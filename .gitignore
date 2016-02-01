@@ -10,3 +10,7 @@ elpa/
 /smex-items
 url/
 var/
+/places
+/recentf
+.python-environments/
+server/
