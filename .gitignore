@@ -1,0 +1,12 @@
+/.emacs.desktop
+/.emacs.desktop.lock
+/.persistent-scratch
+/ac-comphist.dat
+auto-save-list/
+chinese-fonts-setup/
+elpa/
+/history
+/projectile-bookmarks.eld
+/smex-items
+url/
+var/
