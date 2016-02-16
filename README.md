@@ -12,3 +12,12 @@ Emacs power users.
 
 It is compatible **ONLY with GNU Emacs 24.x**. In general you're
 advised to always run with the latest Emacs - currently **24.5**.
+
+# Installation
+
+```
+cd ~
+git clone https://github.com/seagle0128/.emacs.d.git
+```
+Then start emacs.
+
