@@ -32,9 +32,12 @@
 ;;
 ;;; Code:
 
+(setq system-uses-terminfo nil)
+
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'shell-mode-hook 'n-shell-mode-hook)
+
 (defun n-shell-mode-hook ()
   "Shell mode customizations."
   (local-set-key '[up] 'comint-previous-input)
@@ -42,6 +45,7 @@
   (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
   (setq comint-input-sender 'n-shell-simple-send)
   )
+
 (defun n-shell-simple-send (proc command)
   "Various PROC COMMANDs pre-processing before sending to shell."
   (cond
