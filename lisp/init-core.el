@@ -45,6 +45,9 @@
 (defconst sys/linux-x-p
   (and (display-grayscale-p) sys/linuxp)
   "Are we running under X on a GNU/Linux system?")
+(defconst sys/cygwinp
+  (eq system-type 'cygwin)
+  "Are we running on a Cygwin system?")
 
 ;; Start server
 (require 'server)
