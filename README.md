@@ -1,5 +1,3 @@
-[![License GPL 3][badge-license]](http://www.gnu.org/licenses/gpl-3.0.txt)
-
 Personal Emacs Configuration
 ============================
 
@@ -13,11 +11,11 @@ Emacs power users.
 It is compatible **ONLY with GNU Emacs 24.x**. In general you're
 advised to always run with the latest Emacs - currently **24.5**.
 
-# Installation
+# Quick-start
 
 ```
 cd ~
 git clone https://github.com/seagle0128/.emacs.d.git
 ```
-Then start emacs.
+Then start emacs. Enjoy!
 
