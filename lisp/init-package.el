@@ -62,7 +62,7 @@
 
  ;; helm
  'helm 'helm-ag 'helm-bm 'helm-cmd-t 'helm-descbinds 'helm-flycheck
- 'helm-projectile 'helm-mt 'helm-swoop
+ 'helm-ls-git 'helm-projectile 'helm-mt 'helm-swoop
 
  ;; highlight
  'diff-hl 'highlight-indentation 'highlight-symbol 'volatile-highlights

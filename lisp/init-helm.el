@@ -48,6 +48,10 @@
 (setq helm-semantic-fuzzy-match t)
 (setq helm-lisp-fuzzy-completion t)
 
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
+
 ;; key bindings
 (global-set-key (kbd "C-x b")   #'helm-mini)
 (global-set-key (kbd "C-x C-b") #'helm-buffers-list)
@@ -82,7 +86,7 @@
 (add-hook 'helm-mode-hook
           '(lambda ()
              (helm-autoresize-mode 1)
-             ;; (helm-adaptive-mode 1)
+             (helm-adaptive-mode 1)
              ))
 
 (provide 'init-helm)
