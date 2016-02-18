@@ -14,3 +14,4 @@ var/
 /recentf
 .python-environments/
 server/
+/helm-adaptive-history
