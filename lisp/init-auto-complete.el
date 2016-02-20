@@ -48,6 +48,8 @@
                 ac-source-filename
                 ))
 
+(add-hook 'fish-mode-hook 'auto-complete-mode)
+
 (provide 'init-auto-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
