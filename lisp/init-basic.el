@@ -53,8 +53,8 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; (setq visible-bell t)
 (setq ns-pop-up-frames nil)             ; Don't open a file in a new frame
-(tool-bar-mode -1)
-(if (not sys/cygwinp) (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (size-indication-mode 1)
 (blink-cursor-mode -1)
 (show-paren-mode 1)
