@@ -1,4 +1,4 @@
-;; init-dos.el --- Initialize dos configurations.
+;; init-buffer.el --- Initialize ibuffer configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             DOS configurations.
+;;             iBuffer configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,9 +32,21 @@
 ;;
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.\\(cmd\\|btm\\)$" . dos-mode))
-
-(provide 'init-dos)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(setq ibuffer-saved-filter-groups
+      '(("default"
+         ("Dired" (mode . dired-mode))
+         ("Emacs Lisp" (mode . emacs-lisp-mode))
+         ("C" (mode . c-mode))
+         ("C++" (mode . c++-mode))
+         ("Org" (mode . org-mode))
+         ("Python" (mode . python-mode))
+         ("Ruby" (mode . ruby-mode))
+         ("Helm" (predicate string-match "Helm" mode-name))
+         ("Earmuffs" (name . "^\\*.*?\\*$")))))
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-dos.el ends here
+;;; init-ibuffer.el ends here

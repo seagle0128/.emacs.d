@@ -9,7 +9,7 @@
 ;; Last-Updated: Fri Jan 30 08:00:00 2016 (+0800)
 ;;           By: Vincent Zhang
 ;;     Update #: 4000
-;; URL:
+;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
 ;;
@@ -75,8 +75,11 @@
 
 (require 'init-edit)
 
-(require 'init-helm)
-;; (require 'init-ido)
+(require 'init-recentf)
+(require 'init-ibuffer)
+
+(require 'init-ido)
+;; (require 'init-helm)
 
 (require 'init-bookmark)
 (require 'init-highlight)
@@ -108,7 +111,6 @@
 
 ;; Restore
 (require 'init-restore)
-;; (require 'init-recentf)
 
 ;; Post initialization
 (when window-system

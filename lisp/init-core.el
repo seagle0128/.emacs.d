@@ -2,14 +2,14 @@
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
-;; URL:
+;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Some basic configurations.
+;;             Core configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -53,6 +53,25 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
+;; Elisp byte compiler
+(defun byte-compile-init-dir ()
+  "Byte-compile all your dotfiles."
+  (interactive)
+  (byte-recompile-file user-init-file 0 0)
+  (byte-recompile-directory (concat user-emacs-directory "lisp") 0))
+
+(add-hook 'after-init-hook 'byte-compile-init-dir)
+
+(defun recompile-el-on-save ()
+  "If you're saving an elisp file, likely the .elc is no longer valid."
+  (add-hook 'after-save-hook
+            (lambda ()
+              (byte-recompile-file buffer-file-name 0 0))
+            nil
+            t))
+
+(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
 
 (provide 'init-core)
 

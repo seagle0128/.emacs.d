@@ -2,14 +2,14 @@
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
-;; URL:
+;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Some basic configurations.
+;;             Utils configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -31,42 +31,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-
-;; Elisp byte compiler
-(defun byte-compile-init-dir ()
-  "Byte-compile all your dotfiles."
-  (interactive)
-  (byte-recompile-file user-init-file 0 0)
-  (byte-recompile-directory (concat user-emacs-directory "lisp") 0))
-
-(add-hook 'after-init-hook 'byte-compile-init-dir)
-
-(defun recompile-el-on-save ()
-  "If you're saving an elisp file, likely the .elc is no longer valid."
-  (add-hook 'after-save-hook
-            (lambda ()
-              (byte-recompile-file buffer-file-name 0 0))
-            nil
-            t))
-
-(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
-
-;; ibuffer
-;; (global-set-key (kbd "C-x C-b") 'ibuffer)
-(setq ibuffer-saved-filter-groups
-      '(("default"
-         ("Dired" (mode . dired-mode))
-         ("Emacs Lisp" (mode . emacs-lisp-mode))
-         ("C" (mode . c-mode))
-         ("C++" (mode . c++-mode))
-         ("Org" (mode . org-mode))
-         ("Python" (mode . python-mode))
-         ("Ruby" (mode . ruby-mode))
-         ("Helm" (predicate string-match "Helm" mode-name))
-         ("Earmuffs" (name . "^\\*.*?\\*$")))))
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; Which key
 (which-key-mode 1)

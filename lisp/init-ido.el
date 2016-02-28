@@ -2,14 +2,14 @@
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
-;; URL:
+;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Some basic configurations for ido mode.
+;;             Ido configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -42,6 +42,8 @@
 (ido-at-point-mode 1)
 (ido-complete-space-or-hyphen-enable)
 (ido-sort-mtime-mode 1)
+;; (ido-vertical-mode 1)
+(ido-yes-or-no-mode 1)
 (flx-ido-mode 1)
 (defalias 'load-library 'ido-load-library)
 

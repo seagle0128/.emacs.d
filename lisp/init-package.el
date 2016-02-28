@@ -2,14 +2,14 @@
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
-;; URL:
+;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Some basic configurations for pakcage.
+;;             Package configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -44,16 +44,16 @@
 (package-manifest
  ;; ace
  'ace-jump-mode 'ace-link 'ace-isearch
- 
+
  ;; autocomplete
  'auto-complete 'ac-inf-ruby 'ac-js2
- 
+
  ;; edit
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button 'beacon
  'comment-dwim-2 'expand-region 'easy-kill 'iedit
  'mwim 'move-text 'multiple-cursors 'pager-default-keybindings
  'smartparens 'undo-tree
- 
+
  ;; font
  'chinese-fonts-setup
 
@@ -70,7 +70,7 @@
 
  ;; ido
  'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'ido-sort-mtime
- 'ido-ubiquitous 'smex 'flx-ido
+ 'ido-ubiquitous'ido-vertical-mode 'ido-yes-or-no 'flx-ido 'smex
 
  ;; kill ring
  'browse-kill-ring 'popup-kill-ring
