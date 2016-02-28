@@ -100,6 +100,9 @@
       scroll-margin 1
       scroll-conservatively 100000)
 
+;; Imenu
+(global-set-key (kbd "C-.") 'imenu)
+
 (provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
