@@ -64,7 +64,7 @@
 (require 'init-core)
 (require 'init-package)
 
-(benchmark-init/activate)
+;; (benchmark-init/activate)
 
 ;; Preferences
 (require 'init-ui)
@@ -108,7 +108,7 @@
 
 ;; Restore
 (require 'init-restore)
-;; (require 'recentf)
+;; (require 'init-recentf)
 
 ;; Post initialization
 (when window-system

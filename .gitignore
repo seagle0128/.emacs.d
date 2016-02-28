@@ -1,3 +1,6 @@
+*.elc
+ido.*
+session*
 /.emacs.desktop
 /.emacs.desktop.lock
 /.persistent-scratch

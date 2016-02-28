@@ -32,6 +32,25 @@
 ;;
 ;;; Code:
 
+;; Elisp byte compiler
+(defun byte-compile-init-dir ()
+  "Byte-compile all your dotfiles."
+  (interactive)
+  (byte-recompile-file user-init-file 0 0)
+  (byte-recompile-directory (concat user-emacs-directory "lisp") 0))
+
+(add-hook 'after-init-hook 'byte-compile-init-dir)
+
+(defun recompile-el-on-save ()
+  "If you're saving an elisp file, likely the .elc is no longer valid."
+  (add-hook 'after-save-hook
+            (lambda ()
+              (byte-recompile-file buffer-file-name 0 0))
+            nil
+            t))
+
+(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
+
 ;; ibuffer
 ;; (global-set-key (kbd "C-x C-b") 'ibuffer)
 (setq ibuffer-saved-filter-groups
