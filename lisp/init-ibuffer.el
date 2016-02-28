@@ -48,5 +48,7 @@
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
 
+(provide 'init-ibuffer)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-ibuffer.el ends here
