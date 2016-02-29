@@ -42,11 +42,15 @@
   (package-install 'package+))
 
 (package-manifest
+
  ;; ace
  'ace-jump-mode 'ace-link 'ace-isearch
 
  ;; autocomplete
  'auto-complete 'ac-inf-ruby 'ac-js2
+
+ ;; company
+ 'company 'company-flx 'company-jedi
 
  ;; edit
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
