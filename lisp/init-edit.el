@@ -82,9 +82,6 @@
 ;; Undo Tree
 (global-undo-tree-mode 1)
 
-;; Never lose your cursor again
-(beacon-mode 1)
-
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
