@@ -113,11 +113,6 @@
 (global-set-key (kbd "M-o")   'swoop-pcre-regexp)
 (global-set-key (kbd "C-S-o") 'swoop-back-to-last-position)
 
-;; isearch     > press [C-o] > swoop
-;; swoop       > press [C-o] > swoop-multi
-(define-key isearch-mode-map (kbd "C-o") 'swoop-from-isearch)
-(define-key swoop-map (kbd "C-o") 'swoop-multi-from-swoop)
-
 (provide 'init-edit)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
