@@ -52,7 +52,7 @@
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
  'comment-dwim-2 'expand-region 'easy-kill 'iedit
  'mwim 'move-text 'multiple-cursors 'pager-default-keybindings
- 'smartparens 'undo-tree
+ 'smartparens 'swoop 'undo-tree
 
  ;; font
  'chinese-fonts-setup
