@@ -34,8 +34,9 @@
 
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
-(setq flycheck-emacs-lisp-load-path load-path)
-(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
+
+(flycheck-pos-tip-mode 1)
+(setq flycheck-emacs-lisp-load-path 'inherit)
 
 (provide 'init-flycheck)
 
