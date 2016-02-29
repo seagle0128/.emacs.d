@@ -69,8 +69,9 @@
  'rainbow-delimiters 'rainbow-mode 'color-identifiers-mode 'fic-mode
 
  ;; ido
- 'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'ido-sort-mtime
- 'ido-ubiquitous'ido-vertical-mode 'ido-yes-or-no 'flx-ido 'smex
+ 'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
+ 'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'ido-yes-or-no
+ 'flx-ido 'smex
 
  ;; kill ring
  'browse-kill-ring 'popup-kill-ring
