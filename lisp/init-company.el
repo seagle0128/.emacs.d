@@ -1,4 +1,4 @@
-;; init-flycheck.el --- Initialize flycheck configurations.
+;; init-company.el --- Initialize company configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Flycheck configurations.
+;;             Company configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,13 +32,13 @@
 ;;
 ;;; Code:
 
-(add-hook 'after-init-hook 'global-flycheck-mode)
-(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 
-(flycheck-pos-tip-mode 1)
-(setq flycheck-emacs-lisp-load-path 'inherit)
+(add-hook 'company-mode-hook
+          '(lambda()
+             (add-to-list 'company-backends 'company-jedi)))
 
-(provide 'init-flycheck)
+(provide 'init-company)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-flycheck.el ends here
+;;; init-company.el ends here

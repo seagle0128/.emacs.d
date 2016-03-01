@@ -64,7 +64,7 @@
 (require 'init-core)
 (require 'init-package)
 
-;; (benchmark-init/activate)
+(benchmark-init/activate)
 
 ;; Preferences
 (require 'init-ui)
@@ -86,7 +86,8 @@
 (require 'init-kill-ring)
 (require 'init-window)
 
-(require 'init-auto-complete)
+(require 'init-company)
+;; (require 'init-auto-complete)
 (require 'init-yasnippet)
 
 (require 'init-term)
