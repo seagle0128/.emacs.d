@@ -52,6 +52,7 @@
 ;; Auto indent
 (setq auto-indent-assign-indent-level-variables nil)
 (setq python-indent-guess-indent-offset nil) ; fix python indent compatibility issue
+(setq auto-indent-indent-style 'conservative)
 (auto-indent-global-mode 1)
 
 ;; Anzu mode
