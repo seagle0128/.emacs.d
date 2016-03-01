@@ -109,6 +109,7 @@
              (sp-local-pair 'web-mode "<" ">" :actions nil)))
 
 ;; Swoop
+(setq swoop-font-size-change: nil)
 (global-set-key (kbd "C-o")   'swoop)
 (global-set-key (kbd "C-M-o") 'swoop-multi)
 (global-set-key (kbd "M-o")   'swoop-pcre-regexp)
