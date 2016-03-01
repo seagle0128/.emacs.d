@@ -37,13 +37,14 @@
       '(projectile-root-top-down
         projectile-root-top-down-recurring
         projectile-root-bottom-up))
+
 (when (executable-find "ag")
   (let ((val (concat "ag -U -l --nocolor"
                      (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
                      " -g . | tr '\\n' '\\0'")))
-    (setq projectile-generic-command val)
-    (setq projectile-git-command val)
-    (setq projectile-svn-command val)))
+    (setq projectile-generic-command val)))
+
+(global-set-key (kbd "C-S-t") 'projectile-find-file)
 
 ;; Rails
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
