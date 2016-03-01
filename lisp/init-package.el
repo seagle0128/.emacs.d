@@ -56,7 +56,7 @@
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
  'comment-dwim-2 'expand-region 'easy-kill 'iedit
  'mwim 'move-text 'multiple-cursors 'pager-default-keybindings
- 'smartparens 'swoop 'undo-tree
+ 'smartparens 'undo-tree
 
  ;; font
  'chinese-fonts-setup
@@ -86,7 +86,7 @@
  ;; package
  'package+ 'paradox
 
- ;; prog mode
+ ;; programming mode
  'coffee-mode 'csharp-mode 'dos 'fish-mode 'js2-mode 'json-mode
  'haml-mode 'less-css-mode 'markdown-mode 'php-mode 'powershell
  'scss-mode'web-beautify 'web-mode
@@ -107,10 +107,10 @@
  'monokai-theme 'powerline
 
  ;; utils
- 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
+ 'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
  'dash-at-point 'diminish 'dropdown-list
  'exec-path-from-shell 'htmlize 'multi-term 'neotree
- 'persistent-scratch 'smooth-scrolling
+ 'persistent-scratch 'smooth-scrolling 'swoop
  'which-key 'yasnippet 'youdao-dictionary
 
  ;; window
