@@ -102,7 +102,7 @@
 (require 'init-flycheck)
 (require 'init-tags)
 
-(require 'init-lisp)
+(require 'init-emacs-lisp)
 (require 'init-c)
 (require 'init-dos)
 (require 'init-python)
