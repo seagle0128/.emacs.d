@@ -43,7 +43,6 @@
 (ido-complete-space-or-hyphen-enable)
 (ido-sort-mtime-mode 1)
 ;; (ido-vertical-mode 1)
-(ido-yes-or-no-mode 1)
 (flx-ido-mode 1)
 (defalias 'load-library 'ido-load-library)
 
