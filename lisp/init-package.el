@@ -50,7 +50,7 @@
  'auto-complete 'ac-inf-ruby 'ac-js2
 
  ;; company
- 'company 'company-flx 'company-jedi
+ 'company 'company-flx 'company-jedi 'company-quickhelp
 
  ;; edit
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
@@ -74,8 +74,7 @@
 
  ;; ido
  'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
- 'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'ido-yes-or-no
- 'flx-ido 'smex
+ 'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'flx-ido 'smex
 
  ;; kill ring
  'browse-kill-ring 'popup-kill-ring

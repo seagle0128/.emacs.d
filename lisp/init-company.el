@@ -34,6 +34,10 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+(company-quickhelp-mode 1)
+(eval-after-load 'company
+  '(define-key company-active-map (kbd "M-h") #'company-quickhelp-manual-begin))
+
 (add-hook 'company-mode-hook
           '(lambda()
              (add-to-list 'company-backends 'company-jedi)))
