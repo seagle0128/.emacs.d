@@ -47,6 +47,7 @@
 (eval-after-load "highlight-symbol" '(diminish 'highlight-symbol-mode))
 (eval-after-load "rainbow-mode" '(diminish 'rainbow-mode))
 (eval-after-load "smartparens" '(diminish 'smartparens-mode))
+(eval-after-load "subword" '(diminish 'subword-mode))
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
 (eval-after-load "which-key" '(diminish 'which-key-mode))
 (eval-after-load "whitespace" '(diminish 'whitespace-mode))
