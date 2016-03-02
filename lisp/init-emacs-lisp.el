@@ -49,7 +49,8 @@
   (byte-recompile-file user-init-file 0 0)
   (byte-recompile-directory (concat user-emacs-directory "lisp") 0))
 
-(add-hook 'after-init-hook 'byte-compile-init-dir)
+;; (add-hook 'after-init-hook 'byte-compile-init-dir)
+(add-hook 'kill-emacs-hook 'byte-compile-init-dir)
 
 (defun recompile-el-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
