@@ -46,6 +46,7 @@
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-current-column-mode))
 (eval-after-load "highlight-symbol" '(diminish 'highlight-symbol-mode))
 (eval-after-load "rainbow-mode" '(diminish 'rainbow-mode))
+(eval-after-load "robe" '(diminish 'robe-mode))
 (eval-after-load "smartparens" '(diminish 'smartparens-mode))
 (eval-after-load "subword" '(diminish 'subword-mode))
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))

@@ -47,14 +47,19 @@
              (robe-mode 1)
              (inf-ruby-minor-mode 1)
              (local-set-key [f1] 'yari)))
-(add-hook 'robe-mode-hook 'ac-robe-setup)
+
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+
+(add-hook 'robe-mode-hook 'ac-robe-setup)
 
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
 (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
 (eval-after-load 'inf-ruby
   '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
 
 ;; YAML mode
 (add-hook 'yaml-mode-hook
