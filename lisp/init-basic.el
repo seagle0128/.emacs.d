@@ -53,6 +53,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; (setq visible-bell t)
 (setq ns-pop-up-frames nil)             ; Don't open a file in a new frame
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (size-indication-mode 1)
