@@ -50,7 +50,7 @@
  'auto-complete 'ac-inf-ruby 'ac-js2
 
  ;; company
- 'company 'company-flx 'company-jedi 'company-quickhelp
+ 'company 'company-flx 'company-jedi 'company-quickhelp 'company-shell
 
  ;; edit
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
