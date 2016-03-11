@@ -18,3 +18,5 @@ var/
 .python-environments/
 server/
 /helm-adaptive-history
+anaconda-mode/
+flycheck_*.el*
