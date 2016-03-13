@@ -44,7 +44,7 @@
 (package-manifest
 
  ;; ace
- 'ace-jump-mode 'ace-link 'ace-isearch
+ 'ace-jump-mode 'ace-link
 
  ;; autocomplete
  'auto-complete 'ac-inf-ruby 'ac-js2

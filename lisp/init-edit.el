@@ -42,9 +42,6 @@
 ;; Ace link
 (ace-link-setup-default)
 
-;; Ace isearch
-;; (global-ace-isearch-mode 1)
-
 ;; Aggressive indent
 (global-aggressive-indent-mode 1)
 (add-to-list 'aggressive-indent-excluded-modes 'web-mode)

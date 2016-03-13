@@ -32,7 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-after-load "ace-isearch" '(diminish 'ace-isearch-mode))
 (eval-after-load "aggressive-indent" '(diminish 'aggressive-indent-mode))
 (eval-after-load "auto-indent-mode" '(diminish 'auto-indent-mode))
 (eval-after-load "auto-complete" '(diminish 'auto-complete-mode))
