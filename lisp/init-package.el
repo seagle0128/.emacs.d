@@ -50,7 +50,7 @@
  'auto-complete 'ac-inf-ruby 'ac-js2
 
  ;; company
- 'company 'company-anaconda 'company-flx 'company-jedi 'company-quickhelp 'company-shell
+ 'company 'company-anaconda 'company-flx 'company-quickhelp 'company-shell
 
  ;; edit
  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
@@ -94,7 +94,7 @@
  'projectile 'projectile-rails
 
  ;; python
- 'anaconda-mode 'jedi 'py-autopep8
+ 'anaconda-mode 'py-autopep8
 
  ;; ruby
  'robe 'inf-ruby 'yaml-mode 'yari

@@ -39,8 +39,6 @@
   '(define-key company-active-map (kbd "M-h") #'company-quickhelp-manual-begin))
 
 (add-to-list 'company-backends '(company-shell company-fish-shell))
-;; (add-to-list 'company-backends 'company-jedi)
-(add-to-list 'company-backends 'company-anaconda)
 
 (provide 'init-company)
 

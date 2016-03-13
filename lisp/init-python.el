@@ -36,20 +36,19 @@
 (add-hook 'python-mode-hook
           '(lambda ()
              (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
+
 (add-hook 'inferior-python-mode-hook
           '(lambda ()
              (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
-             (process-query-on-exit-flag (get-process "Python"))
-             ))
-(py-autopep8-enable-on-save)
+             (process-query-on-exit-flag (get-process "Python"))))
 
-;; Jedi
-;; (setq jedi:use-shortcuts t)
-;; (setq jedi:complete-on-dot t)
-;; (add-hook 'python-mode-hook 'jedi:setup)
+;; Autopep8
+(py-autopep8-enable-on-save)
 
 ;; Anaconda
 (add-hook 'python-mode-hook 'anaconda-mode)
+(when (boundp 'company-backends)
+  (add-to-list 'company-backends 'company-anaconda))
 
 ;; iPython
 (if (executable-find "ipython")
@@ -66,9 +65,9 @@
      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
   )
 
-  ;; Pdb setup, note the python version
-  (setq pdb-path 'pdb
-        gud-pdb-command-name (symbol-name pdb-path))
+;; Pdb setup, note the python version
+(setq pdb-path 'pdb
+      gud-pdb-command-name (symbol-name pdb-path))
 (defadvice pdb (before gud-query-cmdline activate)
   "Provide a better default command line when called interactively."
   (interactive
