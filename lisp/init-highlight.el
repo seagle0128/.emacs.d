@@ -55,7 +55,7 @@
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
 
 ;; Highlight TODO/FIXME/BUG
-(add-hook 'prog-mode-hook 'turn-on-fic-mode)
+(add-hook 'prog-mode-hook 'fic-mode)
 
 ;; Highlight uncommitted changes
 (global-diff-hl-mode t)
