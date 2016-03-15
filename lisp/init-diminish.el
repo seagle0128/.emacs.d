@@ -52,6 +52,7 @@
 (eval-after-load "which-key" '(diminish 'which-key-mode))
 (eval-after-load "whitespace" '(diminish 'whitespace-mode))
 (eval-after-load "volatile-highlights" '(diminish 'volatile-highlights-mode))
+(eval-after-load "yard-mode" '(diminish 'yard-mode))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 
 (setq-default anzu-mode-lighter nil)
