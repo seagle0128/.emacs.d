@@ -47,8 +47,8 @@
 
 ;; Anaconda
 (add-hook 'python-mode-hook 'anaconda-mode)
-(when (boundp 'company-backends)
-  (add-to-list 'company-backends 'company-anaconda))
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-anaconda))
 
 ;; iPython
 (if (executable-find "ipython")

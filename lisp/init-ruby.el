@@ -50,14 +50,17 @@
 
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
-(add-hook 'robe-mode-hook 'ac-robe-setup)
-
+;; Auto complete
+(eval-after-load 'auto-complete
+  '(add-hook 'robe-mode-hook 'ac-robe-setup))
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
-(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
-(eval-after-load 'inf-ruby
+(eval-after-load 'auto-complete
+  '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
+(eval-after-load 'auto-complete
   '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
+;; Company
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
@@ -65,6 +68,9 @@
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+;; Yard mode
+(add-hook 'ruby-mode-hook 'yard-mode)
 
 (provide 'init-ruby)
 
