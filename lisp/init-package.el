@@ -103,7 +103,7 @@
  'magit 'psvn
 
  ;; theme
- 'monokai-theme 'powerline 'spaceline
+ 'monokai-theme 'spaceline
 
  ;; utils
  'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
