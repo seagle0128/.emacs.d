@@ -41,8 +41,7 @@
 ;; Tramp
 (cond
  (sys/win32p
-  (setq tramp-default-method "plink"
-        tramp-password-end-of-line "\r\n"))
+  (setq tramp-default-method "plink"))
  (sys/linuxp
   (setq tramp-default-method "ssh")))
 
@@ -75,9 +74,6 @@
 ;; Youdao Dict
 (setq url-automatic-caching t)
 (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
-
-;; Powerline
-;; (powerline-center-theme)
 
 (provide 'init-utils)
 
