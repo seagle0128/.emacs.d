@@ -20,3 +20,4 @@ server/
 /helm-adaptive-history
 anaconda-mode/
 flycheck_*.el*
+/projectile.cache

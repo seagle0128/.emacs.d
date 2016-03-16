@@ -33,6 +33,7 @@
 ;;; Code:
 
 (projectile-global-mode 1)
+(setq projectile-indexing-method 'alien)
 (setq projectile-project-root-files-functions
       '(projectile-root-top-down
         projectile-root-top-down-recurring
