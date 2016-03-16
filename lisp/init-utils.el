@@ -40,10 +40,10 @@
 
 ;; Tramp
 (cond
- ((eq system-type 'windows-nt)
+ (sys/win32p
   (setq tramp-default-method "plink"
         tramp-password-end-of-line "\r\n"))
- ((eq system-type 'gnu/linux)
+ (sys/linuxp
   (setq tramp-default-method "ssh")))
 
 ;; Dos2Unix
@@ -77,7 +77,7 @@
 (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
 
 ;; Powerline
-(powerline-center-theme)
+;; (powerline-center-theme)
 
 (provide 'init-utils)
 

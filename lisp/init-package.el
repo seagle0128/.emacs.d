@@ -62,7 +62,7 @@
  'chinese-fonts-setup
 
  ;; flycheck
- 'flycheck 'flycheck-color-mode-line 'flycheck-pos-tip
+ 'flycheck 'flycheck-pos-tip
 
  ;; helm
  'helm 'helm-ag 'helm-bm 'helm-cmd-t 'helm-descbinds 'helm-flycheck
@@ -103,7 +103,7 @@
  'magit 'psvn
 
  ;; theme
- 'monokai-theme 'powerline
+ 'monokai-theme 'powerline 'spaceline
 
  ;; utils
  'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update

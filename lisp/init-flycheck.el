@@ -33,7 +33,6 @@
 ;;; Code:
 
 (add-hook 'after-init-hook 'global-flycheck-mode)
-(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
 
 (flycheck-pos-tip-mode 1)
 (setq flycheck-emacs-lisp-load-path 'inherit)

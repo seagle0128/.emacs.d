@@ -36,6 +36,13 @@
 ;; Theme
 (load-theme 'monokai t)
 
+;; Powerline
+;; (powerline-default-theme)
+
+;; Spaceline
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
+
 ;; Fonts
 (require 'chinese-fonts-setup)
 (setq cfs-profiles
