@@ -39,11 +39,9 @@
 (browse-url-dwim-mode 1)
 
 ;; Tramp
-(cond
- (sys/win32p
-  (setq tramp-default-method "plink"))
- (sys/linuxp
-  (setq tramp-default-method "ssh")))
+(if (executable-find "plink")
+    (setq tramp-default-method "plink")
+  (setq tramp-default-method "ssh"))
 
 ;; Dos2Unix
 (defun dos2unix ()

@@ -86,9 +86,10 @@
 (require 'init-kill-ring)
 (require 'init-window)
 
+(require 'init-yasnippet)
+
 (require 'init-company)
 ;; (require 'init-auto-complete)
-(require 'init-yasnippet)
 
 (require 'init-term)
 (require 'init-shell)

@@ -58,6 +58,7 @@
 (setq-default anzu-mode-lighter nil)
 (setq-default back-button-mode-lighter nil)
 (setq-default ctags-update-lighter nil)
+(setq-default flycheck-mode-line nil)
 (setq-default magit-auto-revert-mode-lighter nil)
 (setq-default projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 

@@ -49,8 +49,7 @@
       '("program" "org-mode" "read-book"))
 (setq cfs--current-profile-name "program")
 ;; (if sys/macp
-;;     (setq cfs--fontsize-steps '(6 6 8))
-;;   (setq cfs--fontsize-steps '(4 4 6)))
+;;     (setq cfs--fontsize-steps '(6 6 8)))
 
 ;; Encoding
 (set-language-environment 'Chinese-GB18030)
