@@ -108,9 +108,9 @@
  ;; utils
  'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
  'dash-at-point 'diminish 'dropdown-list
- 'exec-path-from-shell 'htmlize 'multi-term 'neotree
- 'persistent-scratch 'smooth-scrolling 'swoop
- 'which-key 'yasnippet 'youdao-dictionary
+ 'exec-path-from-shell 'htmlize 'list-environment
+ 'multi-term 'neotree 'persistent-scratch 'smooth-scrolling
+ 'swoop 'which-key 'yasnippet 'youdao-dictionary
 
  ;; window
  'switch-window 'zoom-window
