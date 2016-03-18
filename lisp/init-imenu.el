@@ -37,6 +37,7 @@
 
 ;; Imeunu list
 (global-set-key (kbd "C-'") #'imenu-list-minor-mode)
+(global-set-key (kbd "C-\"") #'imenu-list)
 (setq imenu-list-focus-after-activation t)
 (add-hook 'imenu-list-minor-mode-hook
           '(lambda ()
