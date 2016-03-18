@@ -67,16 +67,14 @@
 ;; (benchmark-init/activate)
 
 ;; Preferences
+(require 'init-basic)
 (require 'init-ui)
 (require 'init-diminish)
 
-(require 'init-basic)
-(require 'init-calendar)
-
 (require 'init-edit)
-
 (require 'init-recentf)
 (require 'init-ibuffer)
+(require 'init-calendar)
 
 (require 'init-ido)
 ;; (require 'init-helm)

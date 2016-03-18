@@ -64,6 +64,10 @@
                           (message "Revert this buffer.")
                           (revert-buffer t t)))
 
+;; Text zoom in/out
+(global-set-key [(C-wheel-up)] 'text-scale-increase)
+(global-set-key [(C-wheel-down)] 'text-scale-decrease)
+
 ;; Dash
 (when sys/macp
   (global-set-key "\C-cd" 'dash-at-point)

@@ -32,7 +32,6 @@
 ;;
 ;;; Code:
 
-
 ;; Theme
 (load-theme 'monokai t)
 
@@ -47,30 +46,6 @@
 (setq cfs--current-profile-name "program")
 ;; (if sys/macp
 ;;     (setq cfs--fontsize-steps '(6 6 8)))
-
-;; Encoding
-(set-language-environment 'Chinese-GB18030)
-(set-keyboard-coding-system 'utf-8)
-(set-clipboard-coding-system 'gbk)
-(set-terminal-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-selection-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
-(setq default-process-coding-system '(utf-8 . utf-8))
-(setq-default pathname-coding-system 'utf-8)
-(set-file-name-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(ansi-color-for-comint-mode-on)
-
-;; Display Time
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time-mode 1)
-
-;; Text zoom in/out
-(global-set-key [(C-wheel-up)] 'text-scale-increase)
-(global-set-key [(C-wheel-down)] 'text-scale-decrease)
 
 (provide 'init-ui)
 

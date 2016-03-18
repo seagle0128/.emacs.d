@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(setq kill-ring-max 200)
+
 (global-set-key [remap kill-ring-save] 'easy-kill)
 (global-set-key [remap mark-sexp] 'easy-mark)
 

@@ -32,6 +32,9 @@
 ;;
 ;;; Code:
 
+;; Highlight line
+(global-hl-line-mode 1)
+
 ;; Highlight symbol
 (add-hook 'find-file-hook 'highlight-symbol-mode)
 (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
