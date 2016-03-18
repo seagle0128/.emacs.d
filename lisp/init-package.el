@@ -76,6 +76,9 @@
  'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
  'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'flx-ido 'smex
 
+ ;; imenu
+ 'imenu-list
+
  ;; kill ring
  'browse-kill-ring 'popup-kill-ring
 

@@ -74,6 +74,7 @@
 (require 'init-edit)
 (require 'init-recentf)
 (require 'init-ibuffer)
+(require 'init-imenu)
 (require 'init-calendar)
 
 (require 'init-ido)
