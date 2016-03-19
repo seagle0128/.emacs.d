@@ -54,6 +54,7 @@
 
 ;; Tree explorer
 (global-set-key [f12] 'neotree-toggle)
+(global-set-key [C-f12] 'neotree-toggle)
 (add-hook 'neotree-mode-hook
           '(lambda ()
              (linum-mode -1)))
