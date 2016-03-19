@@ -36,93 +36,111 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
-(unless (package-installed-p 'package+)
-  (unless (assoc 'package+ package-archive-contents)
-    (package-refresh-contents))
-  (package-install 'package+))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(package-manifest
+(setq use-package-always-ensure t)
 
- ;; ace
- 'ace-jump-mode 'ace-link
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
- ;; autocomplete
- 'auto-complete 'ac-inf-ruby 'ac-js2
+;; (unless (package-installed-p 'package+)
+;;   (unless (assoc 'package+ package-archive-contents)
+;;     (package-refresh-contents))
+;;   (package-install 'package+))
 
- ;; company
- 'company 'company-anaconda 'company-flx 'company-quickhelp 'company-shell
+;; (package-manifest
 
- ;; edit
- 'anzu 'aggressive-indent 'auto-indent-mode 'back-button
- 'comment-dwim-2 'expand-region 'easy-kill 'iedit
- 'mwim 'move-text 'multiple-cursors 'pager-default-keybindings
- 'smartparens 'undo-tree
+;;  ;; ace
+;;  'ace-jump-mode 'ace-link
 
- ;; font
- 'chinese-fonts-setup
+;;  ;; autocomplete
+;;  'auto-complete 'ac-inf-ruby 'ac-js2
 
- ;; flycheck
- 'flycheck 'flycheck-pos-tip
+;;  ;; company
+;;  'company 'company-anaconda 'company-flx 'company-quickhelp 'company-shell
 
- ;; helm
- 'helm 'helm-ag 'helm-bm 'helm-cmd-t 'helm-descbinds 'helm-flycheck
- 'helm-ls-git 'helm-projectile 'helm-mt 'helm-swoop
+;;  ;; edit
+;;  'anzu 'aggressive-indent 'auto-indent-mode 'back-button
+;;  'comment-dwim-2 'expand-region 'easy-kill 'iedit
+;;  'mwim 'move-text 'multiple-cursors 'pager-default-keybindings
+;;  'smartparens 'undo-tree
 
- ;; highlight
- 'diff-hl 'highlight-indentation 'highlight-symbol 'volatile-highlights
- 'rainbow-delimiters 'rainbow-mode 'color-identifiers-mode 'fic-mode
+;;  ;; font
+;;  'chinese-fonts-setup
 
- ;; ido
- 'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
- 'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'flx-ido 'smex
+;;  ;; flycheck
+;;  'flycheck 'flycheck-pos-tip
 
- ;; imenu
- 'imenu-list
+;;  ;; helm
+;;  'helm 'helm-ag 'helm-bm 'helm-cmd-t 'helm-descbinds 'helm-flycheck
+;;  'helm-ls-git 'helm-projectile 'helm-mt 'helm-swoop
 
- ;; kill ring
- 'browse-kill-ring 'popup-kill-ring
+;;  ;; highlight
+;;  'diff-hl 'highlight-indentation 'highlight-symbol 'volatile-highlights
+;;  'rainbow-delimiters 'rainbow-mode 'color-identifiers-mode 'fic-mode
 
- ;; org
- 'org
+;;  ;; ido
+;;  'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
+;;  'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'flx-ido 'smex
 
- ;; package
- 'package+ 'paradox
+;;  ;; imenu
+;;  'imenu-list
 
- ;; programming mode
- 'coffee-mode 'csharp-mode 'dos 'fish-mode 'js2-mode 'json-mode
- 'haml-mode 'less-css-mode 'markdown-mode 'php-mode 'powershell
- 'scss-mode'web-beautify 'web-mode
+;;  ;; kill ring
+;;  'browse-kill-ring 'popup-kill-ring
 
- ;; project
- 'projectile 'projectile-rails
+;;  ;; org
+;;  'org
 
- ;; python
- 'anaconda-mode 'py-autopep8
+;;  ;; package
+;;  'package+ 'paradox 'use-package
 
- ;; ruby
- 'robe 'inf-ruby 'yaml-mode 'yard-mode 'yari
+;;  ;; programming mode
+;;  'coffee-mode 'csharp-mode 'dos 'fish-mode 'js2-mode 'json-mode
+;;  'haml-mode 'less-css-mode 'markdown-mode 'php-mode 'powershell
+;;  'scss-mode'web-beautify 'web-mode
 
- ;; scm
- 'magit 'psvn
+;;  ;; project
+;;  'projectile 'projectile-rails
 
- ;; theme
- 'monokai-theme 'powerline 'spaceline
+;;  ;; python
+;;  'anaconda-mode 'py-autopep8
 
- ;; utils
- 'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
- 'dash-at-point 'diminish 'dropdown-list
- 'exec-path-from-shell 'htmlize 'list-environment
- 'multi-term 'neotree 'persistent-scratch 'smooth-scrolling
- 'swoop 'which-key 'yasnippet 'youdao-dictionary
+;;  ;; ruby
+;;  'robe 'inf-ruby 'yaml-mode 'yard-mode 'yari
 
- ;; window
- 'switch-window 'zoom-window
+;;  ;; scm
+;;  'magit 'psvn
 
- ;; benchmark
- 'benchmark-init
- )
+;;  ;; theme
+;;  'monokai-theme 'powerline 'spaceline
 
-(setq paradox-github-token t)
+;;  ;; utils
+;;  'ack 'ag 'browse-url-dwim 'cal-china-x 'ctags-update
+;;  'dash-at-point 'diminish 'dropdown-list
+;;  'exec-path-from-shell 'htmlize 'list-environment
+;;  'multi-term 'neotree 'persistent-scratch 'smooth-scrolling
+;;  'swoop 'which-key 'yasnippet 'youdao-dictionary
+
+;;  ;; window
+;;  'switch-window 'zoom-window
+
+;;  ;; benchmark
+;;  'benchmark-init
+;;  )
+
+;; (setq paradox-github-token t)
+
+(use-package paradox
+  :ensure t
+  :bind
+  :diminish
+  :config
+  (setq paradox-github-token t))
 
 (provide 'init-package)
 

@@ -34,12 +34,18 @@
 
 (setq kill-ring-max 200)
 
-(global-set-key [remap kill-ring-save] 'easy-kill)
-(global-set-key [remap mark-sexp] 'easy-mark)
+(use-package easy-kill
+  :config
+  (global-set-key [remap kill-ring-save] 'easy-kill)
+  (global-set-key [remap mark-sexp] 'easy-mark))
 
-(when ido-mode
-  (global-set-key (kbd "C-c k") 'browse-kill-ring)
-  (global-set-key "\M-y" 'popup-kill-ring))
+;; Only use with ido    
+(when ido-mode  
+  (use-package browse-kill-ring
+    :bind ("C-c k" . browse-kill-ring))
+
+  (use-package popup-kill-ring
+    :bind ("M-y" . popup-kill-ring)))
 
 (provide 'init-kill-ring)
 

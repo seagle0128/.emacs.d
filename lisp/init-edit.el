@@ -37,80 +37,106 @@
 (cua-mode t)                             ;; for rectangles, CUA is nice
 
 ;; Ace jump mode
-(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-mode))
 
 ;; Ace link
-(ace-link-setup-default)
+(use-package ace-link
+  :config (ace-link-setup-default))
 
 ;; Aggressive indent
-(global-aggressive-indent-mode 1)
-(add-to-list 'aggressive-indent-excluded-modes 'web-mode)
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
 
 ;; Auto indent
-(setq auto-indent-assign-indent-level-variables nil)
-(setq python-indent-guess-indent-offset nil) ; fix python indent compatibility issue
-(setq auto-indent-indent-style 'conservative)
-(auto-indent-global-mode 1)
+(use-package auto-indent-mode
+  :config
+  (setq auto-indent-assign-indent-level-variables nil)
+  (setq python-indent-guess-indent-offset nil) ; fix python indent compatibility issue
+  (setq auto-indent-indent-style 'conservative)
+  (auto-indent-global-mode 1))
 
 ;; Anzu mode
-(global-anzu-mode 1)
-(global-set-key (kbd "M-%") 'anzu-query-replace)
-(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+(use-package anzu
+  :config
+  (global-anzu-mode 1)
+  (global-set-key (kbd "M-%") 'anzu-query-replace)
+  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
 
 ;; Mwim
-(global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
-(global-set-key (kbd "C-e") 'mwim-end-of-code-or-line)
+(use-package mwim
+  :bind
+  (("C-a" . mwim-beginning-of-code-or-line)
+   ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Pager
-(require 'pager-default-keybindings)
+(use-package pager
+  :config
+  (require 'pager-default-keybindings))
 
 ;; Move text
 (move-text-default-bindings)
 
 ;; Comment
-(global-set-key (kbd "M-;") 'comment-dwim-2)
+(use-package comment-dwim-2
+  :bind ("M-;" . comment-dwim-2))
 
 ;; IEdit
-(global-set-key (kbd "C-;") 'iedit-mode)
-(global-set-key (kbd "C-x r RET") 'iedit-rectangle-mode)
+(use-package iedit
+  :bind
+  (("C-;" . iedit-mode)
+   ("C-x r RET" . iedit-rectangle-mode)))
 
 ;; Back button
-(back-button-mode 1)
+(use-package back-button
+  :config (back-button-mode 1))
 
 ;; Undo Tree
-(global-undo-tree-mode 1)
+(use-package undo-tree
+  :config (global-undo-tree-mode 1))
 
 ;; Multiple cursors
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(global-unset-key (kbd "M-<down-mouse-1>"))
-(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+(use-package multiple-cursors
+  :bind
+  (("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<". mc/mark-previous-like-this)
+   ("C-c C-<". mc/mark-all-like-this))
+  :config
+  (global-unset-key (kbd "M-<down-mouse-1>"))
+  (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click))
 
 ;; Expand region
-(global-set-key (kbd "C-=") 'er/expand-region)
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
 
 ;; Subword and Superword
 (add-hook 'prog-mode-hook 'subword-mode)
 
 ;; Smartparens
-(require 'smartparens-config)
-(smartparens-global-mode 1)
-(show-smartparens-global-mode 1)
-(add-hook 'web-mode-hook
-          '(lambda ()
-             "Workaround for auto-paring issues for Rails and Django."
-             (sp-local-pair 'web-mode "{" "}" :actions nil)
-             (sp-local-pair 'web-mode "<" ">" :actions nil)))
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode 1)
+  (show-smartparens-global-mode 1)
+  (add-hook 'web-mode-hook
+            '(lambda ()
+               "Workaround for auto-paring issues for Rails and Django."
+               (sp-local-pair 'web-mode "{" "}" :actions nil)
+               (sp-local-pair 'web-mode "<" ">" :actions nil)))
+  )
 
 ;; Swoop
-(setq swoop-font-size-change: nil)
-(global-set-key (kbd "C-o")   'swoop)
-(global-set-key (kbd "C-M-o") 'swoop-multi)
-(global-set-key (kbd "M-o")   'swoop-pcre-regexp)
-(global-set-key (kbd "C-S-o") 'swoop-back-to-last-position)
+(use-package swoop
+  :config
+  (setq swoop-font-size-change: nil)
+  :bind
+  (("C-o" . swoop)
+   ("C-M-o" . swoop-multi)
+   ("M-o" . swoop-pcre-regexp)
+   ("C-S-o" . swoop-back-to-last-position)))
 
 (provide 'init-edit)
 

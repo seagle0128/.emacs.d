@@ -32,12 +32,17 @@
 ;;
 ;;; Code:
 
-(setq yas-verbosity 0)                  ; Suppress messages
-(yas-global-mode 1)
-(autoload 'dropdown-list "dropdown-list" "Dropdown menu interface" t)
-(setq yas-prompt-functions '(yas-dropdown-prompt
-                             yas-ido-prompt
-                             yas-completing-prompt))
+(use-package dropdown-list
+  :commands dropdown-list)
+
+(use-package yasnippet
+  :defer t
+  :config
+  (setq yas-verbosity 0)                  ; Suppress messages
+  (yas-global-mode 1)
+  (setq yas-prompt-functions '(yas-dropdown-prompt
+                               yas-ido-prompt
+                               yas-completing-prompt)))
 
 (provide 'init-yasnippet)
 

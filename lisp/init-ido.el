@@ -46,8 +46,6 @@
 (flx-ido-mode 1)
 (defalias 'load-library 'ido-load-library)
 
-(global-set-key (kbd "C-.") 'idomenu)
-
 ;; Smex
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)

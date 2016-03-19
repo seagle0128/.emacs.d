@@ -36,36 +36,54 @@
 (global-hl-line-mode 1)
 
 ;; Highlight symbol
-(add-hook 'find-file-hook 'highlight-symbol-mode)
-(add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
-(setq highlight-symbol-idle-delay 0)
-(global-set-key [(control f3)] 'highlight-symbol-at-point)
-(global-set-key [f3] 'highlight-symbol-next)
-(global-set-key [(shift f3)] 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+(use-package highlight-symbol
+  :defer t
+  :config
+  (add-hook 'find-file-hook 'highlight-symbol-mode)
+  (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
+  (setq highlight-symbol-idle-delay 0)
+  :bind (([C-f3] . highlight-symbol-at-point)
+         ([f3] . highlight-symbol-next)
+         ([S-f3] . highlight-symbol-prev)
+         ([M-f3] . highlight-symbol-query-replace)))
 
 ;; Highlight indentions
-(defvar web-mode-html-offset 2)         ; Workaround. Fix void var issue.
-(add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
+(use-package highlight-indentation
+  :defer t
+  :config
+  (defvar web-mode-html-offset 2)         ; Workaround. Fix void var issue.
+  (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode))
 
 ;; Rainbow
-(add-hook 'prog-mode-hook 'rainbow-mode)
+(use-package rainbow-mode
+  :defer t
+  :config (add-hook 'prog-mode-hook 'rainbow-mode))
 
 ;; Highlight delimiters
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :defer t
+  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; Highlight identifiers
-(add-hook 'after-init-hook 'global-color-identifiers-mode)
+(use-package color-identifiers-mode
+  :defer t
+  :config (add-hook 'after-init-hook 'global-color-identifiers-mode))
 
 ;; Highlight TODO/FIXME/BUG
-(add-hook 'prog-mode-hook 'fic-mode)
+(use-package fic-mode
+  :defer t
+  :config (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Highlight uncommitted changes
-(global-diff-hl-mode t)
+(use-package diff-hl
+  :defer t
+  :config (global-diff-hl-mode t))
 
 ;; Highlight some operations
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
+(use-package volatile-highlights
+  :defer t
+  :commands volatile-highlights-mode
+  :config (volatile-highlights-mode t))
 
 ;; Whitespace
 (add-hook 'prog-mode-hook 'whitespace-mode t)

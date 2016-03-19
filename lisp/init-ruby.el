@@ -42,35 +42,41 @@
 (add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
 
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-             (robe-mode 1)
-             (inf-ruby-minor-mode 1)
-             (local-set-key [f1] 'yari)))
+(use-package robe
+  :config
+  (add-hook 'ruby-mode-hook
+            '(lambda ()
+               (robe-mode 1)
+               (inf-ruby-minor-mode 1)
+               (local-set-key [f1] 'yari)))
 
-(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
-;; Auto complete
-(eval-after-load 'auto-complete
-  '(add-hook 'robe-mode-hook 'ac-robe-setup))
-(eval-after-load 'auto-complete
-  '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
-(eval-after-load 'auto-complete
-  '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
-(eval-after-load 'auto-complete
-  '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+  ;; Auto complete
+  (eval-after-load 'auto-complete
+    '(add-hook 'robe-mode-hook 'ac-robe-setup))
+  (eval-after-load 'auto-complete
+    '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
+  (eval-after-load 'auto-complete
+    '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
+  (eval-after-load 'auto-complete
+    '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
-;; Company
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
+  ;; Company
+  (eval-after-load 'company
+    '(push 'company-robe company-backends)))
 
 ;; YAML mode
-(add-hook 'yaml-mode-hook
-          '(lambda ()
-             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(use-package yaml-mode
+  :config
+  (add-hook 'yaml-mode-hook
+            '(lambda ()
+               (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
 ;; Yard mode
-(add-hook 'ruby-mode-hook 'yard-mode)
+(use-package yard-mode
+  :config
+  (add-hook 'ruby-mode-hook 'yard-mode))
 
 (provide 'init-ruby)
 

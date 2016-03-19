@@ -38,7 +38,8 @@
 (desktop-save-mode 1)
 (setq desktop-load-locked-desktop t)
 
-(persistent-scratch-setup-default)
+(use-package persistent-scratch
+  :config (persistent-scratch-setup-default))
 
 (provide 'init-restore)
 

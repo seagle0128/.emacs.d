@@ -32,7 +32,8 @@
 ;;
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.\\(cmd\\|btm\\)$" . dos-mode))
+(use-package dos
+  :mode "\\.\\(cmd\\|btm\\)$")
 
 (provide 'init-dos)
 

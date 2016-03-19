@@ -32,24 +32,28 @@
 ;;
 ;;; Code:
 
-(ac-config-default)
-(setq ac-use-menu-map t)
-(global-set-key "\M-/" 'ac-start)
-(define-key ac-completing-map "\M-/" 'ac-stop)
-(ac-set-trigger-key "TAB")
-(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-(setq ac-delay 0.3)
+(use-package auto-complete
+  :defer t
+  :bind (("\M-/" . ac-start)
+         :map ac-completing-map ("\M-/" . ac-stop)
+         :map ac-mode-map ("M-TAB" . auto-complete))
+  :config
+  (ac-config-default)
+  (setq ac-use-menu-map t)
+  (ac-set-trigger-key "TAB")
+  (setq ac-delay 0.3)
 
-(setq-default ac-sources
-              '(ac-source-yasnippet
-                ac-source-imenu
-                ac-source-abbrev
-                ac-source-words-in-same-mode-buffers
-                ac-source-files-in-current-dir
-                ac-source-filename
-                ))
+  (setq ac-sources
+        '(ac-source-yasnippet
+          ac-source-imenu
+          ac-source-abbrev
+          ac-source-words-in-same-mode-buffers
+          ac-source-files-in-current-dir
+          ac-source-filename
+          ))
 
-(add-hook 'fish-mode-hook 'auto-complete-mode)
+  (if (featurep 'fish-mode)
+      (add-hook 'fish-mode-hook 'auto-complete-mode)))
 
 (provide 'init-auto-complete)
 

@@ -33,13 +33,17 @@
 ;;; Code:
 
 ;; Switch window
-(global-set-key (kbd "C-x o") 'switch-window)
+(use-package switch-window
+  :bind ("C-x o" . switch-window))
+
 (windmove-default-keybindings)
 (winner-mode 1)
 
 ;; Zoom window
-(global-set-key (kbd "C-x C-z") 'zoom-window-zoom)
-(setq zoom-window-mode-line-color "DarkGreen")
+(use-package zoom-window
+  :bind ("C-x C-z" . zoom-window-zoom)
+  :config
+  (setq zoom-window-mode-line-color "DarkGreen"))
 
 (provide 'init-window)
 

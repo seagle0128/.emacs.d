@@ -32,12 +32,16 @@
 ;;
 ;;; Code:
 
-(add-hook 'after-init-hook 'global-flycheck-mode)
+(use-package flycheck
+  :defer t
+  :config
+  (add-hook 'after-init-hook 'global-flycheck-mode)
+  (setq flycheck-indication-mode 'right-fringe)
+  (setq flycheck-emacs-lisp-load-path 'inherit))
 
-(setq flycheck-indication-mode 'right-fringe)
-
-(flycheck-pos-tip-mode 1)
-(setq flycheck-emacs-lisp-load-path 'inherit)
+(use-package flycheck-pos-tip
+  :defer t
+  :config (flycheck-pos-tip-mode 1))
 
 (provide 'init-flycheck)
 
