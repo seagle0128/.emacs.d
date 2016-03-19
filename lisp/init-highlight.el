@@ -64,7 +64,6 @@
 (global-diff-hl-mode t)
 
 ;; Highlight some operations
-(require 'volatile-highlights)
 (volatile-highlights-mode t)
 
 ;; Whitespace
