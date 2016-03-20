@@ -35,12 +35,11 @@
 (setq kill-ring-max 200)
 
 (use-package easy-kill
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill)
-  (global-set-key [remap mark-sexp] 'easy-mark))
+  :bind ((:map kill-ring-save  easy-kill)
+         (:map mark-sexp  easy-mark)))
 
-;; Only use with ido    
-(when ido-mode  
+;; Only use with ido
+(when ido-mode
   (use-package browse-kill-ring
     :bind ("C-c k" . browse-kill-ring))
 

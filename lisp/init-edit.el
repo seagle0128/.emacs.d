@@ -36,6 +36,12 @@
 (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
 (cua-mode t)                             ;; for rectangles, CUA is nice
 
+;; Automatically reload files was modified by external program
+(use-package autorevert
+  :defer t
+  :diminish auto-revert-mode
+  :config (global-auto-revert-mode 1))
+
 ;; Ace jump mode
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
@@ -46,12 +52,14 @@
 
 ;; Aggressive indent
 (use-package aggressive-indent
+  :diminish aggressive-indent-mode
   :config
   (global-aggressive-indent-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
 
 ;; Auto indent
 (use-package auto-indent-mode
+  :diminish auto-indent-mode
   :config
   (setq auto-indent-assign-indent-level-variables nil)
   (setq python-indent-guess-indent-offset nil) ; fix python indent compatibility issue
@@ -60,10 +68,11 @@
 
 ;; Anzu mode
 (use-package anzu
-  :config
-  (global-anzu-mode 1)
-  (global-set-key (kbd "M-%") 'anzu-query-replace)
-  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
+  :diminish anzu-mode
+  :config (global-anzu-mode 1)
+  :bind
+  (("M-%" . anzu-query-replace)
+   ("C-M-%" . anzu-query-replace-regexp)))
 
 ;; Mwim
 (use-package mwim
@@ -91,10 +100,14 @@
 
 ;; Back button
 (use-package back-button
+  :defer t
+  :diminish back-button-mode
   :config (back-button-mode 1))
 
 ;; Undo Tree
 (use-package undo-tree
+  :defer t
+  :diminish undo-tree-mode
   :config (global-undo-tree-mode 1))
 
 ;; Multiple cursors
@@ -113,10 +126,13 @@
   :bind ("C-=" . er/expand-region))
 
 ;; Subword and Superword
-(add-hook 'prog-mode-hook 'subword-mode)
+(use-package subword
+  :diminish subword-mode
+  :init (add-hook 'prog-mode-hook 'subword-mode))
 
 ;; Smartparens
 (use-package smartparens
+  :diminish smartparens-mode
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)

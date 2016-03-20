@@ -32,13 +32,17 @@
 ;;
 ;;; Code:
 
-(add-hook 'c-mode-common-hook 'turn-on-ctags-auto-update-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-ctags-auto-update-mode)
-(add-hook 'python-mode-hook 'turn-on-ctags-auto-update-mode)
-(add-hook 'ruby-mode-hook 'turn-on-ctags-auto-update-mode)
-(add-hook 'js2-mode-hook 'turn-on-ctags-auto-update-mode)
-
-(global-set-key "\C-cE" 'ctags-update)
+(use-package ctags-update
+  :defer t
+  :diminish ctags-auto-update-mode
+  :init
+  (add-hook 'c-mode-common-hook 'turn-on-ctags-auto-update-mode)
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-ctags-auto-update-mode)
+  (add-hook 'python-mode-hook 'turn-on-ctags-auto-update-mode)
+  (add-hook 'ruby-mode-hook 'turn-on-ctags-auto-update-mode)
+  (add-hook 'js2-mode-hook 'turn-on-ctags-auto-update-mode)
+  :bind
+  ("\C-cE" . ctags-update))
 
 (provide 'init-tags)
 

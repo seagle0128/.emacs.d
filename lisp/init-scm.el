@@ -33,11 +33,13 @@
 ;;; Code:
 
 ;; Git
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key [f9] 'magit-status)
+(use-package magit
+  :bind (("C-x g" . magit-status)
+         ([f9] . magit-status)))
 
 ;; Subversion
-(global-set-key [C-f9] 'svn-status)
+(use-package psvn
+  :bind ([C-f9] . svn-status))
 
 (provide 'init-scm)
 

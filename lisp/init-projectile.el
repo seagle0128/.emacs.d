@@ -32,23 +32,27 @@
 ;;
 ;;; Code:
 
-(projectile-global-mode 1)
-(setq projectile-indexing-method 'alien)
-(setq projectile-project-root-files-functions
-      '(projectile-root-top-down
-        projectile-root-top-down-recurring
-        projectile-root-bottom-up))
+(use-package projectile
+  :bind ("C-S-t" . projectile-find-file)
+  :config
+  (projectile-global-mode 1)
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-project-root-files-functions
+        '(projectile-root-top-down
+          projectile-root-top-down-recurring
+          projectile-root-bottom-up))
 
-(when (executable-find "ag")
-  (let ((val (concat "ag -U -l --nocolor"
-                     (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
-                     " -g . | tr '\\n' '\\0'")))
-    (setq projectile-generic-command val)))
-
-(global-set-key (kbd "C-S-t") 'projectile-find-file)
+  (when (executable-find "ag")
+    (let ((val (concat "ag -U -l --nocolor"
+                       (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
+                       " -g . | tr '\\n' '\\0'")))
+      (setq projectile-generic-command val)))
+  
+  (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name)))))
 
 ;; Rails
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
+(use-package projectile-rails
+  :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (provide 'init-projectile)
 

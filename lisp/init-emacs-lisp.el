@@ -38,9 +38,12 @@
 (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'eval-buffer)
 
 ;; Enable Eldoc in lisp modes
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+(use-package eldoc
+  :diminish eldoc-mode
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()

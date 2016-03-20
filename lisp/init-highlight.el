@@ -38,9 +38,11 @@
 ;; Highlight symbol
 (use-package highlight-symbol
   :defer t
-  :config
+  :diminish highlight-symbol-mode
+  :init
   (add-hook 'find-file-hook 'highlight-symbol-mode)
   (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
+  :config
   (setq highlight-symbol-idle-delay 0)
   :bind (([C-f3] . highlight-symbol-at-point)
          ([f3] . highlight-symbol-next)
@@ -50,29 +52,33 @@
 ;; Highlight indentions
 (use-package highlight-indentation
   :defer t
+  :diminish highlight-indentation-mode highlight-indentation-current-column-mode
   :config
   (defvar web-mode-html-offset 2)         ; Workaround. Fix void var issue.
+  :init
   (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode))
 
 ;; Rainbow
 (use-package rainbow-mode
   :defer t
-  :config (add-hook 'prog-mode-hook 'rainbow-mode))
+  :diminish rainbow-mode
+  :init (add-hook 'prog-mode-hook 'rainbow-mode))
 
 ;; Highlight delimiters
 (use-package rainbow-delimiters
   :defer t
-  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; Highlight identifiers
 (use-package color-identifiers-mode
   :defer t
-  :config (add-hook 'after-init-hook 'global-color-identifiers-mode))
+  :diminish color-identifiers-mode
+  :init (add-hook 'after-init-hook 'global-color-identifiers-mode))
 
 ;; Highlight TODO/FIXME/BUG
 (use-package fic-mode
   :defer t
-  :config (add-hook 'prog-mode-hook 'fic-mode))
+  :init (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
@@ -82,17 +88,23 @@
 ;; Highlight some operations
 (use-package volatile-highlights
   :defer t
+  :diminish volatile-highlights-mode
   :commands volatile-highlights-mode
   :config (volatile-highlights-mode t))
 
 ;; Whitespace
-(add-hook 'prog-mode-hook 'whitespace-mode t)
-(setq whitespace-line-column fill-column) ;; limit line length
-;; automatically clean up bad whitespace
-(setq whitespace-action '(auto-cleanup))
-;; only show bad whitespace
-(setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
-;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+(use-package whitespace
+  :defer t
+  :diminish whitespace-mode
+  :config
+  (add-hook 'prog-mode-hook 'whitespace-mode t)
+  (setq whitespace-line-column fill-column) ;; limit line length
+  ;; automatically clean up bad whitespace
+  (setq whitespace-action '(auto-cleanup))
+  ;; only show bad whitespace
+  (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
+  ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+  )
 
 ;;; advice for whitespace-mode conflict with popup
 (defvar my-prev-whitespace-mode nil)

@@ -33,20 +33,22 @@
 ;;; Code:
 
 ;; Visual bookmark
-;; M$ Visual Studio key setup.
-(global-set-key (kbd "<C-f2>") 'bm-toggle)
-(global-set-key (kbd "<f2>")   'bm-next)
-(global-set-key (kbd "<S-f2>") 'bm-previous)
+(use-package bm
+  :bind
+  ;; M$ Visual Studio key setup.
+  ("<C-f2>" . bm-toggle)
+  ("<f2>" . bm-next)
+  ("<S-f2>" . bm-previous)
 
-;; Click on fringe to toggle bookmarks, and use mouse wheel to move
-;; between them.
-(global-set-key (kbd "<left-fringe> <mouse-5>") 'bm-next-mouse)
-(global-set-key (kbd "<left-fringe> <mouse-4>") 'bm-previous-mouse)
-(global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
+  ;; Click on fringe to toggle bookmarks, and use mouse wheel to move
+  ;; between them.
+  ("<left-fringe> <mouse-5>" . bm-next-mouse)
+  ("<left-fringe> <mouse-4>" . bm-previous-mouse)
+  ("<left-fringe> <mouse-1>" . bm-toggle-mouse)
 
-(global-set-key (kbd "<left-margin> <mouse-5>") 'bm-next-mouse)
-(global-set-key (kbd "<left-margin> <mouse-4>") 'bm-previous-mouse)
-(global-set-key (kbd "<left-margin> <mouse-1>") 'bm-toggle-mouse)
+  ("<left-margin> <mouse-5>" . bm-next-mouse)
+  ("<left-margin> <mouse-4>" . bm-previous-mouse)
+  ("<left-margin> <mouse-1>" . bm-toggle-mouse))
 
 (provide 'init-bookmark)
 

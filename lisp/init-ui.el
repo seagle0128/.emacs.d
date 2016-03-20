@@ -36,16 +36,21 @@
 (load-theme 'monokai t)
 
 ;; Spaceline
-(require 'spaceline-config)
-(spaceline-spacemacs-theme)
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 
 ;; Fonts
-(require 'chinese-fonts-setup)
-(setq cfs-profiles
-      '("program" "org-mode" "read-book"))
-(setq cfs--current-profile-name "program")
-;; (if sys/macp
-;;     (setq cfs--fontsize-steps '(6 6 8)))
+(use-package chinese-fonts-setup
+  :config
+  ;; (require 'chinese-fonts-setup)
+  (setq cfs-profiles
+        '("program" "org-mode" "read-book"))
+  (setq cfs--current-profile-name "program")
+  ;; (if sys/macp
+  ;;     (setq cfs--fontsize-steps '(6 6 8)))
+  )
 
 (provide 'init-ui)
 

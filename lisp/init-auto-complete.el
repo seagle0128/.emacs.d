@@ -33,7 +33,7 @@
 ;;; Code:
 
 (use-package auto-complete
-  :defer t
+  :diminish auto-complete-mode
   :bind (("\M-/" . ac-start)
          :map ac-completing-map ("\M-/" . ac-stop)
          :map ac-mode-map ("M-TAB" . auto-complete))

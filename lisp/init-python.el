@@ -46,9 +46,13 @@
 (py-autopep8-enable-on-save)
 
 ;; Anaconda
-(add-hook 'python-mode-hook 'anaconda-mode)
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-anaconda))
+(use-package anaconda-mode
+  :diminish anaconda-mode
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  :config
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-anaconda)))
 
 ;; iPython
 (if (executable-find "ipython")

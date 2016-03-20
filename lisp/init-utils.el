@@ -33,10 +33,14 @@
 ;;; Code:
 
 ;; Which key
-(which-key-mode 1)
+(use-package which-key
+  :defer t
+  :diminish which-key-mode
+  :config (which-key-mode 1))
 
 ;; Browse url
-(browse-url-dwim-mode 1)
+(use-package browse-url-dwim
+  :config (browse-url-dwim-mode 1))
 
 ;; Tramp
 (if (executable-find "plink")
@@ -53,11 +57,14 @@
       (replace-match (string ?\C-j) nil t))))
 
 ;; Tree explorer
-(global-set-key [f12] 'neotree-toggle)
-(global-set-key [C-f12] 'neotree-toggle)
-(add-hook 'neotree-mode-hook
-          '(lambda ()
-             (linum-mode -1)))
+(use-package neotree
+  :bind
+  (([f12] . neotree-toggle)
+   ([C-f12] . neotree-toggle))
+  :init
+  (add-hook 'neotree-mode-hook
+            '(lambda ()
+               (linum-mode -1))))
 
 ;; Revert buffer
 (global-set-key [(f5)] '(lambda ()
@@ -71,12 +78,15 @@
 
 ;; Dash
 (when sys/macp
-  (global-set-key "\C-cd" 'dash-at-point)
-  (global-set-key "\C-ce" 'dash-at-point-with-docset))
+  (use-package dash
+    :bind
+    (("\C-cd" . dash-at-point)
+     ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dict
-(setq url-automatic-caching t)
-(global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
+(use-package youdao-dictionary
+  :config (setq url-automatic-caching t)
+  :bind ("C-c y" . youdao-dictionary-search-at-point))
 
 (provide 'init-utils)
 

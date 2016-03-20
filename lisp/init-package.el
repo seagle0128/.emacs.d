@@ -40,12 +40,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(setq use-package-always-ensure t)
-
 (eval-when-compile
   (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
+
+(setq use-package-always-ensure t)
 
 ;; (unless (package-installed-p 'package+)
 ;;   (unless (assoc 'package+ package-archive-contents)
@@ -138,7 +138,6 @@
 (use-package paradox
   :ensure t
   :bind
-  :diminish
   :config
   (setq paradox-github-token t))
 

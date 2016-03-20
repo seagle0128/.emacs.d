@@ -37,6 +37,7 @@
 
 (use-package yasnippet
   :defer t
+  :diminish yas-minor-mode
   :config
   (setq yas-verbosity 0)                  ; Suppress messages
   (yas-global-mode 1)

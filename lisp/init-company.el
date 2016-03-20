@@ -33,11 +33,10 @@
 ;;; Code:
 
 (use-package company
-  :ensure t
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  :diminish company-mode
+  :init (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-quickhelp
-  :ensure t
   :defer t
   :config (company-quickhelp-mode 1)
   :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))

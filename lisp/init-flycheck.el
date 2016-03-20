@@ -34,8 +34,10 @@
 
 (use-package flycheck
   :defer t
-  :config
+  :diminish flycheck-mode
+  :init
   (add-hook 'after-init-hook 'global-flycheck-mode)
+  :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit))
 

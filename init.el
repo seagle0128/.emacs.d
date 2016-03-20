@@ -64,12 +64,13 @@
 (require 'init-core)
 (require 'init-package)
 
-;; (benchmark-init/activate)
+;; (use-package benchmark-init
+;;   :config (benchmark-init/activate))
 
-;; Preferences
+;; preferences
 (require 'init-basic)
 (require 'init-ui)
-(require 'init-diminish)
+;; (require 'init-diminish)
 
 (require 'init-edit)
 (require 'init-recentf)
