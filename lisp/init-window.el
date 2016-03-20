@@ -36,8 +36,11 @@
 (use-package switch-window
   :bind ("C-x o" . switch-window))
 
-(windmove-default-keybindings)
-(winner-mode 1)
+(use-package windmove
+  :config (windmove-default-keybindings))
+
+(use-package winner
+  :config (winner-mode 1))
 
 ;; Zoom window
 (use-package zoom-window

@@ -33,16 +33,21 @@
 ;;; Code:
 
 ;; Idomenu
-(global-set-key (kbd "C-.") 'idomenu)
+(use-package idomenu
+  :bind ("C-." . idomenu))
 
 ;; Imeunu list
-(global-set-key (kbd "C-'") #'imenu-list-minor-mode)
-(global-set-key (kbd "C-\"") #'imenu-list)
-(setq imenu-list-focus-after-activation t)
-(add-hook 'imenu-list-minor-mode-hook
-          '(lambda ()
-             (when imenu-list-minor-mode
-               (linum-mode -1))))
+(use-package imenu-list
+  :bind
+  (("C-'" . imenu-list-minor-mode)
+   ("C-\"" . imenu-list))
+  :config
+  (setq imenu-list-focus-after-activation t)
+  (add-hook 'imenu-list-minor-mode-hook
+            '(lambda ()
+               (when imenu-list-minor-mode
+                 (linum-mode -1))))
+  )
 
 (provide 'init-imenu)
 

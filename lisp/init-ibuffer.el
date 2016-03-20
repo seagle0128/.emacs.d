@@ -32,21 +32,23 @@
 ;;
 ;;; Code:
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(setq ibuffer-saved-filter-groups
-      '(("default"
-         ("Dired" (mode . dired-mode))
-         ("Emacs Lisp" (mode . emacs-lisp-mode))
-         ("C" (mode . c-mode))
-         ("C++" (mode . c++-mode))
-         ("Org" (mode . org-mode))
-         ("Python" (mode . python-mode))
-         ("Ruby" (mode . ruby-mode))
-         ("Helm" (predicate string-match "Helm" mode-name))
-         ("Earmuffs" (name . "^\\*.*?\\*$")))))
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")))
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer)
+  :config
+  (setq ibuffer-saved-filter-groups
+        '(("default"
+           ("Dired" (mode . dired-mode))
+           ("Emacs Lisp" (mode . emacs-lisp-mode))
+           ("C" (mode . c-mode))
+           ("C++" (mode . c++-mode))
+           ("Org" (mode . org-mode))
+           ("Python" (mode . python-mode))
+           ("Ruby" (mode . ruby-mode))
+           ("Helm" (predicate string-match "Helm" mode-name))
+           ("Earmuffs" (name . "^\\*.*?\\*$")))))
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default"))))
 
 (provide 'init-ibuffer)
 

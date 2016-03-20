@@ -32,39 +32,42 @@
 ;;
 ;;; Code:
 
-(require 'helm-config)
+(use-package helm
+  :config
+  (require 'helm-config)
 
-;; (setq helm-ff-lynx-style-map nil
-;;       helm-input-idle-delay 0.1
-;;       helm-idle-delay 0.1)
+  ;; (setq helm-ff-lynx-style-map nil
+  ;;       helm-input-idle-delay 0.1
+  ;;       helm-idle-delay 0.1)
 
-;; fuzzy match
-(setq helm-M-x-fuzzy-match t)
-(setq helm-locate-fuzzy-match t)
-(setq helm-imenu-fuzzy-match t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-recentf-fuzzy-match t)
-(setq helm-apropos-fuzzy-match t)
-(setq helm-semantic-fuzzy-match t)
-(setq helm-lisp-fuzzy-completion t)
+  ;; fuzzy match
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-locate-fuzzy-match t)
+  (setq helm-imenu-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-apropos-fuzzy-match t)
+  (setq helm-semantic-fuzzy-match t)
+  (setq helm-lisp-fuzzy-completion t)
 
-;; key bindings
-(global-set-key (kbd "C-x b")   #'helm-mini)
-(global-set-key (kbd "C-x C-b") #'helm-buffers-list)
-(global-set-key (kbd "M-x")     #'helm-M-x)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-(global-set-key (kbd "C-x C-r") #'helm-recentf)
-(global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
-(global-set-key (kbd "M-y")     #'helm-show-kill-ring)
-(global-set-key (kbd "C-h a")   #'helm-apropos)
-(global-set-key (kbd "C-h i")   #'helm-info-emacs)
+  ;; key bindings
+  (global-set-key (kbd "C-x b")   #'helm-mini)
+  (global-set-key (kbd "C-x C-b") #'helm-buffers-list)
+  (global-set-key (kbd "M-x")     #'helm-M-x)
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  (global-set-key (kbd "C-x C-r") #'helm-recentf)
+  (global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
+  (global-set-key (kbd "M-y")     #'helm-show-kill-ring)
+  (global-set-key (kbd "C-h a")   #'helm-apropos)
+  (global-set-key (kbd "C-h i")   #'helm-info-emacs)
 
-;; eshell
-(add-hook 'eshell-mode-hook
-          #'(lambda ()
-              (define-key eshell-mode-map
-                [remap eshell-pcomplete]
-                'helm-esh-pcomplete)))
+  ;; eshell
+  (add-hook 'eshell-mode-hook
+            #'(lambda ()
+                (define-key eshell-mode-map
+                  [remap eshell-pcomplete]
+                  'helm-esh-pcomplete)))
+  )
 
 ;; plugins
 (global-set-key (kbd "C-h b")   #'helm-descbinds)
