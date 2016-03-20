@@ -33,6 +33,7 @@
 ;;; Code:
 
 (use-package helm
+  :diminish helm-mode
   :config
   (require 'helm-config)
 
@@ -50,47 +51,52 @@
   (setq helm-semantic-fuzzy-match t)
   (setq helm-lisp-fuzzy-completion t)
 
-  ;; key bindings
-  (global-set-key (kbd "C-x b")   #'helm-mini)
-  (global-set-key (kbd "C-x C-b") #'helm-buffers-list)
-  (global-set-key (kbd "M-x")     #'helm-M-x)
-  (global-set-key (kbd "C-x C-f") #'helm-find-files)
-  (global-set-key (kbd "C-x C-r") #'helm-recentf)
-  (global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
-  (global-set-key (kbd "M-y")     #'helm-show-kill-ring)
-  (global-set-key (kbd "C-h a")   #'helm-apropos)
-  (global-set-key (kbd "C-h i")   #'helm-info-emacs)
-
   ;; eshell
   (add-hook 'eshell-mode-hook
             #'(lambda ()
                 (define-key eshell-mode-map
                   [remap eshell-pcomplete]
                   'helm-esh-pcomplete)))
-  )
+  ;; modes
+  (helm-mode 1)
+  (helm-autoresize-mode 1)
+  (helm-adaptive-mode 1)
+
+  :bind
+  (("C-x b"   . helm-mini)
+   ("C-x C-b" . helm-buffers-list)
+   ("M-x"     . helm-M-x)
+   ("C-x C-f" . helm-find-files)
+   ("C-x C-r" . helm-recentf)
+   ("C-x r l" . helm-filtered-bookmarks)
+   ("M-y"     . helm-show-kill-ring)
+   ("C-h a"   . helm-apropos)
+   ("C-h i"   . helm-info-emacs)
+   ("C-."     . helm-imenu)
+   ;; :map helm-map
+   ;; ("TAB" . helm-execute-persistent-action)
+   ;; ("C-z" . helm-select-action)
+   ;; :map helm-find-files-map
+   ;; ("S-TAB" . helm-find-files-up-one-level))
+   ))
 
 ;; plugins
-(global-set-key (kbd "C-h b")   #'helm-descbinds)
-(global-set-key (kbd "M-s o")   #'helm-swoop)
-(global-set-key (kbd "M-s /")   #'helm-multi-swoop)
-(global-set-key (kbd "M-s s")   #'helm-ag)
-(global-set-key (kbd "C-.")     #'helm-imenu)
-(global-set-key (kbd "C-x t")   #'helm-mt)
-(if sys/macp
-    (global-set-key (kbd "s-t") #'helm-cmd-t)
-  (global-set-key (kbd "C-S-t") #'helm-cmd-t))
+(use-package helm-descbinds
+  :bind ("C-h b" . helm-descbinds))
 
-;; modes
-;; (helm-mode 1)
-(add-hook 'helm-mode-hook
-          (lambda()
-            (helm-autoresize-mode 1)
-            (helm-adaptive-mode 1)
+(use-package helm-swoop
+  :bind (("M-s o" . helm-swoop)
+         ("M-s /" . helm-multi-swoop)))
 
-            (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-            (define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
-            (define-key helm-map (kbd "C-z") 'helm-select-action)
-            ))
+(use-package helm-ag
+  :bind ("M-s s" . helm-ag))
+
+(use-package helm-mt
+  :bind ("C-x t" . helm-mt))
+
+(use-package helm-cmd-t
+  :bind (("C-S-t" . helm-cmd-t)
+         ("s-t" . helm-cmd-t)))
 
 (provide 'init-helm)
 

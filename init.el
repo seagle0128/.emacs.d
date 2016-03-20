@@ -70,7 +70,6 @@
 ;; preferences
 (require 'init-basic)
 (require 'init-ui)
-;; (require 'init-diminish)
 
 (require 'init-edit)
 (require 'init-recentf)
