@@ -40,7 +40,6 @@
 (eval-after-load "color-identifiers-mode" '(diminish 'color-identifiers-mode))
 (eval-after-load "company" '(diminish 'company-mode))
 (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-(eval-after-load "guru-mode" '(diminish 'guru-mode))
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-current-column-mode))
 (eval-after-load "highlight-symbol" '(diminish 'highlight-symbol-mode))
 (eval-after-load "rainbow-mode" '(diminish 'rainbow-mode))
