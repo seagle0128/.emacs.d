@@ -37,17 +37,19 @@
   :config
   (projectile-global-mode 1)
   (setq projectile-indexing-method 'alien)
-  (setq projectile-project-root-files-functions
-        '(projectile-root-top-down
-          projectile-root-top-down-recurring
-          projectile-root-bottom-up))
+  ;; (setq projectile-project-root-files-functions
+  ;;       '(projectile-root-top-down
+  ;;         projectile-root-top-down-recurring
+  ;;         projectile-root-bottom-up))
+
+  (add-to-list 'projectile-project-root-files-bottom-up ".p4config")
 
   (when (executable-find "ag")
     (let ((val (concat "ag -U -l --nocolor"
                        (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
                        " -g . | tr '\\n' '\\0'")))
       (setq projectile-generic-command val)))
-  
+
   (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name)))))
 
 ;; Rails

@@ -50,12 +50,9 @@
   "Are we running on a Cygwin system?")
 
 ;; Start server
-(use-package server
-  :functions server-running-p
-  :commands sever-running-p
-  :config
-  (unless (server-running-p)
-    (server-start)))
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (provide 'init-core)
 

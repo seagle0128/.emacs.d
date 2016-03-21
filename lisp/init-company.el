@@ -36,13 +36,14 @@
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package company-flx
+  :config (company-flx-mode 1))
+
 (use-package company-quickhelp
-  :defer t
   :config (company-quickhelp-mode 1)
   :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))
 
 (use-package company-shell
-  :defer t
   :init (add-to-list 'company-backends '(company-shell company-fish-shell)))
 
 (provide 'init-company)

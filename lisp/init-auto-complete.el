@@ -49,11 +49,13 @@
           ac-source-abbrev
           ac-source-words-in-same-mode-buffers
           ac-source-files-in-current-dir
-          ac-source-filename
-          ))
+          ac-source-filename ))
 
   (if (featurep 'fish-mode)
       (add-hook 'fish-mode-hook 'auto-complete-mode)))
+
+(use-package ac-inf-ruby)
+(use-package ac-js2)
 
 (provide 'init-auto-complete)
 
