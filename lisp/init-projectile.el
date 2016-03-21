@@ -34,10 +34,15 @@
 
 (projectile-global-mode 1)
 (setq projectile-indexing-method 'alien)
-(setq projectile-project-root-files-functions
-      '(projectile-root-top-down
-        projectile-root-top-down-recurring
-        projectile-root-bottom-up))
+;; (setq projectile-project-root-files-functions
+;;       '(projectile-root-top-down
+;;         projectile-root-top-down-recurring
+;;         projectile-root-bottom-up))
+
+;; For perforce project
+(let ((val (let ((enval (getenv "P4CONFIG")))
+             (if enval enval ".p4config"))))
+  (add-to-list 'projectile-project-root-files-bottom-up val))
 
 (when (executable-find "ag")
   (let ((val (concat "ag -U -l --nocolor"
