@@ -34,12 +34,15 @@
 
 ;; Git
 (use-package magit
+  :defer t
   :bind (("C-x g" . magit-status)
          ([f9] . magit-status)))
 
 ;; Subversion
 (use-package psvn
-  :bind ([C-f9] . svn-status))
+  :defer t
+  :bind (("C-x p" . svn-status)
+         ([C-f9] . svn-status)))
 
 (provide 'init-scm)
 
