@@ -78,7 +78,7 @@
   (global-set-key (kbd "C-S-t") #'helm-cmd-t))
 
 ;; modes
-;; (helm-mode 1)
+(helm-mode 1)
 (add-hook 'helm-mode-hook
           (lambda()
             (helm-autoresize-mode 1)
