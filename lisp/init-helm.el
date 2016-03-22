@@ -54,6 +54,8 @@
     ;;       helm-input-idle-delay 0.1
     ;;       helm-idle-delay 0.1)
 
+    (setq helm-ff-guess-ffap-filenames t)
+
     ;; fuzzy match
     (setq helm-M-x-fuzzy-match t)
     (setq helm-locate-fuzzy-match t)
