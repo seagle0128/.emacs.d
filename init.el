@@ -46,12 +46,6 @@
 ;;; Code:
 
 
-;; Added by Package.el. This must come before configurations of
-;; installed packages. Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; (package-initialize)
-
 (defconst emacs-start-time (current-time))
 (unless noninteractive
   (message "Loading %s..." load-file-name))
@@ -60,8 +54,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
-;; Preparation
-(require 'init-core)
+;; Packages
 (require 'init-package)
 
 (use-package benchmark-init
@@ -109,6 +102,9 @@
 (require 'init-python)
 (require 'init-ruby)
 (require 'init-web)
+(require 'init-fish)
+(require 'init-prog)
+
 (require 'init-org)
 
 ;; Restore

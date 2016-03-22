@@ -1,4 +1,4 @@
-;; init-c.el --- Initialize c configurations.
+;; init-fish.el --- Initialize fish configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Configurations for c mode.
+;;             Configurations for fish mode.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,18 +32,15 @@
 ;;
 ;;; Code:
 
-;; C/C++ Mode
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (c-set-style "bsd")
-             (setq tab-width 4)
-             (setq c-basic-offset 4)
-             ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
-             (local-set-key "\C-cc" 'compile)
-             (eval-after-load 'auto-complete
-               '(add-to-list 'ac-sources 'ac-source-semantic))))
+;; Fish Mode
+(use-package fish-mode
+  :defer t
+  :init
+  (add-hook 'fish-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'fish_indent-before-save))))
 
-(provide 'init-c)
+(provide 'init-fish)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-c.el ends here
+;;; init-fish.el ends here

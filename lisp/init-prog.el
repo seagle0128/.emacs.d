@@ -1,4 +1,4 @@
-;; init-c.el --- Initialize c configurations.
+;; init-prog.el --- Initialize prog configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Configurations for c mode.
+;;             Configurations for prog mode.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,18 +32,11 @@
 ;;
 ;;; Code:
 
-;; C/C++ Mode
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (c-set-style "bsd")
-             (setq tab-width 4)
-             (setq c-basic-offset 4)
-             ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
-             (local-set-key "\C-cc" 'compile)
-             (eval-after-load 'auto-complete
-               '(add-to-list 'ac-sources 'ac-source-semantic))))
+(use-package markdown-mode :defer t)
+(use-package powershell :defer t)
+(use-package csharp-mode :defer t)
 
-(provide 'init-c)
+(provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-c.el ends here
+;;; init-prog.el ends here

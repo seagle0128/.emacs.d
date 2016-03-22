@@ -77,25 +77,35 @@
     (helm-mode 1)
     (helm-autoresize-mode 1)
     (helm-adaptive-mode 1)
+
+    ;; plugins
+    (use-package helm-descbinds
+      :defer t
+      :bind ("C-h b" . helm-descbinds))
+
+    (use-package helm-swoop
+      :defer t
+      :bind (("M-s o" . helm-swoop)
+             ("M-s /" . helm-multi-swoop)))
+
+    (use-package helm-ag
+      :defer t
+      :bind ("M-s s" . helm-ag))
+
+    (use-package helm-mt
+      :defer t
+      :bind ("C-x t" . helm-mt))
+
+    (use-package helm-cmd-t
+      :defer t
+      :bind (("C-S-t" . helm-cmd-t)
+             ("s-t" . helm-cmd-t)))
+
+    (use-package helm-ls-git :defer t)
+    (use-package helm-projectile :defer t)
+    (use-package helm-flycheck :defer t)
+    (use-package helm-bm :defer t)
     ))
-
-;; plugins
-(use-package helm-descbinds
-  :bind ("C-h b" . helm-descbinds))
-
-(use-package helm-swoop
-  :bind (("M-s o" . helm-swoop)
-         ("M-s /" . helm-multi-swoop)))
-
-(use-package helm-ag
-  :bind ("M-s s" . helm-ag))
-
-(use-package helm-mt
-  :bind ("C-x t" . helm-mt))
-
-(use-package helm-cmd-t
-  :bind (("C-S-t" . helm-cmd-t)
-         ("s-t" . helm-cmd-t)))
 
 (provide 'init-helm)
 

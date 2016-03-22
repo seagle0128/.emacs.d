@@ -45,16 +45,6 @@
                  "%b"))))
 (setq icon-title-format frame-title-format)
 
-;; Misc
-(setq inhibit-startup-screen t)
-(setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
-(size-indication-mode 1)
-(blink-cursor-mode -1)
-(show-paren-mode 1)
-(setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
-(setq line-move-visual nil)
-(ansi-color-for-comint-mode-on)
-
 ;; Theme
 (use-package monokai-theme
   :config (load-theme 'monokai t))
@@ -76,20 +66,6 @@
     ;; (if sys/macp
     ;;     (setq cfs--fontsize-steps '(6 6 8)))
     ))
-
-;; Encoding
-(set-language-environment 'Chinese-GB18030)
-(set-keyboard-coding-system 'utf-8)
-(set-clipboard-coding-system 'gbk)
-(set-terminal-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-selection-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
-(setq default-process-coding-system '(utf-8 . utf-8))
-(setq-default pathname-coding-system 'utf-8)
-(set-file-name-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
 
 ;; Line and Column
 (setq-default fill-column 80)
@@ -118,6 +94,18 @@
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
   (display-time-mode 1))
+
+;; Misc
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq inhibit-startup-screen t)
+;; (setq visible-bell t)
+(setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
+(size-indication-mode 1)
+(blink-cursor-mode -1)
+(show-paren-mode 1)
+(setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
+(setq line-move-visual nil)
+(ansi-color-for-comint-mode-on)
 
 (provide 'init-ui)
 

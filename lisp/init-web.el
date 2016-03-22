@@ -88,6 +88,10 @@
    (:map sgml-mode-map "C-c C-b" . web-beautify-html)
    (:map css-mode-map "C-c C-b" . web-beautify-css)))
 
+(use-package less-css-mode :defer t)
+(use-package haml-mode :defer t)
+(use-package php-mode :defer t)
+
 (provide 'init-web)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -32,42 +32,37 @@
 ;;
 ;;; Code:
 
+;; Personal information
+(setq user-full-name "Vincent Zhang")
+(setq user-mail-address "seagle012@gmail.com")
+
+;; Consts
+(defconst sys/win32p
+  (eq system-type 'windows-nt)
+  "Are we running on a WinTel system?")
+(defconst sys/linuxp
+  (eq system-type 'gnu/linux)
+  "Are we running on a GNU/Linux system?")
+(defconst sys/macp
+  (eq system-type 'darwin)
+  "Are we running on a Mac system?")
+(defconst sys/linux-x-p
+  (and (display-grayscale-p) sys/linuxp)
+  "Are we running under X on a GNU/Linux system?")
+(defconst sys/cygwinp
+  (eq system-type 'cygwin)
+  "Are we running on a Cygwin system?")
+
 ;; Enviornment
 (use-package exec-path-from-shell
   :defer t
   :if sys/macp
   :config (exec-path-from-shell-initialize))
 
-;; Email
-(setq user-full-name "Vincent Zhang")
-(setq user-mail-address "seagle012@gmail.com")
-
-;; Miscs
-;; (setq initial-scratch-message nil)
-(fset 'yes-or-no-p 'y-or-n-p)
-;; (setq visible-bell t)
-(delete-selection-mode 1)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
-(setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
-(setq adaptive-fill-first-line-regexp "^* *$")
-(setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
-(setq make-backup-files nil)               ; Forbide to make backup files
-(setq auto-save-default nil)               ; Disable auto save
-;; (setq-default kill-whole-line t)           ; Kill line including '\n'
-
-(global-prettify-symbols-mode 1)           ; Display “lambda” as “λ”
-
-(setq-default major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-(setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
-(setq sentence-end-double-space nil)
-
-;; Tab and Space
-;; Permanently indent with spaces, never with TABs
-(setq-default c-basic-offset   4
-              tab-width        4
-              indent-tabs-mode nil)
+;; Start server
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (provide 'init-basic)
 

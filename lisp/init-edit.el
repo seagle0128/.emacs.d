@@ -32,6 +32,47 @@
 ;;
 ;;; Code:
 
+;; Miscs
+(setq initial-scratch-message nil)
+(delete-selection-mode 1)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
+(setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
+(setq adaptive-fill-first-line-regexp "^* *$")
+(setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
+(setq make-backup-files nil)               ; Forbide to make backup files
+(setq auto-save-default nil)               ; Disable auto save
+;; (setq-default kill-whole-line t)           ; Kill line including '\n'
+
+(setq-default major-mode 'text-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+(setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
+(setq sentence-end-double-space nil)
+
+;; Tab and Space
+;; Permanently indent with spaces, never with TABs
+(setq-default c-basic-offset   4
+              tab-width        4
+              indent-tabs-mode nil)
+
+;; Display “lambda” as “λ”
+(when (boundp 'global-prettify-symbols-mode)
+  (global-prettify-symbols-mode 1))
+
+;; Encoding
+(set-language-environment 'Chinese-GB18030)
+(set-keyboard-coding-system 'utf-8)
+(set-clipboard-coding-system 'gbk)
+(set-terminal-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(setq default-process-coding-system '(utf-8 . utf-8))
+(setq-default pathname-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 ;; CUA mode
 (use-package cua-base
   :defer t

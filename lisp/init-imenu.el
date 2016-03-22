@@ -44,12 +44,13 @@
   (("C-'" . imenu-list-minor-mode)
    ("C-\"" . imenu-list))
   :config
-  (setq imenu-list-focus-after-activation t)
-  (add-hook 'imenu-list-minor-mode-hook
-            '(lambda ()
-               (when imenu-list-minor-mode
-                 (linum-mode -1))))
-  )
+  (progn
+    (setq imenu-list-focus-after-activation t)
+    (add-hook 'imenu-list-minor-mode-hook
+              '(lambda ()
+                 (when imenu-list-minor-mode
+                   (linum-mode -1))))
+    ))
 
 (provide 'init-imenu)
 
