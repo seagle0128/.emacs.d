@@ -46,6 +46,7 @@
     ;;         projectile-root-top-down-recurring
     ;;         projectile-root-bottom-up))
 
+    ;; perforce project
     (let ((val (or (getenv "P4CONFIG") ".p4config")))
       (add-to-list 'projectile-project-root-files-bottom-up val))
 

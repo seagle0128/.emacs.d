@@ -91,7 +91,7 @@
 
 ;;  ;; ido
 ;;  'ido-at-point 'ido-complete-space-or-hyphen 'ido-load-library 'idomenu
-;;  'ido-sort-mtime 'ido-ubiquitous'ido-vertical-mode 'flx-ido 'smex
+;;  'ido-sort-mtime 'ido-ubiquitous 'ido-vertical-mode 'flx-ido 'smex
 
 ;;  ;; imenu
 ;;  'imenu-list
@@ -108,7 +108,7 @@
 ;;  ;; programming mode
 ;;  'coffee-mode 'csharp-mode 'dos 'fish-mode 'js2-mode 'json-mode
 ;;  'haml-mode 'less-css-mode 'markdown-mode 'php-mode 'powershell
-;;  'scss-mode'web-beautify 'web-mode
+;;  'scss-mode 'web-beautify 'web-mode
 
 ;;  ;; project
 ;;  'projectile 'projectile-rails

@@ -32,8 +32,32 @@
 ;;
 ;;; Code:
 
+;; Menu/Tool/Scroll bars
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; Title
+(setq frame-title-format
+      '("GNU Emacs " emacs-version "@" user-login-name " : "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+(setq icon-title-format frame-title-format)
+
+;; Misc
+(setq inhibit-startup-screen t)
+(setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
+(size-indication-mode 1)
+(blink-cursor-mode -1)
+(show-paren-mode 1)
+(setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
+(setq line-move-visual nil)
+(ansi-color-for-comint-mode-on)
+
 ;; Theme
-(load-theme 'monokai t)
+(use-package monokai-theme
+  :config (load-theme 'monokai t))
 
 ;; Spaceline
 (use-package spaceline
@@ -52,6 +76,48 @@
     ;; (if sys/macp
     ;;     (setq cfs--fontsize-steps '(6 6 8)))
     ))
+
+;; Encoding
+(set-language-environment 'Chinese-GB18030)
+(set-keyboard-coding-system 'utf-8)
+(set-clipboard-coding-system 'gbk)
+(set-terminal-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(setq default-process-coding-system '(utf-8 . utf-8))
+(setq-default pathname-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; Line and Column
+(setq-default fill-column 80)
+(setq column-number-mode t)
+(setq line-number-mode t)
+(global-linum-mode 1)
+
+;; Mouse & Smooth Scroll
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
+(setq mouse-wheel-progressive-speed nil)            ; don't accelerate scrolling
+(setq scroll-step 1
+      scroll-margin 1
+      scroll-conservatively 100000)
+
+(use-package smooth-scrolling
+  :defer t
+  :config
+  (smooth-scrolling-mode 1)
+  (setq-default smooth-scroll-margin 0))
+
+;; Display Time
+(use-package time
+  :defer t
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (display-time-mode 1))
 
 (provide 'init-ui)
 

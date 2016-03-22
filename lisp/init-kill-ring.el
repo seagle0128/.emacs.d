@@ -40,7 +40,7 @@
          (:map mark-sexp easy-mark)))
 
 ;; Only use with ido
-(eval-after-load "ido"
+(eval-after-load 'ido
   (lambda()
     (use-package browse-kill-ring
       :defer t

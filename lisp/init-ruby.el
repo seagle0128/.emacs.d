@@ -33,56 +33,60 @@
 ;;; Code:
 
 ;; Ruby mode
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Guardfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
-
-(use-package robe
+(use-package ruby-mode
   :defer t
-  :diminish
-  :init
+  :mode "\\.\\(rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
+  :config
   (progn
-    (add-hook 'ruby-mode-hook
-              '(lambda ()
-                 (robe-mode 1)
-                 (inf-ruby-minor-mode 1)
-                 (local-set-key [f1] 'yari)))
+    ;; Robe mode
+    (use-package robe
+      :defer t
+      :diminish robe-mode
+      :init
+      (progn
+        (add-hook 'ruby-mode-hook 'robe-mode)
 
-    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+        ;; auto complete
+        (eval-after-load 'auto-complete
+          '(add-hook 'robe-mode-hook 'ac-robe-setup))
+        (eval-after-load 'auto-complete
+          '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
+        (eval-after-load 'auto-complete
+          '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
+        (eval-after-load 'auto-complete
+          '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
-    ;; Auto complete
-    (eval-after-load 'auto-complete
-      '(add-hook 'robe-mode-hook 'ac-robe-setup))
-    (eval-after-load 'auto-complete
-      '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
-    (eval-after-load 'auto-complete
-      '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
-    (eval-after-load 'auto-complete
-      '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+        ;; company
+        (eval-after-load 'company
+          '(push 'company-robe company-backends))))
 
-    ;; Company
-    (eval-after-load 'company
-      '(push 'company-robe company-backends)))
-  )
+    ;; inf-ruby
+    (use-package inf-ruby
+      :defer t
+      :init
+      (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+      (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+      (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
+
+    ;; Yari
+    (use-package yari
+      :defer t
+      :bind (:map ruby-mode-map ([f1] . yari))
+      :config
+      (eval-after-load 'helm
+        '(bind-key [f1] 'yari-helm ruby-mode-map)))
+
+    ;; Yard mode
+    (use-package yard-mode
+      :defer t
+      :diminish yard-mode
+      :init (add-hook 'ruby-mode-hook 'yard-mode))
+    ))
 
 ;; YAML mode
 (use-package yaml-mode
   :defer t
-  :init
-  (add-hook 'yaml-mode-hook
-            '(lambda ()
-               (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
-
-;; Yard mode
-(use-package yard-mode
-  :defer t
-  :init
-  (add-hook 'ruby-mode-hook 'yard-mode))
+  :mode "\\.yml$")
 
 (provide 'init-ruby)
 

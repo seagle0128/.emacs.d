@@ -66,22 +66,22 @@
       (interactive
        (list (gud-query-cmdline pdb-path
                                 (file-name-nondirectory buffer-file-name)))))
+
+    ;; Autopep8
+    (use-package py-autopep8
+      :defer t
+      :config (py-autopep8-enable-on-save))
+
+    ;; Anaconda
+    (use-package anaconda-mode
+      :defer t
+      :diminish anaconda-mode
+      :init
+      (add-hook 'python-mode-hook 'anaconda-mode)
+      :config
+      (eval-after-load 'company
+        '(add-to-list 'company-backends 'company-anaconda)))
     ))
-
-;; Autopep8
-(use-package py-autopep8
-  :defer t
-  :config (py-autopep8-enable-on-save))
-
-;; Anaconda
-(use-package anaconda-mode
-  :defer t
-  :diminish anaconda-mode
-  :init
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  :config
-  (eval-after-load 'company
-    '(add-to-list 'company-backends 'company-anaconda)))
 
 (provide 'init-python)
 

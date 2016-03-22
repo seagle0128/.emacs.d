@@ -50,7 +50,7 @@
 ;; installed packages. Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
 
 (defconst emacs-start-time (current-time))
 (unless noninteractive
@@ -64,8 +64,9 @@
 (require 'init-core)
 (require 'init-package)
 
-;; (use-package benchmark-init
-;;   :config (benchmark-init/activate))
+(use-package benchmark-init
+  :disabled t
+  :config (benchmark-init/activate))
 
 ;; preferences
 (require 'init-basic)

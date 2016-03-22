@@ -65,7 +65,7 @@
     (setq helm-lisp-fuzzy-completion t)
 
     ;; eshell
-    (eval-after-load "eshell"
+    (eval-after-load 'eshell
       '(bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))
 
     ;; exchange TAB and C-z

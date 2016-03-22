@@ -33,14 +33,18 @@
 ;;; Code:
 
 ;; Multi term
-(defvar term-program shell-file-name)
-(cond ((executable-find "fish")
-       (setq term-program "fish"))
-      ((executable-find "zsh")
-       (setq term-program "zsh")))
-(setq multi-term-program term-program)
-;; Disable yasnippet mode to enable TAB in term
-(add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))
+(use-package multi-term
+  :defer t
+  :config
+  (defvar term-program shell-file-name)
+  (cond ((executable-find "fish")
+         (setq term-program "fish"))
+        ((executable-find "zsh")
+         (setq term-program "zsh")))
+  (setq multi-term-program term-program)
+  ;; Disable yasnippet mode to enable TAB in term
+  (add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))
+  )
 
 (provide 'init-term)
 
