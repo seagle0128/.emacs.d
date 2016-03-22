@@ -44,6 +44,10 @@
              (if enval enval ".p4config"))))
   (add-to-list 'projectile-project-root-files-bottom-up val))
 
+;; for perforce project
+(let ((val (or (getenv "P4CONFIG") ".p4config")))
+  (add-to-list 'projectile-project-root-files-bottom-up val))
+
 (when (executable-find "ag")
   (let ((val (concat "ag -U -l --nocolor"
                      (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")

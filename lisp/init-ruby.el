@@ -46,7 +46,9 @@
           '(lambda ()
              (robe-mode 1)
              (inf-ruby-minor-mode 1)
-             (local-set-key [f1] 'yari)))
+             (local-set-key [f1] 'yari)
+             (eval-after-load 'helm
+               '(local-set-key [f1] 'yari-helm))))
 
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
