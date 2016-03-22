@@ -33,47 +33,55 @@
 ;;; Code:
 
 ;; Python Mode
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
+(use-package python
+  :defer t
+  :config
+  (progn
+    (add-hook 'python-mode-hook
+              '(lambda ()
+                 (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
 
-(add-hook 'inferior-python-mode-hook
-          '(lambda ()
-             (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
-             (process-query-on-exit-flag (get-process "Python"))))
+    (add-hook 'inferior-python-mode-hook
+              '(lambda ()
+                 (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
+                 (process-query-on-exit-flag (get-process "Python"))))
+
+    ;; iPython
+    (if (executable-find "ipython")
+        (setq
+         python-shell-interpreter "ipython"
+         python-shell-interpreter-args "-i"
+         python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+         python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+         python-shell-completion-setup-code
+         "from IPython.core.completerlib import module_completion"
+         python-shell-completion-string-code
+         "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+
+    ;; Pdb setup, note the python version
+    (setq pdb-path 'pdb
+          gud-pdb-command-name (symbol-name pdb-path))
+    (defadvice pdb (before gud-query-cmdline activate)
+      "Provide a better default command line when called interactively."
+      (interactive
+       (list (gud-query-cmdline pdb-path
+                                (file-name-nondirectory buffer-file-name)))))
+    ))
 
 ;; Autopep8
-(py-autopep8-enable-on-save)
+(use-package py-autopep8
+  :defer t
+  :config (py-autopep8-enable-on-save))
 
 ;; Anaconda
 (use-package anaconda-mode
+  :defer t
   :diminish anaconda-mode
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)
   :config
   (eval-after-load 'company
     '(add-to-list 'company-backends 'company-anaconda)))
-
-;; iPython
-(if (executable-find "ipython")
-    (setq
-     python-shell-interpreter "ipython"
-     python-shell-interpreter-args "-i"
-     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-     python-shell-completion-setup-code
-     "from IPython.core.completerlib import module_completion"
-     python-shell-completion-string-code
-     "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
-
-;; Pdb setup, note the python version
-(setq pdb-path 'pdb
-      gud-pdb-command-name (symbol-name pdb-path))
-(defadvice pdb (before gud-query-cmdline activate)
-  "Provide a better default command line when called interactively."
-  (interactive
-   (list (gud-query-cmdline pdb-path
-                            (file-name-nondirectory buffer-file-name)))))
 
 (provide 'init-python)
 

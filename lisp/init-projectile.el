@@ -33,30 +33,37 @@
 ;;; Code:
 
 (use-package projectile
+  :defer t
   :bind ("C-S-t" . projectile-find-file)
   :config
-  (projectile-global-mode 1)
-  (setq projectile-indexing-method 'alien)
-  ;; (setq projectile-project-root-files-functions
-  ;;       '(projectile-root-top-down
-  ;;         projectile-root-top-down-recurring
-  ;;         projectile-root-bottom-up))
+  (progn
+    (projectile-global-mode 1)
 
-  (add-to-list 'projectile-project-root-files-bottom-up ".p4config")
+    (setq projectile-indexing-method 'alien)
 
-  (when (executable-find "ag")
-    (let ((val (concat "ag -U -l --nocolor"
-                       (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
-                       " -g . | tr '\\n' '\\0'")))
-      (setq projectile-generic-command val)))
+    ;; (setq projectile-project-root-files-functions
+    ;;       '(projectile-root-top-down
+    ;;         projectile-root-top-down-recurring
+    ;;         projectile-root-bottom-up))
 
-  (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name)))))
+    (let ((val (or (getenv "P4CONFIG") ".p4config")))
+      (add-to-list 'projectile-project-root-files-bottom-up val))
 
-;; Rails
-(use-package projectile-rails
-  :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
+    (when (executable-find "ag")
+      (let ((val (concat "ag -U -l --nocolor"
+                         (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
+                         " -g . | tr '\\n' '\\0'")))
+        (setq projectile-generic-command val)))
 
-(provide 'init-projectile)
+    (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+
+    ;; Rails
+    (use-package projectile-rails
+      :defer t
+      :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
+    ))
+
+  (provide 'init-projectile)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-projectile.el ends here

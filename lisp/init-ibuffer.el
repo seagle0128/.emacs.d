@@ -33,6 +33,7 @@
 ;;; Code:
 
 (use-package ibuffer
+  :defer t
   :bind ("C-x C-b" . ibuffer)
   :config
   (setq ibuffer-saved-filter-groups

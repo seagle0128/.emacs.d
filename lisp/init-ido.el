@@ -34,6 +34,7 @@
 
 ;; IDO
 (use-package ido
+  :defer t
   :config
   (ido-mode 1)
   (ido-everywhere 1)
@@ -42,28 +43,36 @@
   (setq ido-enable-flex-matching t))
 
 (use-package ido-ubiquitous
+  :defer t
   :config (ido-ubiquitous-mode 1))
 
 (use-package ido-at-point
+  :defer t
   :config (ido-at-point-mode 1))
 
 (use-package ido-complete-space-or-hyphen
+  :defer t
   :config (ido-complete-space-or-hyphen-enable))
 
 (use-package ido-sort-mtime
+  :defer t
   :config (ido-sort-mtime-mode 1))
 
 ;; (use-package ido-vertical-mode
+;;   :defer t
 ;;   :config (ido-vertical-mode 1))
 
 (use-package flx-ido
+  :defer t
   :config (flx-ido-mode 1))
 
 (use-package ido-load-library
+  :defer t
   :config (defalias 'load-library 'ido-load-library))
 
 ;; Smex
 (use-package smex
+  :defer t
   :bind
   (("M-x" . smex)
    ("M-X" . smex-major-mode-commands))

@@ -33,18 +33,24 @@
 ;;; Code:
 
 (use-package company
+  :defer t
   :diminish company-mode
-  :init (add-hook 'after-init-hook 'global-company-mode))
+  :init (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (progn
+    (use-package company-quickhelp
+      :defer t
+      :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin))
+      :config (company-quickhelp-mode 1))
 
-(use-package company-flx
-  :config (company-flx-mode 1))
+    (use-package company-flx
+      :defer t
+      :config (company-flx-mode 1))
 
-(use-package company-quickhelp
-  :config (company-quickhelp-mode 1)
-  :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))
-
-(use-package company-shell
-  :init (add-to-list 'company-backends '(company-shell company-fish-shell)))
+    (use-package company-shell
+      :defer t
+      :init (add-to-list 'company-backends '(company-shell company-fish-shell)))
+    ))
 
 (provide 'init-company)
 

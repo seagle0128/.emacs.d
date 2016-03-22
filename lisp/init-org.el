@@ -32,7 +32,10 @@
 ;;
 ;;; Code:
 
-(setq org-todo-keywords '((type "TODO" "ONGOING" "DONE")))
+(use-package org
+  :defer t
+  :config
+  (setq org-todo-keywords '((type "TODO" "ONGOING" "DONE"))))
 
 (provide 'init-org)
 

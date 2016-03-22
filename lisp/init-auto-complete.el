@@ -33,29 +33,32 @@
 ;;; Code:
 
 (use-package auto-complete
+  :defer t
   :diminish auto-complete-mode
   :bind (("\M-/" . ac-start)
          :map ac-completing-map ("\M-/" . ac-stop)
          :map ac-mode-map ("M-TAB" . auto-complete))
   :config
-  (ac-config-default)
-  (setq ac-use-menu-map t)
-  (ac-set-trigger-key "TAB")
-  (setq ac-delay 0.3)
+  (progn
+    (ac-config-default)
+    (setq ac-use-menu-map t)
+    (ac-set-trigger-key "TAB")
+    (setq ac-delay 0.3)
 
-  (setq ac-sources
-        '(ac-source-yasnippet
-          ac-source-imenu
-          ac-source-abbrev
-          ac-source-words-in-same-mode-buffers
-          ac-source-files-in-current-dir
-          ac-source-filename ))
+    (setq ac-sources
+          '(ac-source-yasnippet
+            ac-source-imenu
+            ac-source-abbrev
+            ac-source-words-in-same-mode-buffers
+            ac-source-files-in-current-dir
+            ac-source-filename ))
 
-  (if (featurep 'fish-mode)
-      (add-hook 'fish-mode-hook 'auto-complete-mode)))
+    (if (featurep 'fish-mode)
+        (add-hook 'fish-mode-hook 'auto-complete-mode))
 
-(use-package ac-inf-ruby)
-(use-package ac-js2)
+    (use-package ac-inf-ruby :defer t)
+    (use-package ac-js2 :defer t)
+    ))
 
 (provide 'init-auto-complete)
 

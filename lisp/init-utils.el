@@ -40,12 +40,16 @@
 
 ;; Browse url
 (use-package browse-url-dwim
-  :config (browse-url-dwim-mode 1))
+  :config
+  (browse-url-dwim-mode 1)
+  (setq browse-url-dwim-always-confirm-extraction nil))
 
 ;; Tramp
-(if (executable-find "plink")
-    (setq tramp-default-method "plink")
-  (setq tramp-default-method "ssh"))
+(use-package tramp
+  :defer t
+  :config
+  (let ((val (if (executable-find "plink") "plink" "ssh")))
+    (setq tramp-default-method val)))
 
 ;; Dos2Unix
 (defun dos2unix ()
@@ -58,6 +62,7 @@
 
 ;; Tree explorer
 (use-package neotree
+  :defer t
   :bind
   (([f12] . neotree-toggle)
    ([C-f12] . neotree-toggle))
@@ -79,12 +84,14 @@
 ;; Dash
 (when sys/macp
   (use-package dash
+    :defer t
     :bind
     (("\C-cd" . dash-at-point)
      ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dict
 (use-package youdao-dictionary
+  :defer t
   :config (setq url-automatic-caching t)
   :bind ("C-c y" . youdao-dictionary-search-at-point))
 

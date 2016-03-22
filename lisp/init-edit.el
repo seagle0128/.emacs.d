@@ -33,8 +33,12 @@
 ;;; Code:
 
 ;; CUA mode
-(setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
-(cua-mode t)                             ;; for rectangles, CUA is nice
+(use-package cua-base
+  :defer t
+  :config
+  (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
+  (cua-mode t)                             ;; for rectangles, CUA is nice
+  )
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
@@ -44,14 +48,17 @@
 
 ;; Ace jump mode
 (use-package ace-jump-mode
+  :defer t
   :bind ("C-c SPC" . ace-jump-mode))
 
 ;; Ace link
 (use-package ace-link
+  :defer t
   :config (ace-link-setup-default))
 
 ;; Aggressive indent
 (use-package aggressive-indent
+  :defer t
   :diminish aggressive-indent-mode
   :config
   (global-aggressive-indent-mode 1)
@@ -59,6 +66,7 @@
 
 ;; Auto indent
 (use-package auto-indent-mode
+  :defer t
   :diminish auto-indent-mode
   :config
   (setq auto-indent-assign-indent-level-variables nil)
@@ -68,6 +76,7 @@
 
 ;; Anzu mode
 (use-package anzu
+  :defer t
   :diminish anzu-mode
   :config (global-anzu-mode 1)
   :bind
@@ -76,24 +85,30 @@
 
 ;; Mwim
 (use-package mwim
+  :defer t
   :bind
   (("C-a" . mwim-beginning-of-code-or-line)
    ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Pager
 (use-package pager
+  :defer t
   :config
   (require 'pager-default-keybindings))
 
 ;; Move text
-(move-text-default-bindings)
+(use-package move-text
+  :defer t
+  :config (move-text-default-bindings))
 
 ;; Comment
 (use-package comment-dwim-2
+  :defer t
   :bind ("M-;" . comment-dwim-2))
 
 ;; IEdit
 (use-package iedit
+  :defer t
   :bind
   (("C-;" . iedit-mode)
    ("C-x r RET" . iedit-rectangle-mode)))
@@ -112,26 +127,30 @@
 
 ;; Multiple cursors
 (use-package multiple-cursors
+  :defer t
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)
    ("C->" . mc/mark-next-like-this)
    ("C-<". mc/mark-previous-like-this)
-   ("C-c C-<". mc/mark-all-like-this))
+   ("C-c C-<". mc/mark-all-like-this)
+   ("M-<mouse-1>" . mc/add-cursor-on-click))
   :config
-  (global-unset-key (kbd "M-<down-mouse-1>"))
-  (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click))
+  (global-set-key (kbd "M-<down-mouse-1>") 'setq))
 
 ;; Expand region
 (use-package expand-region
+  :defer t
   :bind ("C-=" . er/expand-region))
 
 ;; Subword and Superword
 (use-package subword
+  :defer t
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
 
 ;; Smartparens
 (use-package smartparens
+  :defer t
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
@@ -146,6 +165,7 @@
 
 ;; Swoop
 (use-package swoop
+  :defer t
   :config
   (setq swoop-font-size-change: nil)
   :bind

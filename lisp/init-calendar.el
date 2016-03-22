@@ -39,12 +39,15 @@
 
 ;; Chinese calendar
 ;; `pC' can show lunar details
-(require 'cal-china-x)
-(setq calendar-mark-holidays-flag t)
-(setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
-(setq calendar-holidays cal-china-x-important-holidays)
+(use-package cal-china-x
+  :commands cal-china-x-setup
+  :config
+  ;; (require 'cal-china-x)
+  (setq calendar-mark-holidays-flag t)
+  (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+  (setq calendar-holidays cal-china-x-important-holidays))
 
-(provide 'init-calendar)
+  (provide 'init-calendar)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-calendar.el ends here

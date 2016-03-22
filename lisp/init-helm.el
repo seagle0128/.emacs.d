@@ -33,35 +33,8 @@
 ;;; Code:
 
 (use-package helm
+  :defer t
   :diminish helm-mode
-  :config
-  (require 'helm-config)
-
-  ;; (setq helm-ff-lynx-style-map nil
-  ;;       helm-input-idle-delay 0.1
-  ;;       helm-idle-delay 0.1)
-
-  ;; fuzzy match
-  (setq helm-M-x-fuzzy-match t)
-  (setq helm-locate-fuzzy-match t)
-  (setq helm-imenu-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-apropos-fuzzy-match t)
-  (setq helm-semantic-fuzzy-match t)
-  (setq helm-lisp-fuzzy-completion t)
-
-  ;; eshell
-  (add-hook 'eshell-mode-hook
-            #'(lambda ()
-                (define-key eshell-mode-map
-                  [remap eshell-pcomplete]
-                  'helm-esh-pcomplete)))
-  ;; modes
-  (helm-mode 1)
-  (helm-autoresize-mode 1)
-  (helm-adaptive-mode 1)
-
   :bind
   (("C-x b"   . helm-mini)
    ("C-x C-b" . helm-buffers-list)
@@ -72,13 +45,39 @@
    ("M-y"     . helm-show-kill-ring)
    ("C-h a"   . helm-apropos)
    ("C-h i"   . helm-info-emacs)
-   ("C-."     . helm-imenu)
-   ;; :map helm-map
-   ;; ("TAB" . helm-execute-persistent-action)
-   ;; ("C-z" . helm-select-action)
-   ;; :map helm-find-files-map
-   ;; ("S-TAB" . helm-find-files-up-one-level))
-   ))
+   ("C-."     . helm-imenu))
+  :config
+  (progn
+    (require 'helm-config)
+
+    ;; (setq helm-ff-lynx-style-map nil
+    ;;       helm-input-idle-delay 0.1
+    ;;       helm-idle-delay 0.1)
+
+    ;; fuzzy match
+    (setq helm-M-x-fuzzy-match t)
+    (setq helm-locate-fuzzy-match t)
+    (setq helm-imenu-fuzzy-match t)
+    (setq helm-buffers-fuzzy-matching t)
+    (setq helm-recentf-fuzzy-match t)
+    (setq helm-apropos-fuzzy-match t)
+    (setq helm-semantic-fuzzy-match t)
+    (setq helm-lisp-fuzzy-completion t)
+
+    ;; eshell
+    (eval-after-load "eshell"
+      '(bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))
+
+    ;; exchange TAB and C-z
+    (bind-key "TAB" 'helm-execute-persistent-action helm-map)
+    (bind-key "C-z" 'helm-select-action help-map)
+    (bind-key "S-TAB" 'helm-find-files-up-one-level helm-find-files-map)
+
+    ;; modes
+    (helm-mode 1)
+    (helm-autoresize-mode 1)
+    (helm-adaptive-mode 1)
+    ))
 
 ;; plugins
 (use-package helm-descbinds

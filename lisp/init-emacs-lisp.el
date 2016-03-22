@@ -39,11 +39,14 @@
 
 ;; Enable Eldoc in lisp modes
 (use-package eldoc
+  :defer t
   :diminish eldoc-mode
   :init
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+    ))
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()

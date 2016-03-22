@@ -47,6 +47,12 @@
 
 (setq use-package-always-ensure t)
 
+(use-package paradox
+  :ensure t
+  :defer t
+  :config
+  (setq paradox-github-token t))
+
 ;; (unless (package-installed-p 'package+)
 ;;   (unless (assoc 'package+ package-archive-contents)
 ;;     (package-refresh-contents))
@@ -134,12 +140,6 @@
 ;;  )
 
 ;; (setq paradox-github-token t)
-
-(use-package paradox
-  :ensure t
-  :bind
-  :config
-  (setq paradox-github-token t))
 
 (provide 'init-package)
 

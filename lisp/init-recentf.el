@@ -32,17 +32,22 @@
 ;;
 ;;; Code:
 
-(recentf-mode 1)
+(use-package recentf
+  :defer t
+  :config
+  (progn
+    (recentf-mode 1)
 
-(defun recentf-ido-find-file ()
-  "Find a recent file using ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: "
-                                   (-map 'abbreviate-file-name recentf-list)
-                                   nil t)))
-    (when file
-      (find-file file))))
-(global-set-key [(control x)(control r)] 'recentf-ido-find-file)
+    (defun recentf-ido-find-file ()
+      "Find a recent file using ido."
+      (interactive)
+      (let ((file (ido-completing-read "Choose recent file: "
+                                       (-map 'abbreviate-file-name recentf-list)
+                                       nil t)))
+        (when file
+          (find-file file))))
+    (global-set-key [(control x)(control r)] 'recentf-ido-find-file)
+    ))
 
 (provide 'init-recentf)
 

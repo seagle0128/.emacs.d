@@ -35,16 +35,21 @@
 (setq kill-ring-max 200)
 
 (use-package easy-kill
-  :bind ((:map kill-ring-save  easy-kill)
-         (:map mark-sexp  easy-mark)))
+  :defer t
+  :bind ((:map kill-ring-save easy-kill)
+         (:map mark-sexp easy-mark)))
 
 ;; Only use with ido
-(when ido-mode
-  (use-package browse-kill-ring
-    :bind ("C-c k" . browse-kill-ring))
+(eval-after-load "ido"
+  (lambda()
+    (use-package browse-kill-ring
+      :defer t
+      :bind ("C-c k" . browse-kill-ring))
 
-  (use-package popup-kill-ring
-    :bind ("M-y" . popup-kill-ring)))
+    (use-package popup-kill-ring
+      :defer t
+      :bind ("M-y" . popup-kill-ring))
+    ))
 
 (provide 'init-kill-ring)
 

@@ -43,14 +43,15 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
+  :defer t
   :config
-  ;; (require 'chinese-fonts-setup)
-  (setq cfs-profiles
-        '("program" "org-mode" "read-book"))
-  (setq cfs--current-profile-name "program")
-  ;; (if sys/macp
-  ;;     (setq cfs--fontsize-steps '(6 6 8)))
-  )
+  (progn
+    (setq cfs-profiles
+          '("program" "org-mode" "read-book"))
+    (setq cfs--current-profile-name "program")
+    ;; (if sys/macp
+    ;;     (setq cfs--fontsize-steps '(6 6 8)))
+    ))
 
 (provide 'init-ui)
 
