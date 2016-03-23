@@ -35,7 +35,8 @@
 ;; Enhanced Ruby mode
 (use-package enh-ruby-mode
   :defer t
-  :mode "\\.\\(rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
+  :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
+  :interpreter "ruby"
   :config
   (progn
     ;; Robe mode
