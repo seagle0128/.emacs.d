@@ -35,6 +35,13 @@
 (use-package helm
   :defer t
   :diminish helm-mode
+  :defines (helm-M-x-fuzzy-match
+            helm-imenu-fuzzy-match
+            helm-apropos-fuzzy-match
+            helm-semantic-fuzzy-match
+            helm-lisp-fuzzy-completion
+            eshell-mode-map)
+  :commands helm-autoresize-mode
   :bind
   (("C-x b"   . helm-mini)
    ("C-x C-b" . helm-buffers-list)

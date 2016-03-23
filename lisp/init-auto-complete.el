@@ -35,6 +35,7 @@
 (use-package auto-complete
   :defer t
   :diminish auto-complete-mode
+  :functions ac-set-trigger-key
   :bind (("\M-/" . ac-start)
          :map ac-completing-map ("\M-/" . ac-stop)
          :map ac-mode-map ("M-TAB" . auto-complete))
