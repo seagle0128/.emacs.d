@@ -41,8 +41,7 @@
   (package-install 'use-package))
 
 (use-package use-package
-  :config (setq use-package-always-ensure t)
-  (setq use-package-verbose t))
+  :config (setq use-package-always-ensure t))
 
 (use-package paradox
   :defer t
