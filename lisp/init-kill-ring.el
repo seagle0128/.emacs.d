@@ -41,15 +41,14 @@
 
 ;; Only use with ido
 (eval-after-load 'ido
-  (lambda()
+  (progn
     (use-package browse-kill-ring
       :defer t
       :bind ("C-c k" . browse-kill-ring))
-
+    
     (use-package popup-kill-ring
       :defer t
-      :bind ("M-y" . popup-kill-ring))
-    ))
+      :bind ("M-y" . popup-kill-ring))))
 
 (provide 'init-kill-ring)
 

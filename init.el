@@ -61,26 +61,24 @@
   :disabled t
   :config (benchmark-init/activate))
 
-;; preferences
+;; Preferences
 (require 'init-basic)
 (require 'init-ui)
 
 (require 'init-edit)
 (require 'init-recentf)
 (require 'init-ibuffer)
-(require 'init-imenu)
-(require 'init-calendar)
+(require 'init-kill-ring)
 
 (require 'init-ido)
 ;; (require 'init-helm)
 
+(require 'init-calendar)
 (require 'init-bookmark)
 (require 'init-highlight)
-(require 'init-kill-ring)
 (require 'init-window)
 
 (require 'init-yasnippet)
-
 (require 'init-company)
 ;; (require 'init-auto-complete)
 
@@ -94,6 +92,7 @@
 (require 'init-scm)
 (require 'init-projectile)
 (require 'init-flycheck)
+(require 'init-imenu)
 (require 'init-tags)
 
 (require 'init-emacs-lisp)
