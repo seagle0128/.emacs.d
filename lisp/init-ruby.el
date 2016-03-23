@@ -42,6 +42,7 @@
     (use-package robe
       :defer t
       :diminish robe-mode
+      :defines ac-modes company-backends
       :init
       (progn
         (add-hook 'ruby-mode-hook 'robe-mode)

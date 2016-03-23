@@ -38,15 +38,17 @@
   (progn
     (recentf-mode 1)
 
-    (defun recentf-ido-find-file ()
-      "Find a recent file using ido."
-      (interactive)
-      (let ((file (ido-completing-read "Choose recent file: "
-                                       (-map 'abbreviate-file-name recentf-list)
-                                       nil t)))
-        (when file
-          (find-file file))))
-    (global-set-key [(control x)(control r)] 'recentf-ido-find-file)
+    (eval-after-load 'ido
+      '(lambda()
+         (defun recentf-ido-find-file ()
+           "Find a recent file using ido."
+           (interactive)
+           (let ((file (ido-completing-read "Choose recent file: "
+                                            (-map 'abbreviate-file-name recentf-list)
+                                            nil t)))
+             (when file
+               (find-file file))))
+         (bind-key "C-x C-r" 'recentf-ido-find-file)))
     ))
 
 (provide 'init-recentf)

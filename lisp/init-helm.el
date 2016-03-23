@@ -41,7 +41,7 @@
             helm-semantic-fuzzy-match
             helm-lisp-fuzzy-completion
             eshell-mode-map)
-  :commands helm-autoresize-mode
+  :commands helm-autoresize-mode helm-info-emacs
   :bind
   (("C-x b"   . helm-mini)
    ("C-x C-b" . helm-buffers-list)

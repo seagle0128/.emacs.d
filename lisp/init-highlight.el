@@ -94,6 +94,7 @@
 (use-package whitespace
   :defer t
   :diminish whitespace-mode
+  :defines my-prev-whitespace-mode
   :config
   (add-hook 'prog-mode-hook 'whitespace-mode t)
   (setq whitespace-line-column fill-column) ;; limit line length
@@ -104,7 +105,6 @@
   ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
 
   ;;; advice for whitespace-mode conflict with popup
-  (defvar my-prev-whitespace-mode nil)
   (make-variable-buffer-local 'my-prev-whitespace-mode)
 
   (defadvice popup-draw (before my-turn-off-whitespace activate compile)

@@ -54,9 +54,6 @@
             ac-source-files-in-current-dir
             ac-source-filename ))
 
-    (if (featurep 'fish-mode)
-        (add-hook 'fish-mode-hook 'auto-complete-mode))
-
     (use-package ac-inf-ruby :defer t)
     (use-package ac-js2 :defer t)
     ))
