@@ -40,18 +40,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
-
-(setq use-package-always-ensure t)
+(use-package use-package
+  :config (setq use-package-always-ensure t))
 
 (use-package paradox
-  :ensure t
   :defer t
-  :config
-  (setq paradox-github-token t))
+  :config (setq paradox-github-token t))
 
 (provide 'init-package)
 
