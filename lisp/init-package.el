@@ -41,11 +41,14 @@
   (package-install 'use-package))
 
 (use-package use-package
-  :config (setq use-package-always-ensure t))
+  :config (setq use-package-always-ensure t)
+  (setq use-package-verbose t))
 
 (use-package paradox
   :defer t
-  :config (setq paradox-github-token t))
+  :config
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously t))
 
 (provide 'init-package)
 
