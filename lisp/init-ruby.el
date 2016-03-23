@@ -32,8 +32,8 @@
 ;;
 ;;; Code:
 
-;; Ruby mode
-(use-package ruby-mode
+;; Enhanced Ruby mode
+(use-package enh-ruby-mode
   :defer t
   :mode "\\.\\(rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :config
@@ -45,7 +45,7 @@
       :defines ac-modes company-backends
       :init
       (progn
-        (add-hook 'ruby-mode-hook 'robe-mode)
+        (add-hook 'enh-ruby-mode-hook 'robe-mode)
 
         ;; auto complete
         (eval-after-load 'auto-complete
@@ -65,23 +65,23 @@
     (use-package inf-ruby
       :defer t
       :init
-      (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+      (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
       (add-hook 'after-init-hook 'inf-ruby-switch-setup)
       (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
 
     ;; Yari
     (use-package yari
       :defer t
-      :bind (:map ruby-mode-map ([f1] . yari))
+      :bind (:map enh-ruby-mode-map ([f1] . yari))
       :config
       (eval-after-load 'helm
-        '(bind-key [f1] 'yari-helm ruby-mode-map)))
+        '(bind-key [f1] 'yari-helm enh-ruby-mode-map)))
 
     ;; Yard mode
     (use-package yard-mode
       :defer t
       :diminish yard-mode
-      :init (add-hook 'ruby-mode-hook 'yard-mode))
+      :init (add-hook 'enh-ruby-mode-hook 'yard-mode))
     ))
 
 ;; YAML mode
