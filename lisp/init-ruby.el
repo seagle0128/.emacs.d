@@ -32,17 +32,22 @@
 ;;
 ;;; Code:
 
-;; Ruby mode
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Guardfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
+;; Enhanced Ruby mode
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.ru$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Guardfile" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile" . enh-ruby-mode))
 
-(add-hook 'ruby-mode-hook
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+
+(remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
+
+(add-hook 'enh-ruby-mode-hook
           '(lambda ()
              (robe-mode 1)
              (inf-ruby-minor-mode 1)
@@ -72,7 +77,7 @@
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;; Yard mode
-(add-hook 'ruby-mode-hook 'yard-mode)
+(add-hook 'enh-ruby-mode-hook 'yard-mode)
 
 (provide 'init-ruby)
 

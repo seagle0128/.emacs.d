@@ -100,7 +100,7 @@
  'anaconda-mode 'py-autopep8
 
  ;; ruby
- 'robe 'inf-ruby 'yaml-mode 'yard-mode 'yari
+ 'enh-ruby-mode 'robe 'inf-ruby 'yaml-mode 'yard-mode 'yari
 
  ;; scm
  'magit 'psvn
