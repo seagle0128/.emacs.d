@@ -80,7 +80,7 @@
     ;; exchange TAB and C-z
     (bind-key "TAB" 'helm-execute-persistent-action helm-map)
     (bind-key "C-z" 'helm-select-action help-map)
-    (bind-key "S-TAB" 'helm-find-files-up-one-level helm-find-files-map)
+    ;; (bind-key "S-TAB" 'helm-find-files-up-one-level helm-find-files-map)
 
     ;; modes
     (helm-mode 1)
