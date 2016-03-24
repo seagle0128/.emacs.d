@@ -38,9 +38,10 @@
 (global-set-key [remap mark-sexp] 'easy-mark)
 
 ;; Only use with ido
-(when ido-mode
-  (global-set-key (kbd "C-c k") 'browse-kill-ring)
-  (global-set-key "\M-y" 'popup-kill-ring))
+(eval-after-load 'ido
+  '(progn
+     (global-set-key (kbd "C-c k") 'browse-kill-ring)
+     (global-set-key "\M-y" 'popup-kill-ring)))
 
 (provide 'init-kill-ring)
 
