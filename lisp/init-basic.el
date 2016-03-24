@@ -60,9 +60,11 @@
   :config (exec-path-from-shell-initialize))
 
 ;; Start server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+(use-package server
+  :commands server-running-p
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 (provide 'init-basic)
 

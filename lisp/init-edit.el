@@ -111,7 +111,6 @@
   :diminish auto-indent-mode
   :config
   (setq auto-indent-assign-indent-level-variables nil)
-  (setq python-indent-guess-indent-offset nil) ; fix python indent compatibility issue
   (setq auto-indent-indent-style 'conservative)
   (auto-indent-global-mode 1))
 
@@ -119,10 +118,10 @@
 (use-package anzu
   :defer t
   :diminish anzu-mode
-  :config (global-anzu-mode 1)
   :bind
   (("M-%" . anzu-query-replace)
-   ("C-M-%" . anzu-query-replace-regexp)))
+   ("C-M-%" . anzu-query-replace-regexp))
+  :config (global-anzu-mode 1))
 
 ;; Mwim
 (use-package mwim
@@ -134,8 +133,16 @@
 ;; Pager
 (use-package pager
   :defer t
-  :config
-  (require 'pager-default-keybindings))
+  :commands pager-page-down pager-page-up pager-row-down pager-row-up
+  :bind
+  (("\C-v"    . pager-page-down)
+   ([next]    . pager-page-down)
+   ("\ev"     . pager-page-up)
+   ([prior]   . pager-page-up)
+   ([M-up]   . pager-row-up)
+   ([M-kp-8] . pager-row-up)
+   ([M-down] . pager-row-down)
+   ([M-kp-2] . pager-row-down)))
 
 ;; Move text
 (use-package move-text
@@ -174,9 +181,8 @@
    ("C->" . mc/mark-next-like-this)
    ("C-<". mc/mark-previous-like-this)
    ("C-c C-<". mc/mark-all-like-this)
-   ("M-<mouse-1>" . mc/add-cursor-on-click))
-  :config
-  (global-set-key (kbd "M-<down-mouse-1>") 'setq))
+   ("M-<mouse-1>" . mc/add-cursor-on-click) 
+   ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Expand region
 (use-package expand-region
@@ -191,29 +197,24 @@
 
 ;; Smartparens
 (use-package smartparens
-  :defer t
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)
-  (show-smartparens-global-mode 1)
-  (add-hook 'web-mode-hook
-            '(lambda ()
-               "Workaround for auto-paring issues for Rails and Django."
-               (sp-local-pair 'web-mode "{" "}" :actions nil)
-               (sp-local-pair 'web-mode "<" ">" :actions nil)))
-  )
+  (show-smartparens-global-mode 1))
 
 ;; Swoop
-(use-package swoop
-  :defer t
-  :config
-  (setq swoop-font-size-change: nil)
-  :bind
-  (("C-o" . swoop)
-   ("C-M-o" . swoop-multi)
-   ("M-o" . swoop-pcre-regexp)
-   ("C-S-o" . swoop-back-to-last-position)))
+(unless (featurep 'helm)
+    (use-package swoop
+      :defer t
+      :init
+      (setq swoop-font-size-change: nil)
+      :bind
+      (("C-o" . swoop)
+       ("C-M-o" . swoop-multi)
+       ("M-o" . swoop-pcre-regexp)
+       ("C-S-o" . swoop-back-to-last-position)))
+  )
 
 (provide 'init-edit)
 

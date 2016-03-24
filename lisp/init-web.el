@@ -32,20 +32,18 @@
 ;;
 ;;; Code:
 
-;;
-;; css-mode
+;; Css mode
 (use-package css-mode
   :defer t
-  :config (setq css-indent-offset 2))
-;;
-;; scss mode
+  :init (setq css-indent-offset 2))
+
+;; Scss mode
 (use-package scss-mode
   :defer t
-  :config
-  (setq scss-compile-at-save nil)         ; Disable complilation on save
+  :init (setq scss-compile-at-save nil)         ; Disable complilation on save
   )
 ;;
-;; js mode
+;; JS2 mode
 (use-package js2-mode
   :defer t
   :mode "\\.js$"
@@ -58,17 +56,16 @@
                (ac-js2-mode 1)))
   )
 
-;;
-;; coffee mode
+;; Coffee mode
 (use-package coffee-mode
   :defer t
   :config (setq coffee-tab-width 2))
 
-;;
 ;; Web mode
 (use-package web-mode
   :defer t
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
+  :defines ac-modes
   :config
   (progn
     (setq web-mode-markup-indent-offset 2)
@@ -77,6 +74,13 @@
 
     (eval-after-load 'auto-complete
       '(add-to-list 'ac-modes 'web-mode))
+
+    ;; Workaround for auto-paring issues for Rails and Django
+    (eval-after-load 'smartparens
+      (add-hook 'web-mode-hook
+                '(lambda ()
+                   (sp-local-pair 'web-mode "{" "}" :actions nil)
+                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
     ))
 
 ;; Web beautify
