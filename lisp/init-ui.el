@@ -57,7 +57,6 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :defer t
   :config
   (progn
     (setq cfs-profiles

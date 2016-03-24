@@ -22,3 +22,4 @@ anaconda-mode/
 flycheck_*.el*
 /projectile.cache
 *.log
+/tramp
