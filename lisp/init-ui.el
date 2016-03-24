@@ -70,7 +70,9 @@
 (setq-default fill-column 80)
 (setq column-number-mode t)
 (setq line-number-mode t)
-(global-linum-mode 1)
+;; (global-linum-mode 1)
+(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'linum-mode)
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
@@ -88,7 +90,6 @@
 
 ;; Display Time
 (use-package time
-  :defer t
   :config
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
