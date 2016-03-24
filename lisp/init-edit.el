@@ -181,7 +181,7 @@
    ("C->" . mc/mark-next-like-this)
    ("C-<". mc/mark-previous-like-this)
    ("C-c C-<". mc/mark-all-like-this)
-   ("M-<mouse-1>" . mc/add-cursor-on-click) 
+   ("M-<mouse-1>" . mc/add-cursor-on-click)
    ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Expand region
@@ -205,15 +205,15 @@
 
 ;; Swoop
 (unless (featurep 'helm)
-    (use-package swoop
-      :defer t
-      :init
-      (setq swoop-font-size-change: nil)
-      :bind
-      (("C-o" . swoop)
-       ("C-M-o" . swoop-multi)
-       ("M-o" . swoop-pcre-regexp)
-       ("C-S-o" . swoop-back-to-last-position)))
+  (use-package swoop
+    :defer t
+    :init
+    (setq swoop-font-size-change: nil)
+    :bind
+    (("C-o" . swoop)
+     ("C-M-o" . swoop-multi)
+     ("M-o" . swoop-pcre-regexp)
+     ("C-S-o" . swoop-back-to-last-position)))
   )
 
 (provide 'init-edit)
