@@ -85,7 +85,10 @@
 (setq line-number-mode t)
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
-(global-linum-mode 1)
+
+;; (global-linum-mode 1)
+(add-hook 'text-mode-hook 'linum-mode t)
+(add-hook 'prog-mode-hook 'linum-mode t)
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
