@@ -38,7 +38,7 @@
 ;;       helm-input-idle-delay 0.1
 ;;       helm-idle-delay 0.1)
 
-(set helm-ff-guess-ffap-filenames t)
+(setq helm-ff-guess-ffap-filenames t)
 
 ;; fuzzy match
 (setq helm-M-x-fuzzy-match t)
@@ -81,15 +81,12 @@
 
 ;; modes
 (helm-mode 1)
-(add-hook 'helm-mode-hook
-          (lambda()
-            (helm-autoresize-mode 1)
-            (helm-adaptive-mode 1)
+;; (helm-autoresize-mode 1)
+;; (helm-adaptive-mode 1)
 
-            (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-            (define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
-            (define-key helm-map (kbd "C-z") 'helm-select-action)
-            ))
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
 
 (provide 'init-helm)
 
