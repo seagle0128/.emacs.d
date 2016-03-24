@@ -99,11 +99,6 @@
 (require 'smartparens-config)
 (smartparens-global-mode 1)
 (show-smartparens-global-mode 1)
-(add-hook 'web-mode-hook
-          '(lambda ()
-             "Workaround for auto-paring issues for Rails and Django."
-             (sp-local-pair 'web-mode "{" "}" :actions nil)
-             (sp-local-pair 'web-mode "<" ">" :actions nil)))
 
 ;; Swoop
 (setq swoop-font-size-change: nil)

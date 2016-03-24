@@ -64,18 +64,17 @@
 (require 'init-recentf)
 (require 'init-ibuffer)
 (require 'init-imenu)
-(require 'init-calendar)
+(require 'init-kill-ring)
 
 (require 'init-ido)
 ;; (require 'init-helm)
 
+(require 'init-calendar)
 (require 'init-bookmark)
 (require 'init-highlight)
-(require 'init-kill-ring)
 (require 'init-window)
 
 (require 'init-yasnippet)
-
 (require 'init-company)
 ;; (require 'init-auto-complete)
 

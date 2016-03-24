@@ -69,6 +69,14 @@
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'web-mode))
 
+;; Workaround for auto-paring issues for Rails and Django
+(eval-after-load 'smartparens
+  '(add-hook 'web-mode-hook
+             '(lambda ()
+                (sp-local-pair 'web-mode "{" "}" :actions nil)
+                (sp-local-pair 'web-mode "<" ">" :actions nil)))
+  )
+
 ;; Web beautify
 (eval-after-load 'js2-mode
   '(define-key js2-mode-map (kbd "C-c C-b") 'web-beautify-js))
