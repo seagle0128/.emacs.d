@@ -33,7 +33,7 @@
 ;;; Code:
 
 (use-package helm
-  :defer t
+  ;; :defer t
   :diminish helm-mode
   :defines (helm-M-x-fuzzy-match
             helm-imenu-fuzzy-match
@@ -79,13 +79,13 @@
 
     ;; exchange TAB and C-z
     (bind-key "TAB" 'helm-execute-persistent-action helm-map)
-    (bind-key "C-z" 'helm-select-action help-map)
+    (bind-key "C-z" 'helm-select-action helm-map)
     ;; (bind-key "S-TAB" 'helm-find-files-up-one-level helm-find-files-map)
 
     ;; modes
     (helm-mode 1)
-    (helm-autoresize-mode 1)
-    (helm-adaptive-mode 1)
+    ;; (helm-autoresize-mode 1)
+    ;; (helm-adaptive-mode 1)
 
     ;; plugins
     (use-package helm-descbinds
