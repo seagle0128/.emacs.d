@@ -32,7 +32,20 @@
 ;;
 ;;; Code:
 
+(require 'init-core)
 (require 'helm-config)
+
+(eval-when-compile
+  (require 'helm-command)
+  (require 'helm-files)
+  (require 'helm-locate)
+  (require 'helm-imenu)
+  (require 'helm-semantic))
+
+;; modes
+(helm-mode 1)
+;; (helm-autoresize-mode 1)
+;; (helm-adaptive-mode 1)
 
 ;; (setq helm-ff-lynx-style-map nil
 ;;       helm-input-idle-delay 0.1
@@ -50,6 +63,11 @@
 (setq helm-semantic-fuzzy-match t)
 (setq helm-lisp-fuzzy-completion t)
 
+;; exchange TAB and C-z
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
+
 ;; key bindings
 (global-set-key (kbd "C-x b")   #'helm-mini)
 (global-set-key (kbd "C-x C-b") #'helm-buffers-list)
@@ -60,33 +78,18 @@
 (global-set-key (kbd "M-y")     #'helm-show-kill-ring)
 (global-set-key (kbd "C-h a")   #'helm-apropos)
 (global-set-key (kbd "C-h i")   #'helm-info-emacs)
-
-;; eshell
-(add-hook 'eshell-mode-hook
-          #'(lambda ()
-              (define-key eshell-mode-map
-                [remap eshell-pcomplete]
-                'helm-esh-pcomplete)))
+(global-set-key (kbd "C-.")     #'helm-imenu)
+(global-set-key (kbd "C-x C-d") #'helm-browse-project)
 
 ;; plugins
 (global-set-key (kbd "C-h b")   #'helm-descbinds)
 (global-set-key (kbd "M-s o")   #'helm-swoop)
 (global-set-key (kbd "M-s /")   #'helm-multi-swoop)
 (global-set-key (kbd "M-s s")   #'helm-ag)
-(global-set-key (kbd "C-.")     #'helm-imenu)
 (global-set-key (kbd "C-x t")   #'helm-mt)
 (if sys/macp
     (global-set-key (kbd "s-t") #'helm-cmd-t)
   (global-set-key (kbd "C-S-t") #'helm-cmd-t))
-
-;; modes
-(helm-mode 1)
-;; (helm-autoresize-mode 1)
-;; (helm-adaptive-mode 1)
-
-(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-(define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
 
 (provide 'init-helm)
 

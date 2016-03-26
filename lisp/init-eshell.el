@@ -32,6 +32,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'eshell))
+(declare-function eshell-prompt-function 'eshell)
+
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (interactive)
@@ -88,8 +91,15 @@
           (eshell-view-file file)
           (forward-line line))
       (eshell-view-file (pop args)))))
-
 (defalias 'eshell/more 'eshell/less)
+
+(eval-after-load 'helm
+  (add-hook 'eshell-mode-hook
+            #'(lambda ()
+                (define-key eshell-mode-map
+                  [remap eshell-pcomplete]
+                  'helm-esh-pcomplete)))
+  )
 
 (provide 'init-eshell)
 
