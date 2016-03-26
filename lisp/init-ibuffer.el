@@ -41,11 +41,11 @@
         '(("default"
            ("Dired" (mode . dired-mode))
            ("Emacs Lisp" (mode . emacs-lisp-mode))
-           ("C" (mode . c-mode))
-           ("C++" (mode . c++-mode))
+           ("C/C++" (or (mode . c-mode) (mode . c++-mode)))
            ("Org" (mode . org-mode))
+           ("Perl" (or (mode . perl-mode) (mode . cperl-mode)))
            ("Python" (mode . python-mode))
-           ("Ruby" (mode . ruby-mode))
+           ("Ruby" (or (mode .ruby-mode) (mode . enh-ruby-mode)))
            ("Helm" (predicate string-match "Helm" mode-name))
            ("Earmuffs" (name . "^\\*.*?\\*$")))))
   (add-hook 'ibuffer-mode-hook
