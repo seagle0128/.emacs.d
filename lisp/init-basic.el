@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Enviornment
 (when sys/macp (exec-path-from-shell-initialize))
 

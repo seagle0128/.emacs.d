@@ -99,7 +99,7 @@
 (defalias 'eshell/more 'eshell/less)
 
 ;; Integrate helm
-(eval-after-load 'helm
+(when (featurep 'helm)
   (add-hook 'eshell-mode-hook
             #'(lambda ()
                 (define-key eshell-mode-map

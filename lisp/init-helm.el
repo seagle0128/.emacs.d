@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-core)
+(require 'init-const)
 (require 'helm-config)
 
 (eval-when-compile
@@ -41,6 +41,7 @@
   (require 'helm-locate)
   (require 'helm-imenu)
   (require 'helm-semantic))
+(declare-function helm-info-emacs 'helm-info)
 
 ;; modes
 (helm-mode 1)

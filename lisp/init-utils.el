@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-core)
+(require 'init-const)
 
 (eval-when-compile
   (require 'url-cache)
