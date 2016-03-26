@@ -32,6 +32,16 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'auto-complete)
+  (require 'coffee-mode)
+  (require 'css-mode)
+  (require 'js2-mode)
+  (require 'json-mode)
+  (require 'sgml-mode)
+  (require 'scss-mode)
+  (require 'web-mode))
+
 ;;
 ;; css-mode
 (setq css-indent-offset 2)

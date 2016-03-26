@@ -122,6 +122,7 @@
  'benchmark-init
  )
 
+(eval-when-compile (require 'paradox))
 (setq paradox-github-token t)
 
 (provide 'init-package)

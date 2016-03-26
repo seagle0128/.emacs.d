@@ -32,6 +32,7 @@
 ;;
 ;;; Code:
 
+(eval-after-load "abbrev" '(diminish 'abbrev-mode))
 (eval-after-load "anaconda-mode" '(diminish 'anaconda-mode))
 (eval-after-load "aggressive-indent" '(diminish 'aggressive-indent-mode))
 (eval-after-load "auto-indent-mode" '(diminish 'auto-indent-mode))

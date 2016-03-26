@@ -32,8 +32,9 @@
 ;;
 ;;; Code:
 
-(add-hook 'after-init-hook 'global-flycheck-mode)
+(eval-when-compile (require 'flycheck))
 
+(add-hook 'after-init-hook 'global-flycheck-mode)
 (setq flycheck-indication-mode 'right-fringe)
 
 (flycheck-pos-tip-mode 1)

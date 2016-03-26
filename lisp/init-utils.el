@@ -32,6 +32,12 @@
 ;;
 ;;; Code:
 
+(require 'init-core)
+
+(eval-when-compile
+  (require 'url-cache)
+  (require 'tramp))
+
 ;; Which key
 (which-key-mode 1)
 

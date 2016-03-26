@@ -32,6 +32,10 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'highlight-symbol)
+  (require 'whitespace))
+
 ;; Highlight line
 (global-hl-line-mode 1)
 

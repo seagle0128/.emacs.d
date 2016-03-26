@@ -57,7 +57,6 @@
 ;; (setq initial-scratch-message nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; (setq visible-bell t)
-(setq ns-pop-up-frames nil)             ; Don't open a file in a new frame
 (size-indication-mode 1)
 (blink-cursor-mode -1)
 (show-paren-mode 1)
@@ -97,7 +96,7 @@
               indent-tabs-mode nil)
 
 ;; Display Time
-(setq display-time-24hr-format t)
+(setq-default display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time-mode 1)
 

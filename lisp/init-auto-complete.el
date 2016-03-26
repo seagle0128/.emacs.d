@@ -32,6 +32,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'auto-complete))
+(declare-function ac-set-trigger-key 'auto-complete)
+
 (ac-config-default)
 (setq ac-use-menu-map t)
 (global-set-key "\M-/" 'ac-start)

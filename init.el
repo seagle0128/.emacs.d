@@ -50,7 +50,6 @@
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
 ;; Preparation
-(require 'init-core)
 (require 'init-package)
 
 ;; (benchmark-init/activate)

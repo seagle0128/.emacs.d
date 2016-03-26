@@ -32,6 +32,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'ido))
+(declare-function ido-everywhere 'ido)
+
 ;; IDO
 (ido-mode 1)
 (ido-everywhere 1)
