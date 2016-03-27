@@ -32,6 +32,11 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'company)
+  (require 'python)
+  (require 'gud))
+
 ;; Python Mode
 (add-hook 'python-mode-hook
           '(lambda ()
@@ -63,8 +68,8 @@
      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
 ;; Pdb setup, note the python version
-(setq pdb-path 'pdb
-      gud-pdb-command-name (symbol-name pdb-path))
+(defvar pdb-path 'pdb)
+(setq gud-pdb-command-name (symbol-name pdb-path))
 (defadvice pdb (before gud-query-cmdline activate)
   "Provide a better default command line when called interactively."
   (interactive

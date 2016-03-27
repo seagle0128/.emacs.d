@@ -32,6 +32,11 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'auto-complete)
+  (require 'company)
+  (require 'inf-ruby))
+
 ;; Enhanced Ruby mode
 (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
