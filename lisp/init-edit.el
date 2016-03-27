@@ -32,6 +32,13 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'cua-base)
+  (require 'aggressive-indent)
+  (require 'auto-indent-mode)
+  (require 'python)
+  (require 'swoop))
+
 ;; CUA mode
 (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
 (cua-mode t)                             ;; for rectangles, CUA is nice
