@@ -48,4 +48,4 @@
 (provide 'init-yasnippet)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; init-yasnippet.el ends here
+;;; init-yasnippet.el ends here
