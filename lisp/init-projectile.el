@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'projectile))
+
 (projectile-global-mode 1)
 (setq projectile-indexing-method 'alien)
 ;; (setq projectile-project-root-files-functions

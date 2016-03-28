@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'org))
+
 (setq org-todo-keywords '((type "TODO" "ONGOING" "DONE")))
 
 (provide 'init-org)

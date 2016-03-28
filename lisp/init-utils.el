@@ -63,6 +63,7 @@
 (global-set-key [C-f12] 'neotree-toggle)
 (add-hook 'neotree-mode-hook
           '(lambda ()
+             "Disable linum in neotree."
              (linum-mode -1)))
 
 ;; Revert buffer

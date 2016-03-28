@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'imenu-list))
+
 ;; Idomenu
 (global-set-key (kbd "C-.") 'idomenu)
 
@@ -41,6 +43,7 @@
 (setq imenu-list-focus-after-activation t)
 (add-hook 'imenu-list-minor-mode-hook
           '(lambda ()
+             "Disable linum in imenu list."
              (when imenu-list-minor-mode
                (linum-mode -1))))
 

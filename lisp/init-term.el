@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'multi-term))
+
 ;; Multi term
 (defvar term-program shell-file-name)
 (cond ((executable-find "fish")

@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'zoom-window))
+
 ;; Switch window
 (global-set-key (kbd "C-x o") 'switch-window)
 (windmove-default-keybindings)
