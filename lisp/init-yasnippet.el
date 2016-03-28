@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'yasnippet))
+
 (setq yas-verbosity 0)                  ; Suppress messages
 (yas-global-mode 1)
 (autoload 'dropdown-list "dropdown-list" "Dropdown menu interface" t)
@@ -42,4 +44,4 @@
 (provide 'init-yasnippet)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; init-yasnippet.el ends here
+;;; init-yasnippet.el ends here
