@@ -39,8 +39,7 @@
             helm-imenu-fuzzy-match
             helm-apropos-fuzzy-match
             helm-semantic-fuzzy-match
-            helm-lisp-fuzzy-completion
-            eshell-mode-map)
+            helm-lisp-fuzzy-completion)
   :commands helm-autoresize-mode helm-info-emacs
   :bind
   (("C-x b"   . helm-mini)
@@ -73,14 +72,10 @@
     (setq helm-semantic-fuzzy-match t)
     (setq helm-lisp-fuzzy-completion t)
 
-    ;; eshell
-    (eval-after-load 'eshell
-      '(bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))
-
     ;; exchange TAB and C-z
     (bind-key "TAB" 'helm-execute-persistent-action helm-map)
     (bind-key "C-z" 'helm-select-action helm-map)
-    
+
     ;; modes
     (helm-mode 1)
     ;; (helm-autoresize-mode 1)

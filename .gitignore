@@ -19,7 +19,8 @@ var/
 server/
 /helm-adaptive-history
 anaconda-mode/
-flycheck_*.el*
+flycheck_*.el
 /projectile.cache
 *.log
 /tramp
+eshell/
