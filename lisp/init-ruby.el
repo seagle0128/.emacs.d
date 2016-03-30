@@ -76,6 +76,9 @@
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
+;; Rubocop
+(add-hook 'enh-ruby-mode-hook #'rubocop-mode)
+
 ;; YAML mode
 (add-hook 'yaml-mode-hook
           '(lambda ()
