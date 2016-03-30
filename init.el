@@ -65,8 +65,8 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 
-(require 'init-ido)
-;; (require 'init-helm)
+;; (require 'init-ido)
+(require 'init-helm)
 
 (require 'init-calendar)
 (require 'init-bookmark)
