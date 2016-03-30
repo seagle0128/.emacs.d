@@ -99,12 +99,12 @@
 (defalias 'eshell/more 'eshell/less)
 
 ;; Integrate helm
-(when (featurep 'helm)
-  (add-hook 'eshell-mode-hook
-            #'(lambda ()
-                (define-key eshell-mode-map
-                  [remap eshell-pcomplete]
-                  'helm-esh-pcomplete)))
+(eval-after-load 'helm
+  '(add-hook 'eshell-mode-hook
+             #'(lambda ()
+                 (define-key eshell-mode-map
+                   [remap eshell-pcomplete]
+                   'helm-esh-pcomplete)))
   )
 
 (provide 'init-eshell)
