@@ -97,7 +97,8 @@
   :config (setq url-automatic-caching t)
   :bind ("C-c y" . youdao-dictionary-search-at-point))
 
-(use-package ag :defer t)
+(when (executable-find "ack") (use-package ack :defer t))
+(when (executable-find "ag") (use-package ag :defer t))
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 
