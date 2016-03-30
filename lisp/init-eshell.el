@@ -42,9 +42,9 @@
   :config
   (progn
     (eval-after-load 'helm
-      '(progn
-         (defvar eshell-mode-map nil)
-         (bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map)))
+      '(add-hook 'eshell-mode-hook
+                 '(lambda()
+                    (bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))))
 
     (defun eshell/clear ()
       "Clear the eshell buffer."
@@ -64,8 +64,7 @@
         (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
     (defun eshell/ec (&rest args)
       "Compile a file (ARGS) in Emacs.  Use `compile' to do background make."
-      (if (eshell-interactive-output-p
-             )
+      (if (eshell-interactive-output-p)
           (let ((compilation-process-setup-function
                  (list 'lambda nil
                        (list 'setq 'process-environment
