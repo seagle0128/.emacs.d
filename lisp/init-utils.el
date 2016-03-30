@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Which key
 (use-package which-key
   :defer t

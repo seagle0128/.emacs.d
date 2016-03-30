@@ -1,4 +1,4 @@
-;; init-basic.el --- Initialize basic configurations.
+;; init-const.el --- Initialize const variables.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Basic configurations.
+;;             Const variables.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,26 +32,24 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
+;; Consts
+(defconst sys/win32p
+  (eq system-type 'windows-nt)
+  "Are we running on a WinTel system?")
+(defconst sys/linuxp
+  (eq system-type 'gnu/linux)
+  "Are we running on a GNU/Linux system?")
+(defconst sys/macp
+  (eq system-type 'darwin)
+  "Are we running on a Mac system?")
+(defconst sys/linux-x-p
+  (and (display-grayscale-p) sys/linuxp)
+  "Are we running under X on a GNU/Linux system?")
+(defconst sys/cygwinp
+  (eq system-type 'cygwin)
+  "Are we running on a Cygwin system?")
 
-;; Personal information
-(setq user-full-name "Vincent Zhang")
-(setq user-mail-address "seagle012@gmail.com")
-
-;; Enviornment
-(use-package exec-path-from-shell
-  :defer t
-  :if sys/macp
-  :config (exec-path-from-shell-initialize))
-
-;; Start server
-(use-package server
-  :commands server-running-p
-  :config
-  (unless (server-running-p)
-    (server-start)))
-
-(provide 'init-basic)
+(provide 'init-const)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-basic.el ends here
+;;; init-const.el ends here
