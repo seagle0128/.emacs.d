@@ -70,6 +70,12 @@
       (add-hook 'after-init-hook 'inf-ruby-switch-setup)
       (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
 
+    ;; Rubocop
+    (use-package rubocop
+      :defer t
+      :diminish rubocop-mode
+      :init (add-hook 'enh-ruby-mode-hook #'rubocop-mode))
+
     ;; Yari
     (use-package yari
       :defer t
