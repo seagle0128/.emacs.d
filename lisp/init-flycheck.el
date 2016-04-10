@@ -38,12 +38,14 @@
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
-  (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-emacs-lisp-load-path 'inherit))
+  (progn
+    (setq flycheck-indication-mode 'right-fringe)
+    (setq flycheck-emacs-lisp-load-path 'inherit)
 
-(use-package flycheck-pos-tip
-  :defer t
-  :config (flycheck-pos-tip-mode 1))
+    (use-package flycheck-pos-tip
+      :defer t
+      :config (flycheck-pos-tip-mode 1))
+    ))
 
 (provide 'init-flycheck)
 
