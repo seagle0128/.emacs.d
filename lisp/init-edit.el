@@ -203,19 +203,6 @@
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
 
-;; Swoop
-(unless (featurep 'helm)
-  (use-package swoop
-    :defer t
-    :init
-    (setq swoop-font-size-change: nil)
-    :bind
-    (("C-o" . swoop)
-     ("C-M-o" . swoop-multi)
-     ("M-o" . swoop-pcre-regexp)
-     ("C-S-o" . swoop-back-to-last-position)))
-  )
-
 (provide 'init-edit)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

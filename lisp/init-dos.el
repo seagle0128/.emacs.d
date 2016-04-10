@@ -33,6 +33,7 @@
 ;;; Code:
 
 (use-package dos
+  :defer t
   :mode "\\.\\(cmd\\|btm\\)$")
 
 (provide 'init-dos)
