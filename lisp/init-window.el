@@ -35,13 +35,24 @@
 (eval-when-compile (require 'zoom-window))
 
 ;; Switch window
-(global-set-key (kbd "C-x o") 'switch-window)
-(windmove-default-keybindings)
-(winner-mode 1)
+(use-package switch-window
+  :defer t
+  :bind ("C-x o" . switch-window))
+
+(use-package windmove
+  :defer t
+  :config (windmove-default-keybindings))
+
+(use-package winner
+  :defer t
+  :config (winner-mode 1))
 
 ;; Zoom window
-(global-set-key (kbd "C-x C-z") 'zoom-window-zoom)
-(setq zoom-window-mode-line-color "DarkGreen")
+(use-package zoom-window
+  :defer t
+  :bind ("C-x C-z" . zoom-window-zoom)
+  :config
+  (setq zoom-window-mode-line-color "DarkGreen"))
 
 (provide 'init-window)
 

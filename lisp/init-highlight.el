@@ -32,70 +32,95 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'highlight-symbol)
-  (require 'whitespace))
-
 ;; Highlight line
 (global-hl-line-mode 1)
 
 ;; Highlight symbol
-(add-hook 'find-file-hook 'highlight-symbol-mode)
-(add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
-(setq highlight-symbol-idle-delay 0)
-(global-set-key [(control f3)] 'highlight-symbol-at-point)
-(global-set-key [f3] 'highlight-symbol-next)
-(global-set-key [(shift f3)] 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+(use-package highlight-symbol
+  :defer t
+  :diminish highlight-symbol-mode
+  :bind (([C-f3] . highlight-symbol-at-point)
+         ([f3] . highlight-symbol-next)
+         ([S-f3] . highlight-symbol-prev)
+         ([M-f3] . highlight-symbol-query-replace))
+  :init
+  (add-hook 'find-file-hook 'highlight-symbol-mode)
+  (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
+  :config (setq highlight-symbol-idle-delay 0))
 
 ;; Highlight indentions
-(defvar web-mode-html-offset 2)         ; Workaround. Fix void var issue.
-(add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
+(use-package highlight-indentation
+  :defer t
+  :diminish highlight-indentation-mode highlight-indentation-current-column-mode
+  :init (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
+  :config (defvar web-mode-html-offset 2) ; Workaround. Fix void var issue.
+  )
 
 ;; Rainbow
-(add-hook 'prog-mode-hook 'rainbow-mode)
+(use-package rainbow-mode
+  :defer t
+  :diminish rainbow-mode
+  :init (add-hook 'prog-mode-hook 'rainbow-mode))
 
 ;; Highlight delimiters
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :defer t
+  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; Highlight identifiers
-(add-hook 'after-init-hook 'global-color-identifiers-mode)
+(use-package color-identifiers-mode
+  :defer t
+  :diminish color-identifiers-mode
+  :init (add-hook 'after-init-hook 'global-color-identifiers-mode))
 
 ;; Highlight TODO/FIXME/BUG
-(add-hook 'prog-mode-hook 'fic-mode)
+(use-package fic-mode
+  :defer t
+  :init (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Highlight uncommitted changes
-(global-diff-hl-mode t)
+(use-package diff-hl
+  :defer t
+  :config (global-diff-hl-mode t))
 
 ;; Highlight some operations
-(volatile-highlights-mode t)
+(use-package volatile-highlights
+  :defer t
+  :diminish volatile-highlights-mode
+  :commands volatile-highlights-mode
+  :config (volatile-highlights-mode t))
 
 ;; Whitespace
-(add-hook 'prog-mode-hook 'whitespace-mode t)
-(setq whitespace-line-column fill-column) ;; limit line length
-;; automatically clean up bad whitespace
-(setq whitespace-action '(auto-cleanup))
-;; only show bad whitespace
-(setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
-;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+(use-package whitespace
+  :defer t
+  :diminish whitespace-mode
+  :defines my-prev-whitespace-mode
+  :config
+  (add-hook 'prog-mode-hook 'whitespace-mode t)
+  (setq whitespace-line-column fill-column) ;; limit line length
+  ;; automatically clean up bad whitespace
+  (setq whitespace-action '(auto-cleanup))
+  ;; only show bad whitespace
+  (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
+  ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
 
-;;; advice for whitespace-mode conflict with popup
-(defvar my-prev-whitespace-mode nil)
-(make-variable-buffer-local 'my-prev-whitespace-mode)
+  ;;; advice for whitespace-mode conflict with popup
+  (make-variable-buffer-local 'my-prev-whitespace-mode)
 
-(defadvice popup-draw (before my-turn-off-whitespace activate compile)
-  "Turn off whitespace mode before showing autocomplete box."
-  (make-local-variable 'my-prev-whitespace-mode)
-  (if whitespace-mode
-      (progn
-        (setq my-prev-whitespace-mode t)
-        (whitespace-mode -1))
-    (setq my-prev-whitespace-mode nil)))
+  (defadvice popup-draw (before my-turn-off-whitespace activate compile)
+    "Turn off whitespace mode before showing autocomplete box."
+    (make-local-variable 'my-prev-whitespace-mode)
+    (if whitespace-mode
+        (progn
+          (setq my-prev-whitespace-mode t)
+          (whitespace-mode -1))
+      (setq my-prev-whitespace-mode nil)))
 
-(defadvice popup-delete (after my-restore-whitespace activate compile)
-  "Restore previous whitespace mode when deleting autocomplete box."
-  (if my-prev-whitespace-mode
-      (whitespace-mode 1)))
+  (defadvice popup-delete (after my-restore-whitespace activate compile)
+    "Restore previous whitespace mode when deleting autocomplete box."
+    (if my-prev-whitespace-mode
+        (whitespace-mode 1)))
+  )
 
 (provide 'init-highlight)
 

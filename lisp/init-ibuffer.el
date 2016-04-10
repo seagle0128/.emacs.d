@@ -32,26 +32,24 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'ibuf-ext))
-(declare-function ibuffer-switch-to-saved-filter-groups 'ibuf-ext)
-
-(unless (featurep 'helm)
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
+(use-package ibuffer
+  :defer t
+  :bind ("C-x C-b" . ibuffer)
+  :config
   (setq ibuffer-saved-filter-groups
         '(("default"
            ("Dired" (mode . dired-mode))
            ("Emacs Lisp" (mode . emacs-lisp-mode))
-           ("C/C++" (or (mode . c-mode) (mode . c++-mode)))
+           ("C" (mode . c-mode))
+           ("C++" (mode . c++-mode))
            ("Org" (mode . org-mode))
-           ("Perl" (or (mode . perl-mode) (mode . cperl-mode)))
            ("Python" (mode . python-mode))
-           ("Ruby" (or (mode .ruby-mode) (mode . enh-ruby-mode)))
+           ("Ruby" (mode . ruby-mode))
            ("Helm" (predicate string-match "Helm" mode-name))
            ("Earmuffs" (name . "^\\*.*?\\*$")))))
   (add-hook 'ibuffer-mode-hook
             (lambda ()
-              (ibuffer-switch-to-saved-filter-groups "default")))
-  )
+              (ibuffer-switch-to-saved-filter-groups "default"))))
 
 (provide 'init-ibuffer)
 

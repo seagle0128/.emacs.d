@@ -32,9 +32,11 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'org))
-
-(setq org-todo-keywords '((type "TODO" "ONGOING" "DONE")))
+(use-package org
+  :defer t
+  :diminish org-indent-mode
+  :config
+  (setq org-todo-keywords '((type "TODO" "ONGOING" "DONE"))))
 
 (provide 'init-org)
 

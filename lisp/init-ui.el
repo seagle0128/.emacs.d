@@ -32,20 +32,82 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
+;; Menu/Tool/Scroll bars
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; Title
+(setq frame-title-format
+      '("GNU Emacs " emacs-version "@" user-login-name " : "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+(setq icon-title-format frame-title-format)
+
 ;; Theme
-(load-theme 'monokai t)
+(use-package monokai-theme
+  :config (load-theme 'monokai t))
 
 ;; Spaceline
-(require 'spaceline-config)
-(spaceline-spacemacs-theme)
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 
 ;; Fonts
-(require 'chinese-fonts-setup)
-(setq cfs-profiles
-      '("program" "org-mode" "read-book"))
-(setq cfs--current-profile-name "program")
-;; (if sys/macp
-;;     (setq cfs--fontsize-steps '(6 6 8)))
+(use-package chinese-fonts-setup
+  :config
+  (progn
+    (setq cfs-profiles
+          '("program" "org-mode" "read-book"))
+    (setq cfs--current-profile-name "program")
+    ;; (if sys/macp
+    ;;     (setq cfs--fontsize-steps '(6 6 8)))
+    ))
+
+;; Line and Column
+(setq-default fill-column 80)
+(setq column-number-mode t)
+(setq line-number-mode t)
+;; (global-linum-mode 1)
+(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'linum-mode)
+
+;; Mouse & Smooth Scroll
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
+(setq mouse-wheel-progressive-speed nil)            ; don't accelerate scrolling
+(setq scroll-step 1
+      scroll-margin 1
+      scroll-conservatively 100000)
+
+(use-package smooth-scrolling
+  :defer t
+  :config
+  (smooth-scrolling-mode 1)
+  (setq-default smooth-scroll-margin 0))
+
+;; Display Time
+(use-package time
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (display-time-mode 1))
+
+;; Misc
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq inhibit-startup-screen t)
+;; (setq visible-bell t)
+(setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
+(size-indication-mode 1)
+(blink-cursor-mode -1)
+(show-paren-mode 1)
+(setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
+(setq line-move-visual nil)
+(ansi-color-for-comint-mode-on)
 
 (provide 'init-ui)
 

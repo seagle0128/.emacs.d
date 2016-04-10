@@ -1,4 +1,4 @@
-;; init-scm.el --- Initialize scm configurations.
+;; init-fish.el --- Initialize fish configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             SCM configurations, e.g. Git, SVN.
+;;             Configurations for fish mode.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,19 +32,18 @@
 ;;
 ;;; Code:
 
-;; Git
-(use-package magit
+;; Fish Mode
+(use-package fish-mode
   :defer t
-  :bind (("C-x g" . magit-status)
-         ([f9] . magit-status)))
+  :config
+  (add-hook 'fish-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'fish_indent-before-save)))
+  (eval-after-load 'auto-complete
+    '(add-hook 'fish-mode-hook 'auto-complete-mode))
+  )
 
-;; Subversion
-(use-package psvn
-  :defer t
-  :bind (("C-x p" . svn-status)
-         ([C-f9] . svn-status)))
-
-(provide 'init-scm)
+(provide 'init-fish)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-scm.el ends here
+;;; init-fish.el ends here

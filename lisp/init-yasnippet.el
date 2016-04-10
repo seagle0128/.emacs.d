@@ -32,14 +32,18 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'yasnippet))
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :config
+  (setq yas-verbosity 0)                  ; Suppress messages
+  (yas-global-mode 1)
 
-(setq yas-verbosity 0)                  ; Suppress messages
-(yas-global-mode 1)
-(autoload 'dropdown-list "dropdown-list" "Dropdown menu interface" t)
-(setq yas-prompt-functions '(yas-dropdown-prompt
-                             yas-ido-prompt
-                             yas-completing-prompt))
+  (use-package dropdown-list
+    :defer t
+    :commands dropdown-list)
+  (setq yas-prompt-functions '(yas-dropdown-prompt
+                               yas-ido-prompt
+                               yas-completing-prompt)))
 
 (provide 'init-yasnippet)
 

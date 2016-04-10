@@ -1,4 +1,4 @@
-;; init-scm.el --- Initialize scm configurations.
+;; init-prog.el --- Initialize prog configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             SCM configurations, e.g. Git, SVN.
+;;             Configurations for prog mode.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,19 +32,11 @@
 ;;
 ;;; Code:
 
-;; Git
-(use-package magit
-  :defer t
-  :bind (("C-x g" . magit-status)
-         ([f9] . magit-status)))
+(use-package markdown-mode :defer t)
+(use-package powershell :defer t)
+(use-package csharp-mode :defer t)
 
-;; Subversion
-(use-package psvn
-  :defer t
-  :bind (("C-x p" . svn-status)
-         ([C-f9] . svn-status)))
-
-(provide 'init-scm)
+(provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-scm.el ends here
+;;; init-prog.el ends here

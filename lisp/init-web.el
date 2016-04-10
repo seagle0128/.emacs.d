@@ -32,73 +32,69 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'auto-complete)
-  (require 'coffee-mode)
-  (require 'css-mode)
-  (require 'js2-mode)
-  (require 'json-mode)
-  (require 'sgml-mode)
-  (require 'scss-mode)
-  (require 'web-mode))
+;; Css mode
+(use-package css-mode
+  :defer t
+  :init (setq css-indent-offset 2))
 
+;; Scss mode
+(use-package scss-mode
+  :defer t
+  :init (setq scss-compile-at-save nil)         ; Disable complilation on save
+  )
 ;;
-;; css-mode
-(setq css-indent-offset 2)
-;;
-;; scss mode
-(setq scss-compile-at-save nil)         ; Disable complilation on save
-;;
-;; js mode
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-(add-hook 'js2-mode-hook
-          '(lambda ()
-             (setq js-indent-level 2)
-             (js2-imenu-extras-mode 1)
-             (ac-js2-mode 1)))
-;;
-;; coffee mode
-(setq coffee-tab-width 2)
-
-;;
-;; Web mode
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-(eval-after-load 'auto-complete
-  '(add-to-list 'ac-modes 'web-mode))
-
-;; Workaround for auto-paring issues for Rails and Django
-(eval-after-load 'smartparens
-  '(add-hook 'web-mode-hook
-             '(lambda ()
-                (sp-local-pair 'web-mode "{" "}" :actions nil)
-                (sp-local-pair 'web-mode "<" ">" :actions nil)))
+;; JS2 mode
+(use-package js2-mode
+  :defer t
+  :mode "\\.js$"
+  :interpreter "node"
+  :config
+  (add-hook 'js2-mode-hook
+            '(lambda ()
+               (setq js-indent-level 2)
+               (js2-imenu-extras-mode 1)
+               (ac-js2-mode 1)))
   )
 
+;; Coffee mode
+(use-package coffee-mode
+  :defer t
+  :config (setq coffee-tab-width 2))
+
+;; Web mode
+(use-package web-mode
+  :defer t
+  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
+  :defines ac-modes
+  :config
+  (progn
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+
+    (eval-after-load 'auto-complete
+      '(add-to-list 'ac-modes 'web-mode))
+
+    ;; Workaround for auto-paring issues for Rails and Django
+    (eval-after-load 'smartparens
+      (add-hook 'web-mode-hook
+                '(lambda ()
+                   (sp-local-pair 'web-mode "{" "}" :actions nil)
+                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
+    ))
+
 ;; Web beautify
-(eval-after-load 'js2-mode
-  '(define-key js2-mode-map (kbd "C-c C-b") 'web-beautify-js))
+(use-package web-beautify
+  :defer t
+  :bind
+  ((:map js2-mode-map ("C-c C-b" . web-beautify-js))
+   (:map json-mode-map "C-c C-b" . web-beautify-js)
+   (:map sgml-mode-map "C-c C-b" . web-beautify-html)
+   (:map css-mode-map "C-c C-b" . web-beautify-css)))
 
-(eval-after-load 'json-mode
-  '(define-key json-mode-map (kbd "C-c C-b") 'web-beautify-js))
-
-(eval-after-load 'sgml-mode
-  '(define-key html-mode-map (kbd "C-c C-b") 'web-beautify-html))
-
-(eval-after-load 'css-mode
-  '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css))
+(use-package less-css-mode :defer t)
+(use-package haml-mode :defer t)
+(use-package php-mode :defer t)
 
 (provide 'init-web)
 

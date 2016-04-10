@@ -34,37 +34,41 @@
 
 (require 'init-const)
 
-(eval-when-compile
-  (require 'url-cache)
-  (require 'tramp))
-
 ;; Which key
-(which-key-mode 1)
+(use-package which-key
+  :defer t
+  :diminish which-key-mode
+  :config (which-key-mode 1))
 
 ;; Browse url
-(browse-url-dwim-mode 1)
+(use-package browse-url-dwim
+  :config
+  (browse-url-dwim-mode 1)
+  (setq browse-url-dwim-always-confirm-extraction nil))
 
 ;; Tramp
-(if (executable-find "plink")
-    (setq tramp-default-method "plink")
-  (setq tramp-default-method "ssh"))
+(use-package tramp
+  :defer t
+  :config
+  (let ((val (if (executable-find "plink") "plink" "ssh")))
+    (setq tramp-default-method val)))
 
 ;; Dos2Unix
 (defun dos2unix ()
-  "Automate \\<keymap> & \\[function]." ; M-% C-q C-m RET C-q C-j RET
-  (interactive "*b")
-  (save-excursion
-    (goto-char (point-min))
-    (while (search-forward (string ?\C-m) nil t)
-      (replace-match (string ?\C-j) nil t))))
+  "Not exactly but it's easier to remember"
+  (interactive)
+  (set-buffer-file-coding-system 'unix 't) )
 
 ;; Tree explorer
-(global-set-key [f12] 'neotree-toggle)
-(global-set-key [C-f12] 'neotree-toggle)
-(add-hook 'neotree-mode-hook
-          '(lambda ()
-             "Disable linum in neotree."
-             (linum-mode -1)))
+(use-package neotree
+  :defer t
+  :bind
+  (([f12] . neotree-toggle)
+   ([C-f12] . neotree-toggle))
+  :init
+  (add-hook 'neotree-mode-hook
+            '(lambda ()
+               (linum-mode -1))))
 
 ;; Revert buffer
 (global-set-key [(f5)] '(lambda ()
@@ -78,12 +82,22 @@
 
 ;; Dash
 (when sys/macp
-  (global-set-key "\C-cd" 'dash-at-point)
-  (global-set-key "\C-ce" 'dash-at-point-with-docset))
+  (use-package dash
+    :defer t
+    :bind
+    (("\C-cd" . dash-at-point)
+     ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dict
-(setq url-automatic-caching t)
-(global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
+(use-package youdao-dictionary
+  :defer t
+  :config (setq url-automatic-caching t)
+  :bind ("C-c y" . youdao-dictionary-search-at-point))
+
+(when (executable-find "ack") (use-package ack :defer t))
+(when (executable-find "ag") (use-package ag :defer t))
+(use-package htmlize :defer t)
+(use-package list-environment :defer t)
 
 (provide 'init-utils)
 

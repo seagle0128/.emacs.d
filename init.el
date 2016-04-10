@@ -49,25 +49,24 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
-;; Preparation
-(require 'init-server)
+;; Packages
 (require 'init-package)
 
-;; (benchmark-init/activate)
+(use-package benchmark-init
+  :disabled t
+  :config (benchmark-init/activate))
 
 ;; Preferences
 (require 'init-basic)
 (require 'init-ui)
-(require 'init-diminish)
 
 (require 'init-edit)
 (require 'init-recentf)
 (require 'init-ibuffer)
-(require 'init-imenu)
 (require 'init-kill-ring)
 
-(require 'init-ido)
-;; (require 'init-helm)
+;; (require 'init-ido)
+(require 'init-helm)
 
 (require 'init-calendar)
 (require 'init-bookmark)
@@ -88,6 +87,7 @@
 (require 'init-scm)
 (require 'init-projectile)
 (require 'init-flycheck)
+(require 'init-imenu)
 (require 'init-tags)
 
 (require 'init-emacs-lisp)
@@ -96,6 +96,9 @@
 (require 'init-python)
 (require 'init-ruby)
 (require 'init-web)
+(require 'init-fish)
+(require 'init-prog)
+
 (require 'init-org)
 
 ;; Restore

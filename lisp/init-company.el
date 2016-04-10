@@ -32,15 +32,25 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'company))
+(use-package company
+  :defer t
+  :diminish company-mode
+  :init (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (progn
+    (use-package company-quickhelp
+      :defer t
+      :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin))
+      :config (company-quickhelp-mode 1))
 
-(add-hook 'after-init-hook 'global-company-mode)
+    (use-package company-flx
+      :defer t
+      :config (company-flx-mode 1))
 
-(company-quickhelp-mode 1)
-(eval-after-load 'company
-  '(define-key company-active-map (kbd "M-h") #'company-quickhelp-manual-begin))
-
-(add-to-list 'company-backends '(company-shell company-fish-shell))
+    (use-package company-shell
+      :defer t
+      :init (add-to-list 'company-backends '(company-shell company-fish-shell)))
+    ))
 
 (provide 'init-company)
 

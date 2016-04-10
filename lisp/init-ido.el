@@ -32,28 +32,46 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'ido))
-(declare-function ido-everywhere 'ido)
+;; Smex
+(use-package smex
+  :defer t
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands)
+         ("C-c M-x" . execute-extended-command)))
 
 ;; IDO
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-create-new-buffer 'always)
-(setq ido-enable-flex-matching t)
-(ido-ubiquitous-mode 1)
-(ido-at-point-mode 1)
-(ido-complete-space-or-hyphen-enable)
-(ido-sort-mtime-mode 1)
-;; (ido-vertical-mode 1)
-(flx-ido-mode 1)
-(defalias 'load-library 'ido-load-library)
+(use-package ido
+  :defer t
+  :config
+  (progn
+    (ido-mode 1)
+    (ido-everywhere 1)
+    (setq ido-use-filename-at-point 'guess)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-enable-flex-matching t)
 
-;; Smex
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+    (use-package ido-ubiquitous
+      :config (ido-ubiquitous-mode 1))
+
+    (use-package ido-at-point
+      :config (ido-at-point-mode 1))
+
+    (use-package ido-complete-space-or-hyphen
+      :config (ido-complete-space-or-hyphen-enable))
+
+    (use-package ido-sort-mtime
+      :config (ido-sort-mtime-mode 1))
+
+    (use-package ido-vertical-mode
+      :disabled t
+      :config (ido-vertical-mode 1))
+
+    (use-package flx-ido
+      :config (flx-ido-mode 1))
+
+    (use-package ido-load-library
+      :config (defalias 'load-library 'ido-load-library))
+    ))
 
 (provide 'init-ido)
 

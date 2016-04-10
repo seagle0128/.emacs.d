@@ -32,36 +32,39 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'projectile))
+(use-package projectile
+  :defer t
+  :bind ("C-S-t" . projectile-find-file)
+  :config
+  (progn
+    (projectile-global-mode 1)
 
-(projectile-global-mode 1)
-(setq projectile-indexing-method 'alien)
-;; (setq projectile-project-root-files-functions
-;;       '(projectile-root-top-down
-;;         projectile-root-top-down-recurring
-;;         projectile-root-bottom-up))
+    (setq projectile-indexing-method 'alien)
 
-;; For perforce project
-(let ((val (let ((enval (getenv "P4CONFIG")))
-             (if enval enval ".p4config"))))
-  (add-to-list 'projectile-project-root-files-bottom-up val))
+    ;; (setq projectile-project-root-files-functions
+    ;;       '(projectile-root-top-down
+    ;;         projectile-root-top-down-recurring
+    ;;         projectile-root-bottom-up))
 
-;; for perforce project
-(let ((val (or (getenv "P4CONFIG") ".p4config")))
-  (add-to-list 'projectile-project-root-files-bottom-up val))
+    ;; perforce project
+    (let ((val (or (getenv "P4CONFIG") ".p4config")))
+      (add-to-list 'projectile-project-root-files-bottom-up val))
 
-(when (executable-find "ag")
-  (let ((val (concat "ag -U -l --nocolor"
-                     (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
-                     " -g . | tr '\\n' '\\0'")))
-    (setq projectile-generic-command val)))
+    (when (executable-find "ag")
+      (let ((val (concat "ag -U -l --nocolor"
+                         (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
+                         " -g . | tr '\\n' '\\0'")))
+        (setq projectile-generic-command val)))
 
-(global-set-key (kbd "C-S-t") 'projectile-find-file)
+    (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 
-;; Rails
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
+    ;; Rails
+    (use-package projectile-rails
+      :defer t
+      :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
+    ))
 
-(provide 'init-projectile)
+  (provide 'init-projectile)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-projectile.el ends here

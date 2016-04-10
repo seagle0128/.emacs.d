@@ -32,65 +32,83 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
-(require 'helm-config)
+(use-package helm
+  :defer t
+  :diminish helm-mode
+  :defines (helm-M-x-fuzzy-match
+            helm-imenu-fuzzy-match
+            helm-apropos-fuzzy-match
+            helm-semantic-fuzzy-match
+            helm-lisp-fuzzy-completion)
+  :commands helm-autoresize-mode helm-info-emacs
+  :bind
+  (("C-x b"   . helm-mini)
+   ("C-x C-b" . helm-buffers-list)
+   ("M-x"     . helm-M-x)
+   ("C-x C-f" . helm-find-files)
+   ("C-x C-r" . helm-recentf)
+   ("C-x r l" . helm-filtered-bookmarks)
+   ("M-y"     . helm-show-kill-ring)
+   ("C-h a"   . helm-apropos)
+   ("C-h i"   . helm-info-emacs)
+   ("C-."     . helm-imenu))
+  :config
+  (progn
+    (require 'helm-config)
 
-(eval-when-compile
-  (require 'helm-command)
-  (require 'helm-files)
-  (require 'helm-locate)
-  (require 'helm-imenu)
-  (require 'helm-semantic))
-(declare-function helm-info-emacs 'helm-info)
+    ;; (setq helm-ff-lynx-style-map nil
+    ;;       helm-input-idle-delay 0.1
+    ;;       helm-idle-delay 0.1)
 
-;; modes
-(helm-mode 1)
-;; (helm-autoresize-mode 1)
-;; (helm-adaptive-mode 1)
+    (setq helm-ff-guess-ffap-filenames t)
 
-;; (setq helm-ff-lynx-style-map nil
-;;       helm-input-idle-delay 0.1
-;;       helm-idle-delay 0.1)
+    ;; fuzzy match
+    (setq helm-M-x-fuzzy-match t)
+    (setq helm-locate-fuzzy-match t)
+    (setq helm-imenu-fuzzy-match t)
+    (setq helm-buffers-fuzzy-matching t)
+    (setq helm-recentf-fuzzy-match t)
+    (setq helm-apropos-fuzzy-match t)
+    (setq helm-semantic-fuzzy-match t)
+    (setq helm-lisp-fuzzy-completion t)
 
-(setq helm-ff-guess-ffap-filenames t)
+    ;; exchange TAB and C-z
+    (bind-key "TAB" 'helm-execute-persistent-action helm-map)
+    (bind-key "C-z" 'helm-select-action helm-map)
 
-;; fuzzy match
-(setq helm-M-x-fuzzy-match t)
-(setq helm-locate-fuzzy-match t)
-(setq helm-imenu-fuzzy-match t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-recentf-fuzzy-match t)
-(setq helm-apropos-fuzzy-match t)
-(setq helm-semantic-fuzzy-match t)
-(setq helm-lisp-fuzzy-completion t)
+    ;; modes
+    (helm-mode 1)
+    ;; (helm-autoresize-mode 1)
+    ;; (helm-adaptive-mode 1)
 
-;; exchange TAB and C-z
-(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-(define-key helm-find-files-map (kbd "S-TAB") 'helm-find-files-up-one-level)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
+    ;; plugins
+    (use-package helm-descbinds
+      :defer t
+      :bind ("C-h b" . helm-descbinds))
 
-;; key bindings
-(global-set-key (kbd "C-x b")   #'helm-mini)
-(global-set-key (kbd "C-x C-b") #'helm-buffers-list)
-(global-set-key (kbd "M-x")     #'helm-M-x)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-(global-set-key (kbd "C-x C-r") #'helm-recentf)
-(global-set-key (kbd "C-x r l") #'helm-filtered-bookmarks)
-(global-set-key (kbd "M-y")     #'helm-show-kill-ring)
-(global-set-key (kbd "C-h a")   #'helm-apropos)
-(global-set-key (kbd "C-h i")   #'helm-info-emacs)
-(global-set-key (kbd "C-.")     #'helm-imenu)
-(global-set-key (kbd "C-x C-d") #'helm-browse-project)
+    (use-package helm-swoop
+      :defer t
+      :bind (("M-s o" . helm-swoop)
+             ("M-s /" . helm-multi-swoop)))
 
-;; plugins
-(global-set-key (kbd "C-h b")   #'helm-descbinds)
-(global-set-key (kbd "M-s o")   #'helm-swoop)
-(global-set-key (kbd "M-s /")   #'helm-multi-swoop)
-(global-set-key (kbd "M-s s")   #'helm-ag)
-(global-set-key (kbd "C-x t")   #'helm-mt)
-(if sys/macp
-    (global-set-key (kbd "s-t") #'helm-cmd-t)
-  (global-set-key (kbd "C-S-t") #'helm-cmd-t))
+    (use-package helm-ag
+      :defer t
+      :bind ("M-s s" . helm-ag))
+
+    (use-package helm-mt
+      :defer t
+      :bind ("C-x t" . helm-mt))
+
+    (use-package helm-cmd-t
+      :defer t
+      :bind (("C-S-t" . helm-cmd-t)
+             ("s-t" . helm-cmd-t)))
+
+    (use-package helm-ls-git :defer t)
+    (use-package helm-projectile :defer t)
+    (use-package helm-flycheck :defer t)
+    (use-package helm-bm :defer t)
+    ))
 
 (provide 'init-helm)
 
