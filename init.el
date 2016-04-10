@@ -49,12 +49,15 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
+;; Load custom
+(require 'init-custom)
+
 ;; Packages
 (require 'init-package)
 
-(use-package benchmark-init
-  :disabled t
-  :config (benchmark-init/activate))
+(if profile-init
+    (use-package benchmark-init
+      :config (benchmark-init/activate)))
 
 ;; Preferences
 (require 'init-basic)
@@ -65,8 +68,9 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 
-;; (require 'init-ido)
-(require 'init-helm)
+(if (eq completion-framework 'helm)
+    (require 'init-helm)
+  (require 'init-ido))
 
 (require 'init-calendar)
 (require 'init-bookmark)
@@ -74,8 +78,10 @@
 (require 'init-window)
 
 (require 'init-yasnippet)
-(require 'init-company)
-;; (require 'init-auto-complete)
+
+(if (eq auto-complete-system 'company)
+    (require 'init-company)
+  (require 'init-auto-complete))
 
 (require 'init-term)
 (require 'init-shell)
