@@ -33,6 +33,7 @@
 ;;; Code:
 
 (use-package yasnippet
+  :defer t
   :diminish yas-minor-mode
   :config
   (setq yas-verbosity 0)                  ; Suppress messages
@@ -40,10 +41,12 @@
 
   (use-package dropdown-list
     :defer t
-    :commands dropdown-list)
-  (setq yas-prompt-functions '(yas-dropdown-prompt
-                               yas-ido-prompt
-                               yas-completing-prompt)))
+    :commands dropdown-list
+    :config
+    (setq yas-prompt-functions '(yas-dropdown-prompt
+                                 yas-ido-prompt
+                                 yas-completing-prompt)))
+  )
 
 (provide 'init-yasnippet)
 
