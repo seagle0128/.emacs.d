@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'zoom-window))
-
 ;; Switch window
 (use-package switch-window
   :defer t

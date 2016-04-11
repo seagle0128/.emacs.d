@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'multi-term))
-
 ;; Multi term
 (use-package multi-term
   :defer t
