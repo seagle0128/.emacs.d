@@ -35,6 +35,7 @@
 ;; Python Mode
 (use-package python
   :defer t
+  :defines gud-pdb-command-name pdb-path
   :config
   (progn
     (add-hook 'python-mode-hook
@@ -84,8 +85,11 @@
       (add-hook 'python-mode-hook 'anaconda-mode)
       :config
       (eval-after-load 'company
-        '(add-to-list 'company-backends 'company-anaconda)))
-    ))
+        '(use-package company-anaconda
+           :defer t
+           :init
+           (add-to-list 'company-backends 'company-anaconda)))
+      )))
 
 (provide 'init-python)
 
