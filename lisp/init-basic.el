@@ -47,7 +47,7 @@
 ;; Start server
 (use-package server
   :commands server-running-p
-  :config
+  :init
   (unless (server-running-p)
     (server-start)))
 
