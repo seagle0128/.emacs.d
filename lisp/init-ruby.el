@@ -76,6 +76,14 @@
       :diminish rubocop-mode
       :init (add-hook 'enh-ruby-mode-hook #'rubocop-mode))
 
+    ;; RSpec
+    (use-package rspec-mode
+      :defer t
+      :diminish rspec-mode
+      :config
+      (eval-after-load 'yasnippet
+        '(rspec-install-snippets)))
+
     ;; Yari
     (use-package yari
       :defer t
