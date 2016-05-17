@@ -80,6 +80,7 @@
     (use-package rspec-mode
       :defer t
       :diminish rspec-mode
+      :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
       :config
       (eval-after-load 'yasnippet
         '(rspec-install-snippets)))
