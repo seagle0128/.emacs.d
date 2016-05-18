@@ -78,6 +78,9 @@
 (global-set-key [(C-wheel-up)] 'text-scale-increase)
 (global-set-key [(C-wheel-down)] 'text-scale-decrease)
 
+;; Rotate
+(use-package rotate :defer t)
+
 ;; Dash
 (when sys/macp
   (use-package dash
