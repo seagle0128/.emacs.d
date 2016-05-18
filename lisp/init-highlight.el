@@ -95,7 +95,7 @@
   :defer t
   :diminish whitespace-mode
   :defines my-prev-whitespace-mode
-  :config
+  :init
   (add-hook 'prog-mode-hook 'whitespace-mode t)
   (setq whitespace-line-column fill-column) ;; limit line length
   ;; automatically clean up bad whitespace

@@ -111,7 +111,7 @@
 
 ;; Anzu mode
 (use-package anzu
-  :defer t  
+  :defer t
   :diminish anzu-mode
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
