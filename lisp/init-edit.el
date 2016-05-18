@@ -111,8 +111,8 @@
 
 ;; Anzu mode
 (use-package anzu
+  :defer t  
   :diminish anzu-mode
-  :defer t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config (global-anzu-mode 1))
@@ -177,8 +177,8 @@
 
 ;; Subword and Superword
 (use-package subword
-  :diminish subword-mode
   :defer t
+  :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
 
 ;; Smartparens

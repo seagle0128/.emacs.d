@@ -47,6 +47,7 @@
 
 ;; Tramp
 (use-package tramp
+  :defer t  
   :init
   (let ((val (if (executable-find "plink") "plink" "ssh")))
     (setq tramp-default-method val)))
