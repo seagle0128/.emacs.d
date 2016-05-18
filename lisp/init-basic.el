@@ -40,7 +40,6 @@
 
 ;; Enviornment
 (use-package exec-path-from-shell
-  :defer t
   :if sys/macp
   :config (exec-path-from-shell-initialize))
 
