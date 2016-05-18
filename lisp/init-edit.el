@@ -87,6 +87,7 @@
 
 ;; Ace jump mode
 (use-package ace-jump-mode
+  :defer t
   :bind ("C-c SPC" . ace-jump-mode))
 
 ;; Ace link
@@ -111,17 +112,20 @@
 ;; Anzu mode
 (use-package anzu
   :diminish anzu-mode
+  :defer t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config (global-anzu-mode 1))
 
 ;; Mwim
 (use-package mwim
+  :defer t
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Pager
 (use-package pager
+  :defer t
   :commands pager-page-down pager-page-up pager-row-down pager-row-up
   :bind (("\C-v"    . pager-page-down)
          ([next]    . pager-page-down)
@@ -138,10 +142,12 @@
 
 ;; Comment
 (use-package comment-dwim-2
+  :defer t
   :bind ("M-;" . comment-dwim-2))
 
 ;; IEdit
 (use-package iedit
+  :defer t
   :bind (("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)))
 
@@ -157,6 +163,7 @@
 
 ;; Multiple cursors
 (use-package multiple-cursors
+  :defer t
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<". mc/mark-previous-like-this)
@@ -171,11 +178,13 @@
 ;; Subword and Superword
 (use-package subword
   :diminish subword-mode
+  :defer t
   :init (add-hook 'prog-mode-hook 'subword-mode))
 
 ;; Smartparens
 (use-package smartparens
   :diminish smartparens-mode
+  :defer t
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)

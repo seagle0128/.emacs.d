@@ -95,19 +95,6 @@
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 
-;; Swoop
-(unless 'helm-mode
-  (use-package swoop
-    :defer t
-    :bind
-    (("C-o" . swoop)
-     ("C-M-o" . swoop-multi)
-     ("M-o" . swoop-pcre-regexp)
-     ("C-S-o" . swoop-back-to-last-position))
-    :init
-    (setq swoop-font-size-change: nil))
-  )
-
 (provide 'init-utils)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
