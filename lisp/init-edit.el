@@ -75,7 +75,6 @@
 
 ;; CUA mode
 (use-package cua-base
-  :defer t
   :config
   (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
   (cua-mode t)                             ;; for rectangles, CUA is nice
@@ -83,23 +82,19 @@
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
-  :defer t
   :diminish auto-revert-mode
   :config (global-auto-revert-mode 1))
 
 ;; Ace jump mode
 (use-package ace-jump-mode
-  :defer t
   :bind ("C-c SPC" . ace-jump-mode))
 
 ;; Ace link
 (use-package ace-link
-  :defer t
   :config (ace-link-setup-default))
 
 ;; Aggressive indent
 (use-package aggressive-indent
-  :defer t
   :diminish aggressive-indent-mode
   :config
   (global-aggressive-indent-mode 1)
@@ -107,7 +102,6 @@
 
 ;; Auto indent
 (use-package auto-indent-mode
-  :defer t
   :diminish auto-indent-mode
   :config
   (setq auto-indent-assign-indent-level-variables nil)
@@ -116,82 +110,66 @@
 
 ;; Anzu mode
 (use-package anzu
-  :defer t
   :diminish anzu-mode
-  :bind
-  (("M-%" . anzu-query-replace)
-   ("C-M-%" . anzu-query-replace-regexp))
+  :bind (("M-%" . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp))
   :config (global-anzu-mode 1))
 
 ;; Mwim
 (use-package mwim
-  :defer t
-  :bind
-  (("C-a" . mwim-beginning-of-code-or-line)
-   ("C-e" . mwim-end-of-code-or-line)))
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Pager
 (use-package pager
-  :defer t
   :commands pager-page-down pager-page-up pager-row-down pager-row-up
-  :bind
-  (("\C-v"    . pager-page-down)
-   ([next]    . pager-page-down)
-   ("\ev"     . pager-page-up)
-   ([prior]   . pager-page-up)
-   ([M-up]   . pager-row-up)
-   ([M-kp-8] . pager-row-up)
-   ([M-down] . pager-row-down)
-   ([M-kp-2] . pager-row-down)))
+  :bind (("\C-v"    . pager-page-down)
+         ([next]    . pager-page-down)
+         ("\ev"     . pager-page-up)
+         ([prior]   . pager-page-up)
+         ([M-up]   . pager-row-up)
+         ([M-kp-8] . pager-row-up)
+         ([M-down] . pager-row-down)
+         ([M-kp-2] . pager-row-down)))
 
 ;; Move text
 (use-package move-text
-  :defer t
   :config (move-text-default-bindings))
 
 ;; Comment
 (use-package comment-dwim-2
-  :defer t
   :bind ("M-;" . comment-dwim-2))
 
 ;; IEdit
 (use-package iedit
-  :defer t
-  :bind
-  (("C-;" . iedit-mode)
-   ("C-x r RET" . iedit-rectangle-mode)))
+  :bind (("C-;" . iedit-mode)
+         ("C-x r RET" . iedit-rectangle-mode)))
 
 ;; Back button
 (use-package back-button
-  :defer t
   :diminish back-button-mode
   :config (back-button-mode 1))
 
 ;; Undo Tree
 (use-package undo-tree
-  :defer t
   :diminish undo-tree-mode
   :config (global-undo-tree-mode 1))
 
 ;; Multiple cursors
 (use-package multiple-cursors
-  :defer t
-  :bind
-  (("C-S-c C-S-c" . mc/edit-lines)
-   ("C->" . mc/mark-next-like-this)
-   ("C-<". mc/mark-previous-like-this)
-   ("C-c C-<". mc/mark-all-like-this)
-   ("M-<mouse-1>" . mc/add-cursor-on-click)
-   ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<". mc/mark-previous-like-this)
+         ("C-c C-<". mc/mark-all-like-this)
+         ("M-<mouse-1>" . mc/add-cursor-on-click)
+         ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Expand region
 (use-package expand-region
-  :defer t
   :bind ("C-=" . er/expand-region))
 
 ;; Subword and Superword
 (use-package subword
-  :defer t
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
 

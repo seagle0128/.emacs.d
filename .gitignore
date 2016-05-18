@@ -1,3 +1,4 @@
+*.bak
 *.elc
 ido.*
 session*
