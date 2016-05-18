@@ -184,7 +184,6 @@
 ;; Smartparens
 (use-package smartparens
   :diminish smartparens-mode
-  :defer t
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)
