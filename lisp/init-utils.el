@@ -36,7 +36,6 @@
 
 ;; Which key
 (use-package which-key
-  :defer t
   :diminish which-key-mode
   :config (which-key-mode 1))
 
@@ -48,8 +47,7 @@
 
 ;; Tramp
 (use-package tramp
-  :defer t
-  :config
+  :init
   (let ((val (if (executable-find "plink") "plink" "ssh")))
     (setq tramp-default-method val)))
 
@@ -62,9 +60,8 @@
 ;; Tree explorer
 (use-package neotree
   :defer t
-  :bind
-  (([f12] . neotree-toggle)
-   ([C-f12] . neotree-toggle))
+  :bind (([f12] . neotree-toggle)
+         ([C-f12] . neotree-toggle))
   :init
   (add-hook 'neotree-mode-hook
             '(lambda ()
@@ -84,9 +81,8 @@
 (when sys/macp
   (use-package dash
     :defer t
-    :bind
-    (("\C-cd" . dash-at-point)
-     ("\C-ce" . dash-at-point-with-docset))))
+    :bind (("\C-cd" . dash-at-point)
+           ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dict
 (use-package youdao-dictionary
@@ -102,7 +98,7 @@
 ;; Swoop
 (unless 'helm-mode
   (use-package swoop
-    ;; :defer t
+    :defer t
     :bind
     (("C-o" . swoop)
      ("C-M-o" . swoop-multi)
