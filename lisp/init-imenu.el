@@ -32,11 +32,6 @@
 ;;
 ;;; Code:
 
-;; Idomenu
-(use-package idomenu
-  :defer t
-  :bind ("C-." . idomenu))
-
 ;; Imeunu list
 (use-package imenu-list
   :defer t

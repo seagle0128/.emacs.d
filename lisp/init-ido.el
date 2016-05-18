@@ -71,7 +71,10 @@
 
     (use-package ido-load-library
       :config (defalias 'load-library 'ido-load-library))
-    ))
+    
+    (use-package idomenu
+      :bind ("C-." . idomenu))
+  ))
 
 (provide 'init-ido)
 
