@@ -85,9 +85,9 @@
   :init
   (progn
     (global-diff-hl-mode t)
-    (global-diff-hl-amend-mode t)
-    (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-    ))
+    ;; (global-diff-hl-amend-mode t)
+    (diff-hl-flydiff-mode t)
+    (diff-hl-dired-mode t)))
 
 ;; Highlight some operations
 (use-package volatile-highlights
