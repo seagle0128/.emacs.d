@@ -81,20 +81,22 @@
 ;; Highlight uncommitted changes
 (use-package diff-hl
   :defer t
-  :config (global-diff-hl-mode t))
+  :init
+  (progn
+    (global-diff-hl-mode t)
+    (global-diff-hl-amend-mode t)))
 
 ;; Highlight some operations
 (use-package volatile-highlights
   :defer t
   :diminish volatile-highlights-mode
   :commands volatile-highlights-mode
-  :config (volatile-highlights-mode t))
+  :init (volatile-highlights-mode t))
 
 ;; Whitespace
 (use-package whitespace
   :defer t
   :diminish whitespace-mode
-  :defines my-prev-whitespace-mode
   :init
   (add-hook 'prog-mode-hook 'whitespace-mode t)
   (setq whitespace-line-column fill-column) ;; limit line length
