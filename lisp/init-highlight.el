@@ -44,9 +44,10 @@
          ([S-f3] . highlight-symbol-prev)
          ([M-f3] . highlight-symbol-query-replace))
   :init
-  (add-hook 'find-file-hook 'highlight-symbol-mode)
-  (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
-  :config (setq highlight-symbol-idle-delay 0))
+  (progn
+    (add-hook 'find-file-hook 'highlight-symbol-mode)
+    (add-hook 'find-file-hook 'highlight-symbol-nav-mode 1)
+    (setq highlight-symbol-idle-delay 0)))
 
 ;; Highlight indentions
 (use-package highlight-indentation
@@ -84,13 +85,14 @@
   :init
   (progn
     (global-diff-hl-mode t)
-    (global-diff-hl-amend-mode t)))
+    (global-diff-hl-amend-mode t)
+    (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+    ))
 
 ;; Highlight some operations
 (use-package volatile-highlights
   :defer t
   :diminish volatile-highlights-mode
-  :commands volatile-highlights-mode
   :init (volatile-highlights-mode t))
 
 ;; Whitespace
@@ -98,31 +100,30 @@
   :defer t
   :diminish whitespace-mode
   :init
-  (add-hook 'prog-mode-hook 'whitespace-mode t)
-  (setq whitespace-line-column fill-column) ;; limit line length
-  ;; automatically clean up bad whitespace
-  (setq whitespace-action '(auto-cleanup))
-  ;; only show bad whitespace
-  (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
-  ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+  (progn
+    (add-hook 'prog-mode-hook 'whitespace-mode t)
+    (setq whitespace-line-column fill-column) ;; limit line length
+    ;; automatically clean up bad whitespace
+    (setq whitespace-action '(auto-cleanup))
+    ;; only show bad whitespace
+    (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
+    ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
 
-  ;;; advice for whitespace-mode conflict with popup
-  (make-variable-buffer-local 'my-prev-whitespace-mode)
+    ;; advice for whitespace-mode conflict with popup
+    (defadvice popup-draw (before my-turn-off-whitespace activate compile)
+      "Turn off whitespace mode before showing autocomplete box."
+      (make-local-variable 'my-prev-whitespace-mode)
+      (if whitespace-mode
+          (progn
+            (setq my-prev-whitespace-mode t)
+            (whitespace-mode -1))
+        (setq my-prev-whitespace-mode nil)))
 
-  (defadvice popup-draw (before my-turn-off-whitespace activate compile)
-    "Turn off whitespace mode before showing autocomplete box."
-    (make-local-variable 'my-prev-whitespace-mode)
-    (if whitespace-mode
-        (progn
-          (setq my-prev-whitespace-mode t)
-          (whitespace-mode -1))
-      (setq my-prev-whitespace-mode nil)))
-
-  (defadvice popup-delete (after my-restore-whitespace activate compile)
-    "Restore previous whitespace mode when deleting autocomplete box."
-    (if my-prev-whitespace-mode
-        (whitespace-mode 1)))
-  )
+    (defadvice popup-delete (after my-restore-whitespace activate compile)
+      "Restore previous whitespace mode when deleting autocomplete box."
+      (if my-prev-whitespace-mode
+          (whitespace-mode 1)))
+    ))
 
 (provide 'init-highlight)
 
