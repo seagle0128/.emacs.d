@@ -41,11 +41,11 @@
     (use-package company-quickhelp
       :defer t
       :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin))
-      :config (company-quickhelp-mode 1))
+      :init (company-quickhelp-mode 1))
 
     (use-package company-flx
       :defer t
-      :config (company-flx-mode 1))
+      :init (company-flx-mode 1))
 
     (use-package company-shell
       :defer t

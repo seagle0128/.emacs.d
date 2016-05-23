@@ -44,7 +44,7 @@
 
     (use-package flycheck-pos-tip
       :defer t
-      :config (flycheck-pos-tip-mode 1))
+      :init (flycheck-pos-tip-mode 1))
     ))
 
 (provide 'init-flycheck)

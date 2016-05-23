@@ -85,7 +85,6 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :defer t
   :config
   (smooth-scrolling-mode 1)
   (setq-default smooth-scroll-margin 0))
