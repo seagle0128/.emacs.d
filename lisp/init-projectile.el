@@ -37,8 +37,16 @@
   :bind ("C-S-t" . projectile-find-file)
   :config
   (progn
-    ;; Disable to fix hange issue with tramp
+    ;; FIX hange issue with tramp
     ;; (projectile-global-mode 1)
+    (add-hook 'text-mode-hook 'projectile-mode)
+    (add-hook 'prog-mode-hook 'projectile-mode)
+
+    (setq projectile-mode-line '(:eval
+                                 (if (file-remote-p default-directory)
+                                     ""
+                                   (format "[%s]"
+                                           (projectile-project-name)))))
 
     (setq projectile-indexing-method 'alien)
 
@@ -56,12 +64,6 @@
                          (mapconcat 'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")
                          " -g . | tr '\\n' '\\0'")))
         (setq projectile-generic-command val)))
-
-    (setq projectile-mode-line '(:eval
-                                 (if (file-remote-p default-directory)
-                                     ""
-                                   (format "[%s]"
-                                           (projectile-project-name)))))
 
     ;; Rails
     (use-package projectile-rails
