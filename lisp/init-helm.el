@@ -81,6 +81,8 @@
     ;; (helm-autoresize-mode 1)
     ;; (helm-adaptive-mode 1)
 
+    (add-hook 'desktop-after-read-hook '(lambda() (diminish 'helm-mode)))
+
     ;; plugins
     (use-package helm-descbinds
       :defer t
