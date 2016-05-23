@@ -110,9 +110,11 @@
     ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
 
     ;; advice for whitespace-mode conflict with popup
+    (defvar my-prev-whitespace-mode nil)
+    (make-local-variable 'my-prev-whitespace-mode)
+
     (defadvice popup-draw (before my-turn-off-whitespace activate compile)
       "Turn off whitespace mode before showing autocomplete box."
-      (make-local-variable 'my-prev-whitespace-mode)
       (if whitespace-mode
           (progn
             (setq my-prev-whitespace-mode t)
@@ -128,4 +130,4 @@
 (provide 'init-highlight)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; init-highlight.el ends here
+;;; init-highlight.el ends here
