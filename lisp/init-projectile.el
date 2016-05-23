@@ -37,7 +37,8 @@
   :bind ("C-S-t" . projectile-find-file)
   :config
   (progn
-    (projectile-global-mode 1)
+    ;; Disable to fix hange issue with tramp
+    ;; (projectile-global-mode 1)
 
     (setq projectile-indexing-method 'alien)
 
@@ -56,7 +57,11 @@
                          " -g . | tr '\\n' '\\0'")))
         (setq projectile-generic-command val)))
 
-    (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+    (setq projectile-mode-line '(:eval
+                                 (if (file-remote-p default-directory)
+                                     ""
+                                   (format "[%s]"
+                                           (projectile-project-name)))))
 
     ;; Rails
     (use-package projectile-rails
@@ -64,7 +69,7 @@
       :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
     ))
 
-  (provide 'init-projectile)
+(provide 'init-projectile)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-projectile.el ends here
