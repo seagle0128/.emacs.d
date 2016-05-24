@@ -1,4 +1,4 @@
-;; init-basic.el --- Initialize basic configurations.
+;;; init-ivy.el --- Initialize ivy configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Custom configurations.
+;;             Ivy configurations.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,20 +32,40 @@
 ;;
 ;;; Code:
 
-(defvar profile-init nil
-  "Enable profile while initialization or not.")
+;; IVY
+(use-package counsel
+  :defer t
+  :diminish ivy-mode
+  :defines magit-completing-read-function
+  :bind (("C-s" . swiper)
+         ("C-c C-r" . ivy-resume)
+         ("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x C-r" . ivy-recentf))
+  :init
+  (progn
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
 
-(defvar completion-framework 'helm
-  "Incremental complition framework: `helm', `ivy' or `ido'.")
+    (defalias 'load-library 'counsel-load-library)
+    (defalias 'load-theme 'counsel-load-theme)
 
-(defvar auto-complete-system 'company
-  "Auto complete system: `company' or `auto-complete'.")
+    (add-hook 'desktop-after-read-hook
+              '(lambda()
+                 (diminish 'ivy-mode)))
+    )
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq counsel-find-file-at-point t)
 
-(let ((file "~/.emacs.d/custom.el"))
-  (if (file-exists-p file)
-      (load-file file)))
+    (setq projectile-completion-system 'ivy)
+    (setq magit-completing-read-function 'ivy-completing-read)
 
-(provide 'init-custom)
+    (use-package counsel-projectile :defer t)
+    ))
+
+(provide 'init-ivy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-custom.el ends here
+;;; init-ivy.el ends here

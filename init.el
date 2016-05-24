@@ -68,9 +68,13 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 
-(if (eq completion-framework 'helm)
-    (require 'init-helm)
-  (require 'init-ido))
+(cond
+ ((eq completion-framework 'helm)
+  (require 'init-helm))
+ ((eq completion-framework 'ivy)
+  (require 'init-ivy))
+ ((eq completion-framework 'ido)
+  (require 'init-ido)))
 
 (require 'init-calendar)
 (require 'init-bookmark)
