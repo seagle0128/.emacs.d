@@ -49,17 +49,20 @@
 
 ;; Theme
 (use-package monokai-theme
-  :config (load-theme 'monokai t))
+  :defer t
+  :init (load-theme 'monokai t))
 
 ;; Spaceline
 (use-package spaceline
-  :config
+  :defer t
+  :init
   (require 'spaceline-config)
   (spaceline-spacemacs-theme))
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :config
+  :defer t
+  :init
   (progn
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))
@@ -85,13 +88,15 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :config
+  :defer t
+  :init
   (smooth-scrolling-mode 1)
   (setq-default smooth-scroll-margin 0))
 
 ;; Display Time
 (use-package time
-  :config
+  :defer t
+  :init
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
   (display-time-mode 1))

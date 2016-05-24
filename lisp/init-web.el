@@ -48,7 +48,7 @@
   :defer t
   :mode "\\.js$"
   :interpreter "node"
-  :config
+  :init
   (add-hook 'js2-mode-hook
             '(lambda ()
                (setq js-indent-level 2)
@@ -59,14 +59,14 @@
 ;; Coffee mode
 (use-package coffee-mode
   :defer t
-  :config (setq coffee-tab-width 2))
+  :init (setq coffee-tab-width 2))
 
 ;; Web mode
 (use-package web-mode
   :defer t
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
   :defines ac-modes
-  :config
+  :init
   (progn
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)

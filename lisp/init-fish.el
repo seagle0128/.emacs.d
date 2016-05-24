@@ -35,7 +35,7 @@
 ;; Fish Mode
 (use-package fish-mode
   :defer t
-  :config
+  :init
   (progn
     (add-hook 'fish-mode-hook
               (lambda ()

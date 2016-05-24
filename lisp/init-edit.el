@@ -75,15 +75,17 @@
 
 ;; CUA mode
 (use-package cua-base
-  :config
+  :defer t
+  :init
   (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
   (cua-mode t)                             ;; for rectangles, CUA is nice
   )
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
+  :defer t
   :diminish auto-revert-mode
-  :config (global-auto-revert-mode 1))
+  :init (global-auto-revert-mode 1))
 
 ;; Ace jump mode
 (use-package ace-jump-mode
@@ -92,22 +94,27 @@
 
 ;; Ace link
 (use-package ace-link
-  :config (ace-link-setup-default))
+  :defer t
+  :init (ace-link-setup-default))
 
 ;; Aggressive indent
 (use-package aggressive-indent
+  :defer t
   :diminish aggressive-indent-mode
-  :config
-  (global-aggressive-indent-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
+  :init
+  (progn
+    (global-aggressive-indent-mode 1)
+    (add-to-list 'aggressive-indent-excluded-modes 'web-mode)))
 
 ;; Auto indent
 (use-package auto-indent-mode
+  :defer t
   :diminish auto-indent-mode
-  :config
-  (setq auto-indent-assign-indent-level-variables nil)
-  (setq auto-indent-indent-style 'conservative)
-  (auto-indent-global-mode 1))
+  :init
+  (progn
+    (setq auto-indent-assign-indent-level-variables nil)
+    (setq auto-indent-indent-style 'conservative)
+    (auto-indent-global-mode 1)))
 
 ;; Anzu mode
 (use-package anzu
@@ -138,7 +145,8 @@
 
 ;; Move text
 (use-package move-text
-  :config (move-text-default-bindings))
+  :defer t
+  :init  (move-text-default-bindings))
 
 ;; Comment
 (use-package comment-dwim-2
@@ -153,13 +161,15 @@
 
 ;; Back button
 (use-package back-button
+  :defer t
   :diminish back-button-mode
-  :config (back-button-mode 1))
+  :init  (back-button-mode 1))
 
 ;; Undo Tree
 (use-package undo-tree
+  :defer t
   :diminish undo-tree-mode
-  :config (global-undo-tree-mode 1))
+  :init  (global-undo-tree-mode 1))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -173,6 +183,7 @@
 
 ;; Expand region
 (use-package expand-region
+  :defer t
   :bind ("C-=" . er/expand-region))
 
 ;; Subword and Superword
@@ -183,11 +194,13 @@
 
 ;; Smartparens
 (use-package smartparens
+  :defer t
   :diminish smartparens-mode
-  :config
-  (require 'smartparens-config)
-  (smartparens-global-mode 1)
-  (show-smartparens-global-mode 1))
+  :init
+  (progn
+    (require 'smartparens-config)
+    (smartparens-global-mode 1)
+    (show-smartparens-global-mode 1)))
 
 (provide 'init-edit)
 

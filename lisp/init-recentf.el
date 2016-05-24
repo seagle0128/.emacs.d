@@ -34,13 +34,13 @@
 
 (use-package recentf
   :defer t
-  :config
+  :init
   (progn
     (recentf-mode 1)
 
     (eval-after-load 'ido
       '(lambda()
-         (defun recentf-ido-find-file ()
+         (defun ido-recentf-find-file ()
            "Find a recent file using ido."
            (interactive)
            (let ((file (ido-completing-read "Choose recent file: "
@@ -48,7 +48,7 @@
                                             nil t)))
              (when file
                (find-file file))))
-         (bind-key "C-x C-r" 'recentf-ido-find-file)))
+         (bind-key "C-x C-r" 'ido-recentf-find-file)))
     ))
 
 (provide 'init-recentf)

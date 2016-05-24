@@ -35,7 +35,7 @@
 (use-package org
   :defer t
   :diminish org-indent-mode
-  :config
+  :init
   (setq org-todo-keywords '((type "TODO" "ONGOING" "DONE"))))
 
 (provide 'init-org)

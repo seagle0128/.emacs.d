@@ -36,12 +36,14 @@
 
 ;; Which key
 (use-package which-key
+  :defer t
   :diminish which-key-mode
-  :config (which-key-mode 1))
+  :init (which-key-mode 1))
 
 ;; Browse url
 (use-package browse-url-dwim
-  :config
+  :defer t
+  :init
   (browse-url-dwim-mode 1)
   (setq browse-url-dwim-always-confirm-extraction nil))
 
@@ -91,7 +93,7 @@
 ;; Youdao Dict
 (use-package youdao-dictionary
   :defer t
-  :config (setq url-automatic-caching t)
+  :init (setq url-automatic-caching t)
   :bind ("C-c y" . youdao-dictionary-search-at-point))
 
 (when (executable-find "ack") (use-package ack :defer t))

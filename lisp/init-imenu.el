@@ -38,7 +38,7 @@
   :bind
   (("C-'" . imenu-list-minor-mode)
    ("C-\"" . imenu-list))
-  :config
+  :init
   (progn
     (setq imenu-list-focus-after-activation t)
     (add-hook 'imenu-list-minor-mode-hook

@@ -35,7 +35,8 @@
 (setq kill-ring-max 200)
 
 (use-package easy-kill
-  :config
+  :defer t
+  :init
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 

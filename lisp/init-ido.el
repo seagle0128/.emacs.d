@@ -51,27 +51,34 @@
     (setq ido-enable-flex-matching t)
 
     (use-package ido-ubiquitous
-      :config (ido-ubiquitous-mode 1))
+      :defer t
+      :init (ido-ubiquitous-mode 1))
 
     (use-package ido-at-point
-      :config (ido-at-point-mode 1))
+      :defer t
+      :init (ido-at-point-mode 1))
 
     (use-package ido-complete-space-or-hyphen
-      :config (ido-complete-space-or-hyphen-enable))
+      :defer t
+      :init (ido-complete-space-or-hyphen-enable))
 
     (use-package ido-sort-mtime
-      :config (ido-sort-mtime-mode 1))
+      :defer t
+      :init (ido-sort-mtime-mode 1))
 
     (use-package ido-vertical-mode
       :disabled t
-      :config (ido-vertical-mode 1))
+      :defer t
+      :init (ido-vertical-mode 1))
 
     (use-package flx-ido
-      :config (flx-ido-mode 1))
+      :defer t
+      :init (flx-ido-mode 1))
 
     (use-package ido-load-library
-      :config (defalias 'load-library 'ido-load-library))
-    
+      :defer t
+      :init (defalias 'load-library 'ido-load-library))
+
     (use-package idomenu
       :defer t
       :bind ("C-." . idomenu))

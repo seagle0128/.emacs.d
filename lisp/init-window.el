@@ -39,17 +39,17 @@
 
 (use-package windmove
   :defer t
-  :config (windmove-default-keybindings))
+  :init (windmove-default-keybindings))
 
 (use-package winner
   :defer t
-  :config (winner-mode 1))
+  :init (winner-mode 1))
 
 ;; Zoom window
 (use-package zoom-window
   :defer t
   :bind ("C-x C-z" . zoom-window-zoom)
-  :config
+  :init
   (setq zoom-window-mode-line-color "DarkGreen"))
 
 (provide 'init-window)
