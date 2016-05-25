@@ -44,6 +44,8 @@
          ("C-x C-r" . ivy-recentf)
          ("C-." . counsel-imenu)
          ("C-S-t" . counsel-projectile-find-file)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
          :map read-expression-map
          ("C-r" . counsel-expression-history))
   :init
