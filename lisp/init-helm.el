@@ -39,7 +39,8 @@
             helm-imenu-fuzzy-match
             helm-apropos-fuzzy-match
             helm-semantic-fuzzy-match
-            helm-lisp-fuzzy-completion)
+            helm-lisp-fuzzy-completion
+            helm-make-completion-method)
   :commands helm-autoresize-mode helm-info-emacs
   :bind
   (("C-x b"   . helm-mini)
@@ -84,6 +85,9 @@
     (add-hook 'desktop-after-read-hook
               '(lambda()
                  (diminish 'helm-mode)))
+
+    ;; (eval-after-load 'ivy
+    ;;   '(setq helm-make-completion-method 'ivy))
 
     ;; plugins
     (use-package helm-descbinds

@@ -46,8 +46,10 @@
 (use-package paradox
   :defer t
   :init
-  (setq paradox-github-token t)
-  (setq paradox-execute-asynchronously t))
+  (progn
+    (setq paradox-github-token t)
+    (setq paradox-execute-asynchronously t)
+    ))
 
 (provide 'init-package)
 

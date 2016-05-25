@@ -41,11 +41,13 @@
          ("C-c C-r" . ivy-resume)
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
-         ("C-x C-r" . ivy-recentf))
+         ("C-x C-r" . ivy-recentf)
+         ("C-." . counsel-imenu)
+         ("C-S-t" . counsel-projectile-find-file)
+         :map read-expression-map
+         ("C-r" . counsel-expression-history))
   :init
   (progn
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-
     (defalias 'load-library 'counsel-load-library)
     (defalias 'load-theme 'counsel-load-theme)
 
@@ -56,12 +58,21 @@
   :config
   (progn
     (ivy-mode 1)
+
     (setq ivy-use-virtual-buffers t)
+    (setq ivy-height 10)
+    (setq ivy-count-format "(%d/%d) ")
+
+    (setq ivy-re-builders-alist
+          '((read-file-name-internal . ivy--regex-fuzzy)
+            (t . ivy--regex-plus)))
+
     (setq counsel-find-file-at-point t)
 
     (setq projectile-completion-system 'ivy)
     (setq magit-completing-read-function 'ivy-completing-read)
 
+    (use-package ivy-hydra :defer t)
     (use-package counsel-projectile :defer t)
     ))
 
