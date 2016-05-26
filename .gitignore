@@ -23,3 +23,4 @@ flycheck_*.el*
 /projectile.cache
 *.log
 eshell/
+tramp

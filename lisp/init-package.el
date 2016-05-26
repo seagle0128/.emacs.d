@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'paradox))
-
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
