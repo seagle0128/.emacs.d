@@ -41,6 +41,9 @@
 (defvar auto-complete-system 'company
   "Auto complete system: `company' or `auto-complete'.")
 
+(defvar restore-desktop t
+  "Restore desktop inlcuding buffers, sessions or not.")
+
 (let ((file "~/.emacs.d/custom.el"))
   (if (file-exists-p file)
       (load-file file)))

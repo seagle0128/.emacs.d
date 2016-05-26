@@ -6,9 +6,9 @@
 ;; Maintainer:
 ;; Created: Wed Nov 29 00:57:38 2006
 ;; Version:
-;; Last-Updated: Fri Jan 30 08:00:00 2016 (+0800)
+;; Last-Updated: Fri May 30 08:00:00 2016 (+0800)
 ;;           By: Vincent Zhang
-;;     Update #: 4000
+;;     Update #: 5000
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
@@ -112,7 +112,8 @@
 (require 'init-org)
 
 ;; Restore
-(require 'init-restore)
+(if restore-desktop
+    (require 'init-restore))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
