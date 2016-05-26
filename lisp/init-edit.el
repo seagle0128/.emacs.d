@@ -163,7 +163,7 @@
 (use-package back-button
   :defer t
   :diminish back-button-mode
-  :init  (back-button-mode 1))
+  :init (back-button-mode 1))
 
 ;; Undo Tree
 (use-package undo-tree

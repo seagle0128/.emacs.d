@@ -49,19 +49,16 @@
 
 ;; Theme
 (use-package monokai-theme
-  :defer t
-  :init (load-theme 'monokai t))
+  :config (load-theme 'monokai t))
 
 ;; Spaceline
 (use-package spaceline
-  :defer t
-  :init
+  :config
   (require 'spaceline-config)
   (spaceline-spacemacs-theme))
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :defer t
   :init
   (progn
     (setq cfs-profiles
