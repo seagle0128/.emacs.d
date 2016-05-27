@@ -26,3 +26,4 @@ flycheck_*.el
 /tramp
 eshell/
 /custom.el
+tmp*
