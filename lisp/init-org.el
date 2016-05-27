@@ -36,7 +36,13 @@
   :defer t
   :diminish org-indent-mode
   :init
-  (setq org-todo-keywords '((type "TODO" "ONGOING" "DONE"))))
+  (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
+
+  (add-hook 'desktop-after-read-hook
+            '(lambda()
+               (diminish 'org-indent-mode)
+               (diminish 'auto-fill-mode)))
+  )
 
 (provide 'init-org)
 
