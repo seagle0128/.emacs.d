@@ -51,7 +51,6 @@
   :init
   (progn
     (defalias 'load-library 'counsel-load-library)
-    (defalias 'load-theme 'counsel-load-theme)
 
     (add-hook 'desktop-after-read-hook
               '(lambda()
