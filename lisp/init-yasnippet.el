@@ -33,10 +33,10 @@
 ;;; Code:
 
 (use-package yasnippet
-  :defer t
   :diminish yas-minor-mode
   :init
   (setq yas-verbosity 0)                  ; Suppress messages
+  :config
   (yas-global-mode 1)
 
   (use-package dropdown-list
