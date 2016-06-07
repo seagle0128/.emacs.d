@@ -81,8 +81,7 @@
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
-  :defer t
-  :init
+  :config
   (progn
     (global-diff-hl-mode t)
     ;; (global-diff-hl-amend-mode t)
@@ -91,9 +90,8 @@
 
 ;; Highlight some operations
 (use-package volatile-highlights
-  :defer t
   :diminish volatile-highlights-mode
-  :init (volatile-highlights-mode t))
+  :config (volatile-highlights-mode t))
 
 ;; Whitespace
 (use-package whitespace

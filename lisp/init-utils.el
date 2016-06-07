@@ -36,14 +36,12 @@
 
 ;; Which key
 (use-package which-key
-  :defer t
   :diminish which-key-mode
-  :init (which-key-mode 1))
+  :config (which-key-mode 1))
 
 ;; Browse url
 (use-package browse-url-dwim
-  :defer t
-  :init
+  :config
   (browse-url-dwim-mode 1)
   (setq browse-url-dwim-always-confirm-extraction nil))
 

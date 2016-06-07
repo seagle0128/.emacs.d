@@ -86,15 +86,12 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :defer t
-  :init
-  (smooth-scrolling-mode 1)
-  (setq-default smooth-scroll-margin 0))
+  :init (setq-default smooth-scroll-margin 0)
+  :config (smooth-scrolling-mode 1))
 
 ;; Display Time
 (use-package time
-  :defer t
-  :init
+  :config
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
   (display-time-mode 1))

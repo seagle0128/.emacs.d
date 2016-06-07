@@ -75,17 +75,15 @@
 
 ;; CUA mode
 (use-package cua-base
-  :defer t
-  :init
+  :config
   (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
   (cua-mode t)                             ;; for rectangles, CUA is nice
   )
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
-  :defer t
   :diminish auto-revert-mode
-  :init (global-auto-revert-mode 1))
+  :config (global-auto-revert-mode 1))
 
 ;; Ace jump mode
 (use-package ace-jump-mode
@@ -94,23 +92,20 @@
 
 ;; Ace link
 (use-package ace-link
-  :defer t
-  :init (ace-link-setup-default))
+  :config (ace-link-setup-default))
 
 ;; Aggressive indent
 (use-package aggressive-indent
-  :defer t
   :diminish aggressive-indent-mode
-  :init
+  :config
   (progn
     (global-aggressive-indent-mode 1)
     (add-to-list 'aggressive-indent-excluded-modes 'web-mode)))
 
 ;; Auto indent
 (use-package auto-indent-mode
-  :defer t
   :diminish auto-indent-mode
-  :init
+  :config
   (progn
     (setq auto-indent-assign-indent-level-variables nil)
     (setq auto-indent-indent-style 'conservative)
@@ -145,8 +140,7 @@
 
 ;; Move text
 (use-package move-text
-  :defer t
-  :init  (move-text-default-bindings))
+  :config (move-text-default-bindings))
 
 ;; Comment
 (use-package comment-dwim-2
@@ -161,15 +155,13 @@
 
 ;; Back button
 (use-package back-button
-  :defer t
   :diminish back-button-mode
-  :init (back-button-mode 1))
+  :config (back-button-mode 1))
 
 ;; Undo Tree
 (use-package undo-tree
-  :defer t
   :diminish undo-tree-mode
-  :init  (global-undo-tree-mode 1))
+  :config  (global-undo-tree-mode 1))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -194,9 +186,8 @@
 
 ;; Smartparens
 (use-package smartparens
-  :defer t
   :diminish smartparens-mode
-  :init
+  :config
   (progn
     (require 'smartparens-config)
     (smartparens-global-mode 1)

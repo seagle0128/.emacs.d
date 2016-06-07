@@ -35,9 +35,8 @@
 ;; Chinese calendar
 ;; `pC' can show lunar details
 (use-package cal-china-x
-  :defer t
   :commands cal-china-x-setup
-  :init
+  :config
   (progn
     (cal-china-x-setup)
 
