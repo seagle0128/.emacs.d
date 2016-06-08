@@ -27,3 +27,4 @@ flycheck_*.el
 eshell/
 /custom.el
 tmp*
+/.mc-lists.el

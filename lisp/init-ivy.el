@@ -35,7 +35,7 @@
 ;; IVY
 (use-package counsel
   :defer t
-  :diminish ivy-mode
+  :diminish counsel-mode ivy-mode
   :defines magit-completing-read-function
   :bind (("C-s" . swiper)
          ("C-c C-r" . ivy-resume)
@@ -58,6 +58,7 @@
     )
   :config
   (progn
+    (counsel-mode 1)
     (ivy-mode 1)
 
     (setq ivy-use-virtual-buffers t)
@@ -72,6 +73,8 @@
 
     (setq projectile-completion-system 'ivy)
     (setq magit-completing-read-function 'ivy-completing-read)
+
+    (define-key swiper-map (kbd "M-%") 'swiper-query-replace)
 
     (use-package ivy-hydra :defer t)
     (use-package counsel-projectile :defer t)
