@@ -116,6 +116,15 @@
     (use-package helm-projectile :defer t)
     (use-package helm-flycheck :defer t)
     (use-package helm-bm :defer t)
+
+    ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
+    (use-package ace-isearch
+      :diminish ace-isearch-mode
+      :bind (:map isearch-mode-map
+                  ("C-:" . ace-isearch-jump-during-isearch))
+      :config (global-ace-isearch-mode 1)
+      (setq ace-isearch-function 'avy-goto-char)
+      (setq ace-isearch-use-jump 'printing-char))
     ))
 
 (provide 'init-helm)
