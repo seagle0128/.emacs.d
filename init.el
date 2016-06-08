@@ -97,7 +97,6 @@
 (require 'init-scm)
 (require 'init-projectile)
 (require 'init-flycheck)
-(require 'init-imenu)
 (require 'init-tags)
 
 (require 'init-emacs-lisp)
