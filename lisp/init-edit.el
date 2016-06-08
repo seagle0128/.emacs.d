@@ -85,10 +85,15 @@
   :diminish auto-revert-mode
   :config (global-auto-revert-mode 1))
 
-;; Ace jump mode
-(use-package ace-jump-mode
+;; Avy
+(use-package avy
   :defer t
-  :bind ("C-c SPC" . ace-jump-mode))
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)
+         ("M-g e" . avy-goto-word-0))
+  :config (avy-setup-default))
 
 ;; Ace link
 (use-package ace-link
