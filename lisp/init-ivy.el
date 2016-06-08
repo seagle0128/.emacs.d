@@ -75,14 +75,6 @@
 
     (use-package ivy-hydra :defer t)
     (use-package counsel-projectile :defer t)
-    (use-package swoop
-      :defer t
-      :bind (("C-o" . swoop)
-             ("C-M-o" . swoop-multi)
-             ("M-o" . swoop-pcre-regexp)
-             ("C-S-o" . swoop-back-to-last-position))
-      :init
-      (setq swoop-font-size-change: nil))
     ))
 
 (provide 'init-ivy)
