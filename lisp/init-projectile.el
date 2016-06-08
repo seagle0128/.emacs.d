@@ -35,12 +35,15 @@
 (use-package projectile
   :defer t
   :bind ("C-S-t" . projectile-find-file)
+  :init
+  (progn
+    ;; FIX hange issue with tramp
+    (add-hook 'text-mode-hook 'projectile-mode)
+    (add-hook 'prog-mode-hook 'projectile-mode))
   :config
   (progn
     ;; FIX hange issue with tramp
     ;; (projectile-global-mode 1)
-    (add-hook 'text-mode-hook 'projectile-mode)
-    (add-hook 'prog-mode-hook 'projectile-mode)
 
     (setq projectile-mode-line '(:eval
                                  (if (file-remote-p default-directory)
