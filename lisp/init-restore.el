@@ -32,20 +32,18 @@
 ;;
 ;;; Code:
 
-(use-package saveplace
-  :config (setq save-place t))
-;; (customize-set-variable 'save-place t)
+(customize-set-variable 'save-place t)
 
-(use-package savehist
-  :config (savehist-mode 1))
+(savehist-mode 1)
 
-(use-package desktop
-  :config
-  (desktop-save-mode 1)
-  (setq desktop-load-locked-desktop t))
+(desktop-save-mode 1)
+(setq desktop-load-locked-desktop t)
 
 (use-package persistent-scratch
-  :config (persistent-scratch-setup-default))
+  :defer t
+  :init
+  (add-hook 'desktop-after-read-hook 'persistent-scratch-restore)
+  (add-hook 'kill-emacs-hook 'persistent-scratch-save))
 
 (provide 'init-restore)
 

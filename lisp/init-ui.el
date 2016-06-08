@@ -48,15 +48,21 @@
                  "%b"))))
 (setq icon-title-format frame-title-format)
 
-;; Theme
-(use-package monokai-theme
-  :config (load-theme 'monokai t))
-
 ;; Spaceline
-(use-package spaceline
-  :config
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme))
+;; (use-package spaceline
+;;   :config
+;;   (require 'spaceline-config)
+;;   (spaceline-emacs-theme))
+
+;; Powerline
+(use-package powerline
+  :config (powerline-default-theme))
+
+;; Color theme
+;; DO NOT use use-package to load themes
+(unless (package-installed-p 'monokai-theme)
+  (package-install 'monokai-theme))
+(ignore-errors (load-theme 'monokai t))
 
 ;; Fonts
 (use-package chinese-fonts-setup
@@ -90,11 +96,9 @@
   :config (smooth-scrolling-mode 1))
 
 ;; Display Time
-(use-package time
-  :config
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  (display-time-mode 1))
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time-mode 1)
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)

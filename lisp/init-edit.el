@@ -33,7 +33,7 @@
 ;;; Code:
 
 ;; Miscs
-(setq initial-scratch-message nil)
+;; (setq initial-scratch-message nil)
 (delete-selection-mode 1)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
 (setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
