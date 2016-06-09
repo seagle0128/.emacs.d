@@ -47,15 +47,15 @@
 (setq icon-title-format frame-title-format)
 
 ;; Spaceline
-;; (use-package spaceline
-;;   :config
-;;   (require 'spaceline-config)
-;;   (spaceline-emacs-theme)
-;;   (spaceline-helm-mode 1))
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode 1))
 
 ;; Powerline
-(use-package powerline
-  :config (powerline-default-theme))
+;; (use-package powerline
+;;   :config (powerline-default-theme))
 
 ;; Color theme
 ;; DO NOT use use-package to load themes
