@@ -75,7 +75,7 @@
     ;; Autopep8
     (use-package py-autopep8
       :defer t
-      :init (py-autopep8-enable-on-save))
+      :init (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 
     ;; Anaconda
     (use-package anaconda-mode
