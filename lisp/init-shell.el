@@ -32,6 +32,7 @@
 ;;
 ;;; Code:
 
+;; Shell
 (setq system-uses-terminfo nil)
 
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
@@ -66,6 +67,39 @@
    (t (comint-simple-send proc command))
    )
   )
+
+;; Term
+(defvar term-program shell-file-name)
+(cond ((executable-find "fish")
+       (setq term-program "fish"))
+      ((executable-find "zsh")
+       (setq term-program "zsh")))
+
+(setenv "SHELL" term-program)
+
+;; Multi term
+(use-package multi-term
+  :defer t
+  :init
+  (progn
+    (setq multi-term-program term-program)
+    ;; Disable yasnippet mode to enable TAB in term
+    (add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))
+    ))
+
+;; Shell Pop
+(use-package shell-pop
+  :defer t
+  :bind ([f8] . shell-pop)
+  :init
+  (progn
+    (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
+    (setq shell-pop-term-shell term-program)
+    ;; (setq shell-pop-universal-key "C-t")
+    (setq shell-pop-window-size 30)
+    (setq shell-pop-full-span t)
+    (setq shell-pop-window-position "bottom")
+    ))
 
 (provide 'init-shell)
 

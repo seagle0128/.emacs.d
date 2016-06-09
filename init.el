@@ -90,7 +90,6 @@
     (require 'init-company)
   (require 'init-auto-complete))
 
-(require 'init-term)
 (require 'init-shell)
 (require 'init-eshell)
 
