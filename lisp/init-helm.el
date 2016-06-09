@@ -80,7 +80,7 @@
     ;; modes
     (helm-mode 1)
     ;; (helm-autoresize-mode 1)
-    ;; (helm-adaptive-mode 1)
+    (helm-adaptive-mode 1)
 
     (add-hook 'desktop-after-read-hook
               '(lambda()

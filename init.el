@@ -1,4 +1,4 @@
-;;; init.el --- my personal emacs configuration
+;;; init.el --- user init configuration      -*- no-byte-compile: t -*-
 ;;
 ;; Filename: init.el
 ;; Description:
@@ -45,6 +45,8 @@
 ;;
 ;;; Code:
 
+(setq load-prefer-newer t)
+
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
@@ -60,6 +62,7 @@
       :config (benchmark-init/activate)))
 
 ;; Preferences
+(require 'init-const)
 (require 'init-basic)
 (require 'init-ui)
 

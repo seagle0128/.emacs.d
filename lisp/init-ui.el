@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
-
 ;; Menu/Tool/Scroll bars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -52,7 +50,8 @@
 ;; (use-package spaceline
 ;;   :config
 ;;   (require 'spaceline-config)
-;;   (spaceline-emacs-theme))
+;;   (spaceline-emacs-theme)
+;;   (spaceline-helm-mode 1))
 
 ;; Powerline
 (use-package powerline
@@ -66,7 +65,8 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :init
+  :defines cfs--current-profile-name
+  :config
   (progn
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))

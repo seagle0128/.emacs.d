@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
-
 ;; Disable ad-handle-definition warning
 (setq ad-redefinition-action 'accept)
 
