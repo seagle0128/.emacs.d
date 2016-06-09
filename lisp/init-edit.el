@@ -160,8 +160,9 @@
 
 ;; Back button
 (use-package back-button
+  :defer t
   :diminish back-button-mode
-  :config (back-button-mode 1))
+  :init (add-hook 'after-init-hook 'back-button-mode))
 
 ;; Undo Tree
 (use-package undo-tree
