@@ -43,8 +43,7 @@
     (setq flycheck-emacs-lisp-load-path 'inherit)
 
     (use-package flycheck-pos-tip
-      :defer t
-      :init (flycheck-pos-tip-mode 1))
+      :config (flycheck-pos-tip-mode 1))
     ))
 
 (provide 'init-flycheck)
