@@ -48,7 +48,7 @@
     (setq projectile-mode-line '(:eval
                                  (if (file-remote-p default-directory)
                                      ""
-                                   (format "[%s]"
+                                   (format " [%s]"
                                            (projectile-project-name)))))
 
     (setq projectile-indexing-method 'alien)
