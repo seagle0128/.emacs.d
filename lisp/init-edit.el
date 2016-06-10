@@ -78,7 +78,8 @@
 
 ;; CUA mode
 (use-package cua-base
-  :config
+  :defer t
+  :init
   (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
   (cua-mode t)                             ;; for rectangles, CUA is nice
   )

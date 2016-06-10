@@ -97,9 +97,15 @@
   :config (smooth-scrolling-mode 1))
 
 ;; Display Time
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time-mode 1)
+(use-package time
+  :defer t
+  :if (not (display-graphic-p))
+  :init
+  (progn
+    (setq display-time-24hr-format t)
+    (setq display-time-day-and-date t)
+    (display-time-mode 1)
+    ))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
