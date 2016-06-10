@@ -90,6 +90,9 @@
     ;;   '(setq helm-make-completion-method 'ivy))
 
     ;; plugins
+    (use-package helm-flx
+      :config (helm-flx-mode 1))
+
     (use-package helm-descbinds
       :defer t
       :bind ("C-h b" . helm-descbinds))
