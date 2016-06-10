@@ -57,7 +57,7 @@
 ;; Packages
 (require 'init-package)
 
-(if profile-init
+(if my-profile-enable
     (use-package benchmark-init
       :config (benchmark-init/activate)))
 
@@ -69,14 +69,14 @@
 (require 'init-edit)
 (require 'init-recentf)
 (require 'init-ibuffer)
-(require 'init-kill-ring)
+(require 'init-kill-ring)               ; Must before completion framework
 
 (cond
- ((eq completion-framework 'helm)
+ ((eq my-completion-method 'helm)
   (require 'init-helm))
- ((eq completion-framework 'ivy)
+ ((eq my-completion-method 'ivy)
   (require 'init-ivy))
- ((eq completion-framework 'ido)
+ ((eq my-completion-method 'ido)
   (require 'init-ido)))
 
 (require 'init-calendar)
@@ -86,7 +86,7 @@
 
 (require 'init-yasnippet)
 
-(if (eq auto-complete-system 'company)
+(if (eq my-ac-method 'company)
     (require 'init-company)
   (require 'init-auto-complete))
 
@@ -113,7 +113,7 @@
 (require 'init-org)
 
 ;; Restore
-(if restore-desktop
+(if my-desktop-restore
     (require 'init-restore))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

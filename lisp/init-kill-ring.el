@@ -40,16 +40,13 @@
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 
-;; Only use with ido
-(eval-after-load 'ido
-  (progn
-    (use-package browse-kill-ring
-      :defer t
-      :bind ("C-c k" . browse-kill-ring))
+(use-package browse-kill-ring
+  :defer t
+  :bind ("C-c k" . browse-kill-ring))
 
-    (use-package popup-kill-ring
-      :defer t
-      :bind ("M-y" . popup-kill-ring))))
+(use-package popup-kill-ring
+  :defer t
+  :bind ("M-y" . popup-kill-ring))
 
 (provide 'init-kill-ring)
 

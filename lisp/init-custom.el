@@ -1,4 +1,4 @@
-;; init-basic.el --- Initialize basic configurations.
+;; init-custom.el --- Initialize custom configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 1.0.0
@@ -32,17 +32,30 @@
 ;;
 ;;; Code:
 
-(defvar profile-init nil
-  "Enable profile while initialization or not.")
+(defgroup my nil
+  "Personal Emacs configurations."
+  :group 'extensions)
 
-(defvar completion-framework 'helm
-  "Incremental complition framework: `helm', `ivy' or `ido'.")
+(defcustom my-ac-method 'company
+  "Auto complete method: `company' or `auto-complete'."
+  :type '(choice
+          (const :tag "Company" company)
+          (const :tag "Auto-Complete" auto-complete)))
 
-(defvar auto-complete-system 'company
-  "Auto complete system: `company' or `auto-complete'.")
+(defcustom my-completion-method 'helm
+  "Incremental complition method: `helm', `ivy' or `ido'."
+  :type '(choice
+          (const :tag "Helm" helm)
+          (const :tag "Ivy" ivy)
+          (const :tag "Ido" ido)))
 
-(defvar restore-desktop t
-  "Restore desktop inlcuding buffers, sessions or not.")
+(defcustom my-desktop-restore t
+  "Restore desktop inlcuding buffers, sessions or not."
+  :type 'boolean)
+
+(defcustom my-profile-enable nil
+  "Enable the init profiler or not."
+  :type 'boolean)
 
 (let ((file "~/.emacs.d/custom.el"))
   (if (file-exists-p file)
