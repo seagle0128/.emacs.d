@@ -44,7 +44,10 @@
 ;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 
 (setq-default major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook
+          '(lambda ()
+             (turn-on-auto-fill)
+             (diminish 'auto-fill-function)))
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)

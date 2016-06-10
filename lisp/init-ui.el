@@ -48,20 +48,21 @@
 
 ;; Spaceline
 (use-package spaceline
-  :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
-  (spaceline-helm-mode 1))
-
-;; Powerline
-;; (use-package powerline
-;;   :config (powerline-default-theme))
+  :defer t
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (require 'spaceline-config)
+               (spaceline-emacs-theme)
+               (spaceline-helm-mode 1))))
 
 ;; Color theme
 ;; DO NOT use use-package to load themes
 (unless (package-installed-p 'monokai-theme)
   (package-install 'monokai-theme))
-(ignore-errors (load-theme 'monokai t))
+(add-hook 'after-init-hook
+          '(lambda()
+             (load-theme 'monokai t)))
 
 ;; Fonts
 (use-package chinese-fonts-setup

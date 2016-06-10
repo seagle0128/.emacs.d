@@ -32,18 +32,35 @@
 ;;
 ;;; Code:
 
-(customize-set-variable 'save-place t)
+(use-package saveplace
+  :defer t
+  :init
+  (progn
+    (if (fboundp 'save-place-mode)
+        ;; Emacs 25 has a proper mode for `save-place'
+        (save-place-mode 1)
+      (setq save-place t))
+    ))
 
-(savehist-mode 1)
+(use-package savehist
+  :defer t
+  :init (savehist-mode 1))
 
-(desktop-save-mode 1)
-(setq desktop-load-locked-desktop t)
+(use-package desktop
+  :defer t
+  :init
+  (progn
+    (desktop-save-mode 1)
+    (setq desktop-load-locked-desktop t)
+    ))
 
 (use-package persistent-scratch
   :defer t
   :init
-  (add-hook 'desktop-after-read-hook 'persistent-scratch-restore)
-  (add-hook 'kill-emacs-hook 'persistent-scratch-save))
+  (progn
+    (add-hook 'desktop-after-read-hook 'persistent-scratch-restore)
+    (add-hook 'kill-emacs-hook 'persistent-scratch-save)
+    ))
 
 (provide 'init-restore)
 
