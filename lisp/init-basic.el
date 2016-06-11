@@ -41,15 +41,13 @@
 
 ;; Enviornment
 (use-package exec-path-from-shell
-  :defer t
   :if sys/macp
-  :init (exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
 ;; Start server
 (use-package server
-  :defer t
   :commands server-running-p
-  :init
+  :config
   (unless (server-running-p)
     (server-start)))
 
