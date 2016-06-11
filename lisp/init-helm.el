@@ -86,9 +86,6 @@
               '(lambda()
                  (diminish 'helm-mode)))
 
-    ;; (eval-after-load 'ivy
-    ;;   '(setq helm-make-completion-method 'ivy))
-
     ;; plugins
     (use-package helm-flx
       :config (helm-flx-mode 1))

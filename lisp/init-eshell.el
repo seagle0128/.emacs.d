@@ -43,7 +43,7 @@
   (progn
     (eval-after-load 'helm
       '(add-hook 'eshell-mode-hook
-                 '(lambda()
+                 '(lambda ()
                     (bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))))
 
     (defun eshell/clear ()

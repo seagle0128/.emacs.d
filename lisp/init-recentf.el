@@ -33,13 +33,12 @@
 ;;; Code:
 
 (use-package recentf
-  :defer t
-  :init
+  :config
   (progn
     (recentf-mode 1)
 
     (eval-after-load 'ido
-      '(lambda()
+      '(lambda ()
          (defun ido-recentf-find-file ()
            "Find a recent file using ido."
            (interactive)

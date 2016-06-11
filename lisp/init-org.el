@@ -37,7 +37,7 @@
   :init
   (progn
     (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
-    (add-hook 'desktop-after-read-hook '(lambda() (diminish 'org-indent-mode)))
+    (add-hook 'desktop-after-read-hook '(lambda () (diminish 'org-indent-mode)))
     ))
 
 (provide 'init-org)

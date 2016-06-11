@@ -60,9 +60,7 @@
 ;; DO NOT use use-package to load themes
 (unless (package-installed-p 'monokai-theme)
   (package-install 'monokai-theme))
-(add-hook 'after-init-hook
-          '(lambda()
-             (load-theme 'monokai t)))
+(add-hook 'after-init-hook '(lambda () (load-theme 'monokai t)))
 
 ;; Fonts
 (use-package chinese-fonts-setup
