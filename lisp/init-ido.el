@@ -63,7 +63,11 @@
       :config (ido-sort-mtime-mode 1))
 
     (use-package ido-vertical-mode
-      :disabled t
+      :init
+      (progn
+        (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+        (setq ido-vertical-show-count t)
+        )
       :config (ido-vertical-mode 1))
 
     (use-package flx-ido
