@@ -51,29 +51,23 @@
     (setq ido-enable-flex-matching t)
 
     (use-package ido-ubiquitous
-      :defer t
-      :init (ido-ubiquitous-mode 1))
+      :config (ido-ubiquitous-mode 1))
 
     (use-package ido-at-point
-      :defer t
-      :init (ido-at-point-mode 1))
+      :config (ido-at-point-mode 1))
 
     (use-package ido-complete-space-or-hyphen
-      :defer t
-      :init (ido-complete-space-or-hyphen-enable))
+      :config (ido-complete-space-or-hyphen-enable))
 
     (use-package ido-sort-mtime
-      :defer t
-      :init (ido-sort-mtime-mode 1))
+      :config (ido-sort-mtime-mode 1))
 
     (use-package ido-vertical-mode
       :disabled t
-      :defer t
-      :init (ido-vertical-mode 1))
+      :config (ido-vertical-mode 1))
 
     (use-package flx-ido
-      :defer t
-      :init (flx-ido-mode 1))
+      :config (flx-ido-mode 1))
 
     (use-package ido-load-library
       :defer t
@@ -89,8 +83,7 @@
              ("C-M-o" . swoop-multi)
              ("M-o" . swoop-pcre-regexp)
              ("C-S-o" . swoop-back-to-last-position))
-      :init
-      (setq swoop-font-size-change: nil))
+      :init (setq swoop-font-size-change: nil))
     ))
 
 (provide 'init-ido)
