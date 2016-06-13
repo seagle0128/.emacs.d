@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Which key
 (use-package which-key
   :diminish which-key-mode
@@ -76,15 +78,15 @@
 (global-set-key [(C-wheel-up)] 'text-scale-increase)
 (global-set-key [(C-wheel-down)] 'text-scale-decrease)
 
-;; Rotate
+;; Rotate window layout
 (use-package rotate :defer t)
 
 ;; Dash
-(when sys/macp
-  (use-package dash
-    :defer t
-    :bind (("\C-cd" . dash-at-point)
-           ("\C-ce" . dash-at-point-with-docset))))
+(use-package dash
+  :defer t
+  :if sys/macp
+  :bind (("\C-cd" . dash-at-point)
+         ("\C-ce" . dash-at-point-with-docset)))
 
 ;; Youdao Dict
 (use-package youdao-dictionary
@@ -92,8 +94,11 @@
   :init (setq url-automatic-caching t)
   :bind ("C-c y" . youdao-dictionary-search-at-point))
 
+;; Search
 (when (executable-find "ack") (use-package ack :defer t))
 (when (executable-find "ag") (use-package ag :defer t))
+
+;; Misc
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 

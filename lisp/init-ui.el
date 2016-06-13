@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Menu/Tool/Scroll bars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))

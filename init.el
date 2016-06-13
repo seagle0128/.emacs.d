@@ -62,7 +62,6 @@
       :config (benchmark-init/activate)))
 
 ;; Preferences
-(require 'init-const)
 (require 'init-basic)
 (require 'init-ui)
 
