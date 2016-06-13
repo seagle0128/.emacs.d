@@ -73,6 +73,7 @@
 
     (define-key swiper-map (kbd "M-%") 'swiper-query-replace)
 
+    (use-package smex :defer t)
     (use-package ivy-hydra :defer t)
     (use-package counsel-projectile :defer t)
     ))
