@@ -67,7 +67,6 @@
 (require 'init-ui)
 
 (require 'init-edit)
-(require 'init-recentf)
 (require 'init-ibuffer)
 (require 'init-kill-ring)               ; Must before completion framework
 

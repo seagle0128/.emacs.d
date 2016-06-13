@@ -32,6 +32,10 @@
 ;;
 ;;; Code:
 
+(use-package recentf
+  :defer t
+  :init (recentf-mode 1))
+
 (use-package saveplace
   :defer t
   :init

@@ -81,14 +81,12 @@
     (use-package anaconda-mode
       :defer t
       :diminish anaconda-mode
-      :init
-      (add-hook 'python-mode-hook 'anaconda-mode)
+      :init (add-hook 'python-mode-hook 'anaconda-mode)
       :config
       (eval-after-load 'company
         '(use-package company-anaconda
            :defer t
-           :init
-           (add-to-list 'company-backends 'company-anaconda)))
+           :init (add-to-list 'company-backends 'company-anaconda)))
       )))
 
 (provide 'init-python)
