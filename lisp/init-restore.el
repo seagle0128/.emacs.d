@@ -33,12 +33,10 @@
 ;;; Code:
 
 (use-package recentf
-  :defer t
-  :init (recentf-mode 1))
+  :config (recentf-mode 1))
 
 (use-package saveplace
-  :defer t
-  :init
+  :config
   (progn
     (if (fboundp 'save-place-mode)
         ;; Emacs 25 has a proper mode for `save-place'
@@ -47,12 +45,10 @@
     ))
 
 (use-package savehist
-  :defer t
-  :init (savehist-mode 1))
+  :config (savehist-mode 1))
 
 (use-package desktop
-  :defer t
-  :init
+  :config
   (progn
     (desktop-save-mode 1)
     (setq desktop-load-locked-desktop t)
