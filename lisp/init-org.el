@@ -34,8 +34,11 @@
 
 (use-package org
   :defer t
+  :bind (("C-c a" . org-agenda))
   :init
   (progn
+    (setq org-agenda-files '("~/org"))
+    (setq org-src-fontify-natively t)
     (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
     (add-hook 'desktop-after-read-hook '(lambda () (diminish 'org-indent-mode)))
     ))
