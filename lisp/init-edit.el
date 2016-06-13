@@ -34,8 +34,6 @@
 
 (eval-when-compile (require 'cua-base))
 
-(require 'init-const)
-
 ;; Miscs
 ;; (setq initial-scratch-message nil)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
@@ -69,13 +67,8 @@
   (global-prettify-symbols-mode 1))
 
 ;; Encoding
-(if sys/win32p
-    (progn
-      (set-language-environment 'Chinese-GB18030)
-      (set-clipboard-coding-system 'chinese-gb18030))
-  (progn
-    (set-language-environment 'UTF-8)
-    (set-clipboard-coding-system 'utf-8)))
+(set-language-environment 'Chinese-GB18030)
+(set-clipboard-coding-system 'chinese-gb18030)
 (set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
