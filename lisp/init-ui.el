@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
+(eval-when-compile (require 'time))
 
 ;; Menu/Tool/Scroll bars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -97,15 +97,9 @@
   :config (smooth-scrolling-mode 1))
 
 ;; Display Time
-(use-package time
-  :defer t
-  :if (not (display-graphic-p))
-  :init
-  (progn
-    (setq display-time-24hr-format t)
-    (setq display-time-day-and-date t)
-    (display-time-mode 1)
-    ))
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time-mode 1)
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
