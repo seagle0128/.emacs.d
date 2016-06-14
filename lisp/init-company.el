@@ -39,10 +39,11 @@
   :config
   (progn
     (use-package company-quickhelp
-      :bind (:map company-active-map
-                  ("M-h" . company-quickhelp-manual-begin)
-                  ("C-n" . company-select-next)
-                  ("C-p" . company-select-previous))
+      :bind (("C-c v" . company-yasnippet)
+             :map company-active-map
+             ("M-h" . company-quickhelp-manual-begin)
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous))
       :config (company-quickhelp-mode 1))
 
     (use-package company-flx
@@ -51,10 +52,12 @@
     (use-package company-shell
       :defer t
       :init
-      (add-to-list 'company-backends 'company-shell)
-      (add-to-list 'company-backends 'company-fish-shell))
+      (progn
+        (add-to-list 'company-backends 'company-shell)
+        (add-to-list 'company-backends 'company-fish-shell)))
 
     ;; Support yas in commpany
+    ;; Note: Must be the last to involve all backends
     (defvar company-mode/enable-yas t
       "Enable yasnippet for all backends.")
 
@@ -66,8 +69,6 @@
                 '(:with company-yasnippet))))
 
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-    (global-set-key (kbd "C-c v") 'company-yasnippet)
     ))
 
 (provide 'init-company)
