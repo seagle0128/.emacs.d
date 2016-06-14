@@ -56,7 +56,8 @@
             '(lambda ()
                (require 'spaceline-config)
                (spaceline-emacs-theme)
-               (spaceline-helm-mode 1))))
+               (eval-after-load 'helm (spaceline-helm-mode 1))
+               )))
 
 ;; Color theme
 ;; DO NOT use use-package to load themes
