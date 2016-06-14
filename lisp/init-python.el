@@ -86,8 +86,8 @@
       (eval-after-load 'company
         '(use-package company-anaconda
            :defer t
-           :init (add-to-list 'company-backends 'company-anaconda)))
-      )))
+           :init (add-to-list 'company-backends 'company-anaconda))))
+    ))
 
 (provide 'init-python)
 

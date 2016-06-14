@@ -75,7 +75,8 @@
  ((eq my-completion-method 'ivy)
   (require 'init-ivy))
  ((eq my-completion-method 'ido)
-  (require 'init-ido)))
+  (require 'init-ido))
+ )
 
 (require 'init-calendar)
 (require 'init-bookmark)
@@ -84,9 +85,12 @@
 
 (require 'init-yasnippet)
 
-(if (eq my-ac-method 'company)
-    (require 'init-company)
+(cond
+ ((eq my-ac-method 'company)
+  (require 'init-company))
+ ((eq my-ac-method 'auto-complete)
   (require 'init-auto-complete))
+ )
 
 (require 'init-shell)
 (require 'init-eshell)

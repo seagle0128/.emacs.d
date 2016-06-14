@@ -39,7 +39,8 @@
   (progn
     ;; FIX hange issue with tramp
     (add-hook 'text-mode-hook 'projectile-mode)
-    (add-hook 'prog-mode-hook 'projectile-mode))
+    (add-hook 'prog-mode-hook 'projectile-mode)
+    )
   :config
   (progn
     ;; FIX hange issue with tramp

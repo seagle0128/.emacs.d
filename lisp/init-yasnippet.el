@@ -36,16 +36,17 @@
   :defer t
   :diminish yas-minor-mode
   :init
-  (setq yas-verbosity 0)                  ; Suppress messages
-  (add-hook 'after-init-hook 'yas-global-mode)
-
+  (progn
+    (setq yas-verbosity 0)                  ; Suppress messages
+    (add-hook 'after-init-hook 'yas-global-mode)
+    (setq yas-prompt-functions '(yas-dropdown-prompt
+                                 yas-maybe-ido-prompt
+                                 yas-completing-prompt))
+    )
+  :config
   (use-package dropdown-list
     :defer t
-    :commands dropdown-list
-    :init
-    (setq yas-prompt-functions '(yas-dropdown-prompt
-                                 yas-ido-prompt
-                                 yas-completing-prompt)))
+    :commands dropdown-list)
   )
 
 (provide 'init-yasnippet)

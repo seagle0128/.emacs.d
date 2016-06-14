@@ -32,25 +32,19 @@
 ;;
 ;;; Code:
 
+(windmove-default-keybindings)
+(winner-mode 1)
+
 ;; Switch window
 (use-package switch-window
   :defer t
   :bind ("C-x o" . switch-window))
 
-(use-package windmove
-  :defer t
-  :init (windmove-default-keybindings))
-
-(use-package winner
-  :defer t
-  :init (winner-mode 1))
-
 ;; Zoom window
 (use-package zoom-window
   :defer t
   :bind ("C-x C-z" . zoom-window-zoom)
-  :init
-  (setq zoom-window-mode-line-color "DarkGreen"))
+  :init (setq zoom-window-mode-line-color "DarkGreen"))
 
 (provide 'init-window)
 

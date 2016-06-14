@@ -79,10 +79,7 @@
   :defer t
   :bind (([f12] . neotree-toggle)
          ([C-f12] . neotree-toggle))
-  :init
-  (add-hook 'neotree-mode-hook
-            '(lambda ()
-               (linum-mode -1))))
+  :init (add-hook 'neotree-mode-hook '(lambda () (linum-mode -1))))
 
 ;; Rotate window layout
 (use-package rotate :defer t)

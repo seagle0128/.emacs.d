@@ -37,11 +37,13 @@
   :diminish ctags-auto-update-mode
   :bind ("\C-cE" . ctags-update)
   :init
-  (add-hook 'c-mode-common-hook 'turn-on-ctags-auto-update-mode)
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-ctags-auto-update-mode)
-  (add-hook 'python-mode-hook 'turn-on-ctags-auto-update-mode)
-  (add-hook 'ruby-mode-hook 'turn-on-ctags-auto-update-mode)
-  (add-hook 'js2-mode-hook 'turn-on-ctags-auto-update-mode))
+  (progn
+    (add-hook 'c-mode-common-hook 'turn-on-ctags-auto-update-mode)
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-ctags-auto-update-mode)
+    (add-hook 'python-mode-hook 'turn-on-ctags-auto-update-mode)
+    (add-hook 'ruby-mode-hook 'turn-on-ctags-auto-update-mode)
+    (add-hook 'js2-mode-hook 'turn-on-ctags-auto-update-mode)
+    ))
 
 (provide 'init-tags)
 
