@@ -66,9 +66,11 @@
     (use-package inf-ruby
       :defer t
       :init
-      (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
-      (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-      (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
+      (progn
+        (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+        (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+        (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
+        ))
 
     ;; Rubocop
     (use-package rubocop
@@ -80,10 +82,9 @@
     (use-package rspec-mode
       :defer t
       :diminish rspec-mode
+      :commands rspec-install-snippets
       :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
-      :config
-      (eval-after-load 'yasnippet
-        '(rspec-install-snippets)))
+      :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
 
     ;; Yari
     (use-package yari
