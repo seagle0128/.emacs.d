@@ -32,41 +32,15 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'neotree))
+
 (require 'init-const)
-
-;; Which key
-(use-package which-key
-  :diminish which-key-mode
-  :config (which-key-mode 1))
-
-;; Browse url
-(use-package browse-url-dwim
-  :config
-  (browse-url-dwim-mode 1)
-  (setq browse-url-dwim-always-confirm-extraction nil))
-
-;; Tramp
-(use-package tramp
-  :defer t
-  :init
-  (let ((val (if (executable-find "plink") "plink" "ssh")))
-    (setq tramp-default-method val)))
 
 ;; Dos2Unix
 (defun dos2unix ()
   "Not exactly but it's easier to remember."
   (interactive)
   (set-buffer-file-coding-system 'unix 't) )
-
-;; Tree explorer
-(use-package neotree
-  :defer t
-  :bind (([f12] . neotree-toggle)
-         ([C-f12] . neotree-toggle))
-  :init
-  (add-hook 'neotree-mode-hook
-            '(lambda ()
-               (linum-mode -1))))
 
 ;; Revert buffer
 (global-set-key [(f5)] '(lambda ()
@@ -78,11 +52,43 @@
 (global-set-key [(C-wheel-up)] 'text-scale-increase)
 (global-set-key [(C-wheel-down)] 'text-scale-decrease)
 
+;; Which key
+(use-package which-key
+  :defer t
+  :diminish which-key-mode
+  :init (add-hook 'after-init-hook 'which-key-mode))
+
+;; Browse url
+(use-package browse-url-dwim
+  :defer t
+  :init
+  (progn
+    (add-hook 'after-init-hook 'browse-url-dwim-mode)
+    (setq browse-url-dwim-always-confirm-extraction nil)
+    ))
+
+;; Tramp
+(use-package tramp
+  :defer t
+  :init
+  (let ((val (if (executable-find "plink") "plink" "ssh")))
+    (setq tramp-default-method val)))
+
+;; Tree explorer
+(use-package neotree
+  :defer t
+  :bind (([f12] . neotree-toggle)
+         ([C-f12] . neotree-toggle))
+  :init
+  (add-hook 'neotree-mode-hook
+            '(lambda ()
+               (linum-mode -1))))
+
 ;; Rotate window layout
 (use-package rotate :defer t)
 
 ;; Dash
-(use-package dash
+(use-package dash-at-point
   :defer t
   :if sys/macp
   :bind (("\C-cd" . dash-at-point)
