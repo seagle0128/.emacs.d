@@ -53,9 +53,10 @@
 (use-package highlight-indentation
   :defer t
   :diminish highlight-indentation-mode highlight-indentation-current-column-mode
-  :init (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
-  :config (defvar web-mode-html-offset 2) ; Workaround. Fix void var issue.
-  )
+  :init
+  (progn
+    (defvar web-mode-html-offset 2) ; Workaround. Fix void var issue.
+    (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)))
 
 ;; Rainbow
 (use-package rainbow-mode
@@ -81,25 +82,28 @@
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
-  :config
-  (progn
-    (global-diff-hl-mode t)
-    ;; (global-diff-hl-amend-mode t)
-    (diff-hl-flydiff-mode t)
-    (diff-hl-dired-mode t)))
+  :defer t
+  :init
+  (add-hook 'after-ini-hook
+            '(lambda ()
+               (global-diff-hl-mode t)
+               ;; (global-diff-hl-amend-mode t)
+               (diff-hl-flydiff-mode t)
+               (diff-hl-dired-mode t))))
 
 ;; Highlight some operations
 (use-package volatile-highlights
+  :defer t
   :diminish volatile-highlights-mode
-  :config (volatile-highlights-mode t))
+  :init (add-hook 'after-init-hook 'volatile-highlights-mode))
 
 ;; Whitespace
 (use-package whitespace
   :defer t
   :diminish whitespace-mode
-  :init
+  :init (add-hook 'prog-mode-hook 'whitespace-mode t)
+  :config
   (progn
-    (add-hook 'prog-mode-hook 'whitespace-mode t)
     (setq whitespace-line-column fill-column) ;; limit line length
     ;; automatically clean up bad whitespace
     (setq whitespace-action '(auto-cleanup))

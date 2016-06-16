@@ -32,7 +32,9 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'cua-base))
+(eval-when-compile
+  (require 'cua-base)
+  (require 'multiple-cursors))
 
 ;; Miscs
 ;; (setq initial-scratch-message nil)
@@ -85,8 +87,9 @@
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
+  :defer t
   :diminish auto-revert-mode
-  :config (global-auto-revert-mode 1))
+  :init (add-hook 'after-init-hook 'global-auto-revert-mode))
 
 ;; Avy
 (use-package avy
@@ -100,24 +103,28 @@
 
 ;; Ace link
 (use-package ace-link
-  :config (ace-link-setup-default))
+  :defer t
+  :init (add-hook 'after-init-hook 'ace-link-setup-default))
 
 ;; Aggressive indent
 (use-package aggressive-indent
+  :defer t
   :diminish aggressive-indent-mode
-  :config
+  :init
   (progn
-    (global-aggressive-indent-mode 1)
+    (add-hook 'after-init-hook 'global-aggressive-indent-mode)
     (add-to-list 'aggressive-indent-excluded-modes 'web-mode)))
 
 ;; Auto indent
 (use-package auto-indent-mode
+  :defer t
   :diminish auto-indent-mode
-  :config
-  (progn
-    (setq auto-indent-assign-indent-level-variables nil)
-    (setq auto-indent-indent-style 'conservative)
-    (auto-indent-global-mode 1)))
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (setq auto-indent-assign-indent-level-variables nil)
+               (setq auto-indent-indent-style 'conservative)
+               (auto-indent-global-mode 1))))
 
 ;; Anzu mode
 (use-package anzu
@@ -148,7 +155,8 @@
 
 ;; Move text
 (use-package move-text
-  :config (move-text-default-bindings))
+  :defer t
+  :init (add-hook 'after-init-hook 'move-text-default-bindings))
 
 ;; Comment
 (use-package comment-dwim-2
@@ -169,8 +177,9 @@
 
 ;; Undo Tree
 (use-package undo-tree
+  :defer t
   :diminish undo-tree-mode
-  :config (global-undo-tree-mode 1))
+  :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Multiple cursors
 (use-package multiple-cursors
