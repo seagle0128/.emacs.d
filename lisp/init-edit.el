@@ -110,10 +110,8 @@
 (use-package aggressive-indent
   :defer t
   :diminish aggressive-indent-mode
-  :init
-  (progn
-    (add-hook 'after-init-hook 'global-aggressive-indent-mode)
-    (add-to-list 'aggressive-indent-excluded-modes 'web-mode)))
+  :init (add-hook 'after-init-hook 'global-aggressive-indent-mode)
+  :config (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
 
 ;; Auto indent
 (use-package auto-indent-mode
@@ -240,6 +238,14 @@
     (electric-pair-mode -1)
     (smartparens-global-mode 1)
     (show-smartparens-global-mode 1)
+
+    ;; Workaround for auto-paring issues for Rails and Django
+    (eval-after-load 'web-mode
+      (add-hook 'web-mode-hook
+                '(lambda ()
+                   (sp-local-pair 'web-mode "{" "}" :actions nil)
+                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
+
     ))
 
 (provide 'init-edit)
