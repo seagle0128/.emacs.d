@@ -32,9 +32,8 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'saveplace)
-  (require 'desktop))
+(eval-when-compile (require 'saveplace))
+(eval-when-compile (require 'desktop))
 
 (if (fboundp 'save-place-mode)
     ;; Emacs 25 has a proper mode for `save-place'

@@ -32,9 +32,8 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'cua-base)
-  (require 'multiple-cursors))
+(eval-when-compile (require 'cua-base))
+(eval-when-compile (require 'multiple-cursors))
 
 ;; Miscs
 ;; (setq initial-scratch-message nil)
@@ -208,7 +207,7 @@
 
 ;; Smartparens
 (use-package smartparens
-  :disabled t
+  :disabled
   :diminish smartparens-mode
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
