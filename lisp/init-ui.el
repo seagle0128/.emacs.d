@@ -94,8 +94,12 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :init (setq-default smooth-scroll-margin 0)
-  :config (smooth-scrolling-mode 1))
+  :defer t
+  :init
+  (progn
+    (setq-default smooth-scroll-margin 0)
+    (add-hook 'after-init-hook 'smooth-scrolling-mode)
+    ))
 
 ;; Display Time
 (setq display-time-24hr-format t)
