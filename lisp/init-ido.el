@@ -41,17 +41,15 @@
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
 
-(eval-after-load 'recentf
-  '(lambda ()
-     (defun ido-recentf-find-file ()
-       "Find a recent file using ido."
-       (interactive)
-       (let ((file (ido-completing-read "Choose recent file: "
-                                        (-map 'abbreviate-file-name recentf-list)
-                                        nil t)))
-         (when file
-           (find-file file))))
-     (bind-key "C-x C-r" 'ido-recentf-find-file)))
+(defun ido-recentf-find-file ()
+  "Find a recent file using ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: "
+                                   (-map 'abbreviate-file-name recentf-list)
+                                   nil t)))
+    (when file
+      (find-file file))))
+(global-set-key (kbd "C-x C-r") 'ido-recentf-find-file)
 
 (use-package ido-ubiquitous
   :config (ido-ubiquitous-mode 1))
@@ -90,13 +88,25 @@
          ("M-X" . smex-major-mode-commands)
          ("C-c M-x" . execute-extended-command)))
 
-(use-package swoop
-  :defer t
-  :bind (("C-o" . swoop)
-         ("C-M-o" . swoop-multi)
-         ("M-o" . swoop-pcre-regexp)
-         ("C-S-o" . swoop-back-to-last-position))
-  :init (setq swoop-font-size-change: nil))
+(use-package ido-occur
+  :config
+  (progn
+    (defun ido-occur-at-point ()
+      "Open ido-occur at point."
+      (interactive)
+      (ido-occur (symbol-name (symbol-at-point))))
+
+    (global-set-key (kbd "C-o") 'ido-occur-at-point)
+
+    (defun ido-occur-from-isearch ()
+      "Open ido-occur from isearch."
+      (interactive)
+      (ido-occur (if isearch-regexp
+                     isearch-string
+                   (regexp-quote isearch-string))))
+
+    (define-key isearch-mode-map (kbd "C-o") 'ido-occur-from-isearch)
+    ))
 
 (provide 'init-ido)
 
