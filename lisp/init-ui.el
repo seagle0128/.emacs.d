@@ -95,11 +95,8 @@
 
 (use-package smooth-scrolling
   :defer t
-  :init
-  (progn
-    (setq-default smooth-scroll-margin 0)
-    (add-hook 'after-init-hook 'smooth-scrolling-mode)
-    ))
+  :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
+  :config (setq smooth-scroll-margin 0))
 
 ;; Display Time
 (setq display-time-24hr-format t)

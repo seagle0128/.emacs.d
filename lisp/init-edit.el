@@ -100,6 +100,11 @@
          ("M-g e" . avy-goto-word-0))
   :config (avy-setup-default))
 
+;; zzz to char
+(use-package zzz-to-char
+  :defer t
+  :bind (("M-z" . zzz-to-char)))
+
 ;; Ace link
 (use-package ace-link
   :defer t
