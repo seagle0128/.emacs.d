@@ -42,7 +42,19 @@
   :defer t
   :init (setq scss-compile-at-save nil)         ; Disable complilation on save
   )
-;;
+
+(use-package less-css-mode :defer t)
+
+;; Css eldoc
+(use-package css-eldoc
+  :defer t
+  :init
+  (progn
+    (add-hook 'css-mode-hook 'turn-on-css-eldoc)
+    (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
+    (add-hook 'less-css-mode-hook 'turn-on-css-eldoc)
+    ))
+
 ;; JS2 mode
 (use-package js2-mode
   :defer t
@@ -85,7 +97,6 @@
    (:map sgml-mode-map "C-c C-b" . web-beautify-html)
    (:map css-mode-map "C-c C-b" . web-beautify-css)))
 
-(use-package less-css-mode :defer t)
 (use-package haml-mode :defer t)
 (use-package php-mode :defer t)
 
