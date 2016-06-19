@@ -38,6 +38,9 @@
   :bind (("C-x g" . magit-status)
          ([f9] . magit-status)))
 
+(use-package gitconfig-mode :defer t)
+(use-package gitignore-mode :defer t)
+
 ;; Subversion
 (use-package psvn
   :defer t
