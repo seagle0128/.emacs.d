@@ -57,7 +57,7 @@
   "Enable the init profiler or not."
   :type 'boolean)
 
-(let ((file "~/.emacs.d/custom.el"))
+(let ((file (concat user-emacs-directory "custom.el")))
   (if (file-exists-p file)
       (load-file file)))
 

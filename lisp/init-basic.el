@@ -48,6 +48,7 @@
 
 ;; Start server
 (use-package server
+  :if (not sys/rootp)
   :commands server-running-p
   :config
   (unless (server-running-p)
