@@ -37,17 +37,17 @@
   :group 'extensions)
 
 (defcustom my-ac-method 'company
-  "Auto complete method: `company' or `auto-complete'."
+  "Auto complete method: auto-complete' or `company'."
   :type '(choice
-          (const :tag "Company" company)
-          (const :tag "Auto-Complete" auto-complete)))
+          (const :tag "Auto-Complete" auto-complete)
+          (const :tag "Company" company)))
 
 (defcustom my-completion-method 'ivy
-  "Incremental complition method: `helm', `ivy' or `ido'."
+  "Incremental complition method: `ido', `ivy' or `helm'."
   :type '(choice
-          (const :tag "Helm" helm)
+          (const :tag "Ido" ido)
           (const :tag "Ivy" ivy)
-          (const :tag "Ido" ido)))
+          (const :tag "Helm" helm)))
 
 (defcustom my-desktop-restore t
   "Restore desktop inlcuding buffers, sessions or not."

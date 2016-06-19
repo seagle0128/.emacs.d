@@ -49,32 +49,31 @@
 (setq icon-title-format frame-title-format)
 
 ;; Spaceline
-(use-package spaceline
+(use-package spaceline-config
+  :ensure spaceline
   :defer t
-  :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (require 'spaceline-config)
-               (spaceline-emacs-theme)
-               (eval-after-load 'helm (spaceline-helm-mode 1))
-               )))
+  :commands spaceline-emacs-theme spaceline-helm-mode
+  :init (add-hook 'after-init-hook
+                  '(lambda ()
+                     (spaceline-emacs-theme)
+                     (eval-after-load 'helm (spaceline-helm-mode 1))
+                     )))
 
 ;; Color theme
-;; DO NOT use use-package to load themes
-(unless (package-installed-p 'monokai-theme)
-  (package-install 'monokai-theme))
-(add-hook 'after-init-hook '(lambda () (load-theme 'monokai t)))
+(use-package monokai-theme
+  :defer t
+  :init (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t))))
 
 ;; Fonts
 (use-package chinese-fonts-setup
   :defines cfs--current-profile-name
   :config
   (progn
+    ;; (if sys/macp
+    ;;     (setq cfs--fontsize-steps '(6 6 8)))
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))
     (setq cfs--current-profile-name "program")
-    ;; (if sys/macp
-    ;;     (setq cfs--fontsize-steps '(6 6 8)))
     ))
 
 ;; Line and Column

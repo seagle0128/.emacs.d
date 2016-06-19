@@ -45,7 +45,7 @@
 ;;
 ;;; Code:
 
-(setq load-prefer-newer t)
+;; (setq load-prefer-newer t)
 
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
