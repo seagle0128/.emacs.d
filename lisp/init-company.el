@@ -39,22 +39,26 @@
   :config
   (progn
     (use-package company-quickhelp
+      :defer t
       :bind (("C-c v" . company-yasnippet)
              :map company-active-map
              ("M-h" . company-quickhelp-manual-begin)
              ("C-n" . company-select-next)
              ("C-p" . company-select-previous))
-      :config (company-quickhelp-mode 1))
+      :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
 
     (use-package company-flx
-      :config (company-flx-mode 1))
+      :defer t
+      :init (add-hook 'company-mode-hook 'company-flx-mode))
+
+    (use-package company-statistics
+      :defer t
+      :init (add-hook 'company-mode-hook 'company-statistics-mode))
 
     (use-package company-shell
       :defer t
-      :init
-      (progn
-        (add-to-list 'company-backends 'company-shell)
-        (add-to-list 'company-backends 'company-fish-shell)))
+      :init (progn (push 'company-shell company-backends)
+                   (push 'company-fish-shell company-backends)))
 
     ;; Support yas in commpany
     ;; Note: Must be the last to involve all backends
