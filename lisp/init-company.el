@@ -55,6 +55,10 @@
       :defer t
       :init (add-hook 'company-mode-hook 'company-statistics-mode))
 
+    (use-package company-c-headers
+      :defer t
+      :init (push 'company-c-headers company-backends))
+
     (use-package company-shell
       :defer t
       :init (progn (push 'company-shell company-backends)
