@@ -208,7 +208,13 @@
 (use-package electric-spacing
   :defer t
   :diminish electric-spacing-mode
-  :init (add-hook 'prog-mode-hook #'electric-spacing-mode))
+  :init
+  (progn
+    (add-hook 'c-mode-common-hook #'electric-spacing-mode)
+    (add-hook 'python-mode-hook #'electric-spacing-mode)
+    (add-hook 'ruby-mode-hook #'electric-spacing-mode)
+    (add-hook 'enh-ruby-mode-hook #'electric-spacing-mode)
+    ))
 
 ;; Smartparens
 (use-package smartparens

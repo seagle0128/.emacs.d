@@ -28,3 +28,4 @@ eshell/
 /custom.el
 tmp*
 /.mc-lists.el
+/company-statistics-cache.el
