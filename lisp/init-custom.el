@@ -42,7 +42,7 @@
           (const :tag "Company" company)
           (const :tag "Auto-Complete" auto-complete)))
 
-(defcustom my-completion-method 'helm
+(defcustom my-completion-method 'ivy
   "Incremental complition method: `helm', `ivy' or `ido'."
   :type '(choice
           (const :tag "Helm" helm)
