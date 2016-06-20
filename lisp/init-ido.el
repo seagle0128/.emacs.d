@@ -33,6 +33,7 @@
 ;;; Code:
 
 (eval-when-compile (require 'ido))
+(eval-when-compile (require 'recentf))
 
 ;; IDO
 (ido-mode 1)
@@ -41,15 +42,18 @@
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
 
-(defun ido-recentf-find-file ()
-  "Find a recent file using ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: "
-                                   (-map 'abbreviate-file-name recentf-list)
-                                   nil t)))
-    (when file
-      (find-file file))))
-(global-set-key (kbd "C-x C-r") 'ido-recentf-find-file)
+(eval-after-load 'recentf
+  '(progn
+     (defun ido-recentf-find-file ()
+       "Find a recent file using ido."
+       (interactive)
+       (let ((file (ido-completing-read "Choose recent file: "
+                                        (-map 'abbreviate-file-name recentf-list)
+                                        nil t)))
+         (when file
+           (find-file file))))
+     (global-set-key (kbd "C-x C-r") 'ido-recentf-find-file)
+     ))
 
 (use-package ido-ubiquitous
   :config (ido-ubiquitous-mode 1))
@@ -67,8 +71,7 @@
   :init
   (progn
     (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-    (setq ido-vertical-show-count t)
-    )
+    (setq ido-vertical-show-count t))
   :config (ido-vertical-mode 1))
 
 (use-package flx-ido
@@ -78,9 +81,9 @@
   :defer t
   :init (defalias 'load-library 'ido-load-library))
 
-(use-package idomenu
+(use-package imenu-anywhere
   :defer t
-  :bind ("C-." . idomenu))
+  :bind ("C-." . imenu-anywhere))
 
 (use-package smex
   :defer t
