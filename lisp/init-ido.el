@@ -81,9 +81,9 @@
   :defer t
   :init (defalias 'load-library 'ido-load-library))
 
-(use-package imenu-anywhere
+(use-package imenus
   :defer t
-  :bind ("C-." . imenu-anywhere))
+  :bind ("C-." . imenus))
 
 (use-package smex
   :defer t
