@@ -114,8 +114,7 @@
 (use-package aggressive-indent
   :defer t
   :diminish aggressive-indent-mode
-  :init (add-hook 'after-init-hook 'global-aggressive-indent-mode)
-  :config (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
+  :init (add-hook 'after-init-hook 'global-aggressive-indent-mode))
 
 ;; Auto indent
 (use-package auto-indent-mode

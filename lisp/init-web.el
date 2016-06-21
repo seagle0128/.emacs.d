@@ -77,8 +77,8 @@
 (use-package web-mode
   :defer t
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
-  :defines ac-modes
-  :init
+  :defines ac-modes aggressive-indent-excluded-modes
+  :config
   (progn
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
@@ -86,6 +86,9 @@
 
     (eval-after-load 'auto-complete
       '(add-to-list 'ac-modes 'web-mode))
+
+    (eval-after-load 'aggressvie-indent
+      '(add-to-list 'aggressive-indent-excluded-modes 'web-mode))
     ))
 
 ;; Web beautify
