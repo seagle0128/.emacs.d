@@ -1,4 +1,4 @@
-;;; init.el --- user init configuration
+;;; init.el --- user init configuration.     -*- no-byte-compile: t -*-
 ;;
 ;; Filename: init.el
 ;; Description:
