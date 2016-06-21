@@ -38,10 +38,6 @@
   :defines gud-pdb-command-name pdb-path
   :config
   (progn
-    (add-hook 'python-mode-hook
-              '(lambda ()
-                 (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
-
     (add-hook 'inferior-python-mode-hook
               '(lambda ()
                  (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
