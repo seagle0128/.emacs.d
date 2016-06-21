@@ -55,7 +55,7 @@
 
 (defconst sys/rootp
   (string-equal "root" (getenv "USER"))
-  "Is it the ROOT user?")
+  "Are you using ROOT user?")
 
 (provide 'init-const)
 

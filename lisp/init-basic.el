@@ -43,13 +43,19 @@
 
 ;; Enviornment
 (use-package exec-path-from-shell
+  :defer t
   :if sys/macp
-  :config (exec-path-from-shell-initialize))
+  :init (add-hook 'after-init-hook 'exec-path-from-shell-initialize))
 
 ;; Start server
-(use-package server
-  :if (not sys/rootp)
-  :config (server-mode 1))
+(if (fboundp 'server-mode)
+    ;; Emacs 24 has a proper mode for `server'
+    (server-mode 1)
+  (progn
+    (require 'server)
+    (unless (server-running-p)
+      (server-start))
+    ))
 
 (provide 'init-basic)
 
