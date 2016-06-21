@@ -49,10 +49,7 @@
 ;; Start server
 (use-package server
   :if (not sys/rootp)
-  :commands server-running-p
-  :config
-  (unless (server-running-p)
-    (server-start)))
+  :config (server-mode 1))
 
 (provide 'init-basic)
 
