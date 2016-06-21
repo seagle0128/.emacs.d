@@ -47,10 +47,6 @@
                  (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
                  (process-query-on-exit-flag (get-process "Python"))))
 
-    ;; fix python indent compatibility issue
-    (eval-after-load 'auto-indent-mode
-      (setq python-indent-guess-indent-offset nil))
-
     ;; iPython
     (if (executable-find "ipython")
         (setq
