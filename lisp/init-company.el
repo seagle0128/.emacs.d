@@ -59,6 +59,12 @@
       :defer t
       :init (push 'company-c-headers company-backends))
 
+    (use-package company-web
+      :defer t
+      :init (progn (add-to-list 'company-backends 'company-web-html)
+                   (add-to-list 'company-backends 'company-web-jade)
+                   (add-to-list 'company-backends 'company-web-slim)))
+
     (use-package company-shell
       :defer t
       :init (progn (push 'company-shell company-backends)
