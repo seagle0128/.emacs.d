@@ -32,22 +32,7 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'saveplace))
-(eval-when-compile (require 'desktop))
-
-(if (fboundp 'save-place-mode)
-    ;; Emacs 25 has a proper mode for `save-place'
-    (save-place-mode 1)
-  (progn
-    (require 'saveplace)
-    (setq save-place t)
-    ))
-
-(recentf-mode 1)
-(savehist-mode 1)
-
 (desktop-save-mode 1)
-(setq desktop-load-locked-desktop t)
 
 (use-package persistent-scratch
   :defer t

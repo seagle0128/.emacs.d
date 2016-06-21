@@ -32,6 +32,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'server))
+(eval-when-compile (require 'saveplace))
+
 (require 'init-const)
 
 ;; Disable ad-handle-definition warning
@@ -56,6 +59,18 @@
     (unless (server-running-p)
       (server-start))
     ))
+
+;; History
+(if (fboundp 'save-place-mode)
+    ;; Emacs 25 has a proper mode for `save-place'
+    (save-place-mode 1)
+  (progn
+    (require 'saveplace)
+    (setq save-place t)
+    ))
+
+(recentf-mode 1)
+(savehist-mode 1)
 
 (provide 'init-basic)
 

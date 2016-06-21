@@ -53,9 +53,9 @@
   (eq system-type 'cygwin)
   "Are we running on a Cygwin system?")
 
-(defconst sys/rootp
-  (string-equal "root" (getenv "USER"))
-  "Are you using ROOT user?")
+;; (defconst sys/rootp
+;;   (string-equal "root" (getenv "USER"))
+;;   "Are you using ROOT user?")
 
 (provide 'init-const)
 
