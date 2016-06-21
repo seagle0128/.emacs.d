@@ -62,6 +62,8 @@
 (setq-default c-basic-offset   4
               tab-width        4
               indent-tabs-mode nil)
+;; FIXME: c-basic-offset is set to 2 somehow after restoring.
+(customize-set-variable 'c-basic-offset 4)
 
 ;; Display “lambda” as “λ”
 (when (boundp 'global-prettify-symbols-mode)
