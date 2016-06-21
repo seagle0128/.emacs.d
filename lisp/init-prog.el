@@ -37,6 +37,13 @@
 (use-package csharp-mode :defer t)
 (use-package dockerfile-mode :defer t)
 
+(eval-when-compile (require 'aggressive-indent))
+(require 'robot-mode)
+(add-to-list 'auto-mode-alist '("\\.robot\\'" . robot-mode))
+(diminish 'robot-mode)
+(eval-after-load 'aggressvie-indent
+  '(add-to-list 'aggressive-indent-excluded-modes 'robot-mode))
+
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
