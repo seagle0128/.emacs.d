@@ -61,18 +61,13 @@
 ;; Browse url
 (use-package browse-url-dwim
   :defer t
-  :init
-  (progn
-    (add-hook 'after-init-hook 'browse-url-dwim-mode)
-    (setq browse-url-dwim-always-confirm-extraction nil)
-    ))
+  :init (add-hook 'after-init-hook 'browse-url-dwim-mode))
 
 ;; Tramp
 (use-package tramp
   :defer t
-  :init
-  (let ((val (if (executable-find "plink") "plink" "ssh")))
-    (setq tramp-default-method val)))
+  :init (let ((val (if (executable-find "plink") "plink" "ssh")))
+          (setq tramp-default-method val)))
 
 ;; Tree explorer
 (use-package neotree
