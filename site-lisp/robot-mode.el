@@ -226,15 +226,16 @@ This function is bound to \\[robot-mode-indent].
 (save-excursion
   (beginning-of-line)
   (let ((line (delete-and-extract-region (line-beginning-position) (line-end-position)))
-    )
+        )
     (if (string-match "^[ \t]+" line)
-    (insert (replace-regexp-in-string "^[ \t]+" "" line))
+        (insert (replace-regexp-in-string "^[ \t]+" "" line))
       (insert (concat (robot-indent) line))
       )
     )
   )
 )
 
+;;;###autoload
 (define-derived-mode robot-mode prog-mode
   "robot mode"
   "Major mode for editing Robot Framework text files.
