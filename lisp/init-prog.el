@@ -42,7 +42,7 @@
 (use-package markdown-mode :defer t)
 (use-package powershell :defer t)
 (use-package csharp-mode :defer t)
-(use-package dockerfile-mode :defer t)
+(use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
 
 (provide 'init-prog)
 
