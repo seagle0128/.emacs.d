@@ -84,7 +84,7 @@
 (use-package diff-hl
   :defer t
   :init
-  (add-hook 'after-ini-hook
+  (add-hook 'after-init-hook
             '(lambda ()
                (global-diff-hl-mode t)
                ;; (global-diff-hl-amend-mode t)
