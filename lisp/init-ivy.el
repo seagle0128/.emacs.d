@@ -51,7 +51,7 @@
   :init
   (progn
     (defalias 'load-library 'counsel-load-library)
-    (add-hook 'desktop-after-read-hook '(lambda () (diminish 'ivy-mode)))
+    (add-hook 'ivy-mode-hook '(lambda () (diminish 'ivy-mode)))
     )
   :config
   (progn

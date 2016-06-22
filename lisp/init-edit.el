@@ -48,6 +48,8 @@
 (delete-selection-mode 1)
 (electric-pair-mode 1)
 
+(add-hook 'abbrev-mode-hook '(lambda () (diminish 'abbrev-mode)))
+
 (setq-default major-mode 'text-mode)
 (add-hook 'text-mode-hook
           '(lambda ()

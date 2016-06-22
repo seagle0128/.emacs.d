@@ -40,7 +40,7 @@
     (setq org-agenda-files '("~/org"))
     (setq org-src-fontify-natively t)
     (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
-    (add-hook 'desktop-after-read-hook '(lambda () (diminish 'org-indent-mode)))
+    (add-hook 'org-indent-mode-hook '(lambda () (diminish 'org-indent-mode)))
     ))
 
 (provide 'init-org)
