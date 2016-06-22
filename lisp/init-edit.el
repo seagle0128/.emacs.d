@@ -62,8 +62,6 @@
 (setq-default c-basic-offset   4
               tab-width        4
               indent-tabs-mode nil)
-;; FIXME: c-basic-offset is set to 2 somehow after restoring.
-(customize-set-variable 'c-basic-offset 4)
 
 ;; Display “lambda” as “λ”
 (when (boundp 'global-prettify-symbols-mode)
@@ -123,11 +121,11 @@
   :defer t
   :diminish auto-indent-mode
   :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (setq auto-indent-assign-indent-level-variables nil)
-               (setq auto-indent-indent-style 'conservative)
-               (auto-indent-global-mode 1))))
+  (progn
+    (setq auto-indent-assign-indent-level-variables nil)
+    (setq auto-indent-indent-style 'conservative)
+    (add-hook 'after-init-hook 'auto-indent-global-mode)
+    ))
 
 ;; Anzu mode
 (use-package anzu
