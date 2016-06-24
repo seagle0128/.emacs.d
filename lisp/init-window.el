@@ -50,7 +50,6 @@
 (use-package popwin
   :defer t
   :commands popwin-mode
-  :bind (("C-z" . popwin:keymap))
   :init (add-hook 'after-init-hook 'popwin-mode)
   :config
   (progn
