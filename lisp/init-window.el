@@ -46,6 +46,27 @@
   :bind ("C-x C-z" . zoom-window-zoom)
   :init (setq zoom-window-mode-line-color "DarkGreen"))
 
+;; Popwin
+(use-package popwin
+  :defer t
+  :commands popwin-mode
+  :bind (("C-z" . popwin:keymap))
+  :init (add-hook 'after-init-hook 'popwin-mode)
+  :config
+  (progn
+    (global-set-key (kbd "C-z") popwin:keymap)
+
+    ;; Support browse-kill-ring
+    (eval-after-load 'browse-kill-ring
+      '(progn
+         (defun popwin-bkr:update-window-reference ()
+           (popwin:update-window-reference 'browse-kill-ring-original-window :safe t))
+
+         (add-hook 'popwin:after-popup-hook 'popwin-bkr:update-window-reference)
+
+         (push "*Kill Ring*" popwin:special-display-config)))
+    ))
+
 (provide 'init-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
