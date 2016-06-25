@@ -207,7 +207,7 @@
 
 ;; Smartparens
 (use-package smartparens
-  :disabled
+  :defer t
   :diminish smartparens-mode
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
@@ -231,11 +231,11 @@
               ("M-<right>" . sp-forward-barf-sexp)
               ("C-<left>"  . sp-backward-slurp-sexp)
               ("M-<left>"  . sp-backward-barf-sexp))
+  :init (add-hook 'after-init-hook 'smartparens-global-mode)
   :config
   (progn
     (require 'smartparens-config)
     (electric-pair-mode -1)
-    (smartparens-global-mode 1)
     (show-smartparens-global-mode 1)
 
     ;; Workaround for auto-paring issues for Rails and Django
