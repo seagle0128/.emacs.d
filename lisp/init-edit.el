@@ -231,7 +231,10 @@
               ("M-<right>" . sp-forward-barf-sexp)
               ("C-<left>"  . sp-backward-slurp-sexp)
               ("M-<left>"  . sp-backward-barf-sexp))
-  :init (add-hook 'after-init-hook 'smartparens-global-mode)
+  :init
+  (progn
+    (add-hook 'after-init-hook 'smartparens-global-mode)
+    (add-hook 'minibuffer-setup-hook 'turn-on-smartparens-strict-mode))
   :config
   (progn
     (require 'smartparens-config)
@@ -245,7 +248,92 @@
                    (sp-local-pair 'web-mode "{" "}" :actions nil)
                    (sp-local-pair 'web-mode "<" ">" :actions nil))))
 
-    ))
+    ;; Hydra
+    (bind-key "C-M-s"
+              (defhydra smartparens-hydra ()
+                "Smartparens"
+                ("d" sp-down-sexp "Down")
+                ("e" sp-up-sexp "Up")
+                ("u" sp-backward-up-sexp "Up")
+                ("a" sp-backward-down-sexp "Down")
+                ("f" sp-forward-sexp "Forward")
+                ("b" sp-backward-sexp "Backward")
+                ("k" sp-kill-sexp "Kill" :color blue)
+                ("q" nil "Quit" :color blue))
+              smartparens-mode-map)
+
+    ;; Pair Management
+    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+    (bind-key "C-(" 'sp---wrap-with-40 minibuffer-local-map)
+
+    ;; Markdown-mode
+    (sp-with-modes '(markdown-mode gfm-mode rst-mode)
+      (sp-local-pair "*" "*"
+                     :wrap "C-*"
+                     :unless '(sp-point-after-word-p sp-point-at-bol-p)
+                     :post-handlers '(("[d1]" "SPC"))
+                     :skip-match 'sp--gfm-skip-asterisk)
+      (sp-local-pair "**" "**")
+      (sp-local-pair "_" "_" :wrap "C-_" :unless '(sp-point-after-word-p)))
+
+    (defun sp--gfm-skip-asterisk (ms mb me)
+      (save-excursion
+        (goto-char mb)
+        (save-match-data (looking-at "^\\* "))))
+
+    ;; Org-mode
+    (sp-with-modes 'org-mode
+      (sp-local-pair "*" "*" :actions '(insert wrap) :unless '(sp-point-after-word-p sp-point-at-bol-p) :wrap "C-*" :skip-match 'sp--org-skip-asterisk)
+      (sp-local-pair "_" "_" :unless '(sp-point-after-word-p) :wrap "C-_")
+      (sp-local-pair "/" "/" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+      (sp-local-pair "~" "~" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+      (sp-local-pair "=" "=" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+      (sp-local-pair "«" "»"))
+
+    (defun sp--org-skip-asterisk (ms mb me)
+      (or (and (= (line-beginning-position) mb)
+               (eq 32 (char-after (1+ mb))))
+          (and (= (1+ (line-beginning-position)) me)
+               (eq 32 (char-after me)))))
+
+    ;; tex-mode latex-mode
+    (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
+      (sp-local-tag "i" "\"<" "\">"))
+
+    ;; lisp modes
+    (sp-with-modes sp-lisp-modes
+      (sp-local-pair "(" nil
+                     :wrap "C-("
+                     :pre-handlers '(my-add-space-before-sexp-insertion)
+                     :post-handlers '(my-add-space-after-sexp-insertion)))
+
+    (defun my-add-space-after-sexp-insertion (id action _context)
+      (when (eq action 'insert)
+        (save-excursion
+          (forward-char (sp-get-pair id :cl-l))
+          (when (or (eq (char-syntax (following-char)) ?w)
+                    (looking-at (sp--get-opening-regexp)))
+            (insert " ")))))
+
+    (defun my-add-space-before-sexp-insertion (id action _context)
+      (when (eq action 'insert)
+        (save-excursion
+          (backward-char (length id))
+          (when (or (eq (char-syntax (preceding-char)) ?w)
+                    (and (looking-back (sp--get-closing-regexp))
+                         (not (eq (char-syntax (preceding-char)) ?'))))
+            (insert " ")))))
+
+    ;; C
+    (sp-with-modes '(malabar-mode c-mode)
+      (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+    (sp-local-pair 'c-mode "/*" "*/" :post-handlers '((" | " "SPC")
+                                                      ("* ||\n[i]" "RET")))
+    ;; C++
+    (sp-with-modes '(malabar-mode c++-mode)
+      (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+    (sp-local-pair 'c++-mode "/*" "*/" :post-handlers '((" | " "SPC")
+                                                        ("* ||\n[i]" "RET")))))
 
 (provide 'init-edit)
 
