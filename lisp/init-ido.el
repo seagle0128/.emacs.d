@@ -36,8 +36,8 @@
 (eval-when-compile (require 'recentf))
 
 ;; IDO
-(ido-mode 1)
-(ido-everywhere 1)
+(add-hook 'after-init-hook 'ido-mode)
+(add-hook 'after-init-hook 'ido-everywhere)
 (setq ido-use-filename-at-point 'guess)
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
@@ -56,26 +56,33 @@
      ))
 
 (use-package ido-ubiquitous
-  :config (ido-ubiquitous-mode 1))
+  :defer t
+  :init (add-hook 'after-init-hook 'ido-ubiquitous-mode))
 
 (use-package ido-at-point
-  :config (ido-at-point-mode 1))
+  :defer t
+  :init (add-hook 'after-init-hook 'ido-at-point-mode))
 
 (use-package ido-complete-space-or-hyphen
-  :config (ido-complete-space-or-hyphen-enable))
+  :defer t
+  :init (add-hook 'after-init-hook 'ido-complete-space-or-hyphen-enable))
 
 (use-package ido-sort-mtime
-  :config (ido-sort-mtime-mode 1))
+  :defer t
+  :init (add-hook 'after-init-hook 'ido-sort-mtime-mode))
 
 (use-package ido-vertical-mode
+  :defer t
   :init
   (progn
     (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-    (setq ido-vertical-show-count t))
-  :config (ido-vertical-mode 1))
+    (setq ido-vertical-show-count t)
+    (add-hook 'after-init-hook 'ido-vertical-mode)
+    ))
 
 (use-package flx-ido
-  :config (flx-ido-mode 1))
+  :defer t
+  :init (add-hook 'after-init-hook 'flx-ido-mode))
 
 (use-package ido-load-library
   :defer t
@@ -92,24 +99,27 @@
          ("C-c M-x" . execute-extended-command)))
 
 (use-package ido-occur
-  :config
-  (progn
-    (defun ido-occur-at-point ()
-      "Open ido-occur at point."
-      (interactive)
-      (ido-occur (symbol-name (symbol-at-point))))
+  :defer t
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (progn
+                 (defun ido-occur-at-point ()
+                   "Open ido-occur at point."
+                   (interactive)
+                   (ido-occur (symbol-name (symbol-at-point))))
 
-    (global-set-key (kbd "C-o") 'ido-occur-at-point)
+                 (global-set-key (kbd "C-o") 'ido-occur-at-point)
 
-    (defun ido-occur-from-isearch ()
-      "Open ido-occur from isearch."
-      (interactive)
-      (ido-occur (if isearch-regexp
-                     isearch-string
-                   (regexp-quote isearch-string))))
+                 (defun ido-occur-from-isearch ()
+                   "Open ido-occur from isearch."
+                   (interactive)
+                   (ido-occur (if isearch-regexp
+                                  isearch-string
+                                (regexp-quote isearch-string))))
 
-    (define-key isearch-mode-map (kbd "C-o") 'ido-occur-from-isearch)
-    ))
+                 (define-key isearch-mode-map (kbd "C-o") 'ido-occur-from-isearch)
+                 ))))
 
 (provide 'init-ido)
 
