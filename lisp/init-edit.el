@@ -249,18 +249,20 @@
                    (sp-local-pair 'web-mode "<" ">" :actions nil))))
 
     ;; Hydra
-    (bind-key "C-M-s"
-              (defhydra smartparens-hydra ()
-                "Smartparens"
-                ("d" sp-down-sexp "Down")
-                ("e" sp-up-sexp "Up")
-                ("u" sp-backward-up-sexp "Up")
-                ("a" sp-backward-down-sexp "Down")
-                ("f" sp-forward-sexp "Forward")
-                ("b" sp-backward-sexp "Backward")
-                ("k" sp-kill-sexp "Kill" :color blue)
-                ("q" nil "Quit" :color blue))
-              smartparens-mode-map)
+    (use-package hydra
+      :config
+      (bind-key "C-M-s"
+                (defhydra smartparens-hydra ()
+                  "Smartparens"
+                  ("d" sp-down-sexp "Down")
+                  ("e" sp-up-sexp "Up")
+                  ("u" sp-backward-up-sexp "Up")
+                  ("a" sp-backward-down-sexp "Down")
+                  ("f" sp-forward-sexp "Forward")
+                  ("b" sp-backward-sexp "Backward")
+                  ("k" sp-kill-sexp "Kill" :color blue)
+                  ("q" nil "Quit" :color blue))
+                smartparens-mode-map))
 
     ;; Pair Management
     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
