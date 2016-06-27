@@ -252,7 +252,7 @@
     (use-package hydra
       :config
       (bind-key "C-M-s"
-                (defhydra smartparens-hydra ()
+                (defhydra smartparens-hydra (:color pink)
                   "Smartparens"
                   ("d" sp-down-sexp "Down")
                   ("e" sp-up-sexp "Up")
