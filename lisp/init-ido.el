@@ -36,8 +36,8 @@
 (eval-when-compile (require 'recentf))
 
 ;; IDO
-(add-hook 'after-init-hook 'ido-mode)
-(add-hook 'after-init-hook 'ido-everywhere)
+(ido-mode 1)
+(ido-everywhere 1)
 (setq ido-use-filename-at-point 'guess)
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
