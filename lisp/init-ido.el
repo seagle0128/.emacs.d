@@ -35,7 +35,6 @@
 (eval-when-compile (require 'ido))
 (eval-when-compile (require 'recentf))
 
-;; IDO
 (ido-mode 1)
 (ido-everywhere 1)
 (setq ido-use-filename-at-point 'guess)

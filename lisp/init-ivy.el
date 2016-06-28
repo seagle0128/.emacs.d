@@ -32,7 +32,6 @@
 ;;
 ;;; Code:
 
-;; IVY
 (use-package counsel
   :defer t
   :diminish counsel-mode ivy-mode

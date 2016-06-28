@@ -34,6 +34,8 @@
 
 (use-package ibuffer
   :defer t
+  :defines ibuffer-saved-filter-groups
+  :commands ibuffer-switch-to-saved-filter-groups
   :bind ("C-x C-b" . ibuffer)
   :config
   (setq ibuffer-saved-filter-groups
