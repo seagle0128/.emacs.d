@@ -260,6 +260,8 @@
                   ("a" sp-backward-down-sexp "Down")
                   ("f" sp-forward-sexp "Forward")
                   ("b" sp-backward-sexp "Backward")
+                  ("s" sp-split-sexp "Split")
+                  ("j" sp-join-sexp "Join")
                   ("k" sp-kill-sexp "Kill" :color blue)
                   ("q" nil "Quit" :color blue))
                 smartparens-mode-map))
