@@ -35,28 +35,6 @@
 (use-package smartparens
   :defer t
   :diminish smartparens-mode
-  :bind (:map smartparens-mode-map
-              ("C-M-a" . sp-beginning-of-sexp)
-              ("C-M-e" . sp-end-of-sexp)
-
-              ("C-<down>" . sp-down-sexp)
-              ("C-<up>"   . sp-up-sexp)
-              ("M-<down>" . sp-backward-down-sexp)
-              ("M-<up>"   . sp-backward-up-sexp)
-
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp)
-
-              ("C-M-n" . sp-next-sexp)
-              ("C-M-p" . sp-previous-sexp)
-
-              ("C-S-f" . sp-forward-symbol)
-              ("C-S-b" . sp-backward-symbol)
-
-              ("C-<right>" . sp-forward-slurp-sexp)
-              ("M-<right>" . sp-forward-barf-sexp)
-              ("C-<left>"  . sp-backward-slurp-sexp)
-              ("M-<left>"  . sp-backward-barf-sexp))
   :init
   (progn
     (add-hook 'after-init-hook 'smartparens-global-mode)
@@ -66,25 +44,20 @@
     (require 'smartparens-config)
     (show-smartparens-global-mode 1)
 
-    ;; Workaround for auto-paring issues for Rails and Django
-    (eval-after-load 'web-mode
-      (add-hook 'web-mode-hook
-                '(lambda ()
-                   (sp-local-pair 'web-mode "{" "}" :actions nil)
-                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
-
     ;; Hydra
     (use-package hydra
       :config
       (bind-key "C-M-s"
-                (defhydra smartparens-hydra (:color pink)
+                (defhydra hydra-smartparens (:color pink)
                   "Smartparens"
                   ("d" sp-down-sexp "Down")
-                  ("e" sp-up-sexp "Up")
-                  ("u" sp-backward-up-sexp "Up")
-                  ("a" sp-backward-down-sexp "Down")
+                  ("u" sp-up-sexp "Up")
+                  ("e" sp-backward-up-sexp "Backward Up")
+                  ("a" sp-backward-down-sexp "Backward Down")
                   ("f" sp-forward-sexp "Forward")
                   ("b" sp-backward-sexp "Backward")
+                  ("n" sp-next-sexp "Next")
+                  ("p" sp-previous-sexp "Previous")
                   ("s" sp-split-sexp "Split")
                   ("j" sp-join-sexp "Join")
                   ("k" sp-kill-sexp "Kill" :color blue)
@@ -94,6 +67,13 @@
     ;; Pair Management
     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
     (bind-key "C-(" 'sp---wrap-with-40 minibuffer-local-map)
+
+    ;; Workaround for auto-paring issues for Rails and Django
+    (eval-after-load 'web-mode
+      (add-hook 'web-mode-hook
+                '(lambda ()
+                   (sp-local-pair 'web-mode "{" "}" :actions nil)
+                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
 
     ;; Markdown-mode
     (sp-with-modes '(markdown-mode gfm-mode rst-mode)
