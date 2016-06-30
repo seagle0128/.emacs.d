@@ -35,6 +35,7 @@
 (use-package smartparens
   :defer t
   :diminish smartparens-mode
+  :commands sp-with-modes
   :init
   (progn
     (add-hook 'after-init-hook 'smartparens-global-mode)

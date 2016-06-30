@@ -41,7 +41,9 @@
     (setq org-src-fontify-natively t)
     (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
     (add-hook 'org-indent-mode-hook '(lambda () (diminish 'org-indent-mode)))
-
+    )
+  :config
+  (progn
     (use-package hydra
       :config
       (progn
