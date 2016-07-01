@@ -52,9 +52,9 @@
                 (defhydra hydra-smartparens (:color pink)
                   "Smartparens"
                   ("d" sp-down-sexp "Down")
-                  ("u" sp-up-sexp "Up")
-                  ("e" sp-backward-up-sexp "Backward Up")
-                  ("a" sp-backward-down-sexp "Backward Down")
+                  ("e" sp-up-sexp "Up")
+                  ("u" sp-backward-up-sexp "Up")
+                  ("a" sp-backward-down-sexp "Down")
                   ("f" sp-forward-sexp "Forward")
                   ("b" sp-backward-sexp "Backward")
                   ("n" sp-next-sexp "Next")
