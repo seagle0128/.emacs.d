@@ -32,9 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'cua-base))
-(eval-when-compile (require 'multiple-cursors))
-
 ;; Miscs
 ;; (setq initial-scratch-message nil)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
