@@ -47,11 +47,6 @@
          ("C-h v" . counsel-describe-variable)
          :map read-expression-map
          ("C-r" . counsel-expression-history))
-  :init
-  (progn
-    (defalias 'load-library 'counsel-load-library)
-    (add-hook 'ivy-mode-hook '(lambda () (diminish 'ivy-mode)))
-    )
   :config
   (progn
     (counsel-mode 1)
