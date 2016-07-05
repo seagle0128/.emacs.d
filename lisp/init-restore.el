@@ -32,9 +32,7 @@
 ;;
 ;;; Code:
 
-(use-package desktop+
-  :config
-  (desktop-save-mode 1))
+(desktop-save-mode 1)
 
 (use-package persistent-scratch
   :defer t
