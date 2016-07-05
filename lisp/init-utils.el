@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'neotree))
-
 (require 'init-const)
 
 ;; Dos2Unix

@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'aggressive-indent))
-
 ;; Robot mode: located in site-lisp
 (autoload 'robot-mode "robot-mode")
 (add-to-list 'auto-mode-alist '("\\.robot\\'" . robot-mode))
