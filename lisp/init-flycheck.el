@@ -44,6 +44,9 @@
 
     (use-package flycheck-pos-tip
       :config (flycheck-pos-tip-mode 1))
+
+    (use-package avy-flycheck
+      :config (avy-flycheck-setup))
     ))
 
 (provide 'init-flycheck)
