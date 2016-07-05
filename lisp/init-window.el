@@ -53,7 +53,7 @@
   :init (add-hook 'after-init-hook 'popwin-mode)
   :config
   (progn
-    (global-set-key (kbd "C-z") popwin:keymap)
+    ;; (global-set-key (kbd "C-z") popwin:keymap)
 
     ;; Support browse-kill-ring
     (eval-after-load 'browse-kill-ring

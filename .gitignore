@@ -30,3 +30,4 @@ tmp*
 /.mc-lists.el
 /company-statistics-cache.el
 /.emacs-buffers
+/elscreen

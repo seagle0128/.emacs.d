@@ -32,9 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'server))
-(eval-when-compile (require 'saveplace))
-
 (require 'init-const)
 
 ;; Disable ad-handle-definition warning
