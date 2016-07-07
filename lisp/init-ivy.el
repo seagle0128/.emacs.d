@@ -47,11 +47,13 @@
          ("C-h v" . counsel-describe-variable)
          :map read-expression-map
          ("C-r" . counsel-expression-history))
+  :init
+  (progn
+    (add-hook 'after-init-hook 'counsel-mode)
+    (add-hook 'after-init-hook 'ivy-mode)
+    )
   :config
   (progn
-    (counsel-mode 1)
-    (ivy-mode 1)
-
     (setq ivy-use-virtual-buffers t)
     (setq ivy-height 10)
     (setq ivy-count-format "(%d/%d) ")
