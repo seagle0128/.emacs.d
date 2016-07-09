@@ -53,6 +53,15 @@
    ("C-h a"   . helm-apropos)
    ("C-h i"   . helm-info-emacs)
    ("C-."     . helm-imenu))
+  :init
+  (progn
+    (add-hook 'after-init-hook 'helm-mode)
+    (add-hook 'after-init-hook 'helm-adaptive-mode)
+    ;; (add-hook 'after-init-hook 'helm-autoresize-mode)
+    (add-hook 'desktop-after-read-hook
+              '(lambda()
+                 (diminish 'helm-mode)))
+    )
   :config
   (progn
     (require 'helm-config)
@@ -76,15 +85,6 @@
     ;; exchange TAB and C-z
     (bind-key "TAB" 'helm-execute-persistent-action helm-map)
     (bind-key "C-z" 'helm-select-action helm-map)
-
-    ;; modes
-    (helm-mode 1)
-    ;; (helm-autoresize-mode 1)
-    (helm-adaptive-mode 1)
-
-    (add-hook 'desktop-after-read-hook
-              '(lambda()
-                 (diminish 'helm-mode)))
 
     ;; plugins
     (use-package helm-flx
