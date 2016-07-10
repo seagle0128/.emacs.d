@@ -31,3 +31,4 @@ tmp*
 /company-statistics-cache.el
 /.emacs-buffers
 /elscreen
+/network-security.data
