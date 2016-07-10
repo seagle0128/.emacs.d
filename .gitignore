@@ -32,3 +32,5 @@ tmp*
 /.emacs-buffers
 /elscreen
 /network-security.data
+/games/
+/persp-confs/

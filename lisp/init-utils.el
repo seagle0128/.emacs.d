@@ -74,8 +74,10 @@
          ([C-f12] . neotree-toggle))
   :init (add-hook 'neotree-mode-hook '(lambda () (linum-mode -1))))
 
-;; Rotate window layout
-(use-package rotate :defer t)
+;; Perspectives
+(use-package persp-mode
+  :defer t
+  :init (add-hook 'after-init-hook 'persp-mode))
 
 ;; Dash
 (use-package dash-at-point
