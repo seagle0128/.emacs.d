@@ -41,10 +41,10 @@
 (setq user-full-name "Vincent Zhang")
 (setq user-mail-address "seagle012@gmail.com")
 
-;; Enviornment
+;; Environment
 (use-package exec-path-from-shell
   :defer t
-  :if sys/macp
+  :if sys/mac-x-p
   :init (add-hook 'after-init-hook 'exec-path-from-shell-initialize))
 
 ;; Start server

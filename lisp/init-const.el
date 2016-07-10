@@ -45,6 +45,10 @@
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
 
+(defconst sys/mac-x-p
+  (and (display-graphic-p) sys/macp)
+  "Are we running under X on a Mac system?")
+
 (defconst sys/linux-x-p
   (and (display-grayscale-p) sys/linuxp)
   "Are we running under X on a GNU/Linux system?")
