@@ -77,7 +77,8 @@
 ;; Perspectives
 (use-package persp-mode
   :defer t
-  :init (add-hook 'after-init-hook 'persp-mode))
+  :init (add-hook 'after-init-hook 'persp-mode)
+  :config (setq persp-nil-name "main"))
 
 ;; Dash
 (use-package dash-at-point
