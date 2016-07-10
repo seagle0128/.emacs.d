@@ -45,7 +45,6 @@
 ;;
 ;;; Code:
 
-(package-initialize)
 (setq load-prefer-newer t)
 
 ;; Load path
@@ -56,6 +55,7 @@
 (require 'init-custom)
 
 ;; Packages
+(package-initialize)
 (require 'init-package)
 
 (use-package benchmark-init

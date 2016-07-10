@@ -34,17 +34,8 @@
 
 (desktop-save-mode 1)
 
-;; ElScreen
-(use-package elscreen-persist
-  :defer t
-  :defines desktop-files-not-to-save
-  :init (progn
-          (setq desktop-files-not-to-save "")
-          (add-hook 'desktop-after-read-hook 'elscreen-start)
-          (add-hook 'desktop-after-read-hook 'elscreen-persist-mode)
-          ))
-
 (use-package persistent-scratch
+  :ensure t                             ; DO NOT remove to force install
   :defer t
   :init (add-hook 'desktop-after-read-hook 'persistent-scratch-setup-default))
 
