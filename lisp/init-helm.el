@@ -55,9 +55,12 @@
    ("C-."     . helm-imenu))
   :init
   (progn
-    (add-hook 'after-init-hook 'helm-mode)
-    (add-hook 'after-init-hook 'helm-adaptive-mode)
-    ;; (add-hook 'after-init-hook 'helm-autoresize-mode)
+    (add-hook 'after-init-hook
+              '(lambda ()
+                 (helm-mode 1)
+                 (helm-adaptive-mode 1)))
+    (add-hook 'desktop-after-read-hook
+              '(lambda () (diminish 'helm-mode)))
     )
   :config
   (progn
