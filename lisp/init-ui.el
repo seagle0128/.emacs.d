@@ -92,7 +92,7 @@
 
 (use-package smooth-scrolling
   :defer t
-  :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
+  :init (add-hook 'window-setup-hook 'smooth-scrolling-mode)
   :config (setq smooth-scroll-margin 0))
 
 ;; Display Time

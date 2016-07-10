@@ -49,16 +49,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package use-package
-  :init (setq use-package-always-ensure t))
+(use-package use-package :init (setq use-package-always-ensure t))
 
 (use-package paradox
   :defer t
-  :init
-  (progn
-    (setq paradox-github-token t)
-    (setq paradox-execute-asynchronously t)
-    ))
+  :init (progn
+          (setq paradox-github-token t)
+          (setq paradox-execute-asynchronously t)))
 
 (provide 'init-package)
 

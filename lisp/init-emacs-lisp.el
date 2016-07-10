@@ -52,17 +52,18 @@
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
   (interactive)
+  (setq use-package-always-ensure nil)  ; Don't install packages that not needed
   (byte-recompile-file user-init-file 0 0)
   (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
   (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0))
 
-;; (add-hook 'after-init-hook 'byte-compile-init-dir)
 (add-hook 'kill-emacs-hook 'byte-compile-init-dir)
 
 (defun recompile-el-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
   (add-hook 'after-save-hook
             (lambda ()
+              (setq use-package-always-ensure nil)  ; Don't install packages that not needed
               (byte-recompile-file buffer-file-name 0 0))
             nil
             t))
