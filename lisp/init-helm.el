@@ -58,9 +58,6 @@
     (add-hook 'after-init-hook 'helm-mode)
     (add-hook 'after-init-hook 'helm-adaptive-mode)
     ;; (add-hook 'after-init-hook 'helm-autoresize-mode)
-    (add-hook 'desktop-after-read-hook
-              '(lambda()
-                 (diminish 'helm-mode)))
     )
   :config
   (progn
