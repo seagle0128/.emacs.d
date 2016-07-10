@@ -33,8 +33,17 @@
 ;;; Code:
 
 (package-initialize)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+
+;; ELPA
+;; Refer to https://elpa.emacs-china.org/
+
+;; Official
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+
+;; Mirror
+(setq package-archives '(("gnu"   . "https://elpa.zilongshanren.com/gnu/")
+                         ("melpa" . "https://elpa.zilongshanren.com/melpa/")))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
