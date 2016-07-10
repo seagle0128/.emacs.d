@@ -42,8 +42,8 @@
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 ;; Mirror
-(setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-                         ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+(setq package-archives '(("gnu"   . "https://elpa.zilongshanren.com/gnu/")
+                         ("melpa" . "https://elpa.zilongshanren.com/melpa/")))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -53,9 +53,9 @@
 
 (use-package paradox
   :defer t
-  :init (progn
-          (setq paradox-github-token t)
-          (setq paradox-execute-asynchronously t)))
+  :config (progn
+            (setq paradox-github-token t)
+            (setq paradox-execute-asynchronously t)))
 
 (provide 'init-package)
 
