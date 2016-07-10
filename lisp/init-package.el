@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(package-initialize)
+;; (package-initialize)
 
 ;; ELPA
 ;; Refer to https://elpa.emacs-china.org/

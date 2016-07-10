@@ -51,10 +51,11 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
-;; Load custom
+;; Customization
 (require 'init-custom)
 
 ;; Packages
+(package-initialize)
 (require 'init-package)
 
 (if my-profile-enable
