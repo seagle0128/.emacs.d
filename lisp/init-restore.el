@@ -35,7 +35,6 @@
 (desktop-save-mode 1)
 
 (use-package persistent-scratch
-  :ensure t                             ; DO NOT remove to force install
   :defer t
   :init (add-hook 'desktop-after-read-hook 'persistent-scratch-setup-default))
 
