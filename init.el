@@ -45,6 +45,7 @@
 ;;
 ;;; Code:
 
+(package-initialize)
 (setq load-prefer-newer t)
 
 ;; Load path
@@ -55,12 +56,11 @@
 (require 'init-custom)
 
 ;; Packages
-(package-initialize)
 (require 'init-package)
 
-(if my-profile-enable
-    (use-package benchmark-init
-      :config (benchmark-init/activate)))
+(use-package benchmark-init
+  :if my-profile-enable
+  :config (benchmark-init/activate))
 
 ;; Preferences
 (require 'init-basic)
