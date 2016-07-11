@@ -29,8 +29,5 @@ eshell/
 tmp*
 /.mc-lists.el
 /company-statistics-cache.el
-/.emacs-buffers
-/elscreen
-/network-security.data
 /games/
 /persp-confs/

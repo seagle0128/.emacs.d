@@ -34,8 +34,7 @@
 
 ;; (package-initialize)
 
-;; ELPA
-;; Refer to https://elpa.emacs-china.org/
+;; ELPA: refer to https://elpa.emacs-china.org/
 
 ;; Official
 ;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
