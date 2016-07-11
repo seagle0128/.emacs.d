@@ -42,8 +42,8 @@
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 ;; Mirror
-(setq package-archives '(("gnu"   . "https://elpa.zilongshanren.com/gnu/")
-                         ("melpa" . "https://elpa.zilongshanren.com/melpa/")))
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
