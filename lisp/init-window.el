@@ -35,10 +35,10 @@
 (windmove-default-keybindings)
 (winner-mode 1)
 
-;; Switch window
-(use-package switch-window
+;; Ace window
+(use-package ace-window
   :defer t
-  :bind ("C-x o" . switch-window))
+  :bind ("C-x o" . ace-window))
 
 ;; Zoom window
 (use-package zoom-window
