@@ -52,7 +52,7 @@
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
   (interactive)
-  (setq use-package-always-ensure nil)
+  (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
   (byte-recompile-file user-init-file 0 0)
   (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
   (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0)
@@ -68,7 +68,7 @@
             nil
             t))
 
-;; (add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
+(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
 
 (provide 'init-emacs-lisp)
 
