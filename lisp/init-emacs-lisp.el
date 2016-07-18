@@ -48,6 +48,14 @@
     (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
     ))
 
+;; Make M-. and M-, work in elisp like they do in slime.
+;; In Emacs 25, xref is perfect, so only enable in <=24.
+(use-package elisp-slime-nav
+  :defer t
+  :if (< emacs-major-version 25)
+  :init (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
+          (add-hook hook 'elisp-slime-nav-mode)))
+
 ;; Byte compiler
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
