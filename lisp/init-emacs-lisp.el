@@ -53,6 +53,7 @@
 (use-package elisp-slime-nav
   :defer t
   :if (< emacs-major-version 25)
+  :diminish elisp-slime-nav-mode
   :init (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
           (add-hook hook 'elisp-slime-nav-mode)))
 
