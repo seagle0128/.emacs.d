@@ -32,21 +32,28 @@
 ;;
 ;;; Code:
 
-(windmove-default-keybindings)
-(winner-mode 1)
+;; Directional window-selection routines
+(use-package windmove
+  :defer t
+  :init (add-hook 'window-setup-hook 'windmove-default-keybindings))
 
-;; Ace window
+;; Restore old window configurations
+(use-package winner
+  :defer t
+  :init (add-hook 'window-setup-hook 'winner-mode))
+
+;; Quickly switch windows
 (use-package ace-window
   :defer t
   :bind ("C-x o" . ace-window))
 
-;; Zoom window
+;; Zoom window like tmux
 (use-package zoom-window
   :defer t
   :bind ("C-x C-z" . zoom-window-zoom)
   :init (setq zoom-window-mode-line-color "DarkGreen"))
 
-;; Popwin
+;; Popup Window Manager
 (use-package popwin
   :defer t
   :commands popwin-mode
