@@ -94,8 +94,8 @@
   :bind ("C-c y" . youdao-dictionary-search-at-point))
 
 ;; Search
-(when (executable-find "ack") (use-package ack :defer t))
-(when (executable-find "ag") (use-package ag :defer t))
+(use-package ack :defer t :if (executable-find "ack"))
+(use-package ag :defer t :if (executable-find "ag"))
 
 ;; Misc
 (use-package htmlize :defer t)
