@@ -45,6 +45,11 @@
          ("C-S-t" . counsel-projectile-find-file)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
+         ("C-h u" . counsel-unicode-char)
+         ("C-c i" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c s" . counsel-ag)
+         ("C-c l" . counsel-locate)
          :map read-expression-map
          ("C-r" . counsel-expression-history))
   :init
