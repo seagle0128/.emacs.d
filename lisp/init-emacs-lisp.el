@@ -41,12 +41,10 @@
 (use-package eldoc
   :defer t
   :diminish eldoc-mode
-  :init
-  (progn
-    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-    ))
+  :init (progn
+          (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)))
 
 ;; Make M-. and M-, work in elisp like they do in slime.
 ;; In Emacs 25, xref is perfect, so only enable in <=24.
@@ -56,6 +54,12 @@
   :diminish elisp-slime-nav-mode
   :init (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
           (add-hook hook 'elisp-slime-nav-mode)))
+
+;; Interactive macro expander
+(use-package macrostep
+  :defer t
+  :bind (:map emacs-lisp-mode-map
+              ("C-c e" . macrostep-expand)))
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()
