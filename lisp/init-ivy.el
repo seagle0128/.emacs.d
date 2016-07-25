@@ -67,6 +67,7 @@
           '((read-file-name-internal . ivy--regex-fuzzy)
             (t . ivy--regex-plus)))
 
+    (setq swiper-action-recenter t)
     (setq counsel-find-file-at-point t)
 
     (setq projectile-completion-system 'ivy)
