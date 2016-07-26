@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Menu/Tool/Scroll bars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -60,7 +62,15 @@
 ;; Color theme
 (use-package monokai-theme
   :defer t
-  :init (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t))))
+  :init
+  (progn
+    (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t)))
+
+    ;; FIX: Invalid font in org-mode on Windows
+    ;; https://github.com/oneKelvinSmith/monokai-emacs/issues/56
+    (when (and sys/win32p (> emacs-major-version 24))
+      (add-hook 'window-setup-hook '(lambda () (load-theme 'monokai t))))
+    ))
 
 ;; Fonts
 (use-package chinese-fonts-setup
