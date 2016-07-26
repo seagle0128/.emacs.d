@@ -55,6 +55,9 @@
     (add-hook 'less-css-mode-hook 'turn-on-css-eldoc)
     ))
 
+;; Json mode
+(use-package json-mode :defer t)
+
 ;; JS2 mode
 (use-package js2-mode
   :defer t
@@ -63,7 +66,7 @@
   :init
   (add-hook 'js2-mode-hook
             '(lambda ()
-               (setq js-indent-level 2)
+               (setq js2-basic-offset 2)
                (js2-highlight-unused-variables-mode 1)
                (js2-imenu-extras-mode 1)))
   :config
@@ -100,11 +103,19 @@
 ;; Web beautify
 (use-package web-beautify
   :defer t
-  :bind
-  ((:map js2-mode-map ("C-c C-b" . web-beautify-js))
-   (:map json-mode-map "C-c C-b" . web-beautify-js)
-   (:map sgml-mode-map "C-c C-b" . web-beautify-html)
-   (:map css-mode-map "C-c C-b" . web-beautify-css)))
+  :init
+  (progn
+    (eval-after-load 'js2-mode
+      '(define-key js2-mode-map (kbd "C-c C-b") 'web-beautify-js))
+    (eval-after-load 'json-mode
+      '(define-key json-mode-map (kbd "C-c C-b") 'web-beautify-js))
+    (eval-after-load 'sgml-mode
+      '(define-key html-mode-map (kbd "C-c C-b") 'web-beautify-html))
+    (eval-after-load 'css-mode
+      '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css)))
+  :config
+  (setq web-beautify-args '("-s" "2" "-f" "-")) ; Set indent size to 2
+  )
 
 (use-package haml-mode :defer t)
 (use-package php-mode :defer t)
