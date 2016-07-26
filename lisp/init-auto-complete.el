@@ -54,8 +54,13 @@
             ac-source-files-in-current-dir
             ac-source-filename ))
 
-    (use-package ac-inf-ruby :defer t)
-    (use-package ac-js2 :defer t)
+    (use-package ac-inf-ruby
+      :defer t
+      :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
+
+    (use-package ac-js2
+      :defer t
+      :init (add-hook 'js2-mode-hook 'ac-js2-mode 1))
     ))
 
 (provide 'init-auto-complete)

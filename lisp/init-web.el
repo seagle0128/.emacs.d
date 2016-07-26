@@ -64,12 +64,14 @@
   (add-hook 'js2-mode-hook
             '(lambda ()
                (setq js-indent-level 2)
-               (js2-imenu-extras-mode 1)
-               (ac-js2-mode 1)))
+               (js2-highlight-unused-variables-mode 1)
+               (js2-imenu-extras-mode 1)))
   :config
   (use-package js2-refactor
     :defer t
-    :init (add-hook 'js2-mode-hook #'js2-refactor-mode))
+    :diminish js2-refactor-mode
+    :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
+    :config (js2r-add-keybindings-with-prefix "C-c C-m"))
   )
 
 ;; Coffee mode

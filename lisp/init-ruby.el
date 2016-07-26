@@ -51,22 +51,16 @@
       (progn
         (add-hook 'ruby-mode-hook 'robe-mode)
 
-        ;; auto complete
         (eval-after-load 'auto-complete
           '(add-hook 'robe-mode-hook 'ac-robe-setup))
-        (eval-after-load 'auto-complete
-          '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
-        (eval-after-load 'auto-complete
-          '(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
-        (eval-after-load 'auto-complete
-          '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
 
-        ;; company
         (eval-after-load 'company
-          '(push 'company-robe company-backends))))
+          '(push 'company-robe company-backends))
+        ))
 
     (use-package ruby-refactor
       :defer t
+      :diminish ruby-refactor-mode
       :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
     ;; inf-ruby
@@ -77,6 +71,10 @@
         (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
         (add-hook 'after-init-hook 'inf-ruby-switch-setup)
         (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
+        (eval-after-load 'auto-complete
+          '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
+        (eval-after-load 'auto-complete
+          '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
         ))
 
     ;; Rubocop
