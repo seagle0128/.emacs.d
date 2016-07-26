@@ -77,7 +77,9 @@
   "If you're saving an elisp file, likely the .elc is no longer valid."
   (add-hook 'after-save-hook
             (lambda ()
-              (byte-recompile-file buffer-file-name 0 0))
+              (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
+              (byte-recompile-file buffer-file-name 0 0)
+              (setq use-package-always-ensure t))
             nil
             t))
 
