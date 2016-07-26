@@ -65,6 +65,10 @@
         (eval-after-load 'company
           '(push 'company-robe company-backends))))
 
+    (use-package ruby-refactor
+      :defer t
+      :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
+
     ;; inf-ruby
     (use-package inf-ruby
       :defer t
