@@ -103,6 +103,7 @@
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :defer t
+  :diminish skewer-mode
   :init
   (progn
     (eval-after-load 'js2-mode
