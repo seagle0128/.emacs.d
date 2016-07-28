@@ -77,7 +77,6 @@
 ;; Perspectives
 (use-package persp-mode
   :defer t
-  :bind (("C-x b" . persp-switch-to-buffer))
   :init (add-hook 'after-init-hook 'persp-mode))
 
 ;; Dash
