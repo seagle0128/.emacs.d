@@ -38,20 +38,17 @@
   :commands ibuffer-switch-to-saved-filter-groups
   :bind ("C-x C-b" . ibuffer)
   :config
-  (setq ibuffer-saved-filter-groups
-        '(("default"
-           ("Dired" (mode . dired-mode))
-           ("Emacs Lisp" (mode . emacs-lisp-mode))
-           ("C" (mode . c-mode))
-           ("C++" (mode . c++-mode))
-           ("Org" (mode . org-mode))
-           ("Python" (mode . python-mode))
-           ("Ruby" (mode . ruby-mode))
-           ("Helm" (predicate string-match "Helm" mode-name))
-           ("Earmuffs" (name . "^\\*.*?\\*$")))))
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups "default"))))
+  (progn
+    (use-package ibuffer-vc
+      :defer t
+      :init
+      (add-hook 'ibuffer-hook
+                (lambda ()
+                  (ibuffer-vc-set-filter-groups-by-vc-root)
+                  (unless (eq ibuffer-sorting-mode 'alphabetic)
+                    (ibuffer-do-sort-by-alphabetic))))
+      )
+    ))
 
 (provide 'init-ibuffer)
 
