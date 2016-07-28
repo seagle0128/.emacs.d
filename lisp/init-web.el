@@ -58,7 +58,7 @@
 ;; Json mode
 (use-package json-mode :defer t)
 
-;; JS2 mode
+;; Improved JavaScript editing mode
 (use-package js2-mode
   :defer t
   :mode "\\.js$"
@@ -77,12 +77,12 @@
     :config (js2r-add-keybindings-with-prefix "C-c C-m"))
   )
 
-;; Coffee mode
+;; Major mode for CoffeeScript code
 (use-package coffee-mode
   :defer t
   :init (setq coffee-tab-width 2))
 
-;; Web mode
+;; Major mode for editing web templates
 (use-package web-mode
   :defer t
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
@@ -100,7 +100,20 @@
       '(add-to-list 'aggressive-indent-excluded-modes 'web-mode))
     ))
 
-;; Web beautify
+;; Live browser JavaScript, CSS, and HTML interaction
+(use-package skewer-mode
+  :defer t
+  :init
+  (progn
+    (eval-after-load 'js2-mode
+      '(add-hook 'js2-mode-hook 'skewer-mode))
+    (eval-after-load 'css-mode
+      '(add-hook 'css-mode-hook 'skewer-css-mode))
+    (eval-after-load 'sgml-mode
+      '(add-hook 'html-mode-hook 'skewer-html-mode))
+    ))
+
+;; Format HTML, CSS and JavaScript/JSON by js-beautify
 (use-package web-beautify
   :defer t
   :init
