@@ -75,11 +75,17 @@
       :diminish anaconda-mode
       :init (add-hook 'python-mode-hook 'anaconda-mode)
       :config
-      (eval-after-load 'company
-        '(use-package company-anaconda
-           :defer t
-           :defines company-backends
-           :init (add-to-list 'company-backends '(company-anaconda :with company-capf)))))
+      (progn
+        (eval-after-load 'auto-complete
+          '(use-package ac-anaconda
+             :defer t
+             :init (add-hook 'python-mode-hook 'ac-anaconda-setup)))
+
+        (eval-after-load 'company
+          '(use-package company-anaconda
+             :defer t
+             :defines company-backends
+             :init (add-to-list 'company-backends '(company-anaconda :with company-yasnippet))))))
     ))
 
 (provide 'init-python)

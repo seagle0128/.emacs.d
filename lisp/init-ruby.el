@@ -55,7 +55,7 @@
           '(add-hook 'robe-mode-hook 'ac-robe-setup))
 
         (eval-after-load 'company
-          '(push '(company-robe :with company-capf) company-backends))
+          '(push '(company-robe :with company-yasnippet) company-backends))
         ))
 
     (use-package ruby-refactor
