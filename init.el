@@ -69,7 +69,7 @@
 (require 'init-edit)
 (require 'init-smartparens)
 (require 'init-ibuffer)
-(require 'init-kill-ring)               ; Must before completion framework
+(require 'init-kill-ring)
 
 (cond
  ((eq my-completion-method 'helm)
