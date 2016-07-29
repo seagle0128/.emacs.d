@@ -35,6 +35,7 @@
 (use-package company
   :defer t
   :diminish company-mode
+  :bind (("M-/" . company-complete))
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
   (progn

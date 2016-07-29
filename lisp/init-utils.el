@@ -77,10 +77,9 @@
 ;; Perspectives
 (use-package persp-mode
   :defer t
-  :init (progn
-          (setq persp-nil-name "main")               ; Do not use "none"
-          (setq persp-keymap-prefix (kbd "C-c C-p")) ; Avoid conflict with projectile
-          (add-hook 'after-init-hook 'persp-mode)))
+  :init (progn (setq persp-nil-name "main")               ; Do not use "none"
+               (setq persp-keymap-prefix (kbd "C-c C-p")) ; Avoid conflict with projectile
+               (add-hook 'after-init-hook 'persp-mode)))
 
 ;; Dash
 (use-package dash-at-point
