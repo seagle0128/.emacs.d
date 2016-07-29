@@ -77,7 +77,11 @@
 
     (use-package smex :defer t)
     (use-package ivy-hydra :defer t)
-    (use-package counsel-projectile :defer t)
+
+    (use-package counsel-projectile
+      :defer t
+      :bind (("C-S-t" . counsel-projectile-find-file))
+      :init (setq projectile-switch-project-action 'counsel-projectile-find-file))
     ))
 
 (provide 'init-ivy)
