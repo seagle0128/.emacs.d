@@ -45,6 +45,9 @@
 ;;
 ;;; Code:
 
+(unless (>= emacs-major-version 24)
+  (error "This requires Emacs 24 or later!"))
+
 (setq load-prefer-newer t)
 
 ;; Load path
