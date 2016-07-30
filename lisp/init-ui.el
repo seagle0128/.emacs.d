@@ -112,7 +112,7 @@
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
-;; (setq visible-bell t)
+(setq visible-bell t)
 (setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
 (size-indication-mode 1)
 ;; (blink-cursor-mode -1)
