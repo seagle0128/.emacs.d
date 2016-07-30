@@ -60,16 +60,22 @@
 ;; History
 (if (fboundp 'save-place-mode)
     ;; Emacs 25 has a proper mode for `save-place'
-    (save-place-mode 1)
+    (use-package saveplace
+      :defer t
+      :init (add-hook 'after-init-hook 'save-place-mode))
   (progn
     (require 'saveplace)
     (setq save-place t)
     ))
 
-(recentf-mode 1)
+(use-package recentf
+  :defer t
+  :init (add-hook 'after-init-hook 'recentf-mode))
 
-(savehist-mode 1)
-(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+(use-package savehist
+  :defer t
+  :init (add-hook 'after-init-hook 'savehist-mode)
+  :config (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
 (provide 'init-basic)
 

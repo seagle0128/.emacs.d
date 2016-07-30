@@ -104,10 +104,11 @@
   :config (setq smooth-scroll-margin 0))
 
 ;; Display Time
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time-mode 1)
-
+(use-package time
+  :defer t
+  :init (add-hook 'window-setup-hook 'display-time-mode)
+  :config (progn (setq display-time-24hr-format t)
+                 (setq display-time-day-and-date t)))
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
@@ -115,7 +116,7 @@
 (setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
 (size-indication-mode 1)
 (blink-cursor-mode -1)
-(show-paren-mode 1)
+(unless 'smartparens (show-paren-mode 1))
 (setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
 (ansi-color-for-comint-mode-on)
