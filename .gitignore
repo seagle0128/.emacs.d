@@ -31,4 +31,5 @@ tmp*
 /company-statistics-cache.el
 /games/
 /persp-confs/
+/tutorial/
 /.agignore
