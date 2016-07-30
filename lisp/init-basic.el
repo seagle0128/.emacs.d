@@ -48,14 +48,9 @@
   :init (add-hook 'after-init-hook 'exec-path-from-shell-initialize))
 
 ;; Start server
-(if (fboundp 'server-mode)
-    ;; Emacs 24 has a proper mode for `server'
-    (server-mode 1)
-  (progn
-    (require 'server)
-    (unless (server-running-p)
-      (server-start))
-    ))
+(use-package server
+  :defer t
+  :init (add-hook 'after-init-hook 'server-mode))
 
 ;; History
 (if (fboundp 'save-place-mode)
