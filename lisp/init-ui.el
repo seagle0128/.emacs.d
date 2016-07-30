@@ -34,12 +34,6 @@
 
 (require 'init-const)
 
-;; Menu/Tool/Scroll bars
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
-
 ;; Title
 (setq frame-title-format
       '("GNU Emacs " emacs-version "@" user-login-name " : "
@@ -48,7 +42,18 @@
                  "%b"))))
 (setq icon-title-format frame-title-format)
 
-;; Spaceline
+;; Menu/Tool/Scroll bars
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
+
+;; Yet Another Scroll Bar Mode
+(use-package yascroll
+  :defer t
+  :init (add-hook 'window-setup-hook 'global-yascroll-bar-mode))
+
+;; Modeline configuration
 (use-package spaceline-config
   :ensure spaceline
   :defer t
