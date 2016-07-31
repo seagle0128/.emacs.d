@@ -63,19 +63,24 @@
   :defer t
   :mode "\\.js$"
   :interpreter "node"
-  :init
-  (add-hook 'js2-mode-hook
-            '(lambda ()
-               (setq js2-basic-offset 2)
-               (js2-highlight-unused-variables-mode 1)
-               (js2-imenu-extras-mode 1)))
+  :init (add-hook 'js2-mode-hook
+                  '(lambda ()
+                     (setq js2-basic-offset 2)
+                     (js2-highlight-unused-variables-mode 1)
+                     (js2-imenu-extras-mode 1)))
   :config
-  (use-package js2-refactor
-    :defer t
-    :diminish js2-refactor-mode
-    :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
-    :config (js2r-add-keybindings-with-prefix "C-c C-m"))
-  )
+  (progn
+    (use-package js2-refactor
+      :defer t
+      :diminish js2-refactor-mode
+      :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
+      :config (js2r-add-keybindings-with-prefix "C-c C-m"))
+
+    (eval-after-load 'auto-complete
+      '(use-package ac-js2
+         :defer t
+         :init (add-hook 'js2-mode-hook 'ac-js2-mode 1)))
+    ))
 
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode

@@ -71,10 +71,15 @@
         (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
         (add-hook 'after-init-hook 'inf-ruby-switch-setup)
         (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
+
         (eval-after-load 'auto-complete
-          '(add-to-list 'ac-modes 'inf-ruby-minor-mode))
-        (eval-after-load 'auto-complete
-          '(define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete))
+          '(progn
+             (add-to-list 'ac-modes 'inf-ruby-minor-mode)
+             (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
+
+             (use-package ac-inf-ruby
+               :defer t
+               :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))))
         ))
 
     ;; Rubocop

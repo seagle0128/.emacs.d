@@ -36,9 +36,7 @@
   :defer t
   :diminish auto-complete-mode
   :functions ac-set-trigger-key
-  :bind (("\M-/" . ac-start)
-         :map ac-completing-map ("\M-/" . ac-stop)
-         :map ac-mode-map ("M-TAB" . auto-complete))
+  :bind (("M-/" . ac-start))
   :config
   (progn
     (ac-config-default)
@@ -46,21 +44,16 @@
     (ac-set-trigger-key "TAB")
     (setq ac-delay 0.3)
 
+    (define-key ac-completing-map "M-/" 'ac-stop)
+    (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+
     (setq ac-sources
           '(ac-source-yasnippet
             ac-source-imenu
             ac-source-abbrev
             ac-source-words-in-same-mode-buffers
             ac-source-files-in-current-dir
-            ac-source-filename ))
-
-    (use-package ac-inf-ruby
-      :defer t
-      :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
-
-    (use-package ac-js2
-      :defer t
-      :init (add-hook 'js2-mode-hook 'ac-js2-mode 1))
+            ac-source-filename))
     ))
 
 (provide 'init-auto-complete)

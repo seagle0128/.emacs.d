@@ -48,7 +48,7 @@
 (unless (>= emacs-major-version 24)
   (error "This requires Emacs 24 or later!"))
 
-(setq gc-cons-threshold 100000000)
+(setq gc-cons-threshold 10000000)
 (setq load-prefer-newer t)
 
 ;; Load path
@@ -57,16 +57,19 @@
 
 ;; Customization
 (require 'init-custom)
+(let ((file (expand-file-name "custom.el" user-emacs-directory)))
+  (if (file-exists-p file)
+      (load-file file)))
 
 ;; Packages
-;; Without this comment emacs25 adds (package-initialize) here
+;; Without this comment Emacs25 adds (package-initialize) here
 ;; (package-initialize)
 (require 'init-package)
 
 ;; Benchmark
-(use-package benchmark-init
-  :if my-profile-enable
-  :config (benchmark-init/activate))
+(if my-profile-enable
+    (use-package benchmark-init
+      :config (benchmark-init/activate)))
 
 ;; Preferences
 (require 'init-basic)
