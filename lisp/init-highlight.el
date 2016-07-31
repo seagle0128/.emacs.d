@@ -33,7 +33,9 @@
 ;;; Code:
 
 ;; Highlight line
-(global-hl-line-mode 1)
+(use-package hl-line
+  :defer t
+  :init (add-hook 'after-init-hook 'global-hl-line-mode))
 
 ;; Highlight symbol
 (use-package highlight-symbol
