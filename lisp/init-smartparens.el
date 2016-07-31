@@ -1,7 +1,7 @@
 ;; init-smartparens.el --- Initialize smartparens configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 1.0.0
+;; Version: 2.0.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:

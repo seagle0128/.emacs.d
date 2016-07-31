@@ -1,6 +1,7 @@
 ;;; custom-example.el --- user customization file    -*- no-byte-compile: t -*-
 ;;; Commentary:
 ;;;       Copy custom-example.el to custom.el and set the variables.
+;;;       Exit Emacs and delete all elc in ~/.emacs.d/lisp, then start Emacs.
 ;;; Code:
 
 ;; (setq my-ac-method 'company)			; company or auto-complete
