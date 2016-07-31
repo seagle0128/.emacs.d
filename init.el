@@ -48,6 +48,7 @@
 (unless (>= emacs-major-version 24)
   (error "This requires Emacs 24 or later!"))
 
+(setq gc-cons-threshold 100000000)
 (setq load-prefer-newer t)
 
 ;; Load path
@@ -58,9 +59,11 @@
 (require 'init-custom)
 
 ;; Packages
-(package-initialize)
+;; Without this comment emacs25 adds (package-initialize) here
+;; (package-initialize)
 (require 'init-package)
 
+;; Benchmark
 (use-package benchmark-init
   :if my-profile-enable
   :config (benchmark-init/activate))

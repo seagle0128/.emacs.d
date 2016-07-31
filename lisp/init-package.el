@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-;; (package-initialize)
-
 ;; ELPA: refer to https://elpa.emacs-china.org/
 
 ;; Official
@@ -43,6 +41,8 @@
 ;; Mirror
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+(package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
