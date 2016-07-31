@@ -73,7 +73,13 @@
     (setq projectile-completion-system 'ivy)
     (setq magit-completing-read-function 'ivy-completing-read)
 
+    ;; Search and replace
     (define-key swiper-map (kbd "M-%") 'swiper-query-replace)
+
+    ;; Search at point
+    ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
+    (define-key swiper-map (kbd "C-w")
+      (lambda () (interactive) (insert (format "%s" (with-ivy-window (ivy-thing-at-point))))))
 
     (use-package smex :defer t)
     (use-package ivy-hydra :defer t)
