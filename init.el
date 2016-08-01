@@ -7,9 +7,9 @@
 ;; Maintainer:
 ;; Created: Wed Nov 29 00:57:38 2006
 ;; Version:
-;; Last-Updated: Fri May 30 08:00:00 2016 (+0800)
+;; Last-Updated: Fri Aug 1 12:08:00 2016 (+0800)
 ;;           By: Vincent Zhang
-;;     Update #: 6000
+;;     Update #: 8000
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
