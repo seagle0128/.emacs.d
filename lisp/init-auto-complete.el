@@ -44,7 +44,7 @@
     (ac-set-trigger-key "TAB")
     (setq ac-delay 0.3)
 
-    (define-key ac-completing-map "M-/" 'ac-stop)
+    (define-key ac-completing-map (kbd "M-/") 'ac-stop)
     (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
     (setq ac-sources
