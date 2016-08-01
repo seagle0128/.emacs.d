@@ -34,7 +34,8 @@
 
 (use-package dos
   :defer t
-  :mode "\\.\\(cmd\\|btm\\)$")
+  :init (add-to-list 'auto-mode-alist
+                     '("\\.\\(cmd\\|bat\\|btm\\)$" . dos-mode)))
 
 (provide 'init-dos)
 
