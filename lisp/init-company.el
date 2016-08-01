@@ -35,17 +35,20 @@
 (use-package company
   :defer t
   :diminish company-mode
-  :bind (("M-/" . company-complete))
+  :defines company-active-map
+  :bind (("M-/" . company-complete)
+         ("C-c v" . company-yasnippet))
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
   (progn
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+
     (use-package company-quickhelp
       :defer t
-      :bind (("C-c v" . company-yasnippet)
-             :map company-active-map
-             ("M-h" . company-quickhelp-manual-begin)
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous))
+      :if (display-graphic-p)
+      :bind (:map company-active-map
+                  ("M-h" . company-quickhelp-manual-begin))
       :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
 
     (use-package company-flx
