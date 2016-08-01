@@ -35,7 +35,6 @@
 (use-package company
   :defer t
   :diminish company-mode
-  :defines company-active-map
   :bind (("M-/" . company-complete)
          ("C-c v" . company-yasnippet))
   :init (add-hook 'after-init-hook 'global-company-mode)
@@ -49,7 +48,9 @@
       :if (display-graphic-p)
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
-      :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
+      :init (add-hook 'company-mode-hook 'company-quickhelp-mode)
+      :config (setq pos-tip-foreground-color "#F8F8F2"
+                    pos-tip-background-color "#49483E"))
 
     (use-package company-flx
       :defer t
