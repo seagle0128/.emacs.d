@@ -74,7 +74,7 @@
     ;; FIX: Invalid font in org-mode on Windows
     ;; https://github.com/oneKelvinSmith/monokai-emacs/issues/56
     (when (and sys/win32p (> emacs-major-version 24))
-      (add-hook 'window-setup-hook '(lambda () (load-theme 'monokai t))))
+      (add-hook 'emacs-startup-hook '(lambda () (load-theme 'monokai t))))
     ))
 
 ;; Fonts
