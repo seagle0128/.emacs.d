@@ -3,6 +3,7 @@
 *.log
 ido.*
 session*
+tmp*
 /.emacs.desktop
 /.emacs.desktop.lock
 /.persistent-scratch
