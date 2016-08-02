@@ -92,7 +92,7 @@
   ^_k_^    _d_elete    _s_tring     |\\     _,,,--,,
 _h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
   ^_j_^    _n_ew-copy  _r_eset     |,4-  ) )_   .;.(  `'-'
-^^^^       _e_xchange  _u_ndo     '---''( /. )-'( \ )
+^^^^       _e_xchange  _u_ndo     '---''(,/.,)-'(,\,)
 ^^^^       _p_aste     _q_uit
 "
       ("h" backward-char nil)

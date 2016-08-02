@@ -91,6 +91,11 @@
 (use-package ack :defer t :if (executable-find "ack"))
 (use-package ag :defer t :if (executable-find "ag"))
 
+;; Junk file
+(use-package open-junk-file
+  :defer t
+  :commands open-junk-file)
+
 ;; Misc
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
