@@ -32,7 +32,27 @@
 ;;
 ;;; Code:
 
-(desktop-save-mode 1)
+(desktop-save-mode 1)                   ; Do not use `use-package' here
+
+;; Persistent scratch buffter
+(defun save-persistent-scratch ()
+  "Save the contents of *scratch*."
+  (with-current-buffer (get-buffer-create "*scratch*")
+    (write-region (point-min) (point-max)
+                  (concat user-emacs-directory "scratch"))))
+
+(defun load-persistent-scratch ()
+  "Reload the scratch buffer."
+  (let ((scratch-file (concat user-emacs-directory "scratch")))
+    (if (file-exists-p scratch-file)
+        (with-current-buffer (get-buffer "*scratch*")
+          (delete-region (point-min) (point-max))
+          (insert-file-contents scratch-file)))))
+
+(add-hook 'emacs-startup-hook 'load-persistent-scratch)
+(add-hook 'kill-emacs-hook 'save-persistent-scratch)
+
+(run-with-idle-timer 300 t 'save-persistent-scratch)
 
 ;; Perspectives
 (use-package persp-mode
@@ -40,15 +60,12 @@
   :defines desktop-files-not-to-save
   :init
   (progn
-    (add-hook 'after-init-hook 'persp-mode)
     (setq persp-nil-name "main")               ; Do not use "none"
     (setq persp-keymap-prefix (kbd "C-c C-p")) ; Avoid conflict with projectile
     (setq desktop-files-not-to-save "")        ; Do not save buffers via desktop
-    ))
 
-(use-package persistent-scratch
-  :defer t
-  :init (add-hook 'desktop-after-read-hook 'persistent-scratch-setup-default))
+    (add-hook 'after-init-hook 'persp-mode)
+    ))
 
 (provide 'init-restore)
 
