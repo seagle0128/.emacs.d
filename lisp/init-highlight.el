@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-;; Highlight line
+;; Highlight the current line
 (use-package hl-line
   :defer t
   :init (add-hook 'after-init-hook 'global-hl-line-mode))
@@ -61,22 +61,21 @@
   ;; Workaround. Fix void var issue.
   (eval-after-load 'web-mode (defvar web-mode-html-offset 2)))
 
-;; Rainbow
+;; Colorize color names in buffers
 (use-package rainbow-mode
   :defer t
   :diminish rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode))
 
-;; Highlight delimiters
+;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
   :defer t
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-;; Highlight identifiers
+;; Color identifiers based on their names
 (use-package color-identifiers-mode
   :defer t
-  :diminish color-identifiers-mode
-  :init (add-hook 'after-init-hook 'global-color-identifiers-mode))
+  :diminish color-identifiers-mode)
 
 ;; Highlight TODO/FIXME/BUG
 (use-package fic-mode
@@ -99,7 +98,7 @@
   :diminish volatile-highlights-mode
   :init (add-hook 'after-init-hook 'volatile-highlights-mode))
 
-;; Whitespace
+;; Visualize TAB, (HARD) SPACE, NEWLINE
 (use-package whitespace
   :defer t
   :diminish whitespace-mode
