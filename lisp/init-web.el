@@ -35,12 +35,12 @@
 ;; Css mode
 (use-package css-mode
   :defer t
-  :init (setq css-indent-offset 2))
+  :config (setq css-indent-offset 2))
 
 ;; Scss mode
 (use-package scss-mode
   :defer t
-  :init (setq scss-compile-at-save nil)         ; Disable complilation on save
+  :config (setq scss-compile-at-save nil)         ; Disable complilation on save
   )
 
 (use-package less-css-mode :defer t)
@@ -85,7 +85,23 @@
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode
   :defer t
-  :init (setq coffee-tab-width 2))
+  :config (setq coffee-tab-width 2))
+
+;; Typescript Interactive Development Environment
+(use-package tide
+  :defer t
+  :init
+  (progn (add-hook 'typescript-mode-hook #'tide-setup)
+         (add-hook 'typescript-mode-hook #'eldoc-mode)
+         (add-hook 'before-save-hook 'tide-format-before-save)
+         (eval-after-load 'js2-mode
+           '(add-hook 'js2-mode-hook #'tide-setup)
+           ))
+  :config (setq tide-format-options
+                '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
+                  t
+                  :placeOpenBraceOnNewLineForFunctions
+                  nil)))
 
 ;; Major mode for editing web templates
 (use-package web-mode

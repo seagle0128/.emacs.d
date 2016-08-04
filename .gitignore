@@ -4,6 +4,7 @@
 ido.*
 session*
 tmp*
+flycheck_*.el*
 /.emacs.desktop
 /.emacs.desktop.lock
 /.persistent-scratch
