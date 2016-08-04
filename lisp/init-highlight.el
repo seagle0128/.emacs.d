@@ -49,7 +49,8 @@
   (progn
     (add-hook 'find-file-hook 'highlight-symbol-mode)
     (add-hook 'find-file-hook 'highlight-symbol-nav-mode)
-    (setq highlight-symbol-idle-delay 0)))
+    (setq highlight-symbol-idle-delay 0)
+    ))
 
 ;; Highlight indentions
 (use-package highlight-indentation
@@ -85,13 +86,12 @@
 ;; Highlight uncommitted changes
 (use-package diff-hl
   :defer t
-  :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (global-diff-hl-mode t)
-               ;; (global-diff-hl-amend-mode t)
-               (diff-hl-flydiff-mode t)
-               (diff-hl-dired-mode t))))
+  :init (add-hook 'after-init-hook
+                  '(lambda ()
+                     (global-diff-hl-mode t)
+                     ;; (global-diff-hl-amend-mode t)
+                     (diff-hl-flydiff-mode t)
+                     (diff-hl-dired-mode t))))
 
 ;; Highlight some operations
 (use-package volatile-highlights
@@ -103,7 +103,8 @@
 (use-package whitespace
   :defer t
   :diminish whitespace-mode
-  :init (add-hook 'prog-mode-hook 'whitespace-mode)
+  :init (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+          (add-hook hook #'whitespace-mode))
   :config
   (progn
     (setq whitespace-line-column fill-column) ;; limit line length
