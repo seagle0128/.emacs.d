@@ -91,19 +91,16 @@
 (use-package tide
   :defer t
   :diminish tide-mode
-  :init
+  :defines tide-format-options
+  :commands eldoc-mode
+  :config
   (progn
     (add-hook 'typescript-mode-hook #'tide-setup)
-
-    (eval-after-load 'eldoc
-      (add-hook 'typescript-mode-hook #'eldoc-mode))
+    (add-hook 'typescript-mode-hook #'eldoc-mode)
+    (add-hook 'before-save-hook 'tide-format-before-save)
 
     (eval-after-load 'js2-mode
       '(add-hook 'js2-mode-hook #'tide-setup))
-    )
-  :config
-  (progn
-    (add-hook 'before-save-hook 'tide-format-before-save)
 
     (setq tide-format-options
           '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
