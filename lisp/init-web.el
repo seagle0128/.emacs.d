@@ -91,12 +91,13 @@
 (use-package tide
   :defer t
   :init
-  (progn (add-hook 'typescript-mode-hook #'tide-setup)
-         (add-hook 'typescript-mode-hook #'eldoc-mode)
-         (add-hook 'before-save-hook 'tide-format-before-save)
-         (eval-after-load 'js2-mode
-           '(add-hook 'js2-mode-hook #'tide-setup)
-           ))
+  (progn
+    (add-hook 'typescript-mode-hook #'tide-setup)
+    (add-hook 'typescript-mode-hook #'eldoc-mode)
+    (add-hook 'before-save-hook 'tide-format-before-save)
+    (eval-after-load 'js2-mode
+      '(add-hook 'js2-mode-hook #'tide-setup))
+    )
   :config (setq tide-format-options
                 '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
                   t
@@ -147,7 +148,8 @@
     (eval-after-load 'sgml-mode
       '(define-key html-mode-map (kbd "C-c C-b") 'web-beautify-html))
     (eval-after-load 'css-mode
-      '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css)))
+      '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css))
+    )
   :config
   (setq web-beautify-args '("-s" "2" "-f" "-")) ; Set indent size to 2
   )
