@@ -80,7 +80,7 @@
     ;; "M-j": word-at-point
     ;; "M-n"/"C-w": symbol-at-point
     ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
-    ;; and https://github.com/abo-abo/swiper/wikiiki/FAQ
+    ;; and https://github.com/abo-abo/swiper/wiki/FAQ
     (define-key swiper-map (kbd "C-w")
       (lambda () (interactive) (insert (format "%s" (with-ivy-window (ivy-thing-at-point))))))
 
