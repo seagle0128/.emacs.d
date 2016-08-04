@@ -90,19 +90,27 @@
 ;; Typescript Interactive Development Environment
 (use-package tide
   :defer t
+  :diminish tide-mode
   :init
   (progn
     (add-hook 'typescript-mode-hook #'tide-setup)
-    (add-hook 'typescript-mode-hook #'eldoc-mode)
-    (add-hook 'before-save-hook 'tide-format-before-save)
+
+    (eval-after-load 'eldoc
+      (add-hook 'typescript-mode-hook #'eldoc-mode))
+
     (eval-after-load 'js2-mode
       '(add-hook 'js2-mode-hook #'tide-setup))
     )
-  :config (setq tide-format-options
-                '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
-                  t
-                  :placeOpenBraceOnNewLineForFunctions
-                  nil)))
+  :config
+  (progn
+    (add-hook 'before-save-hook 'tide-format-before-save)
+
+    (setq tide-format-options
+          '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
+            t
+            :placeOpenBraceOnNewLineForFunctions
+            nil))
+    ))
 
 ;; Major mode for editing web templates
 (use-package web-mode
