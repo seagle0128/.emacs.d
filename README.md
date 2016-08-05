@@ -8,7 +8,7 @@ library to the mix. The final product offers an easy to use Emacs
 configuration for Emacs newcomers and lots of additional power for
 Emacs power users.
 
-It is compatible **ONLY with GNU Emacs 24.x**. In general you're
+It is compatible **ONLY with GNU Emacs 24.4 and above**. In general you're
 advised to always run with the latest Emacs - currently **24.5**.
 
 # Quick Start
@@ -19,4 +19,3 @@ git clone https://github.com/seagle0128/.emacs.d.git
 ```
 
 Then start emacs. Enjoy!
-

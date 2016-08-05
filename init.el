@@ -46,8 +46,8 @@
 ;;
 ;;; Code:
 
-(unless (>= emacs-major-version 24)
-  (error "This requires Emacs 24 or later!"))
+(unless (version< emacs-version "24.4")
+  (error "This requires Emacs 24.4 and above!"))
 
 (setq gc-cons-threshold 10000000)
 (setq load-prefer-newer t)
