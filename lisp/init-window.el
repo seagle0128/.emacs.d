@@ -87,15 +87,25 @@
          ("C-c w R" . wconf-restore-all)
          ("C-c w w" . wconf-switch-to-config))
   :init
-  (add-hook 'desktop-after-read-hook      ;so we have all buffers again
-            (lambda ()
-              (wconf-load)
-              (wconf-switch-to-config 0)
-              (add-hook 'kill-emacs-hook
-                        (lambda ()
-                          (wconf-store-all)
-                          (wconf-save))))
-            'append))
+  (progn
+    (setq wconf-file (expand-file-name "wconf-window-configs.el"
+                                       user-emacs-directory))
+
+    (add-hook 'desktop-after-read-hook      ;so we have all buffers again
+              '(lambda ()
+                 (unless (file-exists-p wconf-file)
+                   (write-region "" nil wconf-file)
+                   (wconf-create)
+                   (wconf-store)
+                   (wconf-save))
+                 (wconf-load)
+                 (wconf-switch-to-config 0)
+                 ))
+    (add-hook 'kill-emacs-hook
+              '(lambda ()
+                 (wconf-store-all)
+                 (wconf-save)))
+    ))
 
 (provide 'init-window)
 
