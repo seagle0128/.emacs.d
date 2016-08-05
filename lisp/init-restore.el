@@ -54,19 +54,6 @@
 
 (run-with-idle-timer 300 t 'save-persistent-scratch)
 
-;; Perspectives
-(use-package persp-mode
-  :defer t
-  :defines desktop-files-not-to-save
-  :init
-  (progn
-    (setq persp-nil-name "main")               ; Do not use "none"
-    (setq persp-keymap-prefix (kbd "C-c C-p")) ; Avoid conflict with projectile
-    (setq desktop-files-not-to-save "")        ; Do not save buffers via desktop
-
-    (add-hook 'after-init-hook 'persp-mode)
-    ))
-
 (provide 'init-restore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

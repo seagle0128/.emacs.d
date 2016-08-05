@@ -73,6 +73,30 @@
          (push "*Kill Ring*" popwin:special-display-config)))
     ))
 
+;; Minimal window layout manager
+(use-package wconf
+  :defer t
+  :bind (("C-c w c" . wconf-create)
+         ("C-c w k" . wconf-kill)
+         ("C-c w m" . wconf-rename)
+         ("C-c w n" . wconf-use-next)
+         ("C-c w p" . wconf-use-previous)
+         ("C-c w s" . wconf-store)
+         ("C-c w S" . wconf-store-all)
+         ("C-c w r" . wconf-restore)
+         ("C-c w R" . wconf-restore-all)
+         ("C-c w w" . wconf-switch-to-config))
+  :init
+  (add-hook 'desktop-after-read-hook      ;so we have all buffers again
+            (lambda ()
+              (wconf-load)
+              (wconf-switch-to-config 0)
+              (add-hook 'kill-emacs-hook
+                        (lambda ()
+                          (wconf-store-all)
+                          (wconf-save))))
+            'append))
+
 (provide 'init-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
