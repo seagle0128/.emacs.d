@@ -34,9 +34,6 @@
 
 (require 'init-const)
 
-;; Disable ad-handle-definition warning
-(setq ad-redefinition-action 'accept)
-
 ;; Personal information
 (setq user-full-name "Vincent Zhang")
 (setq user-mail-address "seagle012@gmail.com")

@@ -52,6 +52,9 @@
 (setq gc-cons-threshold 10000000)
 (setq load-prefer-newer t)
 
+;; Disable ad-handle-definition warning
+(setq ad-redefinition-action 'accept)
+
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
