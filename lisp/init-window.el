@@ -60,7 +60,7 @@
   :init (add-hook 'after-init-hook 'popwin-mode)
   :config
   (progn
-    ;; (global-set-key (kbd "C-z") popwin:keymap)
+    (global-set-key (kbd "C-z") popwin:keymap)
 
     ;; Support browse-kill-ring
     (eval-after-load 'browse-kill-ring
@@ -93,7 +93,7 @@
     (setq wconf-file (expand-file-name "wconf-window-configs.el"
                                        user-emacs-directory))
 
-    (add-hook 'desktop-after-read-hook      ;so we have all buffers again
+    (add-hook 'desktop-after-read-hook
               '(lambda ()
                  (unless (file-exists-p wconf-file)
                    (write-region "" nil wconf-file)
@@ -101,8 +101,8 @@
                    (wconf-store)
                    (wconf-save))
                  (wconf-load)
-                 (wconf-switch-to-config 0)
-                 ))
+                 (wconf-switch-to-config 0)))
+
     (add-hook 'kill-emacs-hook
               '(lambda ()
                  (wconf-store-all)
