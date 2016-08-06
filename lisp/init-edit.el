@@ -162,7 +162,7 @@ _h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
   :diminish anzu-mode
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
-  :config (global-anzu-mode 1))
+  :init (add-hook 'after-init-hook 'global-anzu-mode))
 
 ;; Mwim
 (use-package mwim
