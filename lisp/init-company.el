@@ -51,14 +51,7 @@
       :if (display-graphic-p)
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
-      :init
-      (progn
-        (add-hook 'company-mode-hook 'company-quickhelp-mode)
-        (add-hook 'window-setup-hook
-                  '(lambda ()
-                     (setq pos-tip-foreground-color "#000000"
-                           pos-tip-background-color "#FEFBD5")))
-        ))
+      :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
 
     (use-package company-flx
       :defer t

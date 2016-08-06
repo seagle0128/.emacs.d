@@ -69,12 +69,18 @@
   :defer t
   :init
   (progn
-    (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t)))
+    (defun load-monokai-theme()
+      "Load Monokai theme and set new tooltip background color."
+      (load-theme 'monokai t)
+      (set-face-background 'tooltip "#FEFBD5")
+      (setq pos-tip-background-color "#FEFBD5"))
+
+    (add-hook 'after-init-hook 'load-monokai-theme)
 
     ;; FIX: Invalid font in org-mode on Windows
     ;; https://github.com/oneKelvinSmith/monokai-emacs/issues/56
     (when (and sys/win32p (> emacs-major-version 24))
-      (add-hook 'emacs-startup-hook '(lambda () (load-theme 'monokai t))))
+      (add-hook 'emacs-startup-hook 'load-monokai-theme))
     ))
 
 ;; Fonts
