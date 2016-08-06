@@ -91,8 +91,8 @@
          ("C-c w v" . wconf-save))
   :init
   (progn
-    (set wconf-file (expand-file-name "wconf-window-configs.el"
-                                      user-emacs-directory))
+    (setq wconf-file (expand-file-name "wconf-window-configs.el"
+                                       user-emacs-directory))
 
     (defun create-wconf-file ()
       (unless (file-exists-p wconf-file)
