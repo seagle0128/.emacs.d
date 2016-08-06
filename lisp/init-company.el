@@ -56,8 +56,8 @@
         (add-hook 'company-mode-hook 'company-quickhelp-mode)
         (add-hook 'window-setup-hook
                   '(lambda ()
-                     (setq pos-tip-foreground-color "#F8F8F2"
-                           pos-tip-background-color "#49483E")))
+                     (setq pos-tip-foreground-color "#000000"
+                           pos-tip-background-color "#FEFBD5")))
         ))
 
     (use-package company-flx
