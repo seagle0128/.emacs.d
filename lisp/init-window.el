@@ -78,6 +78,7 @@
   :defer t
   :bind (("C-c w c" . wconf-create)
          ("C-c w k" . wconf-kill)
+         ("C-c w l" . wconf-load)
          ("C-c w m" . wconf-rename)
          ("C-c w n" . wconf-use-next)
          ("C-c w p" . wconf-use-previous)
@@ -85,7 +86,8 @@
          ("C-c w S" . wconf-store-all)
          ("C-c w r" . wconf-restore)
          ("C-c w R" . wconf-restore-all)
-         ("C-c w w" . wconf-switch-to-config))
+         ("C-c w w" . wconf-switch-to-config)
+         ("C-c w v" . wconf-save))
   :init
   (progn
     (setq wconf-file (expand-file-name "wconf-window-configs.el"
