@@ -74,6 +74,7 @@
     ))
 
 ;; Minimal window layout manager
+
 (use-package wconf
   :defer t
   :bind (("C-c w c" . wconf-create)
@@ -90,21 +91,25 @@
          ("C-c w v" . wconf-save))
   :init
   (progn
-    (setq wconf-file (expand-file-name "wconf-window-configs.el"
-                                       user-emacs-directory))
+    (set wconf-file (expand-file-name "wconf-window-configs.el"
+                                      user-emacs-directory))
+
+    (defun create-wconf-file ()
+      (unless (file-exists-p wconf-file)
+        (write-region "" nil wconf-file)
+        (wconf-create)
+        (wconf-store-all)
+        (wconf-save)))
 
     (add-hook 'desktop-after-read-hook
               '(lambda ()
-                 (unless (file-exists-p wconf-file)
-                   (write-region "" nil wconf-file)
-                   (wconf-create)
-                   (wconf-store)
-                   (wconf-save))
+                 (create-wconf-file)
                  (wconf-load)
                  (wconf-switch-to-config 0)))
 
     (add-hook 'kill-emacs-hook
               '(lambda ()
+                 (create-wconf-file)
                  (wconf-store-all)
                  (wconf-save)))
     ))
