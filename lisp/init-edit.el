@@ -171,6 +171,7 @@
 
 ;; Back button
 (use-package back-button
+  :disabled
   :defer t
   :diminish back-button-mode
   :init (add-hook 'after-init-hook 'back-button-mode))
@@ -188,8 +189,7 @@
          ("C->" . mc/mark-next-like-this)
          ("C-<". mc/mark-previous-like-this)
          ("C-c C-<". mc/mark-all-like-this)
-         ("M-<mouse-1>" . mc/add-cursor-on-click)
-         ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Expand region
 (use-package expand-region
