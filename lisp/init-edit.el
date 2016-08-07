@@ -79,41 +79,11 @@
 (prefer-coding-system 'utf-8)
 
 ;; Rectangle
-;; (setq cua-enable-cua-keys nil)           ;; don't add C-x,C-c,C-v
-;; (cua-mode t)                             ;; for rectangles, CUA is nice
-
-(use-package hydra
-  :config
-  (progn
-    (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                                         :color pink
-                                         :post (deactivate-mark))
-      "
-  ^_k_^    _d_elete    _s_tring     |\\     _,,,--,,
-_h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
-  ^_j_^    _n_ew-copy  _r_eset     |,4-  ) )_   .;.(  `'-'
-^^^^       _e_xchange  _u_ndo     '---''(,/.,)-'(,\,)
-^^^^       _p_aste     _q_uit
-"
-      ("h" backward-char nil)
-      ("l" forward-char nil)
-      ("k" previous-line nil)
-      ("j" next-line nil)
-      ("e" exchange-point-and-mark nil)
-      ("n" copy-rectangle-as-kill nil)
-      ("d" delete-rectangle nil)
-      ("r" (if (region-active-p)
-               (deactivate-mark)
-             (rectangle-mark-mode 1)) nil)
-      ("y" yank-rectangle nil)
-      ("u" undo nil)
-      ("s" string-rectangle nil)
-      ("p" kill-rectangle nil)
-      ("o" nil nil)
-      ("q" nil nil)
-      ("C-<return>" nil nil))
-    (global-set-key (kbd "C-<return>") 'hydra-rectangle/body)
-    ))
+;; for rectangles, CUA is nice
+(use-package cua-rect
+  :ensure cua-base
+  :defer t
+  :bind (("<C-return>" . cua-rectangle-mark-mode)))
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
@@ -160,8 +130,8 @@ _h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
 (use-package anzu
   :defer t
   :diminish anzu-mode
-  :bind (("M-%" . anzu-query-replace)
-         ("C-M-%" . anzu-query-replace-regexp))
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
 ;; Mwim
@@ -219,36 +189,7 @@ _h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
          ("C-<". mc/mark-previous-like-this)
          ("C-c C-<". mc/mark-all-like-this)
          ("M-<mouse-1>" . mc/add-cursor-on-click)
-         ("M-<down-mouse-1>" . mc/add-cursor-on-click))
-  :config
-  (progn
-    (use-package hydra
-      :config
-      (progn
-        (defhydra multiple-cursors-hydra (:color pink :hint nil)
-          "
-     ^Up^            ^Down^        ^Other^
- ----------------------------------------------
- [_p_]   Next    [_n_]   Next    [_l_] Edit lines
- [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
- [_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
- ^ ^             ^ ^             [_q_] Quit
-"
-          ("l" mc/edit-lines :exit t)
-          ("a" mc/mark-all-like-this :exit t)
-          ("n" mc/mark-next-like-this)
-          ("N" mc/skip-to-next-like-this)
-          ("M-n" mc/unmark-next-like-this)
-          ("p" mc/mark-previous-like-this)
-          ("P" mc/skip-to-previous-like-this)
-          ("M-p" mc/unmark-previous-like-this)
-          ("r" mc/mark-all-in-region-regexp :exit t)
-          ("<mouse-1>" mc/add-cursor-on-click)
-          ("<down-mouse-1>" ignore)
-          ("<drag-mouse-1>" ignore)
-          ("q" nil))
-        (global-set-key (kbd "C-S-c") 'multiple-cursors-hydra/body)
-        ))))
+         ("M-<down-mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Expand region
 (use-package expand-region
@@ -260,29 +201,6 @@ _h_   _l_  _o_k        _y_ank       /,`.-'`'   ._  \-;;,-
   :defer t
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
-
-;; Origami code floding
-(use-package origami
-  :defer t
-  :init (add-hook 'after-init-hook 'global-origami-mode)
-  :config
-  (use-package hydra
-    :config
-    (progn
-      (defhydra hydra-folding (:color pink)
-        "
-  _o_pen node    _n_ext fold       toggle _f_orward
-  _c_lose node   _p_revious fold   toggle _a_ll     _q_uit
-"
-        ("o" origami-open-node)
-        ("c" origami-close-node)
-        ("n" origami-next-fold)
-        ("p" origami-previous-fold)
-        ("f" origami-forward-toggle-node)
-        ("a" origami-toggle-all-nodes)
-        ("q" nil))
-      (global-set-key (kbd "C-S-f") 'hydra-folding/body)
-      )))
 
 (provide 'init-edit)
 
