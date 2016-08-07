@@ -4,9 +4,9 @@
 ;;;       Exit Emacs and delete all elc in ~/.emacs.d/lisp, then start Emacs.
 ;;; Code:
 
-;; (setq my-ac-method 'company)			; company or auto-complete
-;; (setq my-desktop-restore t)			; t or nil
+;; (setq my-ac-method 'auto-complete)   ; company or auto-complete
+;; (setq my-desktop-restore nil)        ; t or nil
 ;; (setq my-completion-method 'helm)	; helm, ivy or ido
-;; (setq my-profile-enable nil)			; t or nil
+;; (setq my-profile-enable t)			; t or nil
 
 ;;; custom-example.el ends here
