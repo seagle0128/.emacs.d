@@ -36,11 +36,8 @@
 
 (use-package easy-kill
   :defer t
-  :init
-  (progn
-    (global-set-key [remap kill-ring-save] 'easy-kill)
-    (global-set-key [remap mark-sexp] 'easy-mark)
-    ))
+  :bind (([remap kill-ring-save] . easy-kill)
+         ([remap mark-sexp] . easy-mark)))
 
 (use-package browse-kill-ring
   :defer t
