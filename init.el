@@ -53,7 +53,7 @@
 (setq load-prefer-newer t)
 
 ;; Disable ad-handle-definition warning
-(setq ad-redefinition-action 'accept)
+;; (setq ad-redefinition-action 'accept)
 
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))

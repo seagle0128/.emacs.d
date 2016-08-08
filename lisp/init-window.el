@@ -73,6 +73,11 @@
          (push "*Kill Ring*" popwin:special-display-config)))
     ))
 
+;; Simple window manager for emacs
+(use-package e2wm
+  :defer t
+  :bind (("M-+" . e2wm:start-management)))
+
 ;; Minimal window layout manager
 (use-package wconf
   :defer t
