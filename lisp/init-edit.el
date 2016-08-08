@@ -169,13 +169,6 @@
   :bind (("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)))
 
-;; Back button
-(use-package back-button
-  :disabled
-  :defer t
-  :diminish back-button-mode
-  :init (add-hook 'after-init-hook 'back-button-mode))
-
 ;; Undo Tree
 (use-package undo-tree
   :defer t
