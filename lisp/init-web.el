@@ -156,7 +156,8 @@
       '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css))
     )
   :config
-  (setq web-beautify-args '("-s" "2" "-f" "-")) ; Set indent size to 2
+  ;; Set indent size to 2
+  (setq web-beautify-args '("-s" "2" "-f" "-"))
   )
 
 (use-package haml-mode :defer t)

@@ -59,7 +59,8 @@
   :init (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
   :config
   ;; Workaround. Fix void var issue.
-  (eval-after-load 'web-mode (defvar web-mode-html-offset 2)))
+  (eval-after-load 'web-mode
+    '(defvar web-mode-html-offset 2)))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

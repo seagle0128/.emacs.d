@@ -61,7 +61,7 @@
   :init (add-hook 'after-init-hook
                   '(lambda ()
                      (spaceline-emacs-theme)
-                     (eval-after-load 'helm (spaceline-helm-mode 1))
+                     (eval-after-load 'helm '(spaceline-helm-mode 1))
                      )))
 
 ;; Color theme

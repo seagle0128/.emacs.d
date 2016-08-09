@@ -138,10 +138,10 @@
 
     ;; Workaround for auto-paring issues for Rails and Django
     (eval-after-load 'web-mode
-      (add-hook 'web-mode-hook
-                '(lambda ()
-                   (sp-local-pair 'web-mode "{" "}" :actions nil)
-                   (sp-local-pair 'web-mode "<" ">" :actions nil))))
+      '(add-hook 'web-mode-hook
+                 '(lambda ()
+                    (sp-local-pair 'web-mode "{" "}" :actions nil)
+                    (sp-local-pair 'web-mode "<" ">" :actions nil))))
 
     ;; Markdown-mode
     (sp-with-modes '(markdown-mode gfm-mode rst-mode)
