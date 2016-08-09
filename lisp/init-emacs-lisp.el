@@ -65,6 +65,7 @@
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
   (interactive)
+  (setq package-selected-packages nil)  ; Fix Emacs 25
   (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
   (byte-recompile-file user-init-file 0 0)
   (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
@@ -77,6 +78,7 @@
   "If you're saving an elisp file, likely the .elc is no longer valid."
   (add-hook 'after-save-hook
             (lambda ()
+              (setq package-selected-packages nil)  ; Fix Emacs 25
               (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
               (byte-recompile-file buffer-file-name 0 0)
               (setq use-package-always-ensure t))
