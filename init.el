@@ -49,7 +49,17 @@
 (when (version< emacs-version "24.4")
   (error "This requires Emacs 24.4 and above!"))
 
+;; Optimize loading performance
+(defvar default-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
 (setq gc-cons-threshold 10000000)
+(add-hook 'emacs-startup-hook
+          '(lambda ()
+             "Restore defalut values after init"
+             (setq file-name-handler-alist default-file-name-handler-alist)
+             (setq gc-cons-threshold 800000)))
+
+;; Prefers the newest version of a file
 (setq load-prefer-newer t)
 
 ;; Disable ad-handle-definition warning
@@ -127,8 +137,7 @@
 (require 'init-org)
 
 ;; Restore
-(if my-desktop-restore
-    (require 'init-restore))
+(require 'init-restore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

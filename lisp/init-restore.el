@@ -32,7 +32,9 @@
 ;;
 ;;; Code:
 
-(desktop-save-mode 1)                   ; Do not use `use-package' here
+;; Do not use `use-package' here
+;; since we need after-init-hook in desktop.el
+(desktop-save-mode 1)
 
 ;; Persistent scratch buffter
 (defun save-persistent-scratch ()
@@ -49,7 +51,7 @@
           (delete-region (point-min) (point-max))
           (insert-file-contents scratch-file)))))
 
-(add-hook 'emacs-startup-hook 'load-persistent-scratch)
+(add-hook 'after-init-hook 'load-persistent-scratch)
 (add-hook 'kill-emacs-hook 'save-persistent-scratch)
 
 (run-with-idle-timer 300 t 'save-persistent-scratch)

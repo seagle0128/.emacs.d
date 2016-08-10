@@ -49,10 +49,6 @@
           (const :tag "Ivy" ivy)
           (const :tag "Helm" helm)))
 
-(defcustom my-desktop-restore t
-  "Restore desktop inlcuding buffers, sessions or not."
-  :type 'boolean)
-
 (defcustom my-profile-enable nil
   "Enable the init profiler or not."
   :type 'boolean)
