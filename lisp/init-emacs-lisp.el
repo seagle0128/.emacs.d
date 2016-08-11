@@ -79,7 +79,7 @@
   (add-hook 'after-save-hook
             (lambda ()
               "Only byte-compile files in init dirs."
-              (unless (string-match "\\.*\.emacs\.d\/\\(lisp\\|site-lisp\\)\/.*\\el$" buffer-file-name)
+              (when (string-match "\\.*\.emacs\.d\/\\(lisp\\|site-lisp\\)\/.*\\el$" buffer-file-name)
                 (setq package-selected-packages nil)  ; Fix Emacs 25
                 (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
                 (byte-recompile-file buffer-file-name 0 0)
