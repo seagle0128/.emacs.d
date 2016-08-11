@@ -78,10 +78,12 @@
   "If you're saving an elisp file, likely the .elc is no longer valid."
   (add-hook 'after-save-hook
             (lambda ()
-              (setq package-selected-packages nil)  ; Fix Emacs 25
-              (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
-              (byte-recompile-file buffer-file-name 0 0)
-              (setq use-package-always-ensure t))
+              "Only byte-compile files in init dirs."
+              (unless (string-match "\\.*\.emacs\.d\/\\(lisp\\|site-lisp\\)\/.*\\el$" buffer-file-name)
+                (setq package-selected-packages nil)  ; Fix Emacs 25
+                (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
+                (byte-recompile-file buffer-file-name 0 0)
+                (setq use-package-always-ensure t)))
             nil
             t))
 
