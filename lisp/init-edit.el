@@ -91,7 +91,7 @@
   :diminish auto-revert-mode
   :init (add-hook 'after-init-hook 'global-auto-revert-mode))
 
-;; Avy
+;; Tree-based completion
 (use-package avy
   :defer t
   :bind (("C-:" . avy-goto-char)
@@ -106,18 +106,18 @@
   :defer t
   :bind (("M-z" . zzz-to-char)))
 
-;; Ace link
+;; Quickly follow links
 (use-package ace-link
   :defer t
   :init (add-hook 'after-init-hook 'ace-link-setup-default))
 
-;; Aggressive indent
+;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :defer t
   :diminish aggressive-indent-mode
   :init (add-hook 'after-init-hook 'global-aggressive-indent-mode))
 
-;; Auto indent
+;; Auto indent minor mode
 (use-package auto-indent-mode
   :defer t
   :diminish auto-indent-mode
@@ -126,7 +126,7 @@
           (setq auto-indent-indent-style 'conservative)
           (add-hook 'after-init-hook 'auto-indent-global-mode)))
 
-;; Anzu mode
+;; Show number of matches in mode-line while searching
 (use-package anzu
   :defer t
   :diminish anzu-mode
@@ -134,13 +134,18 @@
          ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
-;; Mwim
+;; Increase selected region by semantic units
+(use-package expand-region
+  :defer t
+  :bind ("C-=" . er/expand-region))
+
+;; Move to the beginning/end of line or code
 (use-package mwim
   :defer t
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
-;; Pager
+;; Windows-scroll commands
 (use-package pager
   :defer t
   :commands pager-page-down pager-page-up pager-row-down pager-row-up
@@ -153,27 +158,22 @@
          ([M-down] . pager-row-down)
          ([M-kp-2] . pager-row-down)))
 
-;; Move text
-(use-package move-text
+;; Drag stuff (lines, words, region, etc...) around
+(use-package drag-stuff
   :defer t
-  :init (add-hook 'after-init-hook 'move-text-default-bindings))
+  :diminish drag-stuff-mode
+  :init (add-hook 'after-init-hook 'drag-stuff-global-mode))
 
-;; Comment
+;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :defer t
   :bind ("M-;" . comment-dwim-2))
 
-;; IEdit
+;; Edit multiple regions in the same way simultaneously
 (use-package iedit
   :defer t
   :bind (("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)))
-
-;; Undo Tree
-(use-package undo-tree
-  :defer t
-  :diminish undo-tree-mode
-  :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -184,12 +184,13 @@
          ("C-c C-<". mc/mark-all-like-this)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
-;; Expand region
-(use-package expand-region
+;; Treat undo history as a tree
+(use-package undo-tree
   :defer t
-  :bind ("C-=" . er/expand-region))
+  :diminish undo-tree-mode
+  :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
-;; Subword and Superword
+;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :defer t
   :diminish subword-mode
