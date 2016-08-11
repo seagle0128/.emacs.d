@@ -127,7 +127,7 @@
 (setq-default ns-pop-up-frames nil)             ; Don't open a file in a new frame
 (size-indication-mode 1)
 ;; (blink-cursor-mode -1)
-(unless (featurep 'smartparens) (show-paren-mode 1))
+(show-paren-mode 1)
 (setq track-eol t)                         ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
 
