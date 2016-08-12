@@ -37,10 +37,13 @@
   :diminish counsel-mode ivy-mode
   :defines magit-completing-read-function
   :bind (("C-s" . swiper)
+         ("C-c u" . swiper-all)
+         ("C-x C-r" . ivy-recentf)
          ("C-c C-r" . ivy-resume)
+         ("C-c v" . ivy-push-view)
+         ("C-c V" . ivy-pop-view)
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
-         ("C-x C-r" . ivy-recentf)
          ("C-." . counsel-imenu)
          ("C-S-t" . counsel-projectile-find-file)
          ("C-h f" . counsel-describe-function)
@@ -59,7 +62,7 @@
     )
   :config
   (progn
-    (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
     (setq ivy-height 10)
     (setq ivy-count-format "(%d/%d) ")
     (setq ivy-on-del-error-function nil)

@@ -36,7 +36,7 @@
   :defer t
   :diminish company-mode
   :bind (("M-/" . company-complete)
-         ("C-c v" . company-yasnippet))
+         ("C-c C-y" . company-yasnippet))
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
   (progn
