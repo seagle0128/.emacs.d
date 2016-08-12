@@ -67,7 +67,8 @@
                  (describe-function symbol)
                (describe-variable symbol)))
            (read-only-mode -1)
-           (buffer-string)))))))
+           (buffer-string)))
+       nil nil nil 0))))
 
 (define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-symbol-at-point)
 
