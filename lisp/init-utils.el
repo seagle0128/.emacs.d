@@ -66,7 +66,6 @@
              (if (fboundp symbol)
                  (describe-function symbol)
                (describe-variable symbol)))
-           (read-only-mode -1)
            (buffer-string)))
        nil nil nil 0))))
 
