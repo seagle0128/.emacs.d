@@ -46,8 +46,8 @@
                           (message "Revert this buffer.")
                           (revert-buffer t t)))
 
-;; Describe function
-(defun my-describe-symbol (symbol)
+;; Describe symbol at point
+(defun my-describe-symbol-at-point (symbol)
   "Display the full documentation of SYMBOL (function and variable) in tooltip."
   (interactive (list (symbol-at-point)))
   (let ((x-gtk-use-system-tooltips nil))
@@ -69,7 +69,7 @@
            (read-only-mode -1)
            (buffer-string)))))))
 
-(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-symbol)
+(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-symbol-at-point)
 
 ;; Text zoom in/out
 (global-set-key [(C-wheel-up)] 'text-scale-increase)

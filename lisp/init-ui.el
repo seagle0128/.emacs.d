@@ -48,13 +48,6 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
-;; Yet Another Scroll Bar Mode
-(use-package yascroll
-  :defer t
-  :init
-  (add-hook 'window-setup-hook 'global-yascroll-bar-mode)
-  (push 'help-mode yascroll:disabled-modes))
-
 ;; Modeline configuration
 (use-package spaceline-config
   :ensure spaceline
