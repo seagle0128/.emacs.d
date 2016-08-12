@@ -50,8 +50,7 @@
 (defun my-describe-function (function)
   "Display the full documentation of FUNCTION (a symbol) in tooltip."
   (interactive (list (function-called-at-point)))
-  (let ((x-gtk-use-system-tooltips nil)
-        (flycheck-pos-tip-mode nil))
+  (let ((x-gtk-use-system-tooltips nil))
     (if (null function)
         (pos-tip-show
          "** You didn't specify a function! **" '("red"))
