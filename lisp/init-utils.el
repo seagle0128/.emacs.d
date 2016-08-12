@@ -46,6 +46,29 @@
                           (message "Revert this buffer.")
                           (revert-buffer t t)))
 
+;; Describe function
+(defun my-describe-function (function)
+  "Display the full documentation of FUNCTION (a symbol) in tooltip."
+  (interactive (list (function-called-at-point)))
+  (let ((x-gtk-use-system-tooltips nil)
+        (flycheck-pos-tip-mode nil))
+    (if (null function)
+        (pos-tip-show
+         "** You didn't specify a function! **" '("red"))
+      (pos-tip-show
+       (with-temp-buffer
+         (let ((standard-output (current-buffer))
+                                        ;(help-xref-following t)
+               )
+           (prin1 function)
+           (princ " is ")
+           (describe-function-1 function)
+           (buffer-string)))
+       nil nil nil 0)))
+  )
+
+(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-function)
+
 ;; Text zoom in/out
 (global-set-key [(C-wheel-up)] 'text-scale-increase)
 (global-set-key [(C-wheel-down)] 'text-scale-decrease)
@@ -81,11 +104,29 @@
   :bind (("\C-cd" . dash-at-point)
          ("\C-ce" . dash-at-point-with-docset)))
 
-;; Youdao Dict
+;; Youdao Dictionay
 (use-package youdao-dictionary
   :defer t
-  :init (setq url-automatic-caching t)
-  :bind ("C-c y" . youdao-dictionary-search-at-point))
+  :commands youdao-dictionary--region-or-word youdao-dictionary--format-result
+  :bind ("C-c y" . youdao-dictionary-search-at-point+)
+  :config
+  (progn
+    ;; Cache documents
+    (setq url-automatic-caching t)
+
+    ;; Use pos-tip instead of popup to display results
+    (if (display-graphic-p)
+        (eval-after-load 'pos-tip
+          '(defun youdao-dictionary-search-at-point+ ()
+             "Search word at point and display results with pos-tip."
+             (interactive)
+             (let ((word (youdao-dictionary--region-or-word))
+                   (x-gtk-use-system-tooltips t))
+               (if word
+                   (pos-tip-show (youdao-dictionary--format-result word)
+                                 nil nil nil 0)
+                 (message "Nothing to look up"))))))
+    ))
 
 ;; Search
 (use-package ack :defer t :if (executable-find "ack"))

@@ -41,8 +41,19 @@
     (setq flycheck-indication-mode 'right-fringe)
     (setq flycheck-emacs-lisp-load-path 'inherit)
 
-    (use-package flycheck-pos-tip :config (flycheck-pos-tip-mode 1))
-    (use-package avy-flycheck :config (avy-flycheck-setup))
+    (use-package flycheck-pos-tip
+      :defer t
+      :init (add-hook 'flycheck-mode-hook 'flycheck-pos-tip-mode)
+      :config
+      ;; Fix: don't hide pos tip to advoid suspress other pos tips.
+      (defun flycheck-pos-tip-hide-messages ()
+        "Hide messages currently being shown if any."
+        (flycheck-hide-error-buffer))
+      )
+
+    (use-package avy-flycheck
+      :defer t
+      :init (add-hook 'flycheck-mode-hook 'avy-flycheck-setup))
     ))
 
 (provide 'init-flycheck)
