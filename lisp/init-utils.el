@@ -47,26 +47,29 @@
                           (revert-buffer t t)))
 
 ;; Describe function
-(defun my-describe-function (function)
-  "Display the full documentation of FUNCTION (a symbol) in tooltip."
-  (interactive (list (function-called-at-point)))
+(defun my-describe-symbol (symbol)
+  "Display the full documentation of SYMBOL (function and variable) in tooltip."
+  (interactive (list (symbol-at-point)))
   (let ((x-gtk-use-system-tooltips nil))
-    (if (null function)
+    (if (null symbol)
         (pos-tip-show
-         "** You didn't specify a function! **" '("red"))
+         "** You didn't specify a symbol! **" '("red"))
       (pos-tip-show
        (with-temp-buffer
          (let ((standard-output (current-buffer))
-                                        ;(help-xref-following t)
-               )
-           (prin1 function)
+               (help-xref-following t))
+           (help-mode)
+           (read-only-mode -1)
+           (prin1 symbol)
            (princ " is ")
-           (describe-function-1 function)
-           (buffer-string)))
-       nil nil nil 0)))
-  )
+           (save-window-excursion
+             (if (fboundp symbol)
+                 (describe-function symbol)
+               (describe-variable symbol)))
+           (read-only-mode -1)
+           (buffer-string)))))))
 
-(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-function)
+(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-symbol)
 
 ;; Text zoom in/out
 (global-set-key [(C-wheel-up)] 'text-scale-increase)

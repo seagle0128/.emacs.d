@@ -51,7 +51,9 @@
 ;; Yet Another Scroll Bar Mode
 (use-package yascroll
   :defer t
-  :init (add-hook 'window-setup-hook 'global-yascroll-bar-mode))
+  :init
+  (add-hook 'window-setup-hook 'global-yascroll-bar-mode)
+  (push 'help-mode yascroll:disabled-modes))
 
 ;; Modeline configuration
 (use-package spaceline-config
