@@ -43,14 +43,6 @@
 (use-package csharp-mode :defer t)
 (use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
 
-;; Emacs refactoring system
-(use-package emr
-  :defer t
-  :diminish emr-c-mode
-  :bind (:map prog-mode-map
-              ("M-RET" . emr-show-refactor-menu))
-  :init (add-hook 'prog-mode-hook 'emr-initialize))
-
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
