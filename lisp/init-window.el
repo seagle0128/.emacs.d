@@ -58,20 +58,7 @@
   :defer t
   :commands popwin-mode
   :init (add-hook 'after-init-hook 'popwin-mode)
-  :config
-  (progn
-    (global-set-key (kbd "C-z") popwin:keymap)
-
-    ;; Support browse-kill-ring
-    (eval-after-load 'browse-kill-ring
-      '(progn
-         (defun popwin-bkr:update-window-reference ()
-           (popwin:update-window-reference 'browse-kill-ring-original-window :safe t))
-
-         (add-hook 'popwin:after-popup-hook 'popwin-bkr:update-window-reference)
-
-         (push "*Kill Ring*" popwin:special-display-config)))
-    ))
+  :config (global-set-key (kbd "C-z") popwin:keymap))
 
 ;; Simple window manager for emacs
 (use-package e2wm
