@@ -97,7 +97,11 @@
   :defer t
   :bind (([f12] . neotree-toggle)
          ([C-f12] . neotree-toggle))
-  :init (add-hook 'neotree-mode-hook '(lambda () (linum-mode -1))))
+  :config
+  (progn
+    (define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
+    (define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
+    ))
 
 ;; Dash
 (use-package dash-at-point
