@@ -74,15 +74,15 @@
 
 ;; Do not use terminal on Windows
 ;; Term
-(defvar term-program shell-file-name)
+(defvar my-term-program shell-file-name)
 (use-package term
   :defer t
   :if (not sys/win32p)
   :init
   (progn
     (if (executable-find "zsh")
-        (setq term-program "zsh"))
-    (setenv "SHELL" term-program)
+        (setq my-term-program "zsh"))
+    (setenv "SHELL" my-term-program)
 
     (setq system-uses-terminfo nil)
 
@@ -92,22 +92,18 @@
     ))
 
 ;; Multi term
-(use-package multi-term
-  :defer t
-  :if (not sys/win32p)
-  :init (setq multi-term-program term-program))
+(use-package multi-term :defer t :if (not sys/win32p))
 
 ;; Shell Pop
 (use-package shell-pop
   :defer t
-  :if (not sys/win32p)
   :bind ([f8] . shell-pop)
   :init
   (progn
-    (setq shell-pop-term-shell term-program)
-    (setq shell-pop-shell-type
-          '("terminal" "*terminal*"
-            (lambda nil (term shell-pop-term-shell))))
+    (setq shell-pop-term-shell my-term-program)
+    (if sys/win32p
+        (setq shell-pop-shell-type '("eshell" "*eshell*" (lambda () (eshell))))
+      (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda () (term shell-pop-term-shell)))))
     ))
 
 (provide 'init-shell)
