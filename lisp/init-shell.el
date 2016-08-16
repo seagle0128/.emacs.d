@@ -74,16 +74,11 @@
 
 ;; Do not use terminal on Windows
 ;; Term
-(defvar my-term-program shell-file-name)
 (use-package term
   :defer t
   :if (not sys/win32p)
   :init
   (progn
-    (if (executable-find "zsh")
-        (setq my-term-program "zsh"))
-    (setenv "SHELL" my-term-program)
-
     (setq system-uses-terminfo nil)
 
     ;; Disable yasnippet mode to enable TAB in term
@@ -100,7 +95,6 @@
   :bind ([f8] . shell-pop)
   :init
   (progn
-    (setq shell-pop-term-shell my-term-program)
     (if sys/win32p
         (setq shell-pop-shell-type '("eshell" "*eshell*" (lambda () (eshell))))
       (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda () (term shell-pop-term-shell)))))
