@@ -48,6 +48,7 @@
 ;; Css eldoc
 (use-package css-eldoc
   :defer t
+  :commands turn-on-css-eldoc
   :init
   (progn
     (add-hook 'css-mode-hook 'turn-on-css-eldoc)
