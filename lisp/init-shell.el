@@ -72,44 +72,42 @@
        ))
     ))
 
-;; Do not use term on Windows
-(when (not sys/win32p)
-  (defvar term-program shell-file-name)
-  (cond ((executable-find "fish")
-         (setq term-program "fish"))
-        ((executable-find "zsh")
-         (setq term-program "zsh")))
+;; Do not use terminal on Windows
+;; Term
+(defvar term-program shell-file-name)
+(use-package term
+  :defer t
+  :if (not sys/win32p)
+  :init
+  (progn
+    (if (executable-find "zsh")
+        (setq term-program "zsh"))
+    (setenv "SHELL" term-program)
 
-  (setenv "SHELL" term-program))
+    (setq system-uses-terminfo nil)
+
+    ;; Disable yasnippet mode to enable TAB in term
+    (eval-after-load 'yasnippet
+      '(add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1))))
+    ))
 
 ;; Multi term
 (use-package multi-term
   :defer t
   :if (not sys/win32p)
-  :config
-  (progn
-    (setq system-uses-terminfo nil)
-
-    (setq multi-term-program term-program)
-    ;; Disable yasnippet mode to enable TAB in term
-    (add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))
-    ))
+  :init (setq multi-term-program term-program))
 
 ;; Shell Pop
 (use-package shell-pop
   :defer t
   :if (not sys/win32p)
   :bind ([f8] . shell-pop)
-  :config
+  :init
   (progn
-    (setq shell-pop-shell-type
-          '("ansi-term" "*ansi-term*"
-            (lambda nil (ansi-term shell-pop-term-shell))))
     (setq shell-pop-term-shell term-program)
-    ;; (setq shell-pop-universal-key "C-t")
-    (setq shell-pop-window-size 30)
-    (setq shell-pop-full-span t)
-    (setq shell-pop-window-position "bottom")
+    (setq shell-pop-shell-type
+          '("terminal" "*terminal*"
+            (lambda nil (term shell-pop-term-shell))))
     ))
 
 (provide 'init-shell)
