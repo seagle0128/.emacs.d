@@ -99,8 +99,22 @@
          ([C-f12] . neotree-toggle))
   :config
   (progn
+    (setq neo-smart-open t)
+
     (define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
     (define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
+
+    ;; Integrate with projectile
+    (eval-after-load 'projectile
+      '(setq projectile-switch-project-action 'neotree-projectile-action))
+
+    ;; Fix compatibility issue with popwin
+    (eval-after-load 'popwin
+      '(when neo-persist-show
+         (add-hook 'popwin:before-popup-hook
+                   (lambda () (setq neo-persist-show nil)))
+         (add-hook 'popwin:after-popup-hook
+                   (lambda () (setq neo-persist-show t)))))
     ))
 
 ;; Dash
