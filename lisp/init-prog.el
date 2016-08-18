@@ -43,6 +43,10 @@
 (use-package csharp-mode :defer t)
 (use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
 
+(use-package editorconfig
+  :defer t
+  :init (add-hook 'prog-mode-hook 'editorconfig))
+
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
