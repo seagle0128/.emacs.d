@@ -113,7 +113,7 @@
 ;; Major mode for editing web templates
 (use-package web-mode
   :defer t
-  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\)$"
+  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\)$"
   :defines ac-modes aggressive-indent-excluded-modes
   :config
   (progn
@@ -131,7 +131,7 @@
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :defer t
-  :diminish skewer-mode
+  :diminish skewer-mode skewer-css-mode skewer-html-mode
   :init
   (progn
     (eval-after-load 'js2-mode
