@@ -45,7 +45,7 @@
 
 (use-package editorconfig
   :defer t
-  :init (add-hook 'prog-mode-hook 'editorconfig))
+  :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
 (provide 'init-prog)
 
