@@ -113,7 +113,7 @@
 ;; Major mode for editing web templates
 (use-package web-mode
   :defer t
-  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\)$"
+  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\|swig\\)$"
   :defines ac-modes aggressive-indent-excluded-modes
   :config
   (progn
