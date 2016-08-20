@@ -34,14 +34,10 @@
 
 (use-package ruby-mode
   :defer t
-  :defines aggressive-indent-excluded-modes
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :interpreter "ruby"
   :config
   (progn
-    (eval-after-load 'aggressive-indent
-      '(add-to-list 'aggressive-indent-excluded-modes 'ruby-mode))
-
     ;; Robe mode
     (use-package robe
       :defer t

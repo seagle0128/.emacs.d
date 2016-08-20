@@ -116,7 +116,7 @@
 (use-package web-mode
   :defer t
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\|swig\\)$"
-  :defines ac-modes aggressive-indent-excluded-modes
+  :defines ac-modes
   :config
   (progn
     (setq web-mode-markup-indent-offset 2)
@@ -125,9 +125,6 @@
 
     (eval-after-load 'auto-complete
       '(add-to-list 'ac-modes 'web-mode))
-
-    (eval-after-load 'aggressvie-indent
-      '(add-to-list 'aggressive-indent-excluded-modes 'web-mode))
     ))
 
 ;; Live browser JavaScript, CSS, and HTML interaction

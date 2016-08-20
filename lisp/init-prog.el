@@ -35,8 +35,6 @@
 ;; Robot mode: located in site-lisp
 (autoload 'robot-mode "robot-mode")
 (add-to-list 'auto-mode-alist '("\\.robot\\'" . robot-mode))
-(eval-after-load 'aggressive-indent
-  '(add-to-list 'aggressive-indent-excluded-modes 'robot-mode))
 
 (use-package markdown-mode :defer t)
 (use-package powershell :defer t)
