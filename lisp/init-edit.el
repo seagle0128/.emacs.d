@@ -117,15 +117,6 @@
   :diminish aggressive-indent-mode
   :init (add-hook 'after-init-hook 'global-aggressive-indent-mode))
 
-;; Auto indent minor mode
-(use-package auto-indent-mode
-  :defer t
-  :diminish auto-indent-mode
-  :init (progn
-          (setq auto-indent-assign-indent-level-variables nil)
-          (setq auto-indent-indent-style 'conservative)
-          (add-hook 'after-init-hook 'auto-indent-global-mode)))
-
 ;; Show number of matches in mode-line while searching
 (use-package anzu
   :defer t
