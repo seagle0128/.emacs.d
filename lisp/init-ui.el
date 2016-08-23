@@ -53,11 +53,11 @@
   :ensure spaceline
   :defer t
   :commands spaceline-emacs-theme spaceline-helm-mode
-  :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (spaceline-emacs-theme)
-                     (eval-after-load 'helm '(spaceline-helm-mode 1))
-                     )))
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (spaceline-spacemacs-theme)
+               (eval-after-load 'helm '(spaceline-helm-mode 1)))))
 
 ;; Color theme
 (use-package monokai-theme
