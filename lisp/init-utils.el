@@ -100,6 +100,7 @@
   :config
   (progn
     (setq neo-smart-open t)
+    (setq neo-vc-integration '(face char))
 
     (define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
     (define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
