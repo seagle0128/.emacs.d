@@ -69,11 +69,8 @@
            (buffer-string)))
        nil nil nil 0))))
 
-(define-key emacs-lisp-mode-map (kbd "C-`") 'my-describe-symbol-at-point)
-
-;; Text zoom in/out
-(global-set-key [(C-wheel-up)] 'text-scale-increase)
-(global-set-key [(C-wheel-down)] 'text-scale-decrease)
+(bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
+(bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map)
 
 ;; Which key
 (use-package which-key
