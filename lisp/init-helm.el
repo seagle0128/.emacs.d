@@ -122,9 +122,11 @@
       :diminish ace-isearch-mode
       :bind (:map isearch-mode-map
                   ("C-:" . ace-isearch-jump-during-isearch))
-      :config (global-ace-isearch-mode 1)
-      (setq ace-isearch-function 'avy-goto-char)
-      (setq ace-isearch-use-jump 'printing-char))
+      :config
+      (progn
+        (global-ace-isearch-mode 1)
+        (setq ace-isearch-function 'avy-goto-char)
+        (setq ace-isearch-use-jump 'printing-char)))
     ))
 
 (provide 'init-helm)
