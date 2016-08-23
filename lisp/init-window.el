@@ -60,49 +60,15 @@
   :init (add-hook 'after-init-hook 'popwin-mode)
   :config (global-set-key (kbd "C-z") popwin:keymap))
 
+;; Easy window config switching
+(use-package eyebrowse
+  :defer t
+  :init (add-hook 'after-init-hook 'eyebrowse-mode))
+
 ;; Simple window manager for emacs
 (use-package e2wm
   :defer t
   :bind (("M-+" . e2wm:start-management)))
-
-;; Minimal window layout manager
-(use-package wconf
-  :defer t
-  :bind (("C-c w c" . wconf-create)
-         ("C-c w k" . wconf-kill)
-         ("C-c w l" . wconf-load)
-         ("C-c w m" . wconf-rename)
-         ("C-c w n" . wconf-use-next)
-         ("C-c w p" . wconf-use-previous)
-         ("C-c w s" . wconf-store)
-         ("C-c w S" . wconf-store-all)
-         ("C-c w r" . wconf-restore)
-         ("C-c w R" . wconf-restore-all)
-         ("C-c w w" . wconf-switch-to-config)
-         ("C-c w v" . wconf-save))
-  :init
-  (progn
-    (setq wconf-file (expand-file-name "wconf-window-configs.el"
-                                       user-emacs-directory))
-
-    (add-hook 'desktop-after-read-hook
-              '(lambda ()
-                 ;; Create wconf file if not exists
-                 (unless (file-exists-p wconf-file)
-                   (write-region "" nil wconf-file)
-                   (wconf-create)
-                   (wconf-store)
-                   (wconf-save))
-
-                 (wconf-load)
-                 (wconf-switch-to-config 0)
-
-                 (add-hook 'kill-emacs-hook
-                           '(lambda ()
-                              (wconf-store-all)
-                              (wconf-save)))
-                 ))
-    ))
 
 (provide 'init-window)
 
