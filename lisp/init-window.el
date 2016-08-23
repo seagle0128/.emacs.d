@@ -47,6 +47,7 @@
   :defer t
   :bind ("C-x o" . ace-window))
 
+;; Numbered window shortcuts
 (use-package window-numbering
   :defer t
   :init (add-hook 'after-init-hook 'window-numbering-mode))

@@ -7,7 +7,6 @@ tmp*
 flycheck_*.el*
 /.emacs.desktop
 /.emacs.desktop.lock
-/.persistent-scratch
 /places
 /recentf
 /history
@@ -34,4 +33,3 @@ eshell/
 /tutorial/
 /.agignore
 /scratch
-/wconf-window-configs.el
