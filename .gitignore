@@ -16,6 +16,9 @@ url/
 var/
 chinese-fonts-setup/
 elpa/
+eshell/
+games/
+tutorial/
 /ac-comphist.dat
 /projectile-bookmarks.eld
 /smex-items
@@ -24,12 +27,8 @@ elpa/
 anaconda-mode/
 /projectile.cache
 /tramp
-eshell/
 /custom.el
 /.mc-lists.el
 /company-statistics-cache.el
-/games/
-/persp-confs/
-/tutorial/
 /.agignore
 /scratch
