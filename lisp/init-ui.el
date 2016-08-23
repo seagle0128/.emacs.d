@@ -52,7 +52,7 @@
 (use-package spaceline-config
   :ensure spaceline
   :defer t
-  :commands spaceline-emacs-theme spaceline-helm-mode
+  :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-helm-mode
   :init
   (add-hook 'after-init-hook
             '(lambda ()
