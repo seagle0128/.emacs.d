@@ -80,7 +80,10 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
+  :defer t
+  :commands chinese-fonts-setup-enable
   :defines cfs--current-profile-name
+  :init (add-hook 'emacs-startup-hook 'chinese-fonts-setup-enable)
   :config
   (progn
     ;; (if sys/macp
