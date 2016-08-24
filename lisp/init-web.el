@@ -49,12 +49,8 @@
 (use-package css-eldoc
   :defer t
   :commands turn-on-css-eldoc
-  :init
-  (progn
-    (add-hook 'css-mode-hook 'turn-on-css-eldoc)
-    (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
-    (add-hook 'less-css-mode-hook 'turn-on-css-eldoc)
-    ))
+  :init (dolist (hook '(css-mode-hook scss-mode-hook less-css-mode-hook))
+          (add-hook hook 'turn-on-css-eldoc)))
 
 ;; Json mode
 (use-package json-mode :defer t)
