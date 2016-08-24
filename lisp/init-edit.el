@@ -116,14 +116,8 @@
   :defer t
   :diminish aggressive-indent-mode
   :init (add-hook 'after-init-hook 'global-aggressive-indent-mode)
-  :config
-  (progn
-    (add-to-list 'aggressive-indent-excluded-modes 'ruby-mode)
-    (add-to-list 'aggressive-indent-excluded-modes 'robot-mode)
-    (add-to-list 'aggressive-indent-excluded-modes 'web-mode)
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-    (add-to-list 'aggressive-indent-excluded-modes 'css-mode)
-    ))
+  :config (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
+            (push mode aggressive-indent-excluded-modes)))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
