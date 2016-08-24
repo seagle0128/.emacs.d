@@ -48,7 +48,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package use-package :init (setq use-package-always-ensure t))
+(setq use-package-enable-imenu-support t)
+(setq use-package-always-ensure t)
+(setq use-package-expand-minimally t)
+(require 'use-package)
 
 (use-package paradox
   :defer t
