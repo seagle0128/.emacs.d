@@ -38,12 +38,12 @@
   :defines magit-completing-read-function
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)
-         ("C-x C-r" . ivy-recentf)
          ("C-c C-r" . ivy-resume)
          ("C-c v" . ivy-push-view)
          ("C-c V" . ivy-pop-view)
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
+         ("C-x C-r" . counsel-recentf)
          ("C-." . counsel-imenu)
          ("C-S-t" . counsel-projectile-find-file)
          ("C-h f" . counsel-describe-function)
@@ -55,11 +55,10 @@
          ("C-c l" . counsel-locate)
          :map read-expression-map
          ("C-r" . counsel-expression-history))
-  :init
-  (progn
-    (add-hook 'after-init-hook 'counsel-mode)
-    (add-hook 'after-init-hook 'ivy-mode)
-    )
+  :init (add-hook 'after-init-hook
+                  '(lambda ()
+                     (ivy-mode 1)
+                     (counsel-mode 1)))
   :config
   (progn
     (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
