@@ -90,11 +90,12 @@ _h_tml    ^ ^         ^ ^             _A_SCII:
             (when mod (insert mod) (forward-line))
             (when text (insert text))))
 
-        (define-key org-mode-map "<"
-          (lambda () (interactive)
-            (if (or (region-active-p) (looking-back "^"))
-                (hydra-org-template/body)
-              (self-insert-command 1))))
+        (bind-key "<"
+                  '(lambda () (interactive)
+                     (if (or (region-active-p) (looking-back "^"))
+                         (hydra-org-template/body)
+                       (self-insert-command 1)))
+                  org-mode-map)
         ))
     ))
 

@@ -53,7 +53,7 @@
                                             nil t)))
              (when file
                (find-file file))))
-         (global-set-key (kbd "C-x C-r") 'ido-recentf-find-file)
+         (bind-key "C-x C-r" 'ido-recentf-find-file)
          ))
 
     (use-package ido-ubiquitous :config (ido-ubiquitous-mode 1))
@@ -89,7 +89,7 @@
           (interactive)
           (ido-occur (symbol-name (symbol-at-point))))
 
-        (global-set-key (kbd "C-o") 'ido-occur-at-point)
+        (bind-key "C-o" 'ido-occur-at-point)
 
         (defun ido-occur-from-isearch ()
           "Open ido-occur from isearch."
@@ -98,7 +98,7 @@
                          isearch-string
                        (regexp-quote isearch-string))))
 
-        (define-key isearch-mode-map (kbd "C-o") 'ido-occur-from-isearch)))
+        (bind-key "C-o" 'ido-occur-from-isearch isearch-mode-map)))
     ))
 
 (provide 'init-ido)

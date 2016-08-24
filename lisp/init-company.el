@@ -43,8 +43,8 @@
     ;; aligns annotation to the right hand side
     (setq company-tooltip-align-annotations t)
 
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    (bind-key "C-p" 'company-select-previous company-active-map)
+    (bind-key "C-n" 'company-select-next company-active-map)
 
     (use-package company-quickhelp
       :defer t

@@ -147,13 +147,13 @@
   :init
   (progn
     (eval-after-load 'js2-mode
-      '(define-key js2-mode-map (kbd "C-c C-b") 'web-beautify-js))
+      '(bind-key "C-c C-b" 'web-beatify-js js2-mode-map))
     (eval-after-load 'json-mode
-      '(define-key json-mode-map (kbd "C-c C-b") 'web-beautify-js))
+      '(bind-key "C-c C-b" 'web-beatify-js json-mode-map))
     (eval-after-load 'sgml-mode
-      '(define-key html-mode-map (kbd "C-c C-b") 'web-beautify-html))
+      '(bind-key "C-c C-b" 'web-beatify-html html-mode-map))
     (eval-after-load 'css-mode
-      '(define-key css-mode-map (kbd "C-c C-b") 'web-beautify-css))
+      '(bind-key "C-c C-b" 'web-beatify-css css-mode-map))
     )
   :config
   ;; Set indent size to 2

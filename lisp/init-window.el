@@ -63,7 +63,7 @@
   :defer t
   :commands popwin-mode
   :init (add-hook 'after-init-hook 'popwin-mode)
-  :config (global-set-key (kbd "C-z") popwin:keymap))
+  :config (bind-key "C-z" popwin:keymap))
 
 ;; Easy window config switching
 (use-package eyebrowse

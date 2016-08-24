@@ -33,9 +33,9 @@
 ;;; Code:
 
 ;; Emacs lisp mode
-(define-key emacs-lisp-mode-map (kbd "C-c C-z") 'ielm)
-(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)
-(define-key emacs-lisp-mode-map (kbd "C-c C-b") 'eval-buffer)
+(bind-key "C-c C-z" 'ielm emacs-lisp-mode-map)
+(bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
+(bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
 
 ;; Enable Eldoc in lisp modes
 (use-package eldoc

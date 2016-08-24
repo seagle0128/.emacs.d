@@ -40,7 +40,7 @@
   (progn
     (add-hook 'inferior-python-mode-hook
               '(lambda ()
-                 (define-key inferior-python-mode-map "\C-c\C-z" 'kill-buffer-and-window)
+                 (bind-key "C-c C-z" 'kill-buffer-and-window inferior-python-mode-map)
                  (process-query-on-exit-flag (get-process "Python"))))
 
     ;; iPython

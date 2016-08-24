@@ -78,15 +78,17 @@
     (setq magit-completing-read-function 'ivy-completing-read)
 
     ;; Search and replace
-    (define-key swiper-map (kbd "M-%") 'swiper-query-replace)
+    (bind-key "M-%" 'swiper-query-replace swiper-map)
 
     ;; Search at point
     ;; "M-j": word-at-point
     ;; "M-n"/"C-w": symbol-at-point
     ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
     ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-    (define-key swiper-map (kbd "C-w")
-      (lambda () (interactive) (insert (format "%s" (with-ivy-window (ivy-thing-at-point))))))
+    (bind-key "C-w" '(lambda ()
+                       (interactive)
+                       (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
+              swiper-map)
 
     (use-package smex :defer t)
     (use-package ivy-hydra :defer t)

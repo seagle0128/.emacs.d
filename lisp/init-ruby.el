@@ -71,7 +71,7 @@
         (eval-after-load 'auto-complete
           '(progn
              (add-to-list 'ac-modes 'inf-ruby-minor-mode)
-             (define-key inf-ruby-mode-map (kbd "TAB") 'auto-complete)
+             (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
 
              (use-package ac-inf-ruby
                :defer t

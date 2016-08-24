@@ -41,10 +41,10 @@
   (set-buffer-file-coding-system 'unix 't) )
 
 ;; Revert buffer
-(global-set-key [(f5)] '(lambda ()
-                          (interactive)
-                          (message "Revert this buffer.")
-                          (revert-buffer t t)))
+(bind-key "<f5>" '(lambda ()
+                    (interactive)
+                    (message "Revert this buffer.")
+                    (revert-buffer t t)))
 
 ;; Describe symbol at point
 (defun my-describe-symbol-at-point (symbol)
@@ -99,8 +99,8 @@
     (setq neo-smart-open t)
     (setq neo-vc-integration '(face char))
 
-    (define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
-    (define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
+    (bind-key "i" 'neotree-enter-horizontal-split neotree-mode-map)
+    (bind-key "I" 'neotree-enter-vertical-split neotree-mode-map)
 
     ;; Integrate with projectile
     (eval-after-load 'projectile
