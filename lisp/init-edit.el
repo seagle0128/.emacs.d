@@ -102,10 +102,11 @@
          ("M-g e" . avy-goto-word-0))
   :config (avy-setup-default))
 
-;; zzz to char
+;; Kill text between the point and the character CHAR
 (use-package zzz-to-char
   :defer t
-  :bind (("M-z" . zzz-to-char)))
+  :bind (("M-z" . zzz-to-char)
+         ("C-M-z" . zzz-up-to-char)))
 
 ;; Quickly follow links
 (use-package ace-link
