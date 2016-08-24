@@ -91,11 +91,8 @@
   :defines tide-format-options
   :init
   (progn
-    (eval-after-load 'typescript-mode
-      '(add-hook 'typescript-mode-hook #'tide-setup))
-
-    (eval-after-load 'eldoc
-      '(add-hook 'typescript-mode-hook #'eldoc-mode))
+    '(add-hook 'typescript-mode-hook #'tide-setup)
+    '(add-hook 'typescript-mode-hook #'eldoc-mode)
 
     (eval-after-load 'js2-mode
       '(add-hook 'js2-mode-hook #'tide-setup))
