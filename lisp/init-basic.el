@@ -41,7 +41,7 @@
 ;; Environment
 (use-package exec-path-from-shell
   :defer t
-  :if sys/mac-x-p
+  :if sys/mac-p
   :init (add-hook 'after-init-hook 'exec-path-from-shell-initialize))
 
 ;; Start server
