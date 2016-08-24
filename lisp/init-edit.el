@@ -42,10 +42,6 @@
 (setq auto-save-default nil)               ; Disable auto save
 ;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 
-(delete-selection-mode 1)
-
-(add-hook 'abbrev-mode-hook '(lambda () (diminish 'abbrev-mode)))
-
 (setq-default major-mode 'text-mode)
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -55,28 +51,33 @@
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
 
+(add-hook 'abbrev-mode-hook '(lambda () (diminish 'abbrev-mode)))
+
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 (setq-default c-basic-offset   4
               tab-width        4
               indent-tabs-mode nil)
 
-;; Display “lambda” as “λ”
-(when (boundp 'global-prettify-symbols-mode)
-  (global-prettify-symbols-mode 1))
-
 ;; Encoding
-(set-language-environment 'Chinese-GB18030)
-(set-clipboard-coding-system 'chinese-gb18030)
-(set-keyboard-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-selection-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
-(setq default-process-coding-system '(utf-8 . utf-8))
-(set-file-name-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(add-hook 'after-init-hook
+          '(lambda ()
+             (set-language-environment 'Chinese-GB18030)
+             (set-clipboard-coding-system 'chinese-gb18030)
+             (set-keyboard-coding-system 'utf-8)
+             (set-terminal-coding-system 'utf-8)
+             (set-buffer-file-coding-system 'utf-8)
+             (set-default-coding-systems 'utf-8)
+             (set-selection-coding-system 'utf-8)
+             (modify-coding-system-alist 'process "*" 'utf-8)
+             (setq default-process-coding-system '(utf-8 . utf-8))
+             (set-file-name-coding-system 'utf-8)
+             (prefer-coding-system 'utf-8)))
+
+;; Delete selection if you insert
+(use-package delsel
+  :defer t
+  :init (add-hook 'after-init-hook 'delete-selection-mode))
 
 ;; Rectangle
 ;; for rectangles, CUA is nice
@@ -142,10 +143,10 @@
 (use-package pager
   :defer t
   :commands pager-page-down pager-page-up pager-row-down pager-row-up
-  :bind (("\C-v"    . pager-page-down)
-         ([next]    . pager-page-down)
-         ("\ev"     . pager-page-up)
-         ([prior]   . pager-page-up)
+  :bind (("\C-v"   . pager-page-down)
+         ([next]   . pager-page-down)
+         ("\ev"    . pager-page-up)
+         ([prior]  . pager-page-up)
          ([M-up]   . pager-row-up)
          ([M-kp-8] . pager-row-up)
          ([M-down] . pager-row-down)

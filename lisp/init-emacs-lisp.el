@@ -32,6 +32,14 @@
 ;;
 ;;; Code:
 
+;; Prettify Symbols
+;; e.g. display “lambda” as “λ”
+(when (boundp 'global-prettify-symbols-mode)
+  (add-hook 'after-init-hook 'global-prettify-symbols-mode)
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (push '("<=" . ?≤) prettify-symbols-alist))))
+
 ;; Emacs lisp mode
 (bind-key "C-c C-z" 'ielm emacs-lisp-mode-map)
 (bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
@@ -41,10 +49,8 @@
 (use-package eldoc
   :defer t
   :diminish eldoc-mode
-  :init (progn
-          (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-          (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-          (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)))
+  :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+          (add-hook hook 'turn-on-eldoc-mode)))
 
 ;; Make M-. and M-, work in elisp like they do in slime.
 ;; In Emacs 25, xref is perfect, so only enable in <=24.
@@ -52,7 +58,7 @@
   :defer t
   :if (< emacs-major-version 25)
   :diminish elisp-slime-nav-mode
-  :init (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
+  :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
           (add-hook hook 'elisp-slime-nav-mode)))
 
 ;; Interactive macro expander
@@ -60,6 +66,32 @@
   :defer t
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
+
+;; Describe symbol at point
+(defun my-describe-symbol-at-point (symbol)
+  "Display the full documentation of SYMBOL (function and variable) in tooltip."
+  (interactive (list (symbol-at-point)))
+  (let ((x-gtk-use-system-tooltips nil))
+    (if (null symbol)
+        (pos-tip-show
+         "** You didn't specify a symbol! **" '("red"))
+      (pos-tip-show
+       (with-temp-buffer
+         (let ((standard-output (current-buffer))
+               (help-xref-following t))
+           (help-mode)
+           (read-only-mode -1)
+           (prin1 symbol)
+           (princ " is ")
+           (save-window-excursion
+             (if (fboundp symbol)
+                 (describe-function symbol)
+               (describe-variable symbol)))
+           (buffer-string)))
+       nil nil nil 0))))
+
+(bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
+(bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map)
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()
