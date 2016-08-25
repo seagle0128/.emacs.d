@@ -32,9 +32,6 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'use-package))
-(require 'init-const)
-
 ;; ELPA: refer to https://elpa.emacs-china.org/
 
 ;; Official
@@ -51,19 +48,16 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(eval-when-compile (require 'use-package))
 (setq use-package-enable-imenu-support t)
 (setq use-package-always-ensure t)
 (setq use-package-expand-minimally t)
 
-;; A modern Packages Menu
 (use-package paradox
   :defer t
   :config (progn
             (setq paradox-github-token t)
             (setq paradox-execute-asynchronously t)))
-
-;; Emacs Package Manager
-(use-package epm :defer t :if (not sys/win32p))
 
 (provide 'init-package)
 
