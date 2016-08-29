@@ -45,6 +45,8 @@
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
+  (dolist (f (directory-files "~/.emacs.d/lisp/" t "\\.elc$"))
+    (delete-file f))
   (package-refresh-contents)
   (package-install 'use-package))
 
