@@ -43,9 +43,19 @@
     ;; aligns annotation to the right hand side
     (setq company-tooltip-align-annotations t)
 
+    ;; Display current candidate inline
+    (setq company-frontends
+          '(company-pseudo-tooltip-unless-just-one-frontend
+            company-preview-frontend
+            company-echo-metadata-frontend))
+
+    ;; Keybindings
     (bind-key "C-p" 'company-select-previous company-active-map)
     (bind-key "C-n" 'company-select-next company-active-map)
+    (bind-key "TAB" 'company-complete-selection company-active-map)
+    (bind-key "<tab>" 'company-complete-selection company-active-map)
 
+    ;; Popup documentation for completion candidates
     (use-package company-quickhelp
       :defer t
       :if (display-graphic-p)
@@ -53,24 +63,29 @@
                   ("M-h" . company-quickhelp-manual-begin))
       :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
 
+    ;; Flx based fuzzy matching for company
     (use-package company-flx
       :defer t
       :init (add-hook 'company-mode-hook 'company-flx-mode))
 
+    ;; Sort candidates using completion history
     (use-package company-statistics
       :defer t
       :init (add-hook 'company-mode-hook 'company-statistics-mode))
 
+    ;; Company mode backend for C/C++ header files
     (use-package company-c-headers
       :defer t
       :init (push 'company-c-headers company-backends))
 
+    ;; Complete for web,html,emmet,jade,slim modes
     (use-package company-web
       :defer t
       :init (progn (add-to-list 'company-backends 'company-web-html)
                    (add-to-list 'company-backends 'company-web-jade)
                    (add-to-list 'company-backends 'company-web-slim)))
 
+    ;; Company mode backend for shell functions
     (use-package company-shell
       :defer t
       :init (progn (push 'company-shell company-backends)
