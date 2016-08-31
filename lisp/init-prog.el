@@ -32,9 +32,12 @@
 ;;
 ;;; Code:
 
-;; Robot mode: located in site-lisp
-(autoload 'robot-mode "robot-mode")
-(add-to-list 'auto-mode-alist '("\\.robot\\'" . robot-mode))
+(use-package robot-mode
+  :ensure nil
+  :defer t
+  :load-path "site-lisp"
+  :commands robot-mode
+  :mode "\\.robot\\'")
 
 (use-package markdown-mode :defer t)
 (use-package powershell :defer t)

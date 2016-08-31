@@ -38,8 +38,6 @@
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config
   (progn
-    ;; (setq yas-verbosity 0)              ; Suppress messages
-
     (use-package dropdown-list
       :defer t
       :commands dropdown-list)
