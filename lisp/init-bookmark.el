@@ -35,21 +35,20 @@
 ;; Visual bookmark
 (use-package bm
   :defer t
-  :bind
-  ;; M$ Visual Studio key setup.
-  ("<C-f2>" . bm-toggle)
-  ("<f2>" . bm-next)
-  ("<S-f2>" . bm-previous)
+  :bind (;; M$ Visual Studio key setup.
+         ("<C-f2>" . bm-toggle)
+         ("<f2>" . bm-next)
+         ("<S-f2>" . bm-previous)
 
-  ;; Click on fringe to toggle bookmarks, and use mouse wheel to move
-  ;; between them.
-  ("<left-fringe> <mouse-5>" . bm-next-mouse)
-  ("<left-fringe> <mouse-4>" . bm-previous-mouse)
-  ("<left-fringe> <mouse-1>" . bm-toggle-mouse)
+         ;; Click on fringe to toggle bookmarks, and use mouse wheel to move
+         ;; between them.
+         ("<left-fringe> <mouse-5>" . bm-next-mouse)
+         ("<left-fringe> <mouse-4>" . bm-previous-mouse)
+         ("<left-fringe> <mouse-1>" . bm-toggle-mouse)
 
-  ("<left-margin> <mouse-5>" . bm-next-mouse)
-  ("<left-margin> <mouse-4>" . bm-previous-mouse)
-  ("<left-margin> <mouse-1>" . bm-toggle-mouse))
+         ("<left-margin> <mouse-5>" . bm-next-mouse)
+         ("<left-margin> <mouse-4>" . bm-previous-mouse)
+         ("<left-margin> <mouse-1>" . bm-toggle-mouse)))
 
 (provide 'init-bookmark)
 
