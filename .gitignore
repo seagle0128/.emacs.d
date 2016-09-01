@@ -32,3 +32,4 @@ anaconda-mode/
 /company-statistics-cache.el
 /.agignore
 /scratch
+*bak/

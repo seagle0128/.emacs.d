@@ -41,6 +41,22 @@
   :defer t
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
+(use-package dos
+  :defer t
+  :init (add-to-list 'auto-mode-alist
+                     '("\\.\\(cmd\\|bat\\|btm\\)$" . dos-mode)))
+
+(use-package fish-mode
+  :defer t
+  :init
+  (progn
+    (add-hook 'fish-mode-hook
+              (lambda ()
+                (add-hook 'before-save-hook 'fish_indent-before-save)))
+    (eval-after-load 'auto-complete
+      '(add-hook 'fish-mode-hook 'auto-complete-mode))
+    ))
+
 (use-package robot-mode
   :ensure nil
   :defer t

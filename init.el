@@ -124,11 +124,9 @@
 
 (require 'init-emacs-lisp)
 (require 'init-c)
-(require 'init-dos)
 (require 'init-python)
 (require 'init-ruby)
 (require 'init-web)
-(require 'init-fish)
 (require 'init-prog)
 
 (require 'init-org)
@@ -138,3 +136,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (auto-complete zzz-to-char zoom-window youdao-dictionary yari yard-mode yaml-mode window-numbering which-key web-mode web-beautify volatile-highlights use-package undo-tree ucs-utils tide spaceline smooth-scrolling smex smartrep smartparens skewer-mode shell-pop scss-mode ruby-refactor rubocop rspec-mode robe rainbow-mode rainbow-delimiters py-autopep8 psvn projectile-rails powershell popwin php-mode paradox pager open-junk-file neotree nav-flash mwim multi-term monokai-theme memory-usage markdown-mode magit macrostep list-environment linum-off less-css-mode json-mode js2-refactor ivy-hydra iedit ibuffer-vc htmlize highlight-symbol highlight-indentation haml-mode gitignore-mode gitconfig-mode git-timemachine flycheck-pos-tip flx-ido fish-mode fic-mode eyebrowse expand-region exec-path-from-shell elisp-slime-nav editorconfig easy-kill e2wm dropdown-list drag-stuff dos dockerfile-mode diff-hl dash-at-point ctags-update css-eldoc csharp-mode counsel-projectile company-web company-statistics company-shell company-quickhelp company-flx company-c-headers company-anaconda comment-dwim-2 color-identifiers-mode coffee-mode chinese-fonts-setup cal-china-x browse-url-dwim browse-kill-ring bm benchmark-init avy-flycheck anzu aggressive-indent ag ack ace-window ace-link))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
