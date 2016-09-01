@@ -32,13 +32,6 @@
 ;;
 ;;; Code:
 
-(use-package robot-mode
-  :ensure nil
-  :defer t
-  :load-path "site-lisp"
-  :commands robot-mode
-  :mode "\\.robot\\'")
-
 (use-package markdown-mode :defer t)
 (use-package powershell :defer t)
 (use-package csharp-mode :defer t)
@@ -47,6 +40,13 @@
 (use-package editorconfig
   :defer t
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
+
+(use-package robot-mode
+  :ensure nil
+  :defer t
+  :load-path "site-lisp"
+  :commands robot-mode
+  :mode "\\.robot\\'")
 
 (provide 'init-prog)
 
