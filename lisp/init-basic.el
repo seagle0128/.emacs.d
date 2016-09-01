@@ -56,7 +56,7 @@
       :defer t
       :init (add-hook 'after-init-hook 'save-place-mode))
   ;; <= Emacs 24
-  (use-package saveplace) :config (setq save-place t))
+  (use-package saveplace :config (setq save-place t)))
 
 (use-package recentf
   :defer t
