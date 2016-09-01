@@ -35,11 +35,10 @@
 (use-package auto-complete
   :defer t
   :diminish auto-complete-mode
-  :functions ac-set-trigger-key
   :bind (("M-/" . ac-start))
+  :init (add-hook 'after-init-hook 'ac-config-default)
   :config
   (progn
-    (ac-config-default)
     (setq ac-use-menu-map t)
     (ac-set-trigger-key "TAB")
     (setq ac-delay 0.3)
