@@ -52,11 +52,12 @@
 (use-package spaceline-config
   :ensure spaceline
   :defer t
-  :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-helm-mode
+  :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-info-mode spaceline-helm-mode
   :init
   (add-hook 'after-init-hook
             '(lambda ()
                (spaceline-spacemacs-theme)
+               (eval-after-load 'info+ '(spaceline-info-mode 1))
                (eval-after-load 'helm '(spaceline-helm-mode 1)))))
 
 ;; Color theme

@@ -130,6 +130,7 @@
   :commands open-junk-file)
 
 ;; Misc
+(use-package info+)
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
