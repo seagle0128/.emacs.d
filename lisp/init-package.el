@@ -32,8 +32,19 @@
 ;;
 ;;; Code:
 
-;; ELPA: refer to https://elpa.emacs-china.org/
+;; DO NOT copy package-selected-packages to init/custom file forcibly.
+;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+(require 'package)
+(defun package--save-selected-packages (&optional value)
+  "Set and (don't!) save `package-selected-packages' to VALUE."
+  (when value
+    (setq package-selected-packages value))
+  (unless after-init-time
+    (add-hook 'after-init-hook #'package--save-selected-packages)))
 
+;;
+;; ELPA: refer to https://elpa.emacs-china.org/
+;;
 ;; Official
 ;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
