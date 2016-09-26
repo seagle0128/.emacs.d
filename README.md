@@ -9,7 +9,7 @@ configuration for Emacs newcomers and lots of additional power for
 Emacs power users.
 
 It is compatible **ONLY with GNU Emacs 24.4 and above**. In general you're
-advised to always run with the latest Emacs - currently **24.5**.
+advised to always run with the latest Emacs - currently **25.1**.
 
 # Quick Start
 
