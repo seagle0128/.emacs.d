@@ -85,6 +85,7 @@
   :init (add-hook 'emacs-startup-hook
                   '(lambda ()
                      (setq cfs-verbose nil)
+                     (setq cfs-save-current-profile nil)
                      (chinese-fonts-setup-enable)))
   :config
   (progn
