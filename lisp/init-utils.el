@@ -129,6 +129,9 @@
   :defer t
   :commands open-junk-file)
 
+;; Side-by-side diff view
+(use-package diffview :defer t)
+
 ;; Misc
 (use-package info+)
 (use-package htmlize :defer t)
