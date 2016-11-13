@@ -133,6 +133,7 @@
 (use-package diffview :defer t)
 
 ;; Misc
+(use-package copyit :defer t)
 (use-package info+)
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
