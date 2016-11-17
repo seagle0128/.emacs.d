@@ -79,14 +79,6 @@
     ;; Integrate with projectile
     (eval-after-load 'projectile
       '(setq projectile-switch-project-action 'neotree-projectile-action))
-
-    ;; Fix compatibility issue with popwin
-    (eval-after-load 'popwin
-      '(when neo-persist-show
-         (add-hook 'popwin:before-popup-hook
-                   (lambda () (setq neo-persist-show nil)))
-         (add-hook 'popwin:after-popup-hook
-                   (lambda () (setq neo-persist-show t)))))
     ))
 
 ;; Dash
