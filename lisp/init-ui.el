@@ -67,9 +67,6 @@
   (progn
     (defun load-monokai-theme()
       "Load Monokai theme and set new tooltip background color."
-      ;; Don't change the font for some headings and titles
-      ;; https://github.com/oneKelvinSmith/monokai-emacs/issues/56
-      (setq monokai-use-variable-pitch nil)
       (load-theme 'monokai t)
       (set-face-background 'tooltip "#FEFBD5")
       (setq pos-tip-background-color "#FEFBD5"))
