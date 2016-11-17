@@ -39,6 +39,7 @@
 
 (use-package editorconfig
   :defer t
+  :diminish editorconfig-mode
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
 (use-package dos
