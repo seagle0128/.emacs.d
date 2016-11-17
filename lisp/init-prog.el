@@ -36,6 +36,7 @@
 (use-package powershell :defer t)
 (use-package csharp-mode :defer t)
 (use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
+(use-package restclient :defer t)
 
 (use-package editorconfig
   :defer t
