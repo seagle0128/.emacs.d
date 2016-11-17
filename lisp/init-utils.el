@@ -121,8 +121,8 @@
     ))
 
 ;; Search
-(use-package ack :defer t :if (executable-find "ack"))
-(use-package ag :defer t :if (executable-find "ag"))
+(use-package ag :defer t)
+(use-package wgrep-ag :defer t)
 
 ;; Junk file
 (use-package open-junk-file
