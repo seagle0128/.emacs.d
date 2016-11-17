@@ -122,7 +122,13 @@
 
 ;; Search
 (use-package ag :defer t)
-(use-package wgrep-ag :defer t)
+(use-package wgrep-ag
+  :defer t
+  :config
+  (progn
+    (setq wgrep-auto-save-buffer t)
+    (setq wgrep-change-readonly-file t)
+    ))
 
 ;; Junk file
 (use-package open-junk-file
