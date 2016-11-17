@@ -70,11 +70,6 @@
   :defer t
   :init (add-hook 'after-init-hook 'eyebrowse-mode))
 
-;; Simple window manager for emacs
-(use-package e2wm
-  :defer t
-  :bind (("M-+" . e2wm:start-management)))
-
 (provide 'init-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
