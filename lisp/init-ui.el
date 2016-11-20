@@ -86,8 +86,6 @@
                      (chinese-fonts-setup-enable)))
   :config
   (progn
-    ;; (if sys/macp
-    ;;     (setq cfs--fontsize-steps '(6 6 8)))
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))
     (setq cfs--current-profile-name "program")
