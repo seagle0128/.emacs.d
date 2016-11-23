@@ -50,6 +50,10 @@
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 ;; Mirror
+;; Zishanlongren
+;; (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
+;;                          ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+;; Tsinghua
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
