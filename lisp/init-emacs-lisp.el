@@ -50,7 +50,7 @@
   :defer t
   :diminish eldoc-mode
   :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
-          (add-hook hook 'turn-on-eldoc-mode)))
+          (add-hook hook 'eldoc-mode)))
 
 ;; Make M-. and M-, work in elisp like they do in slime.
 ;; In Emacs 25, xref is perfect, so only enable in <=24.
