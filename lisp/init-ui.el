@@ -43,9 +43,9 @@
 (setq icon-title-format frame-title-format)
 
 ;; Menu/Tool/Scroll bars
-(when (not sys/mac-x-p) (menu-bar-mode -1))
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(when (and (fboundp 'menu-bar-mode) (not sys/mac-x-p)) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Modeline configuration
 (use-package spaceline-config
