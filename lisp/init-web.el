@@ -32,12 +32,12 @@
 ;;
 ;;; Code:
 
-;; Css mode
+;; CSS mode
 (use-package css-mode
   :defer t
   :config (setq css-indent-offset 2))
 
-;; Scss mode
+;; SCSS mode
 (use-package scss-mode
   :defer t
   :config (setq scss-compile-at-save nil)         ; Disable complilation on save
@@ -45,14 +45,14 @@
 
 (use-package less-css-mode :defer t)
 
-;; Css eldoc
+;; CSS eldoc
 (use-package css-eldoc
   :defer t
   :commands turn-on-css-eldoc
   :init (dolist (hook '(css-mode-hook scss-mode-hook less-css-mode-hook))
           (add-hook hook 'turn-on-css-eldoc)))
 
-;; Json mode
+;; JSON mode
 (use-package json-mode :defer t)
 
 ;; Improved JavaScript editing mode
