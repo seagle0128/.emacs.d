@@ -168,7 +168,14 @@
 (use-package iedit
   :defer t
   :bind (("C-;" . iedit-mode)
-         ("C-x r RET" . iedit-rectangle-mode)))
+         ("C-x r RET" . iedit-rectangle-mode)
+         :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
+         :map esc-map ("C-;" . iedit-execute-last-modification)
+         :map help-map ("C-;" . iedit-mode-toggle-on-function))
+  :init
+  ;; Avoid to restore Iedit mode when restoring desktop
+  (add-to-list 'desktop-minor-mode-handlers
+               '(iedit-mode . nil)))
 
 ;; Multiple cursors
 (use-package multiple-cursors
