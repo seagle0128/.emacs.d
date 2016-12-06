@@ -88,6 +88,10 @@
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))
     (setq cfs--current-profile-name "program")
+    (when sys/mac-x-p
+      (setq cfs--profiles-steps '(("program" . 5)
+                                  ("org-mode" . 6)
+                                  ("read-book" . 8))))
     ))
 
 ;; Line and Column
