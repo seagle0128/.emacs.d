@@ -132,10 +132,10 @@
 
 ;; Misc
 (use-package copyit :defer t)
-(use-package info+)
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
+(add-hook 'Info-mode-hook '(lambda () (use-package info+)))
 
 (provide 'init-utils)
 

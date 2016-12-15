@@ -37,7 +37,7 @@
 (use-package cal-china-x
   :defer t
   :commands cal-china-x-setup
-  :init (add-hook 'after-init-hook 'cal-china-x-setup)
+  :init (add-hook 'calendar-mode-hook 'cal-china-x-setup)
   :config
   (progn
     (setq calendar-mark-holidays-flag t)
