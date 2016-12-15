@@ -45,17 +45,21 @@
 ;;
 ;; ELPA: refer to https://elpa.emacs-china.org/
 ;;
-;; Official
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-
-;; Mirror
-;; Zishanlongren
-;; (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-;;                          ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
-;; Tsinghua
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+(cond
+ ((eq my-package-archives 'melpa)
+  (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+                           ("melpa" . "http://melpa.org/packages/")
+                           ("melpa-stable" . "http://stable.melpa.org/packages/"))))
+ ((eq my-package-archives 'tsinghua)
+  (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                           ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+ ((eq my-package-archives 'emacs-china)
+  (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                           ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
+ ((eq my-package-archives 'zilongshanren)
+  (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
+                           ("melpa" . "http://elpa.zilongshanren.com/melpa/"))))
+ )
 
 (package-initialize)
 
