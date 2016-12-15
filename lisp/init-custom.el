@@ -53,9 +53,8 @@
   "Set package archives from which to fetch."
   :type '(choice
           (const :tag "Melpa" melpa)
-          (const :tag "Tsinghua" tsinghua)
           (const :tag "Emacs-China" emacs-china)
-          (const :tag "Zilongshanren" 'zilongshanren)))
+          (const :tag "Tsinghua" tsinghua)))
 
 (defcustom my-profile-enable nil
   "Enable the init profiler or not."
