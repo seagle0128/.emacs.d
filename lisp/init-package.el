@@ -48,8 +48,7 @@
 (cond
  ((eq my-package-archives 'melpa)
   (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                           ("melpa" . "http://melpa.org/packages/")
-                           ("melpa-stable" . "http://stable.melpa.org/packages/"))))
+                           ("melpa" . "http://melpa.org/packages/"))))
  ((eq my-package-archives 'emacs-china)
   (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                            ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
