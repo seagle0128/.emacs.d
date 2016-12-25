@@ -135,6 +135,7 @@
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
+(use-package try :defer t)
 (add-hook 'Info-mode-hook '(lambda () (use-package info+)))
 
 (provide 'init-utils)
