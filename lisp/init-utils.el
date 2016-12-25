@@ -122,6 +122,13 @@
     (setq wgrep-change-readonly-file t)
     ))
 
+;; Jump to definition via ag/rg/grep
+(use-package dumb-jump
+  :defer t
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go))
+  :config (setq dumb-jump-selector 'ivy))
+
 ;; Junk file
 (use-package open-junk-file
   :defer t
