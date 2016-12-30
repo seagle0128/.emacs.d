@@ -124,7 +124,6 @@
 (require 'init-scm)
 (require 'init-projectile)
 (require 'init-flycheck)
-(require 'init-tags)
 
 (require 'init-emacs-lisp)
 (require 'init-c)

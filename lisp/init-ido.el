@@ -99,6 +99,14 @@
                        (regexp-quote isearch-string))))
 
         (bind-key "C-o" 'ido-occur-from-isearch isearch-mode-map)))
+
+    (use-package ggtags
+      :defer t
+      :diminish ggtags-mode
+      :init (add-hook 'c-mode-common-hook
+                      (lambda ()
+                        (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                          (ggtags-mode 1)))))
     ))
 
 (provide 'init-ido)

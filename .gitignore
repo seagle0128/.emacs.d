@@ -33,3 +33,7 @@ anaconda-mode/
 /.agignore
 /scratch
 *bak/
+/TAGS
+/GPATH
+/GRTAGS
+/GTAGS

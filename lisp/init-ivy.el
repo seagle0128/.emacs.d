@@ -96,6 +96,23 @@
       :defer t
       :bind (("C-S-t" . counsel-projectile-find-file))
       :init (setq projectile-switch-project-action 'counsel-projectile-find-file))
+
+    (use-package counsel-gtags
+      :defer t
+      :diminish counsel-gtags-mode
+      :bind (:map counsel-gtags-mode-map
+                  ("M-." . counsel-gtags-find-definition)
+                  ("M-r" . counsel-gtags-find-reference)
+                  ("M-s" . counsel-gtags-find-symbol)
+                  ("M-," . counsel-gtags-pop-stack))
+      :init
+      (progn
+        (setq counsel-gtags-auto-update t)
+        (add-hook 'c-mode-common-hook
+                  (lambda ()
+                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                      (counsel-gtags-mode 1))))
+        ))
     ))
 
 (provide 'init-ivy)

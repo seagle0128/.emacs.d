@@ -112,6 +112,26 @@
       :bind (("C-S-t" . helm-cmd-t)
              ("s-t" . helm-cmd-t)))
 
+    (use-package helm-gtags
+      :defer t
+      :diminish helm-gtags-mode
+      :bind (:map helm-gtags-mode-map
+                  ("M-t" . helm-gtags-find-tag)
+                  ("M-r" . helm-gtags-find-rtag)
+                  ("M-s" . helm-gtags-find-symbol)
+                  ("M-g M-p" . helm-gtags-parse-file)
+                  ("C-c <" . helm-gtags-previous-history)
+                  ("C-c >" . helm-gtags-next-history)
+                  ("M-," . helm-gtags-pop-stack))
+      :config
+      (progn
+        (setq helm-gtags-auto-update t)
+        (add-hook 'c-mode-common-hook
+                  (lambda ()
+                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                      (helm-gtags-mode 1))))
+        ))
+
     (use-package helm-ls-git :defer t)
     (use-package helm-projectile :defer t)
     (use-package helm-flycheck :defer t)
