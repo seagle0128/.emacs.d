@@ -92,6 +92,9 @@
       :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
       :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
 
+    ;; Coverage for SimpleCov
+    (use-package coverage :defer t)
+
     ;; Yari
     (use-package yari
       :defer t
