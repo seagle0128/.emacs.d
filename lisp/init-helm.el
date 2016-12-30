@@ -123,14 +123,11 @@
                   ("C-c <" . helm-gtags-previous-history)
                   ("C-c >" . helm-gtags-next-history)
                   ("M-," . helm-gtags-pop-stack))
-      :config
-      (progn
-        (setq helm-gtags-auto-update t)
-        (add-hook 'c-mode-common-hook
-                  (lambda ()
-                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                      (helm-gtags-mode 1))))
-        ))
+      :init (add-hook 'c-mode-common-hook
+                      (lambda ()
+                        (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                          (helm-gtags-mode 1))))
+      :config (setq helm-gtags-auto-update t))
 
     (use-package helm-ls-git :defer t)
     (use-package helm-projectile :defer t)
