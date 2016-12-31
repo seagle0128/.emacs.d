@@ -137,13 +137,21 @@
 ;; Side-by-side diff view
 (use-package diffview :defer t)
 
+;; Description: Extensions to `info.el'
+(use-package info+
+  :defer t
+  :init
+  (progn
+    (with-eval-after-load 'info
+      (require 'info+))
+    (setq Info-fontify-angle-bracketed-flag nil)))
+
 ;; Misc
 (use-package copyit :defer t)
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
 (use-package try :defer t)
-(add-hook 'Info-mode-hook '(lambda () (use-package info+)))
 
 (provide 'init-utils)
 
