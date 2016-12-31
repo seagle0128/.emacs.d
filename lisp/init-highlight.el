@@ -56,10 +56,7 @@
 (use-package highlight-indentation
   :defer t
   :diminish highlight-indentation-mode highlight-indentation-current-column-mode
-  :init (add-hook 'prog-mode-hook
-                  '(lambda ()
-                     (set-face-background 'highlight-indentation-current-column-face "#3C3D37")
-                     (highlight-indentation-current-column-mode 1)))
+  :init (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
   :config
   ;; Workaround. Fix void var issue.
   (eval-after-load 'web-mode
