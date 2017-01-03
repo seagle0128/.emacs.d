@@ -142,8 +142,7 @@
   :defer t
   :init
   (progn
-    (with-eval-after-load 'info
-      (require 'info+))
+    (add-hook 'Info-mode-hook '(lambda () (require 'info+)))
     (setq Info-fontify-angle-bracketed-flag nil)))
 
 ;; Misc
