@@ -67,7 +67,8 @@
       "Load Monokai theme and set new tooltip background color."
       (load-theme 'monokai t)
       (set-face-background 'tooltip "#FEFBD5")
-      (setq pos-tip-background-color "#FEFBD5"))
+      (when (boundp 'pos-tip-background-color)
+        (setq pos-tip-background-color "#FEFBD5")))
 
     (add-hook 'after-init-hook 'load-monokai-theme)
     ))
@@ -123,12 +124,15 @@
 (setq inhibit-startup-screen t)
 (setq visible-bell t)
 (setq-default ns-pop-up-frames nil)     ; Don't open a file in a new frame
-(setq x-gtk-use-system-tooltips nil)    ; Don't use GTK+ tooltip
 (size-indication-mode 1)
 ;; (blink-cursor-mode -1)
 (show-paren-mode 1)
 (setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
+
+;; Don't use GTK+ tooltip
+(when (boundp 'x-gtk-use-system-tooltips)
+  (setq x-gtk-use-system-tooltips nil))
 
 ;; Emacs startup screen
 (use-package dashboard
