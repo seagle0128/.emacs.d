@@ -32,19 +32,9 @@
 ;;
 ;;; Code:
 
-;; Save and restore Emacs status
-(use-package desktop
-  :defer t
-  :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (desktop-save-mode 1)
-                     (let ((key "--no-desktop"))
-                       (when (member key command-line-args)
-                         (setq command-line-args (delete key command-line-args))
-                         (desktop-save-mode 0)))
-                     (when desktop-save-mode
-                       (desktop-read)
-                       (setq inhibit-startup-screen t)))))
+;; Do not use `use-package' here
+;; since we need after-init-hook in desktop.el
+(desktop-save-mode 1)
 
 ;; Persistent the scratch buffter
 (defun save-persistent-scratch ()
