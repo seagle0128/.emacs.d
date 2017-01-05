@@ -1,10 +1,6 @@
 language: generic
 sudo: false
 
-before_install:
- - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
- - evm install $EVM_EMACS --use --skip
-
 env:
  - EVM_EMACS=emacs-24.4-travis
  - EVM_EMACS=emacs-24.5-travis
@@ -18,6 +14,8 @@ matrix:
       - EVM_EMACS=emacs-git-snapshot-travis
 
 install:
+  - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
+  - evm install $EVM_EMACS --use --skip
   - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
 
 script:
