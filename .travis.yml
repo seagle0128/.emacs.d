@@ -13,7 +13,7 @@ matrix:
     env:
       - EVM_EMACS=emacs-git-snapshot-travis
 
-install:
+before_script:
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
   - which $EVM_EMACS
