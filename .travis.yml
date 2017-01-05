@@ -1,0 +1,25 @@
+# https://github.com/seagle0128/emacs-travis
+
+language: emacs-lisp
+sudo: false
+
+env:
+ - EVM_EMACS=emacs-24.4-travis
+ - EVM_EMACS=emacs-24.5-travis
+ - EVM_EMACS=emacs-25.1-travis
+ - EVM_EMACS=emacs-git-snapshot-travis
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    env:
+      - EVM_EMACS=emacs-git-snapshot-travis
+
+install:
+  - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
+
+script:
+  $EVM_EMACS --version && $EVM_EMACS -Q --batch -l lib/elisp-lint.el -f elisp-lint-files-batch *.el
+
+notifications:
+  email: false

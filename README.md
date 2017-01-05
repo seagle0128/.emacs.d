@@ -1,6 +1,8 @@
 Personal Emacs Configuration
 ============================
 
+[![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
 bundles a plethora of additional packages and adds its own core
