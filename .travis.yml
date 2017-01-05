@@ -14,7 +14,8 @@ matrix:
       - EVM_EMACS=emacs-git-snapshot-travis
 
 before_script:
-  - mv -f ~/seagle0128/.emacs.d ~/.emacs.d
+  - pwd
+  - mv -f ../.emacs.d ~/.emacs.d
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
   # - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
