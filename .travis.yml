@@ -24,8 +24,8 @@ script:
   - emacs --version
   - pwd
   - cd ~/.emacs.d
-  - emacs -Q --batch --eval  --eval '(package-initialize)' -l init.el &
-  - sleep 120
+  - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l init.el &
+  - sleep 180
   - emacs -Q --batch -l lib/elisp-lint.el -f elisp-lint-files-batch --no-indent --no-indent-character --no-fill-column init.el
   - cd lisp
   - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l ../lib/elisp-lint.el -f elisp-lint-files-batch --no-indent --no-indent-character --no-fill-column *.el
