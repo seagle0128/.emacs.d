@@ -16,8 +16,8 @@ matrix:
 before_script:
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
-  - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
+  # - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
 
 script:
   #emacs --version && emacs -Q --batch -l lib/elisp-lint.el -f elisp-lint-files-batch --no-indent *.el
-  emacs --version && emacs -Q --batch *.el
+  emacs --version && emacs -Q --batch init.el lisp/*.el
