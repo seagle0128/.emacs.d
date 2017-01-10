@@ -88,25 +88,35 @@
 (use-package tide
   :defer t
   :diminish tide-mode
-  :defines company-backends tide-format-options
+  :defines company-backends
   :init
   (progn
-    '(add-hook 'typescript-mode-hook #'tide-setup)
+    (defun setup-tide-mode ()
+      "Setup tide mode."
+      (interactive)
+      (tide-setup)
+      (eldoc-mode 1)
+      (tide-hl-identifier-mode 1))
+
+    '(add-hook 'typescript-mode-hook #'setup-tide-mode)
     '(add-hook 'typescript-mode-hook #'eldoc-mode)
 
     (eval-after-load 'js2-mode
-      '(add-hook 'js2-mode-hook #'tide-setup))
+      '(add-hook 'js2-mode-hook #'setup-tide-mode))
 
     (add-hook 'before-save-hook #'tide-format-before-save)
+    )
+  :config
+  (progn
     (setq tide-format-options
           '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
             t
             :placeOpenBraceOnNewLineForFunctions
             nil))
-    )
-  :config
-  (eval-after-load 'company
-    '(push '(company-tide :with company-yasnippet) company-backends)))
+
+    (eval-after-load 'company
+      '(push '(company-tide :with company-yasnippet) company-backends))
+    ))
 
 ;; Major mode for editing web templates
 (use-package web-mode
