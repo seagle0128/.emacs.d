@@ -97,16 +97,16 @@
     (eval-after-load 'js2-mode
       '(add-hook 'js2-mode-hook #'tide-setup))
 
-    (eval-after-load 'company
-      '(push '(company-tide :with company-yasnippet) company-backends))
-
     (add-hook 'before-save-hook #'tide-format-before-save)
     (setq tide-format-options
           '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
             t
             :placeOpenBraceOnNewLineForFunctions
             nil))
-    ))
+    )
+  :config
+  (eval-after-load 'company
+    '(push '(company-tide :with company-yasnippet) company-backends)))
 
 ;; Major mode for editing web templates
 (use-package web-mode
