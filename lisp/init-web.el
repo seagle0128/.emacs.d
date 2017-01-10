@@ -88,7 +88,7 @@
 (use-package tide
   :defer t
   :diminish tide-mode
-  :defines tide-format-options
+  :defines company-backends tide-format-options
   :init
   (progn
     '(add-hook 'typescript-mode-hook #'tide-setup)
@@ -96,6 +96,9 @@
 
     (eval-after-load 'js2-mode
       '(add-hook 'js2-mode-hook #'tide-setup))
+
+    (eval-after-load 'company
+      '(push '(company-tide :with company-yasnippet) company-backends))
 
     (add-hook 'before-save-hook #'tide-format-before-save)
     (setq tide-format-options
