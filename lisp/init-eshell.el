@@ -44,7 +44,11 @@
     (eval-after-load 'helm
       '(add-hook 'eshell-mode-hook
                  '(lambda ()
-                    (bind-key [remap eshell-pcomplete] 'helm-esh-pcomplete eshell-mode-map))))
+                    (bind-key [remap eshell-pcomplete]
+                              'helm-esh-pcomplete eshell-mode-map))))
+
+    (use-package eshell-z)
+    (use-package eshell-git-prompt :config (eshell/use-theme "powerline"))
 
     (defun eshell/clear ()
       "Clear the eshell buffer."
