@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Git
 (use-package magit
   :defer t
