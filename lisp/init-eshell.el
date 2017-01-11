@@ -48,7 +48,7 @@
                               'helm-esh-pcomplete eshell-mode-map))))
 
     (use-package eshell-z)
-    (use-package eshell-git-prompt :config (eshell/use-theme "powerline"))
+    (use-package eshell-git-prompt :config (eshell/use-theme "robbyrussell"))
 
     (defun eshell/clear ()
       "Clear the eshell buffer."
