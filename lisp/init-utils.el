@@ -132,7 +132,9 @@
   :defer t
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go))
-  :config (setq dumb-jump-selector 'ivy))
+  :config
+  (when (featurep 'ivy)
+    (add-hook 'ivy-mode-hook '(lambda () (setq dumb-jump-selector 'ivy)))))
 
 ;; Junk file
 (use-package open-junk-file
