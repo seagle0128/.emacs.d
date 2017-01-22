@@ -121,6 +121,7 @@
     (setq wgrep-auto-save-buffer t)
     (setq wgrep-change-readonly-file t)
     ))
+(use-package fzf :defer t)
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
