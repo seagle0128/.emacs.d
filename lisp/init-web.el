@@ -79,6 +79,10 @@
          :init (add-hook 'js2-mode-hook 'ac-js2-mode 1)))
     ))
 
+;; Run Mocha or Jasmine tests
+(use-package mocha :defer t)
+(use-package mocha-snippets :defer t)
+
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode
   :defer t
