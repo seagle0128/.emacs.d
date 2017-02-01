@@ -4,9 +4,11 @@
 ;;;       Exit Emacs and delete all elc in ~/.emacs.d/lisp, then start Emacs.
 ;;; Code:
 
-;; (setq my-ac-method 'auto-complete)         ; company or auto-complete
-;; (setq my-completion-method 'helm)          ; helm, ivy or ido
-;; (setq my-package-archives 'emacs-china)    ; melpa, emacs-china or tsinghua
-;; (setq my-profile-enable t)                 ; t or nil
+;; (setq my-full-name "Vincent Zhang")           ; user full name
+;; (setq my-mail-address "seagel0128@gmail.com") ; email address
+;; (setq my-ac-method 'auto-complete)            ; company or auto-complete
+;; (setq my-completion-method 'helm)             ; helm, ivy or ido
+;; (setq my-package-archives 'emacs-china)       ; melpa, emacs-china or tsinghua
+;; (setq my-profile-enable t)                    ; t or nil
 
 ;;; custom-example.el ends here

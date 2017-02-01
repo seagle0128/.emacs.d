@@ -36,6 +36,14 @@
   "Personal Emacs configurations."
   :group 'extensions)
 
+(defcustom my-full-name "Vincent Zhang"
+  "Set user full name."
+  :type 'string)
+
+(defcustom my-mail-address "seagle0128@gmail.com"
+  "Set user email address."
+  :type 'string)
+
 (defcustom my-ac-method 'company
   "Auto complete method: auto-complete' or `company'."
   :type '(choice

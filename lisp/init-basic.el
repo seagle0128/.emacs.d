@@ -33,10 +33,11 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-custom)
 
 ;; Personal information
-(setq user-full-name "Vincent Zhang")
-(setq user-mail-address "seagle012@gmail.com")
+(setq user-full-name my-full-name)
+(setq user-mail-address my-mail-address)
 
 ;; Environment
 (use-package exec-path-from-shell
