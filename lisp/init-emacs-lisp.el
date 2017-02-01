@@ -1,7 +1,7 @@
 ;; init-emacs-lisp.el --- Initialize Emacs Lisp configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 2.0.0
+;; Version: 2.1.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
