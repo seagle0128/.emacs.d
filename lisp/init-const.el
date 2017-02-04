@@ -50,7 +50,7 @@
   "Are we running under X on a Mac system?")
 
 (defconst sys/linux-x-p
-  (and (display-grayscale-p) sys/linuxp)
+  (and (display-graphic-p) sys/linuxp)
   "Are we running under X on a GNU/Linux system?")
 
 (defconst sys/cygwinp
