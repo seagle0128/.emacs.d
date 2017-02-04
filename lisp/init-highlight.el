@@ -35,6 +35,7 @@
 ;; Highlight the current line
 (use-package hl-line
   :defer t
+  :if (display-graphic-p)
   :init (add-hook 'after-init-hook 'global-hl-line-mode))
 
 ;; Highlight symbol
