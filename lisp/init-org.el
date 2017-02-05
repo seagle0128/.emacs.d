@@ -36,14 +36,19 @@
   :defer t
   :bind (("C-c a" . org-agenda))
   :init
-  (progn
-    (setq org-agenda-files '("~/org"))
-    (setq org-src-fontify-natively t)
-    (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
-    (add-hook 'org-indent-mode-hook '(lambda () (diminish 'org-indent-mode)))
-    )
+  (add-hook 'org-mode-hook '(lambda ()
+                              (org-indent-mode 1)
+                              (diminish 'org-indent-mode)))
   :config
   (progn
+    (setq org-agenda-files '("~/org"))
+    (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
+    (setq org-src-fontify-natively t)
+
+    (use-package org-bullets
+      :defer t
+      :init (add-hook 'org-mode-hook 'org-bullets-mode))
+
     (use-package hydra
       :config
       (progn
