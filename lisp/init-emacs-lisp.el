@@ -69,32 +69,6 @@
               :map lisp-interaction-mode-map
               ("C-c e" . macrostep-expand)))
 
-;; Describe symbol at point
-(defun my-describe-symbol-at-point (symbol)
-  "Display the full documentation of SYMBOL (function and variable) in tooltip."
-  (interactive (list (symbol-at-point)))
-  (let ((x-gtk-use-system-tooltips nil))
-    (if (null symbol)
-        (pos-tip-show
-         "** You didn't specify a symbol! **" '("red"))
-      (pos-tip-show
-       (with-temp-buffer
-         (let ((standard-output (current-buffer))
-               (help-xref-following t))
-           (help-mode)
-           (read-only-mode -1)
-           (prin1 symbol)
-           (princ " is ")
-           (save-window-excursion
-             (if (fboundp symbol)
-                 (describe-function symbol)
-               (describe-variable symbol)))
-           (buffer-string)))
-       nil nil nil 0))))
-
-(bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
-(bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map)
-
 ;; Byte compiler
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
@@ -122,6 +96,35 @@
             t))
 
 (add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
+
+;; Only on X
+(when (display-graphic-p)
+  ;; Describe symbol at point
+  (defun my-describe-symbol-at-point (symbol)
+    "Display the full documentation of SYMBOL (function and variable) in tooltip."
+    (interactive (list (symbol-at-point)))
+    (let ((x-gtk-use-system-tooltips nil))
+      (if (null symbol)
+          (pos-tip-show
+           "** You didn't specify a symbol! **" '("red"))
+        (pos-tip-show
+         (with-temp-buffer
+           (let ((standard-output (current-buffer))
+                 (help-xref-following t))
+             (help-mode)
+             (read-only-mode -1)
+             (prin1 symbol)
+             (princ " is ")
+             (save-window-excursion
+               (if (fboundp symbol)
+                   (describe-function symbol)
+                 (describe-variable symbol)))
+             (buffer-string)))
+         nil nil nil 0))))
+
+  (bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
+  (bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map)
+  )
 
 (provide 'init-emacs-lisp)
 
