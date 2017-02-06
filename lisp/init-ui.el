@@ -138,12 +138,12 @@
 ;; Emacs startup screen
 (use-package dashboard
   :defer t
+  :after projectile
   :diminish page-break-lines-mode
   :init (dashboard-setup-startup-hook)
   :config
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5))))
+  (when projectile-mode
+    (add-to-list 'dashboard-items '(projects . 5))))
 
 (provide 'init-ui)
 
