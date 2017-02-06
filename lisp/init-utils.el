@@ -50,6 +50,8 @@
 (use-package which-key
   :defer t
   :diminish which-key-mode
+  :bind (:map help-map
+              ("C-h" . which-key-C-h-dispatch))
   :init (add-hook 'after-init-hook 'which-key-mode))
 
 ;; Browse url
