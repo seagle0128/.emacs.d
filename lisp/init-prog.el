@@ -63,6 +63,8 @@
   :defer t
   :config
   (progn
+    (add-hook 'before-save-hook 'gofmt-before-save)
+
     (use-package golint :defer t)
 
     (use-package go-eldoc
