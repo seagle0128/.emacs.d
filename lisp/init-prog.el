@@ -59,6 +59,27 @@
       '(add-hook 'fish-mode-hook 'auto-complete-mode))
     ))
 
+(use-package go-mode
+  :defer t
+  :config
+  (progn
+    (use-package golint :defer t)
+
+    (use-package go-eldoc
+      :defer t
+      :init (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+    (eval-after-load 'projectile
+      '(use-package go-projectile))
+
+    (eval-after-load 'auto-complete
+      '(use-package go-autocomplete))
+
+    (eval-after-load 'company
+      '(use-package company-go
+         :config (push '(company-go :with company-yasnippet) company-backends)))
+    ))
+
 (use-package robot-mode
   :ensure nil
   :defer t
