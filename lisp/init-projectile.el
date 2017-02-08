@@ -35,13 +35,7 @@
 (use-package projectile
   :defer t
   :bind ("C-S-t" . projectile-find-file)
-  :init
-  (progn
-    ;; DO NOT use projectile-global-mode
-    ;; to avoid hange issue in tramp
-    (add-hook 'text-mode-hook 'projectile-mode)
-    (add-hook 'prog-mode-hook 'projectile-mode)
-    )
+  :init (add-hook 'after-init-hook 'projectile-mode)
   :config
   (progn
     (setq projectile-mode-line
