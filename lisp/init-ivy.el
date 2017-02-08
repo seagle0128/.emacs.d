@@ -95,7 +95,7 @@
 
     (use-package counsel-projectile
       :defer t
-      :init (add-hook 'after-init-hook 'counsel-projectile-on))
+      :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
 
     (use-package counsel-gtags
       :defer t
