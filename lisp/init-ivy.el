@@ -95,8 +95,7 @@
 
     (use-package counsel-projectile
       :defer t
-      :bind (("C-S-t" . counsel-projectile-find-file))
-      :init (setq projectile-switch-project-action 'counsel-projectile-find-file))
+      :init (add-hook 'after-init-hook 'counsel-projectile-on))
 
     (use-package counsel-gtags
       :defer t
