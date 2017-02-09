@@ -34,7 +34,8 @@
 
 (use-package projectile
   :defer t
-  :bind ("C-S-t" . projectile-find-file)
+  :bind (("C-S-t" . projectile-find-file)
+         ("s-t" . projectile-find-file))
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
   (progn
