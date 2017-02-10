@@ -17,8 +17,7 @@ latest Emacs - currently **25.1**.
 # Quick Start
 
 ```sh
-cd ~
-git clone https://github.com/seagle0128/.emacs.d.git
+git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 Then start emacs. Enjoy!
 
