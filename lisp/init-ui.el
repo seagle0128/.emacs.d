@@ -135,16 +135,6 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-;; Emacs startup screen
-(use-package dashboard
-  :defer t
-  :after projectile
-  :diminish page-break-lines-mode
-  :init (dashboard-setup-startup-hook)
-  :config
-  (when projectile-mode
-    (add-to-list 'dashboard-items '(projects . 5))))
-
 (provide 'init-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
