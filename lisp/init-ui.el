@@ -79,16 +79,16 @@
   :defer t
   :commands chinese-fonts-setup-enable
   :defines cfs--current-profile-name
-  :init (add-hook 'emacs-startup-hook
-                  '(lambda ()
-                     (setq cfs-verbose nil)
-                     (setq cfs-save-current-profile nil)
-                     (chinese-fonts-setup-enable)))
+  :init (add-hook 'emacs-startup-hook 'chinese-fonts-setup-enable)
   :config
   (progn
+    (setq cfs-verbose nil)
+    (setq cfs-save-current-profile nil)
+
     (setq cfs-profiles
           '("program" "org-mode" "read-book"))
     (setq cfs--current-profile-name "program")
+
     (when sys/mac-x-p
       (setq cfs--profiles-steps '(("program" . 5)
                                   ("org-mode" . 6)
