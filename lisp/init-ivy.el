@@ -93,6 +93,11 @@
     (use-package smex :defer t)
     (use-package ivy-hydra :defer t)
 
+    (use-package ivy-rich
+      :defer t
+      :init (ivy-set-display-transformer 'ivy-switch-buffer
+                                         'ivy-rich-switch-buffer-transformer))
+
     (use-package counsel-projectile
       :defer t
       :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
