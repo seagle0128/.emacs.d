@@ -101,6 +101,9 @@
       :defer t
       :init
       (progn
+        (setq ivy-virtual-abbreviate 'full
+              ivy-rich-switch-buffer-align-virtual-buffer nil)
+
         (ivy-set-display-transformer 'ivy-switch-buffer
                                      'ivy-rich-switch-buffer-transformer)
 
@@ -110,9 +113,7 @@
                                           'ivy-rich-switch-buffer-transformer)
              (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
                                           'ivy-rich-switch-buffer-transformer)))
-        )
-      :config (setq ivy-virtual-abbreviate 'full
-                    ivy-rich-switch-buffer-align-virtual-buffer nil))
+        ))
 
     (use-package counsel-gtags
       :defer t
