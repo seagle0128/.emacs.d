@@ -93,14 +93,26 @@
     (use-package smex :defer t)
     (use-package ivy-hydra :defer t)
 
-    (use-package ivy-rich
-      :defer t
-      :init (ivy-set-display-transformer 'ivy-switch-buffer
-                                         'ivy-rich-switch-buffer-transformer))
-
     (use-package counsel-projectile
       :defer t
       :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
+
+    (use-package ivy-rich
+      :defer t
+      :init
+      (progn
+        (ivy-set-display-transformer 'ivy-switch-buffer
+                                     'ivy-rich-switch-buffer-transformer)
+
+        (eval-after-load 'counsel-projectile
+          '(progn
+             (ivy-set-display-transformer 'counsel-projectile
+                                          'ivy-rich-switch-buffer-transformer)
+             (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
+                                          'ivy-rich-switch-buffer-transformer)))
+        )
+      :config (setq ivy-virtual-abbreviate 'full
+                    ivy-rich-switch-buffer-align-virtual-buffer nil))
 
     (use-package counsel-gtags
       :defer t
