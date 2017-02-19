@@ -129,6 +129,17 @@
          ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
+;; An all-in-one comment command to rule them all
+(use-package comment-dwim-2
+  :defer t
+  :bind ("M-;" . comment-dwim-2))
+
+;; Drag stuff (lines, words, region, etc...) around
+(use-package drag-stuff
+  :defer t
+  :diminish drag-stuff-mode
+  :init (add-hook 'after-init-hook 'drag-stuff-global-mode))
+
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :defer t
@@ -139,35 +150,11 @@
   :defer t
   :bind ("C-=" . er/expand-region))
 
-;; Move to the beginning/end of line or code
-(use-package mwim
+;; Hungry deletion
+(use-package hungry-delete
   :defer t
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
-
-;; Windows-scroll commands
-(use-package pager
-  :defer t
-  :commands pager-page-down pager-page-up pager-row-down pager-row-up
-  :bind (("\C-v"   . pager-page-down)
-         ([next]   . pager-page-down)
-         ("\ev"    . pager-page-up)
-         ([prior]  . pager-page-up)
-         ([M-up]   . pager-row-up)
-         ([M-kp-8] . pager-row-up)
-         ([M-down] . pager-row-down)
-         ([M-kp-2] . pager-row-down)))
-
-;; Drag stuff (lines, words, region, etc...) around
-(use-package drag-stuff
-  :defer t
-  :diminish drag-stuff-mode
-  :init (add-hook 'after-init-hook 'drag-stuff-global-mode))
-
-;; An all-in-one comment command to rule them all
-(use-package comment-dwim-2
-  :defer t
-  :bind ("M-;" . comment-dwim-2))
+  :diminish hungry-delete-mode
+  :init (add-hook 'after-init-hook 'global-hungry-delete-mode))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
@@ -182,6 +169,12 @@
   (add-to-list 'desktop-minor-mode-handlers
                '(iedit-mode . nil)))
 
+;; Move to the beginning/end of line or code
+(use-package mwim
+  :defer t
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
+
 ;; Multiple cursors
 (use-package multiple-cursors
   :defer t
@@ -190,6 +183,19 @@
          ("C-<". mc/mark-previous-like-this)
          ("C-c C-<". mc/mark-all-like-this)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+
+;; Windows-scroll commands
+(use-package pager
+  :defer t
+  :commands pager-page-down pager-page-up pager-row-down pager-row-up
+  :bind (("\C-v"   . pager-page-down)
+         ([next]   . pager-page-down)
+         ("\ev"    . pager-page-up)
+         ([prior]  . pager-page-up)
+         ([M-up]   . pager-row-up)
+         ([M-kp-8] . pager-row-up)
+         ([M-down] . pager-row-down)
+         ([M-kp-2] . pager-row-down)))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
