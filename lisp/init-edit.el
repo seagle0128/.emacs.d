@@ -129,6 +129,11 @@
          ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
+;; Automatic parenthesis pairing
+(use-package elec-pair
+  :defer t
+  :init (add-hook 'after-init-hook 'electric-pair-mode))
+
 ;; Increase selected region by semantic units
 (use-package expand-region
   :defer t

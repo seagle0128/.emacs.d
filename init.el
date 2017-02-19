@@ -88,7 +88,6 @@
 (require 'init-ui)
 
 (require 'init-edit)
-(require 'init-smartparens)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 
