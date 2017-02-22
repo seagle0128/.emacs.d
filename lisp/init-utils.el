@@ -50,8 +50,7 @@
 (use-package which-key
   :defer t
   :diminish which-key-mode
-  :bind (:map help-map
-              ("C-h" . which-key-C-h-dispatch))
+  :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
   :init (add-hook 'after-init-hook 'which-key-mode))
 
 ;; Browse url
@@ -120,11 +119,9 @@
 (use-package ag :defer t)
 (use-package wgrep-ag
   :defer t
-  :config
-  (progn
-    (setq wgrep-auto-save-buffer t)
-    (setq wgrep-change-readonly-file t)
-    ))
+  :config (progn
+            (setq wgrep-auto-save-buffer t)
+            (setq wgrep-change-readonly-file t)))
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search

@@ -78,6 +78,11 @@
             (setq paradox-github-token t)
             (setq paradox-execute-asynchronously t)))
 
+;; Silent Package Upgrader
+(use-package spu
+  :defer 10 ;; defer package loading for 10 second
+  :config (spu-package-upgrade-daily))
+
 (provide 'init-package)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
