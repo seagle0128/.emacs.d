@@ -32,9 +32,8 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom)
-  (require 'use-package))
+(eval-when-compile (require 'init-custom))
+(eval-when-compile (require 'use-package))
 
 ;; DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
