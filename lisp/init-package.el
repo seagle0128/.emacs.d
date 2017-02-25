@@ -84,7 +84,7 @@
 
 ;; Silent package upgrader
 (use-package spu
-  :defer 10 ;; defer package loading for 10 second
+  :defer 10 ;; defer package loading for 10 seconds
   :config (spu-package-upgrade-daily))
 
 (provide 'init-package)
