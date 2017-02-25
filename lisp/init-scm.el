@@ -38,9 +38,9 @@
 (use-package magit
   :defer t
   :bind (("C-x g" . magit-status)
-         ([f9] . magit-status))
-  :config (use-package ssh-agency :if sys/win32p))
+         ([f9] . magit-status)))
 
+(use-package ssh-agency :defer t)
 (use-package git-timemachine :defer t)
 (use-package gitconfig-mode :defer t)
 (use-package gitignore-mode :defer t)
