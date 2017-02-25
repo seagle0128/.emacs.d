@@ -33,7 +33,6 @@
 ;;; Code:
 
 (eval-when-compile (require 'init-custom))
-(eval-when-compile (require 'use-package))
 
 ;; DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
@@ -70,6 +69,7 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
 (setq use-package-enable-imenu-support t)
 (setq use-package-expand-minimally t)
