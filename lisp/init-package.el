@@ -32,7 +32,9 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-custom)
+  (require 'use-package))
 
 ;; DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
@@ -61,24 +63,26 @@
 
 (package-initialize)
 
-(unless (package-installed-p 'use-package)
+(unless package-archive-contents
   (dolist (f (directory-files "~/.emacs.d/lisp/" t "\\.elc$"))
     (delete-file f))
-  (package-refresh-contents)
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(eval-when-compile (require 'use-package))
-(setq use-package-enable-imenu-support t)
 (setq use-package-always-ensure t)
+(setq use-package-enable-imenu-support t)
 (setq use-package-expand-minimally t)
 
+;; A mondern package interface
 (use-package paradox
   :defer t
   :config (progn
             (setq paradox-github-token t)
             (setq paradox-execute-asynchronously t)))
 
-;; Silent Package Upgrader
+;; Silent package upgrader
 (use-package spu
   :defer 10 ;; defer package loading for 10 second
   :config (spu-package-upgrade-daily))
