@@ -92,12 +92,21 @@
 ;; Youdao Dictionay
 (use-package youdao-dictionary
   :defer t
+  :defines popwin:special-display-config
   :commands youdao-dictionary--region-or-word youdao-dictionary--format-result
-  :bind ("C-c y" . youdao-dictionary-search-at-point+)
+  :bind (("C-c Y" . youdao-dictionary-search-at-point)
+         ("C-c y" . youdao-dictionary-search-at-point+))
   :config
   (progn
     ;; Cache documents
     (setq url-automatic-caching t)
+
+    ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
+    (eval-after-load 'popwin
+      '(push "*Youdao Dictionary*" popwin:special-display-config))
+
+    ;; Enable Chinese word segmentation support (支持中文分词)
+    (setq youdao-dictionary-use-chinese-word-segmentation t)
 
     ;; Use pos-tip instead of popup to display results
     (if (display-graphic-p)
