@@ -99,7 +99,18 @@
 (setq-default fill-column 80)
 (setq column-number-mode t)
 (setq line-number-mode t)
-(use-package linum-off :config (global-linum-mode 1))
+
+(use-package linum-off
+  :config
+  (progn
+    (global-linum-mode 1)
+
+    ;; have a little padding on the right
+    (defun linum-format-func (line)
+      (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+        (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+    (setq linum-format 'linum-format-func)
+    ))
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
