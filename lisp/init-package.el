@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'init-custom))
+(require 'init-custom)
 
 ;; DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
