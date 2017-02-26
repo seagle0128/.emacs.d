@@ -37,78 +37,73 @@
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :interpreter "ruby"
   :config
-  (progn
-    ;; Robe mode
-    (use-package robe
-      :defer t
-      :diminish robe-mode
-      :defines ac-modes company-backends
-      :init
-      (progn
-        (add-hook 'ruby-mode-hook 'robe-mode)
+  ;; Robe mode
+  (use-package robe
+    :defer t
+    :diminish robe-mode
+    :defines ac-modes company-backends
+    :init
+    (add-hook 'ruby-mode-hook 'robe-mode)
 
-        (eval-after-load 'auto-complete
-          '(add-hook 'robe-mode-hook 'ac-robe-setup))
+    (eval-after-load 'auto-complete
+      '(add-hook 'robe-mode-hook 'ac-robe-setup))
 
-        (eval-after-load 'company
-          '(push '(company-robe :with company-yasnippet) company-backends))
-        ))
+    (eval-after-load 'company
+      '(push '(company-robe :with company-yasnippet) company-backends)))
 
-    (use-package ruby-refactor
-      :defer t
-      :diminish ruby-refactor-mode
-      :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
+  (use-package ruby-refactor
+    :defer t
+    :diminish ruby-refactor-mode
+    :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
-    ;; inf-ruby
-    (use-package inf-ruby
-      :defer t
-      :init
-      (progn
-        (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-        (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-        (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
+  ;; inf-ruby
+  (use-package inf-ruby
+    :defer t
+    :init
+    (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
 
-        (eval-after-load 'auto-complete
-          '(progn
-             (add-to-list 'ac-modes 'inf-ruby-minor-mode)
-             (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
+    (eval-after-load 'auto-complete
+      '(progn
+         (add-to-list 'ac-modes 'inf-ruby-minor-mode)
+         (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
 
-             (use-package ac-inf-ruby
-               :defer t
-               :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))))
-        ))
+         (use-package ac-inf-ruby
+           :defer t
+           :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)))))
 
-    ;; Rubocop
-    (use-package rubocop
-      :defer t
-      :diminish rubocop-mode
-      :init (add-hook 'ruby-mode-hook #'rubocop-mode))
+  ;; Rubocop
+  (use-package rubocop
+    :defer t
+    :diminish rubocop-mode
+    :init (add-hook 'ruby-mode-hook #'rubocop-mode))
 
-    ;; RSpec
-    (use-package rspec-mode
-      :defer t
-      :diminish rspec-mode
-      :commands rspec-install-snippets
-      :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
-      :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
+  ;; RSpec
+  (use-package rspec-mode
+    :defer t
+    :diminish rspec-mode
+    :commands rspec-install-snippets
+    :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
+    :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
 
-    ;; Coverage for SimpleCov
-    (use-package coverage :defer t)
+  ;; Coverage for SimpleCov
+  (use-package coverage :defer t)
 
-    ;; Yari
-    (use-package yari
-      :defer t
-      :bind (:map ruby-mode-map ([f1] . yari))
-      :config
-      (eval-after-load 'helm
-        '(bind-key [f1] 'yari-helm ruby-mode-map)))
+  ;; Yari
+  (use-package yari
+    :defer t
+    :bind (:map ruby-mode-map ([f1] . yari))
+    :config
+    (eval-after-load 'helm
+      '(bind-key [f1] 'yari-helm ruby-mode-map)))
 
-    ;; Yard mode
-    (use-package yard-mode
-      :defer t
-      :diminish yard-mode
-      :init (add-hook 'ruby-mode-hook 'yard-mode))
-    ))
+  ;; Yard mode
+  (use-package yard-mode
+    :defer t
+    :diminish yard-mode
+    :init (add-hook 'ruby-mode-hook 'yard-mode))
+  )
 
 ;; YAML mode
 (use-package yaml-mode

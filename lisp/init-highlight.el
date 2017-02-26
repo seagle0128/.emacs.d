@@ -46,11 +46,9 @@
          ([S-f3] . highlight-symbol-prev)
          ([M-f3] . highlight-symbol-query-replace))
   :init
-  (progn
-    (add-hook 'find-file-hook 'highlight-symbol-mode)
-    (add-hook 'find-file-hook 'highlight-symbol-nav-mode)
-    (setq highlight-symbol-idle-delay 0)
-    ))
+  (add-hook 'find-file-hook 'highlight-symbol-mode)
+  (add-hook 'find-file-hook 'highlight-symbol-nav-mode)
+  (setq highlight-symbol-idle-delay 0))
 
 ;; Highlight indentions
 (use-package highlight-indentation
@@ -106,31 +104,30 @@
   :init (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
           (add-hook hook #'whitespace-mode))
   :config
-  (progn
-    (setq whitespace-line-column fill-column) ;; limit line length
-    ;; automatically clean up bad whitespace
-    (setq whitespace-action '(auto-cleanup))
-    ;; only show bad whitespace
-    (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
-    ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+  (setq whitespace-line-column fill-column) ;; limit line length
+  ;; automatically clean up bad whitespace
+  (setq whitespace-action '(auto-cleanup))
+  ;; only show bad whitespace
+  (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
+  ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
 
-    ;; advice for whitespace-mode conflict with popup
-    (defvar my-prev-whitespace-mode nil)
-    (make-local-variable 'my-prev-whitespace-mode)
+  ;; advice for whitespace-mode conflict with popup
+  (defvar my-prev-whitespace-mode nil)
+  (make-local-variable 'my-prev-whitespace-mode)
 
-    (defadvice popup-draw (before my-turn-off-whitespace activate compile)
-      "Turn off whitespace mode before showing autocomplete box."
-      (if whitespace-mode
-          (progn
-            (setq my-prev-whitespace-mode t)
-            (whitespace-mode -1))
-        (setq my-prev-whitespace-mode nil)))
+  (defadvice popup-draw (before my-turn-off-whitespace activate compile)
+    "Turn off whitespace mode before showing autocomplete box."
+    (if whitespace-mode
+        (progn
+          (setq my-prev-whitespace-mode t)
+          (whitespace-mode -1))
+      (setq my-prev-whitespace-mode nil)))
 
-    (defadvice popup-delete (after my-restore-whitespace activate compile)
-      "Restore previous whitespace mode when deleting autocomplete box."
-      (if my-prev-whitespace-mode
-          (whitespace-mode 1)))
-    ))
+  (defadvice popup-delete (after my-restore-whitespace activate compile)
+    "Restore previous whitespace mode when deleting autocomplete box."
+    (if my-prev-whitespace-mode
+        (whitespace-mode 1)))
+  )
 
 (provide 'init-highlight)
 

@@ -36,25 +36,24 @@
 (use-package go-mode
   :defer t
   :config
-  (progn
-    (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'before-save-hook 'gofmt-before-save)
 
-    (use-package golint :defer t)
+  (use-package golint :defer t)
 
-    (use-package go-eldoc
-      :defer t
-      :init (add-hook 'go-mode-hook 'go-eldoc-setup))
+  (use-package go-eldoc
+    :defer t
+    :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
-    (eval-after-load 'projectile
-      '(use-package go-projectile))
+  (eval-after-load 'projectile
+    '(use-package go-projectile))
 
-    (eval-after-load 'auto-complete
-      '(use-package go-autocomplete))
+  (eval-after-load 'auto-complete
+    '(use-package go-autocomplete))
 
-    (eval-after-load 'company
-      '(use-package company-go
-         :config (push '(company-go :with company-yasnippet) company-backends)))
-    ))
+  (eval-after-load 'company
+    '(use-package company-go
+       :config (push '(company-go :with company-yasnippet) company-backends)))
+  )
 
 (provide 'init-go)
 

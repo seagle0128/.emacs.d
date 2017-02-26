@@ -62,8 +62,8 @@
 (package-initialize)
 
 (unless package-archive-contents
-  (dolist (f (directory-files "~/.emacs.d/lisp/" t "\\.elc$"))
-    (delete-file f))
+  (dolist (file (directory-files "~/.emacs.d/lisp/" t "\\.elc$"))
+    (delete-file file))
   (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
@@ -77,9 +77,9 @@
 ;; A mondern package interface
 (use-package paradox
   :defer t
-  :config (progn
-            (setq paradox-github-token t)
-            (setq paradox-execute-asynchronously t)))
+  :config
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously t))
 
 ;; Silent package upgrader
 (use-package spu

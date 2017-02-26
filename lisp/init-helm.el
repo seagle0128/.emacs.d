@@ -54,97 +54,93 @@
    ("C-h i"   . helm-info-emacs)
    ("C-."     . helm-imenu))
   :init
-  (progn
-    (add-hook 'after-init-hook
-              '(lambda ()
-                 (helm-mode 1)
-                 (helm-adaptive-mode 1)))
-    (add-hook 'desktop-after-read-hook
-              '(lambda () (diminish 'helm-mode)))
-    )
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (helm-mode 1)
+               (helm-adaptive-mode 1)))
+  (add-hook 'desktop-after-read-hook
+            '(lambda () (diminish 'helm-mode)))
   :config
-  (progn
-    (require 'helm-config)
+  (require 'helm-config)
 
-    ;; (setq helm-ff-lynx-style-map nil
-    ;;       helm-input-idle-delay 0.1
-    ;;       helm-idle-delay 0.1)
+  ;; (setq helm-ff-lynx-style-map nil
+  ;;       helm-input-idle-delay 0.1
+  ;;       helm-idle-delay 0.1)
 
-    (setq helm-ff-guess-ffap-filenames t)
+  (setq helm-ff-guess-ffap-filenames t)
 
-    ;; fuzzy match
-    (setq helm-M-x-fuzzy-match t)
-    (setq helm-locate-fuzzy-match t)
-    (setq helm-imenu-fuzzy-match t)
-    (setq helm-buffers-fuzzy-matching t)
-    (setq helm-recentf-fuzzy-match t)
-    (setq helm-apropos-fuzzy-match t)
-    (setq helm-semantic-fuzzy-match t)
-    (setq helm-lisp-fuzzy-completion t)
+  ;; fuzzy match
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-locate-fuzzy-match t)
+  (setq helm-imenu-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-apropos-fuzzy-match t)
+  (setq helm-semantic-fuzzy-match t)
+  (setq helm-lisp-fuzzy-completion t)
 
-    ;; exchange TAB and C-z
-    (bind-key "TAB" 'helm-execute-persistent-action helm-map)
-    (bind-key "C-z" 'helm-select-action helm-map)
+  ;; exchange TAB and C-z
+  (bind-key "TAB" 'helm-execute-persistent-action helm-map)
+  (bind-key "C-z" 'helm-select-action helm-map)
 
-    ;; plugins
-    (use-package helm-flx
-      :config (helm-flx-mode 1))
+  ;; plugins
+  (use-package helm-flx
+    :config (helm-flx-mode 1))
 
-    (use-package helm-descbinds
-      :defer t
-      :bind ("C-h b" . helm-descbinds))
+  (use-package helm-descbinds
+    :defer t
+    :bind ("C-h b" . helm-descbinds))
 
-    (use-package helm-swoop
-      :defer t
-      :bind (("M-s o" . helm-swoop)
-             ("M-s /" . helm-multi-swoop)))
+  (use-package helm-swoop
+    :defer t
+    :bind (("M-s o" . helm-swoop)
+           ("M-s /" . helm-multi-swoop)))
 
-    (use-package helm-ag
-      :defer t
-      :bind ("M-s s" . helm-ag))
+  (use-package helm-ag
+    :defer t
+    :bind ("M-s s" . helm-ag))
 
-    (use-package helm-mt
-      :defer t
-      :bind ("C-x t" . helm-mt))
+  (use-package helm-mt
+    :defer t
+    :bind ("C-x t" . helm-mt))
 
-    (use-package helm-cmd-t
-      :defer t
-      :bind (("C-S-t" . helm-cmd-t)
-             ("s-t" . helm-cmd-t)))
+  (use-package helm-cmd-t
+    :defer t
+    :bind (("C-S-t" . helm-cmd-t)
+           ("s-t" . helm-cmd-t)))
 
-    (use-package helm-gtags
-      :defer t
-      :diminish helm-gtags-mode
-      :bind (:map helm-gtags-mode-map
-                  ("M-t" . helm-gtags-find-tag)
-                  ("M-r" . helm-gtags-find-rtag)
-                  ("M-s" . helm-gtags-find-symbol)
-                  ("M-g M-p" . helm-gtags-parse-file)
-                  ("C-c <" . helm-gtags-previous-history)
-                  ("C-c >" . helm-gtags-next-history)
-                  ("M-," . helm-gtags-pop-stack))
-      :init (add-hook 'c-mode-common-hook
-                      (lambda ()
-                        (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                          (helm-gtags-mode 1))))
-      :config (setq helm-gtags-auto-update t))
+  (use-package helm-gtags
+    :defer t
+    :diminish helm-gtags-mode
+    :bind (:map helm-gtags-mode-map
+                ("M-t" . helm-gtags-find-tag)
+                ("M-r" . helm-gtags-find-rtag)
+                ("M-s" . helm-gtags-find-symbol)
+                ("M-g M-p" . helm-gtags-parse-file)
+                ("C-c <" . helm-gtags-previous-history)
+                ("C-c >" . helm-gtags-next-history)
+                ("M-," . helm-gtags-pop-stack))
+    :init (add-hook 'c-mode-common-hook
+                    (lambda ()
+                      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                        (helm-gtags-mode 1))))
+    :config (setq helm-gtags-auto-update t))
 
-    (use-package helm-ls-git :defer t)
-    (use-package helm-projectile :defer t)
-    (use-package helm-flycheck :defer t)
-    (use-package helm-bm :defer t)
+  (use-package helm-ls-git :defer t)
+  (use-package helm-projectile :defer t)
+  (use-package helm-flycheck :defer t)
+  (use-package helm-bm :defer t)
 
-    ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
-    (use-package ace-isearch
-      :diminish ace-isearch-mode
-      :bind (:map isearch-mode-map
-                  ("C-:" . ace-isearch-jump-during-isearch))
-      :config
-      (progn
-        (global-ace-isearch-mode 1)
-        (setq ace-isearch-function 'avy-goto-char)
-        (setq ace-isearch-use-jump 'printing-char)))
-    ))
+  ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
+  (use-package ace-isearch
+    :diminish ace-isearch-mode
+    :bind (:map isearch-mode-map
+                ("C-:" . ace-isearch-jump-during-isearch))
+    :config
+    (global-ace-isearch-mode 1)
+    (setq ace-isearch-function 'avy-goto-char)
+    (setq ace-isearch-use-jump 'printing-char))
+  )
 
 (provide 'init-helm)
 

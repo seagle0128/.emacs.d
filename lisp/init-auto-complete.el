@@ -38,22 +38,21 @@
   :bind (("M-/" . ac-start))
   :init (add-hook 'after-init-hook 'ac-config-default)
   :config
-  (progn
-    (setq ac-use-menu-map t)
-    (ac-set-trigger-key "TAB")
-    (setq ac-delay 0.3)
+  (setq ac-use-menu-map t)
+  (ac-set-trigger-key "TAB")
+  (setq ac-delay 0.3)
 
-    (bind-key "M-/" 'ac-stop ac-completing-map)
-    (bind-key "M-TAB" 'auto-complete ac-mode-map)
+  (bind-key "M-/" 'ac-stop ac-completing-map)
+  (bind-key "M-TAB" 'auto-complete ac-mode-map)
 
-    (setq ac-sources
-          '(ac-source-yasnippet
-            ac-source-imenu
-            ac-source-abbrev
-            ac-source-words-in-same-mode-buffers
-            ac-source-files-in-current-dir
-            ac-source-filename))
-    ))
+  (setq ac-sources
+        '(ac-source-yasnippet
+          ac-source-imenu
+          ac-source-abbrev
+          ac-source-words-in-same-mode-buffers
+          ac-source-files-in-current-dir
+          ac-source-filename))
+  )
 
 (provide 'init-auto-complete)
 

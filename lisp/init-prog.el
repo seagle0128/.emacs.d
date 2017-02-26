@@ -52,13 +52,11 @@
 (use-package fish-mode
   :defer t
   :init
-  (progn
-    (add-hook 'fish-mode-hook
-              (lambda ()
-                (add-hook 'before-save-hook 'fish_indent-before-save)))
-    (eval-after-load 'auto-complete
-      '(add-hook 'fish-mode-hook 'auto-complete-mode))
-    ))
+  (add-hook 'fish-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'fish_indent-before-save)))
+  (eval-after-load 'auto-complete
+    '(add-hook 'fish-mode-hook 'auto-complete-mode)))
 
 (use-package robot-mode
   :ensure nil

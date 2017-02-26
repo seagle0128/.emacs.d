@@ -63,16 +63,14 @@
 (use-package monokai-theme
   :defer t
   :init
-  (progn
-    (defun load-monokai-theme()
-      "Load Monokai theme and set new tooltip background color."
-      (load-theme 'monokai t)
-      (set-face-background 'tooltip "#FEFBD5")
-      (when (boundp 'pos-tip-background-color)
-        (setq pos-tip-background-color "#FEFBD5")))
+  (defun load-monokai-theme()
+    "Load Monokai theme and set new tooltip background color."
+    (load-theme 'monokai t)
+    (set-face-background 'tooltip "#FEFBD5")
+    (when (boundp 'pos-tip-background-color)
+      (setq pos-tip-background-color "#FEFBD5")))
 
-    (add-hook 'after-init-hook 'load-monokai-theme)
-    ))
+  (add-hook 'after-init-hook 'load-monokai-theme))
 
 ;; Fonts
 (use-package chinese-fonts-setup
@@ -81,19 +79,17 @@
   :defines cfs--current-profile-name
   :init (add-hook 'emacs-startup-hook 'chinese-fonts-setup-enable)
   :config
-  (progn
-    (setq cfs-verbose nil)
-    (setq cfs-save-current-profile nil)
+  (setq cfs-verbose nil)
+  (setq cfs-save-current-profile nil)
 
-    (setq cfs-profiles
-          '("program" "org-mode" "read-book"))
-    (setq cfs--current-profile-name "program")
+  (setq cfs-profiles
+        '("program" "org-mode" "read-book"))
+  (setq cfs--current-profile-name "program")
 
-    (when sys/mac-x-p
-      (setq cfs--profiles-steps '(("program" . 5)
-                                  ("org-mode" . 6)
-                                  ("read-book" . 8))))
-    ))
+  (when sys/mac-x-p
+    (setq cfs--profiles-steps '(("program" . 5)
+                                ("org-mode" . 6)
+                                ("read-book" . 8)))))
 
 ;; Line and Column
 (setq-default fill-column 80)
@@ -102,15 +98,13 @@
 
 (use-package linum-off
   :config
-  (progn
-    (global-linum-mode 1)
+  (global-linum-mode 1)
 
-    ;; have a little padding on the right
-    (defun linum-format-func (line)
-      (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-        (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-    (setq linum-format 'linum-format-func)
-    ))
+  ;; have a little padding on the right
+  (defun linum-format-func (line)
+    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+      (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+  (setq linum-format 'linum-format-func))
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
@@ -129,8 +123,10 @@
 (use-package time
   :defer t
   :init (add-hook 'window-setup-hook 'display-time-mode)
-  :config (progn (setq display-time-24hr-format t)
-                 (setq display-time-day-and-date t)))
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t))
+
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)

@@ -37,15 +37,13 @@
   :diminish yas-minor-mode
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config
-  (progn
-    (use-package dropdown-list
-      :defer t
-      :commands dropdown-list)
+  (use-package dropdown-list
+    :defer t
+    :commands dropdown-list)
 
-    (setq yas-prompt-functions '(yas-dropdown-prompt
-                                 yas-maybe-ido-prompt
-                                 yas-completing-prompt))
-    ))
+  (setq yas-prompt-functions '(yas-dropdown-prompt
+                               yas-maybe-ido-prompt
+                               yas-completing-prompt)))
 
 (provide 'init-yasnippet)
 

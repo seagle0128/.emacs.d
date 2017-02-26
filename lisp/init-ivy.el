@@ -60,75 +60,72 @@
                      (ivy-mode 1)
                      (counsel-mode 1)))
   :config
-  (progn
-    (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
-    (setq ivy-height 10)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-on-del-error-function nil)
-    (setq ivy-initial-inputs-alist nil)
+  (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
+  (setq ivy-height 10)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-on-del-error-function nil)
+  (setq ivy-initial-inputs-alist nil)
 
-    (setq ivy-re-builders-alist
-          '((read-file-name-internal . ivy--regex-fuzzy)
-            (t . ivy--regex-plus)))
+  (setq ivy-re-builders-alist
+        '((read-file-name-internal . ivy--regex-fuzzy)
+          (t . ivy--regex-plus)))
 
-    (setq swiper-action-recenter t)
-    (setq counsel-find-file-at-point t)
+  (setq swiper-action-recenter t)
+  (setq counsel-find-file-at-point t)
 
-    (setq projectile-completion-system 'ivy)
-    (setq magit-completing-read-function 'ivy-completing-read)
+  (setq projectile-completion-system 'ivy)
+  (setq magit-completing-read-function 'ivy-completing-read)
 
-    ;; Search and replace
-    (bind-key "M-%" 'swiper-query-replace swiper-map)
+  ;; Search and replace
+  (bind-key "M-%" 'swiper-query-replace swiper-map)
 
-    ;; Search at point
-    ;; "M-j": word-at-point
-    ;; "M-n"/"C-w": symbol-at-point
-    ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
-    ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-    (bind-key "C-w" '(lambda ()
-                       (interactive)
-                       (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
-              swiper-map)
+  ;; Search at point
+  ;; "M-j": word-at-point
+  ;; "M-n"/"C-w": symbol-at-point
+  ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
+  ;; and https://github.com/abo-abo/swiper/wiki/FAQ
+  (bind-key "C-w" '(lambda ()
+                     (interactive)
+                     (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
+            swiper-map)
 
-    (use-package smex :defer t)
-    (use-package ivy-hydra :defer t)
+  (use-package smex :defer t)
+  (use-package ivy-hydra :defer t)
 
-    (use-package counsel-projectile
-      :defer t
-      :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
+  (use-package counsel-projectile
+    :defer t
+    :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
 
-    (use-package ivy-rich
-      :defer t
-      :init
-      (progn
-        (setq ivy-virtual-abbreviate 'full
-              ivy-rich-switch-buffer-align-virtual-buffer nil)
+  (use-package ivy-rich
+    :defer t
+    :init
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-switch-buffer-align-virtual-buffer nil)
 
-        (ivy-set-display-transformer 'ivy-switch-buffer
-                                     'ivy-rich-switch-buffer-transformer)
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer)
 
-        (eval-after-load 'counsel-projectile
-          '(progn
-             (ivy-set-display-transformer 'counsel-projectile
-                                          'ivy-rich-switch-buffer-transformer)
-             (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
-                                          'ivy-rich-switch-buffer-transformer)))
-        ))
+    (eval-after-load 'counsel-projectile
+      '(progn
+         (ivy-set-display-transformer 'counsel-projectile
+                                      'ivy-rich-switch-buffer-transformer)
+         (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
+                                      'ivy-rich-switch-buffer-transformer))))
 
-    (use-package counsel-gtags
-      :defer t
-      :diminish counsel-gtags-mode
-      :bind (:map counsel-gtags-mode-map
-                  ("M-." . counsel-gtags-find-definition)
-                  ("M-r" . counsel-gtags-find-reference)
-                  ("M-s" . counsel-gtags-find-symbol)
-                  ("M-," . counsel-gtags-pop-stack))
-      :init (add-hook 'c-mode-common-hook
-                      (lambda ()
-                        (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                          (counsel-gtags-mode 1))))
-      :config (setq counsel-gtags-auto-update t))
-    ))
+  (use-package counsel-gtags
+    :defer t
+    :diminish counsel-gtags-mode
+    :bind (:map counsel-gtags-mode-map
+                ("M-." . counsel-gtags-find-definition)
+                ("M-r" . counsel-gtags-find-reference)
+                ("M-s" . counsel-gtags-find-symbol)
+                ("M-," . counsel-gtags-pop-stack))
+    :init (add-hook 'c-mode-common-hook
+                    (lambda ()
+                      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                        (counsel-gtags-mode 1))))
+    :config (setq counsel-gtags-auto-update t))
+  )
 
 (provide 'init-ivy)
 

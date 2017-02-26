@@ -38,38 +38,37 @@
          ("s-t" . projectile-find-file))
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
-  (progn
-    (setq projectile-mode-line
-          '(:eval
-            (if (file-remote-p default-directory)
-                ""
-              (format " [%s]"
-                      (projectile-project-name)))))
+  (setq projectile-mode-line
+        '(:eval
+          (if (file-remote-p default-directory)
+              ""
+            (format " [%s]"
+                    (projectile-project-name)))))
 
-    (setq projectile-indexing-method 'alien)
+  (setq projectile-indexing-method 'alien)
 
-    ;; (setq projectile-project-root-files-functions
-    ;;       '(projectile-root-top-down
-    ;;         projectile-root-top-down-recurring
-    ;;         projectile-root-bottom-up))
+  ;; (setq projectile-project-root-files-functions
+  ;;       '(projectile-root-top-down
+  ;;         projectile-root-top-down-recurring
+  ;;         projectile-root-bottom-up))
 
-    ;; Support Perforce project
-    (let ((val (or (getenv "P4CONFIG") ".p4config")))
-      (add-to-list 'projectile-project-root-files-bottom-up val))
+  ;; Support Perforce project
+  (let ((val (or (getenv "P4CONFIG") ".p4config")))
+    (add-to-list 'projectile-project-root-files-bottom-up val))
 
-    (when (executable-find "ag")
-      (let ((val (concat "ag -U -l --nocolor"
-                         (mapconcat 'identity
-                                    (cons "" projectile-globally-ignored-directories)
-                                    " --ignore-dir=")
-                         " -g . | tr '\\n' '\\0'")))
-        (setq projectile-generic-command val)))
+  (when (executable-find "ag")
+    (let ((val (concat "ag -U -l --nocolor"
+                       (mapconcat 'identity
+                                  (cons "" projectile-globally-ignored-directories)
+                                  " --ignore-dir=")
+                       " -g . | tr '\\n' '\\0'")))
+      (setq projectile-generic-command val)))
 
-    ;; Rails
-    (use-package projectile-rails
-      :defer t
-      :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
-    ))
+  ;; Rails
+  (use-package projectile-rails
+    :defer t
+    :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
+  )
 
 (provide 'init-projectile)
 

@@ -38,17 +38,15 @@
   :commands ibuffer-switch-to-saved-filter-groups
   :bind ("C-x C-b" . ibuffer)
   :config
-  (progn
-    (use-package ibuffer-vc
-      :defer t
-      :init
-      (add-hook 'ibuffer-hook
-                (lambda ()
-                  (ibuffer-vc-set-filter-groups-by-vc-root)
-                  (unless (eq ibuffer-sorting-mode 'alphabetic)
-                    (ibuffer-do-sort-by-alphabetic))))
-      )
-    ))
+  (use-package ibuffer-vc
+    :defer t
+    :init
+    (add-hook 'ibuffer-hook
+              (lambda ()
+                (ibuffer-vc-set-filter-groups-by-vc-root)
+                (unless (eq ibuffer-sorting-mode 'alphabetic)
+                  (ibuffer-do-sort-by-alphabetic)))))
+  )
 
 (provide 'init-ibuffer)
 
