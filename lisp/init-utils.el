@@ -67,20 +67,20 @@
 ;; Tree explorer
 (use-package neotree
   :defer t
+  :defines projectile-switch-project-action
   :bind (([f12] . neotree-toggle)
          ([C-f12] . neotree-toggle))
   :config
-  (progn
-    (setq neo-smart-open t)
-    (setq neo-vc-integration '(face char))
+  (setq neo-smart-open t)
+  (setq neo-vc-integration '(face char))
 
-    (bind-key "i" 'neotree-enter-horizontal-split neotree-mode-map)
-    (bind-key "I" 'neotree-enter-vertical-split neotree-mode-map)
+  (bind-key "i" 'neotree-enter-horizontal-split neotree-mode-map)
+  (bind-key "I" 'neotree-enter-vertical-split neotree-mode-map)
 
-    ;; Integrate with projectile
-    (eval-after-load 'projectile
-      '(setq projectile-switch-project-action 'neotree-projectile-action))
-    ))
+  ;; Integrate with projectile
+  (eval-after-load 'projectile
+    '(setq projectile-switch-project-action 'neotree-projectile-action))
+  )
 
 ;; Dash
 (use-package dash-at-point
@@ -97,40 +97,45 @@
   :bind (("C-c Y" . youdao-dictionary-search-at-point)
          ("C-c y" . youdao-dictionary-search-at-point+))
   :config
-  (progn
-    ;; Cache documents
-    (setq url-automatic-caching t)
+  ;; Cache documents
+  (setq url-automatic-caching t)
 
-    ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
-    (eval-after-load 'popwin
-      '(push "*Youdao Dictionary*" popwin:special-display-config))
+  ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
+  (eval-after-load 'popwin
+    '(push "*Youdao Dictionary*" popwin:special-display-config))
 
-    ;; Enable Chinese word segmentation support (支持中文分词)
-    (setq youdao-dictionary-use-chinese-word-segmentation t)
+  ;; Enable Chinese word segmentation support (支持中文分词)
+  (setq youdao-dictionary-use-chinese-word-segmentation t)
 
-    ;; Use pos-tip instead of popup to display results
-    (if (display-graphic-p)
-        (eval-after-load 'pos-tip
-          '(defun youdao-dictionary-search-at-point+ ()
-             "Search word at point and display results with pos-tip."
-             (interactive)
-             (let ((word (youdao-dictionary--region-or-word))
-                   (x-gtk-use-system-tooltips t))
-               (if word
-                   (pos-tip-show (youdao-dictionary--format-result word)
-                                 nil nil nil 0)
-                 (message "Nothing to look up"))))))
-    ))
+  ;; Use pos-tip instead of popup to display results
+  (if (display-graphic-p)
+      (eval-after-load 'pos-tip
+        '(defun youdao-dictionary-search-at-point+ ()
+           "Search word at point and display results with pos-tip."
+           (interactive)
+           (let ((word (youdao-dictionary--region-or-word))
+                 (x-gtk-use-system-tooltips t))
+             (if word
+                 (pos-tip-show (youdao-dictionary--format-result word)
+                               nil nil nil 0)
+               (message "Nothing to look up"))))))
+  )
 
 ;; Search
 (use-package fzf :defer t)
 (use-package ack :defer t)
-(use-package ag :defer t)
+
+(use-package ag
+  :defer t
+  :config
+  (setq ag-highlight-search t)
+  (setq ag-reuse-buffers t))
+
 (use-package wgrep-ag
   :defer t
-  :config (progn
-            (setq wgrep-auto-save-buffer t)
-            (setq wgrep-change-readonly-file t)))
+  :config
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-change-readonly-file t))
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
@@ -158,9 +163,8 @@
 (use-package info+
   :defer t
   :init
-  (progn
-    (add-hook 'Info-mode-hook '(lambda () (require 'info+)))
-    (setq Info-fontify-angle-bracketed-flag nil)))
+  (add-hook 'Info-mode-hook '(lambda () (require 'info+)))
+  (setq Info-fontify-angle-bracketed-flag nil))
 
 ;; Misc
 (use-package copyit :defer t)
