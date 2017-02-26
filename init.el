@@ -120,7 +120,7 @@
 (require 'init-utils)
 
 ;; Programming
-(require 'init-scm)
+(require 'init-vc)
 (require 'init-projectile)
 (require 'init-flycheck)
 

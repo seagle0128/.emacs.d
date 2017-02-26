@@ -1,4 +1,4 @@
-;; init-scm.el --- Initialize scm configurations.
+;; init-vc.el --- Initialize scm configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.1.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             SCM configurations, e.g. Git, SVN.
+;;             Version control systems, e.g. Git, SVN.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -51,7 +51,10 @@
   :bind (("C-x p" . svn-status)
          ([C-f9] . svn-status)))
 
-(provide 'init-scm)
+;; Open github/gitlab/bitbucket page
+(use-package browse-at-remote :defer t)
+
+(provide 'init-vc)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-scm.el ends here
+;;; init-vc.el ends here
