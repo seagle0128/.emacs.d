@@ -1,4 +1,4 @@
-;; init-prog.el --- Initialize prog configurations.
+;; init-go.el --- Initialize c configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.1.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Configurations for prog mode.
+;;             Configurations for golang.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,42 +32,31 @@
 ;;
 ;;; Code:
 
-(use-package quickrun :defer t)
-(use-package markdown-mode :defer t)
-(use-package powershell :defer t)
-(use-package csharp-mode :defer t)
-(use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
-(use-package vimrc-mode :defer t)
-
-(use-package editorconfig
+;; Golang
+(use-package go-mode
   :defer t
-  :diminish editorconfig-mode
-  :init (add-hook 'prog-mode-hook 'editorconfig-mode))
-
-(use-package dos
-  :defer t
-  :init (add-to-list 'auto-mode-alist
-                     '("\\.\\(cmd\\|bat\\|btm\\)$" . dos-mode)))
-
-(use-package fish-mode
-  :defer t
-  :init
+  :config
   (progn
-    (add-hook 'fish-mode-hook
-              (lambda ()
-                (add-hook 'before-save-hook 'fish_indent-before-save)))
+    (add-hook 'before-save-hook 'gofmt-before-save)
+
+    (use-package golint :defer t)
+
+    (use-package go-eldoc
+      :defer t
+      :init (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+    (eval-after-load 'projectile
+      '(use-package go-projectile))
+
     (eval-after-load 'auto-complete
-      '(add-hook 'fish-mode-hook 'auto-complete-mode))
+      '(use-package go-autocomplete))
+
+    (eval-after-load 'company
+      '(use-package company-go
+         :config (push '(company-go :with company-yasnippet) company-backends)))
     ))
 
-(use-package robot-mode
-  :ensure nil
-  :defer t
-  :load-path "site-lisp"
-  :commands robot-mode
-  :mode "\\.robot\\'")
-
-(provide 'init-prog)
+(provide 'init-go)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-prog.el ends here
+;;; init-go.el ends here
