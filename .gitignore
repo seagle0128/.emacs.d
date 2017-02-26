@@ -7,6 +7,7 @@ tmp*
 flycheck_*.el*
 /.emacs.desktop
 /.emacs.desktop.lock
+/bookmarks
 /places
 /recentf
 /history
@@ -32,10 +33,10 @@ anaconda-mode/
 /.mc-lists.el
 /company-statistics-cache.el
 /.agignore
-/scratch
 *bak/
 /TAGS
 /GPATH
 /GRTAGS
 /GTAGS
-/bookmarks
+/scratch
+/.persistent-scratch

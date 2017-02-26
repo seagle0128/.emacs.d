@@ -37,24 +37,9 @@
 (desktop-save-mode 1)
 
 ;; Persistent the scratch buffter
-(defun save-persistent-scratch ()
-  "Save the contents of *scratch*."
-  (with-current-buffer (get-buffer-create "*scratch*")
-    (write-region (point-min) (point-max)
-                  (concat user-emacs-directory "scratch"))))
-
-(defun load-persistent-scratch ()
-  "Reload the scratch buffer."
-  (let ((scratch-file (concat user-emacs-directory "scratch")))
-    (if (file-exists-p scratch-file)
-        (with-current-buffer (get-buffer "*scratch*")
-          (delete-region (point-min) (point-max))
-          (insert-file-contents scratch-file)))))
-
-(add-hook 'after-init-hook 'load-persistent-scratch)
-(add-hook 'kill-emacs-hook 'save-persistent-scratch)
-
-(run-with-idle-timer 300 t 'save-persistent-scratch)
+(use-package persistent-scratch
+  :defer t
+  :init (add-hook 'after-init-hook 'persistent-scratch-setup-default))
 
 (provide 'init-restore)
 
