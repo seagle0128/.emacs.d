@@ -142,6 +142,11 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
+;; Toggle fullscreen
+(bind-key [(meta f11)] 'toggle-frame-fullscreen)
+(bind-key [(meta return)] 'toggle-frame-fullscreen)
+(bind-key [(meta shift return)] 'toggle-frame-fullscreen)
+
 (provide 'init-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
