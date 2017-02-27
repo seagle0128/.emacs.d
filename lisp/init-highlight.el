@@ -84,12 +84,23 @@
 ;; Highlight uncommitted changes
 (use-package diff-hl
   :defer t
-  :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (global-diff-hl-mode t)
-                     ;; (global-diff-hl-amend-mode t)
-                     (diff-hl-flydiff-mode t)
-                     (diff-hl-dired-mode t))))
+  :init
+  (add-hook 'after-init-hook 'global-diff-hl-mode)
+  ;; (add-hook 'after-init-hook 'global-diff-hl-amend-mode)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  :config
+  (diff-hl-flydiff-mode 1)
+
+  ;; In tty use right margin to display.
+  (when (not (display-graphic-p))
+    (diff-hl-margin-mode 1)
+    (setq diff-hl-side 'right))
+
+  (eval-after-load 'psvn
+    '(defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
+       (diff-hl-update)))
+  (eval-after-load 'magit
+    '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
 ;; Highlight some operations
 (use-package volatile-highlights
