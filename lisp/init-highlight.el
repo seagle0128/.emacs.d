@@ -51,14 +51,10 @@
   (setq highlight-symbol-idle-delay 0))
 
 ;; Highlight indentions
-(use-package highlight-indentation
+(use-package indent-guide
   :defer t
-  :diminish highlight-indentation-mode highlight-indentation-current-column-mode
-  :init (add-hook 'prog-mode-hook 'highlight-indentation-current-column-mode)
-  :config
-  ;; Workaround. Fix void var issue.
-  (eval-after-load 'web-mode
-    '(defvar web-mode-html-offset 2)))
+  :diminish indent-guide-mode
+  :init (add-hook 'after-init-hook 'indent-guide-global-mode))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
