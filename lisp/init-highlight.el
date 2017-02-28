@@ -91,10 +91,10 @@
   :config
   (diff-hl-flydiff-mode 1)
 
-  ;; In tty use right margin to display.
-  (when (not (display-graphic-p))
-    (diff-hl-margin-mode 1)
-    (setq diff-hl-side 'right))
+  ;; Fall back to the display margin, if the fringe is unavailable
+  (unless (display-graphic-p)
+    (setq diff-hl-side 'right)
+    (diff-hl-margin-mode 1))
 
   (eval-after-load 'psvn
     '(defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
