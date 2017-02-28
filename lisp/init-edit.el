@@ -126,7 +126,10 @@
   :defer t
   :diminish anzu-mode
   :bind (([remap query-replace] . anzu-query-replace)
-         ([remap query-replace-regexp] . anzu-query-replace-regexp))
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         :map isearch-mode-map
+         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
 ;; An all-in-one comment command to rule them all
