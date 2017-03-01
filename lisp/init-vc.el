@@ -37,8 +37,7 @@
 ;; Git
 (use-package magit
   :defer t
-  :bind (("C-x g" . magit-status)
-         ([f9] . magit-status))
+  :init (add-hook 'after-init-hook 'global-magit-file-mode)
   :config (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
 (use-package git-timemachine :defer t)
@@ -48,8 +47,7 @@
 ;; Subversion
 (use-package psvn
   :defer t
-  :bind (("C-x p" . svn-status)
-         ([C-f9] . svn-status)))
+  :bind (("C-x p" . svn-status)))
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote :defer t)
