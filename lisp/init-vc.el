@@ -38,9 +38,9 @@
 (use-package magit
   :defer t
   :bind (("C-x g" . magit-status)
-         ([f9] . magit-status)))
+         ([f9] . magit-status))
+  :config (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-(use-package ssh-agency :defer t)
 (use-package git-timemachine :defer t)
 (use-package gitconfig-mode :defer t)
 (use-package gitignore-mode :defer t)
