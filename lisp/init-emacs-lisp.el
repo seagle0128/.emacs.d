@@ -49,7 +49,9 @@
 (use-package eldoc
   :defer t
   :diminish eldoc-mode
-  :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+  :init (dolist (hook '(emacs-lisp-mode-hook
+                        lisp-interaction-mode-hook
+                        ielm-mode-hook))
           (add-hook hook 'eldoc-mode)))
 
 ;; Interactive macro expander
@@ -66,7 +68,10 @@
   (use-package elisp-slime-nav
     :defer t
     :diminish elisp-slime-nav-mode
-    :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+    :bind-keymap ("C-h o" . elisp-slime-nav-describe-elisp-thing-at-point)
+    :init (dolist (hook '(emacs-lisp-mode-hook
+                          lisp-interaction-mode-hook
+                          ielm-mode-hook))
             (add-hook hook 'turn-on-elisp-slime-nav-mode)))
   )
 
