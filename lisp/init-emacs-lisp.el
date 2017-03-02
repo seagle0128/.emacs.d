@@ -52,15 +52,6 @@
   :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
           (add-hook hook 'eldoc-mode)))
 
-;; Make M-. and M-, work in elisp like they do in slime.
-;; In Emacs 25, xref is perfect, so only enable in <=24.
-(use-package elisp-slime-nav
-  :defer t
-  :if (< emacs-major-version 25)
-  :diminish elisp-slime-nav-mode
-  :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
-          (add-hook hook 'elisp-slime-nav-mode)))
-
 ;; Interactive macro expander
 (use-package macrostep
   :defer t
@@ -68,6 +59,16 @@
               ("C-c e" . macrostep-expand)
               :map lisp-interaction-mode-map
               ("C-c e" . macrostep-expand)))
+
+;; Make M-. and M-, work in elisp like they do in slime.
+;; In Emacs 25, xref is perfect, so only use in <=24.
+(when (< emacs-major-version 25)
+  (use-package elisp-slime-nav
+    :defer t
+    :diminish elisp-slime-nav-mode
+    :init (dolist (hook '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+            (add-hook hook 'turn-on-elisp-slime-nav-mode)))
+  )
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()
@@ -116,9 +117,10 @@
              (prin1 symbol)
              (princ " is ")
              (save-window-excursion
-               (if (fboundp symbol)
-                   (describe-function symbol)
-                 (describe-variable symbol)))
+               (if (fboundp 'describe-symbol)
+                   (describe-symbol symbol)
+                 (with-no-warnings
+                   (help-xref-interned (intern sym-name)))))
              (buffer-string)))
          nil nil nil 0))))
 
