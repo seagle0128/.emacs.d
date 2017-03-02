@@ -41,13 +41,10 @@
   (set-buffer-file-coding-system 'unix 't) )
 
 ;; Revert buffer
-;; Workaround: https://github.com/dgutov/diff-hl/issues/85
 (bind-key "<f5>" '(lambda ()
                     (interactive)
                     (message "Revert this buffer.")
-                    (diff-hl-flydiff-mode -1)
-                    (revert-buffer t t)
-                    (diff-hl-flydiff-mode 1)))
+                    (revert-buffer t t)))
 
 ;; Which key
 (use-package which-key

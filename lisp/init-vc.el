@@ -38,7 +38,13 @@
 (use-package magit
   :defer t
   :init (add-hook 'after-init-hook 'global-magit-file-mode)
-  :config (setenv "GIT_ASKPASS" "git-gui--askpass"))
+  :config
+  (setenv "GIT_ASKPASS" "git-gui--askpass")
+
+  ;; Workaround for fixing
+  ;; https://github.com/dgutov/diff-hl/issues/85
+  ;; https://github.com/magit/magit/issues/3014
+  (magit-auto-revert-mode -1))
 
 (use-package git-timemachine :defer t)
 (use-package gitconfig-mode :defer t)
