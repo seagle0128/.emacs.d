@@ -78,10 +78,8 @@
 (use-package benchmark-init
   :if my-profile-enable
   :init
-  (progn
-    (add-hook 'before-init-hook 'benchmark-init/activate)
-    (add-hook 'after-init-hook 'benchmark-init/deactivate)
-    ))
+  (add-hook 'before-init-hook 'benchmark-init/activate)
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Preferences
 (require 'init-basic)
