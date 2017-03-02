@@ -68,7 +68,8 @@
   (use-package elisp-slime-nav
     :defer t
     :diminish elisp-slime-nav-mode
-    :bind-keymap ("C-h o" . elisp-slime-nav-describe-elisp-thing-at-point)
+    :bind (:map elisp-slime-nav-mode-map
+                ("C-h o" . elisp-slime-nav-describe-elisp-thing-at-point))
     :init (dolist (hook '(emacs-lisp-mode-hook
                           lisp-interaction-mode-hook
                           ielm-mode-hook))
