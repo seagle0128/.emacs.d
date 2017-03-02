@@ -68,6 +68,7 @@
   (use-package elisp-slime-nav
     :defer t
     :diminish elisp-slime-nav-mode
+    :defines elisp-slime-nav-mode-map
     :bind (:map elisp-slime-nav-mode-map
                 ("C-h o" . elisp-slime-nav-describe-elisp-thing-at-point))
     :init (dolist (hook '(emacs-lisp-mode-hook
@@ -124,9 +125,9 @@
              (princ " is ")
              (save-window-excursion
                (if (fboundp 'describe-symbol)
-                   (describe-symbol (intern symbol))
+                   (describe-symbol symbol)
                  (with-no-warnings
-                   (help-xref-interned (intern symbol)))))
+                   (help-xref-interned symbol))))
              (buffer-string)))
          nil nil nil 0))))
 
