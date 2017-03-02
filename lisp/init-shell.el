@@ -71,11 +71,9 @@
      ))
   )
 
-;; Do not use terminal on Windows
 ;; Term
 (use-package term
   :defer t
-  :if (not sys/win32p)
   :init
   (setq system-uses-terminfo nil)
 
@@ -84,7 +82,7 @@
     '(add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))))
 
 ;; Multi term
-(use-package multi-term :defer t :if (not sys/win32p))
+(use-package multi-term :defer t)
 
 ;; Shell Pop
 (use-package shell-pop

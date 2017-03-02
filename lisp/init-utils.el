@@ -83,11 +83,13 @@
   )
 
 ;; Dash
-(use-package dash-at-point
-  :defer t
-  :if sys/macp
-  :bind (("\C-cd" . dash-at-point)
-         ("\C-ce" . dash-at-point-with-docset)))
+;; only avaliable on macOS
+(when sys/macp
+  (use-package dash-at-point
+    :defer t
+    :bind (("\C-cd" . dash-at-point)
+           ("\C-ce" . dash-at-point-with-docset)))
+  )
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
