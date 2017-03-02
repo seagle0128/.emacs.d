@@ -171,6 +171,7 @@
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
+(use-package restart-emacs :defer t)
 (use-package try :defer t)
 
 (provide 'init-utils)
