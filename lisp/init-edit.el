@@ -212,10 +212,21 @@
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
 
-;; Folding/Hideshow
+;; Hideshow
 (use-package hideshow
   :defer t
   :diminish hs-minor-mode)
+
+;; Folding
+(use-package vimish-fold
+  :defer t
+  :bind (("C-c f f" . vimish-fold)
+         ("C-c f d" . vimish-fold-delete)
+         ("C-c f p" . vimish-fold-previous-fold)
+         ("C-c f n" . vimish-fold-next-fold)
+         ("C-c f a" . vimish-fold-avy)
+         ("C-c f t" . vimish-fold-toggle-all))
+  :init (add-hook 'after-init-hook 'vimish-fold-global-mode))
 
 (provide 'init-edit)
 
