@@ -124,9 +124,9 @@
              (princ " is ")
              (save-window-excursion
                (if (fboundp 'describe-symbol)
-                   (describe-symbol symbol)
+                   (describe-symbol (intern symbol))
                  (with-no-warnings
-                   (help-xref-interned (intern sym-name)))))
+                   (help-xref-interned (intern symbol)))))
              (buffer-string)))
          nil nil nil 0))))
 
