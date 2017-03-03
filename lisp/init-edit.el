@@ -141,7 +141,8 @@
 (use-package drag-stuff
   :defer t
   :diminish drag-stuff-mode
-  :init (add-hook 'after-init-hook 'drag-stuff-global-mode))
+  :init (add-hook 'after-init-hook 'drag-stuff-global-mode)
+  :config (drag-stuff-define-keys))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
@@ -190,7 +191,6 @@
 ;; Windows-scroll commands
 (use-package pager
   :defer t
-  :commands pager-page-down pager-page-up pager-row-down pager-row-up
   :bind (("\C-v"   . pager-page-down)
          ([next]   . pager-page-down)
          ("\ev"    . pager-page-up)
