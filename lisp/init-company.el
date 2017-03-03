@@ -36,7 +36,12 @@
   :defer t
   :diminish company-mode
   :bind (("M-/" . company-complete)
-         ("C-c C-y" . company-yasnippet))
+         ("C-c C-y" . company-yasnippet)
+         :map company-active-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
+         ("TAB" . company-complete-selection)
+         ("<tab>" . company-complete-selection))
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
   ;; aligns annotation to the right hand side
@@ -47,12 +52,6 @@
         '(company-pseudo-tooltip-unless-just-one-frontend
           company-preview-frontend
           company-echo-metadata-frontend))
-
-  ;; Keybindings
-  (bind-key "C-p" 'company-select-previous company-active-map)
-  (bind-key "C-n" 'company-select-next company-active-map)
-  (bind-key "TAB" 'company-complete-selection company-active-map)
-  (bind-key "<tab>" 'company-complete-selection company-active-map)
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
