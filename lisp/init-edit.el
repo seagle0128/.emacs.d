@@ -226,7 +226,7 @@
          ("C-c f n" . vimish-fold-next-fold)
          ("C-c f a" . vimish-fold-avy)
          ("C-c f t" . vimish-fold-toggle-all))
-  :init (add-hook 'after-init-hook 'vimish-fold-global-mode))
+  :init (vimish-fold-global-mode 1))
 
 (provide 'init-edit)
 
