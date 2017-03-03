@@ -91,9 +91,13 @@
     (setq diff-hl-side 'right)
     (diff-hl-margin-mode 1))
 
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  (defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
-    (diff-hl-update)))
+  (eval-after-load 'magit
+    '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+  (eval-after-load 'psvn
+    '(defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
+       (diff-hl-update)))
+  )
 
 ;; Highlight some operations
 (use-package volatile-highlights

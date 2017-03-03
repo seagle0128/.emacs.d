@@ -100,7 +100,7 @@
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0))
-  :config (avy-setup-default))
+  :init (avy-setup-default))
 
 ;; Kill text between the point and the character CHAR
 (use-package zzz-to-char
