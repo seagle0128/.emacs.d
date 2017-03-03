@@ -52,7 +52,11 @@
    ("M-y"     . helm-show-kill-ring)
    ("C-h a"   . helm-apropos)
    ("C-h i"   . helm-info-emacs)
-   ("C-."     . helm-imenu))
+   ("C-."     . helm-imenu)
+   :map helm-map
+   ;; exchange TAB and C-z
+   ("TAB" . helm-execute-persistent-action)
+   ("C-z" . helm-select-action))
   :init
   (add-hook 'after-init-hook
             '(lambda ()
@@ -78,10 +82,6 @@
   (setq helm-apropos-fuzzy-match t)
   (setq helm-semantic-fuzzy-match t)
   (setq helm-lisp-fuzzy-completion t)
-
-  ;; exchange TAB and C-z
-  (bind-key "TAB" 'helm-execute-persistent-action helm-map)
-  (bind-key "C-z" 'helm-select-action helm-map)
 
   ;; plugins
   (use-package helm-flx

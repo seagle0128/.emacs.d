@@ -38,9 +38,11 @@
   :defines magit-completing-read-function
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)
+
          ("C-c C-r" . ivy-resume)
          ("C-c v" . ivy-push-view)
          ("C-c V" . ivy-pop-view)
+
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-x C-r" . counsel-recentf)
@@ -53,6 +55,10 @@
          ("C-c j" . counsel-git-grep)
          ("C-c s" . counsel-ag)
          ("C-c l" . counsel-locate)
+
+         :map swiper-map
+         ("M-%" . swiper-query-replace)
+
          :map read-expression-map
          ("C-r" . counsel-expression-history))
   :init (add-hook 'after-init-hook
@@ -75,9 +81,6 @@
 
   (setq projectile-completion-system 'ivy)
   (setq magit-completing-read-function 'ivy-completing-read)
-
-  ;; Search and replace
-  (bind-key "M-%" 'swiper-query-replace swiper-map)
 
   ;; Search at point
   ;; "M-j": word-at-point
