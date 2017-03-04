@@ -73,19 +73,17 @@
 (use-package neotree
   :defer t
   :defines projectile-switch-project-action
-  :bind (([f12] . neotree-toggle)
-         ([C-f12] . neotree-toggle))
+  :bind (([f8] . neotree-toggle)
+         :map neotree-mode-map
+         ("i" . neotree-enter-horizontal-split)
+         ("I" . neotree-enter-vertical-split))
   :config
   (setq neo-smart-open t)
   (setq neo-vc-integration '(face char))
 
-  (bind-key "i" 'neotree-enter-horizontal-split neotree-mode-map)
-  (bind-key "I" 'neotree-enter-vertical-split neotree-mode-map)
-
   ;; Integrate with projectile
   (eval-after-load 'projectile
-    '(setq projectile-switch-project-action 'neotree-projectile-action))
-  )
+    '(setq projectile-switch-project-action 'neotree-projectile-action)))
 
 ;; Dash
 ;; only avaliable on macOS
