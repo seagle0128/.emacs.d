@@ -58,12 +58,6 @@
   :defer t
   :init (add-hook 'after-init-hook 'browse-url-dwim-mode))
 
-;; Tramp
-(use-package tramp
-  :defer t
-  :init (let ((val (if (executable-find "plink") "plink" "ssh")))
-          (setq tramp-default-method val)))
-
 ;; Show imenu entries in a seperate buffer
 (use-package imenu-list
   :defer t
