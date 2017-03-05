@@ -41,6 +41,12 @@
   :config
   (setenv "GIT_ASKPASS" "git-gui--askpass")
 
+  ;; Gitflow
+  (use-package magit-gitflow
+    :defer t
+    :diminish magit-gitflow-mode
+    :init (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+
   ;; Workaround for fixing
   ;; https://github.com/dgutov/diff-hl/issues/85
   ;; https://github.com/magit/magit/issues/3014
