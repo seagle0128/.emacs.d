@@ -164,7 +164,8 @@
   :after dired
   :init
   (setq diredp-hide-details-initially-flag nil)
-  (setq diredp-highlight-autofiles-mode t))
+  (setq diredp-highlight-autofiles-mode t)
+  :config (diredp-toggle-find-file-reuse-dir 1))
 
 ;; Extensions to `Info'
 (use-package info+
