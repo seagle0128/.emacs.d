@@ -42,3 +42,4 @@ anaconda-mode/
 /.persistent-scratch
 vimish-fold/
 /bm-repository
+/.emacs-buffers

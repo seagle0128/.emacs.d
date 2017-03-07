@@ -36,6 +36,11 @@
 ;; since we need after-init-hook in desktop.el
 (desktop-save-mode 1)
 
+;; Restore special buffers
+(use-package desktop+
+  :defer t
+  :after desktop)
+
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
   :defer t
