@@ -167,6 +167,11 @@
   (setq diredp-highlight-autofiles-mode t)
   :config (diredp-toggle-find-file-reuse-dir 1))
 
+;; Provide menu/dialogue for dired sort options
+(use-package dired-sort-menu+
+  :defer t
+  :after dired)
+
 ;; Extensions to `Info'
 (use-package info+
   :defer t
