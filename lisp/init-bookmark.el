@@ -32,6 +32,11 @@
 ;;
 ;;; Code:
 
+;; Extensions to `Bookmark'
+(use-package bookmark+
+  :defer t
+  :after bookmark)
+
 ;; Visual bookmark
 (use-package bm
   :defer t

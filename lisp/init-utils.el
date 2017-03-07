@@ -158,6 +158,14 @@
 ;; Side-by-side diff view
 (use-package diffview :defer t)
 
+;; Extensions to `Dired'
+(use-package dired+
+  :defer t
+  :after dired
+  :init
+  (setq diredp-hide-details-initially-flag nil)
+  (setq diredp-highlight-autofiles-mode t))
+
 ;; Extensions to `Info'
 (use-package info+
   :defer t
