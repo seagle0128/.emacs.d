@@ -136,11 +136,6 @@
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
-;; Search Chinese by Pinyin
-(use-package pinyin-search
-  :defer t
-  :bind (("C-c C-s" . pinyin-search)))
-
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
   :defer t

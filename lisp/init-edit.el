@@ -92,7 +92,14 @@
   :diminish auto-revert-mode
   :init (add-hook 'after-init-hook 'global-auto-revert-mode))
 
-;; Tree-based completion
+;; Click to browse URL or to send to e-mail address
+(use-package goto-addr
+  :defer t
+  :init
+  (add-hook 'text-mode-hook 'goto-address-mode)
+  (add-hook 'prog-mode-hook 'goto-address-prog-mode))
+
+;; Jump to things in Emacs tree-style
 (use-package avy
   :defer t
   :bind (("C-:" . avy-goto-char)
@@ -100,7 +107,7 @@
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0))
-  :init (avy-setup-default))
+  :init (add-hook 'after-init-hook 'avy-setup-default))
 
 ;; Kill text between the point and the character CHAR
 (use-package zzz-to-char
@@ -111,7 +118,19 @@
 ;; Quickly follow links
 (use-package ace-link
   :defer t
+  :bind (("M-o" . ace-link-addr)
+         :map org-mode-map ("M-o" . ace-link-org))
   :init (add-hook 'after-init-hook 'ace-link-setup-default))
+
+;; Jump to Chinese characters
+(use-package ace-pinyin
+  :defer t
+  :init (add-hook 'after-init-hook 'ace-pinyin-global-mode 1))
+
+;; Search Chinese by Pinyin
+(use-package pinyin-search
+  :defer t
+  :bind (("C-c C-s" . pinyin-search)))
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
