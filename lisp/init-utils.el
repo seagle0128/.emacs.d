@@ -176,16 +176,12 @@
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
 
-;; Restart emacs from within emacs
-(use-package restart-emacs
-  :defer t
-  :config (setq restart-emacs-restore-frames t))
-
 ;; Misc
 (use-package copyit :defer t)
 (use-package htmlize :defer t)
 (use-package list-environment :defer t)
 (use-package memory-usage :defer t)
+(use-package restart-emacs :defer t)
 (use-package try :defer t)
 
 (provide 'init-utils)
