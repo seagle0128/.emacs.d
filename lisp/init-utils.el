@@ -162,9 +162,7 @@
 (use-package dired+
   :defer t
   :after dired
-  :init
-  (setq diredp-hide-details-initially-flag nil)
-  (setq diredp-highlight-autofiles-mode t)
+  :init (setq diredp-hide-details-initially-flag nil)
   :config (diredp-toggle-find-file-reuse-dir 1))
 
 ;; Provide menu/dialogue for dired sort options
@@ -177,6 +175,11 @@
   :defer t
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
+
+;; Restart emacs from within emacs
+(use-package restart-emacs
+  :defer t
+  :config (setq restart-emacs-restore-frames t))
 
 ;; Misc
 (use-package copyit :defer t)
