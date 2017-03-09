@@ -119,13 +119,13 @@
 ;; Quickly follow links
 (use-package ace-link
   :defer t
-  :bind (("M-o" . ace-link-addr)
-         :map org-mode-map ("M-o" . ace-link-org))
+  :bind (("M-o" . ace-link-addr))
   :init (add-hook 'after-init-hook 'ace-link-setup-default))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :defer t
+  :diminish ace-pinyin-mode
   :init (add-hook 'after-init-hook 'ace-pinyin-global-mode 1))
 
 ;; Search Chinese by Pinyin
