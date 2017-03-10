@@ -43,3 +43,4 @@ anaconda-mode/
 vimish-fold/
 /bm-repository
 /.emacs-buffers
+/.last-package-update-day

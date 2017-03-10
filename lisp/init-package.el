@@ -81,10 +81,16 @@
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
-;; Silent package upgrader
-(use-package spu
-  :defer 10 ;; defer package loading for 10 seconds
-  :config (spu-package-upgrade-daily))
+;; Automatically update packages
+(use-package auto-package-update
+  :defer t
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (setq auto-package-update-interval 1)
+               (setq auto-package-update-delete-old-versions t)
+               (auto-package-update-at-time "03:00")
+               (auto-package-update-maybe))))
 
 (provide 'init-package)
 
