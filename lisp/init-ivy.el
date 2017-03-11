@@ -42,13 +42,8 @@
          ("C-c v" . ivy-push-view)
          ("C-c V" . ivy-pop-view)
 
-         ("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
          ("C-x C-r" . counsel-recentf)
-         ("C-." . counsel-imenu)
          ("C-S-t" . counsel-projectile-find-file)
-         ("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable)
          ("C-h u" . counsel-unicode-char)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
@@ -56,10 +51,7 @@
          ("C-c l" . counsel-locate)
 
          :map swiper-map
-         ("M-%" . swiper-query-replace)
-
-         :map read-expression-map
-         ("C-r" . counsel-expression-history))
+         ("M-%" . swiper-query-replace))
   :init (add-hook 'after-init-hook
                   '(lambda ()
                      (ivy-mode 1)
@@ -123,8 +115,7 @@
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
               '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                       (counsel-gtags-mode 1))))
-    ))
+                       (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 
