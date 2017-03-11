@@ -32,6 +32,7 @@
 ;;
 ;;; Code:
 
+;; Manage and navigate projects
 (use-package projectile
   :bind (("C-S-t" . projectile-find-file)
          ("s-t" . projectile-find-file))
@@ -43,13 +44,6 @@
               ""
             (format " [%s]"
                     (projectile-project-name)))))
-
-  (setq projectile-indexing-method 'alien)
-
-  ;; (setq projectile-project-root-files-functions
-  ;;       '(projectile-root-top-down
-  ;;         projectile-root-top-down-recurring
-  ;;         projectile-root-bottom-up))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
@@ -63,7 +57,7 @@
                        " -g . | tr '\\n' '\\0'")))
       (setq projectile-generic-command val)))
 
-  ;; Rails
+  ;; Rails project
   (use-package projectile-rails
     :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
   )
