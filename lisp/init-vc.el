@@ -60,6 +60,7 @@
 
 ;; Gitflow
 (use-package magit-gitflow
+  :diminish magit-gitflow-mode
   :init (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
 (use-package git-timemachine)
