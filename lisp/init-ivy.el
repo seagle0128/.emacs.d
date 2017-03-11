@@ -43,7 +43,6 @@
          ("C-c V" . ivy-pop-view)
 
          ("C-x C-r" . counsel-recentf)
-         ("C-S-t" . counsel-projectile-find-file)
          ("C-h u" . counsel-unicode-char)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
