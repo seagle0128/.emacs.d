@@ -1,7 +1,7 @@
 ;; init-web.el --- Initialize web configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 2.1.0
+;; Version: 2.2.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
