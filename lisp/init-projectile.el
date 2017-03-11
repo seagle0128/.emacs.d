@@ -33,7 +33,6 @@
 ;;; Code:
 
 (use-package projectile
-  :defer t
   :bind (("C-S-t" . projectile-find-file)
          ("s-t" . projectile-find-file))
   :init (add-hook 'after-init-hook 'projectile-mode)
@@ -66,7 +65,6 @@
 
   ;; Rails
   (use-package projectile-rails
-    :defer t
     :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
   )
 

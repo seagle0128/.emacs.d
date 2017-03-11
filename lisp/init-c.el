@@ -33,15 +33,17 @@
 ;;; Code:
 
 ;; C/C++ Mode
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (c-set-style "bsd")
-             (setq tab-width 4)
-             (setq c-basic-offset 4)
-             ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
-             (local-set-key "\C-cc" 'compile)
-             (eval-after-load 'auto-complete
-               '(add-to-list 'ac-sources 'ac-source-semantic))))
+(use-package cc-mode
+  :ensure nil
+  :init (add-hook 'c-mode-common-hook
+                  '(lambda ()
+                     (c-set-style "bsd")
+                     (setq tab-width 4)
+                     (setq c-basic-offset 4)
+                     ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
+                     (local-set-key "\C-cc" 'compile)
+                     (eval-after-load 'auto-complete
+                       '(add-to-list 'ac-sources 'ac-source-semantic)))))
 
 (provide 'init-c)
 

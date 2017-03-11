@@ -33,7 +33,7 @@
 ;;; Code:
 
 (use-package ido
-  :defer t
+  :ensure nil
   :init (add-hook 'after-init-hook 'ido-mode)
   :config
   (ido-everywhere 1)
@@ -55,52 +55,35 @@
        (bind-key "C-x C-r" 'ido-recentf-find-file)
        ))
 
-  (use-package ido-ubiquitous :config (ido-ubiquitous-mode 1))
-  (use-package ido-at-point :config (ido-at-point-mode 1))
-  (use-package ido-complete-space-or-hyphen :config (ido-complete-space-or-hyphen-enable))
-  (use-package ido-sort-mtime :config (ido-sort-mtime-mode 1))
-  (use-package flx-ido :config (flx-ido-mode 1))
+  (use-package ido-ubiquitous :init (ido-ubiquitous-mode 1))
+  (use-package ido-at-point :init (ido-at-point-mode 1))
+  (use-package ido-complete-space-or-hyphen :init (ido-complete-space-or-hyphen-enable))
+  (use-package ido-sort-mtime :init (ido-sort-mtime-mode 1))
+  (use-package flx-ido :init (flx-ido-mode 1))
 
   (use-package ido-vertical-mode
-    :config
+    :init
     (ido-vertical-mode 1)
     (setq ido-vertical-define-keys 'C-n-and-C-p-only)
     (setq ido-vertical-show-count t))
 
   (use-package ido-load-library
-    :defer t
     :init (defalias 'load-library 'ido-load-library))
 
-  (use-package imenus
-    :defer t
-    :bind ("C-." . imenus))
+  (use-package imenus :bind ("C-." . imenus))
 
   (use-package smex
-    :defer t
     :bind (("M-x" . smex)
            ("M-X" . smex-major-mode-commands)
            ("C-c M-x" . execute-extended-command)))
 
   (use-package ido-occur
-    :config
-    (defun ido-occur-at-point ()
-      "Open ido-occur at point."
-      (interactive)
-      (ido-occur (symbol-name (symbol-at-point))))
-
-    (bind-key "C-o" 'ido-occur-at-point)
-
-    (defun ido-occur-from-isearch ()
-      "Open ido-occur from isearch."
-      (interactive)
-      (ido-occur (if isearch-regexp
-                     isearch-string
-                   (regexp-quote isearch-string))))
-
-    (bind-key "C-o" 'ido-occur-from-isearch isearch-mode-map))
+    :bind (("C-c o" . ido-occur)
+           ("C-c O" . ido-occur-at-point)
+           :isearch-mode-map
+           ("C-o" . ido-occur-from-isearch)))
 
   (use-package ggtags
-    :defer t
     :diminish ggtags-mode
     :init (add-hook 'c-mode-common-hook
                     (lambda ()

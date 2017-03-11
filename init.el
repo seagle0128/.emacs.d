@@ -74,13 +74,6 @@
 ;; (package-initialize)
 (require 'init-package)
 
-;; Benchmark
-(use-package benchmark-init
-  :if my-profile-enable
-  :init
-  (add-hook 'before-init-hook 'benchmark-init/activate)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
 ;; Preferences
 (require 'init-basic)
 (require 'init-ui)

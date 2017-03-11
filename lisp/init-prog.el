@@ -32,44 +32,48 @@
 ;;
 ;;; Code:
 
-(use-package quickrun :defer t)
-(use-package markdown-mode :defer t)
-(use-package powershell :defer t)
-(use-package csharp-mode :defer t)
-(use-package dockerfile-mode :defer t :mode "Dockerfile\\'")
-(use-package vimrc-mode :defer t)
+(use-package prog-mode
+  :ensure nil
+  :init
+  ;; Prettify Symbols
+  ;; e.g. display “lambda” as “λ”
+  (when (boundp 'global-prettify-symbols-mode)
+    (add-hook 'after-init-hook 'global-prettify-symbols-mode)
+    (add-hook 'emacs-lisp-mode-hook
+              (lambda ()
+                (push '("<=" . ?≤) prettify-symbols-alist)))))
+
+(use-package quickrun)
+(use-package markdown-mode)
+(use-package powershell)
+(use-package csharp-mode)
+(use-package dockerfile-mode :mode "Dockerfile\\'")
+(use-package vimrc-mode)
 
 (use-package editorconfig
-  :defer t
   :diminish editorconfig-mode
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
 (use-package dos
-  :defer t
   :init (add-to-list 'auto-mode-alist
                      '("\\.\\(cmd\\|bat\\|btm\\)$" . dos-mode)))
 
 (use-package fish-mode
-  :defer t
   :init
   (add-hook 'fish-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook 'fish_indent-before-save)))
+            '(lambda ()
+               (add-hook 'before-save-hook 'fish_indent-before-save)))
   (eval-after-load 'auto-complete
     '(add-hook 'fish-mode-hook 'auto-complete-mode)))
 
 (use-package robot-mode
   :ensure nil
-  :defer t
   :load-path "site-lisp"
   :commands robot-mode
   :mode "\\.robot\\'")
 
 ;; Eval interface for various REPLs
 (use-package eval-in-repl
-  :defer t
-  :defines eir-ielm-eval-in-current-buffer sh-mode-map
-  python-mode-map ruby-mode-map js2-mode-map
   :bind (:map emacs-lisp-mode-map
               ("<C-M-return>" . eir-eval-in-ielm)
               :map lisp-interaction-mode-map

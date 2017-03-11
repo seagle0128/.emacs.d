@@ -33,13 +33,12 @@
 ;;; Code:
 
 (use-package ruby-mode
-  :defer t
+  :ensure nil
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :interpreter "ruby"
   :config
   ;; Robe mode
   (use-package robe
-    :defer t
     :diminish robe-mode
     :defines ac-modes company-backends
     :init
@@ -52,13 +51,11 @@
       '(push '(company-robe :with company-yasnippet) company-backends)))
 
   (use-package ruby-refactor
-    :defer t
     :diminish ruby-refactor-mode
     :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
   ;; inf-ruby
   (use-package inf-ruby
-    :defer t
     :init
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
     (add-hook 'after-init-hook 'inf-ruby-switch-setup)
@@ -70,29 +67,25 @@
          (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
 
          (use-package ac-inf-ruby
-           :defer t
            :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)))))
 
   ;; Rubocop
   (use-package rubocop
-    :defer t
     :diminish rubocop-mode
     :init (add-hook 'ruby-mode-hook #'rubocop-mode))
 
   ;; RSpec
   (use-package rspec-mode
-    :defer t
     :diminish rspec-mode
     :commands rspec-install-snippets
     :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
     :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
 
   ;; Coverage for SimpleCov
-  (use-package coverage :defer t)
+  (use-package coverage)
 
   ;; Yari
   (use-package yari
-    :defer t
     :bind (:map ruby-mode-map ([f1] . yari))
     :config
     (eval-after-load 'helm
@@ -100,14 +93,12 @@
 
   ;; Yard mode
   (use-package yard-mode
-    :defer t
     :diminish yard-mode
     :init (add-hook 'ruby-mode-hook 'yard-mode))
   )
 
 ;; YAML mode
 (use-package yaml-mode
-  :defer t
   :mode "\\.yml$")
 
 (provide 'init-ruby)

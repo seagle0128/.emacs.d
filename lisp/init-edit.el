@@ -76,32 +76,30 @@
 
 ;; Delete selection if you insert
 (use-package delsel
-  :defer t
+  :ensure nil
   :init (add-hook 'after-init-hook 'delete-selection-mode))
 
 ;; Rectangle
 ;; for rectangles, CUA is nice
 (use-package cua-rect
-  :ensure cua-base
-  :defer t
+  :ensure nil
   :bind (("<C-return>" . cua-rectangle-mark-mode)))
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
-  :defer t
+  :ensure nil
   :diminish auto-revert-mode
   :init (add-hook 'after-init-hook 'global-auto-revert-mode))
 
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
-  :defer t
+  :ensure nil
   :init
   (add-hook 'text-mode-hook 'goto-address-mode)
   (add-hook 'prog-mode-hook 'goto-address-prog-mode))
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
-  :defer t
   :bind (("C-:" . avy-goto-char)
          ("C-'" . avy-goto-char-2)
          ("M-g f" . avy-goto-line)
@@ -112,30 +110,25 @@
 
 ;; Kill text between the point and the character CHAR
 (use-package zzz-to-char
-  :defer t
   :bind (("M-z" . zzz-to-char)
          ("C-M-z" . zzz-up-to-char)))
 
 ;; Quickly follow links
 (use-package ace-link
-  :defer t
   :bind (("M-o" . ace-link-addr))
   :init (add-hook 'after-init-hook 'ace-link-setup-default))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
-  :defer t
   :diminish ace-pinyin-mode
   :init (add-hook 'after-init-hook 'ace-pinyin-global-mode 1))
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
-  :defer t
   :bind (("C-c C-s" . pinyin-search)))
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
-  :defer t
   :diminish aggressive-indent-mode
   :init (add-hook 'after-init-hook 'global-aggressive-indent-mode)
   :config (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
@@ -143,7 +136,6 @@
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
-  :defer t
   :diminish anzu-mode
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
@@ -154,35 +146,30 @@
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
-  :defer t
   :bind ("M-;" . comment-dwim-2))
 
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
-  :defer t
   :diminish drag-stuff-mode
   :init (add-hook 'after-init-hook 'drag-stuff-global-mode)
   :config (drag-stuff-define-keys))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
-  :defer t
+  :ensure nil
   :init (add-hook 'after-init-hook 'electric-pair-mode))
 
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :defer t
   :bind ("C-=" . er/expand-region))
 
 ;; Hungry deletion
 (use-package hungry-delete
-  :defer t
   :diminish hungry-delete-mode
   :init (add-hook 'after-init-hook 'global-hungry-delete-mode))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
-  :defer t
   :bind (("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)
          :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
@@ -195,13 +182,11 @@
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
-  :defer t
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Multiple cursors
 (use-package multiple-cursors
-  :defer t
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<". mc/mark-previous-like-this)
@@ -210,7 +195,6 @@
 
 ;; Windows-scroll commands
 (use-package pager
-  :defer t
   :bind (("\C-v"   . pager-page-down)
          ([next]   . pager-page-down)
          ("\ev"    . pager-page-up)
@@ -222,24 +206,22 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
-  :defer t
   :diminish undo-tree-mode
   :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
-  :defer t
+  :ensure nil
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook 'subword-mode))
 
 ;; Hideshow
 (use-package hideshow
-  :defer t
+  :ensure nil
   :diminish hs-minor-mode)
 
 ;; Folding
 (use-package vimish-fold
-  :defer t
   :bind (("C-c f f" . vimish-fold)
          ("C-c f d" . vimish-fold-delete)
          ("C-c f p" . vimish-fold-previous-fold)

@@ -71,26 +71,32 @@
 
 (eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
+(setq use-package-always-defer t)
 (setq use-package-enable-imenu-support t)
 (setq use-package-expand-minimally t)
 
+;; Benchmark
+(use-package benchmark-init
+  :if my-profile-enable
+  :commands benchmark-init/deactivate
+  :init
+  (add-hook 'before-init-hook 'benchmark-init/activate)
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 ;; A mondern package interface
 (use-package paradox
-  :defer t
-  :config
+  :init
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
 ;; Automatically update packages
 (use-package auto-package-update
-  :defer t
-  :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (setq auto-package-update-interval 1)
-               (setq auto-package-update-delete-old-versions t)
-               (auto-package-update-at-time "03:00")
-               (auto-package-update-maybe))))
+  :init (add-hook 'after-init-hook
+                  '(lambda ()
+                     (setq auto-package-update-interval 1)
+                     (setq auto-package-update-delete-old-versions t)
+                     (auto-package-update-at-time "03:00")
+                     (auto-package-update-maybe))))
 
 (provide 'init-package)
 

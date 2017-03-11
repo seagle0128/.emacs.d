@@ -42,30 +42,27 @@
 
 ;; Revert buffer
 (bind-key "<f5>" '(lambda ()
+                    "Revert the current buffer."
                     (interactive)
                     (message "Revert this buffer.")
                     (revert-buffer t t)))
 
-;; Which key
+;; Display available keybindings in popup
 (use-package which-key
-  :defer t
   :diminish which-key-mode
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
   :init (add-hook 'after-init-hook 'which-key-mode))
 
-;; Browse url
+;; Context-sensitive external browse URL or Internet search
 (use-package browse-url-dwim
-  :defer t
   :init (add-hook 'after-init-hook 'browse-url-dwim-mode))
 
 ;; Show imenu entries in a seperate buffer
 (use-package imenu-list
-  :defer t
   :bind ([f9] . imenu-list-smart-toggle))
 
 ;; Tree explorer
 (use-package neotree
-  :defer t
   :defines projectile-switch-project-action
   :bind (([f8] . neotree-toggle)
          :map neotree-mode-map
@@ -83,15 +80,12 @@
 ;; only avaliable on macOS
 (when sys/macp
   (use-package dash-at-point
-    :defer t
     :bind (("\C-cd" . dash-at-point)
            ("\C-ce" . dash-at-point-with-docset)))
   )
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
-  :defer t
-  :defines popwin:special-display-config
   :commands youdao-dictionary--region-or-word youdao-dictionary--format-result
   :bind (("C-c Y" . youdao-dictionary-search-at-point)
          ("C-c y" . youdao-dictionary-search-at-point+))
@@ -121,63 +115,53 @@
   )
 
 ;; Search
-(use-package fzf :defer t)
-(use-package ack :defer t)
+(use-package fzf)
+(use-package ack)
 
 (use-package ag
-  :defer t
   :config
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers t))
 
 (use-package wgrep-ag
-  :defer t
   :config
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
-  :defer t
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go))
   :config
   (when (featurep 'ivy)
-    (add-hook 'ivy-mode-hook '(lambda () (setq dumb-jump-selector 'ivy)))))
-
-;; Junk file
-(use-package open-junk-file
-  :defer t
-  :commands open-junk-file)
+    (add-hook 'ivy-mode-hook
+              '(lambda () (setq dumb-jump-selector 'ivy)))))
 
 ;; Side-by-side diff view
-(use-package diffview :defer t)
+(use-package diffview)
 
 ;; Extensions to `Dired'
 (use-package dired+
-  :defer t
   :after dired
   :init (setq diredp-hide-details-initially-flag nil)
   :config (diredp-toggle-find-file-reuse-dir 1))
 
 ;; Provide menu/dialogue for dired sort options
-(use-package dired-sort-menu+
-  :defer t
-  :after dired)
+(use-package dired-sort-menu+ :after dired)
 
 ;; Extensions to `Info'
 (use-package info+
-  :defer t
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
 
 ;; Misc
-(use-package copyit :defer t)
-(use-package htmlize :defer t)
-(use-package list-environment :defer t)
-(use-package memory-usage :defer t)
-(use-package restart-emacs :defer t)
-(use-package try :defer t)
+(use-package copyit)
+(use-package htmlize)
+(use-package list-environment)
+(use-package memory-usage)
+(use-package open-junk-file)
+(use-package restart-emacs)
+(use-package try)
 
 (provide 'init-utils)
 

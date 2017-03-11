@@ -33,7 +33,6 @@
 ;;; Code:
 
 (use-package auto-complete
-  :defer t
   :diminish auto-complete-mode
   :bind (("M-/" . ac-start))
   :init (add-hook 'after-init-hook 'ac-config-default)

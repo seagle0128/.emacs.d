@@ -33,13 +33,12 @@
 ;;; Code:
 
 (use-package ibuffer
-  :defer t
+  :ensure nil
   :defines ibuffer-saved-filter-groups
   :commands ibuffer-switch-to-saved-filter-groups
   :bind ("C-x C-b" . ibuffer)
   :config
   (use-package ibuffer-vc
-    :defer t
     :init
     (add-hook 'ibuffer-hook
               (lambda ()

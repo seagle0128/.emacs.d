@@ -36,16 +36,9 @@
 
 ;; Git
 (use-package magit
-  :defer t
   :init (add-hook 'after-init-hook 'global-magit-file-mode)
   :config
   (setenv "GIT_ASKPASS" "git-gui--askpass")
-
-  ;; Gitflow
-  (use-package magit-gitflow
-    :defer t
-    :diminish magit-gitflow-mode
-    :init (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
   ;; Workaround for fixing
   ;; https://github.com/dgutov/diff-hl/issues/85
@@ -65,17 +58,19 @@
           (auto-revert-mode)))))
   )
 
-(use-package git-timemachine :defer t)
-(use-package gitconfig-mode :defer t)
-(use-package gitignore-mode :defer t)
+;; Gitflow
+(use-package magit-gitflow
+  :init (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+
+(use-package git-timemachine)
+(use-package gitconfig-mode)
+(use-package gitignore-mode)
 
 ;; Subversion
-(use-package psvn
-  :defer t
-  :bind (("C-x p" . svn-status)))
+(use-package psvn)
 
 ;; Open github/gitlab/bitbucket page
-(use-package browse-at-remote :defer t)
+(use-package browse-at-remote)
 
 (provide 'init-vc)
 

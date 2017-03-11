@@ -32,22 +32,20 @@
 ;;
 ;;; Code:
 
-;; Prettify Symbols
-;; e.g. display “lambda” as “λ”
-(when (boundp 'global-prettify-symbols-mode)
-  (add-hook 'after-init-hook 'global-prettify-symbols-mode)
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (push '("<=" . ?≤) prettify-symbols-alist))))
-
 ;; Emacs lisp mode
-(bind-key "C-c C-z" 'ielm emacs-lisp-mode-map)
-(bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
-(bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
+;; For <=24 it's emacs-lisp-mode
+(use-package elisp-mode
+  :ensure nil
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-z" . ielm)
+              ("C-c C-c" . eval-defun)
+              ("C-c C-b" . eval-buffer)))
 
 ;; Enable Eldoc in lisp modes
+;; global-eldoc-mode is enabled by default in 25.
 (use-package eldoc
-  :defer t
+  :ensure nil
+  :if (<= emacs-major-version 24)
   :diminish eldoc-mode
   :init (dolist (hook '(emacs-lisp-mode-hook
                         lisp-interaction-mode-hook
@@ -56,7 +54,6 @@
 
 ;; Interactive macro expander
 (use-package macrostep
-  :defer t
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)
               :map lisp-interaction-mode-map
@@ -66,9 +63,7 @@
 ;; In Emacs 25, xref is perfect, so only use in <=24.
 (when (< emacs-major-version 25)
   (use-package elisp-slime-nav
-    :defer t
     :diminish elisp-slime-nav-mode
-    :defines elisp-slime-nav-mode-map
     :bind (:map elisp-slime-nav-mode-map
                 ("C-h o" . elisp-slime-nav-describe-elisp-thing-at-point))
     :init (dolist (hook '(emacs-lisp-mode-hook

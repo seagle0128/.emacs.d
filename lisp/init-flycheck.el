@@ -33,7 +33,6 @@
 ;;; Code:
 
 (use-package flycheck
-  :defer t
   :diminish flycheck-mode
   :init (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
@@ -41,7 +40,6 @@
   (setq flycheck-emacs-lisp-load-path 'inherit)
 
   (use-package flycheck-pos-tip
-    :defer t
     :init (add-hook 'flycheck-mode-hook 'flycheck-pos-tip-mode)
     :config
     ;; Fix: don't hide pos tip to advoid suspress other pos tips.
@@ -50,7 +48,6 @@
       (flycheck-hide-error-buffer)))
 
   (use-package avy-flycheck
-    :defer t
     :init (add-hook 'flycheck-mode-hook 'avy-flycheck-setup))
   )
 

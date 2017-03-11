@@ -33,7 +33,6 @@
 ;;; Code:
 
 (use-package counsel
-  :defer t
   :diminish counsel-mode ivy-mode
   :defines magit-completing-read-function
   :bind (("C-s" . swiper)
@@ -92,15 +91,13 @@
                      (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
             swiper-map)
 
-  (use-package smex :defer t)
-  (use-package ivy-hydra :defer t)
+  (use-package smex)
+  (use-package ivy-hydra)
 
   (use-package counsel-projectile
-    :defer t
     :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
 
   (use-package ivy-rich
-    :defer t
     :init
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-switch-buffer-align-virtual-buffer nil)
@@ -116,19 +113,18 @@
                                       'ivy-rich-switch-buffer-transformer))))
 
   (use-package counsel-gtags
-    :defer t
     :diminish counsel-gtags-mode
     :bind (:map counsel-gtags-mode-map
                 ("M-." . counsel-gtags-find-definition)
                 ("M-r" . counsel-gtags-find-reference)
                 ("M-s" . counsel-gtags-find-symbol)
                 ("M-," . counsel-gtags-pop-stack))
-    :init (add-hook 'c-mode-common-hook
-                    (lambda ()
-                      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                        (counsel-gtags-mode 1))))
-    :config (setq counsel-gtags-auto-update t))
-  )
+    :init
+    (setq counsel-gtags-auto-update t)
+    (add-hook 'c-mode-common-hook
+              '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                       (counsel-gtags-mode 1))))
+    ))
 
 (provide 'init-ivy)
 

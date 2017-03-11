@@ -35,9 +35,9 @@
 ;; Chinese calendar
 ;; `pC' can show lunar details
 (use-package cal-china-x
-  :defer t
   :commands cal-china-x-setup
-  :init (add-hook 'calendar-mode-hook 'cal-china-x-setup)
+  :init
+  (add-hook 'calendar-mode-hook 'cal-china-x-setup)
   :config
   (setq calendar-mark-holidays-flag t)
   (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
@@ -46,8 +46,7 @@
   ;; `S' can show the time of sunrise and sunset on Calendar
   (setq calendar-location-name "Chengdu"
         calendar-latitude 30.67
-        calendar-longitude 104.06)
-  )
+        calendar-longitude 104.06))
 
 (provide 'init-calendar)
 

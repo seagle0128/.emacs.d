@@ -33,30 +33,22 @@
 ;;; Code:
 
 (use-package helm
-  :defer t
   :diminish helm-mode
-  :defines (helm-M-x-fuzzy-match
-            helm-imenu-fuzzy-match
-            helm-apropos-fuzzy-match
-            helm-semantic-fuzzy-match
-            helm-lisp-fuzzy-completion
-            helm-make-completion-method)
   :commands helm-autoresize-mode helm-info-emacs
-  :bind
-  (("C-x b"   . helm-mini)
-   ("C-x C-b" . helm-buffers-list)
-   ("M-x"     . helm-M-x)
-   ("C-x C-f" . helm-find-files)
-   ("C-x C-r" . helm-recentf)
-   ("C-x r l" . helm-filtered-bookmarks)
-   ("M-y"     . helm-show-kill-ring)
-   ("C-h a"   . helm-apropos)
-   ("C-h i"   . helm-info-emacs)
-   ("C-."     . helm-imenu)
-   :map helm-map
-   ;; exchange TAB and C-z
-   ("TAB" . helm-execute-persistent-action)
-   ("C-z" . helm-select-action))
+  :bind (("C-x b"   . helm-mini)
+         ("C-x C-b" . helm-buffers-list)
+         ("M-x"     . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x C-r" . helm-recentf)
+         ("C-x r l" . helm-filtered-bookmarks)
+         ("M-y"     . helm-show-kill-ring)
+         ("C-h a"   . helm-apropos)
+         ("C-h i"   . helm-info-emacs)
+         ("C-."     . helm-imenu)
+         :map helm-map
+         ;; exchange TAB and C-z
+         ("TAB" . helm-execute-persistent-action)
+         ("C-z" . helm-select-action))
   :init
   (add-hook 'after-init-hook
             '(lambda ()
@@ -83,34 +75,34 @@
   (setq helm-semantic-fuzzy-match t)
   (setq helm-lisp-fuzzy-completion t)
 
+  (eval-after-load 'eshell
+    '(add-hook 'eshell-mode-hook
+               '(lambda ()
+                  (bind-key [remap eshell-pcomplete]
+                            'helm-esh-pcomplete eshell-mode-map))))
+
   ;; plugins
   (use-package helm-flx
-    :config (helm-flx-mode 1))
+    :init (helm-flx-mode 1))
 
   (use-package helm-descbinds
-    :defer t
     :bind ("C-h b" . helm-descbinds))
 
   (use-package helm-swoop
-    :defer t
     :bind (("M-s o" . helm-swoop)
            ("M-s /" . helm-multi-swoop)))
 
   (use-package helm-ag
-    :defer t
     :bind ("M-s s" . helm-ag))
 
   (use-package helm-mt
-    :defer t
     :bind ("C-x t" . helm-mt))
 
   (use-package helm-cmd-t
-    :defer t
     :bind (("C-S-t" . helm-cmd-t)
            ("s-t" . helm-cmd-t)))
 
   (use-package helm-gtags
-    :defer t
     :diminish helm-gtags-mode
     :bind (:map helm-gtags-mode-map
                 ("M-t" . helm-gtags-find-tag)
@@ -126,17 +118,17 @@
                         (helm-gtags-mode 1))))
     :config (setq helm-gtags-auto-update t))
 
-  (use-package helm-ls-git :defer t)
-  (use-package helm-projectile :defer t)
-  (use-package helm-flycheck :defer t)
-  (use-package helm-bm :defer t)
+  (use-package helm-ls-git)
+  (use-package helm-projectile)
+  (use-package helm-flycheck)
+  (use-package helm-bm)
 
   ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
   (use-package ace-isearch
     :diminish ace-isearch-mode
     :bind (:map isearch-mode-map
                 ("C-:" . ace-isearch-jump-during-isearch))
-    :config
+    :init
     (global-ace-isearch-mode 1)
     (setq ace-isearch-function 'avy-goto-char)
     (setq ace-isearch-use-jump 'printing-char))

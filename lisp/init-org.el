@@ -33,7 +33,7 @@
 ;;; Code:
 
 (use-package org
-  :defer t
+  :ensure nil
   :bind (("C-c a" . org-agenda))
   :init
   (add-hook 'org-mode-hook '(lambda ()
@@ -45,10 +45,10 @@
   (setq org-src-fontify-natively t)
 
   (use-package org-bullets
-    :defer t
     :init (add-hook 'org-mode-hook 'org-bullets-mode))
 
   (use-package hydra
+    :demand
     :config
     (defhydra hydra-org-template (:color blue :hint nil)
       "

@@ -35,12 +35,10 @@
 (setq kill-ring-max 200)
 
 (use-package easy-kill
-  :defer t
   :bind (([remap kill-ring-save] . easy-kill)
          ([remap mark-sexp] . easy-mark)))
 
 (use-package browse-kill-ring
-  :defer t
   :bind ("C-c k" . browse-kill-ring)
   :init (add-hook 'after-init-hook 'browse-kill-ring-default-keybindings))
 

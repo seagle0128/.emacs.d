@@ -51,7 +51,6 @@
 ;; Modeline configuration
 (use-package spaceline-config
   :ensure spaceline
-  :defer t
   :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-info-mode spaceline-helm-mode
   :init (add-hook 'after-init-hook
                   '(lambda ()
@@ -61,7 +60,6 @@
 
 ;; Color theme
 (use-package monokai-theme
-  :defer t
   :init
   (defun load-monokai-theme()
     "Load Monokai theme and set new tooltip background color."
@@ -74,7 +72,6 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :defer t
   :commands chinese-fonts-setup-enable
   :defines cfs--current-profile-name
   :init (add-hook 'emacs-startup-hook 'chinese-fonts-setup-enable)
@@ -97,8 +94,9 @@
 (setq line-number-mode t)
 
 (use-package linum-off
-  :config
-  (global-linum-mode 1)
+  :after linum
+  :init
+  (add-hook 'window-setup-hook 'global-linum-mode)
 
   ;; have a little padding on the right
   (defun linum-format-func (line)
@@ -115,13 +113,12 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :defer t
   :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
   :config (setq smooth-scroll-margin 0))
 
 ;; Display Time
 (use-package time
-  :defer t
+  :ensure nil
   :init (add-hook 'window-setup-hook 'display-time-mode)
   :config
   (setq display-time-24hr-format t)

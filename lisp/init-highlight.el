@@ -34,12 +34,11 @@
 
 ;; Highlight the current line
 (use-package hl-line
-  :defer t
+  :ensure nil
   :init (add-hook 'after-init-hook 'global-hl-line-mode))
 
 ;; Highlight symbol
 (use-package highlight-symbol
-  :defer t
   :diminish highlight-symbol-mode
   :bind (([C-f3] . highlight-symbol-at-point)
          ([f3] . highlight-symbol-next)
@@ -52,34 +51,28 @@
 
 ;; Highlight indentions
 (use-package indent-guide
-  :defer t
   :diminish indent-guide-mode
   :init (add-hook 'after-init-hook 'indent-guide-global-mode))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
-  :defer t
   :diminish rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
-  :defer t
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; Color identifiers based on their names
 (use-package color-identifiers-mode
-  :defer t
   :diminish color-identifiers-mode)
 
 ;; Highlight TODO/FIXME/BUG
 (use-package fic-mode
-  :defer t
   :init (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
-  :defer t
   :init
   (add-hook 'after-init-hook 'global-diff-hl-mode)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
@@ -101,41 +94,43 @@
 
 ;; Highlight some operations
 (use-package volatile-highlights
-  :defer t
   :diminish volatile-highlights-mode
   :init (add-hook 'after-init-hook 'volatile-highlights-mode))
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
 (use-package whitespace
-  :defer t
+  :ensure nil
   :diminish whitespace-mode
-  :init (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
-          (add-hook hook #'whitespace-mode))
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+    (add-hook hook #'whitespace-mode))
   :config
   (setq whitespace-line-column fill-column) ;; limit line length
   ;; automatically clean up bad whitespace
   (setq whitespace-action '(auto-cleanup))
   ;; only show bad whitespace
-  (setq whitespace-style '(face trailing space-before-tab indentation empty space-after-tab))
-  ;; (setq whitespace-style '(face tabs empty trailing lines-tail))
+  (setq whitespace-style '(face
+                           trailing space-before-tab
+                           indentation empty space-after-tab))
 
-  ;; advice for whitespace-mode conflict with popup
-  (defvar my-prev-whitespace-mode nil)
-  (make-local-variable 'my-prev-whitespace-mode)
+  (eval-after-load 'popup
+    '(progn
+       ;; advice for whitespace-mode conflict with popup
+       (defvar my-prev-whitespace-mode nil)
+       (make-local-variable 'my-prev-whitespace-mode)
 
-  (defadvice popup-draw (before my-turn-off-whitespace activate compile)
-    "Turn off whitespace mode before showing autocomplete box."
-    (if whitespace-mode
-        (progn
-          (setq my-prev-whitespace-mode t)
-          (whitespace-mode -1))
-      (setq my-prev-whitespace-mode nil)))
+       (defadvice popup-draw (before my-turn-off-whitespace activate compile)
+         "Turn off whitespace mode before showing autocomplete box."
+         (if whitespace-mode
+             (progn
+               (setq my-prev-whitespace-mode t)
+               (whitespace-mode -1))
+           (setq my-prev-whitespace-mode nil)))
 
-  (defadvice popup-delete (after my-restore-whitespace activate compile)
-    "Restore previous whitespace mode when deleting autocomplete box."
-    (if my-prev-whitespace-mode
-        (whitespace-mode 1)))
-  )
+       (defadvice popup-delete (after my-restore-whitespace activate compile)
+         "Restore previous whitespace mode when deleting autocomplete box."
+         (if my-prev-whitespace-mode
+             (whitespace-mode 1))))))
 
 (provide 'init-highlight)
 

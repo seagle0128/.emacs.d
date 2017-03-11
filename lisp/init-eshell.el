@@ -33,20 +33,12 @@
 ;;; Code:
 
 (use-package eshell
-  :defer t
-  :defines (compilation-last-buffer eshell-prompt-function)
-  :commands (eshell-interactive-output-p
-             eshell-parse-command
-             eshell-flatten-list
-             eshell-view-file)
+  :ensure nil
   :config
-  (eval-after-load 'helm
-    '(add-hook 'eshell-mode-hook
-               '(lambda ()
-                  (bind-key [remap eshell-pcomplete]
-                            'helm-esh-pcomplete eshell-mode-map))))
+  (use-package eshell-git-prompt
+    :init (add-hook 'eshell-load-hook
+                    '(lambda () (eshell/use-theme "robbyrussell"))))
 
-  (use-package eshell-git-prompt :config (eshell/use-theme "robbyrussell"))
   (use-package eshell-z)
 
   (defun eshell/clear ()
@@ -54,6 +46,7 @@
     (interactive)
     (let ((inhibit-read-only t))
       (erase-buffer)))
+
   (defun eshell/emacs (&rest args)
     "Open a file (ARGS) in Emacs.  Some habits die hard."
     (if (null args)
@@ -65,6 +58,7 @@
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
   (defun eshell/ec (&rest args)
     "Compile a file (ARGS) in Emacs.  Use `compile' to do background make."
     (if (eshell-interactive-output-p)
@@ -96,6 +90,7 @@
           (switch-to-buffer buffer)
           (view-mode-enter (cons (selected-window) (cons nil undo-window))
                            'kill-buffer)))))
+
   (defun eshell/less (&rest args)
     "Invoke `view-file' on a file (ARGS).  \"less +42 foo\" will go to line 42 in the buffer for foo."
     (while args

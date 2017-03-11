@@ -32,18 +32,16 @@
 ;;
 ;;; Code:
 
-;; Do not use `use-package' here
-;; since we need after-init-hook in desktop.el
-(desktop-save-mode 1)
+;; Save and restore status
+(use-package desktop
+  :ensure nil
+  :init (desktop-save-mode 1))
 
 ;; Restore special buffers
-(use-package desktop+
-  :defer t
-  :after desktop)
+(use-package desktop+ :after desktop)
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
-  :defer t
   :init (add-hook 'after-init-hook 'persistent-scratch-setup-default))
 
 (provide 'init-restore)

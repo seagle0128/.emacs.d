@@ -33,15 +33,13 @@
 ;;; Code:
 
 ;; Extensions to `Bookmark'
-(use-package bookmark+
-  :defer t
-  :after bookmark)
+(use-package bookmark+ :after bookmark)
 
 ;; Visual bookmark
 (use-package bm
-  :defer t
-  :commands bm-repository-load bm-repository-save
-  :commands bm-buffer-save bm-buffer-restore bm-buffer-save-all
+  :commands (bm-repository-load
+             bm-repository-save bm-buffer-save
+             bm-buffer-restore bm-buffer-save-all)
   :bind (;; M$ Visual Studio key setup.
          ("<C-f2>" . bm-toggle)
          ("<f2>" . bm-next)

@@ -34,25 +34,27 @@
 
 ;; Golang
 (use-package go-mode
-  :defer t
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
 
-  (use-package golint :defer t)
+  (use-package golint)
 
   (use-package go-eldoc
-    :defer t
     :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
   (eval-after-load 'projectile
-    '(use-package go-projectile))
+    '(use-package go-projectile
+       :commands go-projectile-mode go-projectile-switch-project
+       :init
+       (add-hook 'projectile-after-switch-project-hook 'go-projectile-switch-project)
+       (add-hook 'go-mode-hook 'go-projectile-mode)))
 
   (eval-after-load 'auto-complete
-    '(use-package go-autocomplete))
+    '(use-package go-autocomplete :demand))
 
   (eval-after-load 'company
     '(use-package company-go
-       :config (push '(company-go :with company-yasnippet) company-backends)))
+       :init (push '(company-go :with company-yasnippet) company-backends)))
   )
 
 (provide 'init-go)

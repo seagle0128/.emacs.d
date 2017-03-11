@@ -37,7 +37,7 @@
 (require 'init-const)
 
 (use-package shell
-  :defer t
+  :ensure nil
   :config
   (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -73,20 +73,18 @@
 
 ;; Term
 (use-package term
-  :defer t
-  :init
-  (setq system-uses-terminfo nil)
+  :ensure nil
+  :init (setq system-uses-terminfo nil)
 
   ;; Disable yasnippet mode to enable TAB in term
   (eval-after-load 'yasnippet
     '(add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))))
 
 ;; Multi term
-(use-package multi-term :defer t)
+(use-package multi-term)
 
 ;; Shell Pop
 (use-package shell-pop
-  :defer t
   :bind ([f7] . shell-pop)
   :init
   (if sys/win32p
