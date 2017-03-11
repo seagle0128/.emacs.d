@@ -33,7 +33,9 @@
 ;;; Code:
 
 ;; Extensions to `Bookmark'
-(use-package bookmark+ :after bookmark)
+(use-package bookmark+
+  :after bookmark
+  :init (setq bmkp-last-as-first-bookmark-file nil))
 
 ;; Visual bookmark
 (use-package bm
