@@ -140,9 +140,9 @@
   (setq x-gtk-use-system-tooltips nil))
 
 ;; Toggle fullscreen
-(bind-key [(meta f11)] 'toggle-frame-fullscreen)
-(bind-key [(meta return)] 'toggle-frame-fullscreen)
-(bind-key [(meta shift return)] 'toggle-frame-fullscreen)
+(bind-keys ([(meta f11)] . toggle-frame-fullscreen)
+           ([(meta return)] . toggle-frame-fullscreen)
+           ([(meta shift return)] . toggle-frame-fullscreen))
 
 (provide 'init-ui)
 

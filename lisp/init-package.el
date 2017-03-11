@@ -69,7 +69,11 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(eval-when-compile (require 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
 (setq use-package-enable-imenu-support t)
@@ -77,10 +81,11 @@
 
 ;; Benchmark
 (use-package benchmark-init
+  :demand
   :if my-profile-enable
   :commands benchmark-init/deactivate
-  :init
-  (add-hook 'before-init-hook 'benchmark-init/activate)
+  :config
+  (benchmark-init/activate)
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; A mondern package interface
