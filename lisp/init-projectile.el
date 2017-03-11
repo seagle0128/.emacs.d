@@ -49,6 +49,7 @@
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
     (add-to-list 'projectile-project-root-files-bottom-up val))
 
+  ;; Use ag instead of find in a generic project
   (when (executable-find "ag")
     (let ((val (concat "ag -U -l --nocolor"
                        (mapconcat 'identity
@@ -59,8 +60,7 @@
 
   ;; Rails project
   (use-package projectile-rails
-    :init (add-hook 'projectile-mode-hook 'projectile-rails-on))
-  )
+    :init (add-hook 'projectile-mode-hook 'projectile-rails-on)))
 
 (provide 'init-projectile)
 
