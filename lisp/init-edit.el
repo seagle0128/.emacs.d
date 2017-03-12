@@ -144,6 +144,11 @@
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
   :init (add-hook 'after-init-hook 'global-anzu-mode))
 
+;; Visual navigation through mark rings
+(use-package back-button
+  :diminish back-button-mode
+  :init (add-hook 'after-init-hook 'back-button-mode))
+
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :bind ("M-;" . comment-dwim-2))
