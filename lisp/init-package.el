@@ -96,12 +96,12 @@
 
 ;; Automatically update packages
 (use-package auto-package-update
-  :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (setq auto-package-update-interval 1)
-                     (setq auto-package-update-delete-old-versions t)
-                     (auto-package-update-at-time "03:00")
-                     (auto-package-update-maybe))))
+  :defer 5
+  :config
+  (setq auto-package-update-interval 1)
+  (setq auto-package-update-delete-old-versions t)
+  (auto-package-update-at-time "03:00")
+  (auto-package-update-maybe))
 
 (provide 'init-package)
 
