@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-custom)
+
 ;; Emacs lisp mode
 ;; For <=24 it's emacs-lisp-mode
 (use-package elisp-mode
@@ -76,12 +78,12 @@
 (defun byte-compile-init-dir ()
   "Byte-compile all your dotfiles."
   (interactive)
-  (setq package-selected-packages nil)  ; Fix Emacs 25
-  (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
-  (byte-recompile-file user-init-file 0 0)
-  (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
-  (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0)
-  (setq use-package-always-ensure t))
+  (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages while compiling.
+  (ignore-errors
+    (byte-recompile-file user-init-file 0 0)
+    (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
+    (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0))
+  (setq use-package-always-ensure t))   ; Restore
 
 (add-hook 'kill-emacs-hook 'byte-compile-init-dir)
 
@@ -91,7 +93,6 @@
             (lambda ()
               "Only byte-compile files in init dirs."
               (when (string-match "\\.*\.emacs\.d\/\\(lisp\\|site-lisp\\)\/.*\\el$" buffer-file-name)
-                (setq package-selected-packages nil)  ; Fix Emacs 25
                 (setq use-package-always-ensure nil)  ; Don't install unnedeeded packages.
                 (byte-recompile-file buffer-file-name 0 0)
                 (setq use-package-always-ensure t)))

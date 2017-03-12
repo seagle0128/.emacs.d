@@ -82,7 +82,7 @@
 ;; Benchmark
 (use-package benchmark-init
   :demand
-  :if my-profile-enable
+  :if my-benchmark-enabled
   :commands benchmark-init/deactivate
   :config
   (benchmark-init/activate)

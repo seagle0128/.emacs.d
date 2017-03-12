@@ -64,8 +64,8 @@
           (const :tag "Emacs-China" emacs-china)
           (const :tag "Tsinghua" tsinghua)))
 
-(defcustom my-profile-enable nil
-  "Enable the init profiler or not."
+(defcustom my-benchmark-enabled nil
+  "Enable the init benchmark or not."
   :type 'boolean)
 
 (let ((file (expand-file-name "custom.el" user-emacs-directory)))

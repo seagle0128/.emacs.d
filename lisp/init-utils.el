@@ -143,7 +143,7 @@
 ;; Extensions to `Dired'
 (use-package dired+
   :after dired
-  :init (setq diredp-hide-details-initially-flag nil)
+  :init (setq diredp-hide-details-initially-flag nil) ;; before loading
   :config (diredp-toggle-find-file-reuse-dir 1))
 
 ;; Provide menu/dialogue for dired sort options
@@ -153,6 +153,9 @@
 (use-package info+
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
+
+;; Emacs StartUp Profiler
+(use-package esup)
 
 ;; Misc
 (use-package copyit)
