@@ -109,9 +109,9 @@
   :config (setq avy-background t))
 
 ;; Kill text between the point and the character CHAR
-(use-package zzz-to-char
-  :bind (("M-z" . zzz-to-char)
-         ("C-M-z" . zzz-up-to-char)))
+(use-package avy-zap
+  :bind (("M-z" . avy-zap-to-char-dwim)
+         ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Quickly follow links
 (use-package ace-link
