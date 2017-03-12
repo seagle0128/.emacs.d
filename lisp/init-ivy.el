@@ -42,6 +42,7 @@
          ("C-c v" . ivy-push-view)
          ("C-c V" . ivy-pop-view)
 
+         ("C-." . counsel-imenu)
          ("C-x C-r" . counsel-recentf)
          ("C-h u" . counsel-unicode-char)
          ("C-c i" . counsel-git)
@@ -114,7 +115,7 @@
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
               '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                       (counsel-gtags-mode 1))))))
+                            (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 
