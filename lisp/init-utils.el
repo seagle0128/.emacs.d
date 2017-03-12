@@ -41,11 +41,12 @@
   (set-buffer-file-coding-system 'unix 't) )
 
 ;; Revert buffer
-(bind-key "<f5>" '(lambda ()
-                    "Revert the current buffer."
-                    (interactive)
-                    (message "Revert this buffer.")
-                    (revert-buffer t t)))
+(defun revert-current-buffer ()
+  "Revert the current buffer."
+  (interactive)
+  (message "Revert this buffer.")
+  (revert-buffer t t))
+(bind-key "<f5>" 'revert-current-buffer)
 
 ;; Display available keybindings in popup
 (use-package which-key
