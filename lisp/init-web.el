@@ -71,10 +71,9 @@
     :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
     :config (js2r-add-keybindings-with-prefix "C-c C-m"))
 
-  (eval-after-load 'auto-complete
-    '(use-package ac-js2
-       :init (add-hook 'js2-mode-hook 'ac-js2-mode)))
-  )
+  (with-eval-after-load 'auto-complete
+    (use-package ac-js2
+      :init (add-hook 'js2-mode-hook 'ac-js2-mode))))
 
 ;; Run Mocha or Jasmine tests
 (use-package mocha)
@@ -99,8 +98,8 @@
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
   (add-hook 'typescript-mode-hook #'eldoc-mode)
 
-  (eval-after-load 'js2-mode
-    '(add-hook 'js2-mode-hook #'setup-tide-mode))
+  (with-eval-after-load 'js2-mode
+    (add-hook 'js2-mode-hook #'setup-tide-mode))
 
   (add-hook 'before-save-hook #'tide-format-before-save)
   :config
@@ -110,8 +109,8 @@
           :placeOpenBraceOnNewLineForFunctions
           nil))
 
-  (eval-after-load 'company
-    '(push '(company-tide :with company-yasnippet) company-backends)))
+  (with-eval-after-load 'company
+    (push '(company-tide :with company-yasnippet) company-backends)))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -122,31 +121,31 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
 
-  (eval-after-load 'auto-complete
-    '(add-to-list 'ac-modes 'web-mode)))
+  (with-eval-after-load 'auto-complete
+    (add-to-list 'ac-modes 'web-mode)))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :diminish skewer-mode skewer-css-mode skewer-html-mode
   :init
-  (eval-after-load 'js2-mode
-    '(add-hook 'js2-mode-hook 'skewer-mode))
-  (eval-after-load 'css-mode
-    '(add-hook 'css-mode-hook 'skewer-css-mode))
-  (eval-after-load 'sgml-mode
-    '(add-hook 'html-mode-hook 'skewer-html-mode)))
+  (with-eval-after-load 'js2-mode
+    (add-hook 'js2-mode-hook 'skewer-mode))
+  (with-eval-after-load 'css-mode
+    (add-hook 'css-mode-hook 'skewer-css-mode))
+  (with-eval-after-load 'sgml-mode
+    (add-hook 'html-mode-hook 'skewer-html-mode)))
 
 ;; Format HTML, CSS and JavaScript/JSON by js-beautify
 (use-package web-beautify
   :init
-  (eval-after-load 'js2-mode
-    '(bind-key "C-c C-b" 'web-beautify-js js2-mode-map))
-  (eval-after-load 'json-mode
-    '(bind-key "C-c C-b" 'web-beautify-js json-mode-map))
-  (eval-after-load 'sgml-mode
-    '(bind-key "C-c C-b" 'web-beautify-html html-mode-map))
-  (eval-after-load 'css-mode
-    '(bind-key "C-c C-b" 'web-beautify-css css-mode-map))
+  (with-eval-after-load 'js2-mode
+    (bind-key "C-c C-b" 'web-beautify-js js2-mode-map))
+  (with-eval-after-load 'json-mode
+    (bind-key "C-c C-b" 'web-beautify-js json-mode-map))
+  (with-eval-after-load 'sgml-mode
+    (bind-key "C-c C-b" 'web-beautify-html html-mode-map))
+  (with-eval-after-load 'css-mode
+    (bind-key "C-c C-b" 'web-beautify-css css-mode-map))
   :config
   ;; Set indent size to 2
   (setq web-beautify-args '("-s" "2" "-f" "-")))

@@ -42,18 +42,16 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-enable-flex-matching t)
 
-  (eval-after-load 'recentf
-    '(progn
-       (defun ido-recentf-find-file ()
-         "Find a recent file using ido."
-         (interactive)
-         (let ((file (ido-completing-read "Choose recent file: "
-                                          (-map 'abbreviate-file-name recentf-list)
-                                          nil t)))
-           (when file
-             (find-file file))))
-       (bind-key "C-x C-r" 'ido-recentf-find-file)
-       ))
+  (with-eval-after-load 'recentf
+    (defun ido-recentf-find-file ()
+      "Find a recent file using ido."
+      (interactive)
+      (let ((file (ido-completing-read "Choose recent file: "
+                                       (-map 'abbreviate-file-name recentf-list)
+                                       nil t)))
+        (when file
+          (find-file file))))
+    (bind-key "C-x C-r" 'ido-recentf-find-file))
 
   (use-package ido-ubiquitous :init (ido-ubiquitous-mode 1))
   (use-package ido-at-point :init (ido-at-point-mode 1))
@@ -88,8 +86,7 @@
     :init (add-hook 'c-mode-common-hook
                     (lambda ()
                       (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                        (ggtags-mode 1)))))
-  )
+                        (ggtags-mode 1))))))
 
 (provide 'init-ido)
 

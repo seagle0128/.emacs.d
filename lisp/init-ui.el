@@ -51,13 +51,17 @@
 ;; Modeline configuration
 (use-package spaceline-config
   :ensure spaceline
-  :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-info-mode spaceline-helm-mode
-  :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (setq powerline-default-separator 'utf-8)
-                     (spaceline-spacemacs-theme)
-                     (eval-after-load 'info+ '(spaceline-info-mode 1))
-                     (eval-after-load 'helm '(spaceline-helm-mode 1)))))
+  :commands (spaceline-spacemacs-theme
+             spaceline-emacs-theme
+             spaceline-info-mode
+             spaceline-helm-mode)
+  :init
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (setq powerline-default-separator 'utf-8)
+               (spaceline-spacemacs-theme)
+               (with-eval-after-load 'info+ (spaceline-info-mode 1))
+               (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
 
 ;; Color theme
 (use-package monokai-theme

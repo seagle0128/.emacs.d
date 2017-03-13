@@ -75,11 +75,11 @@
   (setq helm-semantic-fuzzy-match t)
   (setq helm-lisp-fuzzy-completion t)
 
-  (eval-after-load 'eshell
-    '(add-hook 'eshell-mode-hook
-               '(lambda ()
-                  (bind-key [remap eshell-pcomplete]
-                            'helm-esh-pcomplete eshell-mode-map))))
+  (with-eval-after-load 'eshell
+    (add-hook 'eshell-mode-hook
+              '(lambda ()
+                 (bind-key [remap eshell-pcomplete]
+                           'helm-esh-pcomplete eshell-mode-map))))
 
   ;; plugins
   (use-package helm-flx

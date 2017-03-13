@@ -84,13 +84,12 @@
     (setq diff-hl-side 'right)
     (diff-hl-margin-mode 1))
 
-  (eval-after-load 'magit
-    '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (with-eval-after-load 'magit
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-  (eval-after-load 'psvn
-    '(defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
-       (diff-hl-update)))
-  )
+  (with-eval-after-load 'psvn
+    (defadvice svn-status-update-modeline (after svn-update-diff-hl activate)
+      (diff-hl-update))))
 
 ;; Highlight some operations
 (use-package volatile-highlights
@@ -113,24 +112,23 @@
                            trailing space-before-tab
                            indentation empty space-after-tab))
 
-  (eval-after-load 'popup
-    '(progn
-       ;; advice for whitespace-mode conflict with popup
-       (defvar my-prev-whitespace-mode nil)
-       (make-local-variable 'my-prev-whitespace-mode)
+  (with-eval-after-load 'popup
+    ;; advice for whitespace-mode conflict with popup
+    (defvar my-prev-whitespace-mode nil)
+    (make-local-variable 'my-prev-whitespace-mode)
 
-       (defadvice popup-draw (before my-turn-off-whitespace activate compile)
-         "Turn off whitespace mode before showing autocomplete box."
-         (if whitespace-mode
-             (progn
-               (setq my-prev-whitespace-mode t)
-               (whitespace-mode -1))
-           (setq my-prev-whitespace-mode nil)))
+    (defadvice popup-draw (before my-turn-off-whitespace activate compile)
+      "Turn off whitespace mode before showing autocomplete box."
+      (if whitespace-mode
+          (progn
+            (setq my-prev-whitespace-mode t)
+            (whitespace-mode -1))
+        (setq my-prev-whitespace-mode nil)))
 
-       (defadvice popup-delete (after my-restore-whitespace activate compile)
-         "Restore previous whitespace mode when deleting autocomplete box."
-         (if my-prev-whitespace-mode
-             (whitespace-mode 1))))))
+    (defadvice popup-delete (after my-restore-whitespace activate compile)
+      "Restore previous whitespace mode when deleting autocomplete box."
+      (if my-prev-whitespace-mode
+          (whitespace-mode 1)))))
 
 (provide 'init-highlight)
 

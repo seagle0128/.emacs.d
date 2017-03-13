@@ -42,8 +42,8 @@
                      (setq c-basic-offset 4)
                      ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
                      (local-set-key "\C-cc" 'compile)
-                     (eval-after-load 'auto-complete
-                       '(add-to-list 'ac-sources 'ac-source-semantic)))))
+                     (with-eval-after-load 'auto-complete
+                       (add-to-list 'ac-sources 'ac-source-semantic)))))
 
 (provide 'init-c)
 

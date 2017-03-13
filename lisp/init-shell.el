@@ -67,9 +67,7 @@
       (funcall 'man command)
       )
      ;; Send other commands to the default handler.
-     (t (comint-simple-send proc command))
-     ))
-  )
+     (t (comint-simple-send proc command)))))
 
 ;; Term
 (use-package term
@@ -77,8 +75,8 @@
   :init (setq system-uses-terminfo nil)
 
   ;; Disable yasnippet mode to enable TAB in term
-  (eval-after-load 'yasnippet
-    '(add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))))
+  (with-eval-after-load 'yasnippet
+    (add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))))
 
 ;; Multi term
 (use-package multi-term)

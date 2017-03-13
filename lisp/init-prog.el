@@ -62,9 +62,10 @@
   :init
   (add-hook 'fish-mode-hook
             '(lambda ()
-               (add-hook 'before-save-hook 'fish_indent-before-save)))
-  (eval-after-load 'auto-complete
-    '(add-hook 'fish-mode-hook 'auto-complete-mode)))
+               (add-hook 'before-save-hook
+                         'fish_indent-before-save)))
+  (with-eval-after-load 'auto-complete
+    (add-hook 'fish-mode-hook 'auto-complete-mode)))
 
 (use-package robot-mode
   :ensure nil
@@ -85,14 +86,14 @@
   :init
   (setq eir-ielm-eval-in-current-buffer t)
 
-  (eval-after-load 'sh-script
-    '(bind-key "<C-M-return>" 'eir-eval-in-shell sh-mode-map))
-  (eval-after-load 'python-mode
-    '(bind-key "<C-M-return>" 'eir-eval-in-python python-mode-map))
-  (eval-after-load 'ruby-mode
-    '(bind-key "<C-M-return>" 'eir-eval-in-ruby ruby-mode-map))
-  (eval-after-load 'js2-mode
-    '(bind-key "<C-M-return>" 'eir-eval-in-javascript js2-mode-map)))
+  (with-eval-after-load 'sh-script
+    (bind-key "<C-M-return>" 'eir-eval-in-shell sh-mode-map))
+  (with-eval-after-load 'python-mode
+    (bind-key "<C-M-return>" 'eir-eval-in-python python-mode-map))
+  (with-eval-after-load 'ruby-mode
+    (bind-key "<C-M-return>" 'eir-eval-in-ruby ruby-mode-map))
+  (with-eval-after-load 'js2-mode
+    (bind-key "<C-M-return>" 'eir-eval-in-javascript js2-mode-map)))
 
 (provide 'init-prog)
 

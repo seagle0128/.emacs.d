@@ -44,11 +44,11 @@
     :init
     (add-hook 'ruby-mode-hook 'robe-mode)
 
-    (eval-after-load 'auto-complete
-      '(add-hook 'robe-mode-hook 'ac-robe-setup))
+    (with-eval-after-load 'auto-complete
+      (add-hook 'robe-mode-hook 'ac-robe-setup))
 
-    (eval-after-load 'company
-      '(push '(company-robe :with company-yasnippet) company-backends)))
+    (with-eval-after-load 'company
+      (push '(company-robe :with company-yasnippet) company-backends)))
 
   (use-package ruby-refactor
     :diminish ruby-refactor-mode
@@ -61,13 +61,11 @@
     (add-hook 'after-init-hook 'inf-ruby-switch-setup)
     (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
 
-    (eval-after-load 'auto-complete
-      '(progn
-         (add-to-list 'ac-modes 'inf-ruby-minor-mode)
-         (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
-
-         (use-package ac-inf-ruby
-           :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)))))
+    (with-eval-after-load 'auto-complete
+      (add-to-list 'ac-modes 'inf-ruby-minor-mode)
+      (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
+      (use-package ac-inf-ruby
+        :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))))
 
   ;; Rubocop
   (use-package rubocop
@@ -79,7 +77,8 @@
     :diminish rspec-mode
     :commands rspec-install-snippets
     :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
-    :config (eval-after-load 'yasnippet '(rspec-install-snippets)))
+    :config (with-eval-after-load 'yasnippet
+              (rspec-install-snippets)))
 
   ;; Coverage for SimpleCov
   (use-package coverage)
@@ -87,9 +86,8 @@
   ;; Yari
   (use-package yari
     :bind (:map ruby-mode-map ([f1] . yari))
-    :config
-    (eval-after-load 'helm
-      '(bind-key [f1] 'yari-helm ruby-mode-map)))
+    :config (with-eval-after-load 'helm
+              (bind-key [f1] 'yari-helm ruby-mode-map)))
 
   ;; Yard mode
   (use-package yard-mode

@@ -79,8 +79,8 @@
   (setq neo-vc-integration '(face char))
 
   ;; Integrate with projectile
-  (eval-after-load 'projectile
-    '(setq projectile-switch-project-action 'neotree-projectile-action)))
+  (with-eval-after-load 'projectile
+    (setq projectile-switch-project-action 'neotree-projectile-action)))
 
 ;; Dash
 ;; only avaliable on macOS
@@ -100,24 +100,24 @@
   (setq url-automatic-caching t)
 
   ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
-  (eval-after-load 'popwin
-    '(push "*Youdao Dictionary*" popwin:special-display-config))
+  (with-eval-after-load 'popwin
+    (push "*Youdao Dictionary*" popwin:special-display-config))
 
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t)
 
   ;; Use pos-tip instead of popup to display results
   (if (display-graphic-p)
-      (eval-after-load 'pos-tip
-        '(defun youdao-dictionary-search-at-point+ ()
-           "Search word at point and display results with pos-tip."
-           (interactive)
-           (let ((word (youdao-dictionary--region-or-word))
-                 (x-gtk-use-system-tooltips t))
-             (if word
-                 (pos-tip-show (youdao-dictionary--format-result word)
-                               nil nil nil 0)
-               (message "Nothing to look up"))))))
+      (with-eval-after-load 'pos-tip
+        (defun youdao-dictionary-search-at-point+ ()
+          "Search word at point and display results with pos-tip."
+          (interactive)
+          (let ((word (youdao-dictionary--region-or-word))
+                (x-gtk-use-system-tooltips t))
+            (if word
+                (pos-tip-show (youdao-dictionary--format-result word)
+                              nil nil nil 0)
+              (message "Nothing to look up"))))))
   )
 
 ;; Search

@@ -96,12 +96,11 @@
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer)
 
-    (eval-after-load 'counsel-projectile
-      '(progn
-         (ivy-set-display-transformer 'counsel-projectile
-                                      'ivy-rich-switch-buffer-transformer)
-         (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
-                                      'ivy-rich-switch-buffer-transformer))))
+    (with-eval-after-load 'counsel-projectile
+      (ivy-set-display-transformer 'counsel-projectile
+                                   'ivy-rich-switch-buffer-transformer)
+      (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
+                                   'ivy-rich-switch-buffer-transformer)))
 
   (use-package counsel-gtags
     :diminish counsel-gtags-mode

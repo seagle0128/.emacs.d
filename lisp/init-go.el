@@ -42,19 +42,19 @@
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
-  (eval-after-load 'projectile
-    '(use-package go-projectile
-       :commands go-projectile-mode go-projectile-switch-project
-       :init
-       (add-hook 'projectile-after-switch-project-hook 'go-projectile-switch-project)
-       (add-hook 'go-mode-hook 'go-projectile-mode)))
+  (with-eval-after-load 'projectile
+    (use-package go-projectile
+      :commands go-projectile-mode go-projectile-switch-project
+      :init
+      (add-hook 'projectile-after-switch-project-hook 'go-projectile-switch-project)
+      (add-hook 'go-mode-hook 'go-projectile-mode)))
 
-  (eval-after-load 'auto-complete
-    '(use-package go-autocomplete :demand))
+  (with-eval-after-load 'auto-complete
+    (use-package go-autocomplete :demand))
 
-  (eval-after-load 'company
-    '(use-package company-go
-       :init (push '(company-go :with company-yasnippet) company-backends)))
+  (with-eval-after-load 'company
+    (use-package company-go
+      :init (push '(company-go :with company-yasnippet) company-backends)))
   )
 
 (provide 'init-go)
