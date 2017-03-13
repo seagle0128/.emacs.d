@@ -54,6 +54,7 @@
   :commands spaceline-spacemacs-theme spaceline-emacs-theme spaceline-info-mode spaceline-helm-mode
   :init (add-hook 'after-init-hook
                   '(lambda ()
+                     (setq powerline-default-separator 'utf-8)
                      (spaceline-spacemacs-theme)
                      (eval-after-load 'info+ '(spaceline-info-mode 1))
                      (eval-after-load 'helm '(spaceline-helm-mode 1)))))
