@@ -59,21 +59,6 @@
               tab-width        4
               indent-tabs-mode nil)
 
-;; Encoding
-(add-hook 'after-init-hook
-          '(lambda ()
-             (set-language-environment 'Chinese-GB18030)
-             (set-clipboard-coding-system 'chinese-gb18030)
-             (set-keyboard-coding-system 'utf-8)
-             (set-terminal-coding-system 'utf-8)
-             (set-buffer-file-coding-system 'utf-8)
-             (set-default-coding-systems 'utf-8)
-             (set-selection-coding-system 'utf-8)
-             (modify-coding-system-alist 'process "*" 'utf-8)
-             (setq default-process-coding-system '(utf-8 . utf-8))
-             (set-file-name-coding-system 'utf-8)
-             (prefer-coding-system 'utf-8)))
-
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil
@@ -121,7 +106,7 @@
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish ace-pinyin-mode
-  :init (add-hook 'after-init-hook 'ace-pinyin-global-mode 1))
+  :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
