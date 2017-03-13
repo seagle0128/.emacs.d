@@ -101,9 +101,9 @@
 (use-package linum-off
   :after linum
   :init
-  (add-hook 'window-setup-hook 'global-linum-mode)
+  (add-hook 'after-init-hook 'global-linum-mode)
 
-  ;; have a little padding on the right
+  ;; Have a little padding on the right
   (defun linum-format-func (line)
     (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
       (propertize (format (format "%%%dd " w) line) 'face 'linum)))
@@ -124,7 +124,7 @@
 ;; Display Time
 (use-package time
   :ensure nil
-  :init (add-hook 'window-setup-hook 'display-time-mode)
+  :init (add-hook 'after-init-hook 'display-time-mode)
   :config
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t))

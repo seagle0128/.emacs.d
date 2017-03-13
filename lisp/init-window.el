@@ -35,12 +35,12 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :init (add-hook 'window-setup-hook 'windmove-default-keybindings))
+  :init (add-hook 'after-init-hook 'windmove-default-keybindings))
 
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
-  :init (add-hook 'window-setup-hook 'winner-mode))
+  :init (add-hook 'after-init-hook 'winner-mode))
 
 ;; Quickly switch windows
 (use-package ace-window
