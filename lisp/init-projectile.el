@@ -60,7 +60,8 @@
 
   ;; Rails project
   (use-package projectile-rails
-    :init (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+    :diminish projectile-rails-mode
+    :init (projectile-rails-global-mode 1)))
 
 (provide 'init-projectile)
 
