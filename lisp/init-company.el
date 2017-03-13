@@ -57,15 +57,13 @@
     :if (display-graphic-p)
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
-    :init (add-hook 'company-mode-hook 'company-quickhelp-mode))
+    :init (company-quickhelp-mode 1))
 
   ;; Flx based fuzzy matching for company
-  (use-package company-flx
-    :init (add-hook 'company-mode-hook 'company-flx-mode))
+  (use-package company-flx :init (company-flx-mode 1))
 
   ;; Sort candidates using completion history
-  (use-package company-statistics
-    :init (add-hook 'company-mode-hook 'company-statistics-mode))
+  (use-package company-statistics :init (company-statistics-mode 1))
 
   ;; Company mode backend for C/C++ header files
   (use-package company-c-headers
@@ -96,8 +94,7 @@
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
 
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  )
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (provide 'init-company)
 
