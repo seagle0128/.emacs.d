@@ -51,15 +51,13 @@
   :init (add-hook 'after-init-hook 'server-mode))
 
 ;; History
-(if (fboundp 'save-place-mode)
-    ;; Emacs 25 has a proper mode for `save-place'
-    (use-package saveplace
-      :ensure nil
-      :init (add-hook 'after-init-hook 'save-place-mode))
-  ;; <= Emacs 24
-  (use-package saveplace
-    :ensure nil
-    :init (setq save-place t)))
+(use-package saveplace
+  :ensure nil
+  :init
+  ;; Emacs 25 has a proper mode for `save-place'
+  (if (fboundp 'save-place-mode)
+      (add-hook 'after-init-hook 'save-place-mode)
+    (setq save-place t)))
 
 (use-package recentf
   :ensure nil
@@ -68,7 +66,8 @@
 (use-package savehist
   :ensure nil
   :init (add-hook 'after-init-hook 'savehist-mode)
-  :config (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
+  :config (setq savehist-additional-variables
+                '(kill-ring search-ring regexp-search-ring)))
 
 (provide 'init-basic)
 
