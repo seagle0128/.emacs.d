@@ -32,13 +32,17 @@
 ;;
 ;;; Code:
 
+;; Emacs command shell
 (use-package eshell
   :ensure nil
   :config
+  ;; Eshell prompt for git users
   (use-package eshell-git-prompt
-    :init (add-hook 'eshell-load-hook
-                    '(lambda () (eshell/use-theme "robbyrussell"))))
+    :init
+    (add-hook 'eshell-load-hook
+              '(lambda () (eshell/use-theme "robbyrussell"))))
 
+  ;; cd to frequent directory in eshell
   (use-package eshell-z)
 
   (defun eshell/clear ()
@@ -101,8 +105,7 @@
             (forward-line line))
         (eshell-view-file (pop args)))))
 
-  (defalias 'eshell/more 'eshell/less)
-  )
+  (defalias 'eshell/more 'eshell/less))
 
 (provide 'init-eshell)
 
