@@ -34,11 +34,16 @@
 
 (require 'init-const)
 
-;; Dos2Unix
+;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
-  "Not exactly but it's easier to remember."
+  "Convert the current buffer to UNIX file format."
   (interactive)
-  (set-buffer-file-coding-system 'unix 't) )
+  (set-buffer-file-coding-system 'undecided-unix nil))
+
+(defun unix2dos ()
+  "Convert the current buffer to DOS file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos nil))
 
 ;; Revert buffer
 (defun revert-current-buffer ()
