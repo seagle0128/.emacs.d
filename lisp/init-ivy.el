@@ -86,8 +86,7 @@
   (use-package smex)
   (use-package ivy-hydra)
 
-  (use-package counsel-projectile
-    :init (add-hook 'projectile-mode-hook 'counsel-projectile-on))
+  (use-package counsel-projectile :init (counsel-projectile-on))
 
   (use-package ivy-rich
     :init
@@ -115,7 +114,7 @@
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
               '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                            (counsel-gtags-mode 1))))))
+                       (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 
