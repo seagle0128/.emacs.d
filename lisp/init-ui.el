@@ -43,7 +43,8 @@
 (setq icon-title-format frame-title-format)
 
 ;; Menu/Tool/Scroll bars
-(when (and (fboundp 'menu-bar-mode) (not sys/mac-x-p)) (menu-bar-mode -1))
+(unless sys/mac-x-p
+  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1)))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
@@ -81,7 +82,7 @@
 (use-package chinese-fonts-setup
   :commands chinese-fonts-setup-enable
   :defines cfs--current-profile-name
-  :init (add-hook 'emacs-startup-hook 'chinese-fonts-setup-enable)
+  :init (add-hook 'after-init-hook 'chinese-fonts-setup-enable)
   :config
   (setq cfs-verbose nil)
   (setq cfs-save-current-profile nil)
@@ -102,8 +103,7 @@
 
 (use-package linum-off
   :after linum
-  :init
-  (add-hook 'after-init-hook 'global-linum-mode)
+  :init (add-hook 'after-init-hook 'global-linum-mode)
 
   ;; Have a little padding on the right
   (defun linum-format-func (line)
