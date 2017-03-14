@@ -68,6 +68,10 @@
   "Enable the init benchmark or not."
   :type 'boolean)
 
+(defcustom my-profiler-enabled nil
+  "Enable the init profiler or not."
+  :type 'boolean)
+
 (let ((file (expand-file-name "custom.el" user-emacs-directory)))
   (if (file-exists-p file)
       (load-file file)))

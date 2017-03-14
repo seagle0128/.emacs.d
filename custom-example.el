@@ -10,5 +10,6 @@
 ;; (setq my-completion-method 'helm)         ; helm, ivy or ido
 ;; (setq my-package-archives 'emacs-china)   ; melpa, emacs-china or tsinghua
 ;; (setq my-benchmark-enabled t)             ; t or nil
+;; (setq my-profiler-enabled t)              ; t or nil
 
 ;;; custom-example.el ends here

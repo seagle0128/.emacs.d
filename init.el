@@ -69,6 +69,14 @@
 ;; Customization
 (require 'init-custom)
 
+(when my-profiler-enabled
+  (profiler-start 'cpu+mem)
+  (add-hook 'after-init-hook
+            (lambda ()
+              (run-with-idle-timer 2 nil (lambda ()
+                                           (profiler-report)
+                                           (profiler-stop))))))
+
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
 ;; (package-initialize)
