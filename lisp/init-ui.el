@@ -58,7 +58,9 @@
   :init
   (add-hook 'after-init-hook
             '(lambda ()
-               (setq powerline-default-separator 'utf-8)
+               (if sys/win32p
+                   (setq powerline-default-separator 'arrow)
+                 (setq powerline-default-separator 'utf-8))
                (spaceline-spacemacs-theme)
                (with-eval-after-load 'info+ (spaceline-info-mode 1))
                (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
