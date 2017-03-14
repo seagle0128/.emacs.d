@@ -36,7 +36,7 @@
 
 ;; Git
 (use-package magit
-  :init (add-hook 'after-init-hook 'global-magit-file-mode)
+  :init (add-hook 'emacs-startup-hook 'global-magit-file-mode)
   :config
   (setenv "GIT_ASKPASS" "git-gui--askpass")
 

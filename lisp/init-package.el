@@ -81,12 +81,9 @@
 
 ;; Benchmark
 (use-package benchmark-init
-  :demand
   :if my-benchmark-enabled
-  :commands benchmark-init/deactivate
-  :config
-  (benchmark-init/activate)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  :init (benchmark-init/activate)
+  :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; A mondern package interface
 (use-package paradox
@@ -96,12 +93,11 @@
 
 ;; Automatically update packages
 (use-package auto-package-update
-  :defer 5
-  :config
+  :init
   (setq auto-package-update-interval 1)
   (setq auto-package-update-delete-old-versions t)
-  (auto-package-update-at-time "03:00")
-  (auto-package-update-maybe))
+  (add-hook 'emacs-startup-hook 'auto-package-update-maybe)
+  :config (auto-package-update-at-time "03:00"))
 
 (provide 'init-package)
 

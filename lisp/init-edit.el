@@ -90,7 +90,7 @@
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0))
-  :init (add-hook 'after-init-hook 'avy-setup-default)
+  :init (avy-setup-default)
   :config (setq avy-background t))
 
 ;; Kill text between the point and the character CHAR

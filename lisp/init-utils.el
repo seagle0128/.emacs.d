@@ -87,8 +87,7 @@
 (when sys/macp
   (use-package dash-at-point
     :bind (("\C-cd" . dash-at-point)
-           ("\C-ce" . dash-at-point-with-docset)))
-  )
+           ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
@@ -117,8 +116,7 @@
             (if word
                 (pos-tip-show (youdao-dictionary--format-result word)
                               nil nil nil 0)
-              (message "Nothing to look up"))))))
-  )
+              (message "Nothing to look up")))))))
 
 ;; Search
 (use-package fzf)
