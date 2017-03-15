@@ -34,7 +34,7 @@
 
 (use-package helm
   :diminish helm-mode
-  :commands helm-autoresize-mode helm-info-emacs
+  :commands (helm-autoresize-mode helm-info-emacs)
   :bind (("C-x b"   . helm-mini)
          ("C-x C-b" . helm-buffers-list)
          ("M-x"     . helm-M-x)
@@ -57,7 +57,9 @@
   (add-hook 'desktop-after-read-hook
             '(lambda () (diminish 'helm-mode)))
   :config
-  (require 'helm-config)
+  (use-package helm-config
+    :ensure nil
+    :demand)
 
   ;; (setq helm-ff-lynx-style-map nil
   ;;       helm-input-idle-delay 0.1
@@ -81,7 +83,7 @@
                  (bind-key [remap eshell-pcomplete]
                            'helm-esh-pcomplete eshell-mode-map))))
 
-  ;; plugins
+  ;; Plugins
   (use-package helm-flx
     :init (helm-flx-mode 1))
 
@@ -118,10 +120,11 @@
                         (helm-gtags-mode 1))))
     :config (setq helm-gtags-auto-update t))
 
+  (use-package helm-bm)
+  (use-package helm-flycheck)
   (use-package helm-ls-git)
   (use-package helm-projectile)
-  (use-package helm-flycheck)
-  (use-package helm-bm)
+  (use-package flyspell-correct-helm :demand)
 
   ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
   (use-package ace-isearch
@@ -131,8 +134,7 @@
     :init
     (global-ace-isearch-mode 1)
     (setq ace-isearch-function 'avy-goto-char)
-    (setq ace-isearch-use-jump 'printing-char))
-  )
+    (setq ace-isearch-use-jump 'printing-char)))
 
 (provide 'init-helm)
 

@@ -33,8 +33,7 @@
 ;;; Code:
 
 (use-package counsel
-  :diminish counsel-mode ivy-mode
-  :defines magit-completing-read-function
+  :diminish ivy-mode counsel-mode
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)
 
@@ -85,8 +84,8 @@
 
   (use-package smex)
   (use-package ivy-hydra)
-
   (use-package counsel-projectile :init (counsel-projectile-on))
+  (use-package flyspell-correct-ivy :demand)
 
   (use-package ivy-rich
     :init

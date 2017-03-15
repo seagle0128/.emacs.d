@@ -44,7 +44,7 @@
 
   (with-eval-after-load 'projectile
     (use-package go-projectile
-      :commands go-projectile-mode go-projectile-switch-project
+      :commands (go-projectile-mode go-projectile-switch-project)
       :init
       (add-hook 'projectile-after-switch-project-hook 'go-projectile-switch-project)
       (add-hook 'go-mode-hook 'go-projectile-mode)))

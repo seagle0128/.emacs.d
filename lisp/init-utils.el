@@ -91,7 +91,8 @@
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
-  :commands youdao-dictionary--region-or-word youdao-dictionary--format-result
+  :commands (youdao-dictionary--region-or-word
+             youdao-dictionary--format-result)
   :bind (("C-c Y" . youdao-dictionary-search-at-point)
          ("C-c y" . youdao-dictionary-search-at-point+))
   :config
