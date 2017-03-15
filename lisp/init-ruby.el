@@ -58,7 +58,6 @@
   (use-package inf-ruby
     :init
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
     (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
 
     (with-eval-after-load 'auto-complete
