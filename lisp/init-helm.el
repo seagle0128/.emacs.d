@@ -124,7 +124,9 @@
   (use-package helm-flycheck)
   (use-package helm-ls-git)
   (use-package helm-projectile)
-  (use-package flyspell-correct-helm :demand)
+
+  (with-eval-after-load 'flyspell-correct
+    (use-package flyspell-correct-helm :demand))
 
   ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
   (use-package ace-isearch

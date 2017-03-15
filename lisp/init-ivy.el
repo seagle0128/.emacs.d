@@ -85,7 +85,9 @@
   (use-package smex)
   (use-package ivy-hydra)
   (use-package counsel-projectile :init (counsel-projectile-on))
-  (use-package flyspell-correct-ivy :demand)
+
+  (with-eval-after-load 'flyspell-correct
+    (use-package flyspell-correct-ivy :demand))
 
   (use-package ivy-rich
     :init

@@ -91,7 +91,8 @@
                                        'java-mode)
                    (ggtags-mode 1)))))
 
-  (use-package flyspell-correct-popup :demand))
+  (with-eval-after-load 'flyspell-correct
+    (use-package flyspell-correct-popup :demand)))
 
 (provide 'init-ido)
 
