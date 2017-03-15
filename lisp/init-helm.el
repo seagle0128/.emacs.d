@@ -125,8 +125,9 @@
   (use-package helm-ls-git)
   (use-package helm-projectile)
 
-  (with-eval-after-load 'flyspell-correct
-    (use-package flyspell-correct-helm :demand))
+  (use-package flyspell-correct-helm
+    :bind (:map flyspell-mode-map
+                ("C-;" . flyspell-correct-previous-word-generic)))
 
   ;; Combines isearch, ace-jump-mode, avy and helm-swoop.
   (use-package ace-isearch
@@ -134,9 +135,9 @@
     :bind (:map isearch-mode-map
                 ("C-:" . ace-isearch-jump-during-isearch))
     :init
-    (global-ace-isearch-mode 1)
     (setq ace-isearch-function 'avy-goto-char)
-    (setq ace-isearch-use-jump 'printing-char)))
+    (setq ace-isearch-use-jump 'printing-char)
+    (global-ace-isearch-mode 1)))
 
 (provide 'init-helm)
 

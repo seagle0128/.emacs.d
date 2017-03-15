@@ -86,8 +86,9 @@
   (use-package ivy-hydra)
   (use-package counsel-projectile :init (counsel-projectile-on))
 
-  (with-eval-after-load 'flyspell-correct
-    (use-package flyspell-correct-ivy :demand))
+  (use-package flyspell-correct-ivy
+    :bind (:map flyspell-mode-map
+                ("C-;" . flyspell-correct-previous-word-generic)))
 
   (use-package ivy-rich
     :init

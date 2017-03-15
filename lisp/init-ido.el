@@ -91,8 +91,9 @@
                                        'java-mode)
                    (ggtags-mode 1)))))
 
-  (with-eval-after-load 'flyspell-correct
-    (use-package flyspell-correct-popup :demand)))
+  (use-package flyspell-correct-popup
+    :bind (:map flyspell-mode-map
+                ("C-;" . flyspell-correct-previous-word-generic))))
 
 (provide 'init-ido)
 

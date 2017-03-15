@@ -156,12 +156,10 @@
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
-;; Correcting words with flyspell
-(use-package flyspell-correct
-  :diminish flyspell-mode
-  :bind (:map flyspell-mode-map
-              ("C-;" . flyspell-correct-previous-word-generic))
-  :init (add-hook 'text-mode-hook 'flyspell-mode))
+;; On-the-fly spell checker
+(use-package flyspell
+  :ensure nil
+  :diminish flyspell-mode)
 
 ;; Hungry deletion
 (use-package hungry-delete
