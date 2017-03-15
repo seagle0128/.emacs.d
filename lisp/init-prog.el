@@ -67,6 +67,12 @@
   (with-eval-after-load 'auto-complete
     (add-hook 'fish-mode-hook 'auto-complete-mode)))
 
+(use-package swift-mode
+  :config
+  (with-eval-after-load 'flycheck
+    (use-package flycheck-swift
+      :init (flycheck-swift-setup))))
+
 (use-package robot-mode
   :ensure nil
   :load-path "site-lisp"

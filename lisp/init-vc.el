@@ -55,8 +55,7 @@
                  (or (not magit-auto-revert-tracked-only)
                      (magit-file-tracked-p buffer-file-name)))
         (unless (or auto-revert-mode global-auto-revert-mode)
-          (auto-revert-mode)))))
-  )
+          (auto-revert-mode))))))
 
 ;; Gitflow
 (use-package magit-gitflow
