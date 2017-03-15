@@ -92,6 +92,7 @@
                    (ggtags-mode 1)))))
 
   (use-package flyspell-correct-popup
+    :after flyspell
     :bind (:map flyspell-mode-map
                 ("C-;" . flyspell-correct-previous-word-generic))))
 

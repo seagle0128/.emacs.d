@@ -126,6 +126,7 @@
   (use-package helm-projectile)
 
   (use-package flyspell-correct-helm
+    :after flyspell
     :bind (:map flyspell-mode-map
                 ("C-;" . flyspell-correct-previous-word-generic)))
 
