@@ -159,7 +159,8 @@
 ;; On-the-fly spell checker
 (use-package flyspell
   :ensure nil
-  :diminish flyspell-mode)
+  :diminish flyspell-mode
+  :init (setq flyspell-issue-message-flag nil))
 
 ;; Hungry deletion
 (use-package hungry-delete
