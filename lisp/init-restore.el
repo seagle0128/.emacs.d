@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-(require 'init-custom)
-
 ;; Save and restore status
 (use-package desktop
   :ensure nil
