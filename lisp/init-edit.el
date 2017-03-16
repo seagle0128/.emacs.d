@@ -66,7 +66,7 @@
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil
-  :init (add-hook 'after-init-hook 'delete-selection-mode))
+  :init (delete-selection-mode 1))
 
 ;; Rectangle
 ;; for rectangles, CUA is nice
