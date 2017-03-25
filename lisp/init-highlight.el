@@ -101,7 +101,7 @@
   :ensure nil
   :diminish whitespace-mode
   :init
-  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (dolist (hook '(prog-mode-hook outline-mode-hook conf-mode-hook))
     (add-hook hook #'whitespace-mode))
   :config
   (setq whitespace-line-column fill-column) ;; limit line length
