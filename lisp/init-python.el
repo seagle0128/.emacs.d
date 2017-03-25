@@ -42,18 +42,6 @@
                (bind-key "C-c C-z" 'kill-buffer-and-window inferior-python-mode-map)
                (process-query-on-exit-flag (get-process "Python"))))
 
-  ;; iPython
-  (if (executable-find "ipython")
-      (setq
-       python-shell-interpreter "ipython"
-       python-shell-interpreter-args "-i"
-       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-       python-shell-completion-setup-code
-       "from IPython.core.completerlib import module_completion"
-       python-shell-completion-string-code
-       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
-
   ;; Pdb setup, note the python version
   (setq pdb-path 'pdb
         gud-pdb-command-name (symbol-name pdb-path))
