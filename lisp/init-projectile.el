@@ -38,6 +38,28 @@
          ("s-t" . projectile-find-file))
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
+  ;; FIX tramp issues: https://github.com/bbatsov/projectile/pull/1129
+  (defun projectile-project-root ()
+    "Retrieves the root directory of a project if available.
+The current directory is assumed to be the project's root otherwise."
+    (let* ((dir default-directory)
+           (is-local (not (file-remote-p dir)))
+           (is-connected (file-remote-p dir nil t)))
+      (or (when (or is-local is-connected)
+            (cl-some
+             (lambda (func)
+               (let* ((cache-key (format "%s-%s" func dir))
+                      (cache-value (gethash cache-key projectile-project-root-cache)))
+                 (if (and cache-value (file-exists-p cache-value))
+                     cache-value
+                   (let ((value (funcall func (file-truename dir))))
+                     (puthash cache-key value projectile-project-root-cache)
+                     value))))
+             projectile-project-root-files-functions))
+          (if projectile-require-project-root
+              (error "You're not in a project")
+            default-directory))))
+
   (setq projectile-mode-line
         '(:eval
           (if (file-remote-p default-directory)
