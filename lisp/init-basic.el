@@ -42,8 +42,9 @@
 ;; Environment
 (use-package exec-path-from-shell
   :if sys/macp
-  :init (add-hook 'after-init-hook 'exec-path-from-shell-initialize)
-  :config (setq exec-path-from-shell-check-startup-files nil))
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
 
 ;; Start server
 (use-package server
