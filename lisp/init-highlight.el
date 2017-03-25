@@ -67,9 +67,10 @@
 (use-package color-identifiers-mode
   :diminish color-identifiers-mode)
 
-;; Highlight TODO/FIXME/BUG
+;; Highlight TODO/FIXME/BUG...
 (use-package fic-mode
-  :init (add-hook 'prog-mode-hook 'fic-mode))
+  :init (add-hook 'prog-mode-hook 'fic-mode)
+  :config (push "FIX" fic-highlighted-words))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
