@@ -42,7 +42,7 @@
   (use-package flycheck-pos-tip
     :init (flycheck-pos-tip-mode 1)
     :config
-    ;; Fix: don't hide pos tip to advoid suspress other pos tips.
+    ;; Don't hide pos tip to advoid suspress other pos tips.
     (defun flycheck-pos-tip-hide-messages ()
       "Hide messages currently being shown if any."
       (flycheck-hide-error-buffer)))

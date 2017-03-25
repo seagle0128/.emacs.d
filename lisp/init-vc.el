@@ -40,7 +40,7 @@
   :config
   (setenv "GIT_ASKPASS" "git-gui--askpass")
 
-  ;; Workaround for fixing
+  ;; FIXME: Workaround for
   ;; https://github.com/dgutov/diff-hl/issues/85
   ;; https://github.com/magit/magit/issues/3014
   ;; (magit-auto-revert-mode -1)

@@ -34,7 +34,7 @@
 
 (require 'init-custom)
 
-;; DO NOT copy package-selected-packages to init/custom file forcibly.
+;; FIXME: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (with-eval-after-load 'package
   (defun package--save-selected-packages (&optional value)

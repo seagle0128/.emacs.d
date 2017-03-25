@@ -69,8 +69,7 @@
 
 ;; Highlight TODO/FIXME/BUG...
 (use-package fic-mode
-  :init (add-hook 'prog-mode-hook 'fic-mode)
-  :config (push "FIX" fic-highlighted-words))
+  :init (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl

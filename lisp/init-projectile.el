@@ -38,7 +38,7 @@
          ("s-t" . projectile-find-file))
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
-  ;; FIX tramp issues: https://github.com/bbatsov/projectile/pull/1129
+  ;; FIXME: tramp issues https://github.com/bbatsov/projectile/pull/1129
   (defun projectile-project-root ()
     "Retrieves the root directory of a project if available.
 The current directory is assumed to be the project's root otherwise."
