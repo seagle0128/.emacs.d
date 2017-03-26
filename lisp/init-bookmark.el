@@ -35,7 +35,10 @@
 ;; Extensions to `Bookmark'
 (use-package bookmark+
   :after bookmark
-  :init (setq bmkp-last-as-first-bookmark-file nil))
+  :init
+  (setq bmkp-last-as-first-bookmark-file nil)
+  (setq bmkp-auto-light-when-set 'all-in-buffer)
+  (setq bmkp-auto-light-when-jump 'all-in-buffer))
 
 ;; Visual bookmark
 (use-package bm
