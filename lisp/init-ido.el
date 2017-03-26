@@ -78,7 +78,7 @@
   (use-package ido-occur
     :bind (("C-c o" . ido-occur)
            ("C-c O" . ido-occur-at-point)
-           :isearch-mode-map
+           :map isearch-mode-map
            ("C-o" . ido-occur-from-isearch)))
 
   (use-package ggtags

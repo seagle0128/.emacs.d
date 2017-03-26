@@ -71,8 +71,7 @@
     :init (dolist (hook '(emacs-lisp-mode-hook
                           lisp-interaction-mode-hook
                           ielm-mode-hook))
-            (add-hook hook 'turn-on-elisp-slime-nav-mode)))
-  )
+            (add-hook hook 'turn-on-elisp-slime-nav-mode))))
 
 ;; Byte compiler
 (defun byte-compile-init-dir ()
@@ -128,8 +127,7 @@
          nil nil nil 0))))
 
   (bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
-  (bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map)
-  )
+  (bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map))
 
 (provide 'init-emacs-lisp)
 
