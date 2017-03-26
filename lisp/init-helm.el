@@ -53,13 +53,10 @@
   (add-hook 'after-init-hook
             '(lambda ()
                (helm-mode 1)
-               (helm-adaptive-mode 1)))
-  (add-hook 'desktop-after-read-hook
-            '(lambda () (diminish 'helm-mode)))
+               (helm-adaptive-mode 1)
+               (diminish 'helm-mode)))
   :config
-  (use-package helm-config
-    :ensure nil
-    :demand)
+  (use-package helm-config :ensure nil :demand)
 
   ;; (setq helm-ff-lynx-style-map nil
   ;;       helm-input-idle-delay 0.1
