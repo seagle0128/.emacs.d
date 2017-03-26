@@ -55,44 +55,7 @@
 
          ("<left-margin> <mouse-5>" . bm-next-mouse)
          ("<left-margin> <mouse-4>" . bm-previous-mouse)
-         ("<left-margin> <mouse-1>" . bm-toggle-mouse))
-  :init
-  ;; Restore on load (even before you require bm)
-  (setq bm-restore-repository-on-load t)
-
-  ;; Allow cross-buffer 'next'
-  (setq bm-cycle-all-buffers t)
-
-  ;; Where to store persistant files
-  (setq bm-repository-file "~/.emacs.d/bm-repository")
-
-  ;; Save bookmarks
-  (setq-default bm-buffer-persistence t)
-
-  (add-hook 'after-init-hook
-            '(lambda ()
-               ;; Loading the repository from file when on start up.
-               (bm-repository-load)
-
-               ;; Saving bookmarks
-               (add-hook 'kill-buffer-hook #'bm-buffer-save)
-               (add-hook 'after-save-hook #'bm-buffer-save)
-               (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
-
-               ;; Restoring bookmarks
-               (add-hook 'desktop-after-read-hook #'bm-buffer-restore-all)
-               (add-hook 'find-file-hooks #'bm-buffer-restore)
-               (add-hook 'after-revert-hook #'bm-buffer-restore)))
-
-  ;; Restoring bookmarks when on file find.
-  (add-hook 'find-file-hooks #'bm-buffer-restore)
-
-  ;; Saving the repository to file when on exit.
-  ;; kill-buffer-hook is not called when Emacs is killed, so we
-  ;; must save all bookmarks first.
-  (add-hook 'kill-emacs-hook #'(lambda nil
-                                 (bm-buffer-save-all)
-                                 (bm-repository-save))))
+         ("<left-margin> <mouse-1>" . bm-toggle-mouse)))
 
 (provide 'init-bookmark)
 
