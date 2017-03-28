@@ -131,7 +131,9 @@
          :map isearch-mode-map
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  :init (add-hook 'after-init-hook 'global-anzu-mode))
+  :init (add-hook 'after-init-hook 'global-anzu-mode)
+  :config (setq anzu-replace-to-string-separator
+                (if (char-displayable-p ?→) " → " " -> ")))
 
 ;; Visual navigation through mark rings
 (use-package back-button
