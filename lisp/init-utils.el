@@ -145,6 +145,9 @@
 ;; Side-by-side diff view
 (use-package diffview)
 
+;; Text mode directory tree. Similar with beyond compare
+(use-package ztree)
+
 ;; Extensions to `Dired'
 (use-package dired+
   :after dired
