@@ -153,6 +153,11 @@
   :init (add-hook 'after-init-hook 'drag-stuff-global-mode)
   :config (drag-stuff-define-keys))
 
+;; A comprehensive visual interface to diff & patch
+(use-package ediff
+  :ensure nil
+  :config (setq ediff-split-window-function 'split-window-horizontally))
+
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
