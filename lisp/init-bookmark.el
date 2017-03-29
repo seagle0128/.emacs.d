@@ -42,7 +42,10 @@
   :init
   (setq bmkp-last-as-first-bookmark-file nil)
   (setq bmkp-auto-light-when-set 'all-in-buffer)
-  (setq bmkp-auto-light-when-jump 'all-in-buffer))
+  (setq bmkp-auto-light-when-jump 'all-in-buffer)
+  (unless (and (fboundp 'fringe-columns) (boundp 'fringe-bitmaps))
+    (setq bmkp-light-style-autonamed 'line)
+    (setq bmkp-light-style-non-autonamed 'line)))
 
 (provide 'init-bookmark)
 
