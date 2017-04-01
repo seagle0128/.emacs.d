@@ -151,7 +151,9 @@
 ;; Extensions to `Dired'
 (use-package dired+
   :after dired
-  :init (setq diredp-hide-details-initially-flag nil) ;; before loading
+  :init
+  (setq diredp-hide-details-initially-flag nil)
+  (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
   :config (diredp-toggle-find-file-reuse-dir 1))
 
 ;; Provide menu/dialogue for dired sort options
