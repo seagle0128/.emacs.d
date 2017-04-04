@@ -87,6 +87,8 @@
 
 ;; A mondern package interface
 (use-package paradox
+  :defer-install t
+  :commands (paradox-list-packages paradox-upgrade-packages)
   :init
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))

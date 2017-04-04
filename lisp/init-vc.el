@@ -72,15 +72,23 @@
   ;; Use magit-show-commit for showing status/diff commands
   (setq git-messenger:use-magit-popup t))
 
-(use-package git-timemachine)
+;; Walk through git revisions of a file
+(use-package git-timemachine
+  :defer-install t
+  :commands git-timemachine)
+
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
 
 ;; Subversion
-(use-package psvn)
+(use-package psvn
+  :defer-install t
+  :commands (svn-status svn-examine svn-checkout))
 
 ;; Open github/gitlab/bitbucket page
-(use-package browse-at-remote)
+(use-package browse-at-remote
+  :defer-install t
+  :commands (bar-browse bar-to-clipboard))
 
 (provide 'init-vc)
 

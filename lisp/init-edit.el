@@ -114,6 +114,7 @@
 
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
+  :defer-install t
   :bind (("C-c C-s" . pinyin-search)))
 
 ;; Minor mode to aggressively keep your code always indented

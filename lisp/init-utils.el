@@ -86,11 +86,13 @@
 ;; only avaliable on macOS
 (when sys/macp
   (use-package dash-at-point
+    :defer-install t 
     :bind (("\C-cd" . dash-at-point)
            ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
+  :defer-install t
   :commands (youdao-dictionary--region-or-word
              youdao-dictionary--format-result)
   :bind (("C-c Y" . youdao-dictionary-search-at-point)
@@ -120,8 +122,13 @@
               (message "Nothing to look up")))))))
 
 ;; Search
-(use-package fzf)
-(use-package ack)
+(use-package fzf
+  :defer-install t
+  :commands (fzf fzf-directory))
+
+(use-package ack
+  :defer-install t
+  :commands ack)
 
 (use-package ag
   :config
@@ -135,6 +142,7 @@
 
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
+  :defer-install t
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go))
   :config
@@ -143,10 +151,14 @@
               '(lambda () (setq dumb-jump-selector 'ivy)))))
 
 ;; Side-by-side diff view
-(use-package diffview)
+(use-package diffview
+  :defer-install t
+  :commands (diffview-region diffview-current diffview-message))
 
 ;; Text mode directory tree. Similar with beyond compare
-(use-package ztree)
+(use-package ztree
+  :defer-install t
+  :commands (ztree-diff ztree-dir))
 
 ;; Extensions to `Dired'
 (use-package dired+
@@ -165,16 +177,33 @@
   :init (setq Info-fontify-angle-bracketed-flag nil))
 
 ;; Emacs StartUp Profiler
-(use-package esup)
+(use-package esup
+  :defer-install t
+  :commands esup)
 
 ;; Misc
 (use-package copyit)
 (use-package htmlize)
-(use-package list-environment)
-(use-package memory-usage)
-(use-package open-junk-file)
-(use-package restart-emacs)
-(use-package try)
+
+(use-package list-environment
+  :defer-install t
+  :commands list-environment)
+
+(use-package memory-usage
+  :defer-install t
+  :commands memory-usage)
+
+(use-package open-junk-file
+  :defer-install t
+  :commands open-junk-file)
+
+(use-package restart-emacs
+  :defer-install t
+  :commands restart-emacs)
+
+(use-package try
+  :defer-install t
+  :commands (try try-and-refresh))
 
 (provide 'init-utils)
 
