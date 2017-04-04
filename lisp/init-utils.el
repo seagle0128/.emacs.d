@@ -86,7 +86,7 @@
 ;; only avaliable on macOS
 (when sys/macp
   (use-package dash-at-point
-    :defer-install t 
+    :defer-install t
     :bind (("\C-cd" . dash-at-point)
            ("\C-ce" . dash-at-point-with-docset))))
 
@@ -175,6 +175,12 @@
 (use-package info+
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
+
+;; Discover key bindings and their meaning for the current Emacs major mode
+(use-package discover-my-major
+  :defer-install t
+  :bind (("C-h M-m" . discover-my-major)
+         ("C-h M-M" . discover-my-mode)))
 
 ;; Emacs StartUp Profiler
 (use-package esup
