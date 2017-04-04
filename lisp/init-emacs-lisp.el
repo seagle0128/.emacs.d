@@ -84,7 +84,7 @@
     (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0))
   (setq use-package-always-ensure t))   ; Restore
 
-(add-hook 'kill-emacs-hook 'byte-compile-init-dir)
+;; (add-hook 'kill-emacs-hook 'byte-compile-init-dir)
 
 (defun recompile-el-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -98,7 +98,7 @@
             nil
             t))
 
-(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
+;; (add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
 
 ;; Only on X
 (when (display-graphic-p)
