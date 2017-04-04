@@ -57,10 +57,15 @@
         (unless (or auto-revert-mode global-auto-revert-mode)
           (auto-revert-mode))))))
 
-;; Gitflow
+;; Gitflow externsion for Magit
 (use-package magit-gitflow
   :diminish magit-gitflow-mode
   :init (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+
+;; Git-Svn extension for Magit
+(use-package magit-svn
+  :diminish magit-svn-mode
+  :init (add-hook 'magit-mode-hook 'magit-svn-mode))
 
 ;;; Pop up last commit information of current line
 (use-package git-messenger
