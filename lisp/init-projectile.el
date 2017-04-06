@@ -71,15 +71,6 @@ The current directory is assumed to be the project's root otherwise."
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
     (add-to-list 'projectile-project-root-files-bottom-up val))
 
-  ;; Use ag instead of find in a generic project
-  (when (executable-find "ag")
-    (let ((val (concat "ag -U -l --nocolor"
-                       (mapconcat 'identity
-                                  (cons "" projectile-globally-ignored-directories)
-                                  " --ignore-dir=")
-                       " -g . | tr '\\n' '\\0'")))
-      (setq projectile-generic-command val)))
-
   ;; Rails project
   (use-package projectile-rails
     :diminish projectile-rails-mode
