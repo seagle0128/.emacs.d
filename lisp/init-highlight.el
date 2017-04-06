@@ -56,7 +56,9 @@
 
 ;; Graphically indicate the fill column
 (use-package fill-column-indicator
-  :init (add-hook 'prog-mode-hook 'fci-mode))
+  :init
+  (setq fci-rule-color "#3C3D37")
+  (add-hook 'prog-mode-hook 'fci-mode))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
