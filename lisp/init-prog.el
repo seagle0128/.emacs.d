@@ -54,9 +54,11 @@
   :diminish editorconfig-mode
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
-(use-package batch-mode
-  :init (add-to-list 'auto-mode-alist
-                     '("\\.\\(cmd\\|bat\\|btm\\)$" . batch-mode)))
+;; Supports bat-mode only on >=25
+(unless (featurep 'bat-mode)
+  (use-package batch-mode
+    :init (add-to-list 'auto-mode-alist
+                       '("\\.\\(cmd\\|bat\\)$" . batch-mode))))
 
 (use-package fish-mode
   :init
