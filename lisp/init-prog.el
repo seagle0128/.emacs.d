@@ -54,9 +54,9 @@
   :diminish editorconfig-mode
   :init (add-hook 'prog-mode-hook 'editorconfig-mode))
 
-(use-package dos
+(use-package batch-mode
   :init (add-to-list 'auto-mode-alist
-                     '("\\.\\(cmd\\|bat\\|btm\\)$" . dos-mode)))
+                     '("\\.\\(cmd\\|bat\\|btm\\)$" . batch-mode)))
 
 (use-package fish-mode
   :init
