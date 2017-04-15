@@ -44,7 +44,6 @@
                 (push '("<=" . ?≤) prettify-symbols-alist)))))
 
 (use-package quickrun)
-(use-package markdown-mode)
 (use-package powershell)
 (use-package csharp-mode)
 (use-package dockerfile-mode :mode "Dockerfile\\'")
@@ -57,8 +56,11 @@
 ;; Supports batch-mode only on >=25
 (when (< emacs-major-version 25)
   (use-package batch-mode
-    :init (add-to-list 'auto-mode-alist
-                       '("\\.\\(cmd\\|bat\\)$" . batch-mode))))
+    :mode (("\\.\\(cmd\\|bat\\)$" . batch-mode))))
+
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package fish-mode
   :init
