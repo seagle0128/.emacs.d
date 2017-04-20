@@ -140,7 +140,36 @@
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
-(use-package ripgrep)
+(use-package ripgrep
+  :config
+  ;; FIXME: Highlighting doesn't work with ripgrep 0.5.1
+  ;; https://github.com/nlamirault/ripgrep.el/issues/20
+  (setq ripgrep-executable "rg --color=always")
+
+  ;; Taken from grep-filter, just changed the color regex.
+  (defun ripgrep-filter ()
+    "Handle match highlighting escape sequences inserted by the rg process.
+This function is called from `compilation-filter-hook'."
+    (when ripgrep-highlight-search
+      (save-excursion
+        (forward-line 0)
+        (let ((end (point)) beg)
+          (goto-char compilation-filter-start)
+          (forward-line 0)
+          (setq beg (point))
+          ;; Only operate on whole lines so we don't get caught with part of an
+          ;; escape sequence in one chunk and the rest in another.
+          (when (< (point) end)
+            (setq end (copy-marker end))
+            ;; Highlight rg matches and delete marking sequences.
+            (while (re-search-forward "\033\\[m\033\\[31m\033\\[1m\\(.*?\\)\033\\[[0-9]*m" end 1)
+              (replace-match (propertize (match-string 1)
+                                         'face nil 'font-lock-face 'ripgrep-match-face)
+                             t t))
+            ;; Delete all remaining escape sequences
+            (goto-char beg)
+            (while (re-search-forward "\033\\[[0-9;]*[mK]" end 1)
+              (replace-match "" t t))))))))
 
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
