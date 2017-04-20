@@ -87,7 +87,7 @@
             swiper-map)
 
   (use-package smex)
-  (use-package ivy-hydra)
+  (use-package ivy-hydra :demand)
   (use-package counsel-projectile :init (counsel-projectile-on))
 
   (use-package flyspell-correct-ivy
