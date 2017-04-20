@@ -47,7 +47,11 @@
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c s" . counsel-ag)
+         ("C-c r" . counsel-rg)
          ("C-c l" . counsel-locate)
+
+         :map projectile-mode-map
+         ([remap projectile-ripgrep] . counsel-projectile-rg)
 
          :map swiper-map
          ("M-%" . swiper-query-replace))
@@ -116,7 +120,7 @@
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
               '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                            (counsel-gtags-mode 1))))))
+                       (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 

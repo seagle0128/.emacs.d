@@ -140,6 +140,8 @@
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
+(use-package ripgrep)
+
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
   :defer-install t

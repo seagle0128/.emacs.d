@@ -49,6 +49,9 @@
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
     (add-to-list 'projectile-project-root-files-bottom-up val))
 
+  (use-package projectile-ripgrep
+    :bind (("C-c p s r" . projectile-ripgrep)))
+
   ;; Rails project
   (use-package projectile-rails
     :diminish projectile-rails-mode
