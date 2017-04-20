@@ -54,12 +54,6 @@
   :diminish indent-guide-mode
   :init (add-hook 'after-init-hook 'indent-guide-global-mode))
 
-;; Graphically indicate the fill column
-(use-package fill-column-indicator
-  :init
-  (setq fci-rule-color "#3C3D37")
-  (add-hook 'prog-mode-hook 'fci-mode))
-
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish rainbow-mode
