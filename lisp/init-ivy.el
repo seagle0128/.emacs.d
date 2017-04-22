@@ -72,6 +72,7 @@
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
+  (setq counsel-yank-pop-separator "\n-------\n")
 
   (setq projectile-completion-system 'ivy)
   (setq magit-completing-read-function 'ivy-completing-read)
