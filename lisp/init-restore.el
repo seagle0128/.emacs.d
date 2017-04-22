@@ -35,7 +35,11 @@
 ;; Save and restore status
 (use-package desktop
   :ensure nil
-  :init (desktop-save-mode 1))
+  :init
+  ;; Don't save/restore frame in tty
+  (if (not (display-graphic-p))
+      (setq desktop-restore-frames nil))
+  (desktop-save-mode 1))
 
 ;; Restore special buffers
 (use-package desktop+ :after desktop)
