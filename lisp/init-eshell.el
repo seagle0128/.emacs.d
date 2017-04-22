@@ -40,10 +40,12 @@
   (use-package eshell-git-prompt
     :init
     (add-hook 'eshell-load-hook
-              '(lambda () (eshell/use-theme "robbyrussell"))))
+              '(lambda () (eshell-git-prompt-use-theme "robbyrussell"))))
 
   ;; cd to frequent directory in eshell
-  (use-package eshell-z)
+  (use-package eshell-z
+    :init (add-hook 'eshell-mode-hook
+                    '(lambda () (require 'eshell-z))))
 
   (defun eshell/clear ()
     "Clear the eshell buffer."
