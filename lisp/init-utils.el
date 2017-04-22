@@ -199,6 +199,13 @@ This function is called from `compilation-filter-hook'."
   (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
   :config (diredp-toggle-find-file-reuse-dir 1))
 
+;; Highlights dired buffer like k
+(use-package dired-k
+  :bind (:map dired-mode-map ("K" . dired-k))
+  :init
+  (add-hook 'dired-initial-position-hook 'dired-k)
+  (add-hook 'dired-after-readin-hook #'dired-k-no-revert))
+
 ;; Provide menu/dialogue for dired sort options
 (use-package dired-sort-menu+ :after dired)
 
