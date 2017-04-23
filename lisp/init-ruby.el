@@ -91,8 +91,7 @@
   ;; Yard mode
   (use-package yard-mode
     :diminish yard-mode
-    :init (add-hook 'ruby-mode-hook 'yard-mode))
-  )
+    :init (add-hook 'ruby-mode-hook 'yard-mode)))
 
 ;; YAML mode
 (use-package yaml-mode

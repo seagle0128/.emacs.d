@@ -56,15 +56,14 @@
                            ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
  ((eq my-package-archives 'tsinghua)
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                           ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
- )
+                           ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
 (package-initialize)
 
-(unless package-archive-contents
-  (dolist (file (directory-files "~/.emacs.d/lisp/" t "\\.elc$"))
-    (delete-file file))
-  (package-refresh-contents))
+;; (unless package-archive-contents
+;;   (dolist (file (directory-files (expand-file-name "lisp" user-emacs-directory) t "\\.elc$"))
+;;     (delete-file file))
+;;   (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
