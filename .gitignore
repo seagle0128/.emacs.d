@@ -40,8 +40,9 @@ anaconda-mode/
 /GTAGS
 /scratch
 /.persistent-scratch
+persistent-scratch/
 vimish-fold/
+.vscode/
 /bm-repository
 /.emacs-buffers
 /.last-package-update-day
-.vscode/
