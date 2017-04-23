@@ -195,6 +195,9 @@ This function is called from `compilation-filter-hook'."
 (use-package dired+
   :after dired
   :init
+  ;; Suppress the warning: `ls does not support --dired'.
+  (when sys/macp (setq dired-use-ls-dired nil))
+
   (setq diredp-hide-details-initially-flag nil)
   (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
   :config (diredp-toggle-find-file-reuse-dir 1))

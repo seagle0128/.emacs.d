@@ -86,6 +86,7 @@
     (setq diff-hl-side 'right)
     (diff-hl-margin-mode 1))
 
+  ;; Integration with magit and psvn
   (with-eval-after-load 'magit
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
