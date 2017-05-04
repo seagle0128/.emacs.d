@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(require 'init-const)
+
 ;; Manage and navigate projects
 (use-package projectile
   :bind (("C-S-t" . projectile-find-file)
@@ -44,6 +46,14 @@
               ""
             (format " [%s]"
                     (projectile-project-name)))))
+
+  (setq projectile-sort-order 'recentf)
+  (setq projectile-use-git-grep t)
+
+  ;; For Windows: GNU find or Cygwin find must be in path to enable fast indexing
+  (when (and sys/win32p (executable-find "sh") (executable-find "find"))
+    (setq  projectile-indexing-method 'alien
+           projectile-generic-command "find . -type f"))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
