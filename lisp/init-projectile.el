@@ -51,10 +51,19 @@
   (setq projectile-use-git-grep t)
 
   ;; For Windows: GNU find or Cygwin find must be in path to enable fast indexing
-  (when (and sys/win32p (executable-find "sh") (executable-find "find"))
+  (when sys/win32p
     (setq projectile-indexing-method 'alien
-          projectile-generic-command "find . -type f"
-          projectile-enable-caching nil))
+          projectile-enable-caching nil)
+
+    (cond
+     ((executable-find "ag")
+      (setq projectile-generic-command
+            (concat "ag -0 -l --nocolor"
+                    (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir="))))
+     ((executable-find "rg")
+      (setq projectile-generic-command "rg --files"))
+     ((and (executable-find "sh") (executable-find "find"))
+      (setq projectile-generic-command "find . -type f"))))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
