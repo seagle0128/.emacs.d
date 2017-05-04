@@ -101,15 +101,21 @@
 (setq column-number-mode t)
 (setq line-number-mode t)
 
-(use-package linum-off
-  :after linum
-  :init (add-hook 'after-init-hook 'global-linum-mode)
+;; Use nlinum instead of linum due to performance issue
+(use-package nlinum
+  :init
+  (unless (display-graphic-p) (setq nlinum-format "%d "))
+  (add-hook 'after-init-hook 'global-nlinum-mode))
 
-  ;; Have a little padding on the right
-  (defun linum-format-func (line)
-    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-      (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-  (setq linum-format 'linum-format-func))
+;; (use-package linum-off
+;;   :after linum
+;;   :init (add-hook 'after-init-hook 'global-linum-mode)
+
+;;   ;; Have a little padding on the right
+;;   (defun linum-format-func (line)
+;;     (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+;;       (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+;;   (setq linum-format 'linum-format-func))
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
