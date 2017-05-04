@@ -47,7 +47,7 @@
             (format " [%s]"
                     (projectile-project-name)))))
 
-  (setq projectile-sort-order 'recentf)
+  (setq projectile-sort-order 'access-time)
   (setq projectile-use-git-grep t)
 
   ;; For Windows: GNU find or Cygwin find must be in path to enable fast indexing
