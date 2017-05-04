@@ -105,7 +105,9 @@
 (use-package nlinum
   :init
   (unless (display-graphic-p) (setq nlinum-format "%d "))
-  (add-hook 'after-init-hook 'global-nlinum-mode))
+  (add-hook 'prog-mode-hook
+            '(lambda ()
+               (nlinum-mode (- (* 5000 80) (buffer-size))))))
 
 ;; (use-package linum-off
 ;;   :after linum
