@@ -53,17 +53,16 @@
   ;; For Windows: GNU find or Cygwin find must be in path to enable fast indexing
   (when sys/win32p
     (setq projectile-indexing-method 'alien
-          projectile-enable-caching nil)
+          projectile-enable-caching nil))
 
-    (cond
-     ((executable-find "rg")
-      (setq projectile-generic-command "rg -0 --files --color=never"))
-     ((executable-find "ag")
-      (setq projectile-generic-command
-            (concat "ag -0 -l --nocolor"
-                    (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir="))))
-     ((and (executable-find "sh") (executable-find "find"))
-      (setq projectile-generic-command "find . -type f"))))
+  ;; Use faster search tools
+  (cond
+   ((executable-find "rg")
+    (setq projectile-generic-command "rg -0 --files --color=never --hidden --sort-files"))
+   ((executable-find "ag")
+    (setq projectile-generic-command
+          (concat "ag -0 -l --nocolor --hidden"
+                  (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")))))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
