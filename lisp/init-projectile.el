@@ -56,12 +56,12 @@
           projectile-enable-caching nil)
 
     (cond
+     ((executable-find "rg")
+      (setq projectile-generic-command "rg -0 --files --color=never"))
      ((executable-find "ag")
       (setq projectile-generic-command
             (concat "ag -0 -l --nocolor"
                     (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir="))))
-     ((executable-find "rg")
-      (setq projectile-generic-command "rg --files"))
      ((and (executable-find "sh") (executable-find "find"))
       (setq projectile-generic-command "find . -type f"))))
 
