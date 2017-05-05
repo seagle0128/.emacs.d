@@ -173,13 +173,11 @@ This function is called from `compilation-filter-hook'."
 
 ;; Jump to definition via ag/rg/grep
 (use-package dumb-jump
-  :defer-install t
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go))
+  :init (add-hook 'after-init-hook 'dumb-jump-mode)
   :config
-  (when (featurep 'ivy)
-    (add-hook 'ivy-mode-hook
-              '(lambda () (setq dumb-jump-selector 'ivy)))))
+  (setq dumb-jump-prefer-searcher 'rg)
+  (with-eval-after-load 'helm (setq dumb-jump-selector 'helm))
+  (with-eval-after-load 'ivy (setq dumb-jump-selector 'ivy)))
 
 ;; Side-by-side diff view
 (use-package diffview
