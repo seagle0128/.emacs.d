@@ -41,19 +41,12 @@
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
   (setq projectile-mode-line
-        '(:eval
-          (if (file-remote-p default-directory)
-              ""
-            (format " [%s]"
-                    (projectile-project-name)))))
+        '(:eval (format "[%s]" (projectile-project-name))))
 
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching nil)
   (setq projectile-sort-order 'access-time)
   (setq projectile-use-git-grep t)
-
-  ;; For Windows: GNU find or Cygwin find must be in path to enable fast indexing
-  (when sys/win32p
-    (setq projectile-indexing-method 'alien
-          projectile-enable-caching nil))
 
   ;; Use faster search tools
   (cond
@@ -64,12 +57,21 @@
           (concat "ag -0 -l --nocolor --hidden"
                   (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")))))
 
+  ;; Faster searching on Windows
+  (when sys/win32p
+    (setq projectile-git-command projectile-generic-command)
+    (setq projectile-svn-command projectile-generic-command)
+    (setq projectile-bzr-command projectile-generic-command)
+    (setq projectile-hg-command projectile-generic-command))
+
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
     (add-to-list 'projectile-project-root-files-bottom-up val))
 
+  ;; Support ripgrep
   (use-package projectile-ripgrep
-    :bind (("C-c p s r" . projectile-ripgrep)))
+    :bind (:map projectile-mode-map
+                ("C-c p s r" . projectile-ripgrep)))
 
   ;; Rails project
   (use-package projectile-rails
