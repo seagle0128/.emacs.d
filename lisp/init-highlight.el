@@ -45,17 +45,17 @@
          ([S-f3] . highlight-symbol-prev)
          ([M-f3] . highlight-symbol-query-replace))
   :init
-  (setq highlight-symbol-idle-delay 0)
+  (setq highlight-symbol-idle-delay 0.5)
 
   (add-hook 'find-file-hook 'highlight-symbol-mode)
   (add-hook 'find-file-hook 'highlight-symbol-nav-mode))
 
 ;; Highlight indentions
-(use-package highlight-indentation
-  :diminish (highlight-indentation-mode
-             highlight-indentation-current-column-mode)
-  :init (add-hook 'prog-mode-hook
-                  'highlight-indentation-current-column-mode))
+(use-package indent-guide
+  :diminish indent-guide-mode
+  :init
+  (setq indent-guide-delay 0.5)
+  (add-hook 'after-init-hook 'indent-guide-global-mode))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
