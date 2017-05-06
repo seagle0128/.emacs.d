@@ -42,6 +42,12 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-enable-flex-matching t)
 
+  (with-eval-after-load 'projectile
+    (setq projectile-completion-system 'ido))
+
+  (with-eval-after-load 'magit
+    (setq magit-completing-read-function 'magit-ido-completing-read))
+
   (with-eval-after-load 'recentf
     (defun ido-recentf-find-file ()
       "Find a recent file using ido."

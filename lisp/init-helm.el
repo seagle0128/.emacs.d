@@ -80,6 +80,12 @@
                  (bind-key [remap eshell-pcomplete]
                            'helm-esh-pcomplete eshell-mode-map))))
 
+  (with-eval-after-load 'projectile
+    (setq projectile-completion-system 'helm))
+
+  (with-eval-after-load 'magit
+    (setq magit-completing-read-function 'helm--completing-read-default))
+
   ;; Plugins
   (use-package helm-flx
     :init (helm-flx-mode 1))

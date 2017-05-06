@@ -74,8 +74,11 @@
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
 
-  (setq projectile-completion-system 'ivy)
-  (setq magit-completing-read-function 'ivy-completing-read)
+  (with-eval-after-load 'projectile
+    (setq projectile-completion-system 'ivy))
+
+  (with-eval-after-load 'magit
+    (setq magit-completing-read-function 'ivy-completing-read))
 
   ;; Search at point
   ;; "M-j": word-at-point
