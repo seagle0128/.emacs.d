@@ -39,18 +39,27 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("TAB" . company-complete-selection)
-         ("<tab>" . company-complete-selection))
+         ("TAB" . company-complete-common-or-cycle)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("S-TAB" . company-select-previous)
+         ("<backtab>" . company-select-previous))
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)
 
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 2
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil)
+
   ;; Display current candidate inline
-  (setq company-frontends
-        '(company-pseudo-tooltip-unless-just-one-frontend
-          company-preview-frontend
-          company-echo-metadata-frontend))
+  ;; (setq company-frontends
+  ;;       '(company-pseudo-tooltip-unless-just-one-frontend
+  ;;         company-preview-frontend
+  ;;         company-echo-metadata-frontend))
+  ;; (set-face-attribute 'company-preview nil :foreground "darkgray" :underline t)
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
@@ -58,9 +67,6 @@
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
     :init (company-quickhelp-mode 1))
-
-  ;; Flx based fuzzy matching for company
-  (use-package company-flx :init (company-flx-mode 1))
 
   ;; Sort candidates using completion history
   (use-package company-statistics :init (company-statistics-mode 1))
