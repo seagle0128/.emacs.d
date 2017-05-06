@@ -113,8 +113,7 @@
 
   ;; FIX: show-paren-mode erroneously highlights the left margin
   ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
-  (custom-set-faces
-   '(linum ((t (:inherit default :weight light))))))
+  (custom-set-faces '(linum ((t (:inherit default))))))
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
