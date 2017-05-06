@@ -141,6 +141,7 @@
   (setq wgrep-change-readonly-file t))
 
 (use-package ripgrep
+  :init (defalias 'rg 'ripgrep-regexp)
   :config
   ;; FIXME: Highlighting doesn't work with ripgrep 0.5.1
   ;; https://github.com/nlamirault/ripgrep.el/issues/20
