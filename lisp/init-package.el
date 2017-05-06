@@ -64,13 +64,13 @@
   (package-install 'use-package))
 
 (eval-when-compile
+  (defvar use-package-enable-imenu-support t)
   (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
 
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
-(setq use-package-enable-imenu-support t)
 (setq use-package-expand-minimally t)
 
 ;; Benchmark
