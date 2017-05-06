@@ -60,11 +60,6 @@
 
 (package-initialize)
 
-;; (unless package-archive-contents
-;;   (dolist (file (directory-files (expand-file-name "lisp" user-emacs-directory) t "\\.elc$"))
-;;     (delete-file file))
-;;   (package-refresh-contents))
-
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 

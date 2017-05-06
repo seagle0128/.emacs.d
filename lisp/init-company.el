@@ -54,13 +54,6 @@
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
 
-  ;; Display current candidate inline
-  ;; (setq company-frontends
-  ;;       '(company-pseudo-tooltip-unless-just-one-frontend
-  ;;         company-preview-frontend
-  ;;         company-echo-metadata-frontend))
-  ;; (set-face-attribute 'company-preview nil :foreground "darkgray" :underline t)
-
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
     :if (display-graphic-p)
