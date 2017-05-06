@@ -109,7 +109,12 @@
   (defun linum-format-func (line)
     (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
       (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-  (setq linum-format 'linum-format-func))
+  (setq linum-format 'linum-format-func)
+
+  ;; FIX: show-paren-mode erroneously highlights the left margin
+  ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
+  (custom-set-faces
+   '(linum ((t (:inherit default :weight light))))))
 
 ;; Mouse & Smooth Scroll
 ;; scroll one line at a time (less "jumpy" than defaults)
