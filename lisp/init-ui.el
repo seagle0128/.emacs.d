@@ -70,8 +70,16 @@
 (use-package monokai-theme
   :init
   (defun load-monokai-theme()
-    "Load Monokai theme and set new tooltip background color."
+    "Load Monokai theme and customize faces."
     (load-theme 'monokai t)
+
+    ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
+    (with-eval-after-load 'flycheck
+      (custom-set-faces
+       '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
+       '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
+       '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))))
+
     (set-face-background 'tooltip "#FEFBD5")
     (when (boundp 'pos-tip-background-color)
       (setq pos-tip-background-color "#FEFBD5")))
