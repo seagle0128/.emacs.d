@@ -70,9 +70,11 @@
 (use-package monokai-theme
   :init
   (defun load-monokai-theme()
-    "Load Monokai theme and customize faces."
-    (load-theme 'monokai t)
+    "Customize faces and load Monokai theme."
+    ;; highlight colors
+    (setq monokai-highlight "gray40")
 
+    ;; flycheck style
     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
     (with-eval-after-load 'flycheck
       (custom-set-faces
@@ -82,7 +84,9 @@
 
     (set-face-background 'tooltip "#FEFBD5")
     (when (boundp 'pos-tip-background-color)
-      (setq pos-tip-background-color "#FEFBD5")))
+      (setq pos-tip-background-color "#FEFBD5"))
+
+    (load-theme 'monokai t))
 
   (add-hook 'after-init-hook 'load-monokai-theme))
 
