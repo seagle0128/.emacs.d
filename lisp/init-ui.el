@@ -114,16 +114,13 @@
 (setq column-number-mode t)
 (setq line-number-mode t)
 
-(use-package linum-off
-  :after linum
-  :init (add-hook 'after-init-hook 'global-linum-mode)
+(use-package nlinum
+  :init
+  (unless (display-graphic-p) (setq nlinum-format "%d "))
+  (add-hook 'prog-mode-hook
+            '(lambda ()
+               (nlinum-mode (- (* 5000 80) (buffer-size)))))
   :config
-  ;; Have a little padding on the right
-  (defun linum-format-func (line)
-    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-      (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-  (setq linum-format 'linum-format-func)
-
   ;; FIX: show-paren-mode erroneously highlights the left margin
   ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
   (custom-set-faces '(linum ((t (:inherit default))))))
