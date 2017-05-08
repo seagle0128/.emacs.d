@@ -60,6 +60,7 @@
   ;; Faster searching on Windows
   (when sys/win32p
     (setq projectile-git-command projectile-generic-command)
+    (setq projectile-git-submodule-command projectile-generic-command)
     (setq projectile-svn-command projectile-generic-command)
     (setq projectile-bzr-command projectile-generic-command)
     (setq projectile-hg-command projectile-generic-command))
