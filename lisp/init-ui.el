@@ -126,7 +126,7 @@
   (custom-set-faces '(linum ((t (:inherit default)))))
 
   ;; FIXME: refresh after exiting macrostep-mode
-  (when (featurep 'macrostep)
+  (with-eval-after-load 'macrostep
     (add-hook 'macrostep-mode-hook
               '(lambda () (when nlinum-mode (nlinum-mode 1))))))
 
