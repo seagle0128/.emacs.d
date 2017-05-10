@@ -58,12 +58,7 @@
                   (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")))))
 
   ;; Faster searching on Windows
-  (when sys/win32p
-    (setq projectile-git-command projectile-generic-command)
-    (setq projectile-git-submodule-command "")
-    (setq projectile-svn-command projectile-generic-command)
-    (setq projectile-bzr-command projectile-generic-command)
-    (setq projectile-hg-command projectile-generic-command))
+  (when sys/win32p (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
