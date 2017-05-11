@@ -43,6 +43,7 @@
 (use-package exec-path-from-shell
   :if sys/macp
   :init
+  (setq exec-path-from-shell-variables '("PATH" "MANPTH" "PYTHONPATH"))
   (setq exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-initialize))
 
