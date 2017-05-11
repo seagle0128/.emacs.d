@@ -94,20 +94,16 @@
 ;; Fonts
 (use-package chinese-fonts-setup
   :commands chinese-fonts-setup-enable
-  :defines cfs--current-profile-name
-  :init (add-hook 'after-init-hook 'chinese-fonts-setup-enable)
-  :config
+  :init
   (setq cfs-verbose nil)
   (setq cfs-save-current-profile nil)
-
-  (setq cfs-profiles
-        '("program" "org-mode" "read-book"))
-  (setq cfs--current-profile-name "program")
-
-  (when sys/mac-x-p
-    (setq cfs--profiles-steps '(("program" . 5)
-                                ("org-mode" . 6)
-                                ("read-book" . 8)))))
+  (setq cfs-use-face-font-rescale t)
+  (setq cfs-profiles '("program" "org-mode" "read-book"))
+  (chinese-fonts-setup-enable)
+  :config
+  (setq cfs--profiles-steps '(("program" . 4)
+                              ("org-mode" . 6)
+                              ("read-book" . 8))))
 
 ;; Line and Column
 (setq-default fill-column 80)
