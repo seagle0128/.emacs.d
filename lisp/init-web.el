@@ -96,7 +96,6 @@
     (tide-hl-identifier-mode 1))
 
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-hook 'typescript-mode-hook #'eldoc-mode)
 
   (with-eval-after-load 'js2-mode
     (add-hook 'js2-mode-hook #'setup-tide-mode))
@@ -110,7 +109,8 @@
           nil))
 
   (with-eval-after-load 'company
-    (push '(company-tide :with company-yasnippet) company-backends)))
+    (cl-remove 'company-tide company-backends)
+    (cl-pushnew '(company-tide :with company-yasnippet) company-backends)))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -122,7 +122,15 @@
   (setq web-mode-code-indent-offset 2)
 
   (with-eval-after-load 'auto-complete
-    (add-to-list 'ac-modes 'web-mode)))
+    (add-to-list 'ac-modes 'web-mode))
+
+  ;; Complete for web,html,emmet,jade,slim modes
+  (with-eval-after-load 'company
+    (use-package company-web
+      :init
+      (cl-pushnew '(company-web-html :with company-yasnippet) company-backends)
+      (cl-pushnew '(company-web-jade :with company-yasnippet) company-backends)
+      (cl-pushnew '(company-web-slim :with company-yasnippet) company-backends))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

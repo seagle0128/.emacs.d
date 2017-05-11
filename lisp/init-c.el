@@ -43,7 +43,12 @@
                      ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
                      (local-set-key "\C-cc" 'compile)
                      (with-eval-after-load 'auto-complete
-                       (add-to-list 'ac-sources 'ac-source-semantic)))))
+                       (add-to-list 'ac-sources 'ac-source-semantic))))
+  :config
+  ;; Company mode backend for C/C++ header files
+  (with-eval-after-load 'company
+    (use-package company-c-headers
+      :init (push '(company-c-headers :with company-yasnippet) company-backends))))
 
 (provide 'init-c)
 

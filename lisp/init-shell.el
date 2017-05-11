@@ -41,7 +41,6 @@
   :config
   (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-  (add-hook 'shell-mode-hook 'n-shell-mode-hook)
 
   (defun n-shell-mode-hook ()
     "Shell mode customizations."
@@ -64,10 +63,17 @@
       (setq command (replace-regexp-in-string "^[ \t]*man[ \t]*" "" command))
       (setq command (replace-regexp-in-string "[ \t]+$" "" command))
       ;;(message (format "command %s command" command))
-      (funcall 'man command)
-      )
+      (funcall 'man command))
      ;; Send other commands to the default handler.
-     (t (comint-simple-send proc command)))))
+     (t (comint-simple-send proc command))))
+
+  (add-hook 'shell-mode-hook 'n-shell-mode-hook))
+
+;; Company mode backend for shell functions
+(with-eval-after-load 'company
+  (use-package company-shell
+    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell :with company-yasnippet)
+                      company-backends)))
 
 ;; Term
 (use-package term

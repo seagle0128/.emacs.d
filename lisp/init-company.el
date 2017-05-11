@@ -62,23 +62,6 @@
   ;; Sort candidates using completion history
   (use-package company-statistics :init (company-statistics-mode 1))
 
-  ;; Company mode backend for C/C++ header files
-  (use-package company-c-headers
-    :init (push 'company-c-headers company-backends))
-
-  ;; Complete for web,html,emmet,jade,slim modes
-  (use-package company-web
-    :init
-    (add-to-list 'company-backends 'company-web-html)
-    (add-to-list 'company-backends 'company-web-jade)
-    (add-to-list 'company-backends 'company-web-slim))
-
-  ;; Company mode backend for shell functions
-  (use-package company-shell
-    :init
-    (push 'company-shell company-backends)
-    (push 'company-fish-shell company-backends))
-
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
   (defvar company-mode/enable-yas t
