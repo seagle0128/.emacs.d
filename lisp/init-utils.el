@@ -231,6 +231,10 @@ This function is called from `compilation-filter-hook'."
 (use-package copyit)
 (use-package htmlize)
 
+(use-package command-log-mode
+  :diminish command-log-mode
+  :bind (("C-c o" . clm/toggle-command-log-buffer)))
+
 (use-package list-environment
   :defer-install t
   :commands list-environment)
