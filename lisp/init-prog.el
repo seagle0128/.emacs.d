@@ -64,7 +64,7 @@
   :config
   ;; On the fly markdown preview
   (use-package flymd
-    :bind (("C-c C-c f" . flymd-flyit))))
+    :bind (:map markdown-mode-map ("C-c C-c f" . flymd-flyit))))
 
 (use-package fish-mode
   :init
