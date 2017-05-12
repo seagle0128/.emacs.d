@@ -115,7 +115,7 @@
 
 (use-package nlinum
   :init
-  (unless (display-graphic-p) (setq nlinum-format "%d "))
+  (setq nlinum-format "%4d ")
   (add-hook 'prog-mode-hook
             '(lambda ()
                (nlinum-mode (- (* 5000 80) (buffer-size)))))
