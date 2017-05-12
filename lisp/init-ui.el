@@ -72,7 +72,7 @@
   (defun load-monokai-theme()
     "Customize faces and load Monokai theme."
     ;; Highlight colors
-    (setq monokai-highlight "gray30")
+    (setq monokai-highlight "gray40")
 
     ;; Flycheck faces
     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
