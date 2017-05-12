@@ -60,7 +60,7 @@
   (defun load-spaceline-theme ()
     "Load spaceline modline theme."
     (let ((separator (if sys/win32p 'arrow 'utf-8)))
-      (set powerline-default-separator separator))
+      (setq powerline-default-separator separator))
 
     (spaceline-spacemacs-theme)
 
