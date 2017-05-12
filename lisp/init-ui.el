@@ -57,22 +57,25 @@
              spaceline-info-mode
              spaceline-helm-mode)
   :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (if sys/win32p
-                   (setq powerline-default-separator 'arrow)
-                 (setq powerline-default-separator 'utf-8))
-               (spaceline-spacemacs-theme)
-               (with-eval-after-load 'info+ (spaceline-info-mode 1))
-               (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
+  (defun load-spaceline-theme ()
+    "Load spaceline modline theme."
+    (let ((separator (if sys/win32p 'arrow 'utf-8)))
+      (set powerline-default-separator separator))
+
+    (spaceline-spacemacs-theme)
+
+    (with-eval-after-load 'info+ (spaceline-info-mode 1))
+    (with-eval-after-load 'helm (spaceline-helm-mode 1)))
+
+  (add-hook 'after-init-hook 'load-spaceline-theme))
 
 ;; Color theme
 (use-package monokai-theme
   :init
-  (defun load-monokai-theme()
+  (defun load-monokai-theme ()
     "Customize faces and load Monokai theme."
     ;; Highlight colors
-    (setq monokai-highlight "gray40")
+    (setq monokai-highlight "gray30")
 
     ;; Flycheck faces
     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
