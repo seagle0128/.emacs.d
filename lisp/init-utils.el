@@ -233,7 +233,7 @@ This function is called from `compilation-filter-hook'."
 
 (use-package command-log-mode
   :diminish command-log-mode
-  :bind (("C-c o" . clm/toggle-command-log-buffer)))
+  :init (setq command-log-mode-auto-show t))
 
 (use-package list-environment
   :defer-install t
