@@ -145,10 +145,11 @@
 ;; Display Time
 (use-package time
   :ensure nil
-  :init (add-hook 'after-init-hook 'display-time-mode)
-  :config
+  :unless (display-graphic-p)
+  :preface
   (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t))
+  (setq display-time-day-and-date t)
+  :init (add-hook 'after-init-hook 'display-time-mode))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
