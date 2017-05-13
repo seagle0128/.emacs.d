@@ -32,22 +32,17 @@
 ;;
 ;;; Code:
 
-;; Group ibuffer's list by VC project
-(use-package ibuffer-vc
+;; Group ibuffer's list by project root
+(use-package ibuffer-projectile
   :bind ("C-x C-b" . ibuffer)
   :init
-  (setq ibuffer-formats
-        '((mark modified read-only vc-status-mini " "
-                (name 18 18 :left :elide)
-                " "
-                (size 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                (vc-status 16 16 :left)
-                " "
-                filename-and-process)))
-  (add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root))
+  (setq ibuffer-filter-group-name-face 'font-lock-function-name-face)
+  (add-hook 'ibuffer-hook
+            '(lambda ()
+               (ibuffer-auto-mode 1)
+               (ibuffer-projectile-set-filter-groups)
+               (unless (eq ibuffer-sorting-mode 'alphabetic)
+                 (ibuffer-do-sort-by-alphabetic)))))
 
 (provide 'init-ibuffer)
 
