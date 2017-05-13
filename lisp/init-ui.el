@@ -57,22 +57,25 @@
              spaceline-info-mode
              spaceline-helm-mode)
   :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (if sys/win32p
-                   (setq powerline-default-separator 'arrow)
-                 (setq powerline-default-separator 'utf-8))
-               (spaceline-spacemacs-theme)
-               (with-eval-after-load 'info+ (spaceline-info-mode 1))
-               (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
+  (defun load-spaceline-theme ()
+    "Load spaceline modline theme."
+    (let ((separator (if sys/win32p 'arrow 'utf-8)))
+      (setq powerline-default-separator separator))
+
+    (spaceline-spacemacs-theme)
+
+    (with-eval-after-load 'info+ (spaceline-info-mode 1))
+    (with-eval-after-load 'helm (spaceline-helm-mode 1)))
+
+  (add-hook 'after-init-hook 'load-spaceline-theme))
 
 ;; Color theme
 (use-package monokai-theme
   :init
-  (defun load-monokai-theme()
+  (defun load-monokai-theme ()
     "Customize faces and load Monokai theme."
     ;; Highlight colors
-    (setq monokai-highlight "gray40")
+    (setq monokai-highlight "gray30")
 
     ;; Flycheck faces
     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
@@ -94,13 +97,12 @@
 ;; Fonts
 (use-package chinese-fonts-setup
   :commands chinese-fonts-setup-enable
-  :init
+  :init (chinese-fonts-setup-enable)
+  :config
   (setq cfs-verbose nil)
   (setq cfs-save-current-profile nil)
   (setq cfs-use-face-font-rescale t)
   (setq cfs-profiles '("program" "org-mode" "read-book"))
-  (chinese-fonts-setup-enable)
-  :config
   (setq cfs--profiles-steps '(("program" . 4)
                               ("org-mode" . 6)
                               ("read-book" . 8))))
@@ -112,11 +114,20 @@
 
 (use-package nlinum
   :init
-  (unless (display-graphic-p) (setq nlinum-format "%d "))
-  (add-hook 'prog-mode-hook
-            '(lambda ()
-               (nlinum-mode (- (* 5000 80) (buffer-size)))))
+  (defun turn-on-nlinum ()
+    "Turn on nlinum in small files."
+    (interactive)
+    (nlinum-mode (- (* 5000 80) (buffer-size))))
+
+  (defun turn-off-nlinum ()
+    "Turn off nlinum."
+    (interactive)
+    (nlnum-mode -1))
+
+  (add-hook 'prog-mode-hook 'turn-on-nlinum)
   :config
+  (setq nlinum-format "%4d ")
+
   ;; FIX: show-paren-mode erroneously highlights the left margin
   ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
   (custom-set-faces '(linum ((t (:inherit default)))))
@@ -124,12 +135,12 @@
   ;; FIXME: refresh after exiting macrostep-mode
   (with-eval-after-load 'macrostep
     (add-hook 'macrostep-mode-hook
-              '(lambda () (when nlinum-mode (nlinum-mode 1))))))
+              '(lambda () (when nlinum-mode (turn-on-nlinum))))))
 
 ;; Mouse & Smooth Scroll
-;; scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
-(setq mouse-wheel-progressive-speed nil)            ; don't accelerate scrolling
+;; Scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
 (setq scroll-step 1
       scroll-margin 1
       scroll-conservatively 100000)
@@ -141,10 +152,11 @@
 ;; Display Time
 (use-package time
   :ensure nil
-  :init (add-hook 'after-init-hook 'display-time-mode)
-  :config
+  :unless (display-graphic-p)
+  :preface
   (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t))
+  (setq display-time-day-and-date t)
+  :init (add-hook 'after-init-hook 'display-time-mode))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)

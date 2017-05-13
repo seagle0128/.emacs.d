@@ -222,6 +222,12 @@ This function is called from `compilation-filter-hook'."
   :bind (("C-h M-m" . discover-my-major)
          ("C-h M-M" . discover-my-mode)))
 
+;; Log keyboard commands to buffer
+(use-package command-log-mode
+  :defer-install t
+  :diminish command-log-mode
+  :init (setq command-log-mode-auto-show t))
+
 ;; Emacs StartUp Profiler
 (use-package esup
   :defer-install t
@@ -230,10 +236,6 @@ This function is called from `compilation-filter-hook'."
 ;; Misc
 (use-package copyit)
 (use-package htmlize)
-
-(use-package command-log-mode
-  :diminish command-log-mode
-  :init (setq command-log-mode-auto-show t))
 
 (use-package list-environment
   :defer-install t
