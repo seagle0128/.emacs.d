@@ -35,22 +35,18 @@
 ;; Save and restore status
 (use-package desktop
   :ensure nil
-  :init
+  :init (desktop-save-mode 1)
+  :config
   ;; Don't save/restore frame in tty
-  (if (not (display-graphic-p))
-      (setq desktop-restore-frames nil))
-  (desktop-save-mode 1))
-
-;; Restore special buffers
-(use-package desktop+ :after desktop)
+  (unless (display-graphic-p)
+    (setq desktop-restore-frames nil)))
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
   :diminish persistent-scratch-autosave-mode
-  :init
-  (setq persistent-scratch-backup-directory
-        (expand-file-name "persistent-scratch" user-emacs-directory))
-  (add-hook 'emacs-startup-hook 'persistent-scratch-setup-default))
+  :init (add-hook 'emacs-startup-hook 'persistent-scratch-setup-default)
+  :config (setq persistent-scratch-backup-directory
+                (expand-file-name "persistent-scratch" user-emacs-directory)))
 
 (provide 'init-restore)
 
