@@ -48,14 +48,21 @@
   (setq projectile-sort-order 'access-time)
   (setq projectile-use-git-grep t)
 
-  ;; Use faster search tools
-  (cond
-   ((executable-find "rg")
-    (setq projectile-generic-command "rg -0 --files --color=never --hidden --sort-files"))
-   ((executable-find "ag")
-    (setq projectile-generic-command
-          (concat "ag -0 -l --nocolor --hidden"
-                  (mapconcat #'identity (cons "" projectile-globally-ignored-directories) " --ignore-dir=")))))
+  ;; Use faster search tools: ripgrep or the silver search
+  ;; Have to delay setting after `'exec-path-from-shell-initialize' on macOS
+  (defun set-projectile-generic-command ()
+    "Set new generic command to the faster seacrh tool."
+    (let ((command
+           (cond
+            ((executable-find "rg")
+             "rg -0 --files --color=never --hidden --sort-files")
+            ((executable-find "ag")
+             (concat "ag -0 -l --nocolor --hidden"
+                     (mapconcat #'identity
+                                (cons "" projectile-globally-ignored-directories)
+                                " --ignore-dir="))))))
+      (setq projectile-generic-command command)))
+  (add-hook 'emacs-startup-hook 'set-projectile-generic-command)
 
   ;; Faster searching on Windows
   (when sys/win32p (setq projectile-git-submodule-command ""))
