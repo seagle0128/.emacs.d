@@ -97,13 +97,12 @@
 ;; Fonts
 (use-package chinese-fonts-setup
   :commands chinese-fonts-setup-enable
-  :init
+  :init (chinese-fonts-setup-enable)
+  :config
   (setq cfs-verbose nil)
   (setq cfs-save-current-profile nil)
   (setq cfs-use-face-font-rescale t)
   (setq cfs-profiles '("program" "org-mode" "read-book"))
-  (chinese-fonts-setup-enable)
-  :config
   (setq cfs--profiles-steps '(("program" . 4)
                               ("org-mode" . 6)
                               ("read-book" . 8))))
@@ -115,11 +114,20 @@
 
 (use-package nlinum
   :init
-  (setq nlinum-format "%4d ")
-  (add-hook 'prog-mode-hook
-            '(lambda ()
-               (nlinum-mode (- (* 5000 80) (buffer-size)))))
+  (defun turn-on-nlinum ()
+    "Turn on nlinum in small files."
+    (interactive)
+    (nlinum-mode (- (* 5000 80) (buffer-size))))
+
+  (defun turn-off-nlinum ()
+    "Turn off nlinum."
+    (interactive)
+    (nlnum-mode -1))
+
+  (add-hook 'prog-mode-hook 'turn-on-nlinum)
   :config
+  (setq nlinum-format "%4d ")
+
   ;; FIX: show-paren-mode erroneously highlights the left margin
   ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
   (custom-set-faces '(linum ((t (:inherit default)))))
@@ -127,7 +135,7 @@
   ;; FIXME: refresh after exiting macrostep-mode
   (with-eval-after-load 'macrostep
     (add-hook 'macrostep-mode-hook
-              '(lambda () (when nlinum-mode (nlinum-mode 1))))))
+              '(lambda () (when nlinum-mode (turn-on-nlinum))))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -138,9 +146,8 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :init
-  (setq smooth-scroll-margin 0)
-  (add-hook 'after-init-hook 'smooth-scrolling-mode))
+  :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
+  :config (setq smooth-scroll-margin 0))
 
 ;; Display Time
 (use-package time
