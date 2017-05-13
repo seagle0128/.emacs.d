@@ -130,16 +130,17 @@
               '(lambda () (when nlinum-mode (nlinum-mode 1))))))
 
 ;; Mouse & Smooth Scroll
-;; scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
-(setq mouse-wheel-progressive-speed nil)            ; don't accelerate scrolling
+;; Scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
 (setq scroll-step 1
       scroll-margin 1
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
-  :config (setq smooth-scroll-margin 0))
+  :init
+  (setq smooth-scroll-margin 0)
+  (add-hook 'after-init-hook 'smooth-scrolling-mode))
 
 ;; Display Time
 (use-package time
