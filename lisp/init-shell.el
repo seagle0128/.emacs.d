@@ -75,25 +75,22 @@
     :init (cl-pushnew '(company-shell company-shell-env company-fish-shell :with company-yasnippet)
                       company-backends)))
 
-;; Term
-(use-package term
-  :ensure nil
-  :init (setq system-uses-terminfo nil)
-
-  ;; Disable yasnippet mode to enable TAB in term
-  (with-eval-after-load 'yasnippet
-    (add-hook 'term-mode-hook '(lambda() (yas-minor-mode -1)))))
-
 ;; Multi term
-(use-package multi-term)
+(use-package multi-term
+  :defer-install t
+  :commands multi-term)
 
 ;; Shell Pop
 (use-package shell-pop
+  :defer-install t
   :bind ([f7] . shell-pop)
   :init
-  (if sys/win32p
-      (setq shell-pop-shell-type '("eshell" "*eshell*" (lambda () (eshell))))
-    (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))))
+  (let ((val
+         (if sys/win32p
+             '("eshell" "*eshell*" (lambda () (eshell)))
+           '("ansi-term" "*ansi-term*"
+             (lambda () (ansi-term shell-pop-term-shell))))))
+    (setq shell-pop-shell-type val)))
 
 (provide 'init-shell)
 
