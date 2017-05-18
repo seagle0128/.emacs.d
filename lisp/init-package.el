@@ -60,6 +60,9 @@
 
 (package-initialize)
 
+(unless package-archive-contents
+  (package-refresh-contents))
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
