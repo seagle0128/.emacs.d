@@ -43,6 +43,10 @@
               (lambda ()
                 (push '("<=" . ?≤) prettify-symbols-alist)))))
 
+(use-package nxml-mode
+  :ensure nil
+  :mode (("\\.xaml$" . xml-mode)))
+
 (use-package quickrun)
 (use-package powershell)
 (use-package csharp-mode)
