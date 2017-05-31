@@ -83,7 +83,7 @@
 ;; Shell Pop
 (use-package shell-pop
   :defer-install t
-  :bind ([f7] . shell-pop)
+  :bind ([f9] . shell-pop)
   :init
   (let ((val
          (if sys/win32p

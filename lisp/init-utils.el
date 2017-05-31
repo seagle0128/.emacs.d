@@ -65,7 +65,7 @@
 
 ;; Show imenu entries in a seperate buffer
 (use-package imenu-list
-  :bind ([f9] . imenu-list-smart-toggle))
+  :bind ([f7] . imenu-list-smart-toggle))
 
 ;; Tree explorer
 (use-package neotree
