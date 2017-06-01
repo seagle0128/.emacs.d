@@ -63,14 +63,9 @@
 (use-package browse-url-dwim
   :init (add-hook 'after-init-hook 'browse-url-dwim-mode))
 
-;; Show imenu entries in a seperate buffer
-(use-package imenu-list
-  :bind ([f7] . imenu-list-smart-toggle))
-
 ;; Tree explorer
 (use-package neotree
-  :defines projectile-switch-project-action
-  :bind (([f8] . neotree-toggle)
+  :bind (([f7] . neotree-toggle)
          :map neotree-mode-map
          ("i" . neotree-enter-horizontal-split)
          ("I" . neotree-enter-vertical-split))
@@ -81,6 +76,11 @@
   ;; Integrate with projectile
   (with-eval-after-load 'projectile
     (setq projectile-switch-project-action 'neotree-projectile-action)))
+
+;; Show imenu entries in a seperate buffer
+(use-package imenu-list
+  :bind ([f8] . imenu-list-smart-toggle)
+  :init (setq imenu-list-focus-after-activation t))
 
 ;; Dash
 ;; only avaliable on macOS
