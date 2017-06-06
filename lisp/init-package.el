@@ -93,7 +93,7 @@
 ;; Automatically update packages
 (use-package auto-package-update
   :init
-  (setq auto-package-update-interval 1)
+  ;; (setq auto-package-update-interval 1)
   (setq auto-package-update-delete-old-versions t)
   (add-hook 'emacs-startup-hook 'auto-package-update-maybe)
   :config (auto-package-update-at-time "03:00"))
