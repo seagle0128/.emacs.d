@@ -53,6 +53,14 @@
   (revert-buffer t t))
 (bind-key "<f5>" 'revert-current-buffer)
 
+;; Save a file as utf-8
+(defun save-buffer-as-utf8 (coding-system)
+  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
+  (interactive "zCoding system for visited file (default nil):")
+  (revert-buffer-with-coding-system coding-system)
+  (set-buffer-file-coding-system 'utf-8)
+  (save-buffer))
+
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish which-key-mode
