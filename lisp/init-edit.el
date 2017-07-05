@@ -151,7 +151,9 @@
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish drag-stuff-mode
-  :init (add-hook 'after-init-hook 'drag-stuff-global-mode)
+  :init
+  (setq drag-stuff-except-modes '(org-mode))
+  (add-hook 'after-init-hook 'drag-stuff-global-mode)
   :config (drag-stuff-define-keys))
 
 ;; A comprehensive visual interface to diff & patch
