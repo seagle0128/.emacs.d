@@ -79,6 +79,8 @@
          ("I" . neotree-enter-vertical-split))
   :config
   (setq neo-smart-open t)
+  (with-eval-after-load 'all-the-icons
+    (setq neo-theme (if (display-graphic-p) 'icons 'classic)))
   (setq neo-vc-integration '(face char))
 
   ;; Integrate with projectile
