@@ -96,6 +96,7 @@
   :init (add-hook 'after-init-hook '(lambda () (load-theme 'doom-one t)))
   :config
   (doom-themes-visual-bell-config)
+  (setq doom-neotree-file-icons t)
   (doom-themes-neotree-config))
 
 ;; Fonts
