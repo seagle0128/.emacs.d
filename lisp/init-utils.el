@@ -105,8 +105,8 @@
   :defer-install t
   :commands (youdao-dictionary--region-or-word
              youdao-dictionary--format-result)
-  :bind (("C-c Y" . youdao-dictionary-search-at-point)
-         ("C-c y" . youdao-dictionary-search-at-point+))
+  :bind (("C-c y" . youdao-dictionary-search-at-point)
+         ("C-c Y" . youdao-dictionary-search-at-point-tooltip))
   :config
   ;; Cache documents
   (setq url-automatic-caching t)
@@ -116,20 +116,7 @@
     (push "*Youdao Dictionary*" popwin:special-display-config))
 
   ;; Enable Chinese word segmentation support (支持中文分词)
-  (setq youdao-dictionary-use-chinese-word-segmentation t)
-
-  ;; Use pos-tip instead of popup to display results
-  (if (display-graphic-p)
-      (with-eval-after-load 'pos-tip
-        (defun youdao-dictionary-search-at-point+ ()
-          "Search word at point and display results with pos-tip."
-          (interactive)
-          (let ((word (youdao-dictionary--region-or-word))
-                (x-gtk-use-system-tooltips t))
-            (if word
-                (pos-tip-show (youdao-dictionary--format-result word)
-                              nil nil nil 0)
-              (message "Nothing to look up")))))))
+  (setq youdao-dictionary-use-chinese-word-segmentation t))
 
 ;; Search
 (use-package fzf
