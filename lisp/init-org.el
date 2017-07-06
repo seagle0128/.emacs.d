@@ -47,6 +47,8 @@
   (use-package org-bullets
     :init (add-hook 'org-mode-hook 'org-bullets-mode))
 
+  (use-package org-tree-slide)
+
   (use-package hydra
     :demand
     :config
