@@ -71,7 +71,6 @@
 
 ;; Color theme
 (use-package monokai-theme
-  :disabled
   :init
   (defun load-monokai-theme ()
     "Customize faces and load Monokai theme."
@@ -91,13 +90,6 @@
     (load-theme 'monokai t))
 
   (add-hook 'after-init-hook 'load-monokai-theme))
-
-(use-package doom-themes
-  :init (add-hook 'after-init-hook '(lambda () (load-theme 'doom-one t)))
-  :config
-  (doom-themes-visual-bell-config)
-  (setq doom-neotree-file-icons t)
-  (doom-themes-neotree-config))
 
 ;; Fonts
 (use-package chinese-fonts-setup
