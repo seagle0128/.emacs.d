@@ -120,7 +120,7 @@
   (defun turn-off-nlinum ()
     "Turn off nlinum."
     (interactive)
-    (nlnum-mode -1))
+    (nlinum-mode -1))
 
   (add-hook 'prog-mode-hook 'turn-on-nlinum)
   :config
