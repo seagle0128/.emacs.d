@@ -83,11 +83,11 @@
      '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
      '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
      ;; Ivy
-     '(ivy-current-match ((t (:background "#65A7E2")))))
+     '(ivy-current-match ((t (:background "#65A7E2"))))
+     ;; Tooltip
+     '(tooltip ((t (:background "#E6DB74")))))
 
-    ;; Tooltip colors
-    (set-face-background 'tooltip "#E6DB74")
-    (setq 'pos-tip-background-color "#E6DB74"))
+    (setq pos-tip-background-color nil))
 
   (add-hook 'after-init-hook 'load-monokai-theme))
 
