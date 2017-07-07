@@ -74,19 +74,18 @@
   :init
   (defun load-monokai-theme ()
     "Tweak the faces and load the Monokai theme."
-
-    ;; Faces
-    ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
     (custom-set-faces
+     ;; Flycheck
+     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
      '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
      '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
      '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
-     '(ivy-current-match ((t (:background "#65a7e2" :foreground "black")))))
+     ;; Ivy
+     '(ivy-current-match ((t (:background "#65A7E2")))))
 
     ;; Tooltip colors
-    (set-face-background 'tooltip "#FEFBD5")
-    (when (boundp 'pos-tip-background-color)
-      (setq pos-tip-background-color "#FEFBD5"))
+    (set-face-background 'tooltip "#E6DB74")
+    (setq pos-tip-background-color "#E6DB74")
 
     (load-theme 'monokai t))
 
