@@ -73,7 +73,9 @@
 (use-package monokai-theme
   :init
   (defun load-monokai-theme ()
-    "Tweak the faces and load the Monokai theme."
+    "Load the Monokai theme and tweak the faces."
+    (load-theme 'monokai t)
+
     (custom-set-faces
      ;; Flycheck
      ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
@@ -85,9 +87,7 @@
 
     ;; Tooltip colors
     (set-face-background 'tooltip "#E6DB74")
-    (setq pos-tip-background-color "#E6DB74")
-
-    (load-theme 'monokai t))
+    (setq 'pos-tip-background-color "#E6DB74"))
 
   (add-hook 'after-init-hook 'load-monokai-theme))
 
