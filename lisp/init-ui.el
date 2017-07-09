@@ -85,7 +85,7 @@
      ;; Ivy
      '(ivy-current-match ((t (:background "#65A7E2"))))
      ;; Tooltip
-     '(tooltip ((t (:background "#E6DB74")))))
+     '(tooltip ((t (:background "#FEFBD5")))))
 
     (setq pos-tip-background-color nil))
 
