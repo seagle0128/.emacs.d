@@ -84,6 +84,8 @@
      '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
      ;; Ivy
      '(ivy-current-match ((t (:background "#65A7E2"))))
+     ;; Highlight symbol
+     '(highlight-symbol-face ((t (:background "gray30" :underline (:color "gray70")))))
      ;; Tooltip
      '(tooltip ((t (:background "#FEFBD5")))))
 
