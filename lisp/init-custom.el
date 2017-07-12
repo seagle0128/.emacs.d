@@ -64,6 +64,13 @@
           (const :tag "Emacs-China" emacs-china)
           (const :tag "Tsinghua" tsinghua)))
 
+(defcustom my-theme 'default
+  "Set color theme."
+  :type '(choice
+          (const :tag "Default" default)
+          (const :tag "Dark" dark)
+          (const :tag "Light" light)))
+
 (defcustom my-benchmark-enabled nil
   "Enable the init benchmark or not."
   :type 'boolean)

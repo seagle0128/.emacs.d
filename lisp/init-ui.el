@@ -33,6 +33,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-custom)
 
 ;; Title
 (setq frame-title-format
@@ -48,6 +49,36 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
+
+;; Color theme
+(cond
+ ((eq my-theme 'default)
+  (use-package monokai-theme
+    :init
+    (defun load-monokai-theme ()
+      "Load the Monokai theme and tweak the faces."
+      (load-theme 'monokai t)
+
+      (custom-set-faces
+       ;; Flycheck
+       ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
+       '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
+       '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
+       '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
+       ;; Ivy
+       '(ivy-current-match ((t (:background "#65A7E2"))))
+       ;; Tooltip
+       '(tooltip ((t (:background "#FEFBD5")))))
+
+      (setq pos-tip-background-color nil))
+
+    (add-hook 'after-init-hook 'load-monokai-theme)))
+ ((eq my-theme 'dark)
+  (use-package dracula-theme
+    :init (add-hook 'after-init-hook '(lambda () (load-theme 'dracula t)))))
+ ((eq my-theme 'light)
+  (use-package leuven-theme
+    :init (add-hook 'after-init-hook '(lambda () (load-theme 'leuven t))))))
 
 ;; Modeline configuration
 (use-package spaceline-config
@@ -68,28 +99,6 @@
     (with-eval-after-load 'helm (spaceline-helm-mode 1)))
 
   (add-hook 'after-init-hook 'load-spaceline-theme))
-
-;; Color theme
-(use-package monokai-theme
-  :init
-  (defun load-monokai-theme ()
-    "Load the Monokai theme and tweak the faces."
-    (load-theme 'monokai t)
-
-    (custom-set-faces
-     ;; Flycheck
-     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
-     '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
-     '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
-     '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
-     ;; Ivy
-     '(ivy-current-match ((t (:background "#65A7E2"))))
-     ;; Tooltip
-     '(tooltip ((t (:background "#FEFBD5")))))
-
-    (setq pos-tip-background-color nil))
-
-  (add-hook 'after-init-hook 'load-monokai-theme))
 
 ;; Fonts
 (use-package chinese-fonts-setup
