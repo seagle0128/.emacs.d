@@ -1,4 +1,4 @@
-;; init-vc.el --- Initialize scm configurations.
+;; init-vcs.el --- Initialize version control system configurations.
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0
@@ -95,7 +95,7 @@
   :defer-install t
   :commands (bar-browse bar-to-clipboard))
 
-(provide 'init-vc)
+(provide 'init-vcs)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-vc.el ends here
+;;; init-vcs.el ends here

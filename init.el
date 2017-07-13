@@ -117,7 +117,7 @@
 (require 'init-utils)
 
 ;; Programming
-(require 'init-vc)
+(require 'init-vcs)
 (require 'init-projectile)
 (require 'init-flycheck)
 
