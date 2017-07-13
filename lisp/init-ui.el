@@ -57,6 +57,8 @@
     :init
     (defun load-monokai-theme ()
       "Load the Monokai theme and tweak the faces."
+      (setq monokai-highlight-line "#30312C")
+
       (load-theme 'monokai t)
 
       (custom-set-faces
@@ -66,7 +68,11 @@
        '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
        '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
        ;; Ivy
-       '(ivy-current-match ((t (:background "#65A7E2"))))
+       '(ivy-current-match ((t (:background "#65A7E2" :foreground "black"))))
+       ;; Swiper
+       '(swiper-match-face-2 ((t (:foreground "black"))))
+       '(swiper-match-face-3 ((t (:foreground "black"))))
+       '(swiper-match-face-4 ((t (:foreground "black"))))
        ;; Tooltip
        '(tooltip ((t (:background "#FEFBD5")))))
 
