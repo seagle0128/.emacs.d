@@ -45,8 +45,12 @@
   (setq org-src-fontify-natively t)
 
   (use-package org-bullets
-    :init (add-hook 'org-mode-hook 'org-bullets-mode))
+    :init (add-hook 'org-mode-hook 'org-bullets-mode)
+    :config
+    (setq org-bullets-bullet-list '("✡" "⎈" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
+    (setq org-ellipsis " ▶ "))
 
+  ;; Presentation
   (use-package org-tree-slide)
 
   (use-package hydra
