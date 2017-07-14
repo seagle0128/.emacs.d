@@ -51,8 +51,9 @@
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Color theme
-(cond
- ((eq my-theme 'default)
+(if (eq my-theme 'light)
+    (use-package leuven-theme
+      :init (add-hook 'after-init-hook '(lambda () (load-theme 'leuven t))))
   (use-package monokai-theme
     :init
     (defun load-monokai-theme ()
@@ -90,12 +91,6 @@
       (setq pos-tip-background-color nil))
 
     (add-hook 'after-init-hook 'load-monokai-theme)))
- ((eq my-theme 'dark)
-  (use-package dracula-theme
-    :init (add-hook 'after-init-hook '(lambda () (load-theme 'dracula t)))))
- ((eq my-theme 'light)
-  (use-package leuven-theme
-    :init (add-hook 'after-init-hook '(lambda () (load-theme 'leuven t))))))
 
 ;; Modeline configuration
 (use-package spaceline-config
