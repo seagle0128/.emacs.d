@@ -73,6 +73,13 @@
        '(swiper-match-face-2 ((t (:foreground "black"))))
        '(swiper-match-face-3 ((t (:foreground "black"))))
        '(swiper-match-face-4 ((t (:foreground "black"))))
+       ;; Org
+       '(org-table ((t (:background "#293700"))))
+       '(org-table ((t (:background "#3E3D31"))))
+       '(org-todo ((t (:box t :background "#530C26"))))
+       '(org-done ((t (:box t :background "#374B0F"))))
+       '(org-level-1 ((t (:overline t :background "#54320A"))))
+       '(org-level-2 ((t (:overline t :background "#293700"))))
        ;; Tooltip
        '(tooltip ((t (:background "#FEFBD5")))))
 
