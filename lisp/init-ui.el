@@ -75,11 +75,11 @@
        '(swiper-match-face-4 ((t (:foreground "black"))))
        ;; Org
        '(org-table ((t (:background "#293700"))))
-       '(org-table ((t (:background "#3E3D31"))))
-       '(org-todo ((t (:box t :background "#530C26"))))
-       '(org-done ((t (:box t :background "#374B0F"))))
-       '(org-level-1 ((t (:overline t :background "#54320A"))))
-       '(org-level-2 ((t (:overline t :background "#293700"))))
+       '(org-todo ((t (:weight bold :box (:line-width 1 :color "#7C1339") :background "#530C26"))))
+       '(org-done ((t (:weight bold :box (:line-width 1 :color "#537117") :background "#374B0F"))))
+       '(org-priority ((t (:box (:line-width 1 :style released-button) :foreground "#F92672" :background "#530C26"))))
+       '(org-level-1 ((t (:overline "#7E4B0F" :background "#54320A"))))
+       '(org-level-2 ((t (:overline "#537117" :background "#374B0F"))))
        ;; Tooltip
        '(tooltip ((t (:background "#FEFBD5")))))
 
