@@ -47,8 +47,8 @@
   :init
   (setq highlight-symbol-idle-delay 0.5)
 
-  (add-hook 'find-file-hook 'highlight-symbol-mode)
-  (add-hook 'find-file-hook 'highlight-symbol-nav-mode))
+  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+  (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
 
 ;; Highlight indentions
 (use-package indent-guide
