@@ -74,12 +74,16 @@
        '(swiper-match-face-3 ((t (:foreground "black"))))
        '(swiper-match-face-4 ((t (:foreground "black"))))
        ;; Org
-       '(org-table ((t (:background "#293700"))))
-       '(org-todo ((t (:weight bold :box (:line-width 1 :color "#7C1339") :background "#530C26"))))
-       '(org-done ((t (:weight bold :box (:line-width 1 :color "#537117") :background "#374B0F"))))
-       '(org-priority ((t (:box (:line-width 1 :style released-button) :foreground "#F92672" :background "#530C26"))))
-       '(org-level-1 ((t (:overline "#7E4B0F" :background "#54320A"))))
-       '(org-level-2 ((t (:overline "#537117" :background "#374B0F"))))
+       '(org-table ((t (:background "#212D09"))))
+       '(org-todo ((t (:weight bold :box (:line-width 1 :color "#7C1339") :background "#3E091C"))))
+       '(org-done ((t (:weight bold :box (:line-width 1 :color "#537117") :background "#29380B"))))
+       '(org-priority ((t (:box (:line-width 1 :style released-button) :foreground "#F92672" :background "#3E091C"))))
+       '(org-level-1 ((t (:overline "#7E4B0F" :background "#3F2507"))))
+       '(org-level-2 ((t (:overline "#537117" :background "#29380B"))))
+       '(org-level-3 ((t (:background "#19363B"))))
+       '(org-level-6 ((t (:slant italic))))
+       '(org-level-7 ((t (:slant italic))))
+       '(org-level-8 ((t (:slant italic))))
        ;; Tooltip
        '(tooltip ((t (:background "#FEFBD5")))))
 
