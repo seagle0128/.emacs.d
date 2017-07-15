@@ -74,6 +74,8 @@
        '(swiper-match-face-2 ((t (:foreground "black"))))
        '(swiper-match-face-3 ((t (:foreground "black"))))
        '(swiper-match-face-4 ((t (:foreground "black"))))
+       ;; Highlight
+       '(highlight-symbol-face ((t (:background "#325371"))))
        ;; Tooltip
        '(tooltip ((t (:background "#FEFBD5")))))
 
