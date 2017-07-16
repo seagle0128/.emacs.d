@@ -33,7 +33,6 @@
 ;;; Code:
 
 (require 'init-const)
-(require 'init-custom)
 
 ;; Title
 (setq frame-title-format
@@ -51,37 +50,34 @@
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Color theme
-(if (eq my-theme 'light)
-    (use-package leuven-theme
-      :init (add-hook 'after-init-hook '(lambda () (load-theme 'leuven t))))
-  (use-package monokai-theme
-    :init
-    (defun load-monokai-theme ()
-      "Load the Monokai theme and tweak the faces."
-      (setq monokai-highlight-line "#30312C")
+(use-package monokai-theme
+  :init
+  (defun load-monokai-theme ()
+    "Load the Monokai theme and tweak the faces."
+    (setq monokai-highlight-line "#30312C")
 
-      (load-theme 'monokai t)
+    (load-theme 'monokai t)
 
-      (custom-set-faces
-       ;; Flycheck
-       ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
-       '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
-       '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
-       '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
-       ;; Ivy
-       '(ivy-current-match ((t (:background "#65A7E2" :foreground "#272822"))))
-       ;; Swiper
-       '(swiper-match-face-2 ((t (:foreground "#272822"))))
-       '(swiper-match-face-3 ((t (:foreground "#272822"))))
-       '(swiper-match-face-4 ((t (:foreground "#272822"))))
-       ;; Highlight
-       '(highlight ((t (:foreground "#FFF7A8"))))
-       ;; Tooltip
-       '(tooltip ((t (:background "#FEFBD5")))))
+    (custom-set-faces
+     ;; Flycheck
+     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
+     '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
+     '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
+     '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
+     ;; Ivy
+     '(ivy-current-match ((t (:background "#65A7E2" :foreground "#272822"))))
+     ;; Swiper
+     '(swiper-match-face-2 ((t (:foreground "#272822"))))
+     '(swiper-match-face-3 ((t (:foreground "#272822"))))
+     '(swiper-match-face-4 ((t (:foreground "#272822"))))
+     ;; Highlight
+     '(highlight ((t (:foreground "#FFF7A8"))))
+     ;; Tooltip
+     '(tooltip ((t (:background "#FEFBD5")))))
 
-      (setq pos-tip-background-color nil))
+    (setq pos-tip-background-color nil))
 
-    (add-hook 'after-init-hook 'load-monokai-theme)))
+  (add-hook 'after-init-hook 'load-monokai-theme))
 
 ;; Modeline configuration
 (use-package spaceline-config
