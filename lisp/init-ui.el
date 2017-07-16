@@ -52,32 +52,28 @@
 ;; Color theme
 (use-package monokai-theme
   :init
-  (defun load-monokai-theme ()
-    "Load the Monokai theme and tweak the faces."
-    (setq monokai-highlight-line "#30312C")
-
-    (load-theme 'monokai t)
-
-    (custom-set-faces
-     ;; Flycheck
-     ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
-     '(flycheck-error ((t (:underline (:style wave :color "#F92672")))))
-     '(flycheck-warning ((t (:underline (:style wave :color "#FD971F")))))
-     '(flycheck-info ((t (:underline (:style wave :color "#66D9EF")))))
-     ;; Ivy
-     '(ivy-current-match ((t (:background "#65A7E2" :foreground "#272822"))))
-     ;; Swiper
-     '(swiper-match-face-2 ((t (:foreground "#272822"))))
-     '(swiper-match-face-3 ((t (:foreground "#272822"))))
-     '(swiper-match-face-4 ((t (:foreground "#272822"))))
-     ;; Highlight
-     '(highlight ((t (:foreground "#FFF7A8"))))
-     ;; Tooltip
-     '(tooltip ((t (:background "#FEFBD5")))))
-
-    (setq pos-tip-background-color nil))
-
-  (add-hook 'after-init-hook 'load-monokai-theme))
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (load-theme 'monokai t)
+               (setq pos-tip-background-color nil)))
+  :config
+  (custom-set-faces
+   ;; Flycheck
+   ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
+   `(flycheck-error ((t (:underline (:style wave :color ,monokai-red)))))
+   `(flycheck-warning ((t (:underline (:style wave :color ,monokai-orange)))))
+   `(flycheck-info ((t (:underline (:style wave :color ,monokai-blue)))))
+   ;; Ivy
+   `(ivy-current-match ((t (:background , "#65A7E2" :foreground ,monokai-background))))
+   ;; Swiper
+   `(swiper-match-face-2 ((t (:foreground ,monokai-background))))
+   `(swiper-match-face-3 ((t (:foreground ,monokai-background))))
+   `(swiper-match-face-4 ((t (:foreground ,monokai-background))))
+   ;; Highlight
+   `(highlight ((t (:foreground ,monokai-yellow))))
+   `(highlight-symbol-face ((t (:background ,monokai-highlight))))
+   ;; Tooltip
+   `(tooltip ((t (:background "#FEFBD5"))))))
 
 ;; Modeline configuration
 (use-package spaceline-config
@@ -87,17 +83,12 @@
              spaceline-info-mode
              spaceline-helm-mode)
   :init
-  (defun load-spaceline-theme ()
-    "Load spaceline modline theme."
-    (let ((separator (if sys/win32p 'arrow 'utf-8)))
-      (setq powerline-default-separator separator))
-
-    (spaceline-spacemacs-theme)
-
-    (with-eval-after-load 'info+ (spaceline-info-mode 1))
-    (with-eval-after-load 'helm (spaceline-helm-mode 1)))
-
-  (add-hook 'after-init-hook 'load-spaceline-theme))
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
+               (spaceline-spacemacs-theme)
+               (with-eval-after-load 'info+ (spaceline-info-mode 1))
+               (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
 
 ;; Fonts
 (use-package chinese-fonts-setup
