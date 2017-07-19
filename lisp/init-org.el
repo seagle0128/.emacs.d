@@ -48,7 +48,7 @@
     :init
     (setq org-ellipsis " ▶ ")
     (setq org-bullets-bullet-list
-          '("✡" "⎈" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
+          '("✡" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
     (add-hook 'org-mode-hook 'org-bullets-mode))
 
   ;; Presentation
