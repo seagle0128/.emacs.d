@@ -43,6 +43,7 @@
   (setq org-agenda-files '("~/org"))
   (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
   (setq org-src-fontify-natively t)
+  (add-to-list 'org-export-backends 'md)
 
   (use-package org-bullets
     :init
