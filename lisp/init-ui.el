@@ -60,7 +60,7 @@
    `(flycheck-warning ((t (:underline (:style wave :color ,monokai-orange)))))
    `(flycheck-info ((t (:underline (:style wave :color ,monokai-blue)))))
    ;; Ivy
-   `(ivy-current-match ((t (:background ,monokai-blue :foreground ,monokai-background))))
+   `(ivy-current-match ((t (:background "#65A7E2" :foreground ,monokai-background))))
    ;; Swiper
    `(swiper-match-face-2 ((t (:foreground ,monokai-background))))
    `(swiper-match-face-3 ((t (:foreground ,monokai-background))))
