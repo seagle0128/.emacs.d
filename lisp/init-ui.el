@@ -51,11 +51,7 @@
 
 ;; Color theme
 (use-package monokai-theme
-  :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (load-theme 'monokai t)
-               (setq pos-tip-background-color nil)))
+  :init (add-hook 'after-init-hook'(lambda () (load-theme 'monokai t)))
   :config
   (custom-set-faces
    ;; Flycheck
@@ -71,9 +67,7 @@
    `(swiper-match-face-4 ((t (:foreground ,monokai-background))))
    ;; Highlight
    `(highlight ((t (:foreground ,monokai-yellow))))
-   `(highlight-symbol-face ((t (:background ,monokai-highlight))))
-   ;; Tooltip
-   `(tooltip ((t (:background "#FEFBD5"))))))
+   `(highlight-symbol-face ((t (:background ,monokai-highlight))))))
 
 ;; Modeline configuration
 (use-package spaceline-config
