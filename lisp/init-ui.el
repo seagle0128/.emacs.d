@@ -49,7 +49,7 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
-;; Color theme
+;; Theme
 (use-package monokai-theme
   :init (add-hook 'after-init-hook'(lambda () (load-theme 'monokai t)))
   :config
@@ -60,7 +60,7 @@
    `(flycheck-warning ((t (:underline (:style wave :color ,monokai-orange)))))
    `(flycheck-info ((t (:underline (:style wave :color ,monokai-blue)))))
    ;; Ivy
-   `(ivy-current-match ((t (:background , "#65A7E2" :foreground ,monokai-background))))
+   `(ivy-current-match ((t (:background "#65A7E2" :foreground ,monokai-background))))
    ;; Swiper
    `(swiper-match-face-2 ((t (:foreground ,monokai-background))))
    `(swiper-match-face-3 ((t (:foreground ,monokai-background))))
@@ -69,7 +69,7 @@
    `(highlight ((t (:foreground ,monokai-yellow))))
    `(highlight-symbol-face ((t (:background ,monokai-highlight))))))
 
-;; Modeline configuration
+;; Modeline
 (use-package spaceline-config
   :ensure spaceline
   :commands (spaceline-spacemacs-theme
@@ -77,12 +77,11 @@
              spaceline-info-mode
              spaceline-helm-mode)
   :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
-               (spaceline-spacemacs-theme)
-               (with-eval-after-load 'info+ (spaceline-info-mode 1))
-               (with-eval-after-load 'helm (spaceline-helm-mode 1)))))
+  (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
+  (add-hook 'after-init-hook'(lambda () (spaceline-spacemacs-theme)))
+  :config
+  (with-eval-after-load 'info+ (spaceline-info-mode 1))
+  (with-eval-after-load 'helm (spaceline-helm-mode 1)))
 
 ;; Fonts
 (use-package chinese-fonts-setup
