@@ -82,6 +82,8 @@
   :defer-install t
   :commands git-timemachine)
 
+;; Git modes
+(use-package gitattributes-mode)
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
 
