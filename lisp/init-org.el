@@ -55,6 +55,9 @@
   ;; Presentation
   (use-package org-tree-slide)
 
+  ;; Pomodoro
+  (use-package org-pomodoro)
+
   (use-package hydra
     :demand
     :config
@@ -106,8 +109,7 @@ _h_tml    ^ ^         ^ ^             _A_SCII:
                  (if (or (region-active-p) (looking-back "^"))
                      (hydra-org-template/body)
                    (self-insert-command 1)))
-              org-mode-map)
-    ))
+              org-mode-map)))
 
 (provide 'init-org)
 
