@@ -66,7 +66,7 @@
    `(swiper-match-face-3 ((t (:foreground ,monokai-background))))
    `(swiper-match-face-4 ((t (:foreground ,monokai-background))))
    ;; Highlight
-   `(highlight ((t (:foreground ,monokai-green))))
+   `(highlight ((t (:foreground ,monokai-yellow))))
    `(highlight-symbol-face ((t (:background ,monokai-highlight))))))
 
 ;; Modeline
