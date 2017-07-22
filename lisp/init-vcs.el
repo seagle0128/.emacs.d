@@ -78,9 +78,13 @@
   (setq git-messenger:use-magit-popup t))
 
 ;; Walk through git revisions of a file
-(use-package git-timemachine
-  :defer-install t
-  :commands git-timemachine)
+(use-package git-timemachine)
+
+;; Highlighting regions by last updated time
+(use-package smeargle
+  :bind (("C-x v S" . smeargle)
+         ("C-x v C" . smeargle-commits)
+         ("C-x v R" . smeargle-clear)))
 
 ;; Git modes
 (use-package gitattributes-mode)
@@ -88,14 +92,10 @@
 (use-package gitignore-mode)
 
 ;; Subversion
-(use-package psvn
-  :defer-install t
-  :commands (svn-status svn-examine svn-checkout))
+(use-package psvn)
 
 ;; Open github/gitlab/bitbucket page
-(use-package browse-at-remote
-  :defer-install t
-  :commands (bar-browse bar-to-clipboard))
+(use-package browse-at-remote)
 
 (provide 'init-vcs)
 
