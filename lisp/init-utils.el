@@ -96,15 +96,11 @@
 ;; only avaliable on macOS
 (when sys/macp
   (use-package dash-at-point
-    :defer-install t
     :bind (("\C-cd" . dash-at-point)
            ("\C-ce" . dash-at-point-with-docset))))
 
 ;; Youdao Dictionay
 (use-package youdao-dictionary
-  :defer-install t
-  :commands (youdao-dictionary--region-or-word
-             youdao-dictionary--format-result)
   :bind (("C-c y" . youdao-dictionary-search-at-point)
          ("C-c Y" . youdao-dictionary-search-at-point-tooltip))
   :config
@@ -119,14 +115,6 @@
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
 ;; Search
-(use-package fzf
-  :defer-install t
-  :commands (fzf fzf-directory))
-
-(use-package ack
-  :defer-install t
-  :commands ack)
-
 (use-package ag
   :config
   (setq ag-highlight-search t)
@@ -178,14 +166,10 @@ This function is called from `compilation-filter-hook'."
   (with-eval-after-load 'ivy (setq dumb-jump-selector 'ivy)))
 
 ;; Side-by-side diff view
-(use-package diffview
-  :defer-install t
-  :commands (diffview-region diffview-current diffview-message))
+(use-package diffview)
 
 ;; Text mode directory tree. Similar with beyond compare
-(use-package ztree
-  :defer-install t
-  :commands (ztree-diff ztree-dir))
+(use-package ztree)
 
 ;; Extensions to `Dired'
 (use-package dired+
@@ -215,44 +199,24 @@ This function is called from `compilation-filter-hook'."
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
-  :defer-install t
   :bind (("C-h M-m" . discover-my-major)
          ("C-h M-M" . discover-my-mode)))
 
 ;; Log keyboard commands to buffer
 (use-package command-log-mode
-  :defer-install t
-  :diminish command-log-mode
+  :diminish (command-log-mode . "¢")
   :init (setq command-log-mode-auto-show t))
 
 ;; Emacs StartUp Profiler
-(use-package esup
-  :defer-install t
-  :commands esup)
+(use-package esup)
 
 ;; Misc
 (use-package copyit)
 (use-package htmlize)
-
-(use-package list-environment
-  :defer-install t
-  :commands list-environment)
-
-(use-package memory-usage
-  :defer-install t
-  :commands memory-usage)
-
-(use-package open-junk-file
-  :defer-install t
-  :commands open-junk-file)
-
-(use-package restart-emacs
-  :defer-install t
-  :commands restart-emacs)
-
-(use-package try
-  :defer-install t
-  :commands (try try-and-refresh))
+(use-package list-environment)
+(use-package memory-usage)
+(use-package open-junk-file)
+(use-package try)
 
 (provide 'init-utils)
 
