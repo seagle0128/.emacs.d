@@ -76,13 +76,10 @@
                       company-backends)))
 
 ;; Multi term
-(use-package multi-term
-  :defer-install t
-  :commands multi-term)
+(use-package multi-term)
 
 ;; Shell Pop
 (use-package shell-pop
-  :defer-install t
   :bind ([f9] . shell-pop)
   :init
   (let ((val
