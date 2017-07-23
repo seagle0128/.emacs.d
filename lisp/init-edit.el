@@ -112,9 +112,9 @@
   :diminish ace-pinyin-mode
   :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
 
+;; TODO: integrate to ivy/helm
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
-  :defer-install t
   :bind (("C-c C-s" . pinyin-search)))
 
 ;; Minor mode to aggressively keep your code always indented
