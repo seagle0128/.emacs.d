@@ -51,23 +51,7 @@
 
 ;; Theme
 (use-package monokai-theme
-  :init (add-hook 'after-init-hook'(lambda () (load-theme 'monokai t)))
-  :config
-  (custom-set-faces
-   ;; Flycheck
-   ;; FIXME: https://github.com/oneKelvinSmith/monokai-emacs/issues/73
-   `(flycheck-error ((t (:underline (:style wave :color ,monokai-red)))))
-   `(flycheck-warning ((t (:underline (:style wave :color ,monokai-orange)))))
-   `(flycheck-info ((t (:underline (:style wave :color ,monokai-blue)))))
-   ;; Ivy
-   `(ivy-current-match ((t (:background "#65A7E2" :foreground ,monokai-background))))
-   ;; Swiper
-   `(swiper-match-face-2 ((t (:foreground ,monokai-background))))
-   `(swiper-match-face-3 ((t (:foreground ,monokai-background))))
-   `(swiper-match-face-4 ((t (:foreground ,monokai-background))))
-   ;; Highlight
-   `(highlight ((t (:foreground ,monokai-yellow))))
-   `(highlight-symbol-face ((t (:background ,monokai-highlight))))))
+  :init (add-hook 'after-init-hook'(lambda () (load-theme 'monokai t))))
 
 ;; Modeline
 (use-package spaceline-config
