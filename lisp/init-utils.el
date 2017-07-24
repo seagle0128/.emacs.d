@@ -207,6 +207,10 @@ This function is called from `compilation-filter-hook'."
   :diminish (command-log-mode . "¢")
   :init (setq command-log-mode-auto-show t))
 
+;; A Simmple and cool pomodoro timer
+(use-package pomidor
+  :bind (("<f12>" . pomidor)))
+
 ;; Emacs StartUp Profiler
 (use-package esup)
 
