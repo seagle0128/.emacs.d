@@ -50,8 +50,7 @@
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Theme
-(use-package monokai-theme
-  :init (add-hook 'after-init-hook'(lambda () (load-theme 'monokai t))))
+(use-package monokai-theme :init (load-theme 'monokai t))
 
 ;; Modeline
 (use-package spaceline-config
