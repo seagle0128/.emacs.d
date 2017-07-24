@@ -34,7 +34,10 @@
 
 (use-package org
   :ensure nil
-  :bind (("C-c a" . org-agenda))
+  :bind (("C-c a" . org-agenda)
+         ("C-c B" . org-switchb)
+         :map org-mode-map
+         ("C-c l" . org-store-link))
   :init
   (add-hook 'org-mode-hook '(lambda ()
                               (org-indent-mode 1)
