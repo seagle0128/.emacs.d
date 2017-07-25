@@ -45,6 +45,7 @@
   :config
   (setq org-agenda-files '("~/org"))
   (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
+  (setq org-log-done t)
   (setq org-src-fontify-natively t)
   (add-to-list 'org-export-backends 'md)
 
