@@ -68,16 +68,16 @@
 
 ;; Fonts
 (use-package chinese-fonts-setup
-  :commands chinese-fonts-setup-enable
-  :init (chinese-fonts-setup-enable)
+  :commands cnfonts-enable
+  :init (cnfonts-enable)
   :config
-  (setq cfs-verbose nil)
-  (setq cfs-save-current-profile nil)
-  (setq cfs-use-face-font-rescale t)
-  (setq cfs-profiles '("program" "org-mode" "read-book"))
-  (setq cfs--profiles-steps '(("program" . 4)
-                              ("org-mode" . 6)
-                              ("read-book" . 8))))
+  (setq cnfonts-verbose nil)
+  (setq cnfonts-save-current-profile nil)
+  (setq cnfonts-use-face-font-rescale t)
+  (setq cnfonts-profiles '("program" "org-mode" "read-book"))
+  (setq cnfonts--profiles-steps '(("program" . 4)
+                                  ("org-mode" . 6)
+                                  ("read-book" . 8))))
 
 ;; Line and Column
 (setq-default fill-column 80)
