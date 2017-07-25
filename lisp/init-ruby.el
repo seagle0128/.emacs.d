@@ -59,7 +59,7 @@
     :init
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
     (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
-
+    :config
     (with-eval-after-load 'auto-complete
       (add-to-list 'ac-modes 'inf-ruby-minor-mode)
       (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
