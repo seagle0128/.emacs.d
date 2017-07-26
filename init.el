@@ -102,6 +102,7 @@
 (require 'init-eshell)
 
 (require 'init-utils)
+(require 'init-org)
 
 ;; Programming
 (require 'init-vcs)
@@ -115,8 +116,6 @@
 (require 'init-ruby)
 (require 'init-web)
 (require 'init-prog)
-
-(require 'init-org)
 
 ;; Restore
 (require 'init-restore)
