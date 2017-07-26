@@ -179,7 +179,8 @@
 ;; Hungry deletion
 (use-package hungry-delete
   :diminish hungry-delete-mode
-  :init (add-hook 'after-init-hook 'global-hungry-delete-mode))
+  :init (add-hook 'after-init-hook 'global-hungry-delete-mode)
+  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit

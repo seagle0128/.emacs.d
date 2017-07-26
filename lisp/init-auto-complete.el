@@ -38,6 +38,8 @@
   :init (add-hook 'after-init-hook 'ac-config-default)
   :config
   (setq ac-use-menu-map t)
+  (setq ac-use-quick-help t)
+  (setq ac-use-fuzzy t)
   (ac-set-trigger-key "TAB")
   (setq ac-delay 0.3)
 
