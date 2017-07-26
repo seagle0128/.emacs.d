@@ -1,4 +1,4 @@
-;;; init.el --- user init configuration.     -*- no-byte-compile: t -*-
+;;; init.el --- user init configuration.
 ;;
 ;; Filename: init.el
 ;; Description:
@@ -52,7 +52,7 @@
 ;; Optimize loading performance
 (defvar default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
-(setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 30000000)
 (add-hook 'emacs-startup-hook
           '(lambda ()
              "Restore defalut values after init"
@@ -87,19 +87,16 @@
 (require 'init-ui)
 
 (require 'init-edit)
+(require 'init-ivy)
+(require 'init-company)
+(require 'init-yasnippet)
+
 (require 'init-ibuffer)
 (require 'init-kill-ring)
-
-(require 'init-ivy)
-
 (require 'init-calendar)
 (require 'init-bookmark)
 (require 'init-highlight)
 (require 'init-window)
-
-(require 'init-yasnippet)
-
-(require 'init-company)
 
 (require 'init-shell)
 (require 'init-eshell)
@@ -108,8 +105,8 @@
 
 ;; Programming
 (require 'init-vcs)
-(require 'init-projectile)
 (require 'init-flycheck)
+(require 'init-projectile)
 
 (require 'init-emacs-lisp)
 (require 'init-c)

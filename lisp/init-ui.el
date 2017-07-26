@@ -50,19 +50,18 @@
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Theme
-(use-package monokai-theme :init (load-theme 'monokai t))
+(use-package monokai-theme
+  :init (load-theme 'monokai t))
 
 ;; Modeline
 (use-package spaceline-config
   :ensure spaceline
   :commands (spaceline-spacemacs-theme
-             spaceline-emacs-theme
              spaceline-info-mode)
   :init
   (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
   (add-hook 'after-init-hook'(lambda () (spaceline-spacemacs-theme)))
-  :config
-  (with-eval-after-load 'info+ (spaceline-info-mode 1)))
+  :config (with-eval-after-load 'info+ (spaceline-info-mode 1)))
 
 ;; Fonts
 (use-package chinese-fonts-setup
