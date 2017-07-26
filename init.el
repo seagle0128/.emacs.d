@@ -1,4 +1,4 @@
-;;; init.el --- user init configuration.	-*- lexical-binding: t -*-
+;;; init.el --- user init configuration.	-*- lexical-binding: t no-byte-compile: t; -*-
 ;;
 ;; Filename: init.el
 ;; Description:
