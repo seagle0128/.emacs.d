@@ -112,7 +112,7 @@
   :diminish ace-pinyin-mode
   :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
 
-;; TODO: integrate to ivy/helm
+;; TODO: integrate to ivy
 ;; Search Chinese by Pinyin
 (use-package pinyin-search
   :bind (("C-c C-s" . pinyin-search)))

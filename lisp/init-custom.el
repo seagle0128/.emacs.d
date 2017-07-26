@@ -44,13 +44,6 @@
   "Set user email address."
   :type 'string)
 
-(defcustom my-completion-method 'ivy
-  "Incremental complition method: `ido', `ivy' or `helm'."
-  :type '(choice
-          (const :tag "Ido" ido)
-          (const :tag "Ivy" ivy)
-          (const :tag "Helm" helm)))
-
 (defcustom my-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice

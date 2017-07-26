@@ -90,13 +90,7 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 
-(cond
- ((eq my-completion-method 'helm)
-  (require 'init-helm))
- ((eq my-completion-method 'ivy)
-  (require 'init-ivy))
- ((eq my-completion-method 'ido)
-  (require 'init-ido)))
+(require 'init-ivy)
 
 (require 'init-calendar)
 (require 'init-bookmark)
@@ -105,7 +99,7 @@
 
 (require 'init-yasnippet)
 
-(require 'init-auto-complete)
+(require 'init-company)
 
 (require 'init-shell)
 (require 'init-eshell)

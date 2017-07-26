@@ -75,9 +75,7 @@
 
   ;; Yari
   (use-package yari
-    :bind (:map ruby-mode-map ([f1] . yari))
-    :config (with-eval-after-load 'helm
-              (bind-key [f1] 'yari-helm ruby-mode-map)))
+    :bind (:map ruby-mode-map ([f1] . yari)))
 
   ;; Yard mode
   (use-package yard-mode

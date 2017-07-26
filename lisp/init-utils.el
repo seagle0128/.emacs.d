@@ -162,7 +162,6 @@ This function is called from `compilation-filter-hook'."
   :init (add-hook 'after-init-hook 'dumb-jump-mode)
   :config
   (setq dumb-jump-prefer-searcher 'rg)
-  (with-eval-after-load 'helm (setq dumb-jump-selector 'helm))
   (with-eval-after-load 'ivy (setq dumb-jump-selector 'ivy)))
 
 ;; Side-by-side diff view
