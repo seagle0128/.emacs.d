@@ -60,9 +60,6 @@
     :diminish anaconda-mode
     :init (add-hook 'python-mode-hook 'anaconda-mode)
     :config
-    (with-eval-after-load 'auto-complete
-      (use-package ac-anaconda
-        :init (add-hook 'python-mode-hook 'ac-anaconda-setup)))
     (with-eval-after-load 'company
       (use-package company-anaconda
         :defines company-backends

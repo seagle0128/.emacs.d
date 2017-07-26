@@ -44,12 +44,6 @@
   "Set user email address."
   :type 'string)
 
-(defcustom my-ac-method 'company
-  "Auto complete method: auto-complete' or `company'."
-  :type '(choice
-          (const :tag "Auto-Complete" auto-complete)
-          (const :tag "Company" company)))
-
 (defcustom my-completion-method 'ivy
   "Incremental complition method: `ido', `ivy' or `helm'."
   :type '(choice

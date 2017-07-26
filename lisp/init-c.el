@@ -43,10 +43,7 @@
                (setq c-basic-offset 4)
 
                ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
-               (local-set-key "\C-cc" 'compile)
-
-               (with-eval-after-load 'auto-complete
-                 (add-to-list 'ac-sources 'ac-source-semantic))))
+               (local-set-key "\C-cc" 'compile)))
   :config
   ;; Company mode backend for C/C++ header files
   (with-eval-after-load 'company

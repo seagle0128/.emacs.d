@@ -105,11 +105,7 @@
 
 (require 'init-yasnippet)
 
-(cond
- ((eq my-ac-method 'company)
-  (require 'init-company))
- ((eq my-ac-method 'auto-complete)
-  (require 'init-auto-complete)))
+(require 'init-auto-complete)
 
 (require 'init-shell)
 (require 'init-eshell)

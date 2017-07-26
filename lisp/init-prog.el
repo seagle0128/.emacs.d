@@ -75,9 +75,7 @@
   (add-hook 'fish-mode-hook
             '(lambda ()
                (add-hook 'before-save-hook
-                         'fish_indent-before-save)))
-  (with-eval-after-load 'auto-complete
-    (add-hook 'fish-mode-hook 'auto-complete-mode)))
+                         'fish_indent-before-save))))
 
 (use-package swift-mode
   :config

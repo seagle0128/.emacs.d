@@ -69,11 +69,7 @@
   (use-package js2-refactor
     :diminish js2-refactor-mode
     :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
-    :config (js2r-add-keybindings-with-prefix "C-c C-m"))
-
-  (with-eval-after-load 'auto-complete
-    (use-package ac-js2
-      :init (add-hook 'js2-mode-hook 'ac-js2-mode))))
+    :config (js2r-add-keybindings-with-prefix "C-c C-m")))
 
 ;; Run Mocha or Jasmine tests
 (use-package mocha)
@@ -119,9 +115,6 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
-
-  (with-eval-after-load 'auto-complete
-    (add-to-list 'ac-modes 'web-mode))
 
   ;; Complete for web,html,emmet,jade,slim modes
   (with-eval-after-load 'company

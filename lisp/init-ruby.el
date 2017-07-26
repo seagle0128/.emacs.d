@@ -44,9 +44,6 @@
     :init
     (add-hook 'ruby-mode-hook 'robe-mode)
 
-    (with-eval-after-load 'auto-complete
-      (add-hook 'robe-mode-hook 'ac-robe-setup))
-
     (with-eval-after-load 'company
       (push '(company-robe :with company-yasnippet) company-backends)))
 
@@ -58,13 +55,7 @@
   (use-package inf-ruby
     :init
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
-    :config
-    (with-eval-after-load 'auto-complete
-      (add-to-list 'ac-modes 'inf-ruby-minor-mode)
-      (bind-key "TAB" 'auto-complete inf-ruby-mode-map)
-      (use-package ac-inf-ruby
-        :init (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))))
+    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
 
   ;; Rubocop
   (use-package rubocop
