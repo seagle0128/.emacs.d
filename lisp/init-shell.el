@@ -1,4 +1,4 @@
-;; init-shell.el --- Initialize shell configurations.
+;; init-shell.el --- Initialize shell configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

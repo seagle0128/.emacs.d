@@ -1,4 +1,4 @@
-;; init-emacs-lisp.el --- Initialize Emacs Lisp configurations.
+;; init-emacs-lisp.el --- Initialize Emacs Lisp configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0
@@ -104,25 +104,24 @@
   (defun my-describe-symbol-at-point (symbol)
     "Display the full documentation of SYMBOL (function and variable) in tooltip."
     (interactive (list (symbol-at-point)))
-    (let ((x-gtk-use-system-tooltips nil))
-      (if (null symbol)
-          (pos-tip-show
-           "** You didn't specify a symbol! **" '("red"))
+    (if (null symbol)
         (pos-tip-show
-         (with-temp-buffer
-           (let ((standard-output (current-buffer))
-                 (help-xref-following t))
-             (help-mode)
-             (read-only-mode -1)
-             (prin1 symbol)
-             (princ " is ")
-             (save-window-excursion
-               (if (fboundp 'describe-symbol)
-                   (describe-symbol symbol)
-                 (with-no-warnings
-                   (help-xref-interned symbol))))
-             (buffer-string)))
-         nil nil nil 0))))
+         "** You didn't specify a symbol! **" '("red"))
+      (pos-tip-show
+       (with-temp-buffer
+         (let ((standard-output (current-buffer))
+               (help-xref-following t))
+           (help-mode)
+           (read-only-mode -1)
+           (prin1 symbol)
+           (princ " is ")
+           (save-window-excursion
+             (if (fboundp 'describe-symbol)
+                 (describe-symbol symbol)
+               (with-no-warnings
+                 (help-xref-interned symbol))))
+           (buffer-string)))
+       nil nil nil 0)))
 
   (bind-key "<f1>" 'my-describe-symbol-at-point emacs-lisp-mode-map)
   (bind-key "<f1>" 'my-describe-symbol-at-point lisp-interaction-mode-map))

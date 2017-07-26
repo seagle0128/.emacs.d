@@ -1,4 +1,4 @@
-;; init-eshell.el --- Initialize eshell configurations.
+;; init-eshell.el --- Initialize eshell configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

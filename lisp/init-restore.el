@@ -1,4 +1,4 @@
-;; init-restore.el --- Initialize restore configurations.
+;; init-restore.el --- Initialize restore configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

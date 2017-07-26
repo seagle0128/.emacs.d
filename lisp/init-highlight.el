@@ -1,4 +1,4 @@
-;; init-highlight.el --- Initialize highlight configurations.
+;; init-highlight.el --- Initialize highlight configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

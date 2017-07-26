@@ -1,4 +1,4 @@
-;; init-custom.el --- Initialize custom configurations.
+;; init-custom.el --- Initialize custom configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

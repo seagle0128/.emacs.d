@@ -1,4 +1,4 @@
-;; init-window.el --- Initialize window configurations.
+;; init-window.el --- Initialize window configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0

@@ -1,4 +1,4 @@
-;;; init-ivy.el --- Initialize ivy configurations.
+;;; init-ivy.el --- Initialize ivy configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0
@@ -125,7 +125,7 @@
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
               '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                       (counsel-gtags-mode 1))))))
+                            (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 

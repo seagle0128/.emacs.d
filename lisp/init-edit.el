@@ -1,4 +1,4 @@
-;; init-edit.el --- Initialize edit configurations.
+;; init-edit.el --- Initialize edit configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 2.2.0
