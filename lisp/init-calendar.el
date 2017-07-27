@@ -50,7 +50,7 @@
           (holiday-fixed 5 4 "青年节")
           (holiday-fixed 6 1 "儿童节")
           (holiday-fixed 9 10 "教师节")))
-  (setq other-holidays
+  (setq holiday-other-holidays
         '((holiday-fixed 2 14 "情人节")
           (holiday-fixed 4 1 "愚人节")
           (holiday-fixed 12 25 "圣诞节")
@@ -60,7 +60,7 @@
   (setq calendar-holidays
         (append cal-china-x-important-holidays
                 cal-china-x-general-holidays
-                other-holidays))
+                holiday-other-holidays))
 
   ;; `S' can show the time of sunrise and sunset on Calendar
   (setq calendar-location-name "Chengdu"
