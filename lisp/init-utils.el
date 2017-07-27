@@ -53,7 +53,7 @@
   (revert-buffer t t))
 (bind-key "<f5>" 'revert-current-buffer)
 
-p;; Update Emacs configuration
+;; Update Emacs configuration
 (defun update-emacs-config ()
   "Update Emacs configuration to the latest version."
   (interactive)

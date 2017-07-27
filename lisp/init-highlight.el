@@ -50,6 +50,14 @@
   (add-hook 'prog-mode-hook 'highlight-symbol-mode)
   (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
 
+;; Highlight matching paren
+(use-package paren
+  :ensure nil
+  :init
+  (setq show-paren-when-point-inside-paren t)
+  (setq show-paren-when-point-in-periphery t)
+  (add-hook 'after-init-hook 'show-paren-mode))
+
 ;; Highlight surrounding parentheses
 (use-package highlight-parentheses
   :diminish highlight-parentheses-mode
