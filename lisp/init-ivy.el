@@ -35,7 +35,7 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :bind (("C-s" . swiper)
-         ("C-c u" . swiper-all)
+         ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
          ("C-c v" . ivy-push-view)
@@ -53,6 +53,7 @@
          ("C-c r" . counsel-rg)
          ("C-c l" . counsel-load-library)
          ("C-c L" . counsel-load-theme)
+         ("C-c P" . counsel-package)
          ("C-x r b" . counsel-bookmark)
          ("C-x r m" . counsel-bookmark)
          :map counsel-find-file-map
