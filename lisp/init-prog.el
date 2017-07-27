@@ -89,28 +89,6 @@
   :commands robot-mode
   :mode "\\.robot\\'")
 
-;; Eval interface for various REPLs
-(use-package eval-in-repl
-  :bind (:map emacs-lisp-mode-map
-              ("<C-M-return>" . eir-eval-in-ielm)
-              :map lisp-interaction-mode-map
-              ("<C-M-return>" . eir-eval-in-ielm)
-              :map Info-mode-map
-              ("<C-M-return>" . eir-eval-in-ielm)
-              :map lisp-mode-map
-              ("<C-M-return>" . eir-eval-in-slime))
-  :init
-  (setq eir-ielm-eval-in-current-buffer t)
-
-  (with-eval-after-load 'sh-script
-    (bind-key "<C-M-return>" 'eir-eval-in-shell sh-mode-map))
-  (with-eval-after-load 'python-mode
-    (bind-key "<C-M-return>" 'eir-eval-in-python python-mode-map))
-  (with-eval-after-load 'ruby-mode
-    (bind-key "<C-M-return>" 'eir-eval-in-ruby ruby-mode-map))
-  (with-eval-after-load 'js2-mode
-    (bind-key "<C-M-return>" 'eir-eval-in-javascript js2-mode-map)))
-
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
