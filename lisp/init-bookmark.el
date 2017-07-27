@@ -34,6 +34,7 @@
 
 ;; Extensions to `Bookmark'
 (use-package bookmark+
+  :after bookmark
   :bind (;; M$ Visual Studio key setup.
          ("<C-f2>" . bmkp-toggle-autonamed-bookmark-set/delete)
          ("<f2>" . bmkp-next-autonamed-bookmark-repeat)

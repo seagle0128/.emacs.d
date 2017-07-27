@@ -43,12 +43,18 @@
 
          ("C-." . counsel-imenu)
          ("C-x C-r" . counsel-recentf)
+         ("C-h F" . counsel-find-library)
          ("C-h u" . counsel-unicode-char)
+         ("C-c c" . counsel-colors-emacs)
+         ("C-c w" . counsel-colors-web)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c s" . counsel-ag)
          ("C-c r" . counsel-rg)
-         ("C-c l" . counsel-locate)
+         ("C-c l" . counsel-load-library)
+         ("C-c L" . counsel-load-theme)
+         ("C-x r b" . counsel-bookmark)
+         ("C-x r m" . counsel-bookmark)
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
 
@@ -67,6 +73,9 @@
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
   ;; (setq ivy-initial-inputs-alist nil)
+
+  (defalias 'load-library 'counsel-load-library)
+  (defalias 'load-theme 'counsel-load-theme)
 
   (setq ivy-re-builders-alist
         '((read-file-name-internal . ivy--regex-fuzzy)
