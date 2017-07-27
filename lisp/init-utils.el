@@ -182,6 +182,7 @@ This function is called from `compilation-filter-hook'."
 
 ;; Extensions to `Dired'
 (use-package dired+
+  :disabled
   :after dired
   :init
   ;; Suppress the warning: `ls does not support --dired'.
@@ -203,6 +204,7 @@ This function is called from `compilation-filter-hook'."
 
 ;; Extensions to `Info'
 (use-package info+
+  :disabled
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
 
