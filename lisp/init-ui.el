@@ -64,8 +64,7 @@
   :config (with-eval-after-load 'info+ (spaceline-info-mode 1)))
 
 ;; Fonts
-(use-package chinese-fonts-setup
-  :commands cnfonts-enable
+(use-package cnfonts
   :init (cnfonts-enable)
   :config
   (setq cnfonts-verbose nil)
