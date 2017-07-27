@@ -50,7 +50,7 @@
          ("C-c r" . counsel-rg)
          ("C-c l" . counsel-locate)
          :map counsel-find-file-map
-         ("C-l" . counsel-up-directory)
+         ("C-h" . counsel-up-directory)
 
          :map projectile-mode-map
          ([remap projectile-ripgrep] . counsel-projectile-rg)
