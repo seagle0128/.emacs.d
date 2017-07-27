@@ -98,17 +98,6 @@
 
 ;; (add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
 
-;; Update Emacs configuration
-(defun update-emacs-config ()
-  "Update Emacs configuration to its latest version."
-  (interactive)
-  (when (y-or-n-p "Do you want to update .emacs.d? ")
-    (message "Updating...")
-    (cd "~/.emacs.d/")
-    (shell-command "git pull")
-    (byte-compile-init-dir)
-    (message "Update finished. Restart Emacs to complete the process.")))
-
 ;; Only on X
 (when (display-graphic-p)
   ;; Describe symbol at point
