@@ -135,6 +135,10 @@
 (setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
 
+;; Don't open a file in a new frame
+(when (boundp 'ns-pop-up-frames)
+  (setq ns-pop-up-frames nil))
+
 ;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
