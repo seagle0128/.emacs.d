@@ -82,7 +82,7 @@
     (byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0)
     (byte-recompile-directory (expand-file-name "site-lisp" user-emacs-directory) 0)))
 
-(add-hook 'kill-emacs-hook 'byte-compile-init-dir)
+;; (add-hook 'kill-emacs-hook 'byte-compile-init-dir)
 
 (defun recompile-el-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -96,7 +96,7 @@
             nil
             t))
 
-(add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
+;; (add-hook 'emacs-lisp-mode-hook 'recompile-el-on-save)
 
 ;; Update Emacs configuration
 (defun update-emacs-config ()
