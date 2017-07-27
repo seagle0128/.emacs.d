@@ -43,9 +43,7 @@
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
-  :init (add-hook 'after-init-hook 'persistent-scratch-setup-default)
-  :config (setq persistent-scratch-backup-directory
-                (expand-file-name "persistent-scratch" user-emacs-directory)))
+  :init (add-hook 'after-init-hook 'persistent-scratch-setup-default))
 
 (provide 'init-restore)
 
