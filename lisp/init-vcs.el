@@ -41,24 +41,7 @@
          ("C-c M-g" . magit-file-popup))
   :config
   (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass"))
-
-  ;; FIXME: Workaround for
-  ;; https://github.com/dgutov/diff-hl/issues/85
-  ;; https://github.com/magit/magit/issues/3014
-  ;; (magit-auto-revert-mode -1)
-  (defun magit-turn-on-auto-revert-mode-if-desired (&optional file)
-    (if file
-        (--when-let (find-buffer-visiting file)
-          (with-current-buffer it
-            (magit-turn-on-auto-revert-mode-if-desired)))
-      (when (and buffer-file-name
-                 (file-readable-p buffer-file-name)
-                 (magit-toplevel)
-                 (or (not magit-auto-revert-tracked-only)
-                     (magit-file-tracked-p buffer-file-name)))
-        (unless (or auto-revert-mode global-auto-revert-mode)
-          (auto-revert-mode))))))
+    (setenv "GIT_ASKPASS" "git-gui--askpass")))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
