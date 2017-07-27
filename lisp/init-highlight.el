@@ -50,6 +50,12 @@
   (add-hook 'prog-mode-hook 'highlight-symbol-mode)
   (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
 
+;; Highlight surrounding parentheses
+(use-package highlight-parentheses
+  :diminish highlight-parentheses-mode
+  :init (add-hook 'prog-mode-hook 'highlight-parentheses-mode)
+  :config (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
+
 ;; Highlight indentions
 (use-package indent-guide
   :diminish indent-guide-mode
