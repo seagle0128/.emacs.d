@@ -49,6 +49,8 @@
          ("C-c s" . counsel-ag)
          ("C-c r" . counsel-rg)
          ("C-c l" . counsel-locate)
+         :map counsel-find-file-map
+         ("C-l" . counsel-up-directory)
 
          :map projectile-mode-map
          ([remap projectile-ripgrep] . counsel-projectile-rg)
@@ -124,8 +126,9 @@
     :init
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
-              '(lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                            (counsel-gtags-mode 1))))))
+              '(lambda ()
+                 (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                   (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 
