@@ -36,9 +36,12 @@
 
 ;; Git
 (use-package magit
-  :init (add-hook 'after-init-hook 'global-magit-file-mode)
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g" . magit-dispatch-popup)
+         ("C-c M-g" . magit-file-popup))
   :config
-  (setenv "GIT_ASKPASS" "git-gui--askpass")
+  (when sys/win32p
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
   ;; FIXME: Workaround for
   ;; https://github.com/dgutov/diff-hl/issues/85
