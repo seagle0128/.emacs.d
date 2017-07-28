@@ -75,9 +75,6 @@
   (setq ivy-on-del-error-function nil)
   ;; (setq ivy-initial-inputs-alist nil)
 
-  (defalias 'load-library 'counsel-load-library)
-  (defalias 'load-theme 'counsel-load-theme)
-
   (setq ivy-re-builders-alist
         '((read-file-name-internal . ivy--regex-fuzzy)
           (t . ivy--regex-plus)))
