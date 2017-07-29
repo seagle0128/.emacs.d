@@ -185,9 +185,6 @@ This function is called from `compilation-filter-hook'."
   :disabled
   :after dired
   :init
-  ;; Suppress the warning: `ls does not support --dired'.
-  (when sys/macp (setq dired-use-ls-dired nil))
-
   (setq diredp-hide-details-initially-flag nil)
   (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
   :config (diredp-toggle-find-file-reuse-dir 1))
@@ -196,15 +193,14 @@ This function is called from `compilation-filter-hook'."
 (use-package dired-k
   :bind (:map dired-mode-map ("K" . dired-k))
   :init
+  ;; Suppress the warning: `ls does not support --dired'.
+  (when sys/macp (setq dired-use-ls-dired nil))
+
   (add-hook 'dired-initial-position-hook 'dired-k)
   (add-hook 'dired-after-readin-hook #'dired-k-no-revert))
 
-;; Provide menu/dialogue for dired sort options
-(use-package dired-sort-menu+ :after dired)
-
 ;; Extensions to `Info'
 (use-package info+
-  :disabled
   :after info
   :init (setq Info-fontify-angle-bracketed-flag nil))
 
