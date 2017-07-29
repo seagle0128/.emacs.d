@@ -190,23 +190,26 @@ This function is called from `compilation-filter-hook'."
     ;; Use GNU ls as `gls' from `coreutils' if available.
     (with-eval-after-load 'exec-path-from-shell
       (setq insert-directory-program "gls")
-      (setq dired-listing-switches "-aBhl --group-directories-first"))))
+      (setq dired-listing-switches "-aBhl --group-directories-first")))
+  :config
+  ;; Extensions to `Dired'
+  (use-package dired+
+    :disabled
+    :init
+    (setq diredp-hide-details-initially-flag nil)
+    (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
+    :config (diredp-toggle-find-file-reuse-dir 1))
 
-;; Extensions to `Dired'
-(use-package dired+
-  :disabled
-  :after dired
-  :init
-  (setq diredp-hide-details-initially-flag nil)
-  (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
-  :config (diredp-toggle-find-file-reuse-dir 1))
+  ;; Quixk sort dired buffers via hydra
+  (use-package dired-quick-sort
+    :init (dired-quick-sort-setup))
 
-;; Highlights dired buffer like k
-(use-package dired-k
-  :bind (:map dired-mode-map ("K" . dired-k))
-  :init
-  (add-hook 'dired-initial-position-hook 'dired-k)
-  (add-hook 'dired-after-readin-hook #'dired-k-no-revert))
+  ;; Highlights dired buffer like k
+  (use-package dired-k
+    :bind (:map dired-mode-map ("K" . dired-k))
+    :init
+    (add-hook 'dired-initial-position-hook 'dired-k)
+    (add-hook 'dired-after-readin-hook #'dired-k-no-revert)))
 
 ;; Extensions to `Info'
 (use-package info+
