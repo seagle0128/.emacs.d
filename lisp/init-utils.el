@@ -192,14 +192,6 @@ This function is called from `compilation-filter-hook'."
       (setq insert-directory-program "gls")
       (setq dired-listing-switches "-aBhl --group-directories-first")))
   :config
-  ;; Extensions to `Dired'
-  (use-package dired+
-    :disabled
-    :init
-    (setq diredp-hide-details-initially-flag nil)
-    (setq font-lock-maximum-decoration (quote ((dired-mode . 1) (t . t))))
-    :config (diredp-toggle-find-file-reuse-dir 1))
-
   ;; Quixk sort dired buffers via hydra
   (use-package dired-quick-sort
     :init (dired-quick-sort-setup))
