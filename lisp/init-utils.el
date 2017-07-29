@@ -180,6 +180,18 @@ This function is called from `compilation-filter-hook'."
 ;; Text mode directory tree. Similar with beyond compare
 (use-package ztree)
 
+(use-package dired
+  :ensure nil
+  :init
+  (when sys/macp
+    ;; Suppress the warning: `ls does not support --dired'.
+    (setq dired-use-ls-dired nil)
+
+    ;; Use GNU ls as `gls' from `coreutils' if available.
+    (with-eval-after-load 'exec-path-from-shell
+      (setq insert-directory-program "gls")
+      (setq dired-listing-switches "-aBhl --group-directories-first"))))
+
 ;; Extensions to `Dired'
 (use-package dired+
   :disabled
@@ -193,9 +205,6 @@ This function is called from `compilation-filter-hook'."
 (use-package dired-k
   :bind (:map dired-mode-map ("K" . dired-k))
   :init
-  ;; Suppress the warning: `ls does not support --dired'.
-  (when sys/macp (setq dired-use-ls-dired nil))
-
   (add-hook 'dired-initial-position-hook 'dired-k)
   (add-hook 'dired-after-readin-hook #'dired-k-no-revert))
 
