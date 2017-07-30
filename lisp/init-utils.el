@@ -180,6 +180,7 @@ This function is called from `compilation-filter-hook'."
 ;; Text mode directory tree. Similar with beyond compare
 (use-package ztree)
 
+;; Directory operations
 (use-package dired
   :ensure nil
   :config
