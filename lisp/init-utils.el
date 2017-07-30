@@ -201,7 +201,7 @@ This function is called from `compilation-filter-hook'."
           ("\\.md\\'" "open")))
 
   (setq dired-omit-files
-        (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|\\^.git$\\|\\^.svn$\\|\\^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*$"))
+        (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))
 
   ;; always delete and copy recursively
   (setq dired-recursive-deletes 'always)
