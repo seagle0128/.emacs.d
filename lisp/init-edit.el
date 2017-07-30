@@ -115,9 +115,15 @@
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
-  :init (add-hook 'after-init-hook 'global-aggressive-indent-mode)
-  :config (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
-            (push mode aggressive-indent-excluded-modes)))
+  :init
+  ;; FIXME: Performance issues in big files
+  ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+  (add-hook 'prog-mode-hook
+            '(lambda ()
+               (aggressive-indent-mode (- (* 3000 80) (buffer-size)))))
+  :config
+  (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
+    (push mode aggressive-indent-excluded-modes)))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
