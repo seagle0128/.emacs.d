@@ -182,7 +182,6 @@ This function is called from `compilation-filter-hook'."
 
 (use-package dired
   :ensure nil
-  :dminish dired-omit-mode
   :config
   (require 'dired-x)
   (require 'dired-aux)
@@ -195,14 +194,14 @@ This function is called from `compilation-filter-hook'."
           ("\\.\\(?:xcf\\)\\'" "open")
           ("\\.csv\\'" "open")
           ("\\.tex\\'" "open")
-          ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|ogv\\)\\(?:\\.part\\)?\\'"
+          ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'"
            "open")
           ("\\.\\(?:mp3\\|flac\\)\\'" "open")
           ("\\.html?\\'" "open")
           ("\\.md\\'" "open")))
 
   (setq dired-omit-files
-        (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|\\.git$\\|\\.svn$\\|\\.elc$\\|\\.js\\.meta$\\|\\.meta$"))
+        (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|\\^.git$\\|\\^.svn$\\|\\^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*$"))
 
   ;; always delete and copy recursively
   (setq dired-recursive-deletes 'always)
@@ -218,8 +217,26 @@ This function is called from `compilation-filter-hook'."
       (setq dired-listing-switches "-aBhl --group-directories-first")))
 
   ;; Quixk sort dired buffers via hydra
+  ;; bind key: `S'
   (use-package dired-quick-sort
     :init (dired-quick-sort-setup))
+
+  ;; Extended file highlighting according to its type
+  (use-package dired-rainbow
+    :commands dired-rainbow-define dired-rainbow-define-chmod
+    :init
+    (dired-rainbow-define html "#4e9a06" ("htm" "html" "xhtml"))
+    (dired-rainbow-define prog-files "yellow3" ("el" "py" "rb" "c" "cpp" "cxx" "swift" "go" "java" "js"))
+    (dired-rainbow-define dotfiles "gray" "\\..*")
+    (dired-rainbow-define dummy "gray50" ("DS_Store" "projectile" "elc"))
+    (dired-rainbow-define media "#ce5c00" ("mp3" "mp4" "MP3" "MP4" "avi" "mpg" "flv" "ogg" "rm" "rmvb"))
+
+    ;; boring regexp due to lack of imagination
+    (dired-rainbow-define log (:inherit default
+                                        :italic t) ".*\\.log")
+
+    ;; highlight executable files, but not directories
+    (dired-rainbow-define-chmod executable-unix "Green" "-[rw-]+x.*"))
 
   ;; Highlights dired buffer like k
   (use-package dired-k
