@@ -182,7 +182,32 @@ This function is called from `compilation-filter-hook'."
 
 (use-package dired
   :ensure nil
-  :init
+  :dminish dired-omit-mode
+  :config
+  (require 'dired-x)
+  (require 'dired-aux)
+  (setq dired-listing-switches "-alh")
+  (setq dired-guess-shell-alist-user
+        '(("\\.pdf\\'" "open")
+          ("\\.docx\\'" "open")
+          ("\\.\\(?:djvu\\|eps\\)\\'" "open")
+          ("\\.\\(?:jpg\\|jpeg\\|png\\|gif\\|xpm\\)\\'" "open")
+          ("\\.\\(?:xcf\\)\\'" "open")
+          ("\\.csv\\'" "open")
+          ("\\.tex\\'" "open")
+          ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|ogv\\)\\(?:\\.part\\)?\\'"
+           "open")
+          ("\\.\\(?:mp3\\|flac\\)\\'" "open")
+          ("\\.html?\\'" "open")
+          ("\\.md\\'" "open")))
+
+  (setq dired-omit-files
+        (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|\\.git$\\|\\.svn$\\|\\.elc$\\|\\.js\\.meta$\\|\\.meta$"))
+
+  ;; always delete and copy recursively
+  (setq dired-recursive-deletes 'always)
+  (setq dired-recursive-copies 'always)
+
   (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
     (setq dired-use-ls-dired nil)
@@ -191,7 +216,7 @@ This function is called from `compilation-filter-hook'."
     (with-eval-after-load 'exec-path-from-shell
       (setq insert-directory-program "gls")
       (setq dired-listing-switches "-aBhl --group-directories-first")))
-  :config
+
   ;; Quixk sort dired buffers via hydra
   (use-package dired-quick-sort
     :init (dired-quick-sort-setup))
