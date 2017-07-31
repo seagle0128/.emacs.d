@@ -40,7 +40,6 @@
   ;; Robe mode
   (use-package robe
     :diminish robe-mode
-    :defines ac-modes company-backends
     :init
     (add-hook 'ruby-mode-hook 'robe-mode)
 
