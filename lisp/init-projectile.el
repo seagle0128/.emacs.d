@@ -62,7 +62,10 @@
                                 (cons "" projectile-globally-ignored-directories)
                                 " --ignore-dir="))))))
       (setq projectile-generic-command command)))
-  (add-hook 'emacs-startup-hook 'set-projectile-generic-command)
+  (if sys/macp
+      (with-eval-after-load 'exec-path-from-shell
+        (set-projectile-generic-command))
+    (set-projectile-generic-command))
 
   ;; Faster searching on Windows
   (when sys/win32p (setq projectile-git-submodule-command ""))
