@@ -187,24 +187,26 @@ This function is called from `compilation-filter-hook'."
   (require 'dired-x)
   (require 'dired-aux)
   (setq dired-listing-switches "-alh")
-  (setq dired-guess-shell-alist-user
-        '(("\\.pdf\\'" "open")
-          ("\\.docx\\'" "open")
-          ("\\.\\(?:djvu\\|eps\\)\\'" "open")
-          ("\\.\\(?:jpg\\|jpeg\\|png\\|gif\\|xpm\\)\\'" "open")
-          ("\\.\\(?:xcf\\)\\'" "open")
-          ("\\.csv\\'" "open")
-          ("\\.tex\\'" "open")
-          ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'"
-           "open")
-          ("\\.\\(?:mp3\\|flac\\)\\'" "open")
-          ("\\.html?\\'" "open")
-          ("\\.md\\'" "open")))
+
+  (when (display-graphic-p)
+    (setq dired-guess-shell-alist-user
+          '(("\\.pdf\\'" "open")
+            ("\\.docx\\'" "open")
+            ("\\.\\(?:djvu\\|eps\\)\\'" "open")
+            ("\\.\\(?:jpg\\|jpeg\\|png\\|gif\\|xpm\\)\\'" "open")
+            ("\\.\\(?:xcf\\)\\'" "open")
+            ("\\.csv\\'" "open")
+            ("\\.tex\\'" "open")
+            ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'"
+             "open")
+            ("\\.\\(?:mp3\\|flac\\)\\'" "open")
+            ("\\.html?\\'" "open")
+            ("\\.md\\'" "open"))))
 
   (setq dired-omit-files
         (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))
 
-  ;; always delete and copy recursively
+  ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
 
