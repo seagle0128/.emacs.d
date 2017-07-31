@@ -61,7 +61,7 @@
       (setq ls-lisp-use-insert-directory-program t))))
 
   ;; Extra Dired functionality
-  (use-package dired-aux)
+  (use-package dired-aux :ensure nil)
   (use-package dired-x
     :ensure nil
     :after dired
