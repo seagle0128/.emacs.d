@@ -96,10 +96,6 @@
   :config
   (setq nlinum-format "%4d ")
 
-  ;; FIX: show-paren-mode erroneously highlights the left margin
-  ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-10/msg01050.html
-  (custom-set-faces '(linum ((t (:inherit default)))))
-
   ;; FIXME: refresh after exiting macrostep-mode
   (with-eval-after-load 'macrostep
     (add-hook 'macrostep-mode-hook
