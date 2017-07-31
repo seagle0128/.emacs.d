@@ -68,7 +68,8 @@
     (set-projectile-generic-command))
 
   ;; Faster searching on Windows
-  (when sys/win32p (setq projectile-git-submodule-command ""))
+  (when sys/win32p
+    (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
