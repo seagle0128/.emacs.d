@@ -208,16 +208,24 @@ This function is called from `compilation-filter-hook'."
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
 
+  ;; For macOS
   (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
     (setq dired-use-ls-dired nil)
 
     ;; Use GNU ls as `gls' from `coreutils' if available.
     (with-eval-after-load 'exec-path-from-shell
-      (setq insert-directory-program "gls")
-      (setq dired-listing-switches "-aBhl --group-directories-first")))
+      (when (executable-find "gls")
+        (setq insert-directory-program "gls")
+        (setq dired-listing-switches "-aBhl --group-directories-first"))))
 
-  ;; Quixk sort dired buffers via hydra
+  ;; For Windows
+  (when sys/win32p
+    (when (executable-find "ls")
+      ;; `dired-quick-sort' needs it
+      (setq ls-lisp-use-insert-directory-program t)))
+
+  ;; Quick sort dired buffers via hydra
   ;; bind key: `S'
   (use-package dired-quick-sort
     :init (dired-quick-sort-setup))
