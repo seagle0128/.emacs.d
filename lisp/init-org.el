@@ -56,7 +56,18 @@
     (add-hook 'org-mode-hook 'org-bullets-mode))
 
   ;; Presentation
-  (use-package org-tree-slide)
+  (use-package org-tree-slide
+    :config
+    (add-hook 'org-tree-slide-play-hook
+              (lambda ()
+                (text-scale-increase 5)
+                (org-display-inline-images)
+                (read-only-mode 1)))
+    (add-hook 'org-tree-slide-stop-hook
+              (lambda ()
+                (text-scale-increase 0)
+                (org-remove-inline-images)
+                (read-only-mode -1))))
 
   ;; Pomodoro
   (use-package org-pomodoro)
