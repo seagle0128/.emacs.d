@@ -45,7 +45,7 @@
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     (setq exec-path-from-shell-variables '("PATH" "MANPTH" "PYTHONPATH"))
-    (add-hook 'after-init-hook 'exec-path-from-shell-initialize)))
+    (exec-path-from-shell-initialize)))
 
 ;; Start server
 (use-package server

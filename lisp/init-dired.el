@@ -51,10 +51,9 @@
     (setq dired-use-ls-dired nil)
 
     ;; Use GNU ls as `gls' from `coreutils' if available.
-    (with-eval-after-load 'exec-path-from-shell
-      (when (executable-find "gls")
-        (setq insert-directory-program "gls")
-        (setq dired-listing-switches "-aBhl --group-directories-first"))))
+    (when (executable-find "gls")
+      (setq insert-directory-program "gls")
+      (setq dired-listing-switches "-aBhl --group-directories-first")))
    (sys/win32p
     (when (executable-find "ls")
       ;; `dired-quick-sort' needs it
