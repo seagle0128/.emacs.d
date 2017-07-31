@@ -91,11 +91,12 @@
 (require 'init-company)
 (require 'init-yasnippet)
 
+(require 'init-bookmark)
+(require 'init-calendar)
+(require 'init-dired)
+(require 'init-highlight)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
-(require 'init-calendar)
-(require 'init-bookmark)
-(require 'init-highlight)
 (require 'init-window)
 
 (require 'init-shell)
