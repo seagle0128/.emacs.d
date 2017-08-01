@@ -91,11 +91,15 @@
   (use-package dired-rainbow
     :commands dired-rainbow-define dired-rainbow-define-chmod
     :init
-    (dired-rainbow-define html "#4e9a06" ("htm" "html" "xhtml"))
-    (dired-rainbow-define prog-files "yellow3" ("el" "py" "rb" "c" "cpp" "cxx" "swift" "go" "java" "js"))
+    (dired-rainbow-define html "#4e9a06" ("htm" "html" "xhtml" "xml"))
+    (dired-rainbow-define prog "yellow3" ("el" "py" "rb" "pl" "c" "cpp" "cxx" "h" "hpp" "hxx" "swift" "go" "java" "js"))
+    (dired-rainbow-define text "YellowGreen" ("txt" "md" "org" "ini" "conf"))
+    (dired-rainbow-define doc "SpringGreen3" ("doc" "docx" "ppt" "pptx" "xls" "xlsx"))
     (dired-rainbow-define dotfiles "gray" "\\..*")
-    (dired-rainbow-define dummy "gray50" ("DS_Store" "projectile" "elc"))
-    (dired-rainbow-define media "#ce5c00" ("mp3" "mp4" "MP3" "MP4" "avi" "mpg" "flv" "ogg" "rm" "rmvb"))
+    (dired-rainbow-define misc "gray50" ("DS_Store" "projectile" "cache" "elc" "dat" "meta"))
+    (dired-rainbow-define media "#ce5c00" ("mp3" "mp4" "MP3" "MP4" "wav" "wma" "wmv" "mov" "3gp" "avi" "mpg" "mkv" "flv" "ogg" "rm" "rmvb"))
+    (dired-rainbow-define picture "purple3" ("bmp" "jpg" "jpeg" "gif" "png" "tiff" "ico" "svg" "psd" "pcd" "raw" "exif" "BMP" "JPG" "PNG"))
+    (dired-rainbow-define archive "SaddleBrown" ("zip" "tar" "gz" "7z" "rar" "gzip" "001" "ace" "bz2" "bzip2" "cab" "jar" "iso"))
 
     ;; boring regexp due to lack of imagination
     (dired-rainbow-define log (:inherit default
