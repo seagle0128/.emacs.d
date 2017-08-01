@@ -84,6 +84,7 @@
   ;; Quick sort dired buffers via hydra
   ;; bind key: `S'
   (use-package dired-quick-sort
+    :if (or (not sys/macp) (executable-find "gls"))
     :init (dired-quick-sort-setup))
 
   ;; Extended file highlighting according to its type
