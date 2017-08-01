@@ -45,6 +45,7 @@
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     (setq exec-path-from-shell-variables '("PATH" "MANPTH" "PYTHONPATH"))
+    (setq exec-path-from-shell-arguments '("-l"))
     (exec-path-from-shell-initialize)))
 
 ;; Start server
