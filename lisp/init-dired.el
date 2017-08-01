@@ -38,13 +38,13 @@
 (use-package dired
   :ensure nil
   :config
-  (setq dired-listing-switches "-alh")
+  ;; Show directory first
+  (setq dired-listing-switches "-alh --group-directories-first")
 
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
 
-  ;; For OS
   (cond
    (sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
@@ -52,8 +52,7 @@
 
     ;; Use GNU ls as `gls' from `coreutils' if available.
     (when (executable-find "gls")
-      (setq insert-directory-program "gls")
-      (setq dired-listing-switches "-aBhl --group-directories-first")))
+      (setq insert-directory-program "gls")))
    (sys/win32p
     (when (executable-find "ls")
       ;; `dired-quick-sort' needs it
