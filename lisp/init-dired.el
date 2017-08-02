@@ -113,9 +113,7 @@
     :bind (:map dired-mode-map ("K" . dired-k))
     :init
     (setq dired-k-padding 1)
-    (setq dired-k-human-readable t)
-    (add-hook 'dired-initial-position-hook 'dired-k)
-    (add-hook 'dired-after-readin-hook #'dired-k-no-revert)))
+    (setq dired-k-human-readable t)))
 
 (provide 'init-dired)
 

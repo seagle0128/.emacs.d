@@ -94,6 +94,7 @@
               ("SPC" . diff-hl-mark-hunk))
   :init
   (add-hook 'after-init-hook 'global-diff-hl-mode)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   :config
   (diff-hl-flydiff-mode 1)
 
