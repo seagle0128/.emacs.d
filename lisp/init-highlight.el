@@ -80,10 +80,6 @@
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-;; Color identifiers based on their names
-(use-package color-identifiers-mode
-  :diminish color-identifiers-mode)
-
 ;; Highlight TODO/FIXME/BUG...
 (use-package fic-mode
   :init (add-hook 'prog-mode-hook 'fic-mode))
