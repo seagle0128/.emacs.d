@@ -99,9 +99,9 @@
     (dired-rainbow-define prog "yellow3" ("el" "l" "ml" "py" "rb" "pl" "pm" "c"
                                           "cpp" "cxx" "c++" "h" "hpp" "hxx" "h++"
                                           "m" "cs" "mk" "make" "swift" "go" "java"
-                                          "asm" "robot" "yml" "rake" "lua"))
-    (dired-rainbow-define sh "GreenYellow" ("sh" "bash" "zsh" "fish" "csh" "awk"
-                                            "ps1" "psm1" "psd1" "bat" "cmd"))
+                                          "asm" "robot" "yml" "yaml" "rake" "lua"))
+    (dired-rainbow-define sh "GreenYellow" ("sh" "bash" "zsh" "fish" "csh" "ksh"
+                                            "awk" "ps1" "psm1" "psd1" "bat" "cmd"))
     (dired-rainbow-define text "YellowGreen" ("txt" "md" "org" "ini" "conf" "rc"
                                               "vim" "vimrc" "exrc"))
     (dired-rainbow-define doc "SpringGreen3" ("doc" "docx" "ppt" "pptx" "xls"
