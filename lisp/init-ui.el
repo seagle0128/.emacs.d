@@ -51,10 +51,7 @@
 
 ;; Theme
 (use-package monokai-theme
-  :init
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (load-theme 'monokai t))))
+  :init (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t))))
 
 ;; Modeline
 (use-package spaceline-config
@@ -63,7 +60,7 @@
              spaceline-info-mode)
   :init
   (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
-  (add-hook 'after-init-hook'(lambda () (spaceline-spacemacs-theme)))
+  (add-hook 'after-init-hook '(lambda () (spaceline-spacemacs-theme)))
   :config (with-eval-after-load 'info+ (spaceline-info-mode 1)))
 
 ;; Fonts
