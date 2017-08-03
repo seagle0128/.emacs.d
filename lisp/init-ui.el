@@ -80,26 +80,13 @@
 (setq column-number-mode t)
 (setq line-number-mode t)
 
-(use-package nlinum
+;; Revert to built-in linum
+;; https://github.com/syl20bnr/spacemacs/issues/6104
+(use-package linum-off
+  :after linum
   :init
-  (defun turn-on-nlinum ()
-    "Turn on nlinum in small files."
-    (interactive)
-    (nlinum-mode (- (* 5000 80) (buffer-size))))
-
-  (defun turn-off-nlinum ()
-    "Turn off nlinum."
-    (interactive)
-    (nlinum-mode -1))
-
-  (add-hook 'prog-mode-hook 'turn-on-nlinum)
-  :config
-  (setq nlinum-format "%4d ")
-
-  ;; FIXME: refresh after exiting macrostep-mode
-  (with-eval-after-load 'macrostep
-    (add-hook 'macrostep-mode-hook
-              '(lambda () (when nlinum-mode (turn-on-nlinum))))))
+  (setq linum-format "%4d ")
+  (add-hook 'after-init-hook 'global-linum-mode))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
