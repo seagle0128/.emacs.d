@@ -49,8 +49,8 @@
          ("C-c w" . counsel-colors-web)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
-         ("C-c s" . counsel-ag)
-         ("C-c r" . counsel-rg)
+         ("C-c S" . counsel-ag)
+         ("C-c R" . counsel-rg)
          ("C-c l" . counsel-locate)
          ("C-c L" . counsel-load-library)
          ("C-c P" . counsel-package)
@@ -58,9 +58,6 @@
          ("C-x r m" . counsel-bookmark)
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
-
-         :map projectile-mode-map
-         ([remap projectile-ripgrep] . counsel-projectile-rg)
 
          :map swiper-map
          ("M-%" . swiper-query-replace))
