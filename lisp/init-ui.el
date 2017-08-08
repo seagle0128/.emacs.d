@@ -51,7 +51,7 @@
 
 ;; Theme
 (use-package monokai-theme
-  :init (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t))))
+  :init (load-theme 'monokai t))
 
 ;; Modeline
 (use-package spaceline-config
