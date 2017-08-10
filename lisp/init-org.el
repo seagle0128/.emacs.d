@@ -60,12 +60,12 @@
     :config
     (add-hook 'org-tree-slide-play-hook
               (lambda ()
-                (text-scale-increase 4)
+                (text-scale-set 4)
                 (org-display-inline-images)
                 (read-only-mode 1)))
     (add-hook 'org-tree-slide-stop-hook
               (lambda ()
-                (text-scale-increase 0)
+                (text-scale-set 0)
                 (org-remove-inline-images)
                 (read-only-mode -1))))
 
