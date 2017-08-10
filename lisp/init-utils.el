@@ -53,15 +53,14 @@
   (revert-buffer t t))
 (bind-key "<f5>" 'revert-current-buffer)
 
-;; Update Emacs configuration
-(defun update-emacs-config ()
-  "Update Emacs configuration to the latest version."
+;; Update configurations
+(defun update-config ()
+  "Update Emacs configurations to the latest version."
   (interactive)
-  (when (y-or-n-p "Do you want to update Emacs configruation? ")
-    (message "Updating Emacs configuration...")
-    (cd "~/.emacs.d/")
-    (shell-command "git pull")
-    (message "Update finished. Restart Emacs to complete the process.")))
+  (message "Updating Emacs configurations...")
+  (cd "~/.emacs.d/")
+  (async-shell-command "git pull")
+  (message "Update finished. Restart Emacs to complete the process."))
 
 ;; Save a file as utf-8
 (defun save-buffer-as-utf8 (coding-system)
