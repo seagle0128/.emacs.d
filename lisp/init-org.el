@@ -72,6 +72,9 @@
   ;; Pomodoro
   (use-package org-pomodoro)
 
+  ;; Visually summarize progress
+  (use-package org-dashboard)
+
   (use-package hydra
     :demand
     :config
