@@ -81,10 +81,12 @@
     (defhydra hydra-org-template (:color blue :hint nil)
       "
 _c_enter  _q_uote     _e_macs-lisp    _L_aTeX:
-_l_atex   _E_xample   _p_erl          _i_ndex:
-_a_scii   _v_erse     _P_erl tangled  _I_NCLUDE:
-_s_rc     ^ ^         plant_u_ml      _H_TML:
-_h_tml    ^ ^         ^ ^             _A_SCII:
+_l_atex   _E_xample   _r_uby          _i_ndex:
+_a_scii   _v_erse     p_y_thon        _I_NCLUDE:
+_s_rc     ^ ^         _p_erl          _H_TML:
+_h_tml    ^ ^         _S_HELL         _A_SCII:
+^ ^       ^ ^         _P_erl tangled  ^ ^
+^ ^       ^ ^         plant_u_ml      ^ ^
 "
       ("s" (hot-expand "<s"))
       ("E" (hot-expand "<e"))
@@ -100,6 +102,7 @@ _h_tml    ^ ^         ^ ^             _A_SCII:
       ("r" (hot-expand "<s" "ruby"))
       ("y" (hot-expand "<s" "python"))
       ("p" (hot-expand "<s" "perl"))
+      ("S" (hot-expand "<s" "sh"))
       ("u" (hot-expand "<s" "plantuml :file CHANGE.png"))
       ("P" (progn
              (insert "#+HEADERS: :results output :exports both :shebang \"#!/usr/bin/env perl\"\n")
