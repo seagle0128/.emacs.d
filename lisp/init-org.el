@@ -78,9 +78,9 @@
   (use-package hydra
     :demand
     :config
-    (defhydra hydra-org-template (:color blue :hint nil)
+    (defhydra hydra-org-template (:color pink :hint nil)
       "
-_c_enter  _q_uote     _e_macs-lisp    _L_aTeX:
+_c_enter  qu_o_te     _e_macs-lisp    _L_aTeX:
 _l_atex   _E_xample   _r_uby          _i_ndex:
 _a_scii   _v_erse     p_y_thon        _I_NCLUDE:
 _s_rc     ^ ^         _p_erl          _H_TML:
@@ -90,7 +90,7 @@ _h_tml    ^ ^         _S_HELL         _A_SCII:
 "
       ("s" (hot-expand "<s"))
       ("E" (hot-expand "<e"))
-      ("q" (hot-expand "<q"))
+      ("o" (hot-expand "<q"))
       ("v" (hot-expand "<v"))
       ("c" (hot-expand "<c"))
       ("l" (hot-expand "<l"))
@@ -111,7 +111,7 @@ _h_tml    ^ ^         _S_HELL         _A_SCII:
       ("H" (hot-expand "<H"))
       ("A" (hot-expand "<A"))
       ("<" self-insert-command "ins")
-      ("o" nil "quit"))
+      ("q" nil "quit"))
 
     (defun hot-expand (str &optional mod)
       "Expand org template."

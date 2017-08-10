@@ -51,8 +51,7 @@
 
   (with-eval-after-load 'company
     (use-package company-go
-      :init (push '(company-go :with company-yasnippet) company-backends)))
-  )
+      :init (push '(company-go :with company-yasnippet) company-backends))))
 
 (provide 'init-go)
 
