@@ -59,7 +59,7 @@
   (interactive)
   (message "Updating Emacs configurations...")
   (cd "~/.emacs.d/")
-  (async-shell-command "git pull")
+  (shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
 ;; Save a file as utf-8
