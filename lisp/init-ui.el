@@ -65,15 +65,12 @@
 
 ;; Fonts
 (use-package cnfonts
-  :init (cnfonts-enable)
-  :config
-  (setq cnfonts-verbose nil)
-  (setq cnfonts-save-current-profile nil)
-  (setq cnfonts-use-face-font-rescale t)
+  :init
   (setq cnfonts-profiles '("program" "org-mode" "read-book"))
   (setq cnfonts--profiles-steps '(("program" . 4)
                                   ("org-mode" . 6)
-                                  ("read-book" . 8))))
+                                  ("read-book" . 8)))
+  (cnfonts-enable))
 
 ;; Line and Column
 (setq-default fill-column 80)
