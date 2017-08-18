@@ -44,8 +44,9 @@
                               (diminish 'org-indent-mode)))
   :config
   (setq org-agenda-files '("~/org"))
-  (setq org-todo-keywords '((sequence "TODO" "ONGOING" "PENDING" "DONE")))
-  (setq org-log-done t)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "DOING(i!)" "HANGUP(h!)" "|" "DONE(d!)" "CANCEL(c!)")))
+  (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
   (add-to-list 'org-export-backends 'md)
 
