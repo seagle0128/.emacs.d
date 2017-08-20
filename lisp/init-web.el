@@ -72,8 +72,8 @@
     :config (js2r-add-keybindings-with-prefix "C-c C-m")))
 
 ;; Run Mocha or Jasmine tests
-(use-package mocha)
-(use-package mocha-snippets)
+(use-package mocha
+  :config (use-package mocha-snippets))
 
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode
