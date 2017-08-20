@@ -84,17 +84,16 @@
 
 ;; A mondern package interface
 (use-package paradox
-  :init
+  :config
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
 ;; Automatically update packages
 (use-package auto-package-update
-  :init
-  ;; (setq auto-package-update-interval 1)
+  :init (add-hook 'emacs-startup-hook 'auto-package-update-maybe)
+  :config
   (setq auto-package-update-delete-old-versions t)
-  (add-hook 'emacs-startup-hook 'auto-package-update-maybe)
-  :config (auto-package-update-at-time "03:00"))
+  (auto-package-update-at-time "03:00"))
 
 (provide 'init-package)
 
