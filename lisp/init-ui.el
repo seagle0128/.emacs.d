@@ -65,12 +65,13 @@
 
 ;; Fonts
 (use-package cnfonts
-  :init
-  (setq cnfonts-profiles '("program" "org-mode" "read-book"))
-  (setq cnfonts--profiles-steps '(("program" . 4)
+  :init (cnfonts-enable)
+  :config
+  (setq cnfonts-profiles '("program1" "program2" "org-mode" "read-book"))
+  (setq cnfonts--profiles-steps '(("program1" . 4)
+                                  ("program2" . 5)
                                   ("org-mode" . 6)
-                                  ("read-book" . 8)))
-  (cnfonts-enable))
+                                  ("read-book" . 8))))
 
 ;; Line and Column
 (setq-default fill-column 80)
