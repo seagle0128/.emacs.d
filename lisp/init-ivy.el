@@ -97,8 +97,13 @@
             swiper-map)
 
   (use-package smex)
-  (use-package ivy-hydra)
-  (use-package counsel-projectile :init (counsel-projectile-on))
+
+  (use-package ivy-hydra
+    :bind (:map ivy-minibuffer-map
+                ("M-o" . ivy-dispatching-done-hydra)))
+
+  (use-package counsel-projectile
+    :init (counsel-projectile-on))
 
   (use-package flyspell-correct-ivy
     :after flyspell
