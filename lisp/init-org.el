@@ -50,6 +50,13 @@
   (setq org-src-fontify-natively t)
   (add-to-list 'org-export-backends 'md)
 
+  (setq org-confirm-babel-evaluate nil)
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((emacs-lisp . t)
+                                 (sh . t)
+                                 (python . t)
+                                 (ruby . t)))
+
   (use-package org-bullets
     :init
     (setq org-bullets-bullet-list
@@ -79,7 +86,7 @@
   (use-package hydra
     :demand
     :config
-    (defhydra hydra-org-template (:color pink :hint nil)
+    (defhydra hydra-org-template (:color blue :hint nil)
       "
 _c_enter  qu_o_te     _e_macs-lisp    _L_aTeX:
 _l_atex   _E_xample   _r_uby          _i_ndex:
