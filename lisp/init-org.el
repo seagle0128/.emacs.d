@@ -78,7 +78,9 @@
                 (read-only-mode -1))))
 
   ;; Pomodoro
-  (use-package org-pomodoro)
+  (use-package org-pomodoro
+    :bind (:map org-agenda-mode-map
+                ("p" . org-pomodoro)))
 
   ;; Visually summarize progress
   (use-package org-dashboard)
