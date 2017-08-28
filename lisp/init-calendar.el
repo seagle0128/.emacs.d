@@ -45,6 +45,7 @@
   (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
   (setq cal-china-x-general-holidays
         '((holiday-lunar 1 15 "元宵节")
+          (holiday-lunar 7 7 "七夕节")
           (holiday-fixed 3 8 "妇女节")
           (holiday-fixed 3 12 "植树节")
           (holiday-fixed 5 4 "青年节")
