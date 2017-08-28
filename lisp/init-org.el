@@ -51,7 +51,8 @@
   (add-to-list 'org-export-backends 'md)
 
   ;; FIXME org-agenda-execute-calendar-command uses deprecated list-calendar-holidays
-  (defalias 'list-calendar-holidays 'calendar-list-holidays)
+  (unless (fboundp 'list-calendar-holidays)
+    (defalias 'list-calendar-holidays 'calendar-list-holidays))
 
   (setq org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages 'org-babel-load-languages
