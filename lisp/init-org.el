@@ -84,7 +84,7 @@
   ;; Pomodoro
   (use-package org-pomodoro
     :bind (:map org-agenda-mode-map
-                ("p" . org-pomodoro)))
+                ("P" . org-pomodoro)))
 
   ;; Visually summarize progress
   (use-package org-dashboard)
