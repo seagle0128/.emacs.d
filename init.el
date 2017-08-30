@@ -63,8 +63,8 @@
 (setq load-prefer-newer t)
 
 ;; Load path
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name (locate-user-emacs-file "lisp")))
+(add-to-list 'load-path (expand-file-name (locate-user-emacs-file "site-lisp")))
 
 ;; Customization
 (require 'init-custom)
