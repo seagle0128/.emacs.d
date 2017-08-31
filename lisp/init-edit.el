@@ -160,7 +160,17 @@
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
   :ensure nil
-  :config (setq ediff-split-window-function 'split-window-horizontally))
+  :init
+  ;; show org ediffs unfolded
+  (with-eval-after-load 'outline
+    (add-hook 'ediff-prepare-buffer-hook #'show-all))
+  ;; restore window layout when done
+  (with-eval-after-load 'winner
+    (add-hook 'ediff-quit-hook #'winner-undo))
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
