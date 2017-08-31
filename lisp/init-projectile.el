@@ -36,16 +36,14 @@
 
 ;; Manage and navigate projects
 (use-package projectile
-  :bind (("C-S-t" . projectile-find-file)
-         ("s-t" . projectile-find-file))
+  :bind (("C-S-t" . projectile-find-file) ; for Windows
+         ("s-t" . projectile-find-file))  ; Cmd-t for Mac and Super-t for Linux
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config
   (setq projectile-mode-line
         '(:eval (format "[%s]" (projectile-project-name))))
 
-  (setq projectile-indexing-method 'alien)
-  (setq projectile-enable-caching nil)
-  (setq projectile-sort-order 'access-time)
+  (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
 
   ;; Use faster search tools: ripgrep or the silver search
@@ -62,6 +60,8 @@
 
   ;; Faster searching on Windows
   (when sys/win32p
+    (when (or (executable-find "rg") (executable-find "ag"))
+      (setq projectile-indexing-method 'alien))
     (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project
