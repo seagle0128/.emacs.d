@@ -51,7 +51,8 @@
   :diminish eldoc-mode
   :init (dolist (hook '(emacs-lisp-mode-hook
                         lisp-interaction-mode-hook
-                        ielm-mode-hook))
+                        ielm-mode-hook
+                        eval-expression-minibuffer-setup-hook))
           (add-hook hook 'eldoc-mode)))
 
 ;; Interactive macro expander
