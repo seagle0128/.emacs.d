@@ -40,7 +40,18 @@
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
-  :init (add-hook 'after-init-hook 'winner-mode))
+  :init
+  (setq winner-boring-buffers '("*Completions*"
+                                "*Compile-Log*"
+                                "*inferior-lisp*"
+                                "*Fuzzy Completions*"
+                                "*Apropos*"
+                                "*Help*"
+                                "*cvs*"
+                                "*Buffer List*"
+                                "*Ibuffer*"
+                                "*esh command on file*"))
+  (add-hook 'after-init-hook 'winner-mode))
 
 ;; Quickly switch windows
 (use-package ace-window
