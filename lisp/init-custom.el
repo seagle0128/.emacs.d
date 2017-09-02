@@ -24,7 +24,7 @@
 ;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
+;; along with this program; see the custom-file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
@@ -59,9 +59,9 @@
   "Enable the init profiler or not."
   :type 'boolean)
 
-(let ((file (locate-user-emacs-file "custom.el")))
-  (if (file-exists-p file)
-      (load-file file)))
+(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
+  (if (file-exists-p custom-file)
+      (load-file custom-file)))
 
 (provide 'init-custom)
 
