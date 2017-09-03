@@ -105,20 +105,25 @@
                      (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
             swiper-map)
 
+  ;; Enhance M-x
   (use-package smex)
 
+  ;; Additional key bindings for Ivy
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
 
+  ;; Ivy integration for Projectile
   (use-package counsel-projectile
     :init (counsel-projectile-on))
 
+  ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
     :after flyspell
     :bind (:map flyspell-mode-map
                 ("C-;" . flyspell-correct-previous-word-generic)))
 
+  ;; More friendly display transformer for Ivy
   (use-package ivy-rich
     :init
     (setq ivy-virtual-abbreviate 'full
@@ -134,6 +139,45 @@
       (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
                                    'ivy-rich-switch-buffer-transformer)))
 
+  ;; Support pinyin in Ivy
+  ;; Input prefix ':' to match pinyin
+  ;; Refer to  https://github.com/abo-abo/swiper/issues/919
+  (use-package pinyinlib
+    :commands pinyinlib-build-regexp-string
+    :init
+    (defun my-pinyinlib-build-regexp-string (str)
+      (cond ((equal str ".*")
+             ".*")
+            (t
+             (pinyinlib-build-regexp-string str t))))
+
+    (defun my-pinyin-regexp-helper (str)
+      (cond ((equal str " ")
+             ".*")
+            ((equal str "")
+             nil)
+            (t
+             str)))
+
+    (defun pinyin-to-utf8 (str)
+      (cond ((equal 0 (length str))
+             nil)
+            ((equal (substring str 0 1) ":")
+             (mapconcat 'my-pinyinlib-build-regexp-string
+                        (remove nil (mapcar 'my-pinyin-regexp-helper
+                                            (split-string
+                                             (replace-regexp-in-string ":" "" str ) "")))
+                        ""))
+            nil))
+
+    (defun re-builder-pinyin (str)
+      (or (pinyin-to-utf8 str)
+          (ivy--regex-plus str)))
+
+    (setq ivy-re-builders-alist
+          '((t . re-builder-pinyin))))
+
+  ;; Ivy for GNU global
   (use-package counsel-gtags
     :diminish counsel-gtags-mode
     :bind (:map counsel-gtags-mode-map
