@@ -39,15 +39,13 @@
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
 
+  ;; Display Flycheck errors in GUI tooltips
   (use-package flycheck-pos-tip
-    :init (flycheck-pos-tip-mode 1)
-    :config
-    ;; Don't hide pos tip to advoid suspress other pos tips.
-    (defun flycheck-pos-tip-hide-messages ()
-      "Hide messages currently being shown if any."
-      (flycheck-hide-error-buffer)))
+    :init (flycheck-pos-tip-mode 1))
 
-  (use-package avy-flycheck :init (avy-flycheck-setup)))
+  ;; Jump to and fix syntax errors via `avy'
+  (use-package avy-flycheck
+    :init (avy-flycheck-setup)))
 
 (provide 'init-flycheck)
 
