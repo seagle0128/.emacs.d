@@ -78,6 +78,7 @@
         '(("*Help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Completions*" :dedicated t :position bottom :stick t :noselect t)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Async Shell Command*" :dedicated t :position bottom :stick t :noselect nil)
           ("* undo-tree*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
