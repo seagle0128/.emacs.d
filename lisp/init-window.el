@@ -70,7 +70,32 @@
 (use-package popwin
   :commands popwin-mode
   :init (add-hook 'after-init-hook 'popwin-mode)
-  :config (bind-key "C-z" popwin:keymap))
+  :config
+  (bind-key "C-z" popwin:keymap)
+
+  ;; don't use default value but manage it ourselves
+  (setq popwin:special-display-config
+        '(("*Help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Async Shell Command*" :dedicated t :position bottom :stick t :noselect nil)
+          ("* undo-tree*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+          ("^*WoMan.+*$" :regexp t :position bottom)
+
+          ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*ag*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
+          ("\*ivy-occur*" :regexp t :position bottom :stick t :noselect nil)
+
+          ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
+
+          ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
+
+          ("*ert*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*nosetests*" :dedicated t :position bottom :stick t :noselect nil))))
 
 ;; Easy window config switching
 (use-package eyebrowse
