@@ -60,7 +60,7 @@
              (setq gc-cons-threshold 800000)))
 
 ;; Prefers the newest version of a file
-(setq load-prefer-newer t)
+;; (setq load-prefer-newer t)
 
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
