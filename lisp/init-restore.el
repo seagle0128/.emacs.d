@@ -37,7 +37,11 @@
   :ensure nil
   :init (desktop-save-mode 1)
   :config
-  ;; Don't save/restore frame in tty
+  ;; Don't save/restre `Info-mode' after loading `info+'
+  (with-eval-after-load 'info+
+    (add-to-list 'desktop-modes-not-to-save 'Info-mode))
+
+  ;; Don't save/restore frames in tty
   (unless (display-graphic-p)
     (setq desktop-restore-frames nil)))
 
