@@ -37,7 +37,10 @@
   :ensure nil
   :init (desktop-save-mode 1)
   :config
-  ;; Don't save/restre `Info-mode' after loading `info+'
+  ;; Restore frames into their original displays (if possible)
+  (setq desktop-restore-in-current-display nil)
+
+  ;; Don't save/restore `Info-mode' after loading `info+'
   (with-eval-after-load 'info+
     (add-to-list 'desktop-modes-not-to-save 'Info-mode))
 
