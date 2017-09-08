@@ -88,8 +88,8 @@
           ("*ag*" :dedicated t :position bottom :stick t :noselect nil)
           ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*xref*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
+          ("*xref*" :dedicated t :position bottom :stick nil :noselect nil)
 
           ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
           ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
