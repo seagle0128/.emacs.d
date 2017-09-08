@@ -86,15 +86,9 @@
          :map neotree-mode-map
          ("i" . neotree-enter-horizontal-split)
          ("I" . neotree-enter-vertical-split))
-  :config
+  :init
   (setq neo-smart-open t)
-  (with-eval-after-load 'all-the-icons
-    (setq neo-theme (if (display-graphic-p) 'icons 'classic)))
-  (setq neo-vc-integration '(face char))
-
-  ;; Integrate with projectile
-  (with-eval-after-load 'projectile
-    (setq projectile-switch-project-action 'neotree-projectile-action)))
+  (setq neo-vc-integration '(face char)))
 
 ;; Show imenu entries in a seperate buffer
 (use-package imenu-list
