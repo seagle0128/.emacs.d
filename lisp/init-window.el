@@ -75,7 +75,7 @@
 
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
-        '(("*Help*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+        '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
