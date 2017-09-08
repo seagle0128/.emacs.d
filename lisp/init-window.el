@@ -75,10 +75,10 @@
 
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
-        '(("*Help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+        '(("*Help*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
-          ("*Completions*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Async Shell Command*" :dedicated t :position bottom :stick t :noselect nil)
           ("* undo-tree*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
@@ -88,7 +88,8 @@
           ("*ag*" :dedicated t :position bottom :stick t :noselect nil)
           ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
-          ("\*ivy-occur*" :regexp t :position bottom :stick t :noselect nil)
+          ("*xref*" :dedicated t :position bottom :stick t :noselect nil)
+          ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
 
           ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
           ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
