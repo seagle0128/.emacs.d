@@ -76,6 +76,11 @@
                           ielm-mode-hook))
             (add-hook hook 'turn-on-elisp-slime-nav-mode))))
 
+(defun recompile-elpa ()
+  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
+  (interactive)
+  (byte-recompile-directory package-user-dir nil t))
+
 (provide 'init-emacs-lisp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
