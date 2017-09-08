@@ -62,9 +62,9 @@
          :map swiper-map
          ("M-%" . swiper-query-replace))
   :init (add-hook 'after-init-hook
-                  '(lambda ()
-                     (ivy-mode 1)
-                     (counsel-mode 1)))
+                  (lambda ()
+                    (ivy-mode 1)
+                    (counsel-mode 1)))
   :config
   (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
   (setq ivy-height 10)
@@ -100,9 +100,9 @@
   ;; "M-n"/"C-w": symbol-at-point
   ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
   ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-  (bind-key "C-w" '(lambda ()
-                     (interactive)
-                     (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
+  (bind-key "C-w" (lambda ()
+                    (interactive)
+                    (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
             swiper-map)
 
   ;; Enhance M-x
@@ -188,9 +188,9 @@
     :init
     (setq counsel-gtags-auto-update t)
     (add-hook 'c-mode-common-hook
-              '(lambda ()
-                 (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                   (counsel-gtags-mode 1))))))
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                  (counsel-gtags-mode 1))))))
 
 (provide 'init-ivy)
 

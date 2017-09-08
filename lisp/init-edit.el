@@ -48,14 +48,14 @@
 
 (setq-default major-mode 'text-mode)
 (add-hook 'text-mode-hook
-          '(lambda ()
-             (turn-on-auto-fill)
-             (diminish 'auto-fill-function)))
+          (lambda ()
+            (turn-on-auto-fill)
+            (diminish 'auto-fill-function)))
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
 
-(add-hook 'abbrev-mode-hook '(lambda () (diminish 'abbrev-mode)))
+(add-hook 'abbrev-mode-hook (lambda () (diminish 'abbrev-mode)))
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
@@ -119,8 +119,8 @@
   ;; FIXME: Performance issues in big files
   ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
   (add-hook 'prog-mode-hook
-            '(lambda ()
-               (aggressive-indent-mode (- (* 3000 80) (buffer-size)))))
+            (lambda ()
+              (aggressive-indent-mode (- (* 3000 80) (buffer-size)))))
   :config
   (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
     (push mode aggressive-indent-excluded-modes)))

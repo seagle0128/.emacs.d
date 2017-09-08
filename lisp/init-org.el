@@ -39,9 +39,9 @@
          :map org-mode-map
          ("C-c l" . org-store-link))
   :init
-  (add-hook 'org-mode-hook '(lambda ()
-                              (org-indent-mode 1)
-                              (diminish 'org-indent-mode)))
+  (add-hook 'org-mode-hook (lambda ()
+                             (org-indent-mode 1)
+                             (diminish 'org-indent-mode)))
   :config
   (setq org-agenda-files '("~/org"))
   (setq org-todo-keywords
@@ -139,10 +139,10 @@ _h_tml    ^ ^         _S_HELL         _A_SCII:
         (when text (insert text))))
 
     (bind-key "<"
-              '(lambda () (interactive)
-                 (if (or (region-active-p) (looking-back "^"))
-                     (hydra-org-template/body)
-                   (self-insert-command 1)))
+              (lambda () (interactive)
+                (if (or (region-active-p) (looking-back "^"))
+                    (hydra-org-template/body)
+                  (self-insert-command 1)))
               org-mode-map)))
 
 (provide 'init-org)

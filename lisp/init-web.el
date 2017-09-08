@@ -61,10 +61,10 @@
   :interpreter "node"
   :init
   (add-hook 'js2-mode-hook
-            '(lambda ()
-               (setq js2-basic-offset 2)
-               (js2-highlight-unused-variables-mode 1)
-               (js2-imenu-extras-mode 1)))
+            (lambda ()
+              (setq js2-basic-offset 2)
+              (js2-highlight-unused-variables-mode 1)
+              (js2-imenu-extras-mode 1)))
   :config
   (use-package js2-refactor
     :diminish js2-refactor-mode
