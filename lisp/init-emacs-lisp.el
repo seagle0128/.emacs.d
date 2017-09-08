@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-custom)
+(eval-when-compile (require 'init-custom))
 
 ;; Emacs lisp mode
 ;; Note: `elisp-mode' was called `emacs-lisp-mode' in <=24

@@ -51,6 +51,14 @@
           (const :tag "Emacs-China" emacs-china)
           (const :tag "Tsinghua" tsinghua)))
 
+(defcustom my-theme 'default
+  "Set color theme."
+  :type '(choice
+          (const :tag "Default theme" default)
+          (const :tag "Dark theme" dark)
+          (const :tag "Light theme" light)
+          (const :tag "Ultra light theme" ultra-light)))
+
 (defcustom my-benchmark-enabled nil
   "Enable the init benchmark or not."
   :type 'boolean)
@@ -59,9 +67,9 @@
   "Enable the init profiler or not."
   :type 'boolean)
 
-(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (if (file-exists-p custom-file)
-      (load-file custom-file)))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(if (file-exists-p custom-file)
+    (load custom-file))
 
 (provide 'init-custom)
 

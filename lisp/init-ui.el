@@ -33,6 +33,7 @@
 ;;; Code:
 
 (require 'init-const)
+(eval-when-compile (require 'init-custom))
 
 ;; Title
 (setq frame-title-format
@@ -49,8 +50,24 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Theme
-(use-package monokai-theme
-  :init (load-theme 'monokai t))
+(defun delay-load-theme (theme)
+  "Load THEME after initialization."
+  (add-hook 'after-init-hook
+            (lambda ()
+              (load-theme theme t))))
+(cond
+ ((eq my-theme 'default)
+  (use-package monokai-theme
+    :init (delay-load-theme 'monokai)))
+ ((eq my-theme 'dark)
+  (use-package spacemacs-theme
+    :init (delay-load-theme 'spacemacs-dark)))
+ ((eq my-theme 'light)
+  (use-package spacemacs-theme
+    :init (delay-load-theme 'spacemacs-light)))
+ ((eq my-theme 'ultra-light)
+  (use-package leuven-theme
+    :init (delay-load-theme 'leuven))))
 
 ;; Modeline
 (use-package spaceline-config
