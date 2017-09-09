@@ -78,6 +78,7 @@
         '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Async Shell Command*" :dedicated t :position bottom :stick t :noselect nil)
@@ -95,6 +96,7 @@
           ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
 
           ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
+          ("*Python*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
 
           ("*ert*" :dedicated t :position bottom :stick t :noselect nil)
           ("*nosetests*" :dedicated t :position bottom :stick t :noselect nil))))
