@@ -37,7 +37,7 @@
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :interpreter "ruby"
   :config
-  ;; Robe mode
+  ;; Code navigation, documentation lookup and completion for Ruby
   (use-package robe
     :diminish robe-mode
     :init
@@ -46,11 +46,12 @@
     (with-eval-after-load 'company
       (push '(company-robe :with company-yasnippet) company-backends)))
 
+  ;; Ruby refactoring helpers
   (use-package ruby-refactor
     :diminish ruby-refactor-mode
     :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
-  ;; inf-ruby
+  ;; Run a Ruby process in a buffer
   (use-package inf-ruby
     :init
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
@@ -72,18 +73,17 @@
   ;; Coverage for SimpleCov
   (use-package coverage)
 
-  ;; Yari
+  ;; Yet Another RI interface for Emacs
   (use-package yari
     :bind (:map ruby-mode-map ([f1] . yari)))
 
-  ;; Yard mode
+  ;; Ruby YARD comments
   (use-package yard-mode
     :diminish yard-mode
     :init (add-hook 'ruby-mode-hook 'yard-mode)))
 
 ;; YAML mode
-(use-package yaml-mode
-  :mode "\\.yml$")
+(use-package yaml-mode)
 
 (provide 'init-ruby)
 
