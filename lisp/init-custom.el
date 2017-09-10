@@ -57,7 +57,7 @@
           (const :tag "Default theme" default)
           (const :tag "Dark theme" dark)
           (const :tag "Light theme" light)
-          (const :tag "Ultra light theme" ultra-light)))
+          (const :tag "Daylight theme" daylight)))
 
 (defcustom my-benchmark-enabled nil
   "Enable the init benchmark or not."

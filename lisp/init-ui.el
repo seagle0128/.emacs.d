@@ -65,7 +65,7 @@
  ((eq my-theme 'light)
   (use-package spacemacs-theme
     :init (delay-load-theme 'spacemacs-light)))
- ((eq my-theme 'ultra-light)
+ ((eq my-theme 'daylight)
   (use-package leuven-theme
     :init (delay-load-theme 'leuven))))
 
