@@ -35,6 +35,9 @@
 (require 'init-const)
 (eval-when-compile (require 'init-custom))
 
+;; Logo
+(setq fancy-splash-image my-logo)
+
 ;; Title
 (setq frame-title-format
       '("GNU Emacs " emacs-version "@" user-login-name " : "

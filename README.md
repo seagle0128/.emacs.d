@@ -1,7 +1,10 @@
-Personal Emacs Configuration
+Centaur Emacs Configuration
 ============================
 
-[![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+[![Build
+Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+
+[Centaur Emacs](logo.png)
 
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
@@ -12,23 +15,25 @@ Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
-latest Emacs - currently **25.1**.
+latest stable release - currently **25.x**.
 
 # Quick Start
 
 ```sh
 git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
-Then start emacs. Enjoy!
+Then start emacs. That's it. Enjoy!
+
+*Note*: You may need to wait for a several minutes to install packages at the first startup.
 
 # Customization
-Copy custom-example.el to custom.el and set the variables. Exit Emacs and delete
-all elc in ~/.emacs.d/lisp, then start Emacs.
+Copy custom-example.el to custom.el and set the variables. Restart Emacs. Enjoy!
 
 ```elisp
+(setq my-logo nil)                        ; logo path or nil (official logo)
 (setq my-full-name "user name")           ; user full name
 (setq my-mail-address "user@email.com")   ; email address
-(setq my-completion-method 'helm)         ; helm, ivy or ido
+(setq my-proxy "127.0.0.1:1080")          ; network proxy
 (setq my-package-archives 'emacs-china)   ; melpa, emacs-china or tsinghua
 (setq my-theme 'dark)                     ; default, dark, light or daylight
 (setq my-benchmark-enabled t)             ; t or nil
