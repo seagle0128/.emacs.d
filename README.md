@@ -4,7 +4,7 @@ Centaur Emacs Configuration
 [![Build
 Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
 
-![Centaur Emacs](logo.png)
+![Centaur Emacs](images/logos/logo.png)
 
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
@@ -42,3 +42,7 @@ Copy custom-example.el to custom.el and set the variables. For example:
 ```
 
 Restart Emacs. Enjoy!
+
+# Screenshots
+
+![Centaur Emacs](images/screenshots/Centaur Emacs.png)
