@@ -155,10 +155,6 @@
   (with-eval-after-load 'projectile
     (bind-key "C-c p s r" 'rg-project projectile-mode-map))
   :config
-  ;; FIXME: Invalid processing regexp while searching words including "("
-  ;; https://github.com/dajva/rg.el/issues/19#issuecomment-328291803
-  (setq rg-command-line-flags '("--fixed-strings"))
-
   (setq rg-custom-type-aliases nil)
   (setq rg-group-result t)
   (setq rg-show-columns t))
