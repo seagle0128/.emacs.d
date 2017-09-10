@@ -44,6 +44,10 @@
   "Set user email address."
   :type 'string)
 
+(defcustom my-proxy "127.0.0.1:1087"
+  "Set network proxy."
+  :type 'string)
+
 (defcustom my-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice

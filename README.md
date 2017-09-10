@@ -28,6 +28,7 @@ all elc in ~/.emacs.d/lisp, then start Emacs.
 ```elisp
 (setq my-full-name "user name")           ; user full name
 (setq my-mail-address "user@email.com")   ; email address
+(setq my-completion-method 'helm)         ; helm, ivy or ido
 (setq my-package-archives 'emacs-china)   ; melpa, emacs-china or tsinghua
 (setq my-theme 'dark)                     ; default, dark, light or daylight
 (setq my-benchmark-enabled t)             ; t or nil

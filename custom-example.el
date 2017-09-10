@@ -6,6 +6,7 @@
 
 ;; (setq my-full-name "user name")           ; user full name
 ;; (setq my-mail-address "user@email.com")   ; email address
+;; (setq my-proxy "127.0.0.1:1087")          ; network proxy
 ;; (setq my-package-archives 'emacs-china)   ; melpa, emacs-china or tsinghua
 ;; (setq my-theme 'dark)                     ; default, dark, light or daylight
 ;; (setq my-benchmark-enabled t)             ; t or nil

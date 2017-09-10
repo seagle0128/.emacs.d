@@ -70,6 +70,20 @@
   (set-buffer-file-coding-system 'utf-8)
   (save-buffer))
 
+;; Proxy settings
+(defun toggle-proxy ()
+  "Toggle network(htpp/https) proxy."
+  (interactive)
+  (if url-proxy-services
+      (progn
+        (setq url-proxy-services nil)
+        (message "No proxy"))
+    (progn
+      (setq my-proxy "127.0.0.1:1087")
+      (setq url-proxy-services `(("http" . ,my-proxy)
+                                 ("https" . ,my-proxy)))
+      (message "Set proxy to %s" my-proxy))))
+
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish which-key-mode
