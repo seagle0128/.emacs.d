@@ -4,7 +4,7 @@ Centaur Emacs Configuration
 [![Build
 Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
 
-[Centaur Emacs](logo.png)
+![Centaur Emacs](logo.png)
 
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
@@ -20,14 +20,15 @@ latest stable release - currently **25.x**.
 # Quick Start
 
 ```sh
-git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
+    git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
+
 Then start emacs. That's it. Enjoy!
 
-*Note*: You may need to wait for a several minutes to install packages at the first startup.
+*Note: You may need to wait for a several minutes to install packages at the first startup.*
 
 # Customization
-Copy custom-example.el to custom.el and set the variables. Restart Emacs. Enjoy!
+Copy custom-example.el to custom.el and set the variables. For example:
 
 ```elisp
 (setq my-logo nil)                        ; logo path or nil (official logo)
@@ -39,3 +40,5 @@ Copy custom-example.el to custom.el and set the variables. Restart Emacs. Enjoy!
 (setq my-benchmark-enabled t)             ; t or nil
 (setq my-profiler-enabled t)              ; t or nil
 ```
+
+Restart Emacs. Enjoy!
