@@ -45,7 +45,9 @@ Restart Emacs. Enjoy!
 
 # Screenshots
 
-![Centaur Emacs](images/screenshots/main.png)
-![Centaur Emacs](images/screenshots/programming.png)
-![Centaur Emacs](images/screenshots/org.png)
-![Centaur Emacs](images/screenshots/search.png)
+![Main](images/screenshots/main.png)
+![Programming](images/screenshots/programming.png)
+![Org](images/screenshots/org.png)
+![Search](images/screenshots/search.png)
+![Magit](images/screenshots/magit.png)
+
