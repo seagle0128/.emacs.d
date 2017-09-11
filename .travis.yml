@@ -25,7 +25,8 @@ script:
   - emacs --version
   - pwd
   - cd ~/.emacs.d
-  - emacs --version && emacs -Q --batch --eval '(byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0 0)'
+  - emacs --batch -l init.el -f batch-byte-compile init.el
+  # - emacs --version && emacs -Q --batch --eval '(byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0 0)'
 
   # - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l init.el &
   # - sleep 180
