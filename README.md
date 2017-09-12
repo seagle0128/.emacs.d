@@ -21,19 +21,19 @@ latest stable release - currently **25.x**.
 - Pure GNU Emacs experience.
 - Out of box.
 - Clean and Fast.
-- Quick fuzzy search (via ivy, ag, rg).
+- Quick fuzzy search (via `ivy`, `ag`, `rg`).
 - Better Org support.
 - Support multiple programming languages
   - Emacs-lisp
   - C/C++/C#
   - Ruby/Python/Perl/PHP/Shell/Powershell
-  - Javascript/Typescript/Json
+  - Javascript/Typescript/JSON/YAML
   - HTML/CSS/XML
   - Golang/Siwft
   - Markdown
-  ...
+  - ...
 - Auto completion.
-- Syntanx check.
+- Syntax check.
 - Fly spell check.
 - Git/SVN integration.
 - Projectile integration.
@@ -55,7 +55,7 @@ Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Ema
 
 ## Optional
 
-Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
+Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or 
 ![dotfiles](https://github.com/seagle0128/dotfiles).
 
 # Quick Start
@@ -66,13 +66,12 @@ Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
     git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-Or download ![zip package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
-directly and extract to `~.emacs.d`.
+or download the ![zip
+package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
+extract to `~.emacs.d`.
 
-Then start emacs. That's it. Enjoy!
-
-*Note: You may need to wait for a several minutes to install packages at the
-first startup.*
+Then start emacs. Wait for a several minutes to install packages at the first
+startup. Enjoy!
 
 ## Update
 
