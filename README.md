@@ -55,8 +55,8 @@ Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Ema
 
 ## Optional
 
-Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or
-![dotfiles](https://github.com/seagle0128/dotfiles).
+Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles) or
+![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
 # Quick Start
 
