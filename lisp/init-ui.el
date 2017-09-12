@@ -88,9 +88,11 @@
 (use-package cnfonts
   :init (cnfonts-enable)
   :config
-  (setq cnfonts-profiles '("program1" "program2" "org-mode" "read-book"))
+  (setq cnfonts-profiles
+        '("program1" "program2" "program3" "org-mode" "read-book"))
   (setq cnfonts--profiles-steps '(("program1" . 4)
                                   ("program2" . 5)
+                                  ("program3" . 3)
                                   ("org-mode" . 6)
                                   ("read-book" . 8))))
 
