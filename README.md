@@ -17,15 +17,57 @@ It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
 latest stable release - currently **25.x**.
 
+# Higlights
+
+- Pure GNU Emacs experience.
+- Out of box.
+- Clean and Fast.
+- Quick fuzzy search (via ivy, ag, rg).
+- Support multiple programming languages
+  - Emacs-lisp
+  - C/C++/C#
+  - Ruby/Python/Perl/PHP/Shell/Powershell
+  - Javascript/Typescript/HTML/CSS/XML/JSON
+  - Golang/Siwft
+  - Markdown
+  ...
+- Auto completion.
+- Syntanx check.
+- Git/SVN integration.
+- Spell check.
+- Support Chinese fonts and calendar.
+
+# Prerequiste
+
+## OS
+
+- GNU Linux
+- macOS
+- Windows (Cygwin)
+
+## GNU Emacs
+
+Please refer to [Installing
+Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+
+## Optional
+
+Recommend to use [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
+[dotfiles](https://github.com/seagle0128/dotfiles).
+
 # Quick Start
 
 ```sh
     git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
+Or download [package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
+directly and extract to `~.emacs.d`.
+
 Then start emacs. That's it. Enjoy!
 
-*Note: You may need to wait for a several minutes to install packages at the first startup.*
+*Note: You may need to wait for a several minutes to install packages at the
+first startup.*
 
 # Customization
 Copy custom-example.el to custom.el and set the variables. For example:
