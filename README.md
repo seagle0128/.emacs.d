@@ -16,7 +16,7 @@ It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
 latest stable release - currently **25.x**.
 
-# Higlights
+# Features
 
 - Pure GNU Emacs experience.
 - Out of box.
