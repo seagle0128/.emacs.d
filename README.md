@@ -1,8 +1,7 @@
 Centaur Emacs Configuration
 ============================
 
-[![Build
-Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+[![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
 
 ![Centaur Emacs](images/logos/logo.png)
 
@@ -23,19 +22,23 @@ latest stable release - currently **25.x**.
 - Out of box.
 - Clean and Fast.
 - Quick fuzzy search (via ivy, ag, rg).
+- Better Org support.
 - Support multiple programming languages
   - Emacs-lisp
   - C/C++/C#
   - Ruby/Python/Perl/PHP/Shell/Powershell
-  - Javascript/Typescript/HTML/CSS/XML/JSON
+  - Javascript/Typescript/Json
+  - HTML/CSS/XML
   - Golang/Siwft
   - Markdown
   ...
 - Auto completion.
 - Syntanx check.
 - Git/SVN integration.
-- Spell check.
+- Pomodor integration.
+- Fly spell check.
 - Support Chinese fonts and calendar.
+- Support Pinyin search.
 
 # Prerequiste
 
@@ -47,21 +50,22 @@ latest stable release - currently **25.x**.
 
 ## GNU Emacs
 
-Please refer to [Installing
-Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
 ## Optional
 
-Recommend to use [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
-[dotfiles](https://github.com/seagle0128/dotfiles).
+Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
+![dotfiles](https://github.com/seagle0128/dotfiles).
 
 # Quick Start
 
-```sh
+## Installation
+
+```shell
     git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-Or download [package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
+Or download ![package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
 directly and extract to `~.emacs.d`.
 
 Then start emacs. That's it. Enjoy!
@@ -69,10 +73,19 @@ Then start emacs. That's it. Enjoy!
 *Note: You may need to wait for a several minutes to install packages at the
 first startup.*
 
+## Update
+
+Run `M-x update-config` in Emacs, or 
+
+``` shell
+cd ~/.emacs.d/
+git pull
+```
+
 # Customization
 Copy custom-example.el to custom.el and set the variables. For example:
 
-```elisp
+```emacs-lisp
 (setq my-logo nil)                        ; logo path or nil (official logo)
 (setq my-full-name "user name")           ; user full name
 (setq my-mail-address "user@email.com")   ; email address
@@ -88,8 +101,12 @@ Restart Emacs. Enjoy!
 # Screenshots
 
 ![Main](images/screenshots/main.png)
+
 ![Programming](images/screenshots/programming.png)
+
 ![Org](images/screenshots/org.png)
+
 ![Search](images/screenshots/search.png)
+
 ![Magit](images/screenshots/magit.png)
 
