@@ -53,24 +53,19 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Theme
-(defun delay-load-theme (theme)
-  "Load THEME after initialization."
-  (add-hook 'after-init-hook
-            (lambda ()
-              (load-theme theme t))))
 (cond
  ((eq my-theme 'default)
   (use-package monokai-theme
-    :init (delay-load-theme 'monokai)))
+    :init (load-theme 'monokai t)))
  ((eq my-theme 'dark)
   (use-package spacemacs-theme
-    :init (delay-load-theme 'spacemacs-dark)))
+    :init (load-theme 'spacemacs-dark t)))
  ((eq my-theme 'light)
   (use-package spacemacs-theme
-    :init (delay-load-theme 'spacemacs-light)))
+    :init (load-theme 'spacemacs-light t)))
  ((eq my-theme 'daylight)
   (use-package leuven-theme
-    :init (delay-load-theme 'leuven))))
+    :init (load-theme 'leuven t))))
 
 ;; Modeline
 (use-package spaceline-config
