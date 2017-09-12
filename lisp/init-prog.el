@@ -64,7 +64,9 @@
 
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode))
-  :init (setq markdown-command "multimarkdown")
+  :init
+  (when (executable-find "multimarkdown")
+    (setq markdown-command "multimarkdown"))
   :config
   ;; On the fly markdown preview
   (use-package flymd
