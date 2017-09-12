@@ -1,4 +1,4 @@
-Centaur Emacs Configuration
+Centaur Emacs
 ============================
 
 [![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
