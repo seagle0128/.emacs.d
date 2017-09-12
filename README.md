@@ -34,9 +34,10 @@ latest stable release - currently **25.x**.
   ...
 - Auto completion.
 - Syntanx check.
-- Git/SVN integration.
-- Pomodor integration.
 - Fly spell check.
+- Git/SVN integration.
+- Projectile integration.
+- Pomodor integration.
 - Support Chinese fonts and calendar.
 - Support Pinyin search.
 
@@ -65,7 +66,7 @@ Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or my
     git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-Or download ![package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
+Or download ![zip package](https://github.com/seagle0128/.emacs.d/archive/master.zip)
 directly and extract to `~.emacs.d`.
 
 Then start emacs. That's it. Enjoy!
@@ -75,25 +76,24 @@ first startup.*
 
 ## Update
 
-Run `M-x update-config` in Emacs, or 
+Run `M-x update-config` in Emacs, or
 
 ``` shell
-cd ~/.emacs.d/
-git pull
+cd ~/.emacs.d && git pull
 ```
-
 # Customization
-Copy custom-example.el to custom.el and set the variables. For example:
+Copy `custom-example.el` to `custom.el` and set the variables. For example:
 
 ```emacs-lisp
-(setq my-logo nil)                        ; logo path or nil (official logo)
-(setq my-full-name "user name")           ; user full name
-(setq my-mail-address "user@email.com")   ; email address
-(setq my-proxy "127.0.0.1:1080")          ; network proxy
-(setq my-package-archives 'emacs-china)   ; melpa, emacs-china or tsinghua
-(setq my-theme 'dark)                     ; default, dark, light or daylight
-(setq my-benchmark-enabled t)             ; t or nil
-(setq my-profiler-enabled t)              ; t or nil
+(setq my-logo nil)                        ; Logo file or nil (official logo)
+(setq my-full-name "user name")           ; User full name
+(setq my-mail-address "user@email.com")   ; Email address
+(setq my-proxy "127.0.0.1:1080")          ; Network proxy
+(setq my-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tsinghua
+(setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
+(setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
+(setq my-profiler-enabled t)              ; Enable startup profiler: t or nil
+
 ```
 
 Restart Emacs. Enjoy!
@@ -101,12 +101,8 @@ Restart Emacs. Enjoy!
 # Screenshots
 
 ![Main](images/screenshots/main.png)
-
 ![Programming](images/screenshots/programming.png)
-
 ![Org](images/screenshots/org.png)
-
 ![Search](images/screenshots/search.png)
-
 ![Magit](images/screenshots/magit.png)
 
