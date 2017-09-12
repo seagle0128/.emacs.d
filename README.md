@@ -14,7 +14,7 @@ Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
-latest stable release - currently **25.x**.
+latest stable release - currently **25.2**.
 
 # Features
 
@@ -55,7 +55,7 @@ Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Ema
 
 ## Optional
 
-Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or 
+Recommend to use ![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) or
 ![dotfiles](https://github.com/seagle0128/dotfiles).
 
 # Quick Start
@@ -70,8 +70,8 @@ or download the ![zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
 extract to `~.emacs.d`.
 
-Then start emacs. Wait for a several minutes to install packages at the first
-startup. Enjoy!
+Then start emacs. Wait for a while to install packages at the first startup.
+Enjoy!
 
 ## Update
 
@@ -80,8 +80,10 @@ Run `M-x update-config` in Emacs, or
 ``` shell
 cd ~/.emacs.d && git pull
 ```
+
 # Customization
-Copy `custom-example.el` to `custom.el` and set the variables. For example:
+
+Copy `custom-example.el` to `custom.el` and change the configurations, then restart.
 
 ```emacs-lisp
 (setq my-logo nil)                        ; Logo file or nil (official logo)
@@ -95,8 +97,6 @@ Copy `custom-example.el` to `custom.el` and set the variables. For example:
 
 ```
 
-Restart Emacs. Enjoy!
-
 # Screenshots
 
 ![Main](images/screenshots/main.png)
@@ -104,4 +104,3 @@ Restart Emacs. Enjoy!
 ![Org](images/screenshots/org.png)
 ![Search](images/screenshots/search.png)
 ![Magit](images/screenshots/magit.png)
-
