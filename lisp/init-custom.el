@@ -36,7 +36,7 @@
   "Personal Emacs configurations."
   :group 'extensions)
 
-(defcustom my-logo (expand-file-name "images/logos/logo.png" user-emacs-directory)
+(defcustom my-logo (expand-file-name "logo.png" user-emacs-directory)
   "Set Centaur logo. nil means official logo."
   :type 'string)
 

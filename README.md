@@ -3,7 +3,7 @@ Centaur Emacs
 
 [![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
 
-![Centaur Emacs](images/logos/logo.png)
+![Centaur Emacs](logo.png)
 
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
@@ -62,7 +62,7 @@ Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles) or
 
 ## Installation
 
-```shell
+``` shell
     git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
@@ -85,7 +85,7 @@ cd ~/.emacs.d && git pull
 
 Copy `custom-example.el` to `custom.el` and change the configurations, then restart.
 
-```emacs-lisp
+``` emacs-lisp
 (setq my-logo nil)                        ; Logo file or nil (official logo)
 (setq my-full-name "user name")           ; User full name
 (setq my-mail-address "user@email.com")   ; Email address
@@ -93,7 +93,6 @@ Copy `custom-example.el` to `custom.el` and change the configurations, then rest
 (setq my-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tsinghua
 (setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
 (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
-
 ```
 
 # Screenshots
