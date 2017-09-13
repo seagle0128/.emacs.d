@@ -97,8 +97,17 @@ Copy `custom-example.el` to `custom.el` and change the configurations, then rest
 
 # Screenshots
 
+## Main (default theme)
 ![Main](images/screenshots/main.png)
+
+## Programming (dark theme)
 ![Programming](images/screenshots/programming.png)
+
+## Org mode (dark theme)
 ![Org](images/screenshots/org.png)
+
+## Search (light theme)
 ![Search](images/screenshots/search.png)
+
+## Magit (daylight theme)
 ![Magit](images/screenshots/magit.png)
