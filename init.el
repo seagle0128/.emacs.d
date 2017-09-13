@@ -66,9 +66,13 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
+;; Constants
+(require 'init-const)
+
 ;; Customization
 (require 'init-custom)
 
+;; Startup Profiler
 (when my-profiler-enabled
   (profiler-start 'cpu+mem)
   (add-hook 'after-init-hook

@@ -32,8 +32,9 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Logo
 (setq fancy-splash-image my-logo)

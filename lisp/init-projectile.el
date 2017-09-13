@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
+(eval-when-compile (require 'init-const))
 
 ;; Manage and navigate projects
 (use-package projectile

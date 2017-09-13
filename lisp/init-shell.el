@@ -34,7 +34,7 @@
 
 ;; Shell
 
-(require 'init-const)
+(eval-when-compile (require 'init-const))
 
 (use-package shell
   :ensure nil

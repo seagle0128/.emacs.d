@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
+(eval-when-compile (require 'init-const))
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()

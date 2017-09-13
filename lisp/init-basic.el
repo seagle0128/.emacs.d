@@ -32,8 +32,9 @@
 ;;
 ;;; Code:
 
-(require 'init-const)
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Personal information
 (setq user-full-name my-full-name)
