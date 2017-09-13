@@ -11,6 +11,5 @@
 ;; (setq my-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tsinghua
 ;; (setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
 ;; (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
-;; (setq my-profiler-enabled t)              ; Enable startup profiler: t or nil
 
 ;;; custom-example.el ends here
