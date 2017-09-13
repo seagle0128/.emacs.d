@@ -24,7 +24,6 @@ spu_log/
 tutorial/
 url/
 var/
-vimish-fold/
 .python-environments/
 .vscode/
 /ac-comphist.dat

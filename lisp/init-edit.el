@@ -243,17 +243,9 @@
 ;; Hideshow
 (use-package hideshow
   :ensure nil
+  :bind (:map hs-minor-mode-map
+              ("C-`" . hs-toggle-hiding))
   :diminish hs-minor-mode)
-
-;; Folding
-(use-package vimish-fold
-  :bind (("C-c f f" . vimish-fold)
-         ("C-c f d" . vimish-fold-delete)
-         ("C-c f p" . vimish-fold-previous-fold)
-         ("C-c f n" . vimish-fold-next-fold)
-         ("C-c f a" . vimish-fold-avy)
-         ("C-c f t" . vimish-fold-toggle-all))
-  :init (vimish-fold-global-mode 1))
 
 (provide 'init-edit)
 
