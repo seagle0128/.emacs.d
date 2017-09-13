@@ -66,21 +66,20 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(eval-when-compile
-  (defvar use-package-enable-imenu-support t)
-  (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
 
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
 (setq use-package-expand-minimally t)
+(setq use-package-enable-imenu-support t)
 
 ;; Benchmark
-(use-package benchmark-init
-  :if my-benchmark-enabled
-  :init (benchmark-init/activate)
-  :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
+(when my-benchmark-enabled
+  (use-package benchmark-init
+    :init
+    (benchmark-init/activate)
+    (add-hook 'after-init-hook 'benchmark-init/deactivate)))
 
 ;; A mondern package interface
 (use-package paradox
