@@ -98,16 +98,16 @@ Copy `custom-example.el` to `custom.el` and change the configurations, then rest
 # Screenshots
 
 ## Main (default theme)
-![Main](images/screenshots/main.png)
+![Main](https://user-images.githubusercontent.com/140797/30391180-20bd0ba8-987e-11e7-9cb4-2aa66a6fd69d.png)
 
 ## Programming (dark theme)
-![Programming](images/screenshots/programming.png)
+![Programming](https://user-images.githubusercontent.com/140797/30391182-20c384ba-987e-11e7-8b7d-fd789e622b9f.png)
 
 ## Org mode (dark theme)
-![Org](images/screenshots/org.png)
+![Org](https://user-images.githubusercontent.com/140797/30391183-20c37e8e-987e-11e7-9579-c4df71549a76.png)
 
 ## Search (light theme)
-![Search](images/screenshots/search.png)
+![Search](https://user-images.githubusercontent.com/140797/30391184-20f47fac-987e-11e7-8be4-9f4e409d65cc.png)
 
 ## Magit (daylight theme)
-![Magit](images/screenshots/magit.png)
+![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
