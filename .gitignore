@@ -24,6 +24,7 @@ spu_log/
 tutorial/
 url/
 var/
+images/
 .python-environments/
 .vscode/
 /ac-comphist.dat
