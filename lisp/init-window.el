@@ -64,7 +64,7 @@
 ;; Zoom window like tmux
 (use-package zoom-window
   :bind ("C-x C-z" . zoom-window-zoom)
-  :init (setq zoom-window-mode-line-color "DarkGreen"))
+  :init (setq zoom-window-mode-line-color "Dark"))
 
 ;; Popup Window Manager
 (use-package popwin
@@ -82,8 +82,10 @@
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect t)
-          (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 0.3)
           ("^*WoMan.+*$" :regexp t :position bottom)
+
+          (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 0.3)
+          ("*undo-tree Diff*" :dedicated nil :stick nil :noselect nil)
 
           ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
           ("*ag search*" :dedicated t :position bottom :stick t :noselect nil)
