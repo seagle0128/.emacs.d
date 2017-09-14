@@ -46,10 +46,6 @@
               (dolist (theme custom-enabled-themes)
                 (load-theme theme t))))
 
-  ;; Don't save/restore `Info-mode' after loading `info+'
-  (with-eval-after-load 'info+
-    (add-to-list 'desktop-modes-not-to-save 'Info-mode))
-
   ;; Don't save/restore frames in tty
   (unless (display-graphic-p)
     (setq desktop-restore-frames nil)))

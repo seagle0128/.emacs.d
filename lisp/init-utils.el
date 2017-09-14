@@ -172,11 +172,6 @@
 ;; Text mode directory tree. Similar with beyond compare
 (use-package ztree)
 
-;; Extensions to `Info'
-(use-package info+
-  :after info
-  :init (setq Info-fontify-angle-bracketed-flag nil))
-
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
   :bind (("C-h M-m" . discover-my-major)
