@@ -14,7 +14,7 @@ Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
-latest stable release - currently **25.2**.
+latest stable release - currently **25.3**.
 
 # Features
 
@@ -68,7 +68,7 @@ Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles) or
 
 or download the ![zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
-extract to `~.emacs.d`.
+extract to `~./emacs.d`.
 
 Then start emacs. Wait for a while to install packages at the first startup.
 Enjoy!
@@ -83,7 +83,8 @@ cd ~/.emacs.d && git pull
 
 # Customization
 
-Copy `custom-example.el` to `custom.el` and change the configurations, then restart.
+Copy `custom-example.el` to `custom.el` and change the configurations, then
+restart Emacs.
 
 ``` emacs-lisp
 (setq my-logo nil)                        ; Logo file or nil (official logo)
