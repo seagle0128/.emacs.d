@@ -86,7 +86,6 @@
 (require 'init-company)
 (require 'init-yasnippet)
 
-(require 'init-bookmark)
 (require 'init-calendar)
 (require 'init-dired)
 (require 'init-highlight)
