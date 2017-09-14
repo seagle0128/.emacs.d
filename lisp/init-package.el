@@ -66,8 +66,10 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(require 'diminish)
-(require 'bind-key)
+;; (eval-when-compile
+;;   (require 'use-package))
+;; (require 'diminish)
+;; (require 'bind-key)
 
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
@@ -80,12 +82,6 @@
     :init
     (benchmark-init/activate)
     (add-hook 'after-init-hook 'benchmark-init/deactivate)))
-
-;; A mondern package interface
-(use-package paradox
-  :init
-  (setq paradox-github-token t)
-  (setq paradox-execute-asynchronously t))
 
 ;; Automatically update packages
 (use-package auto-package-update
