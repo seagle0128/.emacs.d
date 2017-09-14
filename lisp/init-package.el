@@ -84,13 +84,14 @@
     (benchmark-init/activate)
     (add-hook 'after-init-hook 'benchmark-init/deactivate)))
 
-;; Automatically update packages
-(use-package auto-package-update
-  :init
-  ;; (setq auto-package-update-interval 1)
-  (setq auto-package-update-delete-old-versions t)
-  (add-hook 'emacs-startup-hook 'auto-package-update-maybe)
-  :config (auto-package-update-at-time "03:00"))
+;; A mondern package interface
+(use-package paradox
+  :init (defalias 'upgrade-pacakges 'paradox-upgrade-packages)
+  :config
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously t)
+  (setq paradox-automatically-star nil)
+  (setq paradox-display-star-count nil))
 
 (provide 'init-package)
 
