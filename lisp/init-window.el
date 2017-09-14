@@ -81,7 +81,7 @@
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Async Shell Command*" :dedicated t :position bottom :stick t :noselect nil)
+          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect t)
           ("* undo-tree*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
 
