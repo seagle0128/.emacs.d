@@ -58,9 +58,11 @@
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                            ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
+;; Initialize packages
 (setq package-enable-at-startup nil)    ; To prevent initialising twice
 (package-initialize)
 
+;; Setup `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -75,7 +77,7 @@
 (setq use-package-expand-minimally t)
 (setq use-package-enable-imenu-support t)
 
-;; Benchmark
+;; Initialization benchmark
 (when my-benchmark-enabled
   (use-package benchmark-init
     :init
