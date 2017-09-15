@@ -40,6 +40,19 @@
 (setq user-full-name my-full-name)
 (setq user-mail-address my-mail-address)
 
+;; Key Modifiers
+(when sys/win32p
+  ;; make PC keyboard's Win key or other to type Super or Hyper, for emacs running on Windows.
+  (setq w32-pass-lwindow-to-system nil)
+  (setq w32-lwindow-modifier 'super) ; Left Windows key
+
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-rwindow-modifier 'super) ; Right Windows key
+
+  (setq w32-pass-apps-to-system nil)
+  (setq w32-apps-modifier 'hyper) ; Menu/App key
+  )
+
 ;; Environment
 (when sys/macp
   (use-package exec-path-from-shell
