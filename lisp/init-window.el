@@ -64,7 +64,7 @@
 ;; Zoom window like tmux
 (use-package zoom-window
   :bind ("C-x C-z" . zoom-window-zoom)
-  :init (setq zoom-window-mode-line-color "Dark"))
+  :init (setq zoom-window-mode-line-color "DarkGreen"))
 
 ;; Popup Window Manager
 (use-package popwin
