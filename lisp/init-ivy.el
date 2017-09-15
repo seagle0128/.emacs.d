@@ -103,7 +103,7 @@
   (bind-key "C-w" (lambda ()
                     (interactive)
                     (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
-            swiper-map)
+            ivy-minibuffer-map)
 
   ;; Enhance M-x
   (use-package smex)
