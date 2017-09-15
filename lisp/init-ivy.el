@@ -100,10 +100,13 @@
   ;; "M-n"/"C-w": symbol-at-point
   ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
   ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-  (bind-key "C-w" (lambda ()
-                    (interactive)
-                    (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
-            ivy-minibuffer-map)
+  ;; (bind-key "C-w" (lambda ()
+  ;;                   (interactive)
+  ;;                   (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
+  ;;           ivy-minibuffer-map)
+
+  ;; Exact same behaviors as isearch
+  (bind-key "C-w" 'ivy-yank-word ivy-minibuffer-map)
 
   ;; Enhance M-x
   (use-package smex)
