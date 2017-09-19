@@ -37,18 +37,17 @@
   :ensure nil
   :init (add-hook 'after-init-hook 'global-hl-line-mode))
 
-;; Highlight symbol
-(use-package highlight-symbol
-  :diminish highlight-symbol-mode
-  :bind (([C-f3] . highlight-symbol-at-point)
-         ([f3] . highlight-symbol-next)
-         ([S-f3] . highlight-symbol-prev)
-         ([M-f3] . highlight-symbol-query-replace))
-  :init
-  (setq highlight-symbol-idle-delay 0.5)
-
-  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-  (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
+;; Highlight symbols
+(use-package symbol-overlay
+  :diminish symbol-overlay-mode
+  :bind (("M-i" . symbol-overlay-put)
+         ("M-n" . symbol-overlay-jump-next)
+         ("M-p" . symbol-overlay-jump-prev)
+         ([C-f3] . symbol-overlay-put)
+         ([f3] . symbol-overlay-jump-next)
+         ([S-f3] . symbol-overlay-jump-prev)
+         ([M-f3] . symbol-overlay-remove-all))
+  :init (add-hook 'prog-mode-hook 'symbol-overlay-mode))
 
 ;; Highlight matching paren
 (use-package paren
