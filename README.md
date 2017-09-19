@@ -18,13 +18,11 @@ latest stable release - currently **25.3**.
 
 # Features
 
-- Pure GNU Emacs experience.
 - Out of box.
 - Clean and Fast.
 - Quick fuzzy search (via `ivy`, `ag`, `rg`).
 - Better Org support.
 - Support multiple programming languages
-  - Emacs-lisp
   - C/C++/C#
   - Ruby/Python/Perl/PHP/Shell/Powershell
   - Javascript/Typescript/JSON/YAML
@@ -33,7 +31,7 @@ latest stable release - currently **25.3**.
   - Markdown
   - ...
 - Auto completion.
-- Syntax check.
+- Fly syntax check.
 - Fly spell check.
 - Git/SVN integration.
 - Projectile integration.
@@ -62,8 +60,16 @@ Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles) or
 
 ## Installation
 
+Backup your `.emacs.d` if it exists, 
+
 ``` shell
-    git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
+mv ~/.emacs.d ~/.emacs.d.bak
+```
+
+then
+
+``` shell
+git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
 or download the ![zip
