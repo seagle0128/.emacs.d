@@ -3,7 +3,6 @@ Centaur Emacs
 
 [![Build
 Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
-
 [![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 ![Centaur Emacs](logo.png)
