@@ -73,7 +73,12 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish rainbow-mode
-  :init (add-hook 'prog-mode-hook 'rainbow-mode))
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+  (with-eval-after-load 'web-mode
+    (add-hook 'web-mode-hook 'rainbow-mode))
+  (with-eval-after-load 'css-mode
+    (add-hook 'css-mode-hook 'rainbow-mode)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
