@@ -52,10 +52,10 @@
 ;; Highlight matching paren
 (use-package paren
   :ensure nil
-  :init
+  :init (add-hook 'after-init-hook 'show-paren-mode)
+  :config
   (setq show-paren-when-point-inside-paren t)
-  (setq show-paren-when-point-in-periphery t)
-  (add-hook 'after-init-hook 'show-paren-mode))
+  (setq show-paren-when-point-in-periphery t))
 
 ;; Highlight surrounding parentheses
 (use-package highlight-parentheses
@@ -66,9 +66,8 @@
 ;; Highlight indentions
 (use-package indent-guide
   :diminish indent-guide-mode
-  :init
-  (setq indent-guide-delay 0.5)
-  (add-hook 'after-init-hook 'indent-guide-global-mode))
+  :init (add-hook 'after-init-hook 'indent-guide-global-mode)
+  :config (setq indent-guide-delay 0.5))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
