@@ -1,4 +1,4 @@
-;; init-utils.el --- Initialize basic configurations.	-*- lexical-binding: t -*-
+;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 3.0.0
@@ -33,56 +33,6 @@
 ;;; Code:
 
 (eval-when-compile (require 'init-const))
-
-;; Dos2Unix/Unix2Dos
-(defun dos2unix ()
-  "Convert the current buffer to UNIX file format."
-  (interactive)
-  (set-buffer-file-coding-system 'undecided-unix nil))
-
-(defun unix2dos ()
-  "Convert the current buffer to DOS file format."
-  (interactive)
-  (set-buffer-file-coding-system 'undecided-dos nil))
-
-;; Revert buffer
-(defun revert-current-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (message "Revert this buffer.")
-  (revert-buffer t t))
-(bind-key "<f5>" 'revert-current-buffer)
-
-;; Update configurations
-(defun update-config ()
-  "Update Emacs configurations to the latest version."
-  (interactive)
-  (message "Updating Emacs configurations...")
-  (cd "~/.emacs.d/")
-  (async-shell-command "git pull")
-  (message "Update finished. Restart Emacs to complete the process."))
-
-;; Save a file as utf-8
-(defun save-buffer-as-utf8 (coding-system)
-  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
-  (interactive "zCoding system for visited file (default nil):")
-  (revert-buffer-with-coding-system coding-system)
-  (set-buffer-file-coding-system 'utf-8)
-  (save-buffer))
-
-;; Proxy settings
-(defun toggle-proxy ()
-  "Toggle network(htpp/https) proxy."
-  (interactive)
-  (if url-proxy-services
-      (progn
-        (setq url-proxy-services nil)
-        (message "No proxy"))
-    (progn
-      (setq my-proxy "127.0.0.1:1087")
-      (setq url-proxy-services `(("http" . ,my-proxy)
-                                 ("https" . ,my-proxy)))
-      (message "Set proxy to %s" my-proxy))))
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -127,7 +77,7 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search
+;; Search: `ag' and `rg'
 (use-package ag
   :bind (("C-c s" . ag))
   :init
@@ -155,18 +105,12 @@
   (setq rg-group-result t)
   (setq rg-show-columns t))
 
-;; Jump to definition via ag/rg/grep
+;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
   :init (add-hook 'after-init-hook 'dumb-jump-mode)
   :config
   (setq dumb-jump-prefer-searcher 'rg)
   (with-eval-after-load 'ivy (setq dumb-jump-selector 'ivy)))
-
-;; Side-by-side diff view
-(use-package diffview)
-
-;; Text mode directory tree. Similar with beyond compare
-(use-package ztree)
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
@@ -182,16 +126,16 @@
 (use-package pomidor
   :bind (("<f12>" . pomidor)))
 
-;; Emacs StartUp Profiler
-(use-package esup)
-
 ;; Misc
-(use-package copyit)
-(use-package htmlize)
+(use-package copyit)                    ; copy path, url, etc.
+(use-package diffview)                  ; side-by-side diff view
+(use-package esup)                      ; Emacs startup profiler
+(use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
 (use-package open-junk-file)
 (use-package try)
+(use-package ztree)                     ; text mode directory tree. Similar with beyond compare
 
 (provide 'init-utils)
 

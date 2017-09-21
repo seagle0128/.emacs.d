@@ -96,8 +96,10 @@
 (require 'init-shell)
 (require 'init-eshell)
 
-(require 'init-utils)
 (require 'init-org)
+
+(require 'init-funcs)
+(require 'init-utils)
 
 ;; Programming
 (require 'init-vcs)
