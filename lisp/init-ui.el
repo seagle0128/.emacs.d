@@ -49,9 +49,12 @@
 
 ;; Menu/Tool/Scroll bars
 (unless sys/mac-x-p
-  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1)))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (when (and (fboundp 'menu-bar-mode) menu-bar-mode)
+    (menu-bar-mode -1)))
+(when (and (fboundp 'tool-bar-mode) tool-bar-mode)
+  (tool-bar-mode -1))
+(when (and (fboundp 'scroll-bar-mode) scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;; Theme
 (cond
