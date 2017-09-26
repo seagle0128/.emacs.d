@@ -60,6 +60,15 @@
   (async-shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
+;; Update org files
+(defun update-org ()
+  "Update Org files to the latest version."
+  (interactive)
+  (message "Updating Org files...")
+  (cd "~/org/")
+  (async-shell-command "git pull")
+  (message "Update finished."))
+
 ;; Save a file as utf-8
 (defun save-buffer-as-utf8 (coding-system)
   "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
