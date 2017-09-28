@@ -188,10 +188,10 @@
   :init (setq flyspell-issue-message-flag nil))
 
 ;; Hungry deletion
-(use-package smart-hungry-delete
-  :bind (("<backspace>" . smart-hungry-delete-backward-char)
-         ("C-d" . smart-hungry-delete-forward-char))
-  :init (smart-hungry-delete-add-default-hooks))
+(use-package hungry-delete
+  :diminish hungry-delete-mode
+  :init (add-hook 'after-init-hook 'global-hungry-delete-mode)
+  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
