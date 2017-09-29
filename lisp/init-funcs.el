@@ -50,6 +50,7 @@
   (message "Revert this buffer.")
   (revert-buffer t t))
 (bind-key "<f5>" 'revert-current-buffer)
+(bind-key "s-r" 'revert-current-buffer)
 
 ;; Update configurations
 (defun update-config ()
@@ -77,7 +78,7 @@
   (set-buffer-file-coding-system 'utf-8)
   (save-buffer))
 
-;; Proxy settings
+;; Toggle network proxy
 (defun toggle-proxy ()
   "Toggle network(htpp/https) proxy."
   (interactive)
