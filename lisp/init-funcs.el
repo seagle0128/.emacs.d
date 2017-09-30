@@ -58,7 +58,7 @@
   (interactive)
   (message "Updating Emacs configurations...")
   (cd "~/.emacs.d/")
-  (async-shell-command "git pull")
+  (shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
 ;; Update org files
@@ -67,7 +67,7 @@
   (interactive)
   (message "Updating Org files...")
   (cd "~/org/")
-  (async-shell-command "git pull")
+  (shell-command "git pull")
   (message "Update finished."))
 
 ;; Save a file as utf-8
