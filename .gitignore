@@ -47,3 +47,4 @@ tmp*
 tutorial/
 url/
 var/
+*.data

@@ -69,10 +69,9 @@
   :init (add-hook 'after-init-hook 'delete-selection-mode))
 
 ;; Rectangle
-;; for rectangles, CUA is nice
-(use-package cua-rect
+(use-package rect
   :ensure nil
-  :bind (("<C-return>" . cua-rectangle-mark-mode)))
+  :bind (("<C-return>" . rectangle-mark-mode)))
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
