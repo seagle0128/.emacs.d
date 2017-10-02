@@ -1,4 +1,5 @@
 *.bak
+*.data
 *.elc
 *.log
 *bak/
@@ -47,4 +48,3 @@ tmp*
 tutorial/
 url/
 var/
-*.data
