@@ -54,6 +54,7 @@
          ("C-c l" . counsel-locate)
          ("C-c L" . counsel-load-library)
          ("C-c P" . counsel-package)
+         ("C-x j" . counsel-mark-ring)
          ("C-x r b" . counsel-bookmark)
          ("C-x r m" . counsel-bookmark)
 

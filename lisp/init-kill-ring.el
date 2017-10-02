@@ -32,7 +32,7 @@
 ;;
 ;;; Code:
 
-(setq kill-ring-max 200)
+;; (setq kill-ring-max 200)
 
 ;; Save clipboard contents into kill-ring before replace them
 (setq save-interprogram-paste-before-kill t)
