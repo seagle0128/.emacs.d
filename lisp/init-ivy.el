@@ -50,7 +50,7 @@
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c S" . counsel-ag)
-         ("C-c R" . counsel-rg)
+         ("C-c r" . counsel-rg)
          ("C-c l" . counsel-locate)
          ("C-c L" . counsel-load-library)
          ("C-c P" . counsel-package)
