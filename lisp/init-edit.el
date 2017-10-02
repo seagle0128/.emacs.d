@@ -136,14 +136,6 @@
   :config (setq anzu-replace-to-string-separator
                 (if (char-displayable-p ?→) " → " " -> ")))
 
-;; Visual navigation through mark rings
-(use-package back-button
-  :diminish back-button-mode
-  :init (add-hook 'after-init-hook 'back-button-mode)
-  :config
-  (setq back-button-show-toolbar-buttons nil)
-  (setq back-button-less-feedback t))
-
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :bind ("M-;" . comment-dwim-2))
