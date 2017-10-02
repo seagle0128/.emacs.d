@@ -89,8 +89,8 @@
           ("*undo-tree Diff*" :dedicated nil :stick nil :noselect nil)
 
           ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*ag search*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
+          ;; ("*ag search*" :dedicated t :position bottom :stick t :noselect nil)
+          ;; ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
           ("*xref*" :dedicated t :position bottom :stick nil :noselect nil)

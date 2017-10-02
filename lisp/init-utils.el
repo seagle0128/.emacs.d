@@ -90,7 +90,6 @@
 
 ;; Search: `ag' and `rg'
 (use-package ag
-  :bind (("C-c s" . ag))
   :init
   (with-eval-after-load 'projectile
     (bind-key "C-c p s s" 'ag-project projectile-mode-map))
@@ -104,9 +103,8 @@
   (setq wgrep-change-readonly-file t))
 
 (use-package rg
-  :bind (("C-c r" . rg)
-         ("C-c m" . rg-dwim))
   :init
+  (add-hook 'after-init-hook 'rg-enable-default-bindings)
   (if (fboundp 'wgrep-ag-setup)
       (add-hook 'rg-mode-hook 'wgrep-ag-setup))
   (with-eval-after-load 'projectile
