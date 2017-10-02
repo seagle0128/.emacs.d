@@ -25,11 +25,11 @@ latest stable release - currently **25.3**.
 - Quick fuzzy search (via `ivy`, `ag`, `rg`).
 - Better Org support.
 - Support multiple programming languages
-  - C/C++/C#
+  - C/C++/C#/Java
   - Ruby/Python/Perl/PHP/Shell/Powershell
   - Javascript/Typescript/JSON/YAML
   - HTML/CSS/XML
-  - Golang/Siwft
+  - Golang/Swift
   - Markdown
   - ...
 - Auto completion.
