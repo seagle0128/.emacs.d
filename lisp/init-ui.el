@@ -106,9 +106,8 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/6104
 (use-package linum-off
   :after linum
-  :init
-  (setq linum-format "%4d ")
-  (add-hook 'after-init-hook 'global-linum-mode))
+  :init (add-hook 'after-init-hook 'global-linum-mode)
+  :config (setq linum-format "%4d "))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
