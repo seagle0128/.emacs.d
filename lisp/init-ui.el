@@ -85,8 +85,10 @@
 
 ;; Fonts
 (use-package cnfonts
-  :init (cnfonts-enable)
+  :init (add-hook 'after-init-hook 'cnfonts-enable)
   :config
+  (unless sys/win32p
+    (setq cnfonts-use-face-font-rescale t))
   (setq cnfonts-profiles
         '("program1" "program2" "program3" "org-mode" "read-book"))
   (setq cnfonts--profiles-steps '(("program1" . 4)
