@@ -57,7 +57,7 @@
   :type '(choice
           (const :tag "Melpa" melpa)
           (const :tag "Emacs-China" emacs-china)
-          (const :tag "Tsinghua" tsinghua)))
+          (const :tag "Tuna" tuna)))
 
 (defcustom my-theme 'default
   "Set color theme."

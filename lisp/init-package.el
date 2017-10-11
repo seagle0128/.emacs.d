@@ -54,7 +54,7 @@
  ((eq my-package-archives 'emacs-china)
   (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                            ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
- ((eq my-package-archives 'tsinghua)
+ ((eq my-package-archives 'tuna)
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                            ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
