@@ -125,14 +125,16 @@
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
-  :diminish skewer-mode skewer-css-mode skewer-html-mode
+  :diminish skewer-mode
   :init
   (with-eval-after-load 'js2-mode
     (add-hook 'js2-mode-hook 'skewer-mode))
   (with-eval-after-load 'css-mode
-    (add-hook 'css-mode-hook 'skewer-css-mode))
+    (add-hook 'css-mode-hook 'skewer-css-mode)
+    (diminish 'skewer-css-mode))
   (with-eval-after-load 'sgml-mode
-    (add-hook 'html-mode-hook 'skewer-html-mode)))
+    (add-hook 'html-mode-hook 'skewer-html-mode)
+    (diminish 'skewer-html-mode)))
 
 ;; Format HTML, CSS and JavaScript/JSON by js-beautify
 (use-package web-beautify

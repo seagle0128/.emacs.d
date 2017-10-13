@@ -46,16 +46,16 @@
 ;; Show function arglist or variable docstring
 (use-package eldoc
   :ensure nil
-  :if (<= emacs-major-version 24)
   :diminish eldoc-mode
   :init
   ;; Enable Eldoc in lisp modes in 24
   ;; `global-eldoc-mode' is enabled by default in 25.
-  (dolist (hook '(emacs-lisp-mode-hook
-                  lisp-interaction-mode-hook
-                  ielm-mode-hook
-                  eval-expression-minibuffer-setup-hook))
-    (add-hook hook 'eldoc-mode)))
+  (when (<= emacs-major-version 24)
+    (dolist (hook '(emacs-lisp-mode-hook
+                    lisp-interaction-mode-hook
+                    ielm-mode-hook
+                    eval-expression-minibuffer-setup-hook))
+      (add-hook hook 'eldoc-mode))))
 
 ;; Interactive macro expander
 (use-package macrostep
