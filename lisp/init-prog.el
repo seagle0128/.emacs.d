@@ -52,6 +52,7 @@
 (use-package csharp-mode)
 (use-package dockerfile-mode :mode "Dockerfile\\'")
 (use-package vimrc-mode)
+(use-package toml-mode)
 
 (use-package editorconfig
   :diminish editorconfig-mode
