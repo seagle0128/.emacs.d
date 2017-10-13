@@ -38,7 +38,6 @@
   (add-hook 'before-save-hook 'gofmt-before-save)
 
   (use-package golint)
-  (use-package go-snippets)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook 'go-eldoc-setup))
