@@ -67,12 +67,12 @@
           (const :tag "Light theme" light)
           (const :tag "Daylight theme" daylight)))
 
-(defcustom my-benchmark-enabled nil
-  "Enable the init benchmark or not."
+(defcustom my-emoji-enabled nil
+  "Enable emoji features or not."
   :type 'boolean)
 
-(defcustom my-profiler-enabled nil
-  "Enable the init profiler or not."
+(defcustom my-benchmark-enabled nil
+  "Enable the init benchmark or not."
   :type 'boolean)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

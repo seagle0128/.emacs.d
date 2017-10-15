@@ -32,7 +32,9 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -117,11 +119,13 @@
     (bind-key "c" 'counsel-rg rg-global-map)))
 
 ;; Emoji
-(use-package emojify
-  :init
-  (with-eval-after-load 'company
-    (use-package company-emoji
-      :init (add-to-list 'company-backends 'company-emoji))))
+(when my-emoji-enabled
+  (use-package emojify
+    :init (add-hook 'after-init-hook #'global-emojify-mode)
+    :config
+    (with-eval-after-load 'company
+      (use-package company-emoji
+        :init (add-to-list 'company-backends 'company-emoji)))))
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major

@@ -10,6 +10,7 @@
 ;; (setq my-proxy "127.0.0.1:1080")          ; Network proxy
 ;; (setq my-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tuna
 ;; (setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
+;; (setq my-emoji-enabled t)                 ; Enable emoji: t or nil
 ;; (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
 
 ;;; custom-example.el ends here
