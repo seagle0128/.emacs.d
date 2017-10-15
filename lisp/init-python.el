@@ -57,12 +57,12 @@
 
   ;; Autopep8
   (use-package py-autopep8
-    :init (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+    :init (add-hook 'python-mode-hook #'py-autopep8-enable-on-save))
 
   ;; Anaconda
   (use-package anaconda-mode
     :diminish anaconda-mode
-    :init (add-hook 'python-mode-hook 'anaconda-mode)
+    :init (add-hook 'python-mode-hook #'anaconda-mode)
     :config
     (with-eval-after-load 'company
       (use-package company-anaconda

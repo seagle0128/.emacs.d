@@ -38,14 +38,14 @@
   ;; Prettify Symbols
   ;; e.g. display “lambda” as “λ”
   (when (boundp 'global-prettify-symbols-mode)
-    (add-hook 'after-init-hook 'global-prettify-symbols-mode)
+    (add-hook 'after-init-hook #'global-prettify-symbols-mode)
     (add-hook 'emacs-lisp-mode-hook
               (lambda ()
                 (push '("<=" . ?≤) prettify-symbols-alist)))))
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
-  :init (add-hook 'after-init-hook 'dumb-jump-mode)
+  :init (add-hook 'after-init-hook #'dumb-jump-mode)
   :config
   (setq dumb-jump-prefer-searcher 'rg)
   (with-eval-after-load 'ivy
@@ -64,7 +64,7 @@
 
 (use-package editorconfig
   :diminish editorconfig-mode
-  :init (add-hook 'prog-mode-hook 'editorconfig-mode))
+  :init (add-hook 'prog-mode-hook #'editorconfig-mode))
 
 ;; Supports batch-mode only on >=25
 (when (< emacs-major-version 25)
@@ -86,7 +86,7 @@
   (add-hook 'fish-mode-hook
             (lambda ()
               (add-hook 'before-save-hook
-                        'fish_indent-before-save))))
+                        #'fish_indent-before-save))))
 
 (use-package swift-mode
   :config

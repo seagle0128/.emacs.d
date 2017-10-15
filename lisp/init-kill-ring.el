@@ -45,7 +45,7 @@
 ;; Interactively insert items from kill-ring
 (use-package browse-kill-ring
   :bind ("C-c k" . browse-kill-ring)
-  :init (add-hook 'after-init-hook 'browse-kill-ring-default-keybindings))
+  :init (add-hook 'after-init-hook #'browse-kill-ring-default-keybindings))
 
 (provide 'init-kill-ring)
 

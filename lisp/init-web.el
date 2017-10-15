@@ -50,7 +50,7 @@
   :commands turn-on-css-eldoc
   :init
   (dolist (hook '(css-mode-hook scss-mode-hook less-css-mode-hook))
-    (add-hook hook 'turn-on-css-eldoc)))
+    (add-hook hook #'turn-on-css-eldoc)))
 
 ;; JSON mode
 (use-package json-mode)
@@ -128,12 +128,12 @@
   :diminish skewer-mode
   :init
   (with-eval-after-load 'js2-mode
-    (add-hook 'js2-mode-hook 'skewer-mode))
+    (add-hook 'js2-mode-hook #'skewer-mode))
   (with-eval-after-load 'css-mode
-    (add-hook 'css-mode-hook 'skewer-css-mode)
+    (add-hook 'css-mode-hook #'skewer-css-mode)
     (diminish 'skewer-css-mode))
   (with-eval-after-load 'sgml-mode
-    (add-hook 'html-mode-hook 'skewer-html-mode)
+    (add-hook 'html-mode-hook #'skewer-html-mode)
     (diminish 'skewer-html-mode)))
 
 ;; Format HTML, CSS and JavaScript/JSON by js-beautify

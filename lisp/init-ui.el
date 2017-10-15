@@ -85,7 +85,7 @@
 
 ;; Fonts
 (use-package cnfonts
-  :init (add-hook 'after-init-hook 'cnfonts-enable)
+  :init (add-hook 'after-init-hook #'cnfonts-enable)
   :config
   (setq cnfonts-profiles
         '("program1" "program2" "program3" "org-mode" "read-book"))
@@ -104,7 +104,7 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/6104
 (use-package linum-off
   :after linum
-  :init (add-hook 'after-init-hook 'global-linum-mode)
+  :init (add-hook 'after-init-hook #'global-linum-mode)
   :config (setq linum-format "%4d "))
 
 ;; Mouse & Smooth Scroll
@@ -116,7 +116,7 @@
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
-  :init (add-hook 'after-init-hook 'smooth-scrolling-mode)
+  :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
   :config (setq smooth-scroll-margin 0))
 
 ;; Display Time
@@ -126,7 +126,7 @@
   :preface
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
-  :init (add-hook 'after-init-hook 'display-time-mode))
+  :init (add-hook 'after-init-hook #'display-time-mode))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)

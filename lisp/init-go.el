@@ -35,19 +35,19 @@
 ;; Golang
 (use-package go-mode
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package golint)
 
   (use-package go-eldoc
-    :init (add-hook 'go-mode-hook 'go-eldoc-setup))
+    :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
   (with-eval-after-load 'projectile
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
       :init
-      (add-hook 'projectile-after-switch-project-hook 'go-projectile-switch-project)
-      (add-hook 'go-mode-hook 'go-projectile-mode)))
+      (add-hook 'projectile-after-switch-project-hook #'go-projectile-switch-project)
+      (add-hook 'go-mode-hook #'go-projectile-mode)))
 
   (with-eval-after-load 'company
     (use-package company-go

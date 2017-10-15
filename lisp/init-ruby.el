@@ -41,7 +41,7 @@
   (use-package robe
     :diminish robe-mode
     :init
-    (add-hook 'ruby-mode-hook 'robe-mode)
+    (add-hook 'ruby-mode-hook #'robe-mode)
 
     (with-eval-after-load 'company
       (push '(company-robe :with company-yasnippet) company-backends)))
@@ -49,13 +49,13 @@
   ;; Ruby refactoring helpers
   (use-package ruby-refactor
     :diminish ruby-refactor-mode
-    :init (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
+    :init (add-hook 'ruby-mode-hook #'ruby-refactor-mode-launch))
 
   ;; Run a Ruby process in a buffer
   (use-package inf-ruby
     :init
-    (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
+    (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode)
+    (add-hook 'compilation-filter-hook #'inf-ruby-auto-enter))
 
   ;; Rubocop
   (use-package rubocop
@@ -66,7 +66,7 @@
   (use-package rspec-mode
     :diminish rspec-mode
     :commands rspec-install-snippets
-    :init (add-hook 'dired-mode-hook 'rspec-dired-mode)
+    :init (add-hook 'dired-mode-hook #'rspec-dired-mode)
     :config (with-eval-after-load 'yasnippet
               (rspec-install-snippets)))
 
@@ -80,7 +80,7 @@
   ;; Ruby YARD comments
   (use-package yard-mode
     :diminish yard-mode
-    :init (add-hook 'ruby-mode-hook 'yard-mode)))
+    :init (add-hook 'ruby-mode-hook #'yard-mode)))
 
 ;; YAML mode
 (use-package yaml-mode)

@@ -65,7 +65,7 @@
 ;; Start server
 (use-package server
   :ensure nil
-  :init (add-hook 'after-init-hook 'server-mode))
+  :init (add-hook 'after-init-hook #'server-mode))
 
 ;; History
 (use-package saveplace
@@ -73,7 +73,7 @@
   :init
   ;; Emacs 25 has a proper mode for `save-place'
   (if (fboundp 'save-place-mode)
-      (add-hook 'after-init-hook 'save-place-mode)
+      (add-hook 'after-init-hook #'save-place-mode)
     (setq save-place t)))
 
 (use-package recentf
@@ -82,7 +82,7 @@
   (setq recentf-max-saved-items 200)
 
   ;; lazy load recentf
-  ;; (add-hook 'after-init-hook 'recentf-mode)
+  ;; (add-hook 'after-init-hook #'recentf-mode)
   (add-hook 'find-file-hook (lambda () (unless recentf-mode
                                     (recentf-mode)
                                     (recentf-track-opened-file))))
@@ -102,7 +102,7 @@
                                         regexp-search-ring
                                         extended-command-history)
         savehist-autosave-interval 60)
-  (add-hook 'after-init-hook 'savehist-mode))
+  (add-hook 'after-init-hook #'savehist-mode))
 
 (provide 'init-basic)
 

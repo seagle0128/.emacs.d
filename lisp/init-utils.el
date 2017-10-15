@@ -40,11 +40,11 @@
 (use-package which-key
   :diminish which-key-mode
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
-  :init (add-hook 'after-init-hook 'which-key-mode))
+  :init (add-hook 'after-init-hook #'which-key-mode))
 
 ;; Context-sensitive external browse URL or Internet search
 (use-package browse-url-dwim
-  :init (add-hook 'after-init-hook 'browse-url-dwim-mode))
+  :init (add-hook 'after-init-hook #'browse-url-dwim-mode))
 
 ;; A tree layout file explorer
 (use-package treemacs
@@ -106,9 +106,9 @@
 
 (use-package rg
   :init
-  (add-hook 'after-init-hook 'rg-enable-default-bindings)
+  (add-hook 'after-init-hook #'rg-enable-default-bindings)
   (if (fboundp 'wgrep-ag-setup)
-      (add-hook 'rg-mode-hook 'wgrep-ag-setup))
+      (add-hook 'rg-mode-hook #'wgrep-ag-setup))
   (with-eval-after-load 'projectile
     (bind-key "C-c p s r" 'rg-project projectile-mode-map))
   :config

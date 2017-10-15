@@ -55,7 +55,7 @@
                     lisp-interaction-mode-hook
                     ielm-mode-hook
                     eval-expression-minibuffer-setup-hook))
-      (add-hook hook 'eldoc-mode))))
+      (add-hook hook #'eldoc-mode))))
 
 ;; Interactive macro expander
 (use-package macrostep
@@ -74,7 +74,7 @@
     :init (dolist (hook '(emacs-lisp-mode-hook
                           lisp-interaction-mode-hook
                           ielm-mode-hook))
-            (add-hook hook 'turn-on-elisp-slime-nav-mode))))
+            (add-hook hook #'turn-on-elisp-slime-nav-mode))))
 
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."

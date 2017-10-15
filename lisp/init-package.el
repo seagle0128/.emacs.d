@@ -82,7 +82,7 @@
   (use-package benchmark-init
     :init
     (benchmark-init/activate)
-    (add-hook 'after-init-hook 'benchmark-init/deactivate)))
+    (add-hook 'after-init-hook #'benchmark-init/deactivate)))
 
 ;; A mondern package interface
 (use-package paradox

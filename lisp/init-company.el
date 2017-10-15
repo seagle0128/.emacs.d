@@ -43,7 +43,7 @@
          ("<tab>" . company-complete-common-or-cycle)
          ("S-TAB" . company-select-previous)
          ("<backtab>" . company-select-previous))
-  :init (add-hook 'after-init-hook 'global-company-mode)
+  :init (add-hook 'after-init-hook #'global-company-mode)
   :config
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)

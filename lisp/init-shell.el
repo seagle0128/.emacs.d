@@ -39,8 +39,8 @@
 (use-package shell
   :ensure nil
   :config
-  (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+  (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
+  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
 
   (defun n-shell-mode-hook ()
     "Shell mode customizations."
@@ -67,7 +67,7 @@
      ;; Send other commands to the default handler.
      (t (comint-simple-send proc command))))
 
-  (add-hook 'shell-mode-hook 'n-shell-mode-hook))
+  (add-hook 'shell-mode-hook #'n-shell-mode-hook))
 
 ;; Company mode backend for shell functions
 (with-eval-after-load 'company

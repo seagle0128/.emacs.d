@@ -52,7 +52,7 @@
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
-  :init (add-hook 'after-init-hook 'persistent-scratch-setup-default))
+  :init (add-hook 'after-init-hook #'persistent-scratch-setup-default))
 
 (provide 'init-restore)
 
