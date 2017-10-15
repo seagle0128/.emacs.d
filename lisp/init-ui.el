@@ -146,9 +146,9 @@
   (setq x-gtk-use-system-tooltips nil))
 
 ;; Toggle fullscreen
-(bind-keys ([(meta f11)] . toggle-frame-fullscreen)
-           ([(shift super f)] . toggle-frame-fullscreen) ; Compatible with macOS
-           ([(meta return)] . toggle-frame-fullscreen)
+(bind-keys ([(control f11)] . toggle-frame-fullscreen)
+           ([(control super f)] . toggle-frame-fullscreen) ; Compatible with macOS
+           ([(super return)] . toggle-frame-fullscreen)
            ([(meta shift return)] . toggle-frame-fullscreen))
 
 (provide 'init-ui)
