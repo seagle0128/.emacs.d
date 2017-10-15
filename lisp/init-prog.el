@@ -43,6 +43,14 @@
               (lambda ()
                 (push '("<=" . ?≤) prettify-symbols-alist)))))
 
+;; Jump to definition via `ag'/`rg'/`grep'
+(use-package dumb-jump
+  :init (add-hook 'after-init-hook 'dumb-jump-mode)
+  :config
+  (setq dumb-jump-prefer-searcher 'rg)
+  (with-eval-after-load 'ivy
+    (setq dumb-jump-selector 'ivy)))
+
 (use-package nxml-mode
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))

@@ -88,7 +88,7 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search: `ag' and `rg'
+;; Search utils: `ag' and `rg'
 (use-package ag
   :init
   (with-eval-after-load 'projectile
@@ -115,14 +115,6 @@
   (setq rg-show-columns t)
   (with-eval-after-load 'counsel
     (bind-key "c" 'counsel-rg rg-global-map)))
-
-;; Jump to definition via `ag'/`rg'/`grep'
-(use-package dumb-jump
-  :init (add-hook 'after-init-hook 'dumb-jump-mode)
-  :config
-  (setq dumb-jump-prefer-searcher 'rg)
-  (with-eval-after-load 'ivy
-    (setq dumb-jump-selector 'ivy)))
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
