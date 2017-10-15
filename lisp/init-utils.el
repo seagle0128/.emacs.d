@@ -116,6 +116,13 @@
   (with-eval-after-load 'counsel
     (bind-key "c" 'counsel-rg rg-global-map)))
 
+;; Emoji
+(use-package emojify
+  :init
+  (with-eval-after-load 'company
+    (use-package company-emoji
+      :init (add-to-list 'company-backends 'company-emoji))))
+
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
   :bind (("C-h M-m" . discover-my-major)
