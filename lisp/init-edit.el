@@ -126,7 +126,16 @@
                   (aggressive-indent-mode -1))))
   :config
   (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
-    (push mode aggressive-indent-excluded-modes)))
+    (push mode aggressive-indent-excluded-modes))
+
+  (add-to-list
+   'aggressive-indent-dont-indent-if
+   '(and (or (derived-mode-p 'c-mode)
+             (derived-mode-p 'c++-mode)
+             (derived-mode-p 'java-mode)
+             (derived-mode-p 'csharp-mode))
+         (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                             (thing-at-point 'line))))))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
