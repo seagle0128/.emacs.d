@@ -112,7 +112,7 @@ restart Emacs.
 ![Main](https://user-images.githubusercontent.com/140797/30391180-20bd0ba8-987e-11e7-9cb4-2aa66a6fd69d.png)
 
 ## Programming (dark theme)
-![Programming](https://user-images.githubusercontent.com/140797/30391182-20c384ba-987e-11e7-8b7d-fd789e622b9f.png)
+![Programming](https://user-images.githubusercontent.com/140797/31727834-433c1164-b3f0-11e7-9f73-0977d9f600f1.png)
 
 ## Org mode (dark theme)
 ![Org](https://user-images.githubusercontent.com/140797/30391183-20c37e8e-987e-11e7-9579-c4df71549a76.png)
