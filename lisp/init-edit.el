@@ -125,9 +125,11 @@
               (if (> (buffer-size) (* 3000 80))
                   (aggressive-indent-mode -1))))
   :config
-  (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
+  ;; Disable in some modes
+  (dolist (mode '(web-mode html-mode css-mode robot-mode))
     (push mode aggressive-indent-excluded-modes))
 
+  ;; Be slightly less aggressive in C/C++/Java/C#
   (add-to-list
    'aggressive-indent-dont-indent-if
    '(and (or (derived-mode-p 'c-mode)
