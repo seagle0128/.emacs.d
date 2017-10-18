@@ -116,11 +116,14 @@
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
   :init
-  ;; FIXME: Performance issues in big files
+  (add-hook 'after-init-hook #'global-aggressive-indent-mode)
+
+  ;; FIXME: Disable in big files due to the performance issues
   ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-  (add-hook 'prog-mode-hook
+  (add-hook 'find-file-hook
             (lambda ()
-              (aggressive-indent-mode (- (* 3000 80) (buffer-size)))))
+              (if (> (buffer-size) (* 3000 80))
+                  (aggressive-indent-mode -1))))
   :config
   (dolist (mode '(ruby-mode robot-mode web-mode html-mode css-mode))
     (push mode aggressive-indent-excluded-modes)))
