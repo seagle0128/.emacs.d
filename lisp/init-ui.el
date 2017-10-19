@@ -109,7 +109,7 @@
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(2 ((shift) . 1)))
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
 (setq scroll-step 1
       scroll-margin 1
