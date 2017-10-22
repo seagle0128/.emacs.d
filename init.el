@@ -105,6 +105,7 @@
 (require 'init-vcs)
 (require 'init-flycheck)
 (require 'init-projectile)
+(require 'init-lsp)
 
 (require 'init-emacs-lisp)
 (require 'init-c)
