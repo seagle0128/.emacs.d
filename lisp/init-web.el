@@ -82,7 +82,6 @@
 ;; Typescript Interactive Development Environment
 (use-package tide
   :diminish tide-mode
-  :defines company-backends
   :init
   (defun setup-tide-mode ()
     "Setup tide mode."

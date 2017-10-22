@@ -62,7 +62,8 @@
     (company-quickhelp-mode 1))
 
   ;; Sort candidates using completion history
-  (use-package company-statistics :init (company-statistics-mode 1))
+  (use-package company-statistics
+    :init (company-statistics-mode 1))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
