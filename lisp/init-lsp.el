@@ -42,7 +42,7 @@
 
   (with-eval-after-load 'company
     (use-package company-lsp
-      :config (push '(company-lsp :with company-yasnippet) company-backends))))
+      :init (push '(company-lsp :with company-yasnippet) company-backends))))
 
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
 ;; Install: go get github.com/sourcegraph/go-langserver
