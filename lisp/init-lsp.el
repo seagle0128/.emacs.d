@@ -57,7 +57,9 @@
   :init (add-hook 'python-mode-hook #'lsp-python-enable))
 
 ;; Java support for lsp-mode using the Eclipse JDT Language Server.
-;; Download either latest or a specific version of Eclipse JDT Language Server distribution to ~/.emacs.d/eclipse.jdt.ls/server/
+;; Install:
+;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
+;; tar jdt-language-server-latest.tar.gz -P ~/.emacs.d/eclipse.jdt.ls/server/
 (use-package lsp-java
   :commands lsp-java-enable
   :init (add-hook 'java-mode-hook #'lsp-java-enable))
