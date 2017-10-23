@@ -57,9 +57,7 @@
     :if (display-graphic-p)
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
-    :init
-    (setq company-quickhelp-delay nil)
-    (company-quickhelp-mode 1))
+    :init (company-quickhelp-mode 1))
 
   ;; Sort candidates using completion history
   (use-package company-statistics
