@@ -186,13 +186,12 @@
                 ("M-." . counsel-gtags-find-definition)
                 ("M-r" . counsel-gtags-find-reference)
                 ("M-s" . counsel-gtags-find-symbol)
-                ("M-," . counsel-gtags-pop-stack))
+                ("M-," . counsel-gtags-go-backward))
     :init
     (setq counsel-gtags-auto-update t)
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                  (counsel-gtags-mode 1))))))
+
+    (add-hook 'c-mode-hook 'counsel-gtags-mode)
+    (add-hook 'c++-mode-hook 'counsel-gtags-mode)))
 
 (provide 'init-ivy)
 
