@@ -52,16 +52,20 @@
         company-minimum-prefix-length 2
         company-require-match nil)
 
+  ;; Fuzzy matching
+  (use-package company-flx
+    :init (company-flx-mode 1))
+
+  ;; Sort candidates using completion history
+  (use-package company-statistics
+    :init (company-statistics-mode 1))
+
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
     :if (display-graphic-p)
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
     :init (company-quickhelp-mode 1))
-
-  ;; Sort candidates using completion history
-  (use-package company-statistics
-    :init (company-statistics-mode 1))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
