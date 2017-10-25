@@ -33,15 +33,18 @@
 ;;; Code:
 
 ;; Golang
+;; Install: go get -u github.com/nsf/gocode
 (use-package go-mode
   :config
   (add-hook 'before-save-hook #'gofmt-before-save)
 
+  ;; Install: go get -u github.com/golang/lint/golint
   (use-package golint)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
+  ;; Install: go get golang.org/x/tools/cmd/guru
   (use-package go-guru
     :bind (:map go-mode-map
                 ("M-." . go-guru-definition)
