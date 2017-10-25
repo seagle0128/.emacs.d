@@ -55,6 +55,18 @@
      (list (gud-query-cmdline
             pdb-path
             (file-name-nondirectory buffer-file-name)))))
+
+  (when (< emacs-major-version 25)
+    ;; Anaconda mode
+    (use-package anaconda-mode
+      :diminish anaconda-mode
+      :init (add-hook 'python-mode-hook #'anaconda-mode)
+      :config
+      (with-eval-after-load 'company
+        (use-package company-anaconda
+          :defines company-backends
+          :init (add-to-list 'company-backends
+                             '(company-anaconda :with company-yasnippet))))))
   )
 
 (provide 'init-python)
