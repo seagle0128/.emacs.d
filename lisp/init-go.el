@@ -44,6 +44,10 @@
   ;; go get -u github.com/golang/lint/golint
   (use-package golint)
 
+  ;; go get -u github.com/kisielk/errcheck
+  (use-package go-errcheck)
+
+  ;; go get -u github.com/nsf/gocode
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
@@ -60,8 +64,8 @@
       (add-hook 'projectile-after-switch-project-hook #'go-projectile-switch-project)
       (add-hook 'go-mode-hook #'go-projectile-mode)))
 
+  ;; go get -u github.com/nsf/gocode
   (with-eval-after-load 'company
-    ;; go get -u github.com/nsf/gocode
     (use-package company-go
       :init (push '(company-go :with company-yasnippet) company-backends))))
 
