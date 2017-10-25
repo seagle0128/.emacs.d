@@ -42,6 +42,11 @@
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
+  (use-package go-guru
+    :bind (:map go-mode-map
+                ("M-." . go-guru-definition)
+                ("M-?" . go-guru-referrers)))
+
   (with-eval-after-load 'projectile
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
