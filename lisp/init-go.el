@@ -33,18 +33,21 @@
 ;;; Code:
 
 ;; Golang
-;; Install: go get -u github.com/nsf/gocode
+;; go get -u github.com/rogpeppe/godef
 (use-package go-mode
+  :bind (:map go-mode-map
+              ("M-." . godef-jump)
+              ("<f1>" . godoc-at-point))
   :config
   (add-hook 'before-save-hook #'gofmt-before-save)
 
-  ;; Install: go get -u github.com/golang/lint/golint
+  ;; go get -u github.com/golang/lint/golint
   (use-package golint)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
-  ;; Install: go get golang.org/x/tools/cmd/guru
+  ;; go get -u golang.org/x/tools/cmd/guru
   (use-package go-guru
     :bind (:map go-mode-map
                 ("M-." . go-guru-definition)
@@ -58,6 +61,7 @@
       (add-hook 'go-mode-hook #'go-projectile-mode)))
 
   (with-eval-after-load 'company
+    ;; go get -u github.com/nsf/gocode
     (use-package company-go
       :init (push '(company-go :with company-yasnippet) company-backends))))
 
