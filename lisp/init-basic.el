@@ -54,7 +54,7 @@
   )
 
 ;; Environment
-(when sys/macp
+(when (or sys/mac-x-p sys/linux-x-p)
   (use-package exec-path-from-shell
     :init
     (setq exec-path-from-shell-check-startup-files nil)
