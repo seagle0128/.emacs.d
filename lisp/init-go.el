@@ -36,8 +36,10 @@
 ;; go get -u github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
 ;; go get -u github.com/golang/lint/golint
+;; go get -u golang.org/x/tools/cmd/goimports
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
+;; go get -u github.com/alecthomas/gometalinter
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
@@ -66,7 +68,12 @@
 
   (with-eval-after-load 'company
     (use-package company-go
-      :init (push '(company-go :with company-yasnippet) company-backends))))
+      :init (push '(company-go :with company-yasnippet) company-backends)))
+
+  (with-eval-after-load 'flycheck
+    ;; gometalinter --install --update
+    (use-package flycheck-gometalinter
+      :init (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))))
 
 (provide 'init-go)
 
