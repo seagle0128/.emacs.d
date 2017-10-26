@@ -38,8 +38,11 @@
 ;; go get -u github.com/golang/lint/golint
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
+;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
+;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
   :bind (:map go-mode-map
+              ("M-." . godef-jump)
               ("<f1>" . godoc-at-point))
   :config
   (add-hook 'before-save-hook #'gofmt-before-save)
