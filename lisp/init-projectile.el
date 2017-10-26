@@ -46,7 +46,8 @@
   (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
 
-  ;; Use faster search tools: ripgrep or the silver search
+  ;; Use the faster searcher to handle project files:
+  ;; ripgrep `rg' or the silver searcher `ag'
   (let ((command
          (cond
           ((executable-find "rg")
