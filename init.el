@@ -3,7 +3,7 @@
 ;; Filename: init.el
 ;; Description:
 ;; Author: Vincent Zhang
-;; Version: 3.0.0
+;; Version: 3.1.0
 ;; Maintainer:
 ;; Created: Wed Nov 29 00:57:38 2006
 ;; Version:
@@ -105,7 +105,6 @@
 (require 'init-vcs)
 (require 'init-flycheck)
 (require 'init-projectile)
-;; (require 'init-lsp)
 
 (require 'init-emacs-lisp)
 (require 'init-c)
