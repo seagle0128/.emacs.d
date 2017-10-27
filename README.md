@@ -39,6 +39,7 @@ latest stable release - currently **25.3**.
 - Projectile integration.
 - Workspace integration.
 - Pomodor integration.
+- Youdao dictionary integration.
 - Support Chinese fonts and calendar.
 - Support Pinyin search.
 
