@@ -60,7 +60,10 @@
 (use-package csharp-mode)
 (use-package dockerfile-mode :mode "Dockerfile\\'")
 (use-package vimrc-mode)
-(use-package toml-mode)
+
+;; New `conf-toml-mode' in Emacs26
+(unless (fboundp 'conf-toml-mode)
+  (use-package toml-mode))
 
 (use-package editorconfig
   :diminish editorconfig-mode
