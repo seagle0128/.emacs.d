@@ -73,7 +73,8 @@
   (with-eval-after-load 'flycheck
     ;; gometalinter --install --update
     (use-package flycheck-gometalinter
-      :init (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))))
+      :init (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup)
+      :config (setq flycheck-gometalinter-fast t))))
 
 (provide 'init-go)
 
