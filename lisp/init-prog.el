@@ -69,8 +69,8 @@
   :diminish editorconfig-mode
   :init (add-hook 'prog-mode-hook #'editorconfig-mode))
 
-;; Supports batch-mode only on >=25
-(when (< emacs-major-version 25)
+;; New `bat-mode' in 25, only use `batch-mode' in 24.
+(unless (fboundp 'bat-mode)
   (use-package batch-mode
     :mode (("\\.\\(cmd\\|bat\\)$" . batch-mode))))
 
