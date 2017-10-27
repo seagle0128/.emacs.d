@@ -36,6 +36,7 @@
   :diminish ivy-mode counsel-mode
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-S-s" . swiper-all)
+         ("C-c M-x" . execute-extended-command)
 
          ("C-c C-r" . ivy-resume)
          ("C-c v" . ivy-push-view)
