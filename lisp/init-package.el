@@ -58,6 +58,11 @@
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                            ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
+;; For Emacs devel
+;; e.g. release is 24.5 or 25.1, while devel build is 26.0.90
+(if (= emacs-minor-version 0)
+    (setq package-user-dir (locate-user-emacs-file "elpa-devel")))
+
 ;; Initialize packages
 (setq package-enable-at-startup nil)    ; To prevent initialising twice
 (package-initialize)

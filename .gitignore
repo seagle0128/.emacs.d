@@ -37,6 +37,7 @@ auto-save-list/
 cnfonts/
 eclipse.jdt.ls/
 elpa/
+elpa-devel/
 emojis/
 eshell/
 flycheck_*.el*
