@@ -43,7 +43,9 @@
   ;; Disable complilation on save
   (setq scss-compile-at-save nil))
 
-(use-package less-css-mode)
+;; New `less-cs-mde' in Emacs26
+(unless (fboundp 'less-css-mode)
+  (use-package less-css-mode))
 
 ;; CSS eldoc
 (use-package css-eldoc
