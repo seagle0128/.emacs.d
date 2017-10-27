@@ -50,7 +50,7 @@
   :init
   ;; Enable Eldoc in lisp modes in 24
   ;; `global-eldoc-mode' is enabled by default in 25.
-  (when (<= emacs-major-version 24)
+  (unless (fboundp 'global-eldoc-mode)
     (dolist (hook '(emacs-lisp-mode-hook
                     lisp-interaction-mode-hook
                     ielm-mode-hook
@@ -65,8 +65,8 @@
               ("C-c e" . macrostep-expand)))
 
 ;; Make M-. and M-, work in elisp like they do in slime.
-;; In Emacs 25, xref is perfect, so only use in <=24.
-(when (< emacs-major-version 25)
+;; `xref' is perfect since 25, so only use in <=24.
+(unless (featurep 'xref)
   (use-package elisp-slime-nav
     :diminish elisp-slime-nav-mode
     :bind (:map elisp-slime-nav-mode-map
