@@ -51,7 +51,8 @@
 
   (setq w32-pass-apps-to-system nil)
   (setq w32-apps-modifier 'hyper) ; Menu/App key
-  )
+
+  (w32-register-hot-key [s-]))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
