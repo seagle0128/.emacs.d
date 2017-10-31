@@ -100,6 +100,7 @@
 
           ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
           ("*Python*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
+          ("*quickrun*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
 
           ("^*godoc.+*$" :regexp t :position bottom :stick nil :noselect t)
           ("*golint*" :dedicated t :position bottom :stick nil :noselect nil)
