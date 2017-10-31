@@ -59,6 +59,13 @@
                 ("M-." . go-guru-definition)
                 ("M-?" . go-guru-referrers)))
 
+  (use-package gotest
+    :bind (:map go-mode-map
+                ("C-c a" . go-test-current-project)
+                ("C-c m" . go-test-current-file)
+                ("C-c ." . go-test-current-test)
+                ("C-c x" . go-run)))
+
   (with-eval-after-load 'projectile
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
