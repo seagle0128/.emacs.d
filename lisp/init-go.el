@@ -67,6 +67,10 @@
                 ("M-." . go-guru-definition)
                 ("M-?" . go-guru-referrers)))
 
+  (use-package go-add-tags
+    :bind (:map go-mode-map
+                ("C-c t" . go-add-tags)))
+
   (use-package gotest
     :bind (:map go-mode-map
                 ("C-c a" . go-test-current-project)
@@ -89,6 +93,7 @@
   (with-eval-after-load 'flycheck
     ;; gometalinter --install --update
     (use-package flycheck-gometalinter
+      :disabled
       :init (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup)
       :config (setq flycheck-gometalinter-fast t))))
 
