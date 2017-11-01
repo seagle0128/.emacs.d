@@ -33,14 +33,19 @@
 ;;; Code:
 
 ;; Golang
+;;
+;; packages:
 ;; go get -u github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
 ;; go get -u github.com/golang/lint/golint
 ;; go get -u golang.org/x/tools/cmd/goimports
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
+;; go get -u golang.org/x/tools/cmd/godoc
 ;; go get -u github.com/alecthomas/gometalinter
 ;; go get -u github.com/derekparker/delve/cmd/dlv
+;; go get -u github.com/josharian/impl
+;;
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
@@ -52,6 +57,7 @@
 
   (use-package golint)
   (use-package go-dlv)
+  (use-package go-impl)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
