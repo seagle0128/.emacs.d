@@ -40,6 +40,7 @@
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
 ;; go get -u github.com/alecthomas/gometalinter
+;; go get -u github.com/derekparker/delve/cmd/dlv
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
@@ -50,6 +51,7 @@
   (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package golint)
+  (use-package go-dlv)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
@@ -67,6 +69,7 @@
                 ("C-c x" . go-run)))
 
   (with-eval-after-load 'projectile
+    ;; M-x `go-projectile-install-tools'
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
       :init
