@@ -60,6 +60,9 @@
          ("C-x r b" . counsel-bookmark)
          ("C-x r m" . counsel-bookmark)
 
+         :map ivy-minibuffer-map
+         ("C-w" . ivy-yank-word)
+
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
 
@@ -108,9 +111,6 @@
   ;;                   (interactive)
   ;;                   (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
   ;;           ivy-minibuffer-map)
-
-  ;; Exact same behaviors as isearch
-  (bind-key "C-w" 'ivy-yank-word ivy-minibuffer-map)
 
   ;; Enhance M-x
   (use-package smex)
