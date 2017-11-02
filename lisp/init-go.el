@@ -78,24 +78,17 @@
                 ("C-c ." . go-test-current-test)
                 ("C-c x" . go-run)))
 
+  (with-eval-after-load 'company
+    (use-package company-go
+      :init (push '(company-go :with company-yasnippet) company-backends)))
+
   (with-eval-after-load 'projectile
     ;; M-x `go-projectile-install-tools'
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
       :init
       (add-hook 'projectile-after-switch-project-hook #'go-projectile-switch-project)
-      (add-hook 'go-mode-hook #'go-projectile-mode)))
-
-  (with-eval-after-load 'company
-    (use-package company-go
-      :init (push '(company-go :with company-yasnippet) company-backends)))
-
-  (with-eval-after-load 'flycheck
-    ;; gometalinter --install --update
-    (use-package flycheck-gometalinter
-      :disabled
-      :init (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup)
-      :config (setq flycheck-gometalinter-fast t))))
+      (add-hook 'go-mode-hook #'go-projectile-mode))))
 
 (provide 'init-go)
 
