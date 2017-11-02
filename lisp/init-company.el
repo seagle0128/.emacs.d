@@ -39,22 +39,25 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("TAB" . company-complete-common-or-cycle)
          ("<tab>" . company-complete-common-or-cycle)
-         ("S-TAB" . company-select-previous)
-         ("<backtab>" . company-select-previous))
+         ("<backtab>" . company-select-previous)
+         :map company-search-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next))
   :init (add-hook 'after-init-hook #'global-company-mode)
   :config
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)
 
-  (setq company-idle-delay 0.3
+  (setq company-idle-delay 0.5
         company-minimum-prefix-length 2
-        company-require-match nil)
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil)
 
-  ;; Fuzzy matching
-  (use-package company-flx
-    :init (company-flx-mode 1))
+  ;; weight by frequency
+  ;; (setq company-transformers nil)
+  (setq company-transformers '(company-sort-by-occurrence))
 
   ;; Sort candidates using completion history
   (use-package company-statistics
