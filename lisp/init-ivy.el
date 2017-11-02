@@ -60,6 +60,9 @@
          ("C-x r b" . counsel-bookmark)
          ("C-x r m" . counsel-bookmark)
 
+         :map counsel-find-file-map
+         ("C-h" . counsel-up-directory)
+
          :map swiper-map
          ("M-%" . swiper-query-replace))
   :init (add-hook 'after-init-hook
