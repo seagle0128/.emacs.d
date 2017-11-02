@@ -56,7 +56,6 @@
         company-dabbrev-downcase nil)
 
   ;; weight by frequency
-  ;; (setq company-transformers nil)
   (setq company-transformers '(company-sort-by-occurrence))
 
   ;; Sort candidates using completion history
@@ -72,17 +71,17 @@
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
-  (defvar company-mode/enable-yas t
+  (defvar company-enable-yas t
     "Enable yasnippet for all backends.")
 
-  (defun company-mode/backend-with-yas (backend)
-    (if (or (not company-mode/enable-yas)
+  (defun company-backend-with-yas (backend)
+    (if (or (not company-enable-yas)
             (and (listp backend) (member 'company-yasnippet backend)))
         backend
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
 
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+  (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
 
 (provide 'init-company)
 

@@ -72,8 +72,7 @@
 ;; Company mode backend for shell functions
 (with-eval-after-load 'company
   (use-package company-shell
-    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell :with company-yasnippet)
-                      company-backends)))
+    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell) company-backends)))
 
 ;; Multi term
 (use-package multi-term)

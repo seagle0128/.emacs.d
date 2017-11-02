@@ -120,9 +120,9 @@
   (with-eval-after-load 'company
     (use-package company-web
       :init
-      (cl-pushnew '(company-web-html :with company-yasnippet) company-backends)
-      (cl-pushnew '(company-web-jade :with company-yasnippet) company-backends)
-      (cl-pushnew '(company-web-slim :with company-yasnippet) company-backends))))
+      (cl-pushnew (company-backend-with-yas 'company-web-html) company-backends)
+      (cl-pushnew (company-backend-with-yas 'company-web-jade) company-backends)
+      (cl-pushnew (company-backend-with-yas 'company-web-slim) company-backends))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
