@@ -113,7 +113,7 @@
     (bind-key "C-c p s r" 'rg-project projectile-mode-map))
   :config
   (setq rg-custom-type-aliases nil)
-  (setq rg-group-result nil)
+  (setq rg-group-result t)
   (setq rg-show-columns t)
   (with-eval-after-load 'counsel
     (bind-key "c" 'counsel-rg rg-global-map)))
