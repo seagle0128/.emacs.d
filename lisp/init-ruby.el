@@ -44,7 +44,7 @@
     (add-hook 'ruby-mode-hook #'robe-mode)
 
     (with-eval-after-load 'company
-      (push (company-backend-with-yas 'company-robe) company-backends)))
+      (cl-pushnew (company-backend-with-yas 'company-robe) company-backends)))
 
   ;; Ruby refactoring helpers
   (use-package ruby-refactor

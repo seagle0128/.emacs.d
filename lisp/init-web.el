@@ -106,7 +106,7 @@
           nil))
 
   (with-eval-after-load 'company
-    (push '(company-tide :with company-yasnippet) company-backends)))
+    (cl-pushnew (company-backend-with-yas 'company-tide) company-backends)))
 
 ;; Major mode for editing web templates
 (use-package web-mode
