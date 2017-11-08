@@ -51,6 +51,7 @@
 (use-package go-mode
   :bind (:map go-mode-map
               ("M-." . godef-jump)
+              ("C-c C-r" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
   (add-hook 'before-save-hook #'gofmt-before-save)
