@@ -47,11 +47,13 @@
   (setq projectile-use-git-grep t)
 
   ;; Use the faster searcher to handle project files:
-  ;; ripgrep `rg' or the silver searcher `ag'
+  ;; ripgrep `rg', the platinum searcher `pt' or the silver searcher `ag'
   (let ((command
          (cond
           ((executable-find "rg")
-           "rg -0 --files --color=never --hidden --sort-files")
+           "rg -0 -l --color=never --hidden --sort-files")
+          ((executable-find "pt")
+           "pt -0 -l --nocolor --hidden")
           ((executable-find "ag")
            (concat "ag -0 -l --nocolor --hidden"
                    (mapconcat #'identity
@@ -61,7 +63,7 @@
 
   ;; Faster searching on Windows
   (when sys/win32p
-    (when (or (executable-find "rg") (executable-find "ag"))
+    (when (or (executable-find "rg") (executable-find "pt") (executable-find "ag"))
       (setq projectile-indexing-method 'alien))
     (setq projectile-git-submodule-command ""))
 

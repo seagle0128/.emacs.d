@@ -90,7 +90,7 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search utils: `ag' and `rg'
+;; Search utils: `ag', `rg', `pt'
 (use-package ag
   :init
   (with-eval-after-load 'projectile
@@ -113,10 +113,15 @@
     (bind-key "C-c p s r" 'rg-project projectile-mode-map))
   :config
   (setq rg-custom-type-aliases nil)
-  (setq rg-group-result t)
+  (setq rg-group-result nil)
   (setq rg-show-columns t)
   (with-eval-after-load 'counsel
     (bind-key "c" 'counsel-rg rg-global-map)))
+
+(use-package pt
+  :init
+  (with-eval-after-load 'projectile
+    (bind-key "C-c p s p" 'projectile-pt projectile-mode-map)))
 
 ;; Emoji
 (when my-emoji-enabled
