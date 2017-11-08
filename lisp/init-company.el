@@ -56,11 +56,11 @@
         company-dabbrev-downcase nil)
 
   ;; weight by frequency
-  (setq company-transformers '(company-sort-by-occurrence))
+  ;; (setq company-transformers '(company-sort-by-occurrence))
 
   ;; Sort candidates using completion history
-  (use-package company-statistics
-    :init (company-statistics-mode 1))
+  ;; (use-package company-statistics
+  ;;   :init (company-statistics-mode 1))
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
