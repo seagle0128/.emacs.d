@@ -36,8 +36,7 @@
 
 ;; Manage and navigate projects
 (use-package projectile
-  :bind (("C-S-t" . projectile-find-file) ; for Windows
-         ("s-t" . projectile-find-file))  ; Cmd-t for Mac and Super-t for Linux
+  :bind (("s-t" . projectile-find-file)) ; `cmd-t' or `super-t'
   :init (add-hook 'after-init-hook #'projectile-mode)
   :config
   (setq projectile-mode-line
