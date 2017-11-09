@@ -51,7 +51,10 @@
   (let ((command
          (cond
           ((executable-find "rg")
-           "rg -0 --files --color=never --hidden")
+           (let ((rg-cmd ""))
+             (dolist (dir projectile-globally-ignored-directories)
+               (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+             (concat "rg -0 --files --color=never --hidden" rg-cmd)))
           ((executable-find "pt")
            (if sys/win32p
                (concat "pt /0 /l /nocolor /hidden ."
