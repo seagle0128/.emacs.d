@@ -51,11 +51,17 @@
   (let ((command
          (cond
           ((executable-find "rg")
-           "rg -0 --files --color=never --hidden --sort-files")
+           "rg -0 --files --color=never --hidden")
           ((executable-find "pt")
            (if sys/win32p
-               "pt /0 /l /nocolor /hidden /l *"
-             "pt -0 --nocolor --hidden -l *")
+               (concat "pt /0 /l /nocolor /hidden ."
+                       (mapconcat #'identity
+                                  (cons "" projectile-globally-ignored-directories)
+                                  " /ignore:"))
+             (concat "pt -0 -l --nocolor --hidden ."
+                     (mapconcat #'identity
+                                (cons "" projectile-globally-ignored-directories)
+                                " --ignore="))))
           ((executable-find "ag")
            (concat "ag -0 -l --nocolor --hidden"
                    (mapconcat #'identity
@@ -68,6 +74,8 @@
     (when (or (executable-find "rg") (executable-find "pt") (executable-find "ag"))
       (setq projectile-indexing-method 'alien)
       (setq projectile-enable-caching nil))
+
+    ;; FIXME: too slow while getting submodule files on Window
     (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project
