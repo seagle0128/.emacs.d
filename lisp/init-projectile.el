@@ -45,39 +45,15 @@
   (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
 
-  ;; Use the faster searcher to handle project files:
-  ;; ripgrep `rg', the platinum searcher `pt' or the silver searcher `ag'
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           (let ((rg-cmd ""))
-             (dolist (dir projectile-globally-ignored-directories)
-               (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
-             (concat "rg -0 --files --color=never --hidden" rg-cmd)))
-          ((executable-find "pt")
-           (if sys/win32p
-               (concat "pt /0 /l /nocolor /hidden ."
-                       (mapconcat #'identity
-                                  (cons "" projectile-globally-ignored-directories)
-                                  " /ignore:"))
-             (concat "pt -0 -l --nocolor --hidden ."
-                     (mapconcat #'identity
-                                (cons "" projectile-globally-ignored-directories)
-                                " --ignore="))))
-          ((executable-find "ag")
-           (concat "ag -0 -l --nocolor --hidden"
-                   (mapconcat #'identity
-                              (cons "" projectile-globally-ignored-directories)
-                              " --ignore-dir="))))))
-    (setq projectile-generic-command command))
-
-  ;; Faster searching on Windows
+  ;; Faster indexing on Windows
+  ;; `ripgrep' is the fastest
   (when sys/win32p
-    (when (or (executable-find "rg") (executable-find "pt") (executable-find "ag"))
+    (when (executable-find "rg")
+      (setq projectile-generic-command "rg -0 --files --color=never --hidden")
       (setq projectile-indexing-method 'alien)
       (setq projectile-enable-caching nil))
 
-    ;; FIXME: too slow while getting submodule files on Window
+    ;; FIXME: too slow while getting submodule files on Windows
     (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project
