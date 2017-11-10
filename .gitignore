@@ -7,8 +7,8 @@
 .vscode/
 /.agignore
 /.emacs-buffers
-/.emacs.desktop
-/.emacs.desktop.lock
+/.emacs*.desktop
+/.emacs*.desktop.lock
 /.last-package-update-day
 /.mc-lists.el
 /.org-id-locations
