@@ -87,6 +87,7 @@
 (use-package cnfonts
   :init (add-hook 'after-init-hook #'cnfonts-enable)
   :config
+  (setq cnfonts-keep-frame-size nil)
   (setq cnfonts-profiles
         '("program1" "program2" "program3" "org-mode" "read-book"))
   (setq cnfonts--profiles-steps '(("program1" . 4)
