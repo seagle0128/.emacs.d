@@ -67,6 +67,10 @@
           (const :tag "Light theme" light)
           (const :tag "Daylight theme" daylight)))
 
+(defcustom my-cnfonts-enabled t
+  "Enable cnfonts while startup or not."
+  :type 'boolean)
+
 (defcustom my-emoji-enabled nil
   "Enable emoji features or not."
   :type 'boolean)
