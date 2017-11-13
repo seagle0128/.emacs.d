@@ -40,13 +40,6 @@
 (setq user-full-name my-full-name)
 (setq user-mail-address my-mail-address)
 
-;; For Emacs devel
-;; e.g. release is 24.5 or 25.1, while devel build is 26.0.90
-(when (= emacs-minor-version 0)
-  (setq package-user-dir (locate-user-emacs-file "elpa-devel"))
-  (setq desktop-base-file-name ".emacs-devel.desktop")
-  (setq desktop-base-lock-name ".emacs-devel.desktop.lock"))
-
 ;; Key Modifiers
 (when sys/win32p
   ;; make PC keyboard's Win key or other to type Super or Hyper
