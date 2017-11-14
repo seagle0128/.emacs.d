@@ -64,7 +64,7 @@
   :init
   (add-hook 'js2-mode-hook
             (lambda ()
-              (setq js2-basic-offset 2)
+              (setq js2-basic-offset 4)
               (js2-highlight-unused-variables-mode 1)
               (js2-imenu-extras-mode 1)))
   :config
