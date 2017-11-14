@@ -67,7 +67,7 @@
 
 (use-package editorconfig
   :diminish editorconfig-mode
-  :init (add-hook 'prog-mode-hook #'editorconfig-mode))
+  :init (add-hook 'after-init-hook #'editorconfig-mode))
 
 ;; New `bat-mode' in 25, only use `batch-mode' in 24.
 (unless (fboundp 'bat-mode)
