@@ -124,3 +124,8 @@ restart Emacs.
 
 ## Magit (daylight theme)
 ![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
+
+# FAQ
+
+1. why is the modline messy?
+> Powerline fonts are missing on your system. Please install [powerline-fonts](https://github.com/powerline/fonts). 
