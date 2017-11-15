@@ -42,7 +42,6 @@
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
 ;; go get -u golang.org/x/tools/cmd/godoc
-;; go get -u github.com/alecthomas/gometalinter
 ;; go get -u github.com/derekparker/delve/cmd/dlv
 ;; go get -u github.com/josharian/impl
 ;;
