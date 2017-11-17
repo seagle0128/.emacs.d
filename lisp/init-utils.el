@@ -57,7 +57,7 @@
         treemacs-indentation                2
         treemacs-git-integration            t
         treemacs-collapse-dirs              3
-        treemacs-silent-refresh             nil
+        treemacs-silent-refresh             t
         treemacs-change-root-without-asking nil
         treemacs-sorting                    'alphabetic-desc
         treemacs-show-hidden-files          t
