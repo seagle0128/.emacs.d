@@ -44,6 +44,7 @@
 ;; go get -u golang.org/x/tools/cmd/godoc
 ;; go get -u github.com/derekparker/delve/cmd/dlv
 ;; go get -u github.com/josharian/impl
+;; go get -u sourcegraph.com/sqs/goreturns
 ;;
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
@@ -53,6 +54,8 @@
               ("C-c C-r" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
+  ;; `goreturns' or `goimports' or `gofmt'
+  (setq gofmt-command "goreturns")
   (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package golint)
