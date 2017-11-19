@@ -45,6 +45,7 @@
 ;; go get -u github.com/derekparker/delve/cmd/dlv
 ;; go get -u github.com/josharian/impl
 ;; go get -u sourcegraph.com/sqs/goreturns
+;; go get -u github.com/cweill/gotests/...
 ;;
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
@@ -80,6 +81,10 @@
                 ("C-c m" . go-test-current-file)
                 ("C-c ." . go-test-current-test)
                 ("C-c x" . go-run)))
+
+  (use-package go-gen-test
+    :bind (:map go-mode-map
+                ("C-c C-g" . go-gen-test-dwim)))
 
   (with-eval-after-load 'company
     (use-package company-go
