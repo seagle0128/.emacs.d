@@ -88,9 +88,7 @@
 
   (with-eval-after-load 'company
     (use-package company-go
-      :init
-      (setq company-go-show-annotation t)
-      (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
+      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
 
   (with-eval-after-load 'projectile
     ;; M-x `go-projectile-install-tools'
