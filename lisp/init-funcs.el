@@ -70,6 +70,13 @@
   (shell-command "git pull")
   (message "Update finished."))
 
+;; Create a new scratch buffer
+(defun create-scratch-buffer ()
+  "Create a scratch buffer."
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*scratch*"))
+  (lisp-interaction-mode))
+
 ;; Save a file as utf-8
 (defun save-buffer-as-utf8 (coding-system)
   "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
