@@ -74,6 +74,7 @@
                     (ivy-mode 1)
                     (counsel-mode 1)))
   :config
+  (setq ivy-use-selectable-prompt t)
   (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
   (setq ivy-height 10)
   (setq ivy-count-format "(%d/%d) ")
