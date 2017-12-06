@@ -109,7 +109,6 @@
       :ensure nil
       :init (add-hook 'prog-mode-hook #'display-line-numbers-mode))
   (use-package linum-off
-    :after linum
     :init (add-hook 'after-init-hook #'global-linum-mode)
     :config (setq linum-format "%4d ")))
 
