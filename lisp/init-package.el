@@ -75,6 +75,10 @@
 (setq use-package-expand-minimally t)
 (setq use-package-enable-imenu-support t)
 
+;; Required by `use-package'
+(use-package diminish)
+(use-package bind-key)
+
 ;; Initialization benchmark
 (when my-benchmark-enabled
   (use-package benchmark-init
