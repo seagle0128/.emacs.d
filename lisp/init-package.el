@@ -69,6 +69,8 @@
 
 (eval-when-compile
   (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
