@@ -62,6 +62,7 @@
   (use-package dired-aux :ensure nil)
   (use-package dired-x
     :ensure nil
+    :demand
     :after dired
     :config
     (when (display-graphic-p)
