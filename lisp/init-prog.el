@@ -97,6 +97,9 @@
     (use-package flycheck-swift
       :init (flycheck-swift-setup))))
 
+(use-package rust-mode
+  :config (setq rust-format-on-save t))
+
 (use-package robot-mode
   :ensure nil
   :load-path "site-lisp"
