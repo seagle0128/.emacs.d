@@ -55,7 +55,6 @@
   (setq treemacs-follow-after-init          t
         treemacs-width                      35
         treemacs-indentation                2
-        treemacs-git-integration            t
         treemacs-collapse-dirs              3
         treemacs-silent-refresh             t
         treemacs-change-root-without-asking nil
@@ -66,10 +65,13 @@
         treemacs-goto-tag-strategy          'refetch-index)
 
   (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t))
+  (treemacs-filewatch-mode t)
+  (treemacs-git-mode 'extended))
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
+  :bind (([C-f8] . treemacs-projectile-toggle)
+         ("C-c p h" . treemacs-projectile-toggle))
   :config
   (setq treemacs-header-function #'treemacs-projectile-create-header))
 
