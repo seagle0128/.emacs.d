@@ -62,6 +62,7 @@
         treemacs-show-hidden-files          t
         treemacs-never-persist              nil
         treemacs-is-never-other-window      nil
+        treemacs-icon-fallback-text         ""
         treemacs-goto-tag-strategy          'refetch-index)
 
   (treemacs-follow-mode t)
