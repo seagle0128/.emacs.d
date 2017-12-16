@@ -140,8 +140,8 @@
   (use-package ivy-rich
     :init
     (setq ivy-virtual-abbreviate 'full
-          ivy-rich-switch-buffer-align-virtual-buffer nil)
-    (setq ivy-rich-abbreviate-paths t)
+          ivy-rich-switch-buffer-align-virtual-buffer t)
+    (setq ivy-rich-path-style 'abbrev)
 
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer)
