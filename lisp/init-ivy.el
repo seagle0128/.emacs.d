@@ -126,6 +126,10 @@
   (use-package counsel-projectile
     :init (counsel-projectile-on))
 
+  ;; Select from xref candidates with ivy
+  (use-package ivy-xref
+    :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
     :after flyspell
