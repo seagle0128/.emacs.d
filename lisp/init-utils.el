@@ -53,7 +53,7 @@
          ("C-c 1"     . treemacs-delete-other-windows))
   :config
   (setq treemacs-follow-after-init          t
-        treemacs-width                      35
+        treemacs-width                      30
         treemacs-indentation                2
         treemacs-collapse-dirs              3
         treemacs-silent-refresh             t
@@ -71,7 +71,7 @@
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
-  :bind (([C-f8] . treemacs-projectile-toggle)
+  :bind (([M-f8] . treemacs-projectile-toggle)
          ("C-c p h" . treemacs-projectile-toggle))
   :config
   (setq treemacs-header-function #'treemacs-projectile-create-header))
