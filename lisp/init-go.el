@@ -34,7 +34,7 @@
 
 ;; Golang
 ;;
-;; packages:
+;; Go packages:
 ;; go get -u github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
 ;; go get -u github.com/golang/lint/golint
@@ -46,6 +46,7 @@
 ;; go get -u github.com/josharian/impl
 ;; go get -u sourcegraph.com/sqs/goreturns
 ;; go get -u github.com/cweill/gotests/...
+;; go get -u github.com/fatih/gomodifytags
 ;;
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
@@ -71,9 +72,11 @@
                 ("M-." . go-guru-definition)
                 ("M-?" . go-guru-referrers)))
 
-  (use-package go-add-tags
+  (use-package go-tag
     :bind (:map go-mode-map
-                ("C-c t" . go-add-tags)))
+                ("C-c t" . go-tag-add)
+                ("C-c T" . go-tag-remove))
+    :init (setq go-tag-args (list "-transform" "camelcase")))
 
   (use-package gotest
     :bind (:map go-mode-map
