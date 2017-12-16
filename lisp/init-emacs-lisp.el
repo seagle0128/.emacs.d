@@ -66,7 +66,7 @@
 
 ;; Make M-. and M-, work in elisp like they do in slime.
 ;; `xref' is perfect since 25, so only use in <=24.
-(when (<= emacs-major-version 24)
+(unless (fboundp 'xref-find-definitions)
   (use-package elisp-slime-nav
     :diminish elisp-slime-nav-mode
     :bind (:map elisp-slime-nav-mode-map
