@@ -63,6 +63,7 @@
   (use-package golint)
   (use-package go-dlv)
   (use-package go-impl)
+  (use-package go-playground)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
