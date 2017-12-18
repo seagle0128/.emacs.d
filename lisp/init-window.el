@@ -103,9 +103,9 @@
           ("*quickrun*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
 
           ("^*godoc.+*$" :regexp t :position bottom :stick nil :noselect nil)
-          ("*golint*" :dedicated t :position bottom :stick t :noselect t)
+          ("*golint*" :dedicated t :position bottom :stick t :noselect nil)
           ("*go-guru-output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Go Test*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Go Test*" :dedicated t :position bottom :stick t :noselect nil)
 
           ("*ert*" :dedicated t :position bottom :stick t :noselect nil)
           ("*nosetests*" :dedicated t :position bottom :stick t :noselect nil))))
