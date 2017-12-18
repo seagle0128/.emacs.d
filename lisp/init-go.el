@@ -61,6 +61,7 @@
   (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package golint)
+  (use-package govet)
   (use-package go-dlv)
   (use-package go-impl)
   (use-package go-playground)
