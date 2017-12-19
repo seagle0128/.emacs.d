@@ -65,6 +65,9 @@
         treemacs-icon-fallback-text         ""
         treemacs-goto-tag-strategy          'refetch-index)
 
+  (when (fboundp 'xref-find-definitions)
+    (setq treemacs-goto-tag-strategy 'call-xref))
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-git-mode 'simple))
