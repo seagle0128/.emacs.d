@@ -124,7 +124,7 @@
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :init (counsel-projectile-on))
+    :init (counsel-projectile-mode 1))
 
   ;; Select from xref candidates with ivy
   (use-package ivy-xref
