@@ -67,7 +67,7 @@
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-  (treemacs-git-mode 'extended))
+  (treemacs-git-mode 'simple))
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
