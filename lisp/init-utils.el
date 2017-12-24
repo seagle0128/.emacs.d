@@ -122,7 +122,9 @@
   (setq rg-group-result t)
   (setq rg-show-columns t)
   (with-eval-after-load 'counsel
-    (bind-key "c" 'counsel-rg rg-global-map)))
+    (bind-key "c" 'counsel-rg rg-global-map))
+  (with-eval-after-load 'counsel-projectile
+    (bind-key "s r" 'rg-project counsel-projectile-command-map)))
 
 (use-package pt
   :init
