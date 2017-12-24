@@ -55,7 +55,7 @@
   (setq treemacs-follow-after-init          t
         treemacs-width                      30
         treemacs-indentation                2
-        treemacs-collapse-dirs              3
+        treemacs-collapse-dirs              0
         treemacs-silent-refresh             t
         treemacs-change-root-without-asking nil
         treemacs-sorting                    'alphabetic-desc
