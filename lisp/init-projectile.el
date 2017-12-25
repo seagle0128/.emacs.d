@@ -1,7 +1,7 @@
 ;; init-projectile.el --- Initialize projectile configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.1.0
+;; Version: 3.2.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:

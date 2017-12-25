@@ -3,7 +3,7 @@
 ;; Filename: init.el
 ;; Description:
 ;; Author: Vincent Zhang
-;; Version: 3.1.0
+;; Version: 3.2.0
 ;; Maintainer:
 ;; Created: Wed Nov 29 00:57:38 2006
 ;; Version:
