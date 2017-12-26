@@ -46,6 +46,7 @@
 ;; go get -u github.com/josharian/impl
 ;; go get -u github.com/cweill/gotests/...
 ;; go get -u github.com/fatih/gomodifytags
+;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
 ;;
 ;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
 ;; https://github.com/dominikh/go-mode.el/issues/218
@@ -59,11 +60,12 @@
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook #'gofmt-before-save)
 
-  (use-package golint)
-  (use-package govet)
   (use-package go-dlv)
+  (use-package go-fill-struct)
   (use-package go-impl)
   (use-package go-playground)
+  (use-package golint)
+  (use-package govet)
 
   (use-package go-eldoc
     :init (add-hook 'go-mode-hook #'go-eldoc-setup))
