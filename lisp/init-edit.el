@@ -247,7 +247,9 @@
 (use-package subword
   :ensure nil
   :diminish subword-mode
-  :init (add-hook 'prog-mode-hook #'subword-mode))
+  :init
+  (add-hook 'prog-mode-hook #'subword-mode)
+  (add-hook 'minibuffer-setup-hook #'subword-mode))
 
 ;; Hideshow
 (use-package hideshow
