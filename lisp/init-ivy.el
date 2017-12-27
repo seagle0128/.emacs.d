@@ -98,9 +98,11 @@
            "ag -i --noheading --nocolor --nofilename --numbers '%s' %s"))))
     (setq counsel-grep-base-command command))
 
+  ;; Integration with `projectile'
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
 
+  ;; Integration with `magit'
   (with-eval-after-load 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
 
@@ -185,6 +187,13 @@
 
     (setq ivy-re-builders-alist
           '((t . re-builder-pinyin))))
+
+  ;; Display world clock using Ivy
+  (use-package counsel-world-clock)
+
+  ;; Tramp ivy interface
+  (use-package counsel-tramp
+    :bind (("C-c t" . counsel-tramp)))
 
   ;; Ivy for GNU global
   (use-package counsel-gtags
