@@ -95,6 +95,7 @@
 
 ;; Search utils: `ag', `rg', `pt'
 (use-package ag
+  :bind (("C-c s a" . ag))
   :init
   (with-eval-after-load 'projectile
     (bind-key "C-c p s s" 'ag-project projectile-mode-map))
@@ -124,6 +125,7 @@
     (bind-key "s r" 'rg-project counsel-projectile-command-map)))
 
 (use-package pt
+  :bind (("C-c s P" . pt-regexp))
   :init
   (with-eval-after-load 'projectile
     (bind-key "C-c p s p" 'projectile-pt projectile-mode-map)))
