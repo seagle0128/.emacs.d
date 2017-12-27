@@ -83,6 +83,7 @@
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect t)
           ("^*WoMan.+*$" :regexp t :position bottom)
+          ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
           ("*Youdao Dictionary*" :dedicated t :position bottom)
 
           (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 0.3)
