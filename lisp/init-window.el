@@ -75,40 +75,64 @@
 
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
-        '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
+        '(;; basic
+          ("*Help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect t)
+          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
+          ("*Colors*" :dedicated t :position bottom)
           ("^*WoMan.+*$" :regexp t :position bottom)
+
+          ;; flycheck
           ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
+
+          ;; magit
+          (magit-status-mode :dedicated t :position bottom :stick t :height 0.4)
+          (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.4)
+
+          ;; youdao
           ("*Youdao Dictionary*" :dedicated t :position bottom)
 
-          (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 0.3)
-          ("*undo-tree Diff*" :dedicated nil :stick nil :noselect nil)
+          ;; paradox
+          ("*Paradox Report*" :dedicated t :position bottom)
 
+          ;; process
+          ("*Process List*" :dedicated t :position bottom)
+          ("*Process-Enviornment*" :dedicated t :position bottom)
+
+          ;; undo-tree
+          (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 60)
+          ("*undo-tree Diff*" :dedicated t :postion bottom :stick t :noselect nil :height 0.3)
+
+          ;; search
           ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
-          ;; ("*ag search*" :dedicated t :position bottom :stick t :noselect nil)
-          ;; ("*rg*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*ag search*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+          ("*rg*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+          ("*pt-search*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
           ("*xref*" :dedicated t :position bottom :stick nil :noselect nil)
 
+          ;; vc
           ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
           ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
 
+          ;; script
           ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
           ("*Python*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
           ("*quickrun*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
 
+          ;; go
           ("^*godoc.+*$" :regexp t :position bottom :stick nil :noselect nil)
           ("*golint*" :dedicated t :position bottom :stick t :noselect nil)
           ("*govet*" :dedicated t :position bottom :stick t :noselect nil)
           ("*go-guru-output*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Go Test*" :dedicated t :position bottom :stick t :noselect nil)
 
+          ;; test
           ("*ert*" :dedicated t :position bottom :stick t :noselect nil)
           ("*nosetests*" :dedicated t :position bottom :stick t :noselect nil))))
 
