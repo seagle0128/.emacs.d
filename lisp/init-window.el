@@ -90,8 +90,8 @@
           ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
 
           ;; magit
-          (magit-status-mode :dedicated t :position bottom :stick t :height 0.4)
-          (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          (magit-status-mode :dedicated t :position bottom :stick t :height 0.5)
+          (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.5)
 
           ;; youdao
           ("*Youdao Dictionary*" :dedicated t :position bottom)
