@@ -76,6 +76,9 @@
                           ielm-mode-hook))
             (add-hook hook #'turn-on-elisp-slime-nav-mode))))
 
+;; Semantic code search for emacs lisp
+(use-package elisp-refs)
+
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
