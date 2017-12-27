@@ -130,6 +130,7 @@
           ("*golint*" :dedicated t :position bottom :stick t :noselect nil)
           ("*govet*" :dedicated t :position bottom :stick t :noselect nil)
           ("*go-guru-output*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Gofmt Errors*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Go Test*" :dedicated t :position bottom :stick t :noselect nil)
 
           ;; test
