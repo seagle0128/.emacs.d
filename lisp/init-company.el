@@ -39,8 +39,7 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("<tab>" . company-complete-common-or-cycle)
-         ("<backtab>" . company-select-previous)
+         ("<tab>" . company-complete-selection)
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
@@ -49,18 +48,11 @@
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)
 
-  (setq company-idle-delay 0.5
+  (setq company-idle-delay 0.2
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
-
-  ;; weight by frequency
-  ;; (setq company-transformers '(company-sort-by-occurrence))
-
-  ;; Sort candidates using completion history
-  ;; (use-package company-statistics
-  ;;   :init (company-statistics-mode 1))
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
