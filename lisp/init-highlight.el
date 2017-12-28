@@ -64,10 +64,9 @@
   :config (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
 
 ;; Highlight indentions
-(use-package indent-guide
-  :diminish indent-guide-mode
-  :init (add-hook 'after-init-hook #'indent-guide-global-mode)
-  :config (setq indent-guide-delay 0.5))
+(use-package highlight-indent-guides
+  :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+  :config (setq highlight-indent-guides-method 'character))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
