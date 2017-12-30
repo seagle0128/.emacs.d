@@ -59,7 +59,8 @@
     :if (display-graphic-p)
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
-    :init (company-quickhelp-mode 1))
+    :init (company-quickhelp-mode 1)
+    :config (setq company-quickhelp-delay 1))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
