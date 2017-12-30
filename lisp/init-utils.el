@@ -130,6 +130,9 @@
   (with-eval-after-load 'projectile
     (bind-key "C-c p s p" 'projectile-pt projectile-mode-map)))
 
+;; Tramp
+(use-package docker-tramp)
+
 ;; Emoji
 (when my-emoji-enabled
   (use-package emojify
