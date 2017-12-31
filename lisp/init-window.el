@@ -76,14 +76,14 @@
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
         '(;; Emacs
-          ("*Help*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+          ("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
-          ("^*Man.+*$" :regexp t :position bottom :stick t :noselect nil :height 0.4)
+          ("^*Man.+*$" :regexp t :position bottom :stick nil :noselect nil :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
           ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
 
@@ -106,7 +106,6 @@
 
           ;; undo-tree
           (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 60)
-          ("*undo-tree Diff*" :dedicated t :postion bottom :stick t :noselect nil :height 0.3)
 
           ;; Search
           ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
@@ -126,10 +125,10 @@
           ;; (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.5)
 
           ;; Script
-          ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
-          ("*Python*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
-          ("*Ruby*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
-          ("*quickrun*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*shell*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Python*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Ruby*" :dedicated t :position bottom :stick t :noselect t)
+          ("*quickrun*" :dedicated t :position bottom :stick t :noselect t)
 
           ;; Go
           ("^*godoc.+*$" :regexp t :position bottom :stick nil :noselect nil)
