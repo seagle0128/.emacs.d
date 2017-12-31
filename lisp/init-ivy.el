@@ -151,11 +151,20 @@
                                    'ivy-rich-switch-buffer-transformer)))
 
   ;; Support pinyin in Ivy
-  ;; Input prefix ':' to match pinyin
-  ;; Refer to  https://github.com/abo-abo/swiper/issues/919
+  ;; Input prefix '!' to match pinyin
+  ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
+  ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
   (use-package pinyinlib
     :commands pinyinlib-build-regexp-string
     :init
+    (defun re-builder-pinyin (str)
+      (or (pinyin-to-utf8 str)
+          (ivy--regex-plus str)
+          (ivy--regex-ignore-order str)))
+
+    (setq ivy-re-builders-alist
+          '((t . re-builder-pinyin)))
+
     (defun my-pinyinlib-build-regexp-string (str)
       (cond ((equal str ".*")
              ".*")
@@ -173,20 +182,14 @@
     (defun pinyin-to-utf8 (str)
       (cond ((equal 0 (length str))
              nil)
-            ((equal (substring str 0 1) ":")
+            ((equal (substring str 0 1) "!")
              (mapconcat 'my-pinyinlib-build-regexp-string
                         (remove nil (mapcar 'my-pinyin-regexp-helper
                                             (split-string
-                                             (replace-regexp-in-string ":" "" str ) "")))
+                                             (replace-regexp-in-string "!" "" str ) "")))
                         ""))
-            nil))
-
-    (defun re-builder-pinyin (str)
-      (or (pinyin-to-utf8 str)
-          (ivy--regex-plus str)))
-
-    (setq ivy-re-builders-alist
-          '((t . re-builder-pinyin))))
+            (t
+             nil))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
