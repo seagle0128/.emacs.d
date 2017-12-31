@@ -97,7 +97,7 @@
           ("*Youdao Dictionary*" :dedicated t :position bottom)
 
           ;; Paradox
-          ("*Paradox Report*" :dedicated t :position bottom :noselect t)
+          ("*Paradox Report*" :dedicated t :position bottom :noselect nil)
 
           ;; List
           ("*Colors*" :dedicated t :position bottom)
