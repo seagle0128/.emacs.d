@@ -75,16 +75,19 @@
 
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
-        '(;; basic
-          ("*Help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+        '(
+          ;; basic
+          ("*Help*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
-          ("*Colors*" :dedicated t :position bottom)
+          ("^*Man.+*$" :regexp t :position bottom :stick t :noselect nil :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
+          ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
+          ("*Colors*" :dedicated t :position bottom)
           ("*Kill Ring*" :dedicated t :position bottom)
 
           ;; flycheck
@@ -94,7 +97,7 @@
           ;; (magit-status-mode :dedicated t :position bottom :stick t :height 0.5)
           ;; (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.5)
 
-          ;; youdao
+          ;; youdao dict
           ("*Youdao Dictionary*" :dedicated t :position bottom)
 
           ;; paradox
@@ -121,9 +124,10 @@
           ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
           ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
 
-          ;; script
+          ;; scripts
           ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.3)
           ("*Python*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
+          ("*Ruby*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
           ("*quickrun*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
 
           ;; go
