@@ -79,13 +79,15 @@
 
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode))
-  :init
+  :config
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
-  :config
+  (setq markdown-css-paths '("http://www.bjt.name/upload/style.css"))
+
   ;; On the fly markdown preview
   (use-package flymd
-    :bind (:map markdown-mode-map ("C-c C-c f" . flymd-flyit))))
+    :bind (:map markdown-mode-command-map
+                ("f" . flymd-flyit))))
 
 (use-package fish-mode
   :init
