@@ -189,7 +189,8 @@
           '((t . re-builder-pinyin))))
 
   ;; Display world clock using Ivy
-  (use-package counsel-world-clock)
+  (use-package counsel-world-clock
+    :bind ("C-c W" . counsel-world-clock))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
