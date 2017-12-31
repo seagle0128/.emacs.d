@@ -213,6 +213,11 @@
   (add-to-list 'desktop-minor-mode-handlers
                '(iedit-mode . nil)))
 
+;; Framework for mode-specific buffer indexes
+(use-package imenu
+  :ensure nil
+  :bind (("C-." . imenu)))
+
 ;; Multiple cursors
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)

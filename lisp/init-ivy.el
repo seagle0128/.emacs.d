@@ -34,32 +34,35 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :bind (("C-s" . counsel-grep-or-swiper)
+  :bind (("C-s" . swiper)
          ("C-S-s" . swiper-all)
-         ("C-c M-x" . execute-extended-command)
 
          ("C-c C-r" . ivy-resume)
          ("C-c v" . ivy-push-view)
          ("C-c V" . ivy-pop-view)
 
-         ("C-." . counsel-imenu)
+         :map counsel-mode-map
+         ("C-s" . counsel-grep-or-swiper)
          ("C-x C-r" . counsel-recentf)
-         ("C-h F" . counsel-find-library)
-         ("C-h u" . counsel-unicode-char)
-         ("C-c c" . counsel-colors-emacs)
-         ("C-c w" . counsel-colors-web)
-         ("C-c i" . counsel-git)
-         ("C-c j" . counsel-git-grep)
-         ("C-c r" . counsel-rg)
-         ("C-c P" . counsel-pt)
-         ("C-c S" . counsel-ag)
-         ("C-c f" . counsel-fzf)
-         ("C-c l" . counsel-locate)
-         ("C-c L" . counsel-load-library)
-         ("C-c C-p" . counsel-package)
          ("C-x j" . counsel-mark-ring)
-         ("C-x r b" . counsel-bookmark)
-         ("C-x r m" . counsel-bookmark)
+         ("C-c C-p" . counsel-package)
+
+         ("C-c c L" . counsel-find-library)
+         ("C-c c a" . counsel-apropos)
+         ("C-c c e" . counsel-colors-emacs)
+         ("C-c c f" . counsel-fzf)
+         ("C-c c g" . counsel-grep)
+         ("C-c c h" . counsel-command-history)
+         ("C-c c i" . counsel-git)
+         ("C-c c j" . counsel-git-grep)
+         ("C-c c l" . counsel-load-library)
+         ("C-c c m" . counsel-minibuffer-history)
+         ("C-c c o" . counsel-outline)
+         ("C-c c p" . counsel-pt)
+         ("C-c c r" . counsel-rg)
+         ("C-c c s" . counsel-ag)
+         ("C-c c u" . counsel-unicode-char)
+         ("C-c c w" . counsel-colors-web)
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
@@ -74,6 +77,8 @@
                     (ivy-mode 1)
                     (counsel-mode 1)))
   :config
+  (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
+
   (setq ivy-use-selectable-prompt t)
   (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
   (setq ivy-height 10)
@@ -88,6 +93,11 @@
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
+
+  ;; Find counsel commands quickly
+  (bind-key "<f6>" (lambda ()
+                     (interactive)
+                     (counsel-M-x "^counsel ")))
 
   ;; Use faster search tools: ripgrep or the silver search
   (let ((command
@@ -124,10 +134,6 @@
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
 
-  ;; Ivy integration for Projectile
-  (use-package counsel-projectile
-    :init (counsel-projectile-mode 1))
-
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
     :after flyspell
@@ -149,6 +155,35 @@
                                    'ivy-rich-switch-buffer-transformer)
       (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
                                    'ivy-rich-switch-buffer-transformer)))
+
+  ;; Ivy integration for Projectile
+  (use-package counsel-projectile
+    :init (counsel-projectile-mode 1))
+
+  ;; Display world clock using Ivy
+  (use-package counsel-world-clock
+    :bind (:map counsel-mode-map
+                ("C-c c W" . counsel-world-clock)))
+
+  ;; Tramp ivy interface
+  (use-package counsel-tramp
+    :bind (:map counsel-mode-map
+                ("C-c t" . counsel-tramp)
+                ("C-c c t" . counsel-tramp)))
+
+  ;; Ivy for GNU global
+  (use-package counsel-gtags
+    :diminish counsel-gtags-mode
+    :bind (:map counsel-gtags-mode-map
+                ("M-." . counsel-gtags-find-definition)
+                ("M-r" . counsel-gtags-find-reference)
+                ("M-s" . counsel-gtags-find-symbol)
+                ("M-," . counsel-gtags-go-backward))
+    :init
+    (setq counsel-gtags-auto-update t)
+
+    (add-hook 'c-mode-hook 'counsel-gtags-mode)
+    (add-hook 'c++-mode-hook 'counsel-gtags-mode))
 
   ;; Support pinyin in Ivy
   ;; Input prefix '!' to match pinyin
@@ -190,28 +225,7 @@
                         ""))
             (t
              nil))))
-
-  ;; Display world clock using Ivy
-  (use-package counsel-world-clock
-    :bind ("C-c W" . counsel-world-clock))
-
-  ;; Tramp ivy interface
-  (use-package counsel-tramp
-    :bind (("C-c t" . counsel-tramp)))
-
-  ;; Ivy for GNU global
-  (use-package counsel-gtags
-    :diminish counsel-gtags-mode
-    :bind (:map counsel-gtags-mode-map
-                ("M-." . counsel-gtags-find-definition)
-                ("M-r" . counsel-gtags-find-reference)
-                ("M-s" . counsel-gtags-find-symbol)
-                ("M-," . counsel-gtags-go-backward))
-    :init
-    (setq counsel-gtags-auto-update t)
-
-    (add-hook 'c-mode-hook 'counsel-gtags-mode)
-    (add-hook 'c++-mode-hook 'counsel-gtags-mode)))
+  )
 
 (provide 'init-ivy)
 
