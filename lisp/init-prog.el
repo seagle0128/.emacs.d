@@ -55,7 +55,10 @@
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
 
-(use-package quickrun)
+(use-package quickrun
+  :bind (("<f7>" . quickrun)
+         ("C-c x" . quickrun)))
+
 (use-package powershell)
 (use-package csharp-mode)
 (use-package dockerfile-mode :mode "Dockerfile\\'")
