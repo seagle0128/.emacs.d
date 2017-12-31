@@ -39,7 +39,7 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("<tab>" . company-complete-selection)
+         ;; ("<tab>" . company-complete-selection)
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
