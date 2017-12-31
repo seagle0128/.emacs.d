@@ -85,6 +85,7 @@
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
           ("*Colors*" :dedicated t :position bottom)
           ("^*WoMan.+*$" :regexp t :position bottom)
+          ("*Kill Ring*" :dedicated t :position bottom)
 
           ;; flycheck
           ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
