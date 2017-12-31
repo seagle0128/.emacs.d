@@ -91,6 +91,12 @@ Run `M-x update-config` in Emacs, or
 cd ~/.emacs.d && git pull
 ```
 
+## Upgrade packages
+
+``` emacs-lisp
+M-x upgrade-packages
+```
+
 # Customization
 
 Copy `custom-example.el` to `custom.el` and change the configurations, then
