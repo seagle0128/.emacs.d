@@ -132,5 +132,10 @@ restart Emacs.
 
 # FAQ
 
-1. why is the modline messy?
-> Powerline fonts are missing on your system. Please install [powerline-fonts](https://github.com/powerline/fonts). 
+1. Why is the modline messy?
+
+   Powerline fonts are missing on your system. Please install [powerline-fonts](https://github.com/powerline/fonts).
+
+1. How to search Chinese via pinyin?
+   
+   In Emacs, `C-s !`
