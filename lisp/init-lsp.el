@@ -38,6 +38,11 @@
   (use-package lsp-mode
     :diminish lsp-mode
     :config
+    (when (>= emacs-major-version 26)
+      (use-package lsp-ui
+        :demand
+        :init (add-hook 'lsp-mode-hook 'lsp-ui-mode)))
+
     (with-eval-after-load 'flycheck
       (require 'lsp-flycheck))
 
