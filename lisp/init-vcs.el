@@ -41,17 +41,30 @@
          ("C-c M-g" . magit-file-popup))
   :config
   (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass")))
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-;; Gitflow externsion for Magit
-(use-package magit-gitflow
-  :diminish magit-gitflow-mode
-  :init (add-hook 'magit-mode-hook #'turn-on-magit-gitflow))
+  ;; Githun integration
+  (use-package magithub
+    :commands magithub-feature-autoinject
+    :init
+    (add-hook 'magit-mode-hook
+              (lambda()
+                (magithub-feature-autoinject t))))
 
-;; Git-Svn extension for Magit
-(use-package magit-svn
-  :diminish magit-svn-mode
-  :init (add-hook 'magit-mode-hook #'magit-svn-mode))
+  ;; Gitflow externsion for Magit
+  (use-package magit-gitflow
+    :diminish magit-gitflow-mode
+    :bind (:map magit-status-mode-map
+                ("G" . magit-gitflow-popup))
+    :init (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)
+    :config
+    (magit-define-popup-action 'magit-dispatch-popup
+      ?G "GitFlow" #'magit-gitflow-popup ?!))
+
+  ;; Git-Svn extension for Magit
+  (use-package magit-svn
+    :diminish magit-svn-mode
+    :init (add-hook 'magit-mode-hook #'magit-svn-mode)))
 
 ;;; Pop up last commit information of current line
 (use-package git-messenger
