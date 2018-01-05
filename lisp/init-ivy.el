@@ -163,12 +163,11 @@
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-                ("C-c c W" . counsel-world-clock)))
+                ("C-c c c" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                ("C-c t" . counsel-tramp)
                 ("C-c c t" . counsel-tramp)))
 
   ;; Ivy for GNU global
