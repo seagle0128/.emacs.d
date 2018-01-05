@@ -36,6 +36,8 @@
   :diminish yas-minor-mode
   :init (add-hook 'after-init-hook #'yas-global-mode)
   :config
+  (use-package yasnippet-snippets)
+
   (use-package dropdown-list :commands dropdown-list)
 
   (setq yas-prompt-functions '(yas-dropdown-prompt
