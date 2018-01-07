@@ -165,10 +165,11 @@
   :bind (("<f12>" . pomidor)))
 
 ;; Misc
-(use-package fontawesome)
 (use-package copyit)                    ; copy path, url, etc.
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
+(use-package fontawesome)
+(use-package fzf)
 (use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
