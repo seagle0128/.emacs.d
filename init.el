@@ -74,7 +74,6 @@
 
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
-;; (package-initialize)
 (require 'init-package)
 
 ;; Preferences
