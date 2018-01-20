@@ -37,10 +37,6 @@
   :ensure nil
   :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
-;; Interactively highlight the current-window (by dimming the others)
-(use-package dimmer
-  :init (add-hook 'after-init-hook #'dimmer-mode))
-
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish symbol-overlay-mode
