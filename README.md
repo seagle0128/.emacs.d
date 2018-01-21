@@ -110,6 +110,9 @@ restart Emacs.
 (setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
 (setq my-emoji-enabled t)                 ; Enable emoji: t or nil
 (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
+
+;; You may add addtional configurations here
+;; (custom-set-variables )
 ```
 
 # Screenshots
