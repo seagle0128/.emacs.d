@@ -22,7 +22,7 @@ latest stable release - currently **25.3**.
 
 - Out of box.
 - Clean and Fast.
-- Quick fuzzy search (via `ivy`, `ag`, `rg`).
+- Quick fuzzy search (via `ivy`, `rg`, `ag` and `pt` etc.).
 - Better Org support.
 - Support multiple programming languages
   - C/C++/C#/Java
@@ -55,10 +55,9 @@ latest stable release - currently **25.3**.
 
 Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
-## Optional
+## Dotfiles
 
-Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles) or
-![oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
+Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
 # Quick Start
 
