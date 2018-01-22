@@ -51,6 +51,4 @@ session*
 tmp*
 ido.*
 flycheck_*.el*
-flymd.html
-flymd.md
 README.html
