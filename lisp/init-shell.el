@@ -32,8 +32,6 @@
 ;;
 ;;; Code:
 
-;; Shell
-
 (eval-when-compile (require 'init-const))
 
 (use-package shell

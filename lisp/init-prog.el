@@ -77,20 +77,6 @@
   (use-package batch-mode
     :mode (("\\.\\(cmd\\|bat\\)$" . batch-mode))))
 
-;; Markdown
-(use-package markdown-mode
-  :mode (("README\\.md\\'" . gfm-mode))
-  :config
-  (when (executable-find "multimarkdown")
-    (setq markdown-command "multimarkdown"))
-  (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css"))
-
-  (use-package markdown-preview-mode
-    :bind (:map markdown-mode-command-map
-                ("P" . markdown-preview-mode))
-    :config
-    (setq markdown-preview-stylesheets markdown-css-paths)))
-
 (use-package fish-mode
   :init
   (add-hook 'fish-mode-hook

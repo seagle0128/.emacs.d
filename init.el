@@ -92,9 +92,10 @@
 (require 'init-kill-ring)
 (require 'init-window)
 
-(require 'init-shell)
 (require 'init-eshell)
+(require 'init-shell)
 
+(require 'init-markdown)
 (require 'init-org)
 
 (require 'init-funcs)
