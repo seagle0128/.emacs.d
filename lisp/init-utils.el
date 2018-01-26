@@ -169,7 +169,6 @@
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
 (use-package fontawesome)
-(use-package fzf)
 (use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
