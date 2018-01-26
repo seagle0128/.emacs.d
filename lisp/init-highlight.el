@@ -43,9 +43,6 @@
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
-         ([C-f3] . symbol-overlay-put)
-         ([f3] . symbol-overlay-jump-next)
-         ([S-f3] . symbol-overlay-jump-prev)
          ([M-f3] . symbol-overlay-remove-all))
   :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
 
