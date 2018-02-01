@@ -53,11 +53,11 @@ latest stable release - currently **25.3**.
 
 ## GNU Emacs
 
-Please refer to ![Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
 ## Dotfiles
 
-Recommend to use ![Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
+Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
 # Quick Start
 
@@ -75,7 +75,7 @@ then
 git clone https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-or download the ![zip
+or download the [zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
 extract to `~./emacs.d`.
 
@@ -136,8 +136,9 @@ restart Emacs.
 
 1. Why is the modline messy?
 
-   Powerline fonts are missing on your system. Please install [powerline-fonts](https://github.com/powerline/fonts).
-
+   Powerline fonts are missing on your system. Please install
+   [powerline-fonts](https://github.com/powerline/fonts).
+   
 1. How to search Chinese via pinyin?
    
    In Emacs, `C-s !`
