@@ -68,7 +68,7 @@
     (with-eval-after-load 'company
       (use-package company-anaconda
         :defines company-backends
-        :init (cl-pushnew '(company-backend-with-yas 'company-anaconda) company-backends)))))
+        :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends)))))
 
 (provide 'init-python)
 
