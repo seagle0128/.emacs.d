@@ -138,6 +138,15 @@
   (with-eval-after-load 'counsel-projectile
     (bind-key "s r" 'rg-project counsel-projectile-command-map)))
 
+;; Edit text for browsers with GhostText or AtomicChrome extension
+(use-package atomic-chrome
+  :diminish
+  :init (add-hook 'after-init-hook #'atomic-chrome-start-server)
+  :config
+  (setq atomic-chrome-default-major-mode 'markdown-mode)
+  (setq atomic-chrome-url-major-mode-alist
+        '(("github\\.com" . gfm-mode))))
+
 ;; Tramp
 (use-package docker-tramp)
 
