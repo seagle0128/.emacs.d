@@ -48,8 +48,11 @@
 ;; go get -u github.com/fatih/gomodifytags
 ;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
 ;;
+;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
+;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
   :bind (:map go-mode-map
+              ("M-." . godef-jump)
               ("C-c C-r" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
@@ -70,22 +73,7 @@
   (use-package go-guru
     :bind (:map go-mode-map
                 ("M-." . go-guru-definition)
-                ("M-?" . go-guru-referrers))
-    :config
-    ;; Fix: `go-guru' doesn't work on Windows https://github.com/dominikh/go-mode.el/issues/218
-    (defun go-guru--goto-pos (posn other-window)
-      "Find the file containing the position POSN (of the form `file:line:col')
-set the point to it, switching the current buffer."
-      (let ((file-line-pos (split-string posn ":")))
-        (if (eq system-type 'windows-nt)
-            (let ((first-file-line-pos (car file-line-pos)))
-              (if (string-match-p "^[a-z]$" first-file-line-pos);; looks like a drive name ...
-                  (setq file-line-pos (cdr file-line-pos));; .. so remove it
-                )))
-        (funcall (if other-window #'find-file-other-window #'find-file) (car file-line-pos))
-        (goto-char (point-min))
-        (forward-line (1- (string-to-number (cadr file-line-pos))))
-        (go-guru--goto-byte-column (string-to-number (cl-caddr file-line-pos))))))
+                ("M-?" . go-guru-referrers)))
 
   (use-package go-tag
     :bind (:map go-mode-map
