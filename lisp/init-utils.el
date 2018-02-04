@@ -70,8 +70,10 @@
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
+  :after projectile
   :bind (([M-f8] . treemacs-projectile-toggle)
-         ("C-c p h" . treemacs-projectile-toggle))
+         :map projectile-command-map
+         ("h" . treemacs-projectile-toggle))
   :config
   (setq treemacs-header-function #'treemacs-projectile-create-header))
 
