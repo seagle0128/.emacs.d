@@ -48,8 +48,6 @@
 ;; go get -u github.com/fatih/gomodifytags
 ;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
 ;;
-;; FIXME: `go-guru' doesn't work on Windows. Use `godef' instead.
-;; https://github.com/dominikh/go-mode.el/issues/218
 (use-package go-mode
   :bind (:map go-mode-map
               ("M-." . godef-jump)
@@ -72,7 +70,6 @@
 
   (use-package go-guru
     :bind (:map go-mode-map
-                ("M-." . go-guru-definition)
                 ("M-?" . go-guru-referrers)))
 
   (use-package go-tag
