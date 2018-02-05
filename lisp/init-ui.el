@@ -72,12 +72,10 @@
   :ensure spaceline
   :commands (spaceline-spacemacs-theme
              spaceline-info-mode)
-  :init
+  :init (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
+  :config
   (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
-  (add-hook 'after-init-hook
-            (lambda ()
-              (spaceline-spacemacs-theme)))
-  :config (spaceline-info-mode 1))
+  (spaceline-info-mode 1))
 
 ;; Fonts
 (use-package cnfonts
