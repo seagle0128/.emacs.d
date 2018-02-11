@@ -72,10 +72,9 @@
 
          :map swiper-map
          ("M-%" . swiper-query-replace))
-  :init (add-hook 'after-init-hook
-                  (lambda ()
-                    (ivy-mode 1)
-                    (counsel-mode 1)))
+  :init
+  (add-hook 'after-init-hook #'ivy-mode)
+  (add-hook 'ivy-mode-hook #'counsel-mode)
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
