@@ -45,11 +45,7 @@
 
   ;; Githun integration
   (use-package magithub
-    :commands magithub-feature-autoinject
-    :init
-    (add-hook 'magit-mode-hook
-              (lambda()
-                (magithub-feature-autoinject t))))
+    :init (magithub-feature-autoinject t))
 
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow
