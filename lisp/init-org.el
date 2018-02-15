@@ -88,9 +88,7 @@
   ;; Visually summarize progress
   (use-package org-dashboard)
 
-  (use-package hydra
-    :demand
-    :config
+  (with-eval-after-load 'hydra
     (defhydra hydra-org-template (:color blue :hint nil)
       "
 _c_enter  qu_o_te     _e_macs-lisp    _L_aTeX:
