@@ -45,11 +45,28 @@
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g i" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window))
   :init (add-hook 'after-init-hook #'dumb-jump-mode)
   :config
   (setq dumb-jump-prefer-searcher 'rg)
   (with-eval-after-load 'ivy
-    (setq dumb-jump-selector 'ivy)))
+    (setq dumb-jump-selector 'ivy))
+
+  (with-eval-after-load 'hydra
+    (defhydra dumb-jump-hydra (:color blue :columns 3)
+      "Dumb Jump"
+      ("j" dumb-jump-go "Go")
+      ("o" dumb-jump-go-other-window "Other window")
+      ("e" dumb-jump-go-prefer-external "Go external")
+      ("x" dumb-jump-go-prefer-external-other-window "Go external other window")
+      ("i" dumb-jump-go-prompt "Prompt")
+      ("l" dumb-jump-quick-look "Quick look")
+      ("b" dumb-jump-back "Back"))
+    (bind-key "C-M-j" #'dumb-jump-hydra/body dumb-jump-mode-map)))
 
 (use-package nxml-mode
   :ensure nil
