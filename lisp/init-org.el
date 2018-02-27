@@ -60,12 +60,6 @@
                                  (python . t)
                                  (ruby . t)))
 
-  (use-package org-bullets
-    :init
-    (setq org-bullets-bullet-list
-          '("✡" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
-    (add-hook 'org-mode-hook #'org-bullets-mode))
-
   ;; Presentation
   (use-package org-tree-slide
     :config
