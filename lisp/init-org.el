@@ -54,11 +54,17 @@
   (unless (fboundp 'list-calendar-holidays)
     (defalias 'list-calendar-holidays 'calendar-list-holidays))
 
+  ;; Babel
+  (use-package ob-go)
+  (use-package ob-ipython)
   (setq org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
+                                 (perl . t)
                                  (python . t)
-                                 (ruby . t)))
+                                 (ipython . t)
+                                 (ruby . t)
+                                 (go . t)))
 
   ;; Presentation
   (use-package org-tree-slide
@@ -88,10 +94,9 @@
 _c_enter  qu_o_te     _e_macs-lisp    _L_aTeX:
 _l_atex   _E_xample   _r_uby          _i_ndex:
 _a_scii   _v_erse     p_y_thon        _I_NCLUDE:
-_s_rc     _g_o        _p_erl          _H_TML:
-_h_tml    ^ ^         _S_HELL         _A_SCII:
-^ ^       ^ ^         _P_erl tangled  ^ ^
-^ ^       ^ ^         plant_u_ml      ^ ^
+_s_rc     _g_o        ipytho_n_       _H_TML:
+_h_tml    _S_HELL     _p_erl          _A_SCII:
+^ ^       ^ ^         _P_erl tangled  plant_u_ml
 "
       ("s" (hot-expand "<s"))
       ("E" (hot-expand "<e"))
@@ -104,10 +109,11 @@ _h_tml    ^ ^         _S_HELL         _A_SCII:
       ("L" (hot-expand "<L"))
       ("i" (hot-expand "<i"))
       ("e" (hot-expand "<s" "emacs-lisp"))
-      ("r" (hot-expand "<s" "ruby"))
-      ("y" (hot-expand "<s" "python"))
-      ("g" (hot-expand "<s" "go"))
+      ("y" (hot-expand "<s" "python :results output"))
+      ("n" (hot-expand "<s" "ipython :results output"))
+      ("g" (hot-expand "<s" "go :imports \"fmt\""))
       ("p" (hot-expand "<s" "perl"))
+      ("r" (hot-expand "<s" "ruby"))
       ("S" (hot-expand "<s" "sh"))
       ("u" (hot-expand "<s" "plantuml :file CHANGE.png"))
       ("P" (progn
