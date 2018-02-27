@@ -111,7 +111,7 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
       ("e" (hot-expand "<s" "emacs-lisp"))
       ("y" (hot-expand "<s" "python :results output"))
       ("n" (hot-expand "<s" "ipython :session :exports both :results raw drawer\n$0"))
-      ("g" (hot-expand "<s" "go :imports \"fmt\""))
+      ("g" (hot-expand "<s" "go :imports '\(\"fmt\"\)"))
       ("p" (hot-expand "<s" "perl"))
       ("r" (hot-expand "<s" "ruby"))
       ("S" (hot-expand "<s" "sh"))
