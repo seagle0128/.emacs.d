@@ -71,12 +71,11 @@
 ;; Modeline
 (use-package spaceline-config
   :ensure spaceline
-  :commands (spaceline-spacemacs-theme
-             spaceline-info-mode)
+  :commands spaceline-spacemacs-theme
   :init (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
   :config
-  (setq powerline-default-separator (if sys/win32p 'arrow 'utf-8))
-  (spaceline-info-mode 1))
+  (setq powerline-default-separator (if window-system 'slant 'utf-8))
+  (setq powerline-image-apple-rgb sys/mac-x-p))
 
 ;; Fonts
 (use-package cnfonts
