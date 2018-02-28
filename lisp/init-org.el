@@ -92,9 +92,9 @@
     (defhydra hydra-org-template (:color blue :hint nil)
       "
 _c_enter  qu_o_te     _e_macs-lisp    _L_aTeX:
-_l_atex   _E_xample   _r_uby          _i_ndex:
-_a_scii   _v_erse     p_y_thon        _I_NCLUDE:
-_s_rc     _g_o        ipytho_n_       _H_TML:
+_l_atex   _E_xample   p_y_thon        _i_ndex:
+_a_scii   _v_erse     ip_Y_thon       _I_NCLUDE:
+_s_rc     _g_o        _r_uby          _H_TML:
 _h_tml    _S_HELL     _p_erl          _A_SCII:
 ^ ^       ^ ^         _P_erl tangled  plant_u_ml
 "
@@ -110,7 +110,7 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
       ("i" (hot-expand "<i"))
       ("e" (hot-expand "<s" "emacs-lisp"))
       ("y" (hot-expand "<s" "python :results output"))
-      ("n" (hot-expand "<s" "ipython :session :exports both :results raw drawer\n$0"))
+      ("Y" (hot-expand "<s" "ipython :session :exports both :results raw drawer\n$0"))
       ("g" (hot-expand "<s" "go :imports '\(\"fmt\"\)"))
       ("p" (hot-expand "<s" "perl"))
       ("r" (hot-expand "<s" "ruby"))
