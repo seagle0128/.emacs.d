@@ -102,6 +102,10 @@
   (unless (display-graphic-p)
     (diff-hl-margin-mode 1))
 
+  ;; Avoid restoring `diff-hl-margin-mode'
+  (add-to-list 'desktop-minor-mode-table
+               '(diff-hl-margin-mode nil))
+
   ;; Integration with magit and psvn
   (with-eval-after-load 'magit
     (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))

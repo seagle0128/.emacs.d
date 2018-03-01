@@ -208,10 +208,10 @@
          :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
          :map esc-map ("C-;" . iedit-execute-last-modification)
          :map help-map ("C-;" . iedit-mode-toggle-on-function))
-  :init
-  ;; Avoid to restore Iedit mode when restoring desktop
-  (add-to-list 'desktop-minor-mode-handlers
-               '(iedit-mode . nil)))
+  :config
+  ;; Avoid restoring `iedit-mode'
+  (add-to-list 'desktop-minor-mode-table
+               '(iedit-mode nil)))
 
 ;; Framework for mode-specific buffer indexes
 (use-package imenu
