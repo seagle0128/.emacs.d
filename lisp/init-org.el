@@ -55,16 +55,23 @@
     (defalias 'list-calendar-holidays 'calendar-list-holidays))
 
   ;; Babel
-  (use-package ob-go)
-  (use-package ob-ipython)
   (setq org-confirm-babel-evaluate nil)
+
+  (defvar-local load-language-list '((emacs-lisp . t)
+                                     (perl . t)
+                                     (python . t)
+                                     (ruby . t)))
+  (use-package ob-go
+    :init
+    (if (executable-find "go")
+        (cl-pushnew '(go . t) load-language-list)))
+  (use-package ob-ipython
+    :init
+    (if (executable-find "jupyter")
+        (cl-pushnew '(ipython . t) load-language-list)))
+
   (org-babel-do-load-languages 'org-babel-load-languages
-                               '((emacs-lisp . t)
-                                 (perl . t)
-                                 (python . t)
-                                 (ipython . t)
-                                 (ruby . t)
-                                 (go . t)))
+                               load-language-list)
 
   ;; Presentation
   (use-package org-tree-slide
