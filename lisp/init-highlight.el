@@ -100,7 +100,6 @@
 
   ;; Fall back to the display margin, if the fringe is unavailable
   (unless (display-graphic-p)
-    (setq diff-hl-side 'right)
     (diff-hl-margin-mode 1))
 
   ;; Integration with magit and psvn
