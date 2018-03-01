@@ -61,6 +61,15 @@
   (shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
+;; Update dotfiles
+(defun update-dotfiles ()
+  "Update the dotfiles to the latest version."
+  (interactive)
+  (message "Updating dotfiles...")
+  (cd "~/.dotfiles/")
+  (shell-command "git pull")
+  (message "Update finished."))
+
 ;; Update org files
 (defun update-org ()
   "Update Org files to the latest version."
