@@ -166,11 +166,6 @@
   :bind (("C-h M-m" . discover-my-major)
          ("C-h M-M" . discover-my-mode)))
 
-;; Log keyboard commands to buffer
-(use-package command-log-mode
-  :diminish (command-log-mode . "¢")
-  :init (setq command-log-mode-auto-show t))
-
 ;; A Simmple and cool pomodoro timer
 (use-package pomidor
   :bind (("<f12>" . pomidor)))
