@@ -210,8 +210,9 @@
          :map help-map ("C-;" . iedit-mode-toggle-on-function))
   :config
   ;; Avoid restoring `iedit-mode'
-  (add-to-list 'desktop-minor-mode-table
-               '(iedit-mode nil)))
+  (if (boundp 'desktop-minor-mode-table)
+      (add-to-list 'desktop-minor-mode-table
+                   '(iedit-mode nil))))
 
 ;; Framework for mode-specific buffer indexes
 (use-package imenu
