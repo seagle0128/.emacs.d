@@ -38,25 +38,30 @@
 (use-package dired
   :ensure nil
   :config
-  ;; Show directory first
-  (setq dired-listing-switches "-alh --group-directories-first")
-
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
 
-  (cond
-   (sys/macp
+  (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
     (setq dired-use-ls-dired nil)
 
-    ;; Use GNU ls as `gls' from `coreutils' if available.
     (when (executable-find "gls")
+      ;; Use GNU ls as `gls' from `coreutils' if available.
       (setq insert-directory-program "gls")))
-   (sys/win32p
-    (when (executable-find "ls")
-      ;; `dired-quick-sort' needs it
-      (setq ls-lisp-use-insert-directory-program t))))
+
+  (when (or (and sys/macp (executable-find "gls"))
+            (and (not sys/macp) (executable-find "ls")))
+    ;; Using `insert-directory-program'
+    (setq ls-lisp-use-insert-directory-program t)
+
+    ;; Show directory first
+    (setq dired-listing-switches "-alh --group-directories-first")
+
+    ;; Quick sort dired buffers via hydra
+    ;; bind key: `S'
+    (use-package dired-quick-sort
+      :init (dired-quick-sort-setup)))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
@@ -80,13 +85,8 @@
               ("\\.html?\\'" "open")
               ("\\.md\\'" "open"))))
     (setq dired-omit-files
-          (concat dired-omit-files "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
-
-  ;; Quick sort dired buffers via hydra
-  ;; bind key: `S'
-  (use-package dired-quick-sort
-    :if (or (executable-find "gls") (executable-find "ls"))
-    :init (dired-quick-sort-setup))
+          (concat dired-omit-files
+                  "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
   ;; Extended file highlighting according to its type
   (use-package dired-rainbow
