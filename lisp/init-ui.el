@@ -74,6 +74,7 @@
   :commands spaceline-spacemacs-theme
   :init (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
   :config
+  (setq spaceline-pre-hook #'powerline-reset) ; Fix for changing themes
   (setq powerline-default-separator (if window-system 'slant 'utf-8))
   (setq powerline-image-apple-rgb sys/mac-x-p))
 
