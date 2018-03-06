@@ -103,9 +103,9 @@
     (diff-hl-margin-mode 1))
 
   ;; Avoid restoring `diff-hl-margin-mode'
-  (if (boundp 'desktop-minor-mode-table)
-      (add-to-list 'desktop-minor-mode-table
-                   '(diff-hl-margin-mode nil)))
+  (with-eval-after-load 'desktop
+    (add-to-list 'desktop-minor-mode-table
+                 '(diff-hl-margin-mode nil)))
 
   ;; Integration with magit and psvn
   (with-eval-after-load 'magit
