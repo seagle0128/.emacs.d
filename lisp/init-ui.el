@@ -117,10 +117,6 @@
       scroll-margin 1
       scroll-conservatively 100000)
 
-(use-package smooth-scrolling
-  :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
-  :config (setq smooth-scroll-margin 0))
-
 ;; Display Time
 (use-package time
   :ensure nil
