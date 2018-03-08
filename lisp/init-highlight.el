@@ -54,12 +54,6 @@
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t))
 
-;; Highlight surrounding parentheses
-(use-package highlight-parentheses
-  :diminish highlight-parentheses-mode
-  :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
-  :config (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
-
 ;; Highlight indentions
 (use-package highlight-indent-guides
   :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
