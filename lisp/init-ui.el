@@ -76,7 +76,7 @@
   :config
   (setq spaceline-pre-hook #'powerline-reset) ; Fix for changing themes
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)
-  (setq powerline-default-separator (if window-system 'slant 'utf-8))
+  (setq powerline-default-separator (if window-system 'arrow 'utf-8))
   (setq powerline-image-apple-rgb sys/mac-x-p))
 
 ;; Fonts
