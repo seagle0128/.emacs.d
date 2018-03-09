@@ -43,9 +43,10 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  ;; Githun integration
-  (use-package magithub
-    :init (magithub-feature-autoinject t))
+  ;; Github integration (require Emacs>=25)
+  (when (>= emacs-major-version 25)
+    (use-package magithub
+      :init (magithub-feature-autoinject t)))
 
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow
