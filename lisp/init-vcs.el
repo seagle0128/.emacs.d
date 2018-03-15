@@ -74,7 +74,8 @@
   (setq git-messenger:use-magit-popup t))
 
 ;; Walk through git revisions of a file
-(use-package git-timemachine)
+(use-package git-timemachine
+  :bind (("C-x v t" . git-timemachine)))
 
 ;; Highlighting regions by last updated time
 (use-package smeargle
