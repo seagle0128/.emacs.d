@@ -46,9 +46,6 @@
   ;; Github integration (require Emacs>=25)
   (when (>= emacs-major-version 25)
     (use-package magithub
-      :preface
-      ;; FIXME: see https://github.com/vermiculus/magithub/issues/299
-      (define-error 'ghub-404 "Not Found" 'ghub-http-error)
       :init (magithub-feature-autoinject t)))
 
   ;; Gitflow externsion for Magit
