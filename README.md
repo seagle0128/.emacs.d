@@ -53,7 +53,7 @@ latest stable release - currently **25.3**.
 
 ## GNU Emacs
 
-Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+Emacs 24.4+. Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
 ## Dotfiles
 
@@ -63,7 +63,7 @@ Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
 ## Installation
 
-Backup your `.emacs.d` if it exists, 
+Backup `.emacs.d` if need,
 
 ``` shell
 mv ~/.emacs.d ~/.emacs.d.bak
