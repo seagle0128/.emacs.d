@@ -1,7 +1,7 @@
 ;; init-basic.el --- Initialize basic configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.2.0
+;; Version: 3.3.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
 ;; Compatibility:
@@ -81,8 +81,8 @@
   ;; lazy load recentf
   ;; (add-hook 'after-init-hook #'recentf-mode)
   (add-hook 'find-file-hook (lambda () (unless recentf-mode
-                                    (recentf-mode)
-                                    (recentf-track-opened-file))))
+                                         (recentf-mode)
+                                         (recentf-track-opened-file))))
   :config
   (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
   (add-to-list 'recentf-exclude "bookmarks")
