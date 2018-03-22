@@ -88,6 +88,8 @@
   (add-hook 'window-setup-hook
             (lambda ()
               (setq cnfonts-keep-frame-size t)))
+  ;; `cnfonts' has issue on Emacs 26
+  (balance-windows)
 
   (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
