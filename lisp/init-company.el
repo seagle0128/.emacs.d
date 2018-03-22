@@ -48,7 +48,9 @@
   ;; aligns annotation to the right hand side
   (setq company-tooltip-align-annotations t)
 
-  (setq company-idle-delay 0.2
+  (setq company-tooltip-limit 20                      ; bigger popup window
+        company-idle-delay .3                         ; decrease delay before autocompletion popup shows
+        company-echo-delay 0                          ; remove annoying blinking
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
