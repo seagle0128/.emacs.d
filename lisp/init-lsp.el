@@ -45,9 +45,6 @@
                   ([remap xref-find-references] . lsp-ui-peek-find-references))
       :init (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-    (with-eval-after-load 'flycheck
-      (require 'lsp-flycheck))
-
     (with-eval-after-load 'company
       (use-package company-lsp
         :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))))
