@@ -159,10 +159,16 @@
   (use-package counsel-projectile
     :init (counsel-projectile-mode 1))
 
+  ;; Stylesheet-selector-aware swiper
+  (use-package counsel-css
+    :bind (:map counsel-mode-map
+                ("C-c c c" . counsel-css))
+    :init (add-hook 'css-mode-hook 'counsel-css-imenu-setup))
+
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-                ("C-c c c" . counsel-world-clock)))
+                ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
