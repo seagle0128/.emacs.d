@@ -90,7 +90,11 @@
   :init (add-hook 'after-init-hook #'editorconfig-mode))
 
 ;; New `bat-mode' in 25, only use `batch-mode' in 24.
-(unless (fboundp 'bat-mode)
+(if (fboundp 'bat-mode)
+    (use-package bmx-mode
+      :diminish bmx-mode
+      :commands bmx-mode-setup-defaults
+      :init (bmx-mode-setup-defaults))
   (use-package batch-mode
     :mode (("\\.\\(cmd\\|bat\\)$" . batch-mode))))
 
