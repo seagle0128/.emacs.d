@@ -89,15 +89,13 @@
   :diminish editorconfig-mode
   :init (add-hook 'after-init-hook #'editorconfig-mode))
 
-;; New `bat-mode' in 25, only use `batch-mode' in 24.
+;; New `bat-mode' in Emacs 25+
 (if (fboundp 'bat-mode)
     (use-package bmx-mode
       :after company
       :diminish bmx-mode
       :commands bmx-mode-setup-defaults
-      :init (add-hook 'after-init-hook 'bmx-mode-setup-defaults))
-  (use-package batch-mode
-    :mode (("\\.\\(cmd\\|bat\\)$" . batch-mode))))
+      :init (add-hook 'after-init-hook 'bmx-mode-setup-defaults)))
 
 (use-package fish-mode
   :init
