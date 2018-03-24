@@ -60,7 +60,8 @@
   (defvar-local load-language-list '((emacs-lisp . t)
                                      (perl . t)
                                      (python . t)
-                                     (ruby . t)))
+                                     (ruby . t)
+                                     (plantuml . t)))
   (use-package ob-go
     :init
     (if (executable-find "go")

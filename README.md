@@ -142,3 +142,7 @@ restart Emacs.
 1. How to search Chinese via pinyin?
    
    In Emacs, `C-s !`
+
+1. How to enable `plantuml` in `org-mode`?
+
+   Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`. 
