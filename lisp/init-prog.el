@@ -94,8 +94,7 @@
     (use-package bmx-mode
       :after company
       :diminish bmx-mode
-      :commands bmx-mode-setup-defaults
-      :init (add-hook 'after-init-hook 'bmx-mode-setup-defaults)))
+      :init (bmx-mode-setup-defaults)))
 
 (use-package fish-mode
   :init
