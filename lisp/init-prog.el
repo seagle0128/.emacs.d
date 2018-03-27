@@ -89,8 +89,8 @@
   :diminish editorconfig-mode
   :init (add-hook 'after-init-hook #'editorconfig-mode))
 
-;; New `bat-mode' in Emacs 25+
-(if (fboundp 'bat-mode)
+;; Batch Mode eXtras (require 25+)
+(if (>= emacs-major-version 25)
     (use-package bmx-mode
       :after company
       :diminish bmx-mode
