@@ -55,8 +55,7 @@
 
 ;; Quickly switch windows
 (use-package ace-window
-  :bind ([remap other-window] . ace-window)
-  :config (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+  :bind ([remap other-window] . ace-window))
 
 ;; Numbered window shortcuts
 (use-package window-numbering
