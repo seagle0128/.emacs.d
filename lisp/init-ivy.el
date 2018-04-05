@@ -91,7 +91,6 @@
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
-  (setq counsel-grep-swiper-limit 1000000)
   (setq counsel-yank-pop-separator "\n-------\n")
 
   ;; Find counsel commands quickly
