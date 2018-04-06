@@ -50,7 +50,7 @@
 ;; Menu/Tool/Scroll bars
 (unless sys/mac-x-p (menu-bar-mode -1))
 (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
-(and (bound-and-true-p scroll-bar-mode) (scroll-bar-mode -1))
+(and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Theme
