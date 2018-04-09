@@ -49,18 +49,16 @@
 (when (version< emacs-version "24.4")
   (error "This requires Emacs 24.4 and above!"))
 
-;; Optimize loading performance
+;; Speed up startup
 (defvar default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold 30000000)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            "Restore defalut values after init"
+            "Restore defalut values after init."
             (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold 800000)))
-
-;; Prefers the newest version of a file
-;; (setq load-prefer-newer t)
+            (setq gc-cons-threshold 800000)
+            (add-hook 'focus-out-hook 'garbage-collect)))
 
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
