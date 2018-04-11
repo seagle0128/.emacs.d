@@ -61,14 +61,21 @@
     :commands lsp-python-enable
     :init (add-hook 'python-mode-hook #'lsp-python-enable))
 
+  ;; Javascript, Typescript and Flow support for lsp-mode
+  ;; Install: npm i -g javascript-typescript-langserver
+  (use-package lsp-javascript-typescript
+    :commands lsp-javascript-typescript-enable
+    :init
+    (add-hook 'js2-mode-hook #'lsp-javascript-typescript-enable)
+    (add-hook 'typescript-mode-hook #'lsp-javascript-typescript-enable))
+
   ;; Java support for lsp-mode using the Eclipse JDT Language Server.
   ;; Install:
   ;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
   ;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
   (use-package lsp-java
     :commands lsp-java-enable
-    :init (add-hook 'java-mode-hook #'lsp-java-enable))
-  )
+    :init (add-hook 'java-mode-hook #'lsp-java-enable)))
 
 (provide 'init-lsp)
 
