@@ -59,8 +59,8 @@
 
 ;; Improved JavaScript editing mode
 (use-package js2-mode
-  :mode (("\\.js\\" . js2-mode)
-         ("\\.jsx?\\" . js2-jsx-mode))
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.jsx\\'" . js2-jsx-mode))
   :interpreter (("node" . js2-mode)
                 ("node" . js2-jsx-mode))
   :init
