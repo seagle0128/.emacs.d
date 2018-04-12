@@ -68,8 +68,8 @@
   (add-hook 'js2-mode-hook #'js2-highlight-unused-variables-mode)
   :config
   (with-eval-after-load 'flycheck
-    (if (or (executable-find "jshint")
-            (executable-find "jslint"))
+    (if (or (executable-find "eslint")
+            (executable-find "jshint"))
         (setq js2-mode-show-strict-warnings nil)))
 
   (use-package js2-refactor
