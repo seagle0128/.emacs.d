@@ -1,5 +1,4 @@
-Centaur Emacs
-============================
+# Centaur Emacs
 
 [![Build
 Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
@@ -18,7 +17,7 @@ It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 24.4 and above**. In general you're advised to always run with the
 latest stable release - currently **25.3**.
 
-# Features
+## Features
 
 - Out of box.
 - Clean and Fast.
@@ -43,25 +42,25 @@ latest stable release - currently **25.3**.
 - Support Chinese fonts and calendar.
 - Support Pinyin search.
 
-# Prerequiste
+## Prerequiste
 
-## OS
+### OS
 
 - GNU Linux
 - macOS
 - Windows (Cygwin)
 
-## GNU Emacs
+### GNU Emacs
 
 Emacs 24.4+. Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
-## Dotfiles
+### Dotfiles
 
 Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
-# Quick Start
+## Quick Start
 
-## Installation
+### Install
 
 Backup `.emacs.d` if need,
 
@@ -82,7 +81,7 @@ extract to `~./emacs.d`.
 Then start emacs. Wait for a while to install packages at the first startup.
 Enjoy!
 
-## Update
+### Update
 
 Run `M-x update-config` in Emacs, or
 
@@ -90,13 +89,13 @@ Run `M-x update-config` in Emacs, or
 cd ~/.emacs.d && git pull
 ```
 
-## Upgrade packages
+### Upgrade packages
 
 ``` emacs-lisp
 M-x upgrade-packages
 ```
 
-# Customization
+## Customization
 
 Copy `custom-example.el` to `custom.el` and change the configurations, then
 restart Emacs.
@@ -115,34 +114,39 @@ restart Emacs.
 ;; (custom-set-variables )
 ```
 
-# Screenshots
+## Screenshots
 
-## Main (default theme)
+### Main (default theme)
+
 ![Main](https://user-images.githubusercontent.com/140797/30391180-20bd0ba8-987e-11e7-9cb4-2aa66a6fd69d.png)
 
-## Programming (dark theme)
+### Programming (dark theme)
+
 ![Programming](https://user-images.githubusercontent.com/140797/31727834-433c1164-b3f0-11e7-9f73-0977d9f600f1.png)
 
-## Org mode (dark theme)
+### Org mode (dark theme)
+
 ![Org](https://user-images.githubusercontent.com/140797/30391183-20c37e8e-987e-11e7-9579-c4df71549a76.png)
 
-## Search (light theme)
+### Search (light theme)
+
 ![Search](https://user-images.githubusercontent.com/140797/30391184-20f47fac-987e-11e7-8be4-9f4e409d65cc.png)
 
-## Magit (daylight theme)
+### Magit (daylight theme)
+
 ![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
 
-# FAQ
+## FAQ
 
 1. Why is the modline messy?
 
    Powerline fonts are missing on your system. Please install
    [powerline-fonts](https://github.com/powerline/fonts).
-   
+
 1. How to search Chinese via pinyin?
-   
+
    In Emacs, `C-s !`
 
 1. How to enable `plantuml` in `org-mode`?
 
-   Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`. 
+   Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
