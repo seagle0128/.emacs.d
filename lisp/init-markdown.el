@@ -39,6 +39,15 @@
     (setq markdown-command "multimarkdown"))
   (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css"))
 
+  (with-eval-after-load 'flycheck
+    (when (executable-find "markdownlint")
+      (setq flycheck-markdown-markdownlint-cli-config
+            (let ((md-lint ".markdownlint.json"))
+              (let ((directory (locate-dominating-file buffer-file-name md-lint)))
+                (if directory
+                    (concat directory md-lint)
+                  nil))))))
+
   (use-package markdown-preview-mode
     :bind (:map markdown-mode-command-map
                 ("P" . markdown-preview-mode))

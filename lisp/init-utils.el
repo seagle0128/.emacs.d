@@ -145,9 +145,10 @@
   :diminish
   :init (add-hook 'after-init-hook #'atomic-chrome-start-server)
   :config
-  (setq atomic-chrome-default-major-mode 'markdown-mode)
-  (setq atomic-chrome-url-major-mode-alist
-        '(("github\\.com" . gfm-mode))))
+  (with-eval-after-load 'markdown-mode
+    (setq atomic-chrome-default-major-mode 'markdown-mode)
+    (setq atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)))))
 
 ;; Tramp
 (use-package docker-tramp)
