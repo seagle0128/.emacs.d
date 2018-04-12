@@ -38,7 +38,7 @@
   :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
 
   ;; Display Flycheck errors in GUI tooltips
   (use-package flycheck-pos-tip
