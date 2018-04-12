@@ -42,10 +42,6 @@
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
   :init (add-hook 'after-init-hook #'which-key-mode))
 
-;; Context-sensitive external browse URL or Internet search
-(use-package browse-url-dwim
-  :init (add-hook 'after-init-hook #'browse-url-dwim-mode))
-
 ;; A tree layout file explorer
 (use-package treemacs
   :bind (([f8]        . treemacs-toggle)

@@ -80,6 +80,17 @@
   :diminish auto-revert-mode
   :init (add-hook 'after-init-hook #'global-auto-revert-mode))
 
+;; Pass a URL to a WWW browser
+(use-package browse-url
+  :ensure nil
+  :bind (("C-c C-z ." . browse-url-at-point)
+         ("C-c C-z b" . browse-url-of-buffer)
+         ("C-c C-z r" . browse-url-of-region)
+         ("C-c C-z u" . browse-url)
+         ("C-c C-z v" . browse-url-of-file)
+         :map dired-mode-map
+         ("C-c C-z f" . browse-url-of-dired-file)))
+
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
   :ensure nil
