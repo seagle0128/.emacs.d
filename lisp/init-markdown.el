@@ -41,12 +41,10 @@
 
   (with-eval-after-load 'flycheck
     (when (executable-find "markdownlint")
-      (setq flycheck-markdown-markdownlint-cli-config
-            (let ((md-lint ".markdownlint.json"))
-              (let ((directory (locate-dominating-file buffer-file-name md-lint)))
-                (if directory
-                    (concat directory md-lint)
-                  nil))))))
+      (let ((md-lint ".markdownlint.json"))
+        (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
+          (if md-lint-dir
+              (setq flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
 
   (use-package markdown-preview-mode
     :bind (:map markdown-mode-command-map
