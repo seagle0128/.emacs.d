@@ -95,12 +95,7 @@
     (tide-setup)
     (eldoc-mode 1)
     (tide-hl-identifier-mode 1))
-
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-  (with-eval-after-load 'js2-mode
-    (add-hook 'js2-mode-hook #'setup-tide-mode))
-
   (add-hook 'before-save-hook #'tide-format-before-save)
   :config
   (setq tide-format-options
