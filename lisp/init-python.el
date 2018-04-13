@@ -42,8 +42,7 @@
 
   (add-hook 'inferior-python-mode-hook
             (lambda ()
-              (bind-key "C-c C-z"
-                        'kill-buffer-and-window inferior-python-mode-map)
+              (bind-key "C-c C-z" #'kill-buffer-and-window inferior-python-mode-map)
               (process-query-on-exit-flag (get-process "Python"))))
 
   ;; Pdb setup, note the python version

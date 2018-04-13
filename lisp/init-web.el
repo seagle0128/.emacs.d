@@ -146,17 +146,17 @@
 (use-package web-beautify
   :init
   (with-eval-after-load 'js-mode
-    (bind-key "C-c b" 'web-beautify-js js-mode-map))
+    (bind-key "C-c b" #'web-beautify-js js-mode-map))
   (with-eval-after-load 'js2-mode
-    (bind-key "C-c b" 'web-beautify-js js2-mode-map))
+    (bind-key "C-c b" #'web-beautify-js js2-mode-map))
   (with-eval-after-load 'json-mode
-    (bind-key "C-c b" 'web-beautify-js json-mode-map))
+    (bind-key "C-c b" #'web-beautify-js json-mode-map))
   (with-eval-after-load 'web-mode
-    (bind-key "C-c b" 'web-beautify-html web-mode-map))
+    (bind-key "C-c b" #'web-beautify-html web-mode-map))
   (with-eval-after-load 'sgml-mode
-    (bind-key "C-c b" 'web-beautify-html html-mode-map))
+    (bind-key "C-c b" #'web-beautify-html html-mode-map))
   (with-eval-after-load 'css-mode
-    (bind-key "C-c b" 'web-beautify-css css-mode-map))
+    (bind-key "C-c b" #'web-beautify-css css-mode-map))
   :config
   ;; Set indent size to 2
   (setq web-beautify-args '("-s" "2" "-f" "-")))

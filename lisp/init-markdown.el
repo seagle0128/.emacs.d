@@ -94,7 +94,7 @@
                           (file-name-base)
                           (file-name-extension
                            (buffer-file-name)))))
-    (bind-key "V" 'markdown-to-html markdown-mode-command-map)))
+    (bind-key "V" #'markdown-to-html markdown-mode-command-map)))
 
 (provide 'init-markdown)
 
