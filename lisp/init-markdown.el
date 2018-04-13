@@ -37,14 +37,19 @@
   :config
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
-  (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css"))
 
   (with-eval-after-load 'flycheck
-    (when (executable-find "markdownlint")
-      (let ((md-lint ".markdownlint.json"))
-        (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
-          (if md-lint-dir
-              (setq flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
+    (defun set-markdownlint-config ()
+      "Set the `mardkownlint' config file for the current buffer."
+      (when (and (executable-find "markdownlint") buffer-file-name)
+        (let ((md-lint ".markdownlint.json"))
+          (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
+            (if md-lint-dir
+                (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
+    (add-hook 'markdown-mode-hook #'set-markdownlint-config))
+
+  ;; Preview
+  (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css"))
 
   (use-package markdown-preview-mode
     :bind (:map markdown-mode-command-map
