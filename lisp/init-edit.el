@@ -87,9 +87,10 @@
          ("C-c C-z b" . browse-url-of-buffer)
          ("C-c C-z r" . browse-url-of-region)
          ("C-c C-z u" . browse-url)
-         ("C-c C-z v" . browse-url-of-file)
-         :map dired-mode-map
-         ("C-c C-z f" . browse-url-of-dired-file)))
+         ("C-c C-z v" . browse-url-of-file))
+  :init
+  (with-eval-after-load 'dired
+    (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)))
 
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
