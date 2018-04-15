@@ -64,6 +64,10 @@
     :init (company-quickhelp-mode 1)
     :config (setq company-quickhelp-delay 0.8))
 
+  ;; Disable `company-css' backend due to the performance issue
+  (setq company-backends
+        (remove 'company-css company-backends))
+
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
   (defvar company-enable-yas t
