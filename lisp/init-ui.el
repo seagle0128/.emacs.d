@@ -58,6 +58,9 @@
  ((eq my-theme 'default)
   (use-package monokai-theme
     :init (load-theme 'monokai t)))
+ ((eq my-theme 'doom)
+  (use-package doom-themes
+    :init (load-theme 'doom-one t)))
  ((eq my-theme 'dark)
   (use-package spacemacs-theme
     :init (load-theme 'spacemacs-dark t)))
