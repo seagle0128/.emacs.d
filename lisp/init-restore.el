@@ -40,14 +40,14 @@
   ;; Restore frames into their original displays (if possible)
   (setq desktop-restore-in-current-display nil)
 
-  ;; Load custom theme
-  (add-hook 'desktop-after-read-hook
-            (lambda ()
-              (dolist (theme custom-enabled-themes)
-                (load-theme theme t))))
-
-  ;; Don't save/restore frames in tty
-  (unless (display-graphic-p)
+  (if (display-graphic-p)
+      ;; Prevent desktop from holding onto theme elements
+      (add-hook 'desktop-after-read-hook
+                (lambda ()
+                  "Load custom theme."
+                  (dolist (theme custom-enabled-themes)
+                    (load-theme theme t))))
+    ;; Don't save/restore frames in TTY
     (setq desktop-restore-frames nil)))
 
 ;; Persistent the scratch buffter
