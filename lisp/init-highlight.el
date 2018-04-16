@@ -78,8 +78,8 @@
   :init (add-hook 'prog-mode-hook #'fic-mode)
   :config
   (setq fic-activated-faces '(font-lock-comment-face))
-  (set-face-background 'fic-face "yellow")
-  (set-face-background 'fic-author-face "yellow"))
+  (set-face-attribute 'fic-face nil :box t :background nil)
+  (set-face-background 'fic-author-face nil))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
