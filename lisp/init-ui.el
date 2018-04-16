@@ -60,7 +60,11 @@
     :init (load-theme 'monokai t)))
  ((eq my-theme 'doom)
   (use-package doom-themes
-    :init (load-theme 'doom-one t)))
+    :preface (defvar doom-nord-region-highlight t)
+    :init (load-theme 'doom-one t)
+    :config
+    (doom-themes-visual-bell-config)
+    (doom-themes-org-config)))
  ((eq my-theme 'dark)
   (use-package spacemacs-theme
     :init (load-theme 'spacemacs-dark t)))
