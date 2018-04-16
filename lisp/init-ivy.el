@@ -56,6 +56,7 @@
          ("C-c c i" . counsel-git)
          ("C-c c j" . counsel-git-grep)
          ("C-c c l" . counsel-load-library)
+         ("C-c c t" . counsel-load-theme)
          ("C-c c m" . counsel-minibuffer-history)
          ("C-c c o" . counsel-outline)
          ("C-c c p" . counsel-pt)
@@ -173,7 +174,7 @@
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                ("C-c c t" . counsel-tramp)))
+                ("C-c c v" . counsel-tramp)))
 
   ;; Ivy for GNU global
   (use-package counsel-gtags
