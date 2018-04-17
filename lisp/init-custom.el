@@ -76,7 +76,7 @@
   :type 'boolean)
 
 ;; For Emacs devel
-;; e.g. release is 24.5 or 25.1, while devel build is 26.0.90
+;; e.g. 24.5, 25.3 or 26.1 are releses, while 26.0.90 is a devel release.
 (when (= emacs-minor-version 0)
   (setq package-user-dir (locate-user-emacs-file "elpa-devel"))
   (setq desktop-base-file-name ".emacs-devel.desktop")
