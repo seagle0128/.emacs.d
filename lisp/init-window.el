@@ -81,7 +81,7 @@
           ("^*Man.+*$" :regexp t :position bottom :stick nil :noselect nil :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
           ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
-          ("^*helpful .+*$" :regexp t :position bottom :stick nil :noselect nil)
+          ("^*helpful .+*$" :regexp t :position bottom :stick nil :noselect nil :height 0.4)
 
           ;; Kill Ring
           ("*Kill Ring*" :dedicated t :position bottom)
