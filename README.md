@@ -114,6 +114,9 @@ restart Emacs.
 ;; (custom-set-variables )
 ```
 
+The default pacakge archives is `melpa`. You can change it in `custom.el`, or
+switch manually via `M-x switch-package-archives` anytime.
+
 ## Screenshots
 
 ### Main (default theme)
