@@ -119,6 +119,8 @@
   (setq rg-group-result t)
   (setq rg-show-columns t)
 
+  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
+
   (with-eval-after-load 'projectile
     (bind-key "s r" #'rg-project projectile-command-map))
 
