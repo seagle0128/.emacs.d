@@ -47,7 +47,7 @@
 ;;
 ;; ELPA: refer to https://elpa.emacs-china.org/
 ;;
-(defvar-local package-archives-list '(melpa emacs-china tune))
+(defvar-local package-archives-list '(melpa emacs-china tuna))
 (defun switch-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (interactive
