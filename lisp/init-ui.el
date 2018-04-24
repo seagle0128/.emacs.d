@@ -60,7 +60,6 @@
     :init (load-theme 'monokai t)))
  ((eq my-theme 'doom)
   (use-package doom-themes
-    :preface (defvar doom-nord-region-highlight t)
     :init (load-theme 'doom-one t)
     :config
     (doom-themes-visual-bell-config)
