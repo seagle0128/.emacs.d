@@ -45,9 +45,20 @@
          ([remap swiper] . counsel-grep-or-swiper)
          ("C-x C-r" . counsel-recentf)
          ("C-x j" . counsel-mark-ring)
-         ("C-c C-p" . counsel-package)
+
+         ("C-c L" . counsel-load-library)
+         ("C-c P" . counsel-package)
+         ("C-c f" . counsel-fzf)
+         ("C-c g" . counsel-grep)
+         ("C-c h" . counsel-command-history)
+         ("C-c i" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c l" . counsel-find-library)
+         ("C-c r" . counsel-rg)
+         ("C-c t" . counsel-load-theme)
 
          ("C-c c L" . counsel-load-library)
+         ("C-c c P" . counsel-package)
          ("C-c c a" . counsel-apropos)
          ("C-c c e" . counsel-colors-emacs)
          ("C-c c f" . counsel-fzf)
@@ -64,16 +75,6 @@
          ("C-c c t" . counsel-load-theme)
          ("C-c c u" . counsel-unicode-char)
          ("C-c c w" . counsel-colors-web)
-
-         ("C-c L" . counsel-load-library)
-         ("C-c f" . counsel-fzf)
-         ("C-c g" . counsel-grep)
-         ("C-c h" . counsel-command-history)
-         ("C-c i" . counsel-git)
-         ("C-c j" . counsel-git-grep)
-         ("C-c l" . counsel-find-library)
-         ("C-c r" . counsel-rg)
-         ("C-c t" . counsel-load-theme)
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
