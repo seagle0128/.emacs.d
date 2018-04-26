@@ -64,6 +64,7 @@
          ("C-c c s" . counsel-ag)
          ("C-c c u" . counsel-unicode-char)
          ("C-c c w" . counsel-colors-web)
+         ("C-c r" . counsel-rg)
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
