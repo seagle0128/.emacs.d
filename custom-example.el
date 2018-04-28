@@ -13,4 +13,11 @@
 ;; (setq my-emoji-enabled t)                 ; Enable emoji: t or nil
 ;; (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
 
+;; For Emacs devel
+;; e.g. 24.5, 25.3 or 26.1 are releses, while 26.0.90 is a devel release.
+;; (when (= emacs-minor-version 0)
+;;   (setq package-user-dir (locate-user-emacs-file "elpa-devel"))
+;;   (setq desktop-base-file-name ".emacs-devel.desktop")
+;;   (setq desktop-base-lock-name ".emacs-devel.desktop.lock"))
+
 ;;; custom-example.el ends here

@@ -75,13 +75,6 @@
   "Enable the init benchmark or not."
   :type 'boolean)
 
-;; For Emacs devel
-;; e.g. 24.5, 25.3 or 26.1 are releses, while 26.0.90 is a devel release.
-(when (= emacs-minor-version 0)
-  (setq package-user-dir (locate-user-emacs-file "elpa-devel"))
-  (setq desktop-base-file-name ".emacs-devel.desktop")
-  (setq desktop-base-lock-name ".emacs-devel.desktop.lock"))
-
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (if (file-exists-p custom-file)
     (load custom-file))
