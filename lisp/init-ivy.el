@@ -55,7 +55,6 @@
          ("C-c j" . counsel-git-grep)
          ("C-c l" . counsel-find-library)
          ("C-c r" . counsel-rg)
-         ("C-c t" . counsel-load-theme)
 
          ("C-c c L" . counsel-load-library)
          ("C-c c P" . counsel-package)
