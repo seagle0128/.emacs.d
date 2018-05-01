@@ -75,7 +75,8 @@
   (use-package go-tag
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
-                ("C-c T" . go-tag-remove)))
+                ("C-c T" . go-tag-remove))
+    :config (setq go-tag-args (list "-transform" "camelcase")))
 
   (use-package gotest
     :bind (:map go-mode-map
