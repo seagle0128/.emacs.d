@@ -48,7 +48,7 @@
 ;; ELPA: refer to https://elpa.emacs-china.org/
 ;;
 (defvar-local package-archives-list '(melpa emacs-china tuna))
-(defun switch-package-archives (archives)
+(defun set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (interactive
    (list
@@ -65,9 +65,9 @@
     (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                              ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
-  (message "Switch package archives to \"%s\"." archives))
+  (message "Set package archives to \"%s\"." archives))
 
-(switch-package-archives my-package-archives)
+(set-package-archives my-package-archives)
 
 ;; Initialize packages
 (setq package-enable-at-startup nil)    ; To prevent initialising twice
