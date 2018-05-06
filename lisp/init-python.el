@@ -67,7 +67,16 @@
     (with-eval-after-load 'company
       (use-package company-anaconda
         :defines company-backends
-        :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends)))))
+        :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends))))
+
+  ;; Add conda environment
+  (use-package pyvenv
+    :init
+    (setenv "WORKON_HOME" "/usr/local/anaconda3/envs")
+    (pyvenv-mode 1))
+
+  )
+
 
 (provide 'init-python)
 

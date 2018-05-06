@@ -60,6 +60,9 @@
             (setq gc-cons-threshold 800000)
             (add-hook 'focus-out-hook 'garbage-collect)))
 
+;; Always load new byte-compiled elisp files
+(setq load-prefer-newer t)
+
 ;; Load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
