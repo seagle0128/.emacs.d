@@ -53,27 +53,6 @@
 (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
-;; Theme
-(cond
- ((eq my-theme 'default)
-  (use-package monokai-theme
-    :init (load-theme 'monokai t)))
- ((eq my-theme 'doom)
-  (use-package doom-themes
-    :init (load-theme 'doom-one t)
-    :config
-    (doom-themes-visual-bell-config)
-    (doom-themes-org-config)))
- ((eq my-theme 'dark)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-dark t)))
- ((eq my-theme 'light)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-light t)))
- ((eq my-theme 'daylight)
-  (use-package leuven-theme
-    :init (load-theme 'leuven t))))
-
 ;; Modeline
 (use-package spaceline-config
   :ensure spaceline
@@ -84,6 +63,39 @@
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)
   (setq powerline-default-separator (if window-system 'arrow 'utf-8))
   (setq powerline-image-apple-rgb sys/mac-x-p))
+
+;; Theme
+(cond
+ ((eq my-theme 'default)
+  (use-package monokai-theme
+    :init (load-theme 'monokai t)))
+
+ ((eq my-theme 'doom)
+  (use-package doom-themes
+    :init (load-theme 'doom-one t)
+    :config
+    (doom-themes-visual-bell-config)
+    (doom-themes-org-config)
+    (setq powerline-default-separator 'box)
+    (use-package solaire-mode
+      :init
+      (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
+      (add-hook 'ediff-prepare-buffer-hook #'solaire-mode)
+      (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+      (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
+      (solaire-mode-swap-bg))))
+
+ ((eq my-theme 'dark)
+  (use-package spacemacs-theme
+    :init (load-theme 'spacemacs-dark t)))
+
+ ((eq my-theme 'light)
+  (use-package spacemacs-theme
+    :init (load-theme 'spacemacs-light t)))
+
+ ((eq my-theme 'daylight)
+  (use-package leuven-theme
+    :init (load-theme 'leuven t))))
 
 ;; Fonts
 (use-package cnfonts
