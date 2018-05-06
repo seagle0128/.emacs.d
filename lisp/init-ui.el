@@ -134,10 +134,7 @@
   (use-package linum-off
     :demand
     :init (add-hook 'after-init-hook #'global-linum-mode)
-    :config
-    (setq linum-format "%4d ")
-    (use-package hlinum
-      :init (hlinum-activate))))
+    :config (setq linum-format "%4d ")))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
