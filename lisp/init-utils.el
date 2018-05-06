@@ -44,34 +44,44 @@
 
 ;; A tree layout file explorer
 (use-package treemacs
-  :bind (([f8]        . treemacs-toggle)
+  :bind (([f8]        . treemacs)
          ("M-0"       . treemacs-select-window)
          ("C-c 1"     . treemacs-delete-other-windows))
   :config
-  (setq treemacs-follow-after-init          t
-        treemacs-width                      30
+  (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+        treemacs-file-event-delay           5000
+        treemacs-follow-after-init          t
+        treemacs-follow-recenter-distance   0.1
+        treemacs-goto-tag-strategy          'refetch-index
         treemacs-indentation                2
-        treemacs-collapse-dirs              0
-        treemacs-silent-refresh             t
-        treemacs-change-root-without-asking nil
-        treemacs-sorting                    'alphabetic-desc
-        treemacs-show-hidden-files          t
-        treemacs-never-persist              nil
+        treemacs-indentation-string         " "
         treemacs-is-never-other-window      nil
-        treemacs-goto-tag-strategy          'refetch-index)
+        treemacs-no-png-images              nil
+        treemacs-recenter-after-file-follow nil
+        treemacs-recenter-after-tag-follow  nil
+        treemacs-show-hidden-files          t
+        treemacs-silent-filewatch           nil
+        treemacs-silent-refresh             nil
+        treemacs-sorting                    'alphabetic-desc
+        treemacs-tag-follow-cleanup         t
+        treemacs-tag-follow-delay           1.5
+        treemacs-width                      35)
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-  (treemacs-git-mode 'simple))
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null (executable-find "python3"))))
+    (`(t . t)
+     (treemacs-git-mode 'extended))
+    (`(t . _)
+     (treemacs-git-mode 'simple))))
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
   :after projectile
-  :bind (([M-f8] . treemacs-projectile-toggle)
+  :bind (([M-f8] . treemacs-projectile)
          :map projectile-command-map
-         ("h" . treemacs-projectile-toggle))
-  :config
-  (setq treemacs-header-function #'treemacs-projectile-create-header))
+         ("h" . treemacs-projectile)))
 
 ;; Dash: only avaliable on macOS
 (when sys/macp
