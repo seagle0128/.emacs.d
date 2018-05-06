@@ -57,12 +57,13 @@
 (use-package spaceline-config
   :ensure spaceline
   :commands spaceline-spacemacs-theme
-  :init (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
-  :config
-  (setq spaceline-pre-hook #'powerline-reset) ; Fix for changing themes
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)
+  :init
   (setq powerline-default-separator (if window-system 'arrow 'utf-8))
-  (setq powerline-image-apple-rgb sys/mac-x-p))
+  (setq powerline-image-apple-rgb sys/mac-x-p)
+  (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
+  :config
+  (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified))
 
 ;; Theme
 (cond
@@ -72,11 +73,13 @@
 
  ((eq my-theme 'doom)
   (use-package doom-themes
-    :init (load-theme 'doom-one t)
+    :preface (defvar region-fg nil)
+    :init
+    (setq powerline-default-separator 'box)
+    (load-theme 'doom-one t)
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
-    (setq powerline-default-separator 'box)
     (use-package solaire-mode
       :init
       (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
