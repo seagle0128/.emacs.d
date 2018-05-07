@@ -65,6 +65,14 @@
   (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified))
 
+(use-package hide-mode-line
+  :init
+  (add-hook 'completion-list-mode-hook #'hide-mode-line-mode)
+  (add-hook 'term-mode-hook #'hide-mode-line-mode)
+  (add-hook 'shell-mode-hook #'hide-mode-line-mode)
+  (add-hook 'eshell-mode-hook #'hide-mode-line-mode)
+  (add-hook 'treemacs-mode-hook #'hide-mode-line-mode))
+
 ;; Theme
 (cond
  ((eq my-theme 'default)
