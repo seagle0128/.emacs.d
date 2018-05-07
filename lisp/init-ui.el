@@ -55,11 +55,14 @@
 
 ;; Modeline
 (if (eq my-theme 'doom)
-    (use-package doom-modeline
-      :ensure powerline
-      :after powerline
-      :commands doom-mode-line
-      :init (setq-default mode-line-format (doom-mode-line)))
+    (use-package powerline
+      :init
+      (add-hook 'after-init-hook
+                (lambda ()
+                  (use-package doom-modeline
+                    :ensure nil
+                    :commands doom-mode-line
+                    :init (setq-default mode-line-format (doom-mode-line))))))
   (use-package spaceline-config
     :ensure spaceline
     :commands spaceline-spacemacs-theme1
