@@ -54,16 +54,22 @@
 (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 ;; Modeline
-(use-package spaceline-config
-  :ensure spaceline
-  :commands spaceline-spacemacs-theme
-  :init
-  (setq powerline-default-separator (if window-system 'arrow 'utf-8))
-  (setq powerline-image-apple-rgb sys/mac-x-p)
-  (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
-  :config
-  (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified))
+(if (eq my-theme 'doom)
+    (use-package doom-modeline
+      :ensure powerline
+      :after powerline
+      :commands doom-mode-line
+      :init (setq-default mode-line-format (doom-mode-line)))
+  (use-package spaceline-config
+    :ensure spaceline
+    :commands spaceline-spacemacs-theme1
+    :init
+    (setq powerline-default-separator (if window-system 'arrow 'utf-8))
+    (setq powerline-image-apple-rgb sys/mac-x-p)
+    (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
+    :config
+    (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
+    (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
 
 (use-package hide-mode-line
   :init
@@ -82,9 +88,7 @@
  ((eq my-theme 'doom)
   (use-package doom-themes
     :preface (defvar region-fg nil)
-    :init
-    (setq powerline-default-separator nil)
-    (load-theme 'doom-one t)
+    :init (load-theme 'doom-one t)
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
