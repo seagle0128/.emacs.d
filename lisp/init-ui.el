@@ -80,13 +80,20 @@
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
+
     (use-package solaire-mode
       :init
       (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
       (add-hook 'ediff-prepare-buffer-hook #'solaire-mode)
       (add-hook 'after-revert-hook #'turn-on-solaire-mode)
       (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
-      (solaire-mode-swap-bg))))
+      (solaire-mode-swap-bg))
+
+    (with-eval-after-load 'diff-hl
+      (setq diff-hl-draw-borders nil)
+      (set-face-background 'diff-hl-change "orange3")
+      (set-face-background 'diff-hl-delete "dark red")
+      (set-face-background 'diff-hl-insert "yellow green"))))
 
  ((eq my-theme 'dark)
   (use-package spacemacs-theme
