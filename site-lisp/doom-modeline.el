@@ -278,14 +278,21 @@ lines are selected, or the NxM dimensions of a block selection."
 
 (make-variable-buffer-local 'anzu--state)
 (defun *anzu ()
-  "Show the current match number and the total number of matches. Requires anzu
-to be enabled."
-  (when (and (featurep 'evil-anzu) (evil-ex-hl-active-p 'evil-ex-search))
+  "Show the match index and total number thereof. Requires `anzu', also
+`evil-anzu' if using `evil-mode' for compatibility with `evil-search'."
+  (when (and anzu--state (not iedit-mode))
     (propertize
-     (format " %s/%d%s "
-             anzu--current-position anzu--total-matched
-             (if anzu--overflow-p "+" ""))
-     'face (if active 'mode-line-count-face))))
+     (let ((here anzu--current-position)
+           (total anzu--total-matched))
+       (cond ((eq anzu--state 'replace-query)
+              (format " %d replace " total))
+             ((eq anzu--state 'replace)
+              (format " %d/%d " here total))
+             (anzu--overflow-p
+              (format " %s+ " total))
+             (t
+              (format " %s/%d " here total))))
+     'face (if (active) 'doom-modeline-panel))))
 
 (defun *iedit ()
   "Show the number of iedit regions matches + what match you're on."
@@ -325,8 +332,8 @@ to be enabled."
            (lhs (list (propertize " " 'display (if active mode-line-bar mode-line-inactive-bar))
                       (*flycheck)
                       (*selection-info)
-                      ;; (*anzu)
-                      ;; (*iedit)
+                      (*anzu)
+                      (*iedit)
                       " "
                       (*buffer-path)
                       (*buffer-name)
