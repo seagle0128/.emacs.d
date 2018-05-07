@@ -93,10 +93,18 @@
   (add-hook 'after-init-hook #'global-diff-hl-mode)
   (add-hook 'dired-mode-hook #'diff-hl-dired-mode)
   :config
+  ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
 
-  ;; Fall back to the display margin, if the fringe is unavailable
-  (unless (display-graphic-p)
+  (if (display-graphic-p)
+      ;; Beautify faces
+      (progn
+        (set-fringe-mode '(4 . 8))
+        (setq diff-hl-draw-borders nil)
+        (set-face-background 'diff-hl-change "DeepSkyBlue")
+        (set-face-background 'diff-hl-delete "OrangeRed")
+        (set-face-background 'diff-hl-insert "YellowGreen"))
+    ;; Fall back to the display margin, if the fringe is unavailable
     (diff-hl-margin-mode 1))
 
   ;; Avoid restoring `diff-hl-margin-mode'
