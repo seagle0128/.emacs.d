@@ -75,7 +75,7 @@
   (use-package doom-themes
     :preface (defvar region-fg nil)
     :init
-    (setq powerline-default-separator 'box)
+    (setq powerline-default-separator nil)
     (load-theme 'doom-one t)
     :config
     (doom-themes-visual-bell-config)
