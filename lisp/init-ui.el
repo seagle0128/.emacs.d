@@ -67,11 +67,11 @@
 
 (use-package hide-mode-line
   :init
-  (add-hook 'completion-list-mode-hook #'hide-mode-line-mode)
-  (add-hook 'term-mode-hook #'hide-mode-line-mode)
-  (add-hook 'shell-mode-hook #'hide-mode-line-mode)
-  (add-hook 'eshell-mode-hook #'hide-mode-line-mode)
-  (add-hook 'treemacs-mode-hook #'hide-mode-line-mode))
+  (dolist (hook '(completion-list-mode-hook
+                  eshell-mode-hook shell-mode-hook term-mode-hook
+                  magit-mode-hook magit-diff-mode-hook magit-log-mode-hook magit-popup-mode-hook
+                  treemacs-mode-hook))
+    (add-hook hook #'hide-mode-line-mode)))
 
 ;; Theme
 (cond
