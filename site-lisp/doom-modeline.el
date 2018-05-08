@@ -1,16 +1,15 @@
-;;; core-modeline.el
+;;; doom-modeline.el
 
 ;; This file tries to be an almost self-contained configuration of my mode-line.
 ;;
 ;; It depends on the following external packages:
 ;;   + REQUIRED
 ;;       + powerline
-;;       + evil-mode
 ;;       + projectile
 ;;       + DejaVu Mono for Powerline font <https://github.com/powerline/fonts>
 ;;   + OPTIONAL
 ;;       + anzu
-;;       + iedit and evil-multiedit
+;;       + iedit
 ;;       + flycheck
 ;;
 ;; The only external functions used are:
@@ -278,21 +277,13 @@ lines are selected, or the NxM dimensions of a block selection."
 
 (make-variable-buffer-local 'anzu--state)
 (defun *anzu ()
-  "Show the match index and total number thereof. Requires `anzu', also
-`evil-anzu' if using `evil-mode' for compatibility with `evil-search'."
-  (when (and anzu--state (not iedit-mode))
+  "Show the current match number and the total number of matches. Requires anzu to be enabled."
+  (when (and (featurep 'anzu) anzu--state)
     (propertize
-     (let ((here anzu--current-position)
-           (total anzu--total-matched))
-       (cond ((eq anzu--state 'replace-query)
-              (format " %d replace " total))
-             ((eq anzu--state 'replace)
-              (format " %d/%d " here total))
-             (anzu--overflow-p
-              (format " %s+ " total))
-             (t
-              (format " %s/%d " here total))))
-     'face (if (active) 'doom-modeline-panel))))
+     (format " %s/%d%s "
+             anzu--current-position anzu--total-matched
+             (if anzu--overflow-p "+" ""))
+     'face (if active 'mode-line-count-face))))
 
 (defun *iedit ()
   "Show the number of iedit regions matches + what match you're on."
@@ -354,4 +345,4 @@ lines are selected, or the NxM dimensions of a block selection."
 (setq-default mode-line-format (doom-mode-line))
 
 (provide 'doom-modeline)
-;;; core-modeline.el ends here
+;;; doom-modeline.el ends here
