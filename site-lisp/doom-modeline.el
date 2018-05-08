@@ -278,6 +278,7 @@ lines are selected, or the NxM dimensions of a block selection."
 (make-variable-buffer-local 'anzu--state)
 (defun *anzu ()
   "Show the current match number and the total number of matches. Requires anzu to be enabled."
+  (setq anzu-cons-mode-line-p nil)
   (when (and (featurep 'anzu) anzu--state)
     (propertize
      (format " %s/%d%s "
