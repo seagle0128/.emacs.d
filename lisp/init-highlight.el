@@ -82,7 +82,7 @@
   :config
   (setq fic-highlighted-words '("TODO" "FIXME" "FIX" "BUG" "ISSUE" "DEFECT" "WORKAROUND"))
   (setq fic-activated-faces '(font-lock-comment-face))
-  (set-face-attribute 'fic-face nil :box t :background (face-background 'default))
+  (set-face-attribute 'fic-face nil :box t :background (face-background 'default) :foreground "Orange")
   (set-face-background 'fic-author-face (face-background 'default)))
 
 ;; Highlight uncommitted changes
