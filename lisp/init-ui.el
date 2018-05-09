@@ -55,14 +55,24 @@
 
 ;; Modeline
 (if (eq my-theme 'doom)
-    (use-package powerline
-      :init
-      (add-hook 'after-init-hook
-                (lambda ()
-                  (use-package doom-modeline
-                    :ensure nil
-                    :commands doom-mode-line
-                    :init (setq-default mode-line-format (doom-mode-line))))))
+    (progn
+      (use-package powerline
+        :init
+        (add-hook 'after-init-hook
+                  (lambda ()
+                    (use-package doom-modeline
+                      :ensure nil
+                      :commands doom-mode-line
+                      :init (setq-default mode-line-format (doom-mode-line))))))
+
+      (use-package hide-mode-line
+        :init
+        (dolist (hook '(completion-list-mode-hook
+                        eshell-mode-hook shell-mode-hook term-mode-hook
+                        magit-mode-hook magit-diff-mode-hook magit-log-mode-hook magit-popup-mode-hook
+                        helpful-mode-hook treemacs-mode-hook))
+          (add-hook hook #'hide-mode-line-mode)))
+      )
   (use-package spaceline-config
     :ensure spaceline
     :commands spaceline-spacemacs-theme1
@@ -73,14 +83,6 @@
     :config
     (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
     (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
-
-(use-package hide-mode-line
-  :init
-  (dolist (hook '(completion-list-mode-hook
-                  eshell-mode-hook shell-mode-hook term-mode-hook
-                  magit-mode-hook magit-diff-mode-hook magit-log-mode-hook magit-popup-mode-hook
-                  helpful-mode-hook treemacs-mode-hook))
-    (add-hook hook #'hide-mode-line-mode)))
 
 ;; Theme
 (cond
