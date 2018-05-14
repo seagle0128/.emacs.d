@@ -65,7 +65,8 @@
           (const :tag "Default theme" default)
           (const :tag "Dark theme" dark)
           (const :tag "Light theme" light)
-          (const :tag "Daylight theme" daylight)))
+          (const :tag "Daylight theme" daylight)
+          string))
 
 (defcustom my-emoji-enabled nil
   "Enable emoji features or not."

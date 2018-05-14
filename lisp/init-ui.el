@@ -53,8 +53,13 @@
 (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
+(defun is-doom-theme-p (theme)
+  "Check whether the THEME is a doom theme. THEME is a symbol or string."
+  (string-prefix-p "doom" (if (typep theme 'symbol)
+                              (symbol-name theme)
+                            theme)))
 ;; Modeline
-(if (eq my-theme 'doom)
+(if (is-doom-theme-p my-theme)
     (progn
       (use-package powerline
         :init
@@ -90,10 +95,22 @@
   (use-package monokai-theme
     :init (load-theme 'monokai t)))
 
- ((eq my-theme 'doom)
+ ((eq my-theme 'dark)
+  (use-package spacemacs-theme
+    :init (load-theme 'spacemacs-dark t)))
+
+ ((eq my-theme 'light)
+  (use-package spacemacs-theme
+    :init (load-theme 'spacemacs-light t)))
+
+ ((eq my-theme 'daylight)
+  (use-package leuven-theme
+    :init (load-theme 'leuven t)))
+
+ ((is-doom-theme-p my-theme)
   (use-package doom-themes
     :preface (defvar region-fg nil)
-    :init (load-theme 'doom-one t)
+    :init (load-theme (intern my-theme) t)
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
@@ -106,17 +123,8 @@
       (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
       (solaire-mode-swap-bg))))
 
- ((eq my-theme 'dark)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-dark t)))
-
- ((eq my-theme 'light)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-light t)))
-
- ((eq my-theme 'daylight)
-  (use-package leuven-theme
-    :init (load-theme 'leuven t))))
+ ((typep my-theme 'string)
+  (ignore-errors (load-theme (intern my-theme) t))))
 
 ;; Fonts
 (use-package cnfonts
