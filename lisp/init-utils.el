@@ -125,7 +125,6 @@
   (if (fboundp 'wgrep-ag-setup)
       (add-hook 'rg-mode-hook #'wgrep-ag-setup))
   :config
-  (setq rg-custom-type-aliases nil)
   (setq rg-group-result t)
   (setq rg-show-columns t)
 
