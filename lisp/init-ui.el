@@ -54,10 +54,9 @@
 (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
 (defun is-doom-theme-p (theme)
-  "Check whether the THEME is a doom theme. THEME is a symbol or string."
-  (string-prefix-p "doom" (if (typep theme 'symbol)
-                              (symbol-name theme)
-                            theme)))
+  "Check whether the THEME is a doom theme. THEME is a symbol."
+  (string-prefix-p "doom" (symbol-name theme)))
+
 ;; Modeline
 (if (is-doom-theme-p my-theme)
     (progn
@@ -110,7 +109,7 @@
  ((is-doom-theme-p my-theme)
   (use-package doom-themes
     :preface (defvar region-fg nil)
-    :init (load-theme (intern my-theme) t)
+    :init (load-theme my-theme t)
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
@@ -123,8 +122,8 @@
       (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
       (solaire-mode-swap-bg))))
 
- ((typep my-theme 'string)
-  (ignore-errors (load-theme (intern my-theme) t))))
+ (t
+  (ignore-errors (load-theme my-theme t))))
 
 ;; Fonts
 (use-package cnfonts
