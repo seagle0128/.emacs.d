@@ -66,6 +66,7 @@
           (const :tag "Dark theme" dark)
           (const :tag "Light theme" light)
           (const :tag "Daylight theme" daylight)
+          (const :tag "Doom theme" doom)
           symbol))
 
 (defcustom my-emoji-enabled nil

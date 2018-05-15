@@ -109,7 +109,10 @@
  ((is-doom-theme-p my-theme)
   (use-package doom-themes
     :preface (defvar region-fg nil)
-    :init (load-theme my-theme t)
+    :init
+    (if (eq my-theme 'doom)
+        (load-theme 'doom-one t)
+      (load-theme my-theme t))
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)

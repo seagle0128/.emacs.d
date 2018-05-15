@@ -106,7 +106,7 @@ restart Emacs.
 (setq my-mail-address "user@email.com")   ; Email address
 (setq my-proxy "127.0.0.1:1080")          ; Network proxy
 (setq my-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tuna
-(setq my-theme 'dark)                     ; Color theme: default, dark, light or daylight
+(setq my-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
 (setq my-emoji-enabled t)                 ; Enable emoji: t or nil
 (setq my-benchmark-enabled t)             ; Enable initialization benchmark: t or nil
 
@@ -138,6 +138,10 @@ switch manually via `M-x switch-package-archives` anytime.
 ### Magit (daylight theme)
 
 ![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
+
+### Doom theme and modeline
+
+![Doom](https://user-images.githubusercontent.com/140797/40072105-53bd03e0-58a5-11e8-8970-670a2f95bddf.png)
 
 ## FAQ
 
