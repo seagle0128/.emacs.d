@@ -65,7 +65,7 @@
     (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                              ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 
-  (message "Set package archives to \"%s\"." archives))
+  (message "Set package archives to '%s'." archives))
 
 (set-package-archives my-package-archives)
 
