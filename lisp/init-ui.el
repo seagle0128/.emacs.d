@@ -165,20 +165,21 @@
   (use-package linum-off
     :demand
     :init (add-hook 'after-init-hook #'global-linum-mode)
-    :config
-    (setq linum-format "%4d ")
+    :config (setq linum-format "%4d ")
     ;; Highlight current line number
     (use-package hlinum
+      :preface
+      (defun set-linum-highlight-face ()
+        (set-face-attribute 'linum-highlight-face
+                            nil
+                            :inherit 'default
+                            :background (face-background 'default)
+                            :foreground (face-foreground 'default)))
       :init (add-hook 'global-linum-mode-hook #'hlinum-activate)
       :config
       (setq linum-highlight-in-all-buffersp t)
-      (add-hook 'after-load-theme-hook
-                (lambda ()
-                  (set-face-attribute 'linum-highlight-face
-                                      nil
-                                      :inherit 'default
-                                      :background (face-background 'default)
-                                      :foreground (face-foreground 'default)))))))
+      (set-linum-highlight-face)
+      (add-hook 'after-load-theme-hook #'set-linum-highlight-face))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -192,10 +193,10 @@
 (use-package time
   :ensure nil
   :unless (display-graphic-p)
-  :preface
+  :init
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t)
-  :init (add-hook 'after-init-hook #'display-time-mode))
+  (add-hook 'after-init-hook #'display-time-mode))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
