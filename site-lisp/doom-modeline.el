@@ -18,11 +18,14 @@
 ;;
 ;; Both are simple, isolated functions and, besides projectile, has no other
 ;; dependencies.
+
+;;; Code:
+
 (require 's)
 (require 'f)
 
 (defvar mode-line-height 30
-  "How tall the mode-line should be. This is only respected in GUI emacs.")
+  "How tall the mode-line should be. This is only respected in GUI Emacs.")
 
 ;; Load powerline only when uncompiled, in order to generate the xpm bitmaps for
 ;; the mode-line. This is the tall blue bar on the left of the mode-line.
