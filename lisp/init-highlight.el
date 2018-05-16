@@ -59,6 +59,7 @@
 
 ;; Highlight indentions
 (use-package highlight-indent-guides
+  :if (display-graphic-p)
   :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-method 'character)
