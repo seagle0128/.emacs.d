@@ -63,7 +63,9 @@
                              ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
    ((eq archives 'tuna)
     (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                             ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
+                             ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+   (t
+    (error "Unknown archives: '%s'" archives)))
 
   (message "Set package archives to '%s'." archives))
 
