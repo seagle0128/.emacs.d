@@ -117,17 +117,18 @@ first time."
   "Display certain unicode characters in a specific font.
 
 e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
-  (declare (indent 1))
-  (mapc (lambda (x) (set-fontset-font
-                t (cons x x)
-                (cond ((fontp font)
-                       font)
-                      ((listp font)
-                       (font-spec :family (car font) :size (nth 1 font)))
-                      ((stringp font)
-                       (font-spec :family font))
-                      (t (error "FONT is an invalid type: %s" font)))))
-        chars))
+  (if (display-graphic-p)
+      (declare (indent 1))
+    (mapc (lambda (x) (set-fontset-font
+                  t (cons x x)
+                  (cond ((fontp font)
+                         font)
+                        ((listp font)
+                         (font-spec :family (car font) :size (nth 1 font)))
+                        ((stringp font)
+                         (font-spec :family font))
+                        (t (error "FONT is an invalid type: %s" font)))))
+          chars)))
 ;; Make certain unicode glyphs bigger for the mode-line.
 ;; FIXME Replace with all-the-icons?
 (doom-fix-unicode '("DejaVu Sans Mono" 15) ?✱) ;; modified symbol
@@ -146,7 +147,6 @@ e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
 (add-hook 'focus-in-hook #'doom|set-selected-window)
 (advice-add 'select-window :after 'doom|set-selected-window)
 (advice-add 'select-frame  :after 'doom|set-selected-window)
-
 
 ;;
 ;; Mode-line segments
