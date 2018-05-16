@@ -172,7 +172,13 @@
       :init (add-hook 'global-linum-mode-hook #'hlinum-activate)
       :config
       (setq linum-highlight-in-all-buffersp t)
-      (set-face-attribute 'linum-highlight-face nil :inherit 'default :background (face-background 'default)  :foreground (face-foreground 'default)))))
+      (add-hook 'after-load-theme-hook
+                (lambda ()
+                  (set-face-attribute 'linum-highlight-face
+                                      nil
+                                      :inherit 'default
+                                      :background (face-background 'default)
+                                      :foreground (face-foreground 'default)))))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
