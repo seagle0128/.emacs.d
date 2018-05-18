@@ -106,7 +106,8 @@
   "Set http/https proxy."
   (interactive)
   (setq url-proxy-services `(("http" . ,my-proxy)
-                             ("https" . ,my-proxy)))
+                             ("https" . ,my-proxy)
+                             ("no_proxy" . "^\\(localhost\\|10.*\\|192.168.*\\)")))
   (show-proxy))
 
 (defun unset-proxy ()
