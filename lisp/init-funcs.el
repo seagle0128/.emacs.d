@@ -123,6 +123,20 @@
       (unset-proxy)
     (set-proxy)))
 
+(defun proxy-socks-enable ()
+  "Enable Socks proxy."
+  (interactive)
+  (setq url-gateway-method 'socks)
+  (setq socks-noproxy '("localhost"))
+  (setq socks-server '("Default server" "127.0.0.1" 1086 5))
+  (setq proxy-mode-proxy-type "socks"))
+
+(defun proxy-socks-disable ()
+  "Disable Socks proxy."
+  (interactive)
+  (setq url-gateway-method 'native)
+  (setq proxy-mode-proxy-type nil))
+
 (provide 'init-funcs)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
