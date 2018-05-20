@@ -129,13 +129,15 @@
   (setq url-gateway-method 'socks)
   (setq socks-noproxy '("localhost"))
   (setq socks-server '("Default server" "127.0.0.1" 1086 5))
-  (setq proxy-mode-proxy-type "socks"))
+  (setq proxy-mode-proxy-type "socks")
+  (message "Enable socks proxy."))
 
 (defun proxy-socks-disable ()
   "Disable Socks proxy."
   (interactive)
   (setq url-gateway-method 'native)
-  (setq proxy-mode-proxy-type nil))
+  (setq proxy-mode-proxy-type nil)
+  (message "Disable socks proxy."))
 
 (provide 'init-funcs)
 
