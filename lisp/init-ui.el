@@ -121,12 +121,8 @@
     (doom-themes-org-config)
 
     (use-package solaire-mode
-      :init
-      (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
-      (add-hook 'ediff-prepare-buffer-hook #'solaire-mode)
-      (add-hook 'after-revert-hook #'turn-on-solaire-mode)
-      (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
-      (solaire-mode-swap-bg))))
+      :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+             (minibuffer-setup-hook . solaire-mode-in-minibuffer)))))
 
  (t
   (ignore-errors (load-theme my-theme t))))
