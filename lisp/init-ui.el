@@ -80,9 +80,9 @@
       (use-package hide-mode-line
         :init
         (dolist (hook '(completion-list-mode-hook
-                        eshell-mode-hook shell-mode-hook term-mode-hook
-                        magit-mode-hook magit-diff-mode-hook magit-log-mode-hook magit-popup-mode-hook
-                        helpful-mode-hook treemacs-mode-hook))
+                        completion-in-region-mode-hook
+                        neotree-mode-hook
+                        treemacs-mode-hook))
           (add-hook hook #'hide-mode-line-mode))))
   (use-package spaceline-config
     :ensure spaceline
