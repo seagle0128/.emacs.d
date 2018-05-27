@@ -69,10 +69,14 @@
     (progn
       (use-package doom-modeline
         :ensure powerline
-        :demand
-        :config (add-hook 'after-init-hook
-                          (lambda ()
-                            (setq-default mode-line-format (doom-mode-line)))))
+        :commands (+doom-modeline|init)
+        :init (add-hook 'after-init-hook #'+doom-modeline|init)
+        :config
+        (setq anzu-cons-mode-line-p nil)
+        (add-hook 'after-init-hook
+                  (lambda ()
+                    (window-numbering-mode -1))))
+
       (use-package hide-mode-line
         :init
         (dolist (hook '(completion-list-mode-hook
