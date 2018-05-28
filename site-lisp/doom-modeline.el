@@ -806,7 +806,7 @@ Returns \"\" to not break --no-window-system."
 
 (def-modeline-segment! window-number
   (when (bound-and-true-p window-numbering-mode)
-    (propertize (concat " " (window-numbering-get-number-string) " ")
+    (propertize (format " %s " (window-numbering-get-number-string))
                 'face 'doom-modeline-panel)))
 
 ;;
