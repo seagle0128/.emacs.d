@@ -66,19 +66,11 @@
 
 ;; Modeline
 (if (is-doom-theme-p my-theme)
-    (progn
-      (use-package doom-modeline
-        :ensure powerline
-        :commands (+doom-modeline|init)
-        :init (add-hook 'after-load-theme-hook #'+doom-modeline|init)
-        :config (setq anzu-cons-mode-line-p nil))
-      (use-package hide-mode-line
-        :init
-        (dolist (hook '(completion-list-mode-hook
-                        completion-in-region-mode-hook
-                        neotree-mode-hook
-                        treemacs-mode-hook))
-          (add-hook hook #'hide-mode-line-mode))))
+    (use-package doom-modeline
+      :ensure powerline
+      :commands (+doom-modeline|init)
+      :init (add-hook 'after-load-theme-hook #'+doom-modeline|init)
+      :config (setq anzu-cons-mode-line-p nil))
   (use-package spaceline-config
     :ensure spaceline
     :commands spaceline-spacemacs-theme1
@@ -89,6 +81,14 @@
     :config
     (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
     (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
+
+(use-package hide-mode-line
+  :init
+  (dolist (hook '(completion-list-mode-hook
+                  completion-in-region-mode-hook
+                  neotree-mode-hook
+                  treemacs-mode-hook))
+    (add-hook hook #'hide-mode-line-mode)))
 
 ;; Color theme
 (cond
