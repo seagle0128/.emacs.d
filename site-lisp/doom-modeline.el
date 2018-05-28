@@ -151,11 +151,18 @@ error if it doesn't exist."
 (defun doom-set-modeline (key &optional default)
   "Set the modeline format. Does nothing if the modeline KEY doesn't exist. If
 DEFAULT is non-nil, set the default mode-line for all buffers."
-  (let* ((modeline (doom-modeline key)))
+  (when-let ((modeline (doom-modeline key)))
     (setf (if default
               (default-value 'mode-line-format)
             (buffer-local-value 'mode-line-format (current-buffer)))
           modeline)))
+
+(defun doom-project-root ()
+  "Get the path to the root of your project.
+If STRICT-P, return nil if no project was found, otherwise return
+`default-directory'."
+  (let (projectile-require-project-root)
+    (projectile-project-root)))
 
 ;;
 ;; modeline configs
@@ -214,7 +221,7 @@ DEFAULT is non-nil, set the default mode-line for all buffers."
 (defvar +doom-modeline-current-window (frame-selected-window))
 (defun +doom-modeline|set-selected-window (&rest _)
   "Sets `+doom-modeline-current-window' appropriately"
-  (let* ((win (frame-selected-window)))
+  (when-let ((win (frame-selected-window)))
     (unless (minibuffer-window-active-p win)
       (setq +doom-modeline-current-window win))))
 
@@ -414,7 +421,7 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
 
 (defun +doom-modeline--buffer-file-name-relative (&optional include-project)
   "Propertized `buffer-file-name' showing directories relative to project's root only."
-  (let ((root (projectile-project-root))
+  (let ((root (doom-project-root))
         (active (active)))
     (if (null root)
         (propertize "%b" 'face (if active 'doom-modeline-buffer-file))
@@ -442,7 +449,7 @@ If TRUNCATE-PROJECT-ROOT-PARENT is t space will be saved by truncating it down
 fish-shell style.
 Example:
 ~/Projects/FOSS/emacs/lisp/comint.el => ~/P/F/emacs/lisp/comint.el"
-  (let* ((project-root (projectile-project-root))
+  (let* ((project-root (doom-project-root))
          (file-name-split (shrink-path-file-mixed project-root
                                                   (file-name-directory buffer-file-truename)
                                                   buffer-file-truename))
@@ -780,7 +787,7 @@ Returns \"\" to not break --no-window-system."
   "The persp number."
   (when (featurep 'persp-mode)
     (when (+doom-window-bottom-left-p)
-      (let* ((persp (get-current-persp)))
+      (when-let ((persp (get-current-persp)))
         (propertize
          (concat
           (number-to-string
@@ -841,10 +848,6 @@ Returns \"\" to not break --no-window-system."
 ;;
 ;; Bootstrap
 ;;
-
-(add-hook 'doom-init-ui-hook #'+doom-modeline|init)
-(add-hook 'doom-scratch-buffer-hook #'+doom-modeline|set-special-modeline)
-(add-hook '+doom-dashboard-mode-hook #'+doom-modeline|set-project-modeline)
 
 (add-hook 'image-mode-hook   #'+doom-modeline|set-media-modeline)
 (add-hook 'org-src-mode-hook #'+doom-modeline|set-special-modeline)
