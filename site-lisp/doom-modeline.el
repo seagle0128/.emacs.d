@@ -805,9 +805,10 @@ Returns \"\" to not break --no-window-system."
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
 (def-modeline-segment! window-number
-  (when (bound-and-true-p window-numbering-mode)
-    (propertize (format " %s " (window-numbering-get-number-string))
-                'face 'doom-modeline-panel)))
+  (if (bound-and-true-p window-numbering-mode)
+      (propertize (format " %s " (window-numbering-get-number-string))
+                  'face 'doom-modeline-panel)
+    ""))
 
 ;;
 ;; Mode lines
