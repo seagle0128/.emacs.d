@@ -800,20 +800,29 @@ Returns \"\" to not break --no-window-system."
           " ")
          'face 'doom-modeline-persp)))))
 
+
+(advice-add #'window-numbering-install-mode-line :override #'ignore)
+(advice-add #'window-numbering-clear-mode-line :override #'ignore)
+
+(def-modeline-segment! window-number
+  (when (bound-and-true-p window-numbering-mode)
+    (propertize (concat " " (window-numbering-get-number-string) " ")
+                'face 'doom-modeline-panel)))
+
 ;;
 ;; Mode lines
 ;;
 
 (def-modeline! main
-  (bar matches " " buffer-info "  %l:%c %p  " selection-info)
+  (window-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode vcs flycheck))
 
 (def-modeline! minimal
-  (bar matches " " buffer-info)
+  (window-number bar matches " " buffer-info)
   (media-info major-mode))
 
 (def-modeline! special
-  (bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
+  (window-number bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode flycheck))
 
 (def-modeline! project
