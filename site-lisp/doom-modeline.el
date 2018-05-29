@@ -484,14 +484,12 @@ Example:
   "Displays `default-directory'. This is for special buffers like the scratch
 buffer where knowing the current project directory is important."
   (let ((face (if (active) 'doom-modeline-buffer-path)))
-    (concat (when (display-graphic-p)
-              (concat
-               " "
-               (all-the-icons-octicon
-                "file-directory"
-                :face face
-                :v-adjust -0.05
-                :height 1.25)))
+    (concat (if (display-graphic-p) " ")
+            (+doom-maybe-icon-octicon
+             "file-directory"
+             :face face
+             :v-adjust -0.05
+             :height 1.25)
             (propertize (concat " " (abbreviate-file-name default-directory))
                         'face face))))
 
@@ -501,32 +499,31 @@ buffer where knowing the current project directory is important."
   "Combined information about the current buffer, including the current working
 directory, the file name, and its state (modified, read-only or non-existent)."
   (concat
-   (when (display-graphic-p)
-     (cond (buffer-read-only
-            (concat (all-the-icons-octicon
-                     "lock"
-                     :face 'doom-modeline-warning
-                     :v-adjust -0.05)
-                    " "))
-           ((buffer-modified-p)
-            (concat (all-the-icons-faicon
-                     "floppy-o"
-                     :face 'doom-modeline-buffer-modified
-                     :v-adjust -0.0575)
-                    " "))
-           ((and buffer-file-name
-                 (not (file-exists-p buffer-file-name)))
-            (concat (all-the-icons-octicon
-                     "circle-slash"
-                     :face 'doom-modeline-urgent
-                     :v-adjust -0.05)
-                    " "))
-           ((buffer-narrowed-p)
-            (concat (all-the-icons-octicon
-                     "fold"
-                     :face 'doom-modeline-warning
-                     :v-adjust -0.05)
-                    " "))))
+   (cond (buffer-read-only
+          (concat (+doom-maybe-icon-octicon
+                   "lock"
+                   :face 'doom-modeline-warning
+                   :v-adjust -0.05)
+                  " "))
+         ((buffer-modified-p)
+          (concat (all-the-icons-faicon
+                   "floppy-o"
+                   :face 'doom-modeline-buffer-modified
+                   :v-adjust -0.0575)
+                  " "))
+         ((and buffer-file-name
+               (not (file-exists-p buffer-file-name)))
+          (concat (+doom-maybe-icon-octicon
+                   "circle-slash"
+                   :face 'doom-modeline-urgent
+                   :v-adjust -0.05)
+                  " "))
+         ((buffer-narrowed-p)
+          (concat (+doom-maybe-icon-octicon
+                   "fold"
+                   :face 'doom-modeline-warning
+                   :v-adjust -0.05)
+                  " ")))
    (if buffer-file-name
        (+doom-modeline-buffer-file-name)
      "%b")))
@@ -579,30 +576,28 @@ directory, the file name, and its state (modified, read-only or non-existent)."
       (let ((face    'mode-line-inactive)
             (active  (active))
             (all-the-icons-default-adjust -0.1))
-        (concat (when (display-graphic-p)
-                  (concat
-                   "  "
-                   (cond ((memq state '(edited added))
-                          (if active (setq face 'doom-modeline-info))
-                          (all-the-icons-octicon
-                           "git-compare"
-                           :face face
-                           :v-adjust -0.05))
-                         ((eq state 'needs-merge)
-                          (if active (setq face 'doom-modeline-info))
-                          (all-the-icons-octicon "git-merge" :face face))
-                         ((eq state 'needs-update)
-                          (if active (setq face 'doom-modeline-warning))
-                          (all-the-icons-octicon "arrow-down" :face face))
-                         ((memq state '(removed conflict unregistered))
-                          (if active (setq face 'doom-modeline-urgent))
-                          (all-the-icons-octicon "alert" :face face))
-                         (t
-                          (if active (setq face 'font-lock-doc-face))
-                          (all-the-icons-octicon
-                           "git-compare"
-                           :face face
-                           :v-adjust -0.05)))))
+        (concat (if (display-graphic-p) "  ")
+                (cond ((memq state '(edited added))
+                       (if active (setq face 'doom-modeline-info))
+                       (+doom-maybe-icon-octicon
+                        "git-compare"
+                        :face face
+                        :v-adjust -0.05))
+                      ((eq state 'needs-merge)
+                       (if active (setq face 'doom-modeline-info))
+                       (+doom-maybe-icon-octicon "git-merge" :face face))
+                      ((eq state 'needs-update)
+                       (if active (setq face 'doom-modeline-warning))
+                       (+doom-maybe-icon-octicon "arrow-down" :face face))
+                      ((memq state '(removed conflict unregistered))
+                       (if active (setq face 'doom-modeline-urgent))
+                       (+doom-maybe-icon-octicon "alert" :face face))
+                      (t
+                       (if active (setq face 'font-lock-doc-face))
+                       (+doom-maybe-icon-octicon
+                        "git-compare"
+                        :face face
+                        :v-adjust -0.05)))
                 " "
                 (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
                             'face (if active face))
@@ -611,8 +606,8 @@ directory, the file name, and its state (modified, read-only or non-existent)."
 
 ;;
 (defun +doom-ml-icon (icon &optional text face voffset)
-  "Displays an octicon ICON with FACE, followed by TEXT. Uses
-`all-the-icons-octicon' to fetch the icon."
+  "Displays an ICON with FACE, followed by TEXT. Uses
+`all-the-icons-material' to fetch the icon."
   (concat (if vc-mode " " "  ")
           (when icon
             (concat
@@ -680,13 +675,11 @@ lines are selected, or the NxM dimensions of a block selection."
                               (char-to-string evil-this-macro)
                             "Macro")
                           'face 'doom-modeline-panel)
-              (when (display-graphic-p)
-                (concat
-                 sep
-                 (all-the-icons-octicon "triangle-right"
+              sep
+              (+doom-maybe-icon-octicon "triangle-right"
                                         :face 'doom-modeline-panel
-                                        :v-adjust -0.05)))
-              sep))))
+                                        :v-adjust -0.05))
+      sep)))
 
 (defsubst +doom-modeline--anzu ()
   "Show the match index and total number thereof. Requires `anzu', also
@@ -873,3 +866,4 @@ Returns \"\" to not break --no-window-system."
 (add-hook 'circe-mode-hook   #'+doom-modeline|set-special-modeline)
 
 (provide 'doom-modeline)
+;;; doom-modeline.el ends here
