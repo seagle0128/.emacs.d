@@ -506,7 +506,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
                    :v-adjust -0.05)
                   " "))
          ((buffer-modified-p)
-          (concat (all-the-icons-faicon
+          (concat (+doom-maybe-icon-faicon
                    "floppy-o"
                    :face 'doom-modeline-buffer-modified
                    :v-adjust -0.0575)
@@ -567,6 +567,14 @@ directory, the file name, and its state (modified, read-only or non-existent)."
   (when (display-graphic-p)
     (apply 'all-the-icons-octicon args)))
 
+(defun +doom-maybe-icon-faicon (&rest args)
+  (when (display-graphic-p)
+    (apply 'all-the-icons-faicon args)))
+
+(defun +doom-maybe-icon-material (&rest args)
+  (when (display-graphic-p)
+    (apply 'all-the-icons-material args)))
+
 ;;
 (def-modeline-segment! vcs
   "Displays the current branch, colored based on its state."
@@ -595,7 +603,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
                       (t
                        (if active (setq face 'font-lock-doc-face))
                        (+doom-maybe-icon-octicon
-                        "git-compare"
+                        "git-branch"
                         :face face
                         :v-adjust -0.05)))
                 " "
