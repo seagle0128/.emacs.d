@@ -179,7 +179,6 @@
   :bind (("<f12>" . pomidor)))
 
 ;; Misc
-(use-package all-the-icons)             ; fonts
 (use-package copyit)                    ; copy path, url, etc.
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler

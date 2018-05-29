@@ -61,7 +61,28 @@
   ;; Git-Svn extension for Magit
   (use-package magit-svn
     :diminish magit-svn-mode
-    :init (add-hook 'magit-mode-hook #'magit-svn-mode)))
+    :init (add-hook 'magit-mode-hook #'magit-svn-mode))
+
+  ;; Pretty magit
+  (use-package pretty-magit
+    :ensure nil
+    :commands (pretty-magit)
+    :after (ivy all-the-icons)
+    :if (display-graphic-p)
+    :init
+    (pretty-magit "Feature" ? (:foreground "slate gray" :height 1.2))
+    (pretty-magit "Add"     ? (:foreground "#375E97" :height 1.2))
+    (pretty-magit "New"     ? (:foreground "#375E97" :height 1.2))
+    (pretty-magit "Fix"     ? (:foreground "#FB6542" :height 1.2))
+    (pretty-magit "Clean"   ? (:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Delete"  ? (:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Remove"  ? (:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Docs"    ? (:foreground "#3F681C" :height 1.2))
+    (pretty-magit "Refactor"? (:foreground "#1E90FF" :height 1.2))
+    (pretty-magit "Format"  ? (:foreground "#1E90FF" :height 1.2))
+    (pretty-magit "Update"  ? (:foreground "#1E90FF" :height 1.2))
+    (pretty-magit "master"  ? (:box nil :height 1.2) t)
+    (pretty-magit "origin"  ? (:box nil :height 1.2) t)))
 
 ;;; Pop up last commit information of current line
 (use-package git-messenger
