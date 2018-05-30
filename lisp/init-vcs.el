@@ -81,7 +81,7 @@
     (pretty-magit "Refactor"? (:foreground "#1E90FF" :height 1.2))
     (pretty-magit "Format"  ? (:foreground "#1E90FF" :height 1.2))
     (pretty-magit "Update"  ? (:foreground "#1E90FF" :height 1.2))
-    (pretty-magit "master"  ? (:box nil :height 1.2) t)
+    (pretty-magit "master"  ? (:box nil :height 1.2) t)
     (pretty-magit "origin"  ? (:box nil :height 1.2) t)))
 
 ;;; Pop up last commit information of current line
