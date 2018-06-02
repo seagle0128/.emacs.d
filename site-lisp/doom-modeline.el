@@ -341,6 +341,10 @@ active."
   "The face used for persp number."
   :group '+doom-modeline)
 
+(defface doom-modeline-eyebrowse '((t ()))
+  "The face used for eyebrowse."
+  :group '+doom-modeline)
+
 (defface doom-modeline-bracket '((t (:inherit shadow)))
   "The face used for brackets around the project."
   :group '+doom-modeline)
@@ -815,25 +819,37 @@ Returns \"\" to not break --no-window-system."
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
 (def-modeline-segment! window-number
-  (if (bound-and-true-p window-numbering-mode)
-      (propertize (format " %s " (window-numbering-get-number-string))
-                  'face 'doom-modeline-panel)
-    ""))
+  (when (bound-and-true-p window-numbering-mode)
+    (propertize (format " %s " (window-numbering-get-number-string))
+                'face 'doom-modeline-panel)))
+
+(declare-function eyebrowse--get 'eyebrowse)
+(def-modeline-segment! workspace-number
+  "The current workspace name or number. Requires `eyebrowse-mode' to be
+enabled."
+  (when (and (bound-and-true-p eyebrowse-mode)
+             (< 1 (length (eyebrowse--get 'window-configs))))
+    (let* ((num (eyebrowse--get 'current-slot))
+           (tag (when num (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
+           (str (if (and tag (< 0 (length tag)))
+                    tag
+                  (when num (int-to-string num)))))
+      (propertize str 'face 'doom-modeline-eyebrowse))))
 
 ;;
 ;; Mode lines
 ;;
 
 (def-modeline! main
-  (window-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
+  (workspace-number window-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode vcs flycheck))
 
 (def-modeline! minimal
-  (window-number bar matches " " buffer-info)
+  (bar matches " " buffer-info)
   (media-info major-mode))
 
 (def-modeline! special
-  (window-number bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
+  (bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode flycheck))
 
 (def-modeline! project
