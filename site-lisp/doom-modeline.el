@@ -819,22 +819,24 @@ Returns \"\" to not break --no-window-system."
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
 (def-modeline-segment! window-number
-  (when (bound-and-true-p window-numbering-mode)
-    (propertize (format " %s " (window-numbering-get-number-string))
-                'face 'doom-modeline-panel)))
+  (if (bound-and-true-p window-numbering-mode)
+      (propertize (format " %s " (window-numbering-get-number-string))
+                  'face 'doom-modeline-panel)
+    ""))
 
 (declare-function eyebrowse--get 'eyebrowse)
 (def-modeline-segment! workspace-number
   "The current workspace name or number. Requires `eyebrowse-mode' to be
 enabled."
-  (when (and (bound-and-true-p eyebrowse-mode)
-             (< 1 (length (eyebrowse--get 'window-configs))))
-    (let* ((num (eyebrowse--get 'current-slot))
-           (tag (when num (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
-           (str (if (and tag (< 0 (length tag)))
-                    tag
-                  (when num (int-to-string num)))))
-      (propertize str 'face 'doom-modeline-eyebrowse))))
+  (if (and (bound-and-true-p eyebrowse-mode)
+           (< 1 (length (eyebrowse--get 'window-configs))))
+      (let* ((num (eyebrowse--get 'current-slot))
+             (tag (when num (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
+             (str (if (and tag (< 0 (length tag)))
+                      tag
+                    (when num (int-to-string num)))))
+        (propertize (format "%s " str) 'face 'doom-modeline-eyebrowse))
+    ""))
 
 ;;
 ;; Mode lines
