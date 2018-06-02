@@ -62,7 +62,9 @@
   ;; Anaconda mode
   (use-package anaconda-mode
     :diminish anaconda-mode
-    :init (add-hook 'python-mode-hook #'anaconda-mode)
+    :init
+    (add-hook 'python-mode-hook #'anaconda-mode)
+    (add-hook 'python-mode-hook #'anaconda-eldoc-mode)
     :config
     (with-eval-after-load 'company
       (use-package company-anaconda
