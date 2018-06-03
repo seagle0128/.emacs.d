@@ -65,10 +65,11 @@
     :config (setq company-quickhelp-delay 0.8))
 
   ;; Sort completion candidates
-  (use-package company-prescient
-    :init
-    (company-prescient-mode 1)
-    (prescient-persist-mode 1))
+  (when (>= emacs-major-version 25)
+    (use-package company-prescient
+      :init
+      (company-prescient-mode 1)
+      (prescient-persist-mode 1)))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends

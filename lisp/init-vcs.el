@@ -43,7 +43,7 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  ;; Github integration (require Emacs>=25)
+  ;; Github integration
   (when (>= emacs-major-version 25)
     (use-package magithub
       :init (magithub-feature-autoinject t)))
