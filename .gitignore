@@ -36,11 +36,12 @@ anaconda-mode/
 auto-save-list/
 cnfonts/
 eclipse.jdt.ls/
-elpa/
 elpa-devel/
+elpa/
 emojis/
 eshell/
 games/
+image-dired/
 images/
 magithub/
 persistent-scratch/
