@@ -63,6 +63,10 @@
     (use-package dired-quick-sort
       :init (dired-quick-sort-setup)))
 
+  ;; Colourful dired
+  (use-package diredfl
+    :init (diredfl-global-mode 1))
+
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
   (use-package dired-x
@@ -86,18 +90,7 @@
               ("\\.md\\'" "open"))))
     (setq dired-omit-files
           (concat dired-omit-files
-                  "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
-
-  ;; Colourful dired
-  (use-package diredfl
-    :init (diredfl-global-mode 1))
-
-  ;; Highlights dired buffer like k
-  (use-package dired-k
-    :bind (:map dired-mode-map ("K" . dired-k))
-    :init
-    (setq dired-k-padding 1)
-    (setq dired-k-human-readable t)))
+                  "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))))
 
 (provide 'init-dired)
 
