@@ -38,7 +38,8 @@
   :config
   (use-package yasnippet-snippets)
   (with-eval-after-load 'ivy
-    (use-package ivy-yasnippet)))
+    (use-package ivy-yasnippet
+      :init (defalias 'counsel-yasnippet 'ivy-yasnippet))))
 
 (provide 'init-yasnippet)
 
