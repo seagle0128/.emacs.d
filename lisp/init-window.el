@@ -89,6 +89,8 @@
   :config
   (setq switch-window-increase 8)
   (setq switch-window-minibuffer-shortcut ?0)
+  (with-eval-after-load 'ivy
+    (setq switch-window-input-style 'ivy))
   (unless (display-graphic-p)
     (setq switch-window-shortcut-appearance 'asciiart)))
 
