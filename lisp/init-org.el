@@ -68,11 +68,11 @@
   ;; Babel
   (setq org-confirm-babel-evaluate nil)
 
-  (defvar-local load-language-list '((emacs-lisp . t)
-                                     (perl . t)
-                                     (python . t)
-                                     (ruby . t)
-                                     (plantuml . t)))
+  (defvar load-language-list '((emacs-lisp . t)
+                               (perl . t)
+                               (python . t)
+                               (ruby . t)
+                               (plantuml . t)))
   (use-package ob-go
     :init
     (if (executable-find "go")
