@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'init-const))
+
 (use-package org
   :ensure nil
   :bind (("C-c a" . org-agenda)
@@ -49,6 +51,15 @@
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
   (add-to-list 'org-export-backends 'md)
+
+  ;; More fancy UI
+  ;; Disable in Windows due to performance issue.
+  (unless sys/win32p
+    (use-package org-bullets
+      :hook (org-mode . org-bullets-mode))
+    (use-package org-fancy-priorities
+      :hook (org-mode . org-fancy-priorities-mode)
+      :config (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕"))))
 
   ;; FIXME org-agenda-execute-calendar-command uses deprecated list-calendar-holidays
   (unless (fboundp 'list-calendar-holidays)
@@ -146,7 +157,7 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
 
     (bind-key "<"
               (lambda () (interactive)
-                (if (or (region-active-p) (looking-back "^"))
+                (if (or (region-active-p) (looking-back "^" 1))
                     (hydra-org-template/body)
                   (self-insert-command 1)))
               org-mode-map)))
