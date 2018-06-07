@@ -139,16 +139,18 @@
   ;; Enhance M-x
   (use-package smex)
 
+  ;; Sort and filter candidates
+  (when (>= emacs-major-version 25)
+    (use-package ivy-prescient
+      :init (ivy-prescient-mode 1)
+      :config
+      (setq ivy-initial-inputs-alist nil)
+      (prescient-persist-mode 1)))
+
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
-
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after flyspell
-    :bind (:map flyspell-mode-map
-                ("C-;" . flyspell-correct-previous-word-generic)))
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
@@ -165,6 +167,12 @@
                                    'ivy-rich-switch-buffer-transformer)
       (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
                                    'ivy-rich-switch-buffer-transformer)))
+
+  ;; Correcting words with flyspell via Ivy
+  (use-package flyspell-correct-ivy
+    :after flyspell
+    :bind (:map flyspell-mode-map
+                ("C-;" . flyspell-correct-previous-word-generic)))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile

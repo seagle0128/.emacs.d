@@ -67,9 +67,8 @@
   ;; Sort completion candidates
   (when (>= emacs-major-version 25)
     (use-package company-prescient
-      :init
-      (company-prescient-mode 1)
-      (prescient-persist-mode 1)))
+      :init (company-prescient-mode 1)
+      :config (prescient-persist-mode 1)))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
