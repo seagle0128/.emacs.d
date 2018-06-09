@@ -880,9 +880,11 @@ enabled."
     (doom-set-modeline 'main)))
 
 (defun +doom-modeline|set-special-modeline ()
+  "Set the special modeline."
   (doom-set-modeline 'special))
 
 (defun +doom-modeline|set-media-modeline ()
+  "Set the media modeline."
   (doom-set-modeline 'media))
 
 ;;
