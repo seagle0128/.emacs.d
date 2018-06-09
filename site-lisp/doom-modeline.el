@@ -821,7 +821,9 @@ Returns \"\" to not break --no-window-system."
 (def-modeline-segment! window-number
   (if (bound-and-true-p window-numbering-mode)
       (propertize (format " %s " (window-numbering-get-number-string))
-                  'face 'doom-modeline-panel)
+                  'face (if (active)
+                            'doom-modeline-bar
+                          'doom-modeline-inactive-bar))
     ""))
 
 (declare-function eyebrowse--get 'eyebrowse)
@@ -843,7 +845,7 @@ enabled."
 ;;
 
 (def-modeline! main
-  (workspace-number window-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
+  (workspace-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode vcs flycheck))
 
 (def-modeline! minimal
