@@ -69,6 +69,10 @@
           (const :tag "Doom theme" doom)
           symbol))
 
+(defcustom my-company-backend-with-yas nil
+  "Enable yasnippet for company backends or not."
+  :type 'boolean)
+
 (defcustom my-emoji-enabled nil
   "Enable emoji features or not."
   :type 'boolean)

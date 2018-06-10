@@ -32,6 +32,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile (require 'init-custom))
+
 (use-package company
   :diminish company-mode
   :bind (("M-/" . company-complete)
@@ -72,7 +74,7 @@
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
-  (defvar company-enable-yas t
+  (defvar company-enable-yas my-company-backend-with-yas
     "Enable yasnippet for all backends.")
 
   (defun company-backend-with-yas (backend)
