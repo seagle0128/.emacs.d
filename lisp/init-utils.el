@@ -117,7 +117,8 @@
 (use-package pt
   :init
   (with-eval-after-load 'projectile
-    (bind-key "s p" #'projectile-pt projectile-command-map)))
+    (bind-key "s p" #'projectile-pt projectile-command-map))
+  :config (use-package wgrep-pt))
 
 (use-package rg
   :init
