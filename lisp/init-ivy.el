@@ -139,14 +139,6 @@
   ;; Enhance M-x
   (use-package smex)
 
-  ;; Sort and filter candidates
-  (when (>= emacs-major-version 25)
-    (use-package ivy-prescient
-      :init (ivy-prescient-mode 1)
-      :config
-      (setq ivy-initial-inputs-alist nil)
-      (prescient-persist-mode 1)))
-
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
