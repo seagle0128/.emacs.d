@@ -1,11 +1,8 @@
 ;;; doom-modeline.el  -*- lexical-binding: t; -*-
 
+(require 'projectile)
 (require 'all-the-icons)
 (require 'memoize)
-(require 's)
-(require 'powerline-separators)
-
-(defvar powerline-image-apple-rgb nil)
 
 (eval-and-compile
   (defun doom--resolve-hooks (hooks)
