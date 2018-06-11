@@ -35,11 +35,7 @@
 (use-package yasnippet
   :diminish yas-minor-mode
   :init (add-hook 'after-init-hook #'yas-global-mode)
-  :config
-  (use-package yasnippet-snippets)
-  (with-eval-after-load 'ivy
-    (use-package ivy-yasnippet
-      :init (defalias 'counsel-yasnippet 'ivy-yasnippet))))
+  :config (use-package yasnippet-snippets))
 
 (provide 'init-yasnippet)
 
