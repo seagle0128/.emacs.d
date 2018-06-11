@@ -41,9 +41,12 @@
   ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
 
   ;; Display Flycheck errors in GUI tooltips
-  (use-package flycheck-pos-tip
-    :init (flycheck-pos-tip-mode 1)
-    :config (setq flycheck-pos-tip-timeout 30))
+  (if (display-graphic-p)
+      (use-package flycheck-pos-tip
+        :init (flycheck-pos-tip-mode 1)
+        :config (setq flycheck-pos-tip-timeout 30))
+    (use-package flycheck-popup-tip
+      :init (flycheck-popup-tip-mode 1)))
 
   ;; Jump to and fix syntax errors via `avy'
   (use-package avy-flycheck
