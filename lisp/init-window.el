@@ -87,7 +87,6 @@
 (use-package switch-window
   :bind ([remap other-window] . switch-window)
   :config
-  (set-face-attribute 'switch-window-label nil :foreground "deep sky blue" :weight 'bold :height 3.0)
   (setq switch-window-minibuffer-shortcut ?0)
   (with-eval-after-load 'ivy
     (setq switch-window-preferred 'ivy))
