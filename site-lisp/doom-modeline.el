@@ -2,6 +2,7 @@
 
 (require 'projectile)
 (require 'all-the-icons)
+(require 'dash)
 (require 'memoize)
 
 (eval-and-compile
@@ -148,7 +149,7 @@ error if it doesn't exist."
 (defun doom-set-modeline (key &optional default)
   "Set the modeline format. Does nothing if the modeline KEY doesn't exist. If
 DEFAULT is non-nil, set the default mode-line for all buffers."
-  (when-let ((modeline (doom-modeline key)))
+  (-when-let* ((modeline (doom-modeline key)))
     (setf (if default
               (default-value 'mode-line-format)
             (buffer-local-value 'mode-line-format (current-buffer)))
@@ -218,7 +219,7 @@ If STRICT-P, return nil if no project was found, otherwise return
 (defvar +doom-modeline-current-window (frame-selected-window))
 (defun +doom-modeline|set-selected-window (&rest _)
   "Sets `+doom-modeline-current-window' appropriately"
-  (when-let ((win (frame-selected-window)))
+  (-when-let* ((win (frame-selected-window)))
     (unless (minibuffer-window-active-p win)
       (setq +doom-modeline-current-window win))))
 
@@ -823,7 +824,7 @@ Returns \"\" to not break --no-window-system."
   "The persp number."
   (when (featurep 'persp-mode)
     (when (+doom-window-bottom-left-p)
-      (when-let ((persp (get-current-persp)))
+      (-when-let* ((persp (get-current-persp)))
         (propertize
          (concat
           (number-to-string
