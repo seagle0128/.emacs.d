@@ -144,7 +144,7 @@ switch manually via `M-x switch-package-archives` anytime.
 
 ### Doom theme and modeline
 
-![Doom](https://user-images.githubusercontent.com/140797/40072105-53bd03e0-58a5-11e8-8970-670a2f95bddf.png)
+![Doom](https://user-images.githubusercontent.com/140797/41302817-13cb7622-6e9e-11e8-894b-07aff95f91bc.png)
 
 ## FAQ
 
