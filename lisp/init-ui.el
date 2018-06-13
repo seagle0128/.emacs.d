@@ -68,8 +68,8 @@
 (if (is-doom-theme-p my-theme)
     (use-package doom-modeline
       :ensure nil
-      :commands (doom-modeline-init)
-      :init (add-hook 'after-load-theme-hook #'doom-modeline-init))
+      :commands (+doom-modeline|init)
+      :init (add-hook 'after-load-theme-hook #'+doom-modeline|init))
   (use-package spaceline-config
     :ensure spaceline
     :commands spaceline-spacemacs-theme1
