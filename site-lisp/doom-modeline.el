@@ -3,7 +3,6 @@
 (require 'projectile)
 (require 'all-the-icons)
 (require 'dash)
-(require 'memoize)
 
 (eval-and-compile
   (defun doom--resolve-hooks (hooks)
@@ -377,7 +376,7 @@ active."
   (eq (selected-window) +doom-modeline-current-window))
 
 ;; Inspired from `powerline's `pl/make-xpm'.
-(defmemoize +doom-modeline--make-xpm (color height width)
+(defun +doom-modeline--make-xpm (color height width)
   "Create an XPM bitmap."
   (propertize
    " " 'display
@@ -440,9 +439,6 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
                   (propertize (file-name-nondirectory buffer-file-name)
                               'face (if file-faces `(:inherit ,file-faces)))))))))
 
-(defmemoize +doom-file-relative-name (filename directory)
-  (file-relative-name filename directory))
-
 (defun +doom-modeline--buffer-file-name-relative (&optional include-project)
   "Propertized `buffer-file-name' showing directories relative to project's root only."
   (let ((root (doom-project-root))
@@ -458,14 +454,6 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
         (concat (propertize relative-dirs 'face (if relative-faces `(:inherit ,relative-faces)))
                 (propertize (file-name-nondirectory buffer-file-truename)
                             'face (if file-faces `(:inherit ,file-faces))))))))
-
-(defmemoize +doom-abbreviate-file-name (file-name)
-  (abbreviate-file-name file-name))
-
-(defmemoize +doom-shrink-path-file-mixed (project-root file-name)
-  (shrink-path-file-mixed project-root
-                          (file-name-directory file-name)
-                          file-name))
 
 (defun +doom-modeline--buffer-file-name (truncate-project-root-parent)
   "Propertized `buffer-file-name'.
