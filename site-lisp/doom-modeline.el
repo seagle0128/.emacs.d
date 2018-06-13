@@ -645,8 +645,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
   (concat (if vc-mode " " "  ")
           (when icon
             (concat
-             (when (display-graphic-p)
-               (all-the-icons-material icon :face face :height 1.1 :v-adjust (or voffset -0.2)))
+             (+doom-maybe-icon-material icon :face face :height 1.1 :v-adjust (or voffset -0.2))
              (if text +doom-modeline-vspc)))
           (when text
             (propertize text 'face face))
