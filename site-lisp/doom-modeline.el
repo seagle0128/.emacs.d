@@ -1,11 +1,18 @@
 ;;; doom-modeline.el  -*- lexical-binding: t; -*-
 
-(require 'projectile)
-(require 'dash)
+(use-package dash
+  :commands (-when-let*))
 
+(use-package projectile
+  :commands (projectile-project-root projectile-require-project-root))
 
 (when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
-  (require 'all-the-icons))
+  (use-package all-the-icons
+    :preface (defvar all-the-icons-default-adjust -0.2)
+    :commands (all-the-icons-alltheicon
+               all-the-icons-octicon
+               all-the-icons-faicon
+               all-the-icons-material)))
 
 (eval-and-compile
   (defun doom--resolve-hooks (hooks)
@@ -169,6 +176,7 @@ If STRICT-P, return nil if no project was found, otherwise return
 ;;
 
 (use-package eldoc-eval
+  :hook (after-init . eldoc-in-minibuffer-mode)
   :config
   (defun +doom-modeline-eldoc (text)
     (concat (when (display-graphic-p)
@@ -188,10 +196,7 @@ If STRICT-P, return nil if no project was found, otherwise return
              mode-line-in-non-selected-windows)
         (force-mode-line-update)
         (sit-for eldoc-show-in-mode-line-delay))))
-  (setq eldoc-in-minibuffer-show-fn #'+doom-modeline--show-eldoc)
-
-  (eldoc-in-minibuffer-mode +1))
-
+  (setq eldoc-in-minibuffer-show-fn #'+doom-modeline--show-eldoc))
 
 ;; anzu and evil-anzu expose current/total state that can be displayed in the
 ;; mode-line.
@@ -265,8 +270,6 @@ file-name => comint.el")
 (defvar evil-state nil)
 (defvar evil-visual-selection nil)
 (defvar iedit-mode nil)
-(defvar all-the-icons-scale-factor)
-(defvar all-the-icons-default-adjust)
 
 
 ;;
@@ -335,10 +338,6 @@ active."
 
 (defface doom-modeline-inactive-bar '((t (:inherit warning :inverse-video t)))
   "The face used for the left-most bar on the mode-line of an inactive window."
-  :group '+doom-modeline)
-
-(defface doom-modeline-persp '((t ()))
-  "The face used for persp number."
   :group '+doom-modeline)
 
 (defface doom-modeline-eyebrowse '((t ()))
@@ -793,41 +792,7 @@ Returns \"\" to not break --no-window-system."
        +doom-modeline-bar-width)
     ""))
 
-(defun +doom-modeline-eyebrowse-number ()
-  (when (and (bound-and-true-p eyebrowse-mode)
-             (< 1 (length (eyebrowse--get 'window-configs))))
-    (let* ((num (eyebrowse--get 'current-slot))
-           (tag (when num (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
-           (str (if (and tag (< 0 (length tag)))
-                    tag
-                  (when num (int-to-string num)))))
-      str)))
-
-(defun +doom-window-bottom-left-p ()
-  (let* ((edges (window-edges))
-         (minibuffer-edges (window-edges (minibuffer-window))))
-    (and (eq 0 (car edges))
-         (eq (nth 3 edges)
-             (cadr minibuffer-edges)))))
-
-(def-modeline-segment! persp-number
-  "The persp number."
-  (when (featurep 'persp-mode)
-    (when (+doom-window-bottom-left-p)
-      (-when-let* ((persp (get-current-persp)))
-        (propertize
-         (concat
-          (number-to-string
-           (+ 1
-              (cl-position
-               (persp-name persp)
-               (persp-names-current-frame-fast-ordered))))
-          "."
-          (or (+doom-modeline-eyebrowse-number) "1")
-          " ")
-         'face 'doom-modeline-persp)))))
-
-
+;;
 (advice-add #'window-numbering-install-mode-line :override #'ignore)
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
@@ -902,7 +867,6 @@ enabled."
 
 (add-hook 'image-mode-hook   #'+doom-modeline|set-media-modeline)
 (add-hook 'org-src-mode-hook #'+doom-modeline|set-special-modeline)
-(add-hook 'circe-mode-hook   #'+doom-modeline|set-special-modeline)
 
 (provide 'doom-modeline)
 
