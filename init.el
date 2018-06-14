@@ -3,11 +3,11 @@
 ;; Filename: init.el
 ;; Description:
 ;; Author: Vincent Zhang
-;; Version: 3.3.0
+;; Version: 3.4.0
 ;; Maintainer:
 ;; Created: Wed Nov 29 00:57:38 2006
 ;; Version:
-;; Last-Updated: Fri Aug 1 12:08:00 2016 (+0800)
+;; Last-Updated: Fri Jnue 14 19:08:00 2018 (+0800)
 ;;           By: Vincent Zhang
 ;;     Update #: 8000
 ;; URL: https://github.com/seagle0128/.emacs.d
