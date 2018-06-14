@@ -1,8 +1,11 @@
 ;;; doom-modeline.el  -*- lexical-binding: t; -*-
 
 (require 'projectile)
-(require 'all-the-icons)
 (require 'dash)
+
+
+(when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
+  (require 'all-the-icons))
 
 (eval-and-compile
   (defun doom--resolve-hooks (hooks)
