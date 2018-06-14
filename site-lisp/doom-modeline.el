@@ -409,12 +409,12 @@ active."
   "Propertized `buffer-file-name' based on `+doom-modeline-buffer-file-name-style'."
   (propertize
    (pcase +doom-modeline-buffer-file-name-style
-     ('truncate-upto-project (+doom-modeline--buffer-file-name 'shrink))
-     ('truncate-upto-root (+doom-modeline--buffer-file-name-truncate))
-     ('truncate-all (+doom-modeline--buffer-file-name-truncate t))
-     ('relative-to-project (+doom-modeline--buffer-file-name-relative))
-     ('relative-from-project (+doom-modeline--buffer-file-name-relative 'include-project))
-     ('file-name (propertize (file-name-nondirectory buffer-file-name)
+     (`truncate-upto-project (+doom-modeline--buffer-file-name 'shrink))
+     (`truncate-upto-root (+doom-modeline--buffer-file-name-truncate))
+     (`truncate-all (+doom-modeline--buffer-file-name-truncate t))
+     (`relative-to-project (+doom-modeline--buffer-file-name-relative))
+     (`relative-from-project (+doom-modeline--buffer-file-name-relative 'include-project))
+     (`file-name (propertize (file-name-nondirectory buffer-file-name)
                              'face
                              (let ((face (or (and (buffer-modified-p)
                                                   'doom-modeline-buffer-modified)
@@ -647,7 +647,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
 icons."
   (when (boundp 'flycheck-last-status-change)
     (pcase flycheck-last-status-change
-      ('finished (if flycheck-current-errors
+      (`finished (if flycheck-current-errors
                      (let-alist (flycheck-count-errors flycheck-current-errors)
                        (let ((sum (+ (or .error 0) (or .warning 0))))
                          (+doom-ml-icon "do_not_disturb_alt"
@@ -655,10 +655,10 @@ icons."
                                         (if .error 'doom-modeline-urgent 'doom-modeline-warning)
                                         -0.25)))
                    (+doom-ml-icon "check" nil 'doom-modeline-info)))
-      ('running     (+doom-ml-icon "access_time" nil 'font-lock-doc-face -0.25))
-      ('no-checker  (+doom-ml-icon "sim_card_alert" "-" 'font-lock-doc-face))
-      ('errored     (+doom-ml-icon "sim_card_alert" "Error" 'doom-modeline-urgent))
-      ('interrupted (+doom-ml-icon "pause" "Interrupted" 'font-lock-doc-face)))))
+      (`running     (+doom-ml-icon "access_time" nil 'font-lock-doc-face -0.25))
+      (`no-checker  (+doom-ml-icon "sim_card_alert" "-" 'font-lock-doc-face))
+      (`errored     (+doom-ml-icon "sim_card_alert" "Error" 'doom-modeline-urgent))
+      (`interrupted (+doom-ml-icon "pause" "Interrupted" 'font-lock-doc-face)))))
 ;; ('interrupted (+doom-ml-icon "x" "Interrupted" 'font-lock-doc-face)))))
 
 
