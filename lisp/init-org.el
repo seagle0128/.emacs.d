@@ -53,11 +53,12 @@
   (add-to-list 'org-export-backends 'md)
 
   ;; More fancy UI
-  ;; Disable in Windows due to performance issue.
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode))
+
   (unless sys/win32p
-    (use-package org-bullets
-      :hook (org-mode . org-bullets-mode))
     (use-package org-fancy-priorities
+      :unless sys/win32p
       :hook (org-mode . org-fancy-priorities-mode)
       :config (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕"))))
 
