@@ -67,11 +67,7 @@
 ;; History
 (use-package saveplace
   :ensure nil
-  :init
-  ;; Emacs 25 has a proper mode for `save-place'
-  (if (fboundp 'save-place-mode)
-      (add-hook 'after-init-hook #'save-place-mode)
-    (setq save-place t)))
+  :hook (after-init . save-place-mode))
 
 (use-package recentf
   :ensure nil

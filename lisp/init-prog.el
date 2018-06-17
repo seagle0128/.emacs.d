@@ -81,7 +81,7 @@
 (use-package dockerfile-mode :mode "Dockerfile\\'")
 (use-package vimrc-mode)
 
-;; New `conf-toml-mode' in Emacs26
+;; New `conf-toml-mode' in Emacs 26
 (unless (fboundp 'conf-toml-mode)
   (use-package toml-mode))
 
@@ -89,7 +89,7 @@
   :diminish editorconfig-mode
   :init (add-hook 'after-init-hook #'editorconfig-mode))
 
-;; Batch Mode eXtras (require 25+)
+;; Batch Mode eXtras
 (use-package bmx-mode
   :after company
   :diminish bmx-mode
