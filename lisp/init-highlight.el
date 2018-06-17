@@ -178,10 +178,7 @@
   (setq beacon-color (let ((bg (face-attribute 'highlight :background nil t)))
                        (if (eq bg 'unspecified)
                            (face-attribute 'highlight :foreground nil t)
-                         bg))
-        beacon-blink-delay 0.2
-        beacon-blink-when-buffer-changes t
-        beacon-blink-when-point-moves-vertically 10))
+                         bg))))
 
 (provide 'init-highlight)
 
