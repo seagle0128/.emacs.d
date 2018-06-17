@@ -167,6 +167,22 @@
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
 
+;; Highlight the current buffer
+(use-package dimmer
+  :hook (after-init . dimmer-mode))
+
+;; Never lose the cursor again
+(use-package beacon
+  :hook (after-init . beacon-mode)
+  :config
+  (setq beacon-color (let ((bg (face-attribute 'highlight :background nil t)))
+                       (if (eq bg 'unspecified)
+                           (face-attribute 'highlight :foreground nil t)
+                         bg))
+        beacon-blink-delay 0.2
+        beacon-blink-when-buffer-changes t
+        beacon-blink-when-point-moves-vertically 10))
+
 (provide 'init-highlight)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -126,10 +126,6 @@
  (t
   (ignore-errors (load-theme my-theme t))))
 
-;; Highlight the current buffer
-(use-package dimmer
-  :hook (after-init . dimmer-mode))
-
 ;; Fonts
 (use-package cnfonts
   :init
