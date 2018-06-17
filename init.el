@@ -46,8 +46,8 @@
 ;;
 ;;; Code:
 
-(when (version< emacs-version "24.4")
-  (error "This requires Emacs 24.4 and above!"))
+(when (version< emacs-version "25.1")
+  (error "This requires Emacs 25.1 and above!"))
 
 ;; Speed up startup
 (defvar default-file-name-handler-alist file-name-handler-alist)

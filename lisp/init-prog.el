@@ -90,11 +90,10 @@
   :init (add-hook 'after-init-hook #'editorconfig-mode))
 
 ;; Batch Mode eXtras (require 25+)
-(if (>= emacs-major-version 25)
-    (use-package bmx-mode
-      :after company
-      :diminish bmx-mode
-      :init (bmx-mode-setup-defaults)))
+(use-package bmx-mode
+  :after company
+  :diminish bmx-mode
+  :init (bmx-mode-setup-defaults))
 
 (use-package fish-mode
   :init

@@ -44,9 +44,8 @@
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
   ;; Github integration
-  (when (>= emacs-major-version 25)
-    (use-package magithub
-      :init (magithub-feature-autoinject t)))
+  (use-package magithub
+    :init (magithub-feature-autoinject t))
 
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow

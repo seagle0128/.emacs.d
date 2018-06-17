@@ -127,9 +127,8 @@
   (ignore-errors (load-theme my-theme t))))
 
 ;; Highlight the current buffer
-(when (>= emacs-major-version 25)
-  (use-package dimmer
-    :hook (after-init . dimmer-mode)))
+(use-package dimmer
+  :hook (after-init . dimmer-mode))
 
 ;; Fonts
 (use-package cnfonts
