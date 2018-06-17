@@ -173,8 +173,10 @@
 
 ;; Never lose the cursor again
 (use-package beacon
+  :diminish beacon-mode
   :hook (after-init . beacon-mode)
   :config
+  (setq beacon-size 20)
   (setq beacon-color (let ((bg (face-attribute 'highlight :background nil t)))
                        (if (eq bg 'unspecified)
                            (face-attribute 'highlight :foreground nil t)
