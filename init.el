@@ -1,31 +1,13 @@
-;;; init.el --- user init configuration.	-*- lexical-binding: t no-byte-compile: t; -*-
-;;
-;; Filename: init.el
-;; Description:
-;; Author: Vincent Zhang
-;; Version: 3.4.0
-;; Maintainer:
-;; Created: Wed Nov 29 00:57:38 2006
-;; Version:
-;; Last-Updated: Fri Jnue 14 19:08:00 2018 (+0800)
-;;           By: Vincent Zhang
-;;     Update #: 8000
+;;; init.el --- Centaur Emacs configurations.	-*- lexical-binding: t no-byte-compile: t; -*-
+
+;; Copyright (C) 2018 Vincent Zhang
+
+;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Vincent's Emacs configuration
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Change log:
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Version: 3.4.0
+;; Keywords: .emacs.d centaur
+
+;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -42,8 +24,12 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Commentary:
 ;;
+;; Centaur Emacs configurations.
+;;
+
 ;;; Code:
 
 (when (version< emacs-version "25.1")

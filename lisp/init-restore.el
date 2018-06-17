@@ -1,17 +1,11 @@
-;; init-restore.el --- Initialize restore configurations.	-*- lexical-binding: t -*-
-;;
+;; init-restore.el --- Initialize restoring configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2018 Vincent Zhang
+
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.4.0
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Restore configurations.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -28,8 +22,12 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Commentary:
 ;;
+;; Restoring configurations.
+;;
+
 ;;; Code:
 
 ;; Save and restore status

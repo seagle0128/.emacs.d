@@ -1,17 +1,11 @@
 ;; init-web.el --- Initialize web configurations.	-*- lexical-binding: t -*-
-;;
+
+;; Copyright (C) 2018 Vincent Zhang
+
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.4.0
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Web configurations.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -28,11 +22,13 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Code:
 
-;; CSS mode
+;;; Commentary:
+;;
+;; Web configurations.
+;;
+
+;;; Code:
 (use-package css-mode
   :ensure nil
   :init (setq css-indent-offset 2))
@@ -43,7 +39,7 @@
   ;; Disable complilation on save
   (setq scss-compile-at-save nil))
 
-;; New `less-cs-mde' in Emacs26
+;; New `less-cs-mde' in Emacs 26
 (unless (fboundp 'less-css-mode)
   (use-package less-css-mode))
 
