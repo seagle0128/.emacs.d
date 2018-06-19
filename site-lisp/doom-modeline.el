@@ -701,8 +701,8 @@ lines are selected, or the NxM dimensions of a block selection."
               sep
               (+doom-maybe-icon-octicon "triangle-right"
                                         :face 'doom-modeline-panel
-                                        :v-adjust -0.05))
-      sep)))
+                                        :v-adjust -0.05)
+              sep))))
 
 (defsubst +doom-modeline--anzu ()
   "Show the match index and total number thereof. Requires `anzu', also
