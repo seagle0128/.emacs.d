@@ -170,16 +170,17 @@
   :hook (after-init . dimmer-mode))
 
 ;; Never lose the cursor again
-(use-package beacon
-  :diminish beacon-mode
-  :hook (after-init . beacon-mode)
-  :config
-  (setq beacon-size 10)
-  (setq beacon-blink-delay 0.1)
-  (setq beacon-color (let ((bg (face-attribute 'highlight :background nil t)))
-                       (if (eq bg 'unspecified)
-                           (face-attribute 'highlight :foreground nil t)
-                         bg))))
+(when (display-graphic-p)
+  (use-package beacon
+    :diminish beacon-mode
+    :hook (after-init . beacon-mode)
+    :config
+    (setq beacon-size 10)
+    (setq beacon-blink-delay 0.1)
+    (setq beacon-color (let ((bg (face-attribute 'highlight :background nil t)))
+                         (if (eq bg 'unspecified)
+                             (face-attribute 'highlight :foreground nil t)
+                           bg)))))
 
 (provide 'init-highlight)
 
