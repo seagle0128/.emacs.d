@@ -56,12 +56,12 @@
   (setq show-paren-when-point-in-periphery t))
 
 ;; Highlight indentions
-(use-package highlight-indent-guides
-  :if (display-graphic-p)
-  :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-method 'character)
-  (setq highlight-indent-guides-responsive t))
+(when (display-graphic-p)
+  (use-package highlight-indent-guides
+    :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+    :config
+    (setq highlight-indent-guides-method 'character)
+    (setq highlight-indent-guides-responsive t)))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
