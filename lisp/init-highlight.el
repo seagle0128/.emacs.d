@@ -165,10 +165,6 @@
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
 
-;; Highlight the current buffer
-(use-package dimmer
-  :hook (after-init . dimmer-mode))
-
 ;; Never lose the cursor again
 (when (display-graphic-p)
   (use-package beacon
