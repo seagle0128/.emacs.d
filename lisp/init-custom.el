@@ -30,38 +30,38 @@
 
 ;;; Code:
 
-(defgroup centaur-emacs nil
+(defgroup centaur nil
   "Centaur Emacs customizations."
-  :group 'extensions)
+  :group 'convenience)
 
-(defcustom my-logo (expand-file-name "logo.png" user-emacs-directory)
+(defcustom centaur-logo (expand-file-name "logo.png" user-emacs-directory)
   "Set Centaur logo. nil means official logo."
   :type 'string
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-full-name "Vincent Zhang"
+(defcustom centaur-full-name "Vincent Zhang"
   "Set user full name."
   :type 'string
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-mail-address "seagle0128@gmail.com"
+(defcustom centaur-mail-address "seagle0128@gmail.com"
   "Set user email address."
   :type 'string)
 
-(defcustom my-proxy "127.0.0.1:1087"
+(defcustom centaur-proxy "127.0.0.1:1087"
   "Set network proxy."
   :type 'string
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-package-archives 'melpa
+(defcustom centaur-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice
           (const :tag "Melpa" melpa)
           (const :tag "Emacs-China" emacs-china)
           (const :tag "Tuna" tuna))
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-theme 'default
+(defcustom centaur-theme 'default
   "Set color theme."
   :type '(choice
           (const :tag "Default theme" default)
@@ -70,22 +70,22 @@
           (const :tag "Daylight theme" daylight)
           (const :tag "Doom theme" doom)
           symbol)
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-company-backend-with-yas nil
-  "Enable yasnippet for company backends or not."
+(defcustom centuar-company-enable-yas nil
+  "Enable/disable yasnippet for company backends."
   :type 'boolean
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-emoji-enabled nil
-  "Enable emoji features or not."
+(defcustom centaur-emoji-enabled nil
+  "Enable/disable emoji features or not."
   :type 'boolean
-  :group 'centaur-emacs)
+  :group 'centaur)
 
-(defcustom my-benchmark-enabled nil
-  "Enable the init benchmark or not."
+(defcustom centaur-benchmark-enabled nil
+  "Enable/disable the init benchmark."
   :type 'boolean
-  :group 'centaur-emacs)
+  :group 'centaur)
 
 ;; Load `custome.el' file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

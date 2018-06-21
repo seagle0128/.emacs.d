@@ -35,7 +35,7 @@
   (require 'init-custom))
 
 ;; Logo
-(setq fancy-splash-image my-logo)
+(setq fancy-splash-image centaur-logo)
 
 ;; Title
 (setq frame-title-format
@@ -63,7 +63,7 @@
   (run-hooks 'after-load-theme-hook))
 
 ;; Modeline
-(if (is-doom-theme-p my-theme)
+(if (is-doom-theme-p centaur-theme)
     (use-package doom-modeline
       :ensure nil
       :commands (doom-modeline-init)
@@ -89,29 +89,29 @@
 
 ;; Color theme
 (cond
- ((eq my-theme 'default)
+ ((eq centaur-theme 'default)
   (use-package monokai-theme
     :init (load-theme 'monokai t)))
 
- ((eq my-theme 'dark)
+ ((eq centaur-theme 'dark)
   (use-package spacemacs-theme
     :init (load-theme 'spacemacs-dark t)))
 
- ((eq my-theme 'light)
+ ((eq centaur-theme 'light)
   (use-package spacemacs-theme
     :init (load-theme 'spacemacs-light t)))
 
- ((eq my-theme 'daylight)
+ ((eq centaur-theme 'daylight)
   (use-package leuven-theme
     :init (load-theme 'leuven t)))
 
- ((is-doom-theme-p my-theme)
+ ((is-doom-theme-p centaur-theme)
   (use-package doom-themes
     :preface (defvar region-fg nil)
     :init
-    (if (eq my-theme 'doom)
+    (if (eq centaur-theme 'doom)
         (load-theme 'doom-one t)
-      (load-theme my-theme t))
+      (load-theme centaur-theme t))
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
@@ -121,10 +121,11 @@
              (minibuffer-setup . solaire-mode-in-minibuffer)))))
 
  (t
-  (ignore-errors (load-theme my-theme t))))
+  (ignore-errors (load-theme centaur-theme t))))
 
 ;; Fonts
 (use-package cnfonts
+  :disabled
   :hook (after-init . cnfonts-enable)
   :config
   (setq cnfonts-keep-frame-size nil)

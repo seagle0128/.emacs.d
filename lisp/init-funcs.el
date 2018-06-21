@@ -97,14 +97,14 @@
   "Show http/https proxy."
   (interactive)
   (if url-proxy-services
-      (message "Current proxy is \"%s\"" my-proxy)
+      (message "Current proxy is \"%s\"" centaur-proxy)
     (message "No proxy")))
 
 (defun set-proxy ()
   "Set http/https proxy."
   (interactive)
-  (setq url-proxy-services `(("http" . ,my-proxy)
-                             ("https" . ,my-proxy)
+  (setq url-proxy-services `(("http" . ,centaur-proxy)
+                             ("https" . ,centaur-proxy)
                              ("no_proxy" . "^\\(localhost\\|10.*\\|192.168.*\\)")))
   (show-proxy))
 

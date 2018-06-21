@@ -160,7 +160,7 @@
 (use-package docker-tramp)
 
 ;; Emoji
-(when my-emoji-enabled
+(when centaur-emoji-enabled
   (use-package emojify
     :init (add-hook 'after-init-hook #'global-emojify-mode)
     :config

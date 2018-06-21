@@ -67,7 +67,7 @@
 
   (message "Set package archives to '%s'." archives))
 
-(set-package-archives my-package-archives)
+(set-package-archives centaur-package-archives)
 
 ;; Initialize packages
 (setq package-enable-at-startup nil)    ; To prevent initialising twice
@@ -91,7 +91,7 @@
 (use-package bind-key)
 
 ;; Initialization benchmark
-(when my-benchmark-enabled
+(when centaur-benchmark-enabled
   (use-package benchmark-init
     :init
     (benchmark-init/activate)
