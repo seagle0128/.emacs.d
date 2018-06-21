@@ -6,7 +6,7 @@
 (use-package projectile
   :commands (projectile-project-root projectile-require-project-root))
 
-(when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
+(when (display-graphic-p)
   (use-package all-the-icons
     :preface (defvar all-the-icons-default-adjust -0.2)
     :commands (all-the-icons-alltheicon
@@ -580,15 +580,15 @@ directory, the file name, and its state (modified, read-only or non-existent)."
 
 
 (defun +doom-maybe-icon-octicon (&rest args)
-  (when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
+  (when (display-graphic-p)
     (apply 'all-the-icons-octicon args)))
 
 (defun +doom-maybe-icon-faicon (&rest args)
-  (when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
+  (when (display-graphic-p)
     (apply 'all-the-icons-faicon args)))
 
 (defun +doom-maybe-icon-material (&rest args)
-  (when (and (display-graphic-p) (not (eq system-type 'windows-nt)))
+  (when (display-graphic-p)
     (apply 'all-the-icons-material args)))
 
 ;;
@@ -847,15 +847,15 @@ enabled."
 ;;
 
 (defun doom-modeline-init ()
-  "Set the default modeline."
-  (doom-set-modeline 'main t)
+"Set the default modeline."
+(doom-set-modeline 'main t)
 
-  ;; This scratch and messages buffer is already created and doesn't get a
-  ;; modeline.
-  (with-current-buffer "*Messages*"
-    (doom-set-modeline 'main))
-  (with-current-buffer "*scratch*"
-    (doom-set-modeline 'main)))
+;; This scratch and messages buffer is already created and doesn't get a
+;; modeline.
+(with-current-buffer "*Messages*"
+  (doom-set-modeline 'main))
+(with-current-buffer "*scratch*"
+  (doom-set-modeline 'main)))
 
 (defun doom-modeline-set-special-modeline ()
   "Set the special modeline."
