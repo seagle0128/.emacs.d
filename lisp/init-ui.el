@@ -125,15 +125,26 @@
 
 ;; Fonts
 (use-package cnfonts
-  :unless (is-doom-theme-p centaur-theme)
   :hook (after-init . cnfonts-enable)
   :config
+  ;; Fallback to `all-the-icons'.
+  (defun cnfonts--set-all-the-icons-fonts (fontsizes-list)
+    "Show icons in all-the-icons."
+    (when (featurep 'all-the-icons)
+      (dolist (charset '(kana han cjk-misc bopomofo gb18030))
+        (set-fontset-font "fontset-default" charset "github-octicons" nil 'append)
+        (set-fontset-font "fontset-default" charset "FontAwesome" nil 'append)
+        (set-fontset-font "fontset-default" charset "Material Icons" nil 'append))))
+  (add-hook 'cnfonts-set-font-finish-hook #'cnfonts--set-all-the-icons-fonts)
+
+  ;; Keep frame size
   (setq cnfonts-keep-frame-size nil)
   (add-hook 'window-setup-hook
             (lambda ()
               (setq cnfonts-keep-frame-size t)))
 
-  (setq cnfonts-use-cache t)
+  ;; Set profiles
+  ;; (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
         '("program1" "program2" "program3" "org-mode" "read-book"))
   (setq cnfonts--profiles-steps '(("program1" . 4)
