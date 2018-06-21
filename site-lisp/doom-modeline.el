@@ -846,7 +846,7 @@ enabled."
 ;; Bootstrap
 ;;
 
-(defun +doom-modeline|init ()
+(defun doom-modeline-init ()
   "Set the default modeline."
   (doom-set-modeline 'main t)
 
@@ -857,16 +857,16 @@ enabled."
   (with-current-buffer "*scratch*"
     (doom-set-modeline 'main)))
 
-(defun +doom-modeline|set-special-modeline ()
+(defun doom-modeline-set-special-modeline ()
   "Set the special modeline."
   (doom-set-modeline 'special))
 
-(defun +doom-modeline|set-media-modeline ()
+(defun doom-modeline-set-media-modeline ()
   "Set the media modeline."
   (doom-set-modeline 'media))
 
-(add-hook 'image-mode-hook   #'+doom-modeline|set-media-modeline)
-(add-hook 'org-src-mode-hook #'+doom-modeline|set-special-modeline)
+(add-hook 'image-mode-hook   #'doom-modeline-set-media-modeline)
+(add-hook 'org-src-mode-hook #'doom-modeline-set-special-modeline)
 
 (provide 'doom-modeline)
 
