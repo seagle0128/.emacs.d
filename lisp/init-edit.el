@@ -195,22 +195,6 @@
   :ensure nil
   :init (add-hook 'after-init-hook #'electric-pair-mode))
 
-;; Increase selected region by semantic units
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
-
-;; On-the-fly spell checker
-(use-package flyspell
-  :ensure nil
-  :diminish flyspell-mode
-  :init (setq flyspell-issue-message-flag nil))
-
-;; Hungry deletion
-(use-package hungry-delete
-  :diminish hungry-delete-mode
-  :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
-  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
-
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
   :bind (("C-;" . iedit-mode)
@@ -224,10 +208,9 @@
     (add-to-list 'desktop-minor-mode-table
                  '(iedit-mode nil))))
 
-;; Framework for mode-specific buffer indexes
-(use-package imenu
-  :ensure nil
-  :bind (("C-." . imenu)))
+;; Increase selected region by semantic units
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -237,6 +220,27 @@
          ("C-c C-<". mc/mark-all-like-this)
          ("s-<mouse-1>" . mc/add-cursor-on-click)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+
+;; Smartly select region, rectangle, multi cursors
+(use-package smart-region
+  :hook (after-init . smart-region-on))
+
+;; On-the-fly spell checker
+(use-package flyspell
+  :ensure nil
+  :diminish flyspell-mode
+  :init (setq flyspell-issue-message-flag nil))
+
+;; Hungry deletion
+(use-package hungry-delete
+  :diminish hungry-delete-mode
+  :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
+  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
+
+;; Framework for mode-specific buffer indexes
+(use-package imenu
+  :ensure nil
+  :bind (("C-." . imenu)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
