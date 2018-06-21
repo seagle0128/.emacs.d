@@ -59,13 +59,14 @@
 ;; A better *Help* buffer
 (use-package helpful
   :bind (("C-c C-d" . helpful-at-point))
-  :init
+  :config
   (with-eval-after-load 'ivy
-    (cl-pushnew '(helpful-callable . "^") ivy-initial-inputs-alist)
-    (cl-pushnew '(helpful-variable . "^") ivy-initial-inputs-alist)
-    (cl-pushnew '(helpful-function . "^") ivy-initial-inputs-alist)
-    (cl-pushnew '(helpful-macro . "^") ivy-initial-inputs-alist)
-    (cl-pushnew '(helpful-command . "^") ivy-initial-inputs-alist)))
+    (dolist (cmd '(helpful-callable
+                   helpful-variable
+                   helpful-function
+                   helpful-macro
+                   helpful-command))
+      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
 
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."
