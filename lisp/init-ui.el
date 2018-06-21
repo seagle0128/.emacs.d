@@ -125,7 +125,7 @@
 
 ;; Fonts
 (use-package cnfonts
-  :disabled
+  :unless (featurep 'all-the-icons)
   :hook (after-init . cnfonts-enable)
   :config
   (setq cnfonts-keep-frame-size nil)
