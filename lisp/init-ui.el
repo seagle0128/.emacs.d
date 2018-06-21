@@ -125,7 +125,7 @@
 
 ;; Fonts
 (use-package cnfonts
-  :unless (featurep 'all-the-icons)
+  :unless (is-doom-theme-p centaur-theme)
   :hook (after-init . cnfonts-enable)
   :config
   (setq cnfonts-keep-frame-size nil)
