@@ -80,12 +80,11 @@
     (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
 
 (use-package hide-mode-line
-  :init
-  (dolist (hook '(completion-list-mode-hook
-                  completion-in-region-mode-hook
-                  neotree-mode-hook
-                  treemacs-mode-hook))
-    (add-hook hook #'hide-mode-line-mode)))
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           neotree-mode
+           treemacs-mode)
+          . hide-mode-line-mode)))
 
 ;; Color theme
 (cond
