@@ -823,7 +823,7 @@ enabled."
 ;;
 
 (def-modeline! main
-  (workspace-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
+  (workspace-number window-number bar matches " " buffer-info "  %l:%c %p  " selection-info)
   (buffer-encoding major-mode vcs flycheck))
 
 (def-modeline! minimal
