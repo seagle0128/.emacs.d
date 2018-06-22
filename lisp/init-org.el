@@ -84,6 +84,10 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
 
+  ;; Preview
+  (use-package org-preview-html
+    :diminish org-preview-html-mode)
+
   ;; Presentation
   (use-package org-tree-slide
     :config
