@@ -97,14 +97,11 @@
     (benchmark-init/activate)
     (add-hook 'after-init-hook #'benchmark-init/deactivate)))
 
-;; A mondern package interface
-(use-package paradox
-  :init (defalias 'upgrade-packages 'paradox-upgrade-packages)
-  :config
-  (setq paradox-github-token t)
-  (setq paradox-execute-asynchronously t)
-  (setq paradox-automatically-star nil)
-  (setq paradox-display-star-count nil))
+;; Extensions
+(use-package package-utils
+  :init
+  (defalias 'upgrade-packages 'package-utils-upgrade-all)
+  (defalias 'upgrade-packages-restart 'package-utils-upgrade-all-and-restart))
 
 (provide 'init-package)
 
