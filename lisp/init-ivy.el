@@ -198,6 +198,18 @@
     (add-hook 'c-mode-hook 'counsel-gtags-mode)
     (add-hook 'c++-mode-hook 'counsel-gtags-mode))
 
+  ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
+  (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+    (unless initial-input
+      (if (region-active-p)
+          (setq initial-input (buffer-substring-no-properties
+                               (region-beginning) (region-end)))
+        (setq initial-input (ivy-thing-at-point))))
+    (unless initial-directory (setq initial-directory default-directory))
+    (message "input: %s" initial-input)
+    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
+  (advice-add 'counsel-ag :around #'my-counsel-ag)
+
   ;; Support pinyin in Ivy
   ;; Input prefix '!' to match pinyin
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
