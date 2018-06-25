@@ -67,14 +67,16 @@
     (use-package doom-modeline
       :ensure nil
       :commands (doom-modeline-init)
-      :init (add-hook 'after-load-theme-hook #'doom-modeline-init))
+      :hook (after-load-theme . doom-modeline-init)
+      :config
+      (use-package shrink-path)
+      (use-package eldoc-eval))
   (use-package spaceline-config
     :ensure spaceline
-    :commands spaceline-spacemacs-theme1
+    :hook (after-init . spaceline-spacemacs-theme)
     :init
     (setq powerline-default-separator (if window-system 'arrow 'utf-8))
     (setq powerline-image-apple-rgb sys/mac-x-p)
-    (add-hook 'after-init-hook #'spaceline-spacemacs-theme)
     :config
     (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
     (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
