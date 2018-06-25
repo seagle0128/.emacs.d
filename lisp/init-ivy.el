@@ -134,7 +134,7 @@
   ;;                   (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
   ;;           ivy-minibuffer-map)
 
-  ;; Enhance fuzzy
+  ;; Enhance fuzzy matching
   (use-package flx)
 
   ;; Enhance M-x
@@ -229,7 +229,8 @@
           (ivy--regex-ignore-order str)))
 
     (setq ivy-re-builders-alist
-          '((t . re-builder-pinyin)))
+          '((read-file-name-internal . ivy--regex-fuzzy)
+            (t . re-builder-pinyin)))
 
     (defun my-pinyinlib-build-regexp-string (str)
       (cond ((equal str ".*")
