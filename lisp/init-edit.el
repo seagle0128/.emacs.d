@@ -231,6 +231,10 @@
   :diminish flyspell-mode
   :init (setq flyspell-issue-message-flag nil))
 
+;; Goto last change
+(use-package goto-chg
+  :bind ("C-," . goto-last-change))
+
 ;; Hungry deletion
 (use-package hungry-delete
   :diminish hungry-delete-mode
