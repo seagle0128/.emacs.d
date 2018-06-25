@@ -134,6 +134,9 @@
   ;;                   (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
   ;;           ivy-minibuffer-map)
 
+  ;; Enhance fuzzy
+  (use-package flx)
+
   ;; Enhance M-x
   (use-package smex)
 
