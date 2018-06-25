@@ -155,11 +155,7 @@
     (setq ivy-rich-path-style 'abbrev)
 
     (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer)
-
-    (with-eval-after-load 'counsel-projectile
-      (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
-                                   'ivy-rich-switch-buffer-transformer)))
+                                 'ivy-rich-switch-buffer-transformer))
 
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
