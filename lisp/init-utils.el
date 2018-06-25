@@ -81,12 +81,6 @@
          :map projectile-command-map
          ("h" . treemacs-projectile)))
 
-;; Dash: only avaliable on macOS
-(when sys/macp
-  (use-package dash-at-point
-    :bind (("\C-cd" . dash-at-point)
-           ("\C-ce" . dash-at-point-with-docset))))
-
 ;; Youdao Dictionay
 (use-package youdao-dictionary
   :bind (("C-c y" . youdao-dictionary-search-at-point)
