@@ -50,8 +50,7 @@
          ("C-n" . company-select-next))
   :init (add-hook 'after-init-hook #'global-company-mode)
   :config
-  (setq company-auto-complete t             ; trigger insertion of the selected completion candidate
-        company-tooltip-align-annotations t ; aligns annotation to the right
+  (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
         company-idle-delay .2               ; decrease delay before autocompletion popup shows
         company-echo-delay 0                ; remove annoying blinking
