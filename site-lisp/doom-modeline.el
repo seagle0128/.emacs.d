@@ -624,7 +624,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
             (let ((face    'mode-line-inactive)
                   (active  (doom-modeline--active))
                   (all-the-icons-default-adjust -0.1))
-              (concat "  "
+              (concat (if (display-graphic-p) "  ")
                       (cond ((memq state '(edited added))
                              (if active (setq face 'doom-modeline-info))
                              (doom-modeline-maybe-icon-octicon
