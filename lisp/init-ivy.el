@@ -83,9 +83,8 @@
 
          :map swiper-map
          ("M-%" . swiper-query-replace))
-  :init
-  (add-hook 'after-init-hook #'ivy-mode)
-  (add-hook 'ivy-mode-hook #'counsel-mode)
+  :hook ((after-init . ivy-mode)
+         (ivy-mode . counsel-mode))
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
@@ -171,7 +170,7 @@
   (use-package counsel-css
     :bind (:map counsel-mode-map
                 ("C-c c c" . counsel-css))
-    :init (add-hook 'css-mode-hook 'counsel-css-imenu-setup))
+    :hook (css-mode . counsel-css-imenu-setup))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
@@ -191,11 +190,8 @@
                 ("M-r" . counsel-gtags-find-reference)
                 ("M-s" . counsel-gtags-find-symbol)
                 ("M-," . counsel-gtags-go-backward))
-    :init
-    (setq counsel-gtags-auto-update t)
-
-    (add-hook 'c-mode-hook 'counsel-gtags-mode)
-    (add-hook 'c++-mode-hook 'counsel-gtags-mode))
+    :hook ((c-mode c++-mode) . counsel-gtags-mode)
+    :config (setq counsel-gtags-auto-update t))
 
   ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
   ;; search the selection or current symbol by default
