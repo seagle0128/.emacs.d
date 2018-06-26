@@ -41,22 +41,29 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ;; ("<tab>" . company-complete-selection)
+         ("TAB" . company-complete-common-or-cycle)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("S-TAB" . company-select-previous)
+         ("<backtab>" . company-select-previous)
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
   :init (add-hook 'after-init-hook #'global-company-mode)
   :config
-  ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
-
-  (setq company-tooltip-limit 12                      ; bigger popup window
-        company-idle-delay .2                         ; decrease delay before autocompletion popup shows
-        company-echo-delay 0                          ; remove annoying blinking
+  (setq company-auto-complete t             ; trigger insertion of the selected completion candidate
+        company-tooltip-align-annotations t ; aligns annotation to the right
+        company-tooltip-limit 12            ; bigger popup window
+        company-idle-delay .2               ; decrease delay before autocompletion popup shows
+        company-echo-delay 0                ; remove annoying blinking
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
+
+  (setq company-frontends
+        '(company-pseudo-tooltip-unless-just-one-frontend
+          company-preview-frontend
+          company-echo-metadata-frontend))
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
