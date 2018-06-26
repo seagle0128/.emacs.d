@@ -50,9 +50,117 @@
 (require 'projectile)
 (require 'shrink-path)
 
-(when (>= emacs-major-version 26)
-  (require 'subr-x)
-  (defalias 'when-let 'when-let*))
+;;
+;; Variables
+;;
+
+(defvar doom-modeline-height 29
+  "How tall the mode-line should be (only respected in GUI Emacs).")
+
+(defvar doom-modeline-bar-width 3
+  "How wide the mode-line bar should be (only respected in GUI Emacs).")
+
+(defvar doom-modeline-buffer-file-name-style 'truncate-upto-project
+  "Determines the style used by `doom-modeline-buffer-file-name'.
+
+Given ~/Projects/FOSS/emacs/lisp/comint.el
+truncate-upto-project => ~/P/F/emacs/lisp/comint.el
+truncate-upto-root => ~/P/F/e/lisp/comint.el
+truncate-all => ~/P/F/e/l/comint.el
+relative-from-project => emacs/lisp/comint.el
+relative-to-project => lisp/comint.el
+file-name => comint.el")
+
+;; externs
+(defvar anzu--current-position 0)
+(defvar anzu--overflow-p nil)
+(defvar anzu--state nil)
+(defvar anzu--total-matched 0)
+(defvar evil-ex-active-highlights-alist nil)
+(defvar evil-ex-argument nil)
+(defvar evil-ex-range nil)
+(defvar evil-mode nil)
+(defvar evil-state nil)
+(defvar evil-visual-beginning nil)
+(defvar evil-visual-end nil)
+(defvar evil-visual-selection nil)
+(defvar iedit-mode nil)
+(defvar iedit-occurrences-overlays nil)
+(defvar text-scale-mode-amount)
+(defvar-local flycheck-current-errors nil)
+
+
+;;
+;; Custom faces
+;;
+
+(defgroup doom-modeline nil
+  "TODO"
+  :group 'faces)
+
+(defface doom-modeline-buffer-path
+  '((t (:inherit (mode-line-emphasis bold))))
+  "Face used for the dirname part of the buffer path."
+  :group 'doom-modeline)
+
+(defface doom-modeline-buffer-file
+  '((t (:inherit (mode-line-buffer-id bold))))
+  "Face used for the filename part of the mode-line buffer path."
+  :group 'doom-modeline)
+
+(defface doom-modeline-buffer-modified
+  '((t (:inherit (error bold) :background nil)))
+  "Face used for the 'unsaved' symbol in the mode-line."
+  :group 'doom-modeline)
+
+(defface doom-modeline-buffer-major-mode
+  '((t (:inherit (mode-line-emphasis bold))))
+  "Face used for the major-mode segment in the mode-line."
+  :group 'doom-modeline)
+
+(defface doom-modeline-highlight
+  '((t (:inherit mode-line-emphasis)))
+  "Face for bright segments of the mode-line."
+  :group 'doom-modeline)
+
+(defface doom-modeline-panel
+  '((t (:inherit mode-line-highlight)))
+  "Face for 'X out of Y' segments, such as `doom-modeline--anzu', `doom-modeline--evil-substitute' and
+`iedit'"
+  :group 'doom-modeline)
+
+(defface doom-modeline-info
+  `((t (:inherit (success bold))))
+  "Face for info-level messages in the modeline. Used by `*vc'."
+  :group 'doom-modeline)
+
+(defface doom-modeline-warning
+  `((t (:inherit (warning bold))))
+  "Face for warnings in the modeline. Used by `*flycheck'"
+  :group 'doom-modeline)
+
+(defface doom-modeline-urgent
+  `((t (:inherit (error bold))))
+  "Face for errors in the modeline. Used by `*flycheck'"
+  :group 'doom-modeline)
+
+;; Bar
+(defface doom-modeline-bar '((t (:inherit highlight)))
+  "The face used for the left-most bar on the mode-line of an active window."
+  :group 'doom-modeline)
+
+(defface doom-modeline-eldoc-bar '((t (:inherit shadow)))
+  "The face used for the left-most bar on the mode-line when eldoc-eval is
+active."
+  :group 'doom-modeline)
+
+(defface doom-modeline-inactive-bar '((t (:inherit warning :inverse-video t)))
+  "The face used for the left-most bar on the mode-line of an inactive window."
+  :group 'doom-modeline)
+
+(defface doom-modeline-eyebrowse '((t ()))
+  "The face used for eyebrowse."
+  :group 'doom-modeline)
 
 (eval-and-compile
   (defun doom-modeline--resolve-hook-forms (hooks)
@@ -163,7 +271,7 @@ Throws an error if it doesn't exist."
 (defun doom-modeline-set-modeline (key &optional default)
   "Set the modeline format. Does nothing if the modeline KEY doesn't exist.
 If DEFAULT is non-nil, set the default mode-line for all buffers."
-  (when-let ((modeline (doom-modeline key)))
+  (let ((modeline (doom-modeline key)))
     (setf (if default
               (default-value 'mode-line-format)
             (buffer-local-value 'mode-line-format (current-buffer)))
@@ -181,6 +289,7 @@ If STRICT-P, return nil if no project was found, otherwise return
 ;;
 
 (defun doom-modeline-eldoc (text)
+  "Get eldoc TEXT for mode-line."
   (concat (when (display-graphic-p)
             (doom-modeline--make-xpm 'doom-modeline-eldoc-bar
                                      doom-modeline-height
@@ -189,7 +298,7 @@ If STRICT-P, return nil if no project was found, otherwise return
 
 ;; Show eldoc in the mode-line with `eval-expression'
 (defun doom-modeline--show-eldoc (input)
-  "Display string STR in the mode-line next to minibuffer."
+  "Display string INPUT in the mode-line next to minibuffer."
   (with-current-buffer (eldoc-current-buffer)
     (let* ((str              (and (stringp input) input))
            (mode-line-format (or (and str (or (doom-modeline-eldoc str) str))
@@ -233,12 +342,13 @@ If STRICT-P, return nil if no project was found, otherwise return
 (defvar doom-modeline-current-window (frame-selected-window))
 (defun doom-modeline-set-selected-window (&rest _)
   "Set `doom-modeline-current-window' appropriately."
-  (when-let ((win (frame-selected-window)))
+  (let ((win (frame-selected-window)))
     (unless (minibuffer-window-active-p win)
       (setq doom-modeline-current-window win)
       (force-mode-line-update))))
 
 (defun doom-modeline-unset-selected-window ()
+  "Unset `doom-modeline-current-window' appropriately."
   (setq doom-modeline-current-window nil)
   (force-mode-line-update))
 
@@ -264,113 +374,13 @@ If STRICT-P, return nil if no project was found, otherwise return
 (add-hook 'focus-in-hook #'doom-modeline-update-env)
 (add-hook 'find-file-hook #'doom-modeline-update-env)
 (defun doom-modeline-update-env ()
+  "Update environment info on mode-line."
   (when doom-modeline-env-command
     (let* ((default-directory (doom-modeline-project-root))
            (s (shell-command-to-string doom-modeline-env-command)))
       (setq doom-modeline-env-version (if (string-match "[ \t\n\r]+\\'" s)
                                           (replace-match "" t t s)
                                         s)))))
-
-;;
-;; Variables
-;;
-
-(defvar doom-modeline-height 29
-  "How tall the mode-line should be (only respected in GUI emacs).")
-
-(defvar doom-modeline-bar-width 3
-  "How wide the mode-line bar should be (only respected in GUI emacs).")
-
-(defvar doom-modeline-buffer-file-name-style 'truncate-upto-project
-  "Determines the style used by `doom-modeline-buffer-file-name'.
-
-Given ~/Projects/FOSS/emacs/lisp/comint.el
-truncate-upto-project => ~/P/F/emacs/lisp/comint.el
-truncate-upto-root => ~/P/F/e/lisp/comint.el
-truncate-all => ~/P/F/e/l/comint.el
-relative-from-project => emacs/lisp/comint.el
-relative-to-project => lisp/comint.el
-file-name => comint.el")
-
-;; externs
-(defvar anzu--state nil)
-(defvar evil-mode nil)
-(defvar evil-state nil)
-(defvar evil-visual-selection nil)
-(defvar iedit-mode nil)
-
-;;
-;; Custom faces
-;;
-
-(defgroup doom-modeline nil
-  "TODO"
-  :group 'faces)
-
-(defface doom-modeline-buffer-path
-  '((t (:inherit (mode-line-emphasis bold))))
-  "Face used for the dirname part of the buffer path."
-  :group 'doom-modeline)
-
-(defface doom-modeline-buffer-file
-  '((t (:inherit (mode-line-buffer-id bold))))
-  "Face used for the filename part of the mode-line buffer path."
-  :group 'doom-modeline)
-
-(defface doom-modeline-buffer-modified
-  '((t (:inherit (error bold) :background nil)))
-  "Face used for the 'unsaved' symbol in the mode-line."
-  :group 'doom-modeline)
-
-(defface doom-modeline-buffer-major-mode
-  '((t (:inherit (mode-line-emphasis bold))))
-  "Face used for the major-mode segment in the mode-line."
-  :group 'doom-modeline)
-
-(defface doom-modeline-highlight
-  '((t (:inherit mode-line-emphasis)))
-  "Face for bright segments of the mode-line."
-  :group 'doom-modeline)
-
-(defface doom-modeline-panel
-  '((t (:inherit mode-line-highlight)))
-  "Face for 'X out of Y' segments, such as `doom-modeline--anzu', `doom-modeline--evil-substitute' and
-`iedit'"
-  :group 'doom-modeline)
-
-(defface doom-modeline-info
-  `((t (:inherit (success bold))))
-  "Face for info-level messages in the modeline. Used by `*vc'."
-  :group 'doom-modeline)
-
-(defface doom-modeline-warning
-  `((t (:inherit (warning bold))))
-  "Face for warnings in the modeline. Used by `*flycheck'"
-  :group 'doom-modeline)
-
-(defface doom-modeline-urgent
-  `((t (:inherit (error bold))))
-  "Face for errors in the modeline. Used by `*flycheck'"
-  :group 'doom-modeline)
-
-;; Bar
-(defface doom-modeline-bar '((t (:inherit highlight)))
-  "The face used for the left-most bar on the mode-line of an active window."
-  :group 'doom-modeline)
-
-(defface doom-modeline-eldoc-bar '((t (:inherit shadow)))
-  "The face used for the left-most bar on the mode-line when eldoc-eval is
-active."
-  :group 'doom-modeline)
-
-(defface doom-modeline-inactive-bar '((t (:inherit warning :inverse-video t)))
-  "The face used for the left-most bar on the mode-line of an inactive window."
-  :group 'doom-modeline)
-
-(defface doom-modeline-eyebrowse '((t ()))
-  "The face used for eyebrowse."
-  :group 'doom-modeline)
-
 ;;
 ;; Modeline helpers
 ;;
@@ -391,6 +401,7 @@ active."
     (apply 'all-the-icons-material args)))
 
 (defsubst doom-modeline--active ()
+  "Whether is an active window."
   (eq (selected-window) doom-modeline-current-window))
 
 (defun doom-modeline--make-xpm (face width height)
@@ -441,7 +452,7 @@ active."
      'help-echo buffer-file-truename)))
 
 (defun doom-modeline--buffer-file-name-truncate (&optional truncate-tail)
-  "Propertized `buffer-file-name' that truncates every dir along path.
+  "Propertized variable `buffer-file-name' that truncates every dir along path.
 If TRUNCATE-TAIL is t also truncate the parent directory of the file."
   (let ((dirs (shrink-path-prompt (file-name-directory buffer-file-truename)))
         (active (doom-modeline--active)))
@@ -460,7 +471,7 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
                               'face (if file-faces `(:inherit ,file-faces)))))))))
 
 (defun doom-modeline--buffer-file-name-relative (&optional include-project)
-  "Propertized `buffer-file-name' showing directories relative to project's root only."
+  "Propertized variable `buffer-file-name' showing directories relative to project's root only."
   (let ((root (doom-modeline-project-root))
         (active (doom-modeline--active)))
     (if (null root)
@@ -477,7 +488,7 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
                             'face (if file-faces `(:inherit ,file-faces))))))))
 
 (defun doom-modeline--buffer-file-name (truncate-project-root-parent)
-  "Propertized `buffer-file-name'.
+  "Propertized variable `buffer-file-name'.
 If TRUNCATE-PROJECT-ROOT-PARENT is t space will be saved by truncating it down
 fish-shell style.
 
@@ -593,6 +604,7 @@ directory, the file name, and its state (modified, read-only or non-existent)."
            (when doom-modeline-env-version
              (concat " " doom-modeline-env-version))
            (and (featurep 'face-remap)
+                (> text-scale-mode-amount 0)
                 (/= text-scale-mode-amount 0)
                 (format " (%+d)" text-scale-mode-amount)))
    'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))
@@ -670,6 +682,7 @@ Uses `all-the-icons-material' to fetch the icon."
 (add-hook 'flycheck-mode-hook #'doom-modeline-update-flycheck-segment)
 
 (defun doom-modeline-update-flycheck-segment (&optional status)
+  "Update flycheck segment via STATUS."
   (setq doom-modeline--flycheck
         (pcase status
           (`finished (if flycheck-current-errors
@@ -748,8 +761,9 @@ lines are selected, or the NxM dimensions of a block selection."
               sep))))
 
 (defsubst doom-modeline--anzu ()
-  "Show the match index and total number thereof. Requires `anzu', also
-`evil-anzu' if using `evil-mode' for compatibility with `evil-search'."
+  "Show the match index and total number thereof.
+Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
+`evil-search'."
   (setq anzu-cons-mode-line-p nil)
   (when (and anzu--state (not iedit-mode))
     (propertize
