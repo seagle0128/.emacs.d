@@ -98,11 +98,10 @@
   (diff-hl-flydiff-mode 1)
 
   (if (display-graphic-p)
-      ;; Beautify faces
       (progn
+        ;; Beautify faces
         (set-fringe-mode '(4 . 8))
         (setq-default fringes-outside-margins t)
-
         (add-hook 'after-load-theme-hook
                   (lambda ()
                     "Set diff-hl faces."
@@ -110,13 +109,13 @@
                     (set-face-background 'diff-hl-change "DeepSkyBlue")
                     (set-face-background 'diff-hl-delete "OrangeRed")
                     (set-face-background 'diff-hl-insert "YellowGreen"))))
-    ;; Fall back to the display margin, if the fringe is unavailable
-    (diff-hl-margin-mode 1))
-
-  ;; Avoid restoring `diff-hl-margin-mode'
-  (with-eval-after-load 'desktop
-    (add-to-list 'desktop-minor-mode-table
-                 '(diff-hl-margin-mode nil)))
+    (progn
+      ;; Fall back to the display margin since the fringe is unavailable in tty
+      (diff-hl-margin-mode 1)
+      ;; Avoid restoring `diff-hl-margin-mode'
+      (with-eval-after-load 'desktop
+        (add-to-list 'desktop-minor-mode-table
+                     '(diff-hl-margin-mode nil)))))
 
   ;; Integration with magit
   (with-eval-after-load 'magit
