@@ -160,11 +160,33 @@
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
 
-;; Never lose the cursor again
-(when (display-graphic-p)
-  (use-package beacon
-    :diminish beacon-mode
-    :hook (after-init . beacon-mode)))
+;; Flash the current line
+(use-package nav-flash
+  :hook (imenu-after-jump . nav-flash-show)
+  :init
+  (defun my-blink-cursor-maybe (orig-fn &rest args)
+    "Blink current line if the window has moved."
+    (let ((point (save-excursion (goto-char (window-start))
+                                 (point-marker))))
+      (apply orig-fn args)
+      (unless (or (derived-mode-p 'term-mode)
+                  (equal point
+                         (save-excursion (goto-char (window-start))
+                                         (point-marker))))
+        (my-blink-cursor))))
+
+  (defun my-blink-cursor (&rest _)
+    "Blink current line using `nav-flash'."
+    (interactive)
+    (unless (minibufferp)
+      (nav-flash-show)
+      ;; only show in the current window
+      (overlay-put compilation-highlight-overlay 'window (selected-window))))
+
+  ;; NOTE In :feature jump `recenter' is hooked to a bunch of jumping commands,
+  ;; which will trigger nav-flash.
+  (advice-add #'windmove-do-window-select :around #'my-blink-cursor-maybe)
+  (advice-add #'recenter :around #'my-blink-cursor-maybe))
 
 (provide 'init-highlight)
 
