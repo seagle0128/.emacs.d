@@ -60,11 +60,6 @@
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
 
-  (setq company-frontends
-        '(company-pseudo-tooltip-unless-just-one-frontend
-          company-preview-frontend
-          company-echo-metadata-frontend))
-
   ;; Popup documentation for completion candidates
   (when (display-graphic-p)
     (use-package company-quickhelp
