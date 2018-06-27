@@ -209,7 +209,7 @@
   (advice-add 'counsel-ag :around #'my-counsel-ag)
 
   ;; Support pinyin in Ivy
-  ;; Input prefix '!' to match pinyin
+  ;; Input prefix ':' to match pinyin
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
   ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
   (use-package pinyinlib
@@ -241,11 +241,11 @@
     (defun pinyin-to-utf8 (str)
       (cond ((equal 0 (length str))
              nil)
-            ((equal (substring str 0 1) "!")
+            ((equal (substring str 0 1) ":")
              (mapconcat 'my-pinyinlib-build-regexp-string
                         (remove nil (mapcar 'my-pinyin-regexp-helper
                                             (split-string
-                                             (replace-regexp-in-string "!" "" str ) "")))
+                                             (replace-regexp-in-string ":" "" str ) "")))
                         ""))
             (t
              nil))))
