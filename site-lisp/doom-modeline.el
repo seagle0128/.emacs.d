@@ -46,7 +46,6 @@
 
 (require 'all-the-icons)
 (require 'eldoc-eval)
-(require 'map)
 (require 'projectile)
 (require 'shrink-path)
 
@@ -202,13 +201,13 @@ active."
                      (format "%s modeline segment" name))))
     (cond ((and (symbolp (car body))
                 (not (cdr body)))
-           (map-put doom-modeline-var-alist name (car body))
-           `(map-put doom-modeline-var-alist ',name ',(car body)))
+           (add-to-list 'doom-modeline-var-alist (cons name (car body)))
+           `(add-to-list 'doom-modeline-var-alist (cons ',name ',(car body))))
           (t
-           (map-put doom-modeline-fn-alist name sym)
+           (add-to-list 'doom-modeline-fn-alist (cons name sym))
            `(progn
               (fset ',sym (lambda () ,docstring ,@body))
-              (map-put doom-modeline-fn-alist ',name ',sym)
+              (add-to-list 'doom-modeline-fn-alist (cons ',name ',sym))
               ,(unless (bound-and-true-p byte-compile-current-file)
                  `(let (byte-compile-warnings)
                     (byte-compile #',sym))))))))
