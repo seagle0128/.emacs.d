@@ -76,6 +76,8 @@
          ("C-c c z" . counsel-fzf)
 
          :map ivy-minibuffer-map
+         ("C-j" . ivy-immediate-done)   ; IDO behaviors
+         ("RET" . ivy-alt-done)
          ("C-w" . ivy-yank-word)
 
          :map counsel-find-file-map
