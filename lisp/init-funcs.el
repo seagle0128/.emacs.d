@@ -50,7 +50,7 @@
 (bind-key "<f5>" #'revert-current-buffer)
 (bind-key "s-r" #'revert-current-buffer)
 
-;; Update configurations
+;; Update
 (defun update-config ()
   "Update Emacs configurations to the latest version."
   (interactive)
@@ -59,7 +59,12 @@
   (shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
-;; Update dotfiles
+(defun update-and-restart ()
+  "Update configurations and packages, then restart."
+  (interactive)
+  (update-config)
+  (upgrade-packages-and-restart))
+
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
@@ -68,7 +73,6 @@
   (shell-command "git pull")
   (message "Update finished."))
 
-;; Update org files
 (defun update-org ()
   "Update Org files to the latest version."
   (interactive)

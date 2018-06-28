@@ -101,7 +101,7 @@
 (use-package package-utils
   :init
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
-  (defalias 'upgrade-packages-restart 'package-utils-upgrade-all-and-restart))
+  (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart))
 
 (provide 'init-package)
 
