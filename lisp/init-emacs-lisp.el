@@ -70,11 +70,6 @@
                    helpful-command))
       (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
 
-(defun recompile-elpa ()
-  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
-  (interactive)
-  (byte-recompile-directory package-user-dir nil t))
-
 (provide 'init-emacs-lisp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

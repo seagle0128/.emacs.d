@@ -36,35 +36,36 @@
   :diminish lsp-mode
   :config
   (use-package lsp-ui
+    :defines lsp-ui-mode-map
     :commands (lsp-ui-mode lsp-ui-peek-find-definistions lsp-ui-peek-find-references)
     :bind (:map lsp-ui-mode-map
                 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                 ([remap xref-find-references] . lsp-ui-peek-find-references))
-    :init (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+    :hook (lsp-mode . lsp-ui-mode))
 
   (with-eval-after-load 'company
     (use-package company-lsp
+      :defines company-backends
+      :functions company-backend-with-yas
       :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))))
 
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
 ;; Install: go get github.com/sourcegraph/go-langserver
 (use-package lsp-go
   :commands lsp-go-enable
-  :init (add-hook 'go-mode-hook #'lsp-go-enable))
+  :hook (go-mode . lsp-go-enable))
 
 ;; Python support for lsp-mode using pyls.
 ;; Install: pip install python-language-server
 (use-package lsp-python
   :commands lsp-python-enable
-  :init (add-hook 'python-mode-hook #'lsp-python-enable))
+  :hook (python-mode . lsp-python-enable))
 
 ;; Javascript, Typescript and Flow support for lsp-mode
 ;; Install: npm i -g javascript-typescript-langserver
 (use-package lsp-javascript-typescript
   :commands lsp-javascript-typescript-enable
-  :init
-  (add-hook 'js2-mode-hook #'lsp-javascript-typescript-enable)
-  (add-hook 'typescript-mode-hook #'lsp-javascript-typescript-enable))
+  :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
 
 ;; Java support for lsp-mode using the Eclipse JDT Language Server.
 ;; Install:
@@ -72,7 +73,7 @@
 ;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
 (use-package lsp-java
   :commands lsp-java-enable
-  :init (add-hook 'java-mode-hook #'lsp-java-enable))
+  :hook (java-mode . lsp-java-enable))
 
 (provide 'init-lsp)
 

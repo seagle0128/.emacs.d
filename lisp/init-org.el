@@ -35,6 +35,8 @@
 
 (use-package org
   :ensure nil
+  :commands org-try-structure-completion
+  :functions hydra-org-template/body
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb))
   :hook ((org-mode . org-indent-mode)
@@ -88,17 +90,14 @@
   ;; Presentation
   (use-package org-tree-slide
     :functions (org-display-inline-images org-remove-inline-images)
-    :config
-    (add-hook 'org-tree-slide-play-hook
-              (lambda ()
-                (text-scale-set 4)
-                (org-display-inline-images)
-                (read-only-mode 1)))
-    (add-hook 'org-tree-slide-stop-hook
-              (lambda ()
-                (text-scale-set 0)
-                (org-remove-inline-images)
-                (read-only-mode -1))))
+    :hook ((org-tree-slide-play . (lambda ()
+                                    (text-scale-set 4)
+                                    (org-display-inline-images)
+                                    (read-only-mode 1)))
+           (org-tree-slide-stop . (lambda ()
+                                    (text-scale-set 0)
+                                    (org-remove-inline-images)
+                                    (read-only-mode -1)))))
 
   ;; Pomodoro
   (use-package org-pomodoro

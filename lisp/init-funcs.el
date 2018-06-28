@@ -96,6 +96,12 @@
   (set-buffer-file-coding-system 'utf-8)
   (save-buffer))
 
+;; Recompile elpa directory
+(defun recompile-elpa ()
+  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
+  (interactive)
+  (byte-recompile-directory package-user-dir nil t))
+
 ;; Configure network proxy
 (defun show-proxy ()
   "Show http/https proxy."

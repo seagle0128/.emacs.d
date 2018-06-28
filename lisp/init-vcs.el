@@ -52,7 +52,7 @@
     :functions magit-define-popup-action
     :bind (:map magit-status-mode-map
                 ("G" . magit-gitflow-popup))
-    :init (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)
+    :hook (magit-mode . turn-on-magit-gitflow)
     :config
     (magit-define-popup-action 'magit-dispatch-popup
       ?G "GitFlow" #'magit-gitflow-popup ?!))
@@ -60,7 +60,7 @@
   ;; Git-Svn extension for Magit
   (use-package magit-svn
     :diminish magit-svn-mode
-    :init (add-hook 'magit-mode-hook #'magit-svn-mode)))
+    :hook (magit-mode . magit-svn-mode)))
 
 ;;; Pop up last commit information of current line
 (use-package git-messenger
