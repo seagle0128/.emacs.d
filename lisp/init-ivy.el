@@ -32,6 +32,7 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
+  :defines magit-completing-read-function
   :bind (("C-s" . swiper)
          ("C-S-s" . swiper-all)
 
@@ -148,6 +149,7 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
+    :functions ivy-set-display-transformer
     :init
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-switch-buffer-align-virtual-buffer t)
@@ -195,41 +197,38 @@
 
   ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
   ;; search the selection or current symbol by default
-  (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
-    (unless initial-input
-      (if (region-active-p)
-          (setq initial-input (buffer-substring-no-properties
-                               (region-beginning) (region-end)))
-        (setq initial-input (ivy-thing-at-point))))
-    (unless initial-directory
-      (setq initial-directory default-directory))
-    (message "input: %s" initial-input)
-    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
+  (eval-and-compile
+    (declare-function ivy-thing-at-point "ivy")
+    (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+      (unless initial-input
+        (if (region-active-p)
+            (setq initial-input (buffer-substring-no-properties
+                                 (region-beginning) (region-end)))
+          (setq initial-input (ivy-thing-at-point))))
+      (unless initial-directory
+        (setq initial-directory default-directory))
+      (message "input: %s" initial-input)
+      (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
 
-  (advice-add 'counsel-ag :around #'my-counsel-ag)
+    (advice-add 'counsel-ag :around #'my-counsel-ag))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
   ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
   (use-package pinyinlib
+    :functions ivy--regex-plus ivy--regex-ignore-order
     :commands pinyinlib-build-regexp-string
-    :init
+    :preface
     (defun re-builder-pinyin (str)
       (or (pinyin-to-utf8 str)
           (ivy--regex-plus str)
           (ivy--regex-ignore-order str)))
-
-    (setq ivy-re-builders-alist
-          '((read-file-name-internal . ivy--regex-fuzzy)
-            (t . re-builder-pinyin)))
-
     (defun my-pinyinlib-build-regexp-string (str)
       (cond ((equal str ".*")
              ".*")
             (t
              (pinyinlib-build-regexp-string str t))))
-
     (defun my-pinyin-regexp-helper (str)
       (cond ((equal str " ")
              ".*")
@@ -237,7 +236,6 @@
              nil)
             (t
              str)))
-
     (defun pinyin-to-utf8 (str)
       (cond ((equal 0 (length str))
              nil)
@@ -248,8 +246,10 @@
                                              (replace-regexp-in-string ":" "" str ) "")))
                         ""))
             (t
-             nil))))
-  )
+             nil)))
+    :init (setq ivy-re-builders-alist
+                '((read-file-name-internal . ivy--regex-fuzzy)
+                  (t . re-builder-pinyin)))))
 
 (provide 'init-ivy)
 
