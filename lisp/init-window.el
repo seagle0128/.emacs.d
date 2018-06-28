@@ -74,8 +74,8 @@
       ("x" delete-frame "delete frame"))
     (defhydra hydra-window-scroll (:color red)
       "Scroll other window"
-      ("n" joe-scroll-other-window "scroll")
-      ("p" joe-scroll-other-window-down "scroll down"))
+      ("n" scroll-other-window "scroll")
+      ("p" scroll-other-window-down "scroll down"))
     (add-to-list 'aw-dispatch-alist '(?w hydra-window-size/body) t)
     (add-to-list 'aw-dispatch-alist '(?o hydra-window-scroll/body) t)
     (add-to-list 'aw-dispatch-alist '(?\; hydra-window-frame/body) t)))
