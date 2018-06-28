@@ -38,10 +38,11 @@
 (use-package which-key
   :diminish which-key-mode
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
-  :init (add-hook 'after-init-hook #'which-key-mode))
+  :hook (after-init . which-key-mode))
 
 ;; A tree layout file explorer
 (use-package treemacs
+  :commands (treemacs-follow-mode treemacs-filewatch-mode treemacs-git-mode)
   :bind (([f8]        . treemacs)
          ("M-0"       . treemacs-select-window)
          ("C-c 1"     . treemacs-delete-other-windows))
@@ -113,10 +114,10 @@
   :config (use-package wgrep-pt))
 
 (use-package rg
-  :init
-  (add-hook 'after-init-hook #'rg-enable-default-bindings)
-  (if (fboundp 'wgrep-ag-setup)
-      (add-hook 'rg-mode-hook #'wgrep-ag-setup))
+  :defines counsel-projectile-command-map
+  :requires wgrep-ag-setup
+  :hook ((after-init . rg-enable-default-bindings)
+         (rg-mode . wgrep-ag-setup))
   :config
   (setq rg-group-result t)
   (setq rg-show-columns t)
@@ -142,13 +143,12 @@
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
-  :diminish
-  :init (add-hook 'after-init-hook #'atomic-chrome-start-server)
+  :after markdown-mode
+  :hook (after-init . atomic-chrome-start-server)
   :config
-  (with-eval-after-load 'markdown-mode
-    (setq atomic-chrome-default-major-mode 'markdown-mode)
-    (setq atomic-chrome-url-major-mode-alist
-          '(("github\\.com" . gfm-mode)))))
+  (setq atomic-chrome-default-major-mode 'markdown-mode)
+  (setq atomic-chrome-url-major-mode-alist
+        '(("github\\.com" . gfm-mode))))
 
 ;; Tramp
 (use-package docker-tramp)
@@ -156,10 +156,11 @@
 ;; Emoji
 (when centaur-emoji-enabled
   (use-package emojify
-    :init (add-hook 'after-init-hook #'global-emojify-mode)
+    :hook (after-init . global-emojify-mode)
     :config
     (with-eval-after-load 'company
       (use-package company-emoji
+        :defines company-backends
         :init (add-to-list 'company-backends 'company-emoji)))))
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
