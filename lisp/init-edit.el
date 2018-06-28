@@ -65,7 +65,7 @@
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil
-  :init (add-hook 'after-init-hook #'delete-selection-mode))
+  :hook (after-init . delete-selection-mode))
 
 ;; Rectangle
 (use-package rect
@@ -76,11 +76,12 @@
 (use-package autorevert
   :ensure nil
   :diminish auto-revert-mode
-  :init (add-hook 'after-init-hook #'global-auto-revert-mode))
+  :hook (after-init . global-auto-revert-mode))
 
 ;; Pass a URL to a WWW browser
 (use-package browse-url
   :ensure nil
+  :defines dired-mode-map
   :bind (("C-c C-z ." . browse-url-at-point)
          ("C-c C-z b" . browse-url-of-buffer)
          ("C-c C-z r" . browse-url-of-region)
@@ -93,9 +94,8 @@
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
   :ensure nil
-  :init
-  (add-hook 'text-mode-hook #'goto-address-mode)
-  (add-hook 'prog-mode-hook #'goto-address-prog-mode))
+  :hook ((text-mode . goto-address-mode)
+         (prog-mode . goto-address-prog-mode)))
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
@@ -104,7 +104,7 @@
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0))
-  :init (add-hook 'after-init-hook #'avy-setup-default)
+  :hook (after-init . avy-setup-default)
   :config (setq avy-background t))
 
 ;; Kill text between the point and the character CHAR
@@ -115,19 +115,18 @@
 ;; Quickly follow links
 (use-package ace-link
   :bind (("M-o" . ace-link-addr))
-  :init (add-hook 'after-init-hook #'ace-link-setup-default))
+  :hook (after-init . ace-link-setup-default))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish ace-pinyin-mode
-  :init (add-hook 'after-init-hook #'ace-pinyin-global-mode))
+  :hook (after-init . ace-pinyin-global-mode))
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
+  :hook (after-init . global-aggressive-indent-mode)
   :init
-  (add-hook 'after-init-hook #'global-aggressive-indent-mode)
-
   ;; FIXME: Disable in big files due to the performance issues
   ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
   (add-hook 'find-file-hook
@@ -159,7 +158,7 @@
          :map isearch-mode-map
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  :init (add-hook 'after-init-hook #'global-anzu-mode)
+  :hook (after-init . global-anzu-mode)
   :config (setq anzu-replace-to-string-separator
                 (if (char-displayable-p ?→) " → " " -> ")))
 
@@ -170,7 +169,8 @@
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish drag-stuff-mode
-  :init (add-hook 'after-init-hook #'drag-stuff-global-mode)
+  :commands drag-stuff-define-keys
+  :hook (after-init . drag-stuff-global-mode)
   :config
   (add-to-list 'drag-stuff-except-modes 'org-mode)
   (drag-stuff-define-keys))
@@ -178,6 +178,7 @@
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
   :ensure nil
+  :functions (show-all winner-undo)
   :init
   ;; show org ediffs unfolded
   (with-eval-after-load 'outline
@@ -193,10 +194,11 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
-  :init (add-hook 'after-init-hook #'electric-pair-mode))
+  :hook (after-init . electric-pair-mode))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
+  :defines desktop-minor-mode-table
   :bind (("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)
          :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
@@ -238,7 +240,7 @@
 ;; Hungry deletion
 (use-package hungry-delete
   :diminish hungry-delete-mode
-  :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
+  :hook (after-init . global-hungry-delete-mode)
   :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
 ;; Framework for mode-specific buffer indexes
@@ -265,15 +267,14 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish undo-tree-mode
-  :init (add-hook 'after-init-hook #'global-undo-tree-mode))
+  :hook (after-init . global-undo-tree-mode))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :ensure nil
   :diminish subword-mode
-  :init
-  (add-hook 'prog-mode-hook #'subword-mode)
-  (add-hook 'minibuffer-setup-hook #'subword-mode))
+  :hook ((prog-mode . subword-mode)
+         (minibuffer-setup . subword-mode)))
 
 ;; Hideshow
 (use-package hideshow
