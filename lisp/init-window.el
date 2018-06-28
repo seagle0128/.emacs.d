@@ -33,31 +33,30 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :init (add-hook 'after-init-hook #'windmove-default-keybindings))
+  :hook (after-init . windmove-default-keybindings))
 
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
-  :init
-  (setq winner-boring-buffers '("*Completions*"
-                                "*Compile-Log*"
-                                "*inferior-lisp*"
-                                "*Fuzzy Completions*"
-                                "*Apropos*"
-                                "*Help*"
-                                "*cvs*"
-                                "*Buffer List*"
-                                "*Ibuffer*"
-                                "*esh command on file*"))
-  (add-hook 'after-init-hook #'winner-mode))
+  :hook (after-init . winner-mode)
+  :init (setq winner-boring-buffers '("*Completions*"
+                                      "*Compile-Log*"
+                                      "*inferior-lisp*"
+                                      "*Fuzzy Completions*"
+                                      "*Apropos*"
+                                      "*Help*"
+                                      "*cvs*"
+                                      "*Buffer List*"
+                                      "*Ibuffer*"
+                                      "*esh command on file*")))
 
 ;; Quickly switch windows
 (use-package ace-window
   :bind ([remap other-window] . ace-window)
+  :custom-face
+  (aw-leading-char-face ((t (:foreground "deep sky blue" :bold t :height 3.0))))
+  (aw-mode-line-face ((t (:inherit 'mode-line-buffer-id :foreground "lawn green"))))
   :config
-  (set-face-attribute 'aw-leading-char-face nil :foreground "deep sky blue" :weight 'bold :height 3.0)
-  (set-face-attribute 'aw-mode-line-face nil :inherit 'mode-line-buffer-id :foreground "lawn green")
-
   (add-to-list 'aw-dispatch-alist '(?l balance-windows "Balance Windows") t)
   (add-to-list 'aw-dispatch-alist '(?u winner-undo "Switch back to an earlier config") t)
   (add-to-list 'aw-dispatch-alist '(?r winner-redo "Restore to a recent config") t)
@@ -98,7 +97,7 @@
 ;; Popup Window Manager
 (use-package popwin
   :commands popwin-mode
-  :init (add-hook 'after-init-hook #'popwin-mode)
+  :hook (after-init . popwin-mode)
   :config
   (bind-key "C-z" popwin:keymap)
 
@@ -174,7 +173,7 @@
 
 ;; Easy window config switching
 (use-package eyebrowse
-  :init (add-hook 'after-init-hook #'eyebrowse-mode))
+  :hook (after-init . eyebrowse-mode))
 
 (provide 'init-window)
 
