@@ -79,6 +79,7 @@
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
+  :custom-face (hl-todo ((t (:box t :bold t))))
   :bind (:map hl-todo-mode-map
               ([C-f3] . hl-todo-occur)
               ("C-c t p" . hl-todo-previous)
@@ -86,7 +87,6 @@
               ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
-  (set-face-attribute 'hl-todo nil :box t :bold t)
   (dolist (keyword '("BUG" "DEFECT" "ISSUE" "WORKAROUND"))
     (cl-pushnew `(,keyword . "#cd5c5c") hl-todo-keyword-faces)))
 
@@ -94,6 +94,13 @@
 (use-package diff-hl
   :defines desktop-minor-mode-table
   :commands diff-hl-magit-post-refresh
+  :custom ((diff-hl-draw-borders nil)
+           (fringes-outside-margins t)
+           (fringe-mode '(4 . 8)))
+  :custom-face
+  (diff-hl-change ((t (:background "DeepSkyBlue"))))
+  (diff-hl-delete ((t (:background "OrangeRed"))))
+  (diff-hl-insert ((t (:background "YellowGreen"))))
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -102,25 +109,13 @@
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
 
-  (if (display-graphic-p)
-      (progn
-        ;; Beautify faces
-        (set-fringe-mode '(4 . 8))
-        (setq-default fringes-outside-margins t)
-        (add-hook 'after-load-theme-hook
-                  (lambda ()
-                    "Set diff-hl faces."
-                    (setq diff-hl-draw-borders nil)
-                    (set-face-background 'diff-hl-change "DeepSkyBlue")
-                    (set-face-background 'diff-hl-delete "OrangeRed")
-                    (set-face-background 'diff-hl-insert "YellowGreen"))))
-    (progn
-      ;; Fall back to the display margin since the fringe is unavailable in tty
-      (diff-hl-margin-mode 1)
-      ;; Avoid restoring `diff-hl-margin-mode'
-      (with-eval-after-load 'desktop
-        (add-to-list 'desktop-minor-mode-table
-                     '(diff-hl-margin-mode nil)))))
+  (unless (display-graphic-p)
+    ;; Fall back to the display margin since the fringe is unavailable in tty
+    (diff-hl-margin-mode 1)
+    ;; Avoid restoring `diff-hl-margin-mode'
+    (with-eval-after-load 'desktop
+      (add-to-list 'desktop-minor-mode-table
+                   '(diff-hl-margin-mode nil))))
 
   ;; Integration with magit
   (with-eval-after-load 'magit
