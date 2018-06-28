@@ -33,7 +33,7 @@
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
-  :init (add-hook 'after-init-hook #'global-hl-line-mode))
+  :hook (after-init . global-hl-line-mode))
 
 ;; Highlight symbols
 (use-package symbol-overlay
@@ -45,12 +45,12 @@
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
-  :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
+  :hook (prog-mode . symbol-overlay-mode))
 
 ;; Highlight matching paren
 (use-package paren
   :ensure nil
-  :init (add-hook 'after-init-hook #'show-paren-mode)
+  :hook (after-init . show-paren-mode)
   :config
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t))
@@ -58,7 +58,7 @@
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
-    :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+    :hook (prog-mode . highlight-indent-guides-mode)
     :config
     (setq highlight-indent-guides-method 'character)
     (setq highlight-indent-guides-responsive t)))
@@ -75,7 +75,7 @@
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
@@ -92,11 +92,11 @@
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
+  :defines desktop-minor-mode-table
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
-  :init
-  (add-hook 'after-init-hook #'global-diff-hl-mode)
-  (add-hook 'dired-mode-hook #'diff-hl-dired-mode)
+  :hook ((after-init . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode))
   :config
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
@@ -128,15 +128,13 @@
 ;; Highlight some operations
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
-  :init (add-hook 'after-init-hook #'volatile-highlights-mode))
+  :hook (after-init . volatile-highlights-mode))
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
 (use-package whitespace
   :ensure nil
   :diminish whitespace-mode
-  :init
-  (dolist (hook '(prog-mode-hook outline-mode-hook conf-mode-hook))
-    (add-hook hook #'whitespace-mode))
+  :hook ((prog-mode outline-mode conf-mode) . whitespace-mode)
   :config
   (setq whitespace-line-column fill-column) ;; limit line length
   ;; automatically clean up bad whitespace
@@ -166,7 +164,8 @@
 
 ;; Flash the current line
 (use-package nav-flash
-  :init
+  :defines compilation-highlight-overlay
+  :preface
   (defun my-blink-cursor-maybe (orig-fn &rest args)
     "Blink current line if the window has moved."
     (let ((point (save-excursion (goto-char (window-start))
@@ -185,15 +184,13 @@
       (nav-flash-show)
       ;; only show in the current window
       (overlay-put compilation-highlight-overlay 'window (selected-window))))
-
+  :hook ((imenu-after-jump switch-window-finish) . my-blink-cursor)
+  :init
   ;; NOTE In :feature jump `recenter' is hooked to a bunch of jumping commands,
   ;; which will trigger nav-flash.
   (advice-add #'windmove-do-window-select :around #'my-blink-cursor-maybe)
   (advice-add #'other-window :around #'my-blink-cursor-maybe)
-  (advice-add #'recenter :around #'my-blink-cursor-maybe)
-
-  (add-hook 'imenu-after-jump-hook #'my-blink-cursor)
-  (add-hook 'switch-window-finish-hook #'my-blink-cursor))
+  (advice-add #'recenter :around #'my-blink-cursor-maybe))
 
 (provide 'init-highlight)
 
