@@ -51,10 +51,10 @@
               ("M-." . godef-jump)
               ("C-c C-r" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
-  :hook (before-save . gofmt-before-save)
   :config
   ;; `goimports' or `gofmt'
   (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package go-dlv)
   (use-package go-fill-struct)
