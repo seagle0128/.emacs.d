@@ -30,16 +30,15 @@
 
 ;;; Code:
 
+;; Prettify Symbols
+;; e.g. display “lambda” as “λ”
 (use-package prog-mode
   :ensure nil
-  :init
-  ;; Prettify Symbols
-  ;; e.g. display “lambda” as “λ”
-  (when (boundp 'global-prettify-symbols-mode)
-    (add-hook 'after-init-hook #'global-prettify-symbols-mode)
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda ()
-                (push '("<=" . ?≤) prettify-symbols-alist)))))
+  :hook (after-init . global-prettify-symbols-mode)
+  :config
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (push '("<=" . ?≤) prettify-symbols-alist))))
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
@@ -48,7 +47,7 @@
          ("M-g i" . dumb-jump-go-prompt)
          ("M-g x" . dumb-jump-go-prefer-external)
          ("M-g z" . dumb-jump-go-prefer-external-other-window))
-  :init (add-hook 'after-init-hook #'dumb-jump-mode)
+  :hook (after-init . dumb-jump-mode)
   :config
   (setq dumb-jump-prefer-searcher 'rg)
   (with-eval-after-load 'ivy
@@ -85,20 +84,18 @@
 
 (use-package editorconfig
   :diminish editorconfig-mode
-  :init (add-hook 'after-init-hook #'editorconfig-mode))
+  :hook (after-init . editorconfig-mode))
 
 ;; Batch Mode eXtras
 (use-package bmx-mode
   :after company
   :diminish bmx-mode
-  :init (bmx-mode-setup-defaults))
+  :hook (after-init . bmx-mode-setup-defaults))
 
 (use-package fish-mode
-  :init
-  (add-hook 'fish-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook
-                        #'fish_indent-before-save))))
+  :hook (fish-mode . (lambda ()
+                       (add-hook 'before-save-hook
+                                 #'fish_indent-before-save))))
 
 (use-package swift-mode
   :config
