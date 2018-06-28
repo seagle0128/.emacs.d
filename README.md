@@ -162,7 +162,7 @@ switch manually via `M-x switch-package-archives` anytime.
 
 1. How to search Chinese via pinyin?
 
-   In Emacs, `C-s !`
+   In Emacs, `C-s :`. If you just want to search `:`, use `C-s \:`.
 
 1. How to enable `plantuml` in `org-mode`?
 
