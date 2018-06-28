@@ -93,6 +93,7 @@
 ;; Highlight uncommitted changes
 (use-package diff-hl
   :defines desktop-minor-mode-table
+  :commands diff-hl-magit-post-refresh
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -165,6 +166,7 @@
 ;; Flash the current line
 (use-package nav-flash
   :defines compilation-highlight-overlay
+  :functions windmove-do-window-select
   :preface
   (defun my-blink-cursor-maybe (orig-fn &rest args)
     "Blink current line if the window has moved."
