@@ -60,7 +60,7 @@
 ;; Start server
 (use-package server
   :ensure nil
-  :init (add-hook 'after-init-hook #'server-mode))
+  :hook (after-init . server-mode))
 
 ;; History
 (use-package saveplace
@@ -69,14 +69,13 @@
 
 (use-package recentf
   :ensure nil
-  :init
-  (setq recentf-max-saved-items 200)
-
   ;; lazy load recentf
+  :hook (find-file . (lambda () (unless recentf-mode
+                             (recentf-mode)
+                             (recentf-track-opened-file))))
+  :init
   ;; (add-hook 'after-init-hook #'recentf-mode)
-  (add-hook 'find-file-hook (lambda () (unless recentf-mode
-                                         (recentf-mode)
-                                         (recentf-track-opened-file))))
+  (setq recentf-max-saved-items 200)
   :config
   (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
   (add-to-list 'recentf-exclude "bookmarks")
@@ -84,16 +83,15 @@
 
 (use-package savehist
   :ensure nil
-  :init
-  (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-        history-length 1000
-        savehist-additional-variables '(mark-ring
-                                        global-mark-ring
-                                        search-ring
-                                        regexp-search-ring
-                                        extended-command-history)
-        savehist-autosave-interval 60)
-  (add-hook 'after-init-hook #'savehist-mode))
+  :hook (after-init . savehist-mode)
+  :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
+              history-length 1000
+              savehist-additional-variables '(mark-ring
+                                              global-mark-ring
+                                              search-ring
+                                              regexp-search-ring
+                                              extended-command-history)
+              savehist-autosave-interval 60))
 
 (provide 'init-basic)
 

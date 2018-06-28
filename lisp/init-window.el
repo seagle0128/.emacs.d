@@ -92,7 +92,7 @@
 
 ;; Numbered window shortcuts
 (use-package window-numbering
-  :init (add-hook 'after-init-hook #'window-numbering-mode))
+  :hook (after-init . window-numbering-mode))
 
 ;; Popup Window Manager
 (use-package popwin
