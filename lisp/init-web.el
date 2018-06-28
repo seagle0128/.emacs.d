@@ -46,9 +46,7 @@
 ;; CSS eldoc
 (use-package css-eldoc
   :commands turn-on-css-eldoc
-  :init
-  (dolist (hook '(css-mode-hook scss-mode-hook less-css-mode-hook))
-    (add-hook hook #'turn-on-css-eldoc)))
+  :hook ((css-mode scss-mode less-css-mode) . turn-on-css-eldoc))
 
 ;; JSON mode
 (use-package json-mode)
@@ -59,9 +57,8 @@
          ("\\.jsx\\'" . js2-jsx-mode))
   :interpreter (("node" . js2-mode)
                 ("node" . js2-jsx-mode))
-  :init
-  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
-  (add-hook 'js2-mode-hook #'js2-highlight-unused-variables-mode)
+  :hook ((js2-mode . js2-imenu-extras-mode)
+         (js2-mode . js2-highlight-unused-variables-mode))
   :config
   (with-eval-after-load 'flycheck
     (if (or (executable-find "eslint")
@@ -70,7 +67,7 @@
 
   (use-package js2-refactor
     :diminish js2-refactor-mode
-    :init (add-hook 'js2-mode-hook #'js2-refactor-mode)
+    :hook (js2-mode . js2-refactor-mode)
     :config (js2r-add-keybindings-with-prefix "C-c C-m")))
 
 ;; Run Mocha or Jasmine tests
@@ -84,16 +81,16 @@
 ;; Typescript Interactive Development Environment
 (use-package tide
   :diminish tide-mode
-  :init
+  :defines company-backends
+  :preface
   (defun setup-tide-mode ()
     "Setup tide mode."
     (interactive)
     (tide-setup)
     (eldoc-mode 1)
     (tide-hl-identifier-mode 1))
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-hook 'js2-mode-hook #'setup-tide-mode)
-  (add-hook 'before-save-hook #'tide-format-before-save)
+  :hook (((typescript-mode js2-mode) . setup-tide-mode)
+         (before-save . tide-format-before-save))
   :config
   (setq tide-format-options
         '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
@@ -106,6 +103,7 @@
 
 ;; Major mode for editing web templates
 (use-package web-mode
+  :defines company-backends
   :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\|swig\\|tm?pl\\|vue\\)$"
   :config
   (setq web-mode-markup-indent-offset 2)
@@ -115,24 +113,18 @@
   ;; Complete for web,html,emmet,jade,slim modes
   (with-eval-after-load 'company
     (use-package company-web
-      :init
-      (cl-pushnew (company-backend-with-yas 'company-web-html) company-backends)
-      (cl-pushnew (company-backend-with-yas 'company-web-jade) company-backends)
-      (cl-pushnew (company-backend-with-yas 'company-web-slim) company-backends))))
+      :functions company-backend-with-yas
+      :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
+              (cl-pushnew (company-backend-with-yas mode) company-backends)))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :diminish skewer-mode
+  :hook ((js2-mode . skewer-mode)
+         (css-mode . skewer-css-mode)
+         (web-mode . skewer-html-mode)
+         (html-mode . skewer-html-mode))
   :init
-  (with-eval-after-load 'js2-mode
-    (add-hook 'js2-mode-hook #'skewer-mode))
-  (with-eval-after-load 'css-mode
-    (add-hook 'css-mode-hook #'skewer-css-mode))
-  (with-eval-after-load 'web-mode
-    (add-hook 'web-mode-hook #'skewer-html-mode))
-  (with-eval-after-load 'sgml-mode
-    (add-hook 'html-mode-hook #'skewer-html-mode))
-
   ;; diminish
   (with-eval-after-load 'skewer-css
     (diminish 'skewer-css-mode))
