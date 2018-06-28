@@ -186,18 +186,12 @@
     ;; Highlight current line number
     (use-package hlinum
       :defines linum-highlight-in-all-buffersp
-      :preface
-      (defun set-linum-highlight-face ()
-        (set-face-attribute 'linum-highlight-face
-                            nil
-                            :inherit 'default
-                            :background (face-background 'default)
-                            :foreground (face-foreground 'default)))
-      :hook ((global-linum-mode . hlinum-activate)
-             (after-load-theme . set-linum-highlight-face))
-      :config
+      :hook (global-linum-mode . hlinum-activate)
+      :init
       (setq linum-highlight-in-all-buffersp t)
-      (set-linum-highlight-face))))
+      (custom-set-faces
+       `(linum-highlight-face
+         ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
