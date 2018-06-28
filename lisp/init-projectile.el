@@ -35,7 +35,7 @@
 ;; Manage and navigate projects
 (use-package projectile
   :bind (("s-t" . projectile-find-file)) ; `cmd-t' or `super-t'
-  :init (add-hook 'after-init-hook #'projectile-mode)
+  :hook (after-init . projectile-mode)
   :config
   (setq projectile-mode-line
         '(:eval (format "[%s]" (projectile-project-name))))
@@ -85,7 +85,7 @@
   ;; Rails project
   (use-package projectile-rails
     :diminish projectile-rails-mode
-    :init (projectile-rails-global-mode 1)))
+    :hook (projectile-mode . projectile-rails-global-mode)))
 
 (provide 'init-projectile)
 
