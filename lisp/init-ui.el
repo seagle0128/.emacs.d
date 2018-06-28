@@ -73,6 +73,11 @@
       (use-package eldoc-eval))
   (use-package spaceline-config
     :ensure spaceline
+    :defines (powerline-default-separator
+              powerline-image-apple-rgb
+              spaceline-pre-hook
+              spaceline-highlight-face-func)
+    :functions powerline-reset
     :hook (after-init . spaceline-spacemacs-theme)
     :init
     (setq powerline-default-separator (if window-system 'arrow 'utf-8))
@@ -129,18 +134,18 @@
 
 ;; Fonts
 (use-package cnfonts
-  :hook (after-init . cnfonts-enable)
-  :config
+  :preface
   ;; Fallback to `all-the-icons'.
-  (defun cnfonts--set-all-the-icons-fonts (fontsizes-list)
+  (defun cnfonts--set-all-the-icons-fonts (&optional _)
     "Show icons in all-the-icons."
     (when (featurep 'all-the-icons)
       (dolist (charset '(kana han cjk-misc bopomofo gb18030))
         (set-fontset-font "fontset-default" charset "github-octicons" nil 'append)
         (set-fontset-font "fontset-default" charset "FontAwesome" nil 'append)
         (set-fontset-font "fontset-default" charset "Material Icons" nil 'append))))
-  (add-hook 'cnfonts-set-font-finish-hook #'cnfonts--set-all-the-icons-fonts)
-
+  :hook ((after-init . cnfonts-enable)
+         (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
+  :config
   ;; Keep frame size
   (setq cnfonts-keep-frame-size nil)
   (add-hook 'window-setup-hook
@@ -169,13 +174,17 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      :init (add-hook 'prog-mode-hook #'display-line-numbers-mode))
+      :hook (prog-mode . display-line-numbers-mode))
   (use-package linum-off
     :demand
-    :init (add-hook 'after-init-hook #'global-linum-mode)
-    :config (setq linum-format "%4d ")
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :config
+    (setq linum-format "%4d ")
+
     ;; Highlight current line number
     (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
       :preface
       (defun set-linum-highlight-face ()
         (set-face-attribute 'linum-highlight-face
@@ -183,11 +192,11 @@
                             :inherit 'default
                             :background (face-background 'default)
                             :foreground (face-foreground 'default)))
-      :init (add-hook 'global-linum-mode-hook #'hlinum-activate)
+      :hook ((global-linum-mode . hlinum-activate)
+             (after-load-theme . set-linum-highlight-face))
       :config
       (setq linum-highlight-in-all-buffersp t)
-      (set-linum-highlight-face)
-      (add-hook 'after-load-theme-hook #'set-linum-highlight-face))))
+      (set-linum-highlight-face))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -201,10 +210,10 @@
 (use-package time
   :ensure nil
   :unless (display-graphic-p)
+  :hook (after-init . display-time-mode)
   :init
   (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  (add-hook 'after-init-hook #'display-time-mode))
+  (setq display-time-day-and-date t))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
