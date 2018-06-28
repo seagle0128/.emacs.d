@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
+(eval-when-compile
+  (require 'init-const))
 
 ;; Git
 (use-package magit
@@ -48,6 +49,7 @@
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow
     :diminish magit-gitflow-mode
+    :functions magit-define-popup-action
     :bind (:map magit-status-mode-map
                 ("G" . magit-gitflow-popup))
     :init (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)
