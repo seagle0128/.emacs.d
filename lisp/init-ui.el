@@ -146,6 +146,16 @@
   :hook ((after-init . cnfonts-enable)
          (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
   :config
+  ;; NOTE: on macOS, the frame size is changed during the startup without below.
+  ;; Keep frame size
+  (setq cnfonts-keep-frame-size nil)
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (setq cnfonts-keep-frame-size t)))
+
+  ;; Balance windows since `cnfonts' has issue in Emacs 26 on macOS
+  (balance-windows)
+
   ;; Set profiles
   (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
