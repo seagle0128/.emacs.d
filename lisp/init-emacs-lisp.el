@@ -58,6 +58,7 @@
 
 ;; A better *Help* buffer
 (use-package helpful
+  :defines ivy-initial-inputs-alist
   :bind (("C-c C-d" . helpful-at-point))
   :config
   (with-eval-after-load 'ivy
