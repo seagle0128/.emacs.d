@@ -162,7 +162,6 @@
 
 ;; Flash the current line
 (use-package nav-flash
-  :hook ((imenu-after-jump switch-window-finish) . nav-flash-show)
   :init
   (defun my-blink-cursor-maybe (orig-fn &rest args)
     "Blink current line if the window has moved."
@@ -187,7 +186,10 @@
   ;; which will trigger nav-flash.
   (advice-add #'windmove-do-window-select :around #'my-blink-cursor-maybe)
   (advice-add #'other-window :around #'my-blink-cursor-maybe)
-  (advice-add #'recenter :around #'my-blink-cursor-maybe))
+  (advice-add #'recenter :around #'my-blink-cursor-maybe)
+
+  (add-hook 'imenu-after-jump-hook #'my-blink-cursor)
+  (add-hook 'switch-window-finish-hook #'my-blink-cursor))
 
 (provide 'init-highlight)
 
