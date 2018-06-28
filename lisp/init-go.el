@@ -51,10 +51,10 @@
               ("M-." . godef-jump)
               ("C-c C-r" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
+  :hook (before-save . gofmt-before-save)
   :config
   ;; `goimports' or `gofmt'
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package go-dlv)
   (use-package go-fill-struct)
@@ -64,7 +64,7 @@
   (use-package govet)
 
   (use-package go-eldoc
-    :init (add-hook 'go-mode-hook #'go-eldoc-setup))
+    :hook (go-mode . go-eldoc-setup))
 
   (use-package go-guru
     :bind (:map go-mode-map
@@ -89,15 +89,15 @@
 
   (with-eval-after-load 'company
     (use-package company-go
+      :functions company-backend-with-yas
       :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
 
   (with-eval-after-load 'projectile
     ;; M-x `go-projectile-install-tools'
     (use-package go-projectile
       :commands (go-projectile-mode go-projectile-switch-project)
-      :init
-      (add-hook 'projectile-after-switch-project-hook #'go-projectile-switch-project)
-      (add-hook 'go-mode-hook #'go-projectile-mode))))
+      :hook ((go-mode . go-projectile-mode)
+             (projectile-after-switch-project . go-projectile-switch-project)))))
 
 (provide 'init-go)
 
