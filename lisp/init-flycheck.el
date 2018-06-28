@@ -41,14 +41,14 @@
   ;; Display Flycheck errors in GUI tooltips
   (if (display-graphic-p)
       (use-package flycheck-pos-tip
-        :init (flycheck-pos-tip-mode 1)
+        :hook (global-flycheck-mode . flycheck-pos-tip-mode)
         :config (setq flycheck-pos-tip-timeout 30))
     (use-package flycheck-popup-tip
-      :init (flycheck-popup-tip-mode 1)))
+      :hook (global-flycheck-mode . flycheck-popup-tip-mode)))
 
   ;; Jump to and fix syntax errors via `avy'
   (use-package avy-flycheck
-    :init (avy-flycheck-setup)))
+    :hook (global-flycheck-mode . avy-flycheck-setup)))
 
 (provide 'init-flycheck)
 
