@@ -93,9 +93,8 @@
 ;; Initialization benchmark
 (when centaur-benchmark-enabled
   (use-package benchmark-init
-    :init
-    (benchmark-init/activate)
-    (add-hook 'after-init-hook #'benchmark-init/deactivate)))
+    :hook (after-init . benchmark-init/deactivate)
+    :init (benchmark-init/activate)))
 
 ;; Extensions
 (use-package package-utils
