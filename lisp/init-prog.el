@@ -42,6 +42,7 @@
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
+  :functions dumb-jump-hydra/body
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt)
@@ -101,6 +102,7 @@
   :config
   (with-eval-after-load 'flycheck
     (use-package flycheck-swift
+      :commands flycheck-swift-setup
       :init (flycheck-swift-setup))))
 
 (use-package rust-mode
