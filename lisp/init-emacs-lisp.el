@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-custom))
 
 ;; Emacs lisp mode
 (use-package elisp-mode

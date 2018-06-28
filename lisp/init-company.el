@@ -32,7 +32,8 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-custom))
 
 (use-package company
   :diminish company-mode

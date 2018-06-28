@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
+(eval-when-compile
+  (require 'init-const))
 
 (use-package org
   :ensure nil
@@ -109,8 +110,8 @@
   ;; Visually summarize progress
   (use-package org-dashboard)
 
-  (eval-when-compile
-    (with-eval-after-load 'hydra
+  (with-eval-after-load 'hydra
+    (eval-and-compile
       (defun hot-expand (str &optional mod)
         "Expand org template."
         (let (text)

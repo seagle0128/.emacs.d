@@ -31,20 +31,22 @@
 ;;; Code:
 
 (use-package markdown-mode
+  :defines flycheck-markdown-markdownlint-cli-config
   :mode (("README\\.md\\'" . gfm-mode))
   :config
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
 
   (with-eval-after-load 'flycheck
-    (defun set-markdownlint-config ()
-      "Set the `mardkownlint' config file for the current buffer."
-      (when (and (executable-find "markdownlint") buffer-file-name)
-        (let ((md-lint ".markdownlint.json"))
-          (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
-            (if md-lint-dir
-                (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
-    (add-hook 'markdown-mode-hook #'set-markdownlint-config))
+    (eval-and-compile
+      (defun set-markdownlint-config ()
+        "Set the `mardkownlint' config file for the current buffer."
+        (when (and (executable-find "markdownlint") buffer-file-name)
+          (let ((md-lint ".markdownlint.json"))
+            (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
+              (if md-lint-dir
+                  (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
+      (add-hook 'markdown-mode-hook #'set-markdownlint-config)))
 
   ;; Preview
   (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css"))
@@ -85,13 +87,14 @@
 
   ;; Render and preview via `grip'
   (when (executable-find "grip")
-    (defun markdown-to-html ()
-      (interactive)
-      (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) "5000")
-      (browse-url (format "http://localhost:5000/%s.%s"
-                          (file-name-base)
-                          (file-name-extension
-                           (buffer-file-name)))))
+    (eval-and-compile
+      (defun markdown-to-html ()
+        (interactive)
+        (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) "5000")
+        (browse-url (format "http://localhost:5000/%s.%s"
+                            (file-name-base)
+                            (file-name-extension
+                             (buffer-file-name))))))
     (bind-key "V" #'markdown-to-html markdown-mode-command-map)))
 
 (provide 'init-markdown)

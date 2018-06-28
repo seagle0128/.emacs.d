@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
+(eval-when-compile
+  (require 'init-const))
 
 ;; Directory operations
 (use-package dired
