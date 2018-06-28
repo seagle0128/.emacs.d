@@ -33,18 +33,9 @@
 ;; Emacs command shell
 (use-package eshell
   :ensure nil
-  :config
-  ;; Eshell prompt for git users
-  (use-package eshell-git-prompt
-    :init
-    (add-hook 'eshell-load-hook
-              (lambda () (eshell-git-prompt-use-theme "robbyrussell"))))
-
-  ;; cd to frequent directory in eshell
-  (use-package eshell-z
-    :init (add-hook 'eshell-mode-hook
-                    (lambda () (require 'eshell-z))))
-
+  :defines (compilation-last-buffer eshell-prompt-function)
+  :commands (eshell-flatten-list eshell-interactive-output-p eshell-parse-command)
+  :preface
   (defun eshell/clear ()
     "Clear the eshell buffer."
     (interactive)
@@ -83,8 +74,7 @@
     "View FILE.  A version of `view-file' which properly rets the eshell prompt."
     (interactive "fView file: ")
     (unless (file-exists-p file) (error "%s does not exist" file))
-    (let ((had-a-buf (get-file-buffer file))
-          (buffer (find-file-noselect file)))
+    (let ((buffer (find-file-noselect file)))
       (if (eq (with-current-buffer buffer (get major-mode 'mode-class))
               'special)
           (progn
@@ -107,7 +97,19 @@
             (forward-line line))
         (eshell-view-file (pop args)))))
 
-  (defalias 'eshell/more 'eshell/less))
+  (defalias 'eshell/more 'eshell/less)
+  :config
+  ;; Eshell prompt for git users
+  (use-package eshell-git-prompt
+    :hook (eshell-load
+           .
+           (lambda () (eshell-git-prompt-use-theme "robbyrussell"))))
+
+  ;; cd to frequent directory in eshell
+  (use-package eshell-z
+    :hook (eshell-mode
+           .
+           (lambda () (require 'eshell-z)))))
 
 (provide 'init-eshell)
 

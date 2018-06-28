@@ -34,25 +34,15 @@
 
 (use-package shell
   :ensure nil
-  :config
-  (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
-  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
-
-  (defun n-shell-mode-hook ()
-    "Shell mode customizations."
-    (local-set-key '[up] 'comint-previous-input)
-    (local-set-key '[down] 'comint-next-input)
-    (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
-    (setq comint-input-sender 'n-shell-simple-send))
-
+  :commands comint-send-string comint-simple-send comint-strip-ctrl-m
+  :preface
   (defun n-shell-simple-send (proc command)
     "Various PROC COMMANDs pre-processing before sending to shell."
     (cond
      ;; Checking for clear command and execute it.
      ((string-match "^[ \t]*clear[ \t]*$" command)
       (comint-send-string proc "\n")
-      (erase-buffer)
-      )
+      (erase-buffer))
      ;; Checking for man command and execute it.
      ((string-match "^[ \t]*man[ \t]*" command)
       (comint-send-string proc "\n")
@@ -62,13 +52,21 @@
       (funcall 'man command))
      ;; Send other commands to the default handler.
      (t (comint-simple-send proc command))))
-
-  (add-hook 'shell-mode-hook #'n-shell-mode-hook))
+  (defun n-shell-mode-hook ()
+    "Shell mode customizations."
+    (local-set-key '[up] 'comint-previous-input)
+    (local-set-key '[down] 'comint-next-input)
+    (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
+    (setq comint-input-sender 'n-shell-simple-send))
+  :hook ((shell-mode . ansi-color-for-comint-mode-on)
+         (shell-mode . n-shell-mode-hook))
+  :config (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m))
 
 ;; Company mode backend for shell functions
 (with-eval-after-load 'company
   (use-package company-shell
-    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell) company-backends)))
+    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
+                      company-backends)))
 
 ;; Multi term
 (use-package multi-term)
@@ -76,13 +74,12 @@
 ;; Shell Pop
 (use-package shell-pop
   :bind ([f9] . shell-pop)
-  :init
-  (let ((val
-         (if sys/win32p
-             '("eshell" "*eshell*" (lambda () (eshell)))
-           '("ansi-term" "*ansi-term*"
-             (lambda () (ansi-term shell-pop-term-shell))))))
-    (setq shell-pop-shell-type val)))
+  :init (let ((val
+               (if sys/win32p
+                   '("eshell" "*eshell*" (lambda () (eshell)))
+                 '("ansi-term" "*ansi-term*"
+                   (lambda () (ansi-term shell-pop-term-shell))))))
+          (setq shell-pop-shell-type val)))
 
 (provide 'init-shell)
 
