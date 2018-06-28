@@ -146,15 +146,6 @@
   :hook ((after-init . cnfonts-enable)
          (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
   :config
-  ;; Keep frame size
-  (setq cnfonts-keep-frame-size nil)
-  (add-hook 'window-setup-hook
-            (lambda ()
-              (setq cnfonts-keep-frame-size t)))
-
-  ;; Balance windows since `cnfonts' has issue in Emacs 26
-  (balance-windows)
-
   ;; Set profiles
   (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
