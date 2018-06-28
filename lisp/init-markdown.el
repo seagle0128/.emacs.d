@@ -90,11 +90,13 @@
     (eval-and-compile
       (defun markdown-to-html ()
         (interactive)
-        (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) "5000")
-        (browse-url (format "http://localhost:5000/%s.%s"
-                            (file-name-base)
-                            (file-name-extension
-                             (buffer-file-name))))))
+        (let ((port "6419"))
+          (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
+          (browse-url (format "http://localhost:%s/%s.%s"
+                              port
+                              (file-name-base)
+                              (file-name-extension
+                               (buffer-file-name)))))))
     (bind-key "V" #'markdown-to-html markdown-mode-command-map)))
 
 (provide 'init-markdown)
