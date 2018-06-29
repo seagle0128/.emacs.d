@@ -34,11 +34,8 @@
 ;; e.g. display “lambda” as “λ”
 (use-package prog-mode
   :ensure nil
-  :hook (after-init . global-prettify-symbols-mode)
-  :config
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (push '("<=" . ?≤) prettify-symbols-alist))))
+  :hook ((after-init . global-prettify-symbols-mode)
+         (emacs-lisp-mode . (lambda () (push '("<=" . ?≤) prettify-symbols-alist)))))
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump

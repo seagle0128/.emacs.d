@@ -125,14 +125,12 @@
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
-  :hook (after-init . global-aggressive-indent-mode)
-  :init
-  ;; FIXME: Disable in big files due to the performance issues
-  ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-  (add-hook 'find-file-hook
-            (lambda ()
-              (if (> (buffer-size) (* 3000 80))
-                  (aggressive-indent-mode -1))))
+  :hook ((after-init . global-aggressive-indent-mode)
+         ;; FIXME: Disable in big files due to the performance issues
+         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+         (find-file . (lambda ()
+                        (if (> (buffer-size) (* 3000 80))
+                            (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
   (dolist (mode '(asm-mode web-mode html-mode css-mode robot-mode))
@@ -178,14 +176,10 @@
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
   :ensure nil
-  :functions (show-all winner-undo)
-  :init
-  ;; show org ediffs unfolded
-  (with-eval-after-load 'outline
-    (add-hook 'ediff-prepare-buffer-hook #'show-all))
-  ;; restore window layout when done
-  (with-eval-after-load 'winner
-    (add-hook 'ediff-quit-hook #'winner-undo))
+  :hook(;; show org ediffs unfolded
+        (ediff-prepare-buffer . outline-show-all)
+        ;; restore window layout when done
+        (ediff-quit . winner-undo))
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally)
