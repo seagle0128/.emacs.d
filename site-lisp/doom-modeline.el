@@ -808,6 +808,7 @@ lines are selected, or the NxM dimensions of a block selection."
      'face (if (doom-modeline--active) 'doom-modeline-panel))))
 
 (defun doom-modeline-themes--overlay-sort (a b)
+  "Sort overlay A and B."
   (< (overlay-start a) (overlay-start b)))
 
 (defsubst doom-modeline--iedit ()
