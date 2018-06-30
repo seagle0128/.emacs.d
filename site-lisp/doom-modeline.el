@@ -81,7 +81,7 @@
 (defvar evil-ex-active-highlights-alist)
 (defvar evil-ex-argument)
 (defvar evil-ex-range)
-(defvar evil-modee)
+(defvar evil-mode)
 (defvar evil-state)
 (defvar evil-visual-beginning)
 (defvar evil-visual-end)
@@ -728,7 +728,7 @@ segment.")
 lines are selected, or the NxM dimensions of a block selection."
   (when (and mark-active (doom-modeline--active))
     (cl-destructuring-bind (beg . end)
-        (if (and (featurep 'evil) (eq evil-state 'visual))
+        (if (and (bound-and-true-p evil-state) (eq evil-state 'visual))
             (cons evil-visual-beginning evil-visual-end)
           (cons (region-beginning) (region-end)))
       (propertize
@@ -776,7 +776,7 @@ lines are selected, or the NxM dimensions of a block selection."
   (setq anzu-cons-mode-line-p nil)
   (when (and (featurep 'anzu)
              anzu--state
-             (and (featurep 'iedit) (not iedit-mode)))
+             (not (bound-and-true-p iedit-mode)))
     (propertize
      (let ((here anzu--current-position)
            (total anzu--total-matched))
