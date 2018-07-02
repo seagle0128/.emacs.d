@@ -890,7 +890,8 @@ Returns \"\" to not break --no-window-system."
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
 (doom-modeline-def-segment window-number
-  (if (bound-and-true-p window-numbering-mode)
+  (if (and (bound-and-true-p window-numbering-mode)
+           (< 2 (length (window-list))))
       (propertize (format " %s " (window-numbering-get-number-string))
                   'face (if (doom-modeline--active)
                             'doom-modeline-bar
