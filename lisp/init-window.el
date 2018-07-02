@@ -55,7 +55,7 @@
   :bind ([remap other-window] . ace-window)
   :custom-face
   (aw-leading-char-face ((t (:foreground "deep sky blue" :bold t :height 3.0))))
-  (aw-mode-line-face ((t (:inherit 'mode-line-buffer-id :foreground "lawn green"))))
+  (aw-mode-line-face ((t (:inherit 'mode-line-buffer-id :foreground "yellow green"))))
   :config
   (add-to-list 'aw-dispatch-alist '(?l balance-windows "Balance Windows") t)
   (add-to-list 'aw-dispatch-alist '(?u winner-undo "Switch back to an earlier config") t)
