@@ -49,6 +49,7 @@
 (require 'projectile)
 (require 'shrink-path)
 
+
 ;;
 ;; Variables
 ;;
@@ -90,6 +91,9 @@ Given ~/Projects/FOSS/emacs/lisp/comint.el
 (defvar iedit-mode)
 (defvar iedit-occurrences-overlays)
 (defvar text-scale-mode-amount)
+(defvar winum-auto-setup-mode-line)
+
+
 ;;
 ;; Custom faces
 ;;
@@ -890,13 +894,20 @@ Returns \"\" to not break --no-window-system."
 (advice-add #'window-numbering-clear-mode-line :override #'ignore)
 
 (doom-modeline-def-segment window-number
-  (if (and (bound-and-true-p window-numbering-mode)
-           (< 2 (length (window-list nil 'ignore))))
-      (propertize (format " %s " (window-numbering-get-number-string))
-                  'face (if (doom-modeline--active)
-                            'doom-modeline-bar
-                          'doom-modeline-inactive-bar))
-    ""))
+  (setq winum-auto-setup-mode-line nil)
+  (let ((num (cond
+              ((bound-and-true-p winum-mode)
+               (winum-get-number-string))
+              ((bound-and-true-p window-numbering-mode)
+               (window-numbering-get-number-string))
+              (t ""))))
+    (if (and (< 0 (length num))
+             (< 2 (length (window-list nil 'ignore))))
+        (propertize (format " %s " num)
+                    'face (if (doom-modeline--active)
+                              'doom-modeline-bar
+                            'doom-modeline-inactive-bar))
+      "")))
 
 ;;
 ;; workspace-number
