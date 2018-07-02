@@ -891,7 +891,7 @@ Returns \"\" to not break --no-window-system."
 
 (doom-modeline-def-segment window-number
   (if (and (bound-and-true-p window-numbering-mode)
-           (< 2 (length (window-list))))
+           (< 2 (length (window-list nil 'ignore))))
       (propertize (format " %s " (window-numbering-get-number-string))
                   'face (if (doom-modeline--active)
                             'doom-modeline-bar
