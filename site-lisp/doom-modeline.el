@@ -966,14 +966,17 @@ enabled."
       (with-current-buffer bname
         (doom-modeline-set-modeline 'main)))))
 
+;;;###autoload
 (defun doom-modeline-set-special-modeline ()
   "Set sepcial mode-line."
   (doom-modeline-set-modeline 'special))
 
+;;;###autoload
 (defun doom-modeline-set-media-modeline ()
   "Set media mode-line."
   (doom-modeline-set-modeline 'media))
 
+;;;###autoload
 (defun doom-modeline-set-project-modeline ()
   "Set project mode-line."
   (doom-modeline-set-modeline 'project))
