@@ -901,8 +901,7 @@ Returns \"\" to not break --no-window-system."
               ((bound-and-true-p window-numbering-mode)
                (window-numbering-get-number-string))
               (t ""))))
-    (if (and (< 0 (length num))
-             (< 2 (length (window-list nil 'ignore))))
+    (if (< 0 (length num))
         (propertize (format " %s " num)
                     'face (if (doom-modeline--active)
                               'doom-modeline-bar
