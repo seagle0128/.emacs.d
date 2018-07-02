@@ -992,6 +992,7 @@ enabled."
 ;; (add-hook 'doom-dashboard-mode-hook #'doom-modeline-set-project-modeline)
 
 (add-hook 'image-mode-hook #'doom-modeline-set-media-modeline)
+(add-hook 'org-src-mode-hook #'doom-modeline-set-special-modeline)
 (add-hook 'circe-mode-hook #'doom-modeline-set-special-modeline)
 
 ;; Versions, support Python, Ruby and Golang
