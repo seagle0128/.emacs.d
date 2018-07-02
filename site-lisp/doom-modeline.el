@@ -62,7 +62,7 @@
 (defvar doom-modeline-buffer-file-name-style 'truncate-upto-project
   "Determines the style used by `doom-modeline-buffer-file-name'.
 
-  Given ~/Projects/FOSS/emacs/lisp/comint.el
+Given ~/Projects/FOSS/emacs/lisp/comint.el
   truncate-upto-project => ~/P/F/emacs/lisp/comint.el
   truncate-upto-root => ~/P/F/e/lisp/comint.el
   truncate-all => ~/P/F/e/l/comint.el
@@ -218,10 +218,10 @@ active.")
 (defmacro doom-modeline-def-modeline (name lhs &optional rhs)
   "Defines a modeline format and byte-compiles it.
 
-  NAME is a symbol to identify it (used by `doom-modeline' for retrieval).
-  LHS and RHS are lists of symbols of modeline segments defined with
-  `doom-modeline-def-segment'.
-  Example:
+AME is a symbol to identify it (used by `doom-modeline' for retrieval).
+LHS and RHS are lists of symbols of modeline segments defined with
+`doom-modeline-def-segment'.
+Example:
   (doom-modeline-def-modeline minimal
     (bar matches \" \" buffer-info)
     (media-info major-mode))
@@ -270,7 +270,7 @@ active.")
 (defun doom-modeline-project-root ()
   "Get the path to the root of your project.
 
-  If STRICT-P, return nil if no project was found, otherwise return
+If STRICT-P, return nil if no project was found, otherwise return
 `default-directory'."
   (let (projectile-require-project-root)
     (projectile-project-root)))
@@ -445,7 +445,7 @@ active.")
 (defun doom-modeline--buffer-file-name-truncate (&optional truncate-tail)
   "Propertized variable `buffer-file-name' that truncates every dir along path.
 
-  If TRUNCATE-TAIL is t also truncate the parent directory of the file."
+If TRUNCATE-TAIL is t also truncate the parent directory of the file."
   (let ((dirs (shrink-path-prompt (file-name-directory buffer-file-truename)))
         (active (doom-modeline--active)))
     (if (null dirs)
@@ -771,7 +771,7 @@ lines are selected, or the NxM dimensions of a block selection."
 (defsubst doom-modeline--anzu ()
   "Show the match index and total number thereof.
 
-  Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
+Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
 `evil-search'."
   (setq anzu-cons-mode-line-p nil)
   (when (and (featurep 'anzu)
@@ -928,15 +928,15 @@ enabled."
                             (media-info major-mode))
 
 (doom-modeline-def-modeline special
-                            (bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
+                            (window-number bar matches " " buffer-info-simple "  %l:%c %p  " selection-info)
                             (buffer-encoding major-mode flycheck))
 
 (doom-modeline-def-modeline project
-                            (bar buffer-default-directory)
+                            (window-number bar buffer-default-directory)
                             (major-mode))
 
 (doom-modeline-def-modeline media
-                            (bar " %b  ")
+                            (window-number bar " %b  ")
                             (media-info major-mode))
 
 ;;
