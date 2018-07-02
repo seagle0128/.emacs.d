@@ -44,8 +44,8 @@
 (use-package treemacs
   :commands (treemacs-follow-mode treemacs-filewatch-mode treemacs-git-mode)
   :bind (([f8]        . treemacs)
-         ("M-0"       . treemacs-select-window)
-         ("C-c 1"     . treemacs-delete-other-windows))
+         ("M-9"       . treemacs-select-window)
+         ("C-x 1"     . treemacs-delete-other-windows))
   :config
   (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
         treemacs-file-event-delay           5000
