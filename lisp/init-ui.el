@@ -113,11 +113,11 @@
 
  ((is-doom-theme-p centaur-theme)
   (use-package doom-themes
-    :preface (defvar region-fg nil)
     :init
-    (if (eq centaur-theme 'doom)
-        (load-theme 'doom-one t)
-      (load-theme centaur-theme t))
+    (let ((theme (if (eq centaur-theme 'doom)
+                     'doom-one
+                   centaur-theme)))
+      (load-theme theme t))
     :config
     (doom-themes-visual-bell-config)
     (doom-themes-org-config)
