@@ -115,7 +115,6 @@
 
 (use-package rg
   :defines counsel-projectile-command-map
-  :requires wgrep-ag-setup
   :hook ((after-init . rg-enable-default-bindings)
          (rg-mode . wgrep-ag-setup))
   :config
