@@ -124,8 +124,8 @@
 
     (use-package solaire-mode
       :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-             (minibuffer-setup . solaire-mode-in-minibuffer))
-      :init (solaire-mode-swap-bg))))
+             (minibuffer-setup . solaire-mode-in-minibuffer)
+             (after-load-theme . solaire-mode-swap-bg)))))
 
  (t
   (ignore-errors (load-theme centaur-theme t))))
