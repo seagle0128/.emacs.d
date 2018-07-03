@@ -125,9 +125,7 @@
     (use-package solaire-mode
       :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
              (minibuffer-setup . solaire-mode-in-minibuffer))
-      :init
-      (when (eq centaur-theme 'doom-molokai)
-        (solaire-mode-swap-bg)))))
+      :init (solaire-mode-swap-bg))))
 
  (t
   (ignore-errors (load-theme centaur-theme t))))
