@@ -52,11 +52,14 @@
 
 ;; Quickly switch windows
 (use-package ace-window
+  :disabled
   :bind ([remap other-window] . ace-window)
   :custom-face
   (aw-leading-char-face ((t (:foreground "deep sky blue" :bold t :height 3.0))))
   (aw-mode-line-face ((t (:inherit 'mode-line-buffer-id :foreground "yellow green"))))
   :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+
   (add-to-list 'aw-dispatch-alist '(?l balance-windows "Balance Windows") t)
   (add-to-list 'aw-dispatch-alist '(?u winner-undo "Switch back to an earlier config") t)
   (add-to-list 'aw-dispatch-alist '(?r winner-redo "Restore to a recent config") t)
@@ -84,6 +87,7 @@
 (use-package switch-window
   :bind ([remap other-window] . switch-window)
   :config
+  (setq switch-window-shortcut-style 'qwerty)
   (setq switch-window-minibuffer-shortcut ?0)
   (setq switch-window-multiple-frames t)
   (with-eval-after-load 'ivy
