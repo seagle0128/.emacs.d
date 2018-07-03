@@ -1009,13 +1009,13 @@ enabled."
 ;; Versions, support Python, Ruby and Golang
 (add-hook 'python-mode-hook
           (lambda ()
-            (setq doom-modeline-env-command "python --version 2>&1 | cut -d' ' -f2")))
+            (setq doom-modeline-env-command "python --version 2>&1 | cut -d' ' -f2 | sed -n '1p'")))
 (add-hook 'ruby-mode-hook
           (lambda ()
-            (setq doom-modeline-env-command "ruby --version 2>&1 | cut -d' ' -f2")))
+            (setq doom-modeline-env-command "ruby --version 2>&1 | cut -d' ' -f2 | sed -n '1p'")))
 (add-hook 'go-mode-hook
           (lambda ()
-            (setq doom-modeline-env-command "go version 2>&1 | cut -d' ' -f3 | tr -d 'go'")))
+            (setq doom-modeline-env-command "go version 2>&1 | cut -d' ' -f3 | tr -d 'go' | sed -n '1p'")))
 
 
 ;; Ensure modeline is inactive when Emacs is unfocused (and active otherwise)
