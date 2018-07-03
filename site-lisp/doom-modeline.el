@@ -222,7 +222,7 @@ active.")
 (defmacro doom-modeline-def-modeline (name lhs &optional rhs)
   "Defines a modeline format and byte-compiles it.
 
-AME is a symbol to identify it (used by `doom-modeline' for retrieval).
+NAME is a symbol to identify it (used by `doom-modeline' for retrieval).
 LHS and RHS are lists of symbols of modeline segments defined with
 `doom-modeline-def-segment'.
 Example:
