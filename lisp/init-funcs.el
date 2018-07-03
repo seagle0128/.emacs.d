@@ -105,6 +105,12 @@
   (interactive)
   (byte-recompile-directory package-user-dir nil t))
 
+;; Recompile site-lisp directory
+(defun recompile-site-lisp ()
+  "Recompile packages in site-lisp directory."
+  (interactive)
+  (byte-recompile-directory (concat user-emacs-directory "site-lisp") 0 t))
+
 ;; Configure network proxy
 (defun show-proxy ()
   "Show http/https proxy."
