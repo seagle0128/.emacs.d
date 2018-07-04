@@ -153,8 +153,8 @@
     :hook (ivy-mode . ivy-rich-mode)
     :config
     (setq ivy-virtual-abbreviate 'full
-          ivy-rich-switch-buffer-align-virtual-buffer t)
-    (setq ivy-rich-path-style 'abbrev))
+          ivy-rich-switch-buffer-align-virtual-buffer t
+          ivy-rich-path-style 'abbrev))
 
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
