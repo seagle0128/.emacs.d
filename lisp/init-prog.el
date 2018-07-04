@@ -107,7 +107,6 @@
 
 (use-package robot-mode
   :ensure nil
-  :load-path "site-lisp"
   :commands robot-mode
   :mode "\\.robot\\'")
 
