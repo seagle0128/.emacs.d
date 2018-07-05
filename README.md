@@ -1,7 +1,6 @@
 # Centaur Emacs
 
-[![Build
-Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+[![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
 [![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 ![Centaur Emacs](logo.png)
@@ -52,7 +51,7 @@ latest stable release - currently **26.1**.
 
 ### GNU Emacs
 
-Emacs 24.4+. Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
 ### Dotfiles
 
