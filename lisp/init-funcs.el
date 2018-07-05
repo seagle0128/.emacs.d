@@ -31,7 +31,6 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'cl)
   (require 'socks)
   (require 'init-const)
   (require 'init-custom)
@@ -158,22 +157,6 @@
   (setq url-gateway-method 'native)
   (setq socks-noproxy nil)
   (message "Disable socks proxy."))
-
-(when sys/macp
-  (defun play-sound-internal (sound)
-    "Internal function for `play-sound' (which see)."
-    (or (eq (car-safe sound) 'sound)
-        (signal 'wrong-type-argument (list sound)))
-
-    (destructuring-bind (&key file data volume device)
-        (cdr sound)
-
-      (and (or data device)
-           (error "DATA and DEVICE arg not supported"))
-
-      (apply #'start-process "afplay" nil
-             "afplay" (append (and volume (list "-v" volume))
-                              (list (expand-file-name file data-directory)))))))
 
 (provide 'init-funcs)
 
