@@ -65,12 +65,7 @@
 ;; Modeline
 (if (is-doom-theme-p centaur-theme)
     (use-package doom-modeline
-      :ensure nil
-      :commands (doom-modeline-init)
-      :hook (after-load-theme . doom-modeline-init)
-      :config
-      (use-package shrink-path)
-      (use-package eldoc-eval))
+      :hook (after-load-theme . doom-modeline-init))
   (use-package spaceline-config
     :ensure spaceline
     :defines (powerline-default-separator
