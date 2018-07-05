@@ -115,7 +115,8 @@
           ((executable-find "rg")
            "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
           ((executable-find "ag")
-           "ag -i --noheading --nocolor --nofilename --numbers '%s' %s"))))
+           "ag -i --noheading --nocolor --nofilename --numbers '%s' %s")
+          (t counsel-grep-base-command))))
     (setq counsel-grep-base-command command))
 
   ;; Integration with `projectile'
