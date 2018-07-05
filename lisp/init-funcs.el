@@ -31,7 +31,11 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-custom))
+  (require 'cl)
+  (require 'socks)
+  (require 'init-const)
+  (require 'init-custom)
+  (require 'init-package))
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
@@ -146,15 +150,30 @@
   (setq url-gateway-method 'socks)
   (setq socks-noproxy '("localhost"))
   (setq socks-server '("Default server" "127.0.0.1" 1086 5))
-  (setq proxy-mode-proxy-type "socks")
   (message "Enable socks proxy."))
 
 (defun proxy-socks-disable ()
   "Disable Socks proxy."
   (interactive)
   (setq url-gateway-method 'native)
-  (setq proxy-mode-proxy-type nil)
+  (setq socks-noproxy nil)
   (message "Disable socks proxy."))
+
+(when sys/macp
+  (defun play-sound-internal (sound)
+    "Internal function for `play-sound' (which see)."
+    (or (eq (car-safe sound) 'sound)
+        (signal 'wrong-type-argument (list sound)))
+
+    (destructuring-bind (&key file data volume device)
+        (cdr sound)
+
+      (and (or data device)
+           (error "DATA and DEVICE arg not supported"))
+
+      (apply #'start-process "afplay" nil
+             "afplay" (append (and volume (list "-v" volume))
+                              (list (expand-file-name file data-directory)))))))
 
 (provide 'init-funcs)
 
