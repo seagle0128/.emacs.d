@@ -33,8 +33,7 @@
 (eval-when-compile
   (require 'socks)
   (require 'init-const)
-  (require 'init-custom)
-  (require 'init-package))
+  (require 'init-custom))
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()

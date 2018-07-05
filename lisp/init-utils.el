@@ -169,7 +169,16 @@
 
 ;; A Simmple and cool pomodoro timer
 (use-package pomidor
-  :bind (("<f12>" . pomidor)))
+  :bind ("<f12>" . pomidor)
+  :init (setq alert-default-style 'mode-line)
+  :config
+  (when sys/macp
+    (setq pomidor-play-sound-file
+          (lambda (file)
+            (start-process "my-pomidor-play-sound"
+                           nil
+                           "afplay"
+                           file)))))
 
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
