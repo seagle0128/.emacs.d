@@ -71,9 +71,10 @@
   :bind (("<f7>" . quickrun)
          ("C-c x" . quickrun)))
 
-(use-package powershell)
+(use-package cask-mode)
 (use-package csharp-mode)
-(use-package dockerfile-mode :mode "Dockerfile\\'")
+(use-package dockerfile-mode)
+(use-package powershell)
 (use-package vimrc-mode)
 
 ;; New `conf-toml-mode' in Emacs 26
