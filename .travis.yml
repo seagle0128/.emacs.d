@@ -1,4 +1,4 @@
-language: generic
+language: emacs-lisp
 sudo: false
 
 env:
@@ -13,7 +13,6 @@ matrix:
       - EVM_EMACS=emacs-git-snapshot-travis
 
 before_script:
-  - pwd
   - mv -f ../.emacs.d ~/.emacs.d
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
@@ -21,7 +20,6 @@ before_script:
 
 script:
   - emacs --version
-  - pwd
   - cd ~/.emacs.d
   - emacs --batch -l init.el -f batch-byte-compile init.el
   # - emacs --version && emacs -Q --batch --eval '(byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0 0)'
