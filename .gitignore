@@ -5,6 +5,7 @@
 *.log
 *bak/
 .cache/
+.cask/
 .vscode/
 /.agignore
 /.emacs*.desktop
