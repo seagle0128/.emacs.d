@@ -159,6 +159,7 @@
   (setq socks-noproxy nil)
   (message "Disable socks proxy."))
 
+;; Refer to https://github.com/leoliu/play-sound-osx/
 (when sys/macp
   (defun play-sound-internal (sound)
     "Internal function for `play-sound' (which see)."
