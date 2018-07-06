@@ -150,8 +150,7 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :commands ivy-rich-mode
-    :hook (ivy-mode . ivy-rich-mode)
+    :init (ivy-rich-mode 1)
     :config
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-switch-buffer-align-virtual-buffer t
