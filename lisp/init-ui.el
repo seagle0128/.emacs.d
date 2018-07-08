@@ -146,9 +146,6 @@
             (lambda ()
               (setq cnfonts-keep-frame-size t)))
 
-  ;; Balance windows since `cnfonts' has issue in Emacs 26 on macOS
-  (balance-windows)
-
   ;; Set profiles
   (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
