@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Python Mode
 (use-package python
   :ensure nil
@@ -63,6 +66,9 @@
     :hook ((python-mode . anaconda-mode)
            (python-mode . anaconda-eldoc-mode))
     :config
+    ;; Workaround: https://github.com/proofit404/anaconda-mode#faq
+    (when sys/macp
+      (setq anaconda-mode-localhost-address "localhost"))
     (with-eval-after-load 'company
       (use-package company-anaconda
         :defines company-backends
