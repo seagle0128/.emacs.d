@@ -36,13 +36,11 @@
 
 (defcustom centaur-logo (expand-file-name "logo.png" user-emacs-directory)
   "Set Centaur logo. nil means official logo."
-  :type 'string
-  :group 'centaur)
+  :type 'string)
 
 (defcustom centaur-full-name "Vincent Zhang"
   "Set user full name."
-  :type 'string
-  :group 'centaur)
+  :type 'string)
 
 (defcustom centaur-mail-address "seagle0128@gmail.com"
   "Set user email address."
@@ -50,16 +48,14 @@
 
 (defcustom centaur-proxy "127.0.0.1:1087"
   "Set network proxy."
-  :type 'string
-  :group 'centaur)
+  :type 'string)
 
 (defcustom centaur-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice
           (const :tag "Melpa" melpa)
           (const :tag "Emacs-China" emacs-china)
-          (const :tag "Tuna" tuna))
-  :group 'centaur)
+          (const :tag "Tuna" tuna)))
 
 (defcustom centaur-theme 'default
   "Set color theme."
@@ -69,23 +65,19 @@
           (const :tag "Light theme" light)
           (const :tag "Daylight theme" daylight)
           (const :tag "Doom theme" doom)
-          symbol)
-  :group 'centaur)
+          symbol))
 
 (defcustom centuar-company-enable-yas nil
   "Enable/disable yasnippet for company backends."
-  :type 'boolean
-  :group 'centaur)
+  :type 'boolean)
 
 (defcustom centaur-emoji-enabled nil
   "Enable/disable emoji features or not."
-  :type 'boolean
-  :group 'centaur)
+  :type 'boolean)
 
 (defcustom centaur-benchmark-enabled nil
   "Enable/disable the init benchmark."
-  :type 'boolean
-  :group 'centaur)
+  :type 'boolean)
 
 ;; Load `custome.el' file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
