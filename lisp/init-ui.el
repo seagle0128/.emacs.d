@@ -208,6 +208,7 @@
 ;; (blink-cursor-mode -1)
 (setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
+(setq inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
 
 ;; Don't open a file in a new frame
 (when (boundp 'ns-pop-up-frames)
