@@ -76,6 +76,7 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 (require 'init-window)
+(require 'init-treemacs)
 
 (require 'init-eshell)
 (require 'init-shell)
