@@ -59,10 +59,14 @@
 (defun update-config ()
   "Update Emacs configurations to the latest version."
   (interactive)
-  (message "Updating Emacs configurations...")
-  (cd "~/.emacs.d/")
-  (shell-command "git pull")
-  (message "Update finished. Restart Emacs to complete the process."))
+  (let ((dir (expand-file-name "~/.emacs.d/")))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating Emacs configurations...")
+          (cd dir)
+          (shell-command "git pull")
+          (message "Update finished. Restart Emacs to complete the process."))
+      (message "\"%s\" doesn't exist." dir))))
 
 (declare-function upgrade-packages-and-restart 'init-package)
 (defun update-and-restart ()
@@ -74,18 +78,26 @@
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
-  (message "Updating dotfiles...")
-  (cd "~/.dotfiles/")
-  (shell-command "git pull")
-  (message "Update finished."))
+  (let ((dir (expand-file-name "~/.dotfiles/")))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating dotfiles...")
+          (cd dir)
+          (shell-command "git pull")
+          (message "Update finished."))
+      (message "\"%s\" doesn't exist." dir))))
 
 (defun update-org ()
   "Update Org files to the latest version."
   (interactive)
-  (message "Updating Org files...")
-  (cd "~/org/")
-  (shell-command "git pull")
-  (message "Update finished."))
+  (let ((dir (expand-file-name "~/org/")))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating org files...")
+          (cd dir)
+          (shell-command "git pull")
+          (message "Update finished."))
+      (message "\"%s\" doesn't exist." dir))))
 
 ;; Create a new scratch buffer
 (defun create-scratch-buffer ()
@@ -112,7 +124,8 @@
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (byte-recompile-directory (concat user-emacs-directory "site-lisp") 0 t))
+  (byte-recompile-directory
+   (concat user-emacs-directory "site-lisp") 0 t))
 
 ;;
 ;; Network Proxy
