@@ -64,6 +64,7 @@
   (shell-command "git pull")
   (message "Update finished. Restart Emacs to complete the process."))
 
+(declare-function upgrade-packages-and-restart 'init-package)
 (defun update-and-restart ()
   "Update configurations and packages, then restart."
   (interactive)
@@ -113,34 +114,37 @@
   (interactive)
   (byte-recompile-directory (concat user-emacs-directory "site-lisp") 0 t))
 
-;; Configure network proxy
-(defun show-proxy ()
+;;
+;; Network Proxy
+;;
+
+(defun proxy-http-show ()
   "Show http/https proxy."
   (interactive)
   (if url-proxy-services
-      (message "Current proxy is \"%s\"" centaur-proxy)
+      (message "Current HTTP proxy is \"%s\"" centaur-proxy)
     (message "No proxy")))
 
-(defun set-proxy ()
-  "Set http/https proxy."
+(defun proxy-http-enable ()
+  "Enable http/https proxy."
   (interactive)
   (setq url-proxy-services `(("http" . ,centaur-proxy)
                              ("https" . ,centaur-proxy)
-                             ("no_proxy" . "^\\(localhost\\|10.*\\|192.168.*\\)")))
-  (show-proxy))
+                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
+  (proxy-http-show))
 
-(defun unset-proxy ()
-  "Unset http/https proxy."
+(defun proxy-http-disable ()
+  "Disable http/https proxy."
   (interactive)
   (setq url-proxy-services nil)
-  (show-proxy))
+  (proxy-http-show))
 
-(defun toggle-proxy ()
+(defun proxy-http-toggle ()
   "Toggle http/https proxy."
   (interactive)
   (if url-proxy-services
-      (unset-proxy)
-    (set-proxy)))
+      (proxy-http-disable)
+    (proxy-http-enable)))
 
 (defun proxy-socks-enable ()
   "Enable Socks proxy."

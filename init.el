@@ -62,8 +62,9 @@
 
 ;; Preferences
 (require 'init-basic)
-(require 'init-ui)
+(require 'init-funcs)
 
+(require 'init-ui)
 (require 'init-edit)
 (require 'init-ivy)
 (require 'init-company)
@@ -82,7 +83,6 @@
 (require 'init-markdown)
 (require 'init-org)
 
-(require 'init-funcs)
 (require 'init-utils)
 
 ;; Programming
