@@ -53,6 +53,7 @@
 
 ;; Search utils: `ag', `rg', `pt'
 (use-package ag
+  :defines projectile-command-map
   :init
   (with-eval-after-load 'projectile
     (bind-key "s s" #'ag-project projectile-command-map))
