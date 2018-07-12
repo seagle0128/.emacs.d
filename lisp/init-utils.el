@@ -88,7 +88,36 @@
     (`(t . t)
      (treemacs-git-mode 'extended))
     (`(t . _)
-     (treemacs-git-mode 'simple))))
+     (treemacs-git-mode 'simple)))
+
+  (if (fboundp 'define-fringe-bitmap)
+      (define-fringe-bitmap 'treemacs--fringe-indicator-bitmap
+        (vector #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111
+                #b00000111111))))
 
 ;; Projectile integration for treemacs
 (use-package treemacs-projectile
