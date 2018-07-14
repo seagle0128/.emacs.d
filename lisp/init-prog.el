@@ -98,10 +98,10 @@
 
 (use-package swift-mode
   :config
-  (with-eval-after-load 'flycheck
-    (use-package flycheck-swift
-      :commands flycheck-swift-setup
-      :init (flycheck-swift-setup))))
+  (use-package flycheck-swift
+    :after flycheck
+    :commands flycheck-swift-setup
+    :init (flycheck-swift-setup)))
 
 (use-package rust-mode
   :config (setq rust-format-on-save t))

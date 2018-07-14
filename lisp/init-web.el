@@ -112,11 +112,11 @@
   (setq web-mode-code-indent-offset 2)
 
   ;; Complete for web,html,emmet,jade,slim modes
-  (with-eval-after-load 'company
-    (use-package company-web
-      :functions company-backend-with-yas
-      :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
-              (cl-pushnew (company-backend-with-yas mode) company-backends)))))
+  (use-package company-web
+    :after company
+    :functions company-backend-with-yas
+    :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
+            (cl-pushnew (company-backend-with-yas mode) company-backends))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

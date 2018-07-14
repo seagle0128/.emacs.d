@@ -102,8 +102,9 @@
 
   ;; Pomodoro
   (use-package org-pomodoro
-    :init (with-eval-after-load 'org-agenda
-            (bind-key "P" #'org-pomodoro org-agenda-mode-map)))
+    :after org-agenda
+    :bind (:map org-agenda-mode-map
+                ("P" . org-pomodoro)))
 
   ;; Visually summarize progress
   (use-package org-dashboard)

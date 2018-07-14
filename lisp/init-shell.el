@@ -63,10 +63,10 @@
   :config (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m))
 
 ;; Company mode backend for shell functions
-(with-eval-after-load 'company
-  (use-package company-shell
-    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
-                      company-backends)))
+(use-package company-shell
+  :after company
+  :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
+                    company-backends))
 
 ;; Multi term
 (use-package multi-term)

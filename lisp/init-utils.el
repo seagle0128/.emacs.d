@@ -116,10 +116,10 @@
   (use-package emojify
     :hook (after-init . global-emojify-mode)
     :config
-    (with-eval-after-load 'company
-      (use-package company-emoji
-        :defines company-backends
-        :init (add-to-list 'company-backends 'company-emoji)))))
+    (use-package company-emoji
+      :after company
+      :defines company-backends
+      :init (add-to-list 'company-backends 'company-emoji))))
 
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major

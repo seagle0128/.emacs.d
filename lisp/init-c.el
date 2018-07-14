@@ -41,10 +41,10 @@
                            (setq c-basic-offset 4)))
   :config
   ;; Company mode backend for C/C++ header files
-  (with-eval-after-load 'company
-    (use-package company-c-headers
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends))))
+  (use-package company-c-headers
+    :after company
+    :functions company-backend-with-yas
+    :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends)))
 
 (provide 'init-c)
 

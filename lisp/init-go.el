@@ -87,17 +87,18 @@
     :bind (:map go-mode-map
                 ("C-c C-g" . go-gen-test-dwim)))
 
-  (with-eval-after-load 'company
-    (use-package company-go
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
+  (use-package company-go
+    :after company
+    :unless (featurep 'lsp-mode)
+    :functions company-backend-with-yas
+    :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends))
 
-  (with-eval-after-load 'projectile
-    ;; M-x `go-projectile-install-tools'
-    (use-package go-projectile
-      :commands (go-projectile-mode go-projectile-switch-project)
-      :hook ((go-mode . go-projectile-mode)
-             (projectile-after-switch-project . go-projectile-switch-project)))))
+  ;; M-x `go-projectile-install-tools'
+  (use-package go-projectile
+    :after projectile
+    :commands (go-projectile-mode go-projectile-switch-project)
+    :hook ((go-mode . go-projectile-mode)
+           (projectile-after-switch-project . go-projectile-switch-project))))
 
 (provide 'init-go)
 
