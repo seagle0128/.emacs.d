@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (use-package css-mode
   :ensure nil
   :init (setq css-indent-offset 2))
@@ -99,7 +102,7 @@
           :placeOpenBraceOnNewLineForFunctions
           nil))
 
-  (unless (featurep 'lsp-mode)
+  (unless centuar-lsp
     (with-eval-after-load 'company
       (cl-pushnew (company-backend-with-yas 'company-tide) company-backends))))
 
@@ -113,12 +116,12 @@
   (setq web-mode-code-indent-offset 2)
 
   ;; Complete for web,html,emmet,jade,slim modes
-  (use-package company-web
-    :after company
-    :unless (featurep 'lsp-mode)
-    :functions company-backend-with-yas
-    :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
-            (cl-pushnew (company-backend-with-yas mode) company-backends))))
+  (unless centuar-lsp
+    (use-package company-web
+      :after company
+      :functions company-backend-with-yas
+      :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
+              (cl-pushnew (company-backend-with-yas mode) company-backends)))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

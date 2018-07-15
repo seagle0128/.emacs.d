@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (use-package ruby-mode
   :ensure nil
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
@@ -41,7 +44,7 @@
     :defines company-backends
     :hook (ruby-mode . robe-mode)
     :config
-    (unless (featurep 'lsp-mode)
+    (unless centuar-lsp
       (with-eval-after-load 'company
         (cl-pushnew (company-backend-with-yas 'company-robe) company-backends))))
 

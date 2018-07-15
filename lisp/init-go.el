@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; Golang
 ;;
 ;; Go packages:
@@ -87,11 +90,11 @@
     :bind (:map go-mode-map
                 ("C-c C-g" . go-gen-test-dwim)))
 
-  (use-package company-go
-    :after company
-    :unless (featurep 'lsp-mode)
-    :functions company-backend-with-yas
-    :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends))
+  (unless centuar-lsp
+    (use-package company-go
+      :after company
+      :functions company-backend-with-yas
+      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
 
   ;; M-x `go-projectile-install-tools'
   (use-package go-projectile

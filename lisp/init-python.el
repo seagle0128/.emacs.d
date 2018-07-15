@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Python Mode
 (use-package python
@@ -61,20 +62,20 @@
     :hook (python-mode . py-autopep8-enable-on-save))
 
   ;; Anaconda mode
-  (use-package anaconda-mode
-    :unless (featurep 'lsp-mode)
-    :diminish anaconda-mode
-    :hook ((python-mode . anaconda-mode)
-           (python-mode . anaconda-eldoc-mode))
-    :config
-    ;; Workaround: https://github.com/proofit404/anaconda-mode#faq
-    (when sys/macp
-      (setq anaconda-mode-localhost-address "localhost"))
-    (use-package company-anaconda
-      :after company
-      :defines company-backends
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends))))
+  (unless centuar-lsp
+    (use-package anaconda-mode
+      :diminish anaconda-mode
+      :hook ((python-mode . anaconda-mode)
+             (python-mode . anaconda-eldoc-mode))
+      :config
+      ;; Workaround: https://github.com/proofit404/anaconda-mode#faq
+      (when sys/macp
+        (setq anaconda-mode-localhost-address "localhost"))
+      (use-package company-anaconda
+        :after company
+        :defines company-backends
+        :functions company-backend-with-yas
+        :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends)))))
 
 (provide 'init-python)
 
