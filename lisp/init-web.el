@@ -99,8 +99,9 @@
           :placeOpenBraceOnNewLineForFunctions
           nil))
 
-  (with-eval-after-load 'company
-    (cl-pushnew (company-backend-with-yas 'company-tide) company-backends)))
+  (unless (featurep 'lsp-mode)
+    (with-eval-after-load 'company
+      (cl-pushnew (company-backend-with-yas 'company-tide) company-backends))))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -114,6 +115,7 @@
   ;; Complete for web,html,emmet,jade,slim modes
   (use-package company-web
     :after company
+    :unless (featurep 'lsp-mode)
     :functions company-backend-with-yas
     :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
             (cl-pushnew (company-backend-with-yas mode) company-backends))))

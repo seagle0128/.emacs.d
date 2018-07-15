@@ -67,6 +67,10 @@
           (const :tag "Doom theme" doom)
           symbol))
 
+(defcustom centuar-lsp nil
+  "Use language servers or not."
+  :type 'boolean)
+
 (defcustom centuar-company-enable-yas nil
   "Enable/disable yasnippet for company backends."
   :type 'boolean)

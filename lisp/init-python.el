@@ -62,6 +62,7 @@
 
   ;; Anaconda mode
   (use-package anaconda-mode
+    :unless (featurep 'lsp-mode)
     :diminish anaconda-mode
     :hook ((python-mode . anaconda-mode)
            (python-mode . anaconda-eldoc-mode))

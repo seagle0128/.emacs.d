@@ -34,20 +34,37 @@
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
   :diminish lsp-mode
+  :defines projectile-project-root
   :config
+  (setq lsp-inhibit-message t)
+
+  ;; https://emacs-china.org/t/topic/6392/2
+  (defun restart-lsp-server ()
+    "Restart lsp server."
+    (interactive)
+    (setq lsp--workspaces (make-hash-table :test #'equal))
+    (revert-buffer t t))
+
+  (require 'lsp-imenu)
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+
+  (with-eval-after-load 'projectile
+    (defun my-set-projectile-root ()
+      (when lsp--cur-workspace
+        (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
+    (add-hook 'lsp-before-open-hook #'my-set-projectile-root))
+
   (use-package lsp-ui
-    :defines lsp-ui-mode-map
-    :commands (lsp-ui-mode lsp-ui-peek-find-definistions lsp-ui-peek-find-references)
     :bind (:map lsp-ui-mode-map
                 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                 ([remap xref-find-references] . lsp-ui-peek-find-references))
     :hook (lsp-mode . lsp-ui-mode))
 
-  (with-eval-after-load 'company
-    (use-package company-lsp
-      :defines company-backends
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))))
+  (use-package company-lsp
+    :after company
+    :defines company-backends
+    :functions company-backend-with-yas
+    :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends)))
 
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
 ;; Install: go get github.com/sourcegraph/go-langserver
@@ -61,11 +78,120 @@
   :commands lsp-python-enable
   :hook (python-mode . lsp-python-enable))
 
+;; Ruby support for lsp-mode using the solargraph gem.
+;; Install: gem install solargraph
+(use-package lsp-ruby
+  :ensure nil
+  :after lsp-mode
+  :commands lsp-ruby-enable
+  :hook (ruby-mode . lsp-ruby-enable)
+  :init
+  (defconst lsp-ruby--get-root
+    (lsp-make-traverser
+     #'(lambda (dir)
+         (directory-files dir nil "\\(Rakefile\\|Gemfile\\)"))))
+
+  (defun lsp-ruby--render-string (str)
+    "Render STR with `ruby-mode' syntax highlighting."
+    (ignore-errors
+      (with-temp-buffer
+        (ruby-mode)
+        (insert str)
+        (font-lock-ensure)
+        (buffer-string))))
+
+  (defun lsp-ruby--initialize-client (client)
+    "Initial setup for ruby LSP CLIENT."
+    (lsp-provide-marked-string-renderer
+     client "ruby" 'lsp-ruby--render-string))
+
+  (lsp-define-tcp-client
+   lsp-ruby "ruby"
+   lsp-ruby--get-root
+   '("solargraph" "socket")
+   "127.0.0.1"
+   7658
+   :initialize 'lsp-ruby--initialize-client)
+
+  (lsp-define-stdio-client
+   lsp-ruby-mtsmfm "ruby"
+   lsp-ruby--get-root
+   '("language_server-ruby" "--experimental-features")
+   :initialize 'lsp-ruby--initialize-client))
+
 ;; Javascript, Typescript and Flow support for lsp-mode
 ;; Install: npm i -g javascript-typescript-langserver
 (use-package lsp-javascript-typescript
   :commands lsp-javascript-typescript-enable
   :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
+
+;; Vue.js support for lsp-mode using vls
+;; Install: npm install vue-language-server -g
+(use-package lsp-vue
+  :commands lsp-vue-mmm-enable
+  :hook (vue-mode . lsp-vue-mmm-enable))
+
+;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
+;; Install: npm i -g vscode-css-languageserver-bin
+(use-package lsp-css
+  :ensure nil
+  :after lsp-mode
+  :commands (lsp-css-enable
+             lsp-less-enable
+             lsp-sass-enable
+             lsp-scss-enable)
+  :hook ((css-mode . lsp-css-enable)
+         (less-mode . lsp-less-enable)
+         (sass-mode . lsp-sass-enable)
+         (scss-mode . lsp-scss-enable))
+  :init
+  (defconst lsp-css--get-root
+    (lsp-make-traverser #'(lambda (dir)
+                            (directory-files dir nil "package.json"))))
+
+  (lsp-define-stdio-client
+   lsp-css
+   "css"
+   lsp-css--get-root
+   '("css-languageserver" "--stdio"))
+
+  (lsp-define-stdio-client
+   lsp-scss
+   "scss"
+   lsp-css--get-root
+   '("css-languageserver" "--stdio"))
+
+  (lsp-define-stdio-client
+   lsp-less
+   "less"
+   lsp-css--get-root
+   '("css-languageserver" "--stdio")))
+
+;; HTML support for lsp-mode using vscode-html-languageserver-bin
+;; Install: npm i -g vscode-html-languageserver-bin
+(use-package lsp-html
+  :commands lsp-html-enable
+  :hook (html-mode . lsp-html-enable))
+
+;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
+;; Install: npm i -g bash-language-server
+;; Require Python2.5+, use --python to specify.
+(use-package lsp-sh
+  :ensure nil
+  :after lsp-mode
+  :commands lsp-sh-enable
+  :hook (sh-mode . lsp-sh-enable)
+  :init
+  (lsp-define-stdio-client lsp-sh
+                           "sh"
+                           #'(lambda () default-directory)
+                           '("bash-language-server" "start")))
+
+;; Rust support for lsp-mode using the Rust Language Server.
+;; Install: rustup component add rls-preview rust-analysis rust-src
+(use-package lsp-rust
+  :commands lsp-rust-enable
+  :hook (rust-mode . lsp-rust-enable))
 
 ;; Java support for lsp-mode using the Eclipse JDT Language Server.
 ;; Install:

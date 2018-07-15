@@ -41,8 +41,9 @@
     :defines company-backends
     :hook (ruby-mode . robe-mode)
     :config
-    (with-eval-after-load 'company
-      (cl-pushnew (company-backend-with-yas 'company-robe) company-backends)))
+    (unless (featurep 'lsp-mode)
+      (with-eval-after-load 'company
+        (cl-pushnew (company-backend-with-yas 'company-robe) company-backends))))
 
   ;; Ruby refactoring helpers
   (use-package ruby-refactor

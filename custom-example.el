@@ -10,6 +10,7 @@
 ;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 ;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tuna
 ;; (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
+;; (setq centuar-lsp t)                           ; Use language servers or not: t or nil
 ;; (setq centuar-company-enable-yas t)            ; Enable/disable yasnippet for company: t or nil
 ;; (setq centaur-emoji-enabled t)                 ; Enable/disable emoji: t or nil
 ;; (setq centaur-benchmark-enabled t)             ; Enable/disable initialization benchmark: t or nil
