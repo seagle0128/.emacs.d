@@ -40,19 +40,14 @@
 
   ;; https://emacs-china.org/t/topic/6392/2
   (defun restart-lsp-server ()
-    "Restart lsp server."
+    "Restart LSP server."
     (interactive)
     (setq lsp--workspaces (make-hash-table :test #'equal))
-    (revert-buffer t t))
+    (revert-buffer t t)
+    (message "LSP server restarted."))
 
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-
-  (with-eval-after-load 'projectile
-    (defun my-set-projectile-root ()
-      (when lsp--cur-workspace
-        (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
-    (add-hook 'lsp-before-open-hook #'my-set-projectile-root))
 
   (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
