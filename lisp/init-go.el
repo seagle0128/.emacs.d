@@ -51,8 +51,8 @@
 ;;
 (use-package go-mode
   :bind (:map go-mode-map
-              ("M-." . godef-jump)
-              ("C-c C-r" . go-remove-unused-imports)
+              ([remap xref-find-definitions] . godef-jump)
+              ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
   ;; `goimports' or `gofmt'
@@ -65,13 +65,6 @@
   (use-package go-playground)
   (use-package golint)
   (use-package govet)
-
-  (use-package go-eldoc
-    :hook (go-mode . go-eldoc-setup))
-
-  (use-package go-guru
-    :bind (:map go-mode-map
-                ("M-?" . go-guru-referrers)))
 
   (use-package go-tag
     :bind (:map go-mode-map
@@ -90,7 +83,16 @@
     :bind (:map go-mode-map
                 ("C-c C-g" . go-gen-test-dwim)))
 
+  ;; LSP provides the functionalities
   (unless centuar-lsp
+    (use-package go-guru
+      :bind (:map go-mode-map
+                  ;; ([remap xref-find-definitions] . go-guru-definition)
+                  ([remap xref-find-references] . go-guru-referrers)))
+
+    (use-package go-eldoc
+      :hook (go-mode . go-eldoc-setup))
+
     (use-package company-go
       :after company
       :functions company-backend-with-yas
