@@ -34,7 +34,6 @@
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
   :diminish lsp-mode
-  :defines projectile-project-root
   :config
   (setq lsp-inhibit-message t)
 
