@@ -150,14 +150,10 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :ensure nil
-    :commands ivy-rich-mode
     :init (ivy-rich-mode 1)
-    :hook (ivy-rich-mode . (lambda ()
-                             (let ((style (if ivy-rich-mode
-                                              'abbreviate
-                                            'name)))
-                               (setq ivy-virtual-abbreviate style)))))
+    :config
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-path-style 'abbrev))
 
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
