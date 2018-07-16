@@ -83,26 +83,26 @@
   :config (setq coffee-tab-width 2))
 
 ;; Typescript Interactive Development Environment
-(use-package tide
-  :diminish tide-mode
-  :defines company-backends
-  :preface
-  (defun setup-tide-mode ()
-    "Setup tide mode."
-    (interactive)
-    (tide-setup)
-    (eldoc-mode 1)
-    (tide-hl-identifier-mode 1))
-  :hook (((typescript-mode js2-mode) . setup-tide-mode)
-         (before-save . tide-format-before-save))
-  :config
-  (setq tide-format-options
-        '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
-          t
-          :placeOpenBraceOnNewLineForFunctions
-          nil))
+(unless centuar-lsp
+  (use-package tide
+    :diminish tide-mode
+    :defines company-backends
+    :preface
+    (defun setup-tide-mode ()
+      "Setup tide mode."
+      (interactive)
+      (tide-setup)
+      (eldoc-mode 1)
+      (tide-hl-identifier-mode 1))
+    :hook (((typescript-mode js2-mode) . setup-tide-mode)
+           (before-save . tide-format-before-save))
+    :config
+    (setq tide-format-options
+          '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
+            t
+            :placeOpenBraceOnNewLineForFunctions
+            nil))
 
-  (unless centuar-lsp
     (with-eval-after-load 'company
       (cl-pushnew (company-backend-with-yas 'company-tide) company-backends))))
 
