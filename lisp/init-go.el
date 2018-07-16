@@ -66,6 +66,14 @@
   (use-package golint)
   (use-package govet)
 
+  (use-package go-eldoc
+    :hook (go-mode . go-eldoc-setup))
+
+  (use-package go-guru
+    :bind (:map go-mode-map
+                ;; ([remap xref-find-definitions] . go-guru-definition)
+                ([remap xref-find-references] . go-guru-referrers)))
+
   (use-package go-tag
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
@@ -85,14 +93,6 @@
 
   ;; LSP provides the functionalities
   (unless centuar-lsp
-    (use-package go-guru
-      :bind (:map go-mode-map
-                  ;; ([remap xref-find-definitions] . go-guru-definition)
-                  ([remap xref-find-references] . go-guru-referrers)))
-
-    (use-package go-eldoc
-      :hook (go-mode . go-eldoc-setup))
-
     (use-package company-go
       :after company
       :functions company-backend-with-yas
