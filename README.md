@@ -99,8 +99,8 @@ M-x upgrade-packages
 
 ### Customize-group
 
-`M-x customize-group` and select `centaur`. You can add additional
-customizations in `custom.el`.
+`M-x customize-group` and select `centaur`. Set and save the configurations,
+then restart Emacs.
 
 ### Manual
 
