@@ -160,14 +160,15 @@
   :preface
   (defun my-blink-cursor-maybe (orig-fn &rest args)
     "Blink current line if the window has moved."
-    (let ((point (save-excursion (goto-char (window-start))
-                                 (point-marker))))
-      (apply orig-fn args)
-      (unless (or (derived-mode-p 'term-mode)
-                  (equal point
-                         (save-excursion (goto-char (window-start))
-                                         (point-marker))))
-        (my-blink-cursor))))
+    (ignore-errors
+      (let ((point (save-excursion (goto-char (window-start))
+                                   (point-marker))))
+        (apply orig-fn args)
+        (unless (or (derived-mode-p 'term-mode)
+                    (equal point
+                           (save-excursion (goto-char (window-start))
+                                           (point-marker))))
+          (my-blink-cursor)))))
 
   (defun my-blink-cursor (&rest _)
     "Blink current line using `nav-flash'."
