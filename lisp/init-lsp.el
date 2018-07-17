@@ -122,8 +122,6 @@
 ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
 ;; Install: npm i -g vscode-css-languageserver-bin
 (use-package lsp-css
-  :ensure nil
-  :after lsp-mode
   :commands (lsp-css-enable
              lsp-less-enable
              lsp-sass-enable
@@ -131,29 +129,7 @@
   :hook ((css-mode . lsp-css-enable)
          (less-mode . lsp-less-enable)
          (sass-mode . lsp-sass-enable)
-         (scss-mode . lsp-scss-enable))
-  :init
-  (defconst lsp-css--get-root
-    (lsp-make-traverser #'(lambda (dir)
-                            (directory-files dir nil "package.json"))))
-
-  (lsp-define-stdio-client
-   lsp-css
-   "css"
-   lsp-css--get-root
-   '("css-languageserver" "--stdio"))
-
-  (lsp-define-stdio-client
-   lsp-scss
-   "scss"
-   lsp-css--get-root
-   '("css-languageserver" "--stdio"))
-
-  (lsp-define-stdio-client
-   lsp-less
-   "less"
-   lsp-css--get-root
-   '("css-languageserver" "--stdio")))
+         (scss-mode . lsp-scss-enable)))
 
 ;; HTML support for lsp-mode using vscode-html-languageserver-bin
 ;; Install: npm i -g vscode-html-languageserver-bin
