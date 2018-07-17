@@ -69,11 +69,6 @@
   (use-package go-eldoc
     :hook (go-mode . go-eldoc-setup))
 
-  (use-package go-guru
-    :bind (:map go-mode-map
-                ;; ([remap xref-find-definitions] . go-guru-definition)
-                ([remap xref-find-references] . go-guru-referrers)))
-
   (use-package go-tag
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
@@ -91,19 +86,25 @@
     :bind (:map go-mode-map
                 ("C-c C-g" . go-gen-test-dwim)))
 
-  ;; LSP provides the functionalities
-  (unless centuar-lsp
-    (use-package company-go
-      :after company
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))
-
-  ;; M-x `go-projectile-install-tools'
+  ;; Run: M-x `go-projectile-install-tools'
   (use-package go-projectile
     :after projectile
     :commands (go-projectile-mode go-projectile-switch-project)
     :hook ((go-mode . go-projectile-mode)
-           (projectile-after-switch-project . go-projectile-switch-project))))
+           (projectile-after-switch-project . go-projectile-switch-project)))
+
+  ;; LSP provides the functionalities.
+  ;; NOTE: `go-langserver' doesn't support Windows so far.
+  (unless centuar-lsp
+    (use-package go-guru
+      :bind (:map go-mode-map
+                  ;; ([remap xref-find-definitions] . go-guru-definition)
+                  ([remap xref-find-references] . go-guru-referrers)))
+
+    (use-package company-go
+      :after company
+      :functions company-backend-with-yas
+      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends))))
 
 (provide 'init-go)
 
