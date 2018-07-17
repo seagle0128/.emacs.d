@@ -66,9 +66,6 @@
   (use-package golint)
   (use-package govet)
 
-  (use-package go-eldoc
-    :hook (go-mode . go-eldoc-setup))
-
   (use-package go-tag
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
@@ -96,6 +93,9 @@
   ;; LSP provides the functionalities.
   ;; NOTE: `go-langserver' doesn't support Windows so far.
   (unless centuar-lsp
+    (use-package go-eldoc
+      :hook (go-mode . go-eldoc-setup))
+
     (use-package go-guru
       :bind (:map go-mode-map
                   ;; ([remap xref-find-definitions] . go-guru-definition)
