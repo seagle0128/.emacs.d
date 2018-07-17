@@ -155,6 +155,10 @@
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-path-style 'abbrev))
 
+  ;; Select from xref candidates with Ivy
+  (use-package ivy-xref
+    :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
     :after flyspell

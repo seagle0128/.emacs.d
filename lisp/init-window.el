@@ -167,7 +167,7 @@
           ("*pt-search*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
-          ("*xref*" :dedicated t :position bottom :stick nil :noselect nil)
+          ;; ("*xref*" :dedicated t :position bottom :stick t :noselect nil)
 
           ;; VC
           ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
