@@ -175,6 +175,12 @@
                            #'(lambda () default-directory)
                            '("bash-language-server" "start")))
 
+;; C/C++/Objective-C language server support for lsp-mode using clang
+;; Install: brew install cquery or see https://github.com/cquery-project/cquery/releases
+(use-package cquery
+  :commands lsp-cquery-enable
+  :hook (c-mode-common . lsp-cquery-enable))
+
 ;; Rust support for lsp-mode using the Rust Language Server.
 ;; Install: rustup component add rls-preview rust-analysis rust-src
 (use-package lsp-rust
