@@ -56,6 +56,7 @@
     :config
     (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
           treemacs-file-event-delay           5000
+          treemacs-silent-refresh             t
           treemacs-follow-after-init          t
           treemacs-follow-recenter-distance   0.1
           treemacs-goto-tag-strategy          'refetch-index
