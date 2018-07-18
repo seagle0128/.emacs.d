@@ -129,7 +129,7 @@
 ;; A Simmple and cool pomodoro timer
 (use-package pomidor
   :bind ("<f12>" . pomidor)
-  :init (setq alert-default-style 'mode-line)
+  :init (setq alert-default-style (if sys/macp 'osx-notifier 'libnotify))
   :config
   (when sys/macp
     (setq pomidor-play-sound-file
