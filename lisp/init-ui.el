@@ -136,9 +136,7 @@
         (set-fontset-font "fontset-default" charset "all-the-icons" nil 'append)
         (set-fontset-font "fontset-default" charset "github-octicons" nil 'append)
         (set-fontset-font "fontset-default" charset "FontAwesome" nil 'append)
-        (set-fontset-font "fontset-default" charset "Material Icons" nil 'append)
-        (set-fontset-font "fontset-default" charset "file-icons" nil 'append)
-        (set-fontset-font "fontset-default" charset "Weather Icons" nil 'append))))
+        (set-fontset-font "fontset-default" charset "Material Icons" nil 'append))))
   :hook ((after-init . cnfonts-enable)
          (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
   :config
