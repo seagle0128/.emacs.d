@@ -133,6 +133,7 @@
     "Show icons in all-the-icons."
     (when (featurep 'all-the-icons)
       (dolist (charset '(kana han cjk-misc bopomofo gb18030))
+        (set-fontset-font "fontset-default" charset "all-the-icons" nil 'append)
         (set-fontset-font "fontset-default" charset "github-octicons" nil 'append)
         (set-fontset-font "fontset-default" charset "FontAwesome" nil 'append)
         (set-fontset-font "fontset-default" charset "Material Icons" nil 'append))))
