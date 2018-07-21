@@ -111,16 +111,6 @@
 ;; Tramp
 (use-package docker-tramp)
 
-;; Emoji
-(when centaur-emoji
-  (use-package emojify
-    :hook (after-init . global-emojify-mode)
-    :config
-    (use-package company-emoji
-      :after company
-      :defines company-backends
-      :init (add-to-list 'company-backends 'company-emoji))))
-
 ;; Discover key bindings and their meaning for the current Emacs major mode
 (use-package discover-my-major
   :bind (("C-h M-m" . discover-my-major)

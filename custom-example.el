@@ -12,7 +12,6 @@
 ;; (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
 ;; (setq centuar-lsp t)                           ; Enable language servers or not: t or nil
 ;; (setq centuar-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
-;; (setq centaur-emoji t)                         ; Enable emoji or not: t or nil
 ;; (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 
 ;; For Emacs devel

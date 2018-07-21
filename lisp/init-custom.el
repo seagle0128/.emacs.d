@@ -75,10 +75,6 @@
   "Enable yasnippet for company backends or not."
   :type 'boolean)
 
-(defcustom centaur-emoji nil
-  "Enable emoji features or not."
-  :type 'boolean)
-
 (defcustom centaur-benchmark nil
   "Enable the init benchmark or not."
   :type 'boolean)
