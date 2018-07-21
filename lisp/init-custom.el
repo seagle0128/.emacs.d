@@ -68,19 +68,19 @@
           symbol))
 
 (defcustom centuar-lsp nil
-  "Use language servers or not."
+  "Enable language servers or not."
   :type 'boolean)
 
 (defcustom centuar-company-enable-yas nil
-  "Enable/disable yasnippet for company backends."
+  "Enable yasnippet for company backends or not."
   :type 'boolean)
 
-(defcustom centaur-emoji-enabled nil
-  "Enable/disable emoji features or not."
+(defcustom centaur-emoji nil
+  "Enable emoji features or not."
   :type 'boolean)
 
-(defcustom centaur-benchmark-enabled nil
-  "Enable/disable the init benchmark."
+(defcustom centaur-benchmark nil
+  "Enable the init benchmark or not."
   :type 'boolean)
 
 ;; Load `custome.el' file

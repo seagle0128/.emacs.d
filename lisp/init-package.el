@@ -92,7 +92,7 @@
 (use-package bind-key)
 
 ;; Initialization benchmark
-(when centaur-benchmark-enabled
+(when centaur-benchmark
   (use-package benchmark-init
     :commands (benchmark-init/activate)
     :hook (after-init . benchmark-init/deactivate)

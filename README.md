@@ -116,12 +116,10 @@ For Example:
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china or tuna
 (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
-(setq centuar-company-enable-yas t)            ; Enable/disable yasnippet for company: t or nil
-(setq centaur-emoji-enabled t)                 ; Enable/disable emoji: t or nil
-(setq centaur-benchmark-enabled t)             ; Enable/disable initialization benchmark: t or nil
-
-;; You may add addtional configurations here
-;; (custom-set-variables )
+(setq centuar-lsp t)                           ; Enable language servers or not: t or nil
+(setq centuar-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
+(setq centaur-emoji t)                         ; Enable emoji or not: t or nil
+(setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 
 The default pacakge archives is `melpa`. You can change it in `custom.el`, or
