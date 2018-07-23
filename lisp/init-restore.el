@@ -60,22 +60,22 @@
         (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
         (widget-create 'url-link
                        :tag (propertize "Homepage" 'face 'font-lock-keyword-face)
-                       :help-echo "Open the Centaur Emacs Github page."
+                       :help-echo "Open the Centaur Emacs Github page"
                        :mouse-face 'highlight
                        :follow-link "\C-m"
                        "https://github.com/seagle0128/.emacs.d")
         (insert " ")
         (widget-create 'push-button
-                       :help-echo "Recover Desktop."
+                       :help-echo "Restore previous session"
                        :action (lambda (&rest ignore) (desktop-read))
                        :mouse-face 'highlight
                        :follow-link "\C-m"
                        :button-prefix ""
                        :button-suffix ""
-                       (propertize "Recover Desktop" 'face 'font-lock-keyword-face))
+                       (propertize "Restore Session" 'face 'font-lock-keyword-face))
         (insert " ")
         (widget-create 'push-button
-                       :help-echo "Edit Configurations."
+                       :help-echo "Edit Personal Configurations"
                        :action (lambda (&rest ignore) (open-custom-file))
                        :mouse-face 'highlight
                        :follow-link "\C-m"
@@ -84,12 +84,14 @@
                        (propertize "Edit Config" 'face 'font-lock-keyword-face))
         (insert " ")
         (widget-create 'push-button
-                       :help-echo "Update Centaur Emacs."
+                       :help-echo "Update Centaur Emacs config and packages"
                        :action (lambda (&rest ignore) (update-config) (upgrade-packages))
                        :mouse-face 'highlight
                        :follow-link "\C-m"
                        (propertize "Update" 'face 'font-lock-keyword-face))
-        (insert "\n"))
+        (insert "\n")
+        (insert "\n")
+        (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
 
       (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
       (add-to-list 'dashboard-items '(buttons)))
