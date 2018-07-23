@@ -37,7 +37,6 @@
     ;; Dashboard
     (use-package dashboard
       :diminish dashboard-mode
-      ;; :init (dashboard-setup-startup-hook)
       :hook ((after-init . dashboard-setup-startup-hook)
              (emacs-startup . toggle-frame-maximized))
       :config
@@ -63,8 +62,7 @@
                     (dolist (theme custom-enabled-themes)
                       (load-theme theme t))))
       ;; Don't save/restore frames in TTY
-      (setq desktop-restore-frames nil)))
-  )
+      (setq desktop-restore-frames nil))))
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
