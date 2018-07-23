@@ -41,7 +41,7 @@
              (emacs-startup . toggle-frame-maximized))
       :config
       (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
-      (setq dashboard-startup-banner centaur-logo)
+      (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
       (setq dashboard-items '((recents  . 5)
                               (bookmarks . 5)
                               (projects . 5))))
