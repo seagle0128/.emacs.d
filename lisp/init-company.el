@@ -37,7 +37,7 @@
   :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :preface
-  (defvar company-enable-yas centuar-company-enable-yas
+  (defvar company-enable-yas centaur-company-enable-yas
     "Enable yasnippet for all backends.")
 
   (defun company-backend-with-yas (backend)

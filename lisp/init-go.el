@@ -92,7 +92,7 @@
 
   ;; LSP provides the functionalities.
   ;; NOTE: `go-langserver' doesn't support Windows so far.
-  (unless centuar-lsp
+  (unless centaur-lsp
     (use-package go-eldoc
       :hook (go-mode . go-eldoc-setup))
 

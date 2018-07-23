@@ -62,7 +62,7 @@
     :hook (python-mode . py-autopep8-enable-on-save))
 
   ;; Anaconda mode
-  (unless centuar-lsp
+  (unless centaur-lsp
     (use-package anaconda-mode
       :diminish anaconda-mode
       :hook ((python-mode . anaconda-mode)

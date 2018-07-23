@@ -67,11 +67,15 @@
           (const :tag "Doom theme" doom)
           symbol))
 
-(defcustom centuar-lsp nil
+(defcustom centaur-dashboard nil
+  "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will recover last session."
+  :type 'boolean)
+
+(defcustom centaur-lsp nil
   "Enable language servers or not."
   :type 'boolean)
 
-(defcustom centuar-company-enable-yas nil
+(defcustom centaur-company-enable-yas nil
   "Enable yasnippet for company backends or not."
   :type 'boolean)
 

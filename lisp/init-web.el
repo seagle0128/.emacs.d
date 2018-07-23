@@ -83,7 +83,7 @@
   :config (setq coffee-tab-width 2))
 
 ;; Typescript Interactive Development Environment
-(unless centuar-lsp
+(unless centaur-lsp
   (use-package tide
     :diminish tide-mode
     :defines company-backends
@@ -116,7 +116,7 @@
   (setq web-mode-code-indent-offset 2)
 
   ;; Complete for web,html,emmet,jade,slim modes
-  (unless centuar-lsp
+  (unless centaur-lsp
     (use-package company-web
       :after company
       :functions company-backend-with-yas

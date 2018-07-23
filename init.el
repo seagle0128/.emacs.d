@@ -90,7 +90,7 @@
 (require 'init-vcs)
 (require 'init-flycheck)
 (require 'init-projectile)
-(when centuar-lsp (require 'init-lsp))
+(when centaur-lsp (require 'init-lsp))
 
 (require 'init-emacs-lisp)
 (require 'init-c)

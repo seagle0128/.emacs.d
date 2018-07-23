@@ -30,23 +30,41 @@
 
 ;;; Code:
 
-;; Save and restore status
-(use-package desktop
-  :ensure nil
-  :init (desktop-save-mode 1)
-  :config
-  ;; Restore frames into their original displays (if possible)
-  (setq desktop-restore-in-current-display nil)
+(eval-when-compile
+  (require 'init-custom))
 
-  (if (display-graphic-p)
-      ;; Prevent desktop from holding onto theme elements
-      (add-hook 'desktop-after-read-hook
-                (lambda ()
-                  "Load custom theme."
-                  (dolist (theme custom-enabled-themes)
-                    (load-theme theme t))))
-    ;; Don't save/restore frames in TTY
-    (setq desktop-restore-frames nil)))
+(if centaur-dashboard
+    ;; Dashboard
+    (use-package dashboard
+      :diminish dashboard-mode
+      ;; :init (dashboard-setup-startup-hook)
+      :hook ((after-init . dashboard-setup-startup-hook)
+             (emacs-startup . toggle-frame-maximized))
+      :config
+      (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
+      (setq dashboard-startup-banner centaur-logo)
+      (setq dashboard-items '((recents  . 5)
+                              (bookmarks . 5)
+                              (projects . 5))))
+
+  ;; Save and restore status
+  (use-package desktop
+    :ensure nil
+    :init (desktop-save-mode 1)
+    :config
+    ;; Restore frames into their original displays (if possible)
+    (setq desktop-restore-in-current-display nil)
+
+    (if (display-graphic-p)
+        ;; Prevent desktop from holding onto theme elements
+        (add-hook 'desktop-after-read-hook
+                  (lambda ()
+                    "Load custom theme."
+                    (dolist (theme custom-enabled-themes)
+                      (load-theme theme t))))
+      ;; Don't save/restore frames in TTY
+      (setq desktop-restore-frames nil)))
+  )
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch

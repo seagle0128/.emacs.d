@@ -44,7 +44,7 @@
     :defines company-backends
     :hook (ruby-mode . robe-mode)
     :config
-    (unless centuar-lsp
+    (unless centaur-lsp
       (with-eval-after-load 'company
         (cl-pushnew (company-backend-with-yas 'company-robe) company-backends))))
 
