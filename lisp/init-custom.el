@@ -69,7 +69,7 @@
           symbol))
 
 (defcustom centaur-dashboard nil
-  "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will recover last session."
+  "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will restore previous session."
   :type 'boolean)
 
 (defcustom centaur-lsp nil
