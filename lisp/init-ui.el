@@ -45,6 +45,10 @@
                  "%b"))))
 (setq icon-title-format frame-title-format)
 
+(when sys/mac-x-p
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+
 ;; Menu/Tool/Scroll bars
 (unless sys/mac-x-p (menu-bar-mode -1))
 (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
