@@ -45,7 +45,7 @@
 ;;
 ;; ELPA: refer to https://elpa.emacs-china.org/
 ;;
-(defvar-local package-archives-list '(melpa emacs-china tuna))
+(defvar-local package-archives-list '(melpa melpa-mirror emacs-china tuna))
 (defun set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (interactive
@@ -56,6 +56,9 @@
    ((eq archives 'melpa)
     (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
                              ("melpa" . "http://melpa.org/packages/"))))
+   ((eq archives 'melpa-mirror)
+    (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+                             ("melpa" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))))
    ((eq archives 'emacs-china)
     (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                              ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
