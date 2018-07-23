@@ -51,7 +51,13 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search utils: `ag', `rg', `pt'
+;; Search tools: `wgrep', `ag', `rg' and `pt'
+(use-package wgrep
+  :init
+  (setq wgrep-enable-key "r")
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-change-readonly-file t))
+
 (use-package ag
   :defines projectile-command-map
   :init
@@ -59,12 +65,8 @@
     (bind-key "s s" #'ag-project projectile-command-map))
   :config
   (setq ag-highlight-search t)
-  (setq ag-reuse-buffers t))
-
-(use-package wgrep-ag
-  :config
-  (setq wgrep-auto-save-buffer t)
-  (setq wgrep-change-readonly-file t))
+  (setq ag-reuse-buffers t)
+  (use-package wgrep-ag))
 
 (use-package pt
   :init
@@ -73,14 +75,17 @@
   :config (use-package wgrep-pt))
 
 (use-package rg
+  :if (fboundp 'wgrep-ag-setup)
   :defines counsel-projectile-command-map
-  :hook ((after-init . rg-enable-default-bindings)
-         (rg-mode . wgrep-ag-setup))
+  :hook (after-init . rg-enable-default-bindings)
   :config
   (setq rg-group-result t)
   (setq rg-show-columns t)
 
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
+
+  (use-package wgrep-ag
+    :hook (rg-mode . wgrep-ag-setup))
 
   (with-eval-after-load 'projectile
     (bind-key "s r" #'rg-project projectile-command-map))
