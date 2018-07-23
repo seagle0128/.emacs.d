@@ -37,14 +37,58 @@
     ;; Dashboard
     (use-package dashboard
       :diminish dashboard-mode
+      :bind (("<f2>" . (lambda ()
+                         "Open the *dashboard* buffer."
+                         (interactive)
+                         (dashboard-insert-startupify-lists)
+                         (switch-to-buffer dashboard-buffer-name))))
       :hook ((after-init . dashboard-setup-startup-hook)
              (emacs-startup . toggle-frame-maximized))
       :config
       (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
       (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
-      (setq dashboard-items '((recents  . 5)
+      (setq dashboard-items '((recents  . 10)
                               (bookmarks . 5)
-                              (projects . 5))))
+                              (projects . 5)))
+
+      (defun dashboard-insert-buttons (list-size)
+        (insert "\n")
+        (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
+        (widget-create 'url-link
+                       :tag (propertize "Homepage" 'face 'font-lock-keyword-face)
+                       :help-echo "Open the Centaur Emacs Github page."
+                       :mouse-face 'highlight
+                       :follow-link "\C-m"
+                       "https://github.com/seagle0128/.emacs.d")
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Recover Desktop."
+                       :action `(lambda (&rest ignore) (desktop-read))
+                       :mouse-face 'highlight
+                       :follow-link "\C-m"
+                       :button-prefix ""
+                       :button-suffix ""
+                       (propertize "Recover Desktop" 'face 'font-lock-keyword-face))
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Edit Configurations."
+                       :action `(lambda (&rest ignore) (open-custom-file))
+                       :mouse-face 'highlight
+                       :follow-link "\C-m"
+                       :button-prefix ""
+                       :button-suffix ""
+                       (propertize "Edit Config" 'face 'font-lock-keyword-face))
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Update Centaur Emacs."
+                       :action (lambda (&rest ignore) (update-config) (upgrade-packages))
+                       :mouse-face 'highlight
+                       :follow-link "\C-m"
+                       (propertize "Update" 'face 'font-lock-keyword-face))
+        (insert "\n"))
+
+      (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
+      (add-to-list 'dashboard-items '(buttons)))
 
   ;; Save and restore status
   (use-package desktop

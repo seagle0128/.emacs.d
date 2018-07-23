@@ -55,6 +55,17 @@
 (bind-key "<f5>" #'revert-current-buffer)
 (bind-key "s-r" #'revert-current-buffer)
 
+;; Open custom file
+(defun open-custom-file()
+  "Open custom.el if exists, otherwise create it."
+  (interactive)
+  (let ((custom-example (expand-file-name "custom-example.el" user-emacs-directory)))
+    (if (not (file-exists-p custom-file))
+        (if (file-exists-p custom-example)
+            (copy-file custom-file)
+          (error "Unable to find custom-example.el")))
+    (find-file custom-file)))
+
 ;; Update
 (defun update-config ()
   "Update Emacs configurations to the latest version."
