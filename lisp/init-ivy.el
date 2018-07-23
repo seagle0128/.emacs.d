@@ -76,8 +76,22 @@
          ("C-c c w" . counsel-colors-web)
          ("C-c c z" . counsel-fzf)
 
+         ;; Find counsel commands quickly
+         ("<f6>" . (lambda ()
+                     (interactive)
+                     (counsel-M-x "^counsel ")))
+
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
+
+         ;; Search at point
+         ;; "M-j": word-at-point
+         ;; "M-n"/"C-w": symbol-at-point
+         ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
+         ;; and https://github.com/abo-abo/swiper/wiki/FAQ
+         ;; ("C-w" . (lambda ()
+         ;;            (interactive)
+         ;;            (insert (format "%s" (with-ivy-window (ivy-thing-at-point))))))
 
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
@@ -104,11 +118,6 @@
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
 
-  ;; Find counsel commands quickly
-  (bind-key "<f6>" (lambda ()
-                     (interactive)
-                     (counsel-M-x "^counsel ")))
-
   ;; Use faster search tools: ripgrep or the silver search
   (let ((command
          (cond
@@ -126,16 +135,6 @@
   ;; Integration with `magit'
   (with-eval-after-load 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
-
-  ;; Search at point
-  ;; "M-j": word-at-point
-  ;; "M-n"/"C-w": symbol-at-point
-  ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
-  ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-  ;; (bind-key "C-w" (lambda ()
-  ;;                   (interactive)
-  ;;                   (insert (format "%s" (with-ivy-window (ivy-thing-at-point)))))
-  ;;           ivy-minibuffer-map)
 
   ;; Enhance fuzzy matching
   (use-package flx)
