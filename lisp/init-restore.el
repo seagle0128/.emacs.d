@@ -38,10 +38,14 @@
     (use-package dashboard
       :diminish dashboard-mode
       :bind (("<f2>" . (lambda ()
-                         "Open the *dashboard* buffer."
+                         "Open the *dashboard* buffer and jump to the first widget."
                          (interactive)
+                         (if (get-buffer dashboard-buffer-name)
+                             (kill-buffer dashboard-buffer-name))
                          (dashboard-insert-startupify-lists)
-                         (switch-to-buffer dashboard-buffer-name))))
+                         (switch-to-buffer dashboard-buffer-name)
+                         (goto-char (point-min))
+                         (widget-forward 1))))
       :hook ((after-init . dashboard-setup-startup-hook)
              (emacs-startup . toggle-frame-maximized))
       :config
@@ -63,7 +67,7 @@
         (insert " ")
         (widget-create 'push-button
                        :help-echo "Recover Desktop."
-                       :action `(lambda (&rest ignore) (desktop-read))
+                       :action (lambda (&rest ignore) (desktop-read))
                        :mouse-face 'highlight
                        :follow-link "\C-m"
                        :button-prefix ""
@@ -72,7 +76,7 @@
         (insert " ")
         (widget-create 'push-button
                        :help-echo "Edit Configurations."
-                       :action `(lambda (&rest ignore) (open-custom-file))
+                       :action (lambda (&rest ignore) (open-custom-file))
                        :mouse-face 'highlight
                        :follow-link "\C-m"
                        :button-prefix ""
