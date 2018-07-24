@@ -39,7 +39,7 @@
 
 ;; Title
 (setq frame-title-format
-      '("GNU Emacs " emacs-version "@" user-login-name " : "
+      '("Centaur Emacs - "
         (:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
