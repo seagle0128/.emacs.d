@@ -46,13 +46,13 @@
          ("C-x j" . counsel-mark-ring)
 
          ("C-c L" . counsel-load-library)
-         ("C-c P" . counsel-package)
          ("C-c f" . counsel-find-library)
          ("C-c g" . counsel-grep)
          ("C-c h" . counsel-command-history)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c l" . counsel-locate)
+         ("C-c p" . counsel-package)
          ("C-c r" . counsel-rg)
          ("C-c z" . counsel-fzf)
 
