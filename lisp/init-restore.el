@@ -36,7 +36,7 @@
 (if centaur-dashboard
     ;; Dashboard
     (use-package dashboard
-      :diminish dashboard-mode
+      :diminish dashboard-mode page-break-lines-mode
       :bind (("<f2>" . (lambda ()
                          "Open the *dashboard* buffer and jump to the first widget."
                          (interactive)
