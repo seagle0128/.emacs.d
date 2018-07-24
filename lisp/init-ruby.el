@@ -39,12 +39,12 @@
   :interpreter "ruby"
   :config
   ;; Code navigation, documentation lookup and completion for Ruby
-  (use-package robe
-    :diminish robe-mode
-    :defines company-backends
-    :hook (ruby-mode . robe-mode)
-    :config
-    (unless centaur-lsp
+  (unless centaur-lsp
+    (use-package robe
+      :diminish robe-mode
+      :defines company-backends
+      :hook (ruby-mode . robe-mode)
+      :config
       (with-eval-after-load 'company
         (cl-pushnew (company-backend-with-yas 'company-robe) company-backends))))
 
