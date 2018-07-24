@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'init-custom))
+(eval-when-compile
+  (require 'init-custom))
 
 ;; FIXME: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
@@ -43,7 +44,7 @@
       (add-hook 'after-init-hook #'package--save-selected-packages))))
 
 ;;
-;; ELPA: refer to https://elpa.emacs-china.org/
+;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 ;;
 (defvar-local package-archives-list '(melpa melpa-mirror emacs-china tuna))
 (defun set-package-archives (archives)
@@ -52,21 +53,25 @@
    (list
     (intern (completing-read "Switch to archives: "
                              package-archives-list))))
-  (cond
-   ((eq archives 'melpa)
-    (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                             ("melpa" . "http://melpa.org/packages/"))))
-   ((eq archives 'melpa-mirror)
-    (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                             ("melpa" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))))
-   ((eq archives 'emacs-china)
-    (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                             ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
-   ((eq archives 'tuna)
-    (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                             ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
-   (t
-    (error "Unknown archives: '%s'" archives)))
+
+  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                      (not (gnutls-available-p))))
+         (proto (if no-ssl "http" "https")))
+    (cond
+     ((eq archives 'melpa)
+      (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
+                               ,(cons "melpa" (concat proto "://melpa.org/packages/")))))
+     ((eq archives 'melpa-mirror)
+      (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
+                               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/")))))
+     ((eq archives 'emacs-china)
+      (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
+                               ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/")))))
+     ((eq archives 'tuna)
+      (setq package-archives `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+                               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
+     (t
+      (error "Unknown archives: '%s'" archives))))
 
   (message "Set package archives to '%s'." archives))
 
