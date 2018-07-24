@@ -147,7 +147,7 @@ switch manually via `M-x switch-package-archives` anytime.
 
 ![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
 
-### Doom theme and modeline
+### Dired and replace (doom theme with [doom-modeline](https://github.com/seagle0128/doom-modeline))
 
 ![Doom](https://user-images.githubusercontent.com/140797/41302817-13cb7622-6e9e-11e8-894b-07aff95f91bc.png)
 
@@ -155,8 +155,8 @@ switch manually via `M-x switch-package-archives` anytime.
 
 1. Why is the modline messy?
 
-   Powerline fonts are missing on your system. Please install
-   [powerline-fonts](https://github.com/powerline/fonts).
+   Powerline fonts or all-the-icons are missing on your system. Please install
+   [powerline-fonts](https://github.com/powerline/fonts) or `M-x all-the-icons-install-fonts`.
 
 1. How to search Chinese via pinyin?
 
