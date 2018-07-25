@@ -30,6 +30,10 @@
 
 ;;; Code:
 
+(defconst centaur-homepage
+  "https://github.com/seagle0128/.emacs.d"
+  "The Github page of Centuar Emacs.")
+
 (defconst sys/win32p
   (eq system-type 'windows-nt)
   "Are we running on a WinTel system?")

@@ -55,6 +55,12 @@
 (bind-key "<f5>" #'revert-current-buffer)
 (bind-key "s-r" #'revert-current-buffer)
 
+;; Browse the homepage
+(defun browse-homepage ()
+  "Browse the Github page of Centuar Emacs."
+  (interactive)
+  (browse-url centaur-homepage))
+
 ;; Open custom file
 (defun open-custom-file()
   "Open custom.el if exists, otherwise create it."
@@ -79,8 +85,15 @@
           (message "Update finished. Restart Emacs to complete the process."))
       (message "\"%s\" doesn't exist." dir))))
 
+(declare-function upgrade-packages 'init-package)
+(defun update-centaur()
+  "Update confgiurations and packages."
+  (interactive)
+  (update-config)
+  (upgrade-packages))
+
 (declare-function upgrade-packages-and-restart 'init-package)
-(defun update-and-restart ()
+(defun update-centaur-and-restart ()
   "Update configurations and packages, then restart."
   (interactive)
   (update-config)

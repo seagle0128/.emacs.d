@@ -31,92 +31,98 @@
 ;;; Code:
 
 (eval-when-compile
+  (require 'init-const)
   (require 'init-custom))
 
-(if centaur-dashboard
-    ;; Dashboard
-    (use-package dashboard
-      :diminish dashboard-mode page-break-lines-mode
-      :bind (("<f2>" . (lambda ()
-                         "Open the *dashboard* buffer and jump to the first widget."
-                         (interactive)
-                         (if (get-buffer dashboard-buffer-name)
-                             (kill-buffer dashboard-buffer-name))
-                         (dashboard-insert-startupify-lists)
-                         (switch-to-buffer dashboard-buffer-name)
-                         (goto-char (point-min))
-                         (widget-forward 1))))
-      :hook ((after-init . dashboard-setup-startup-hook)
-             (emacs-startup . toggle-frame-maximized))
-      :config
-      (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
-      (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
-      (setq dashboard-items '((recents  . 10)
-                              (bookmarks . 5)
-                              (projects . 5)))
+;; Save and restore status
+(use-package desktop
+  :ensure nil
+  :init
+  ;; If using dashboard, enable `desktop-save-mode' after startup.
+  (if centaur-dashboard
+      (add-hook 'after-init-hook #'desktop-save-mode)
+    (desktop-save-mode 1))
+  :config
+  ;; Restore frames into their original displays (if possible)
+  (setq desktop-restore-in-current-display nil)
 
-      (defun dashboard-insert-buttons (list-size)
-        (insert "\n")
-        (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
-        (widget-create 'url-link
-                       :tag (propertize "Homepage" 'face 'font-lock-keyword-face)
-                       :help-echo "Open the Centaur Emacs Github page"
-                       :mouse-face 'highlight
-                       :follow-link "\C-m"
-                       "https://github.com/seagle0128/.emacs.d")
-        (insert " ")
-        (widget-create 'push-button
-                       :help-echo "Restore previous session"
-                       :action (lambda (&rest ignore) (desktop-read))
-                       :mouse-face 'highlight
-                       :follow-link "\C-m"
-                       :button-prefix ""
-                       :button-suffix ""
-                       (propertize "Restore Session" 'face 'font-lock-keyword-face))
-        (insert " ")
-        (widget-create 'push-button
-                       :help-echo "Edit Personal Configurations"
-                       :action (lambda (&rest ignore) (open-custom-file))
-                       :mouse-face 'highlight
-                       :follow-link "\C-m"
-                       :button-prefix ""
-                       :button-suffix ""
-                       (propertize "Edit Config" 'face 'font-lock-keyword-face))
-        (insert " ")
-        (widget-create 'push-button
-                       :help-echo "Update Centaur Emacs config and packages"
-                       :action (lambda (&rest ignore) (update-config) (upgrade-packages))
-                       :mouse-face 'highlight
-                       :follow-link "\C-m"
-                       (propertize "Update" 'face 'font-lock-keyword-face))
-        (insert "\n")
-        (insert "\n")
-        (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
-
-      (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
-      (add-to-list 'dashboard-items '(buttons)))
-
-  ;; Save and restore status
-  (use-package desktop
-    :ensure nil
-    :init (desktop-save-mode 1)
-    :config
-    ;; Restore frames into their original displays (if possible)
-    (setq desktop-restore-in-current-display nil)
-
-    (if (display-graphic-p)
-        ;; Prevent desktop from holding onto theme elements
-        (add-hook 'desktop-after-read-hook
-                  (lambda ()
-                    "Load custom theme."
-                    (dolist (theme custom-enabled-themes)
-                      (load-theme theme t))))
-      ;; Don't save/restore frames in TTY
-      (setq desktop-restore-frames nil))))
+  (if (display-graphic-p)
+      ;; Prevent desktop from holding onto theme elements
+      (add-hook 'desktop-after-read-hook
+                (lambda ()
+                  "Load custom theme."
+                  (dolist (theme custom-enabled-themes)
+                    (load-theme theme t))))
+    ;; Don't save/restore frames in TTY
+    (setq desktop-restore-frames nil)))
 
 ;; Persistent the scratch buffter
 (use-package persistent-scratch
   :hook (after-init . persistent-scratch-setup-default))
+
+;; Dashboard
+(when centaur-dashboard
+  (use-package dashboard
+    :diminish dashboard-mode page-break-lines-mode
+    :bind (("<f2>" . (lambda ()
+                       "Open the *dashboard* buffer and jump to the first widget."
+                       (interactive)
+                       (if (get-buffer dashboard-buffer-name)
+                           (kill-buffer dashboard-buffer-name))
+                       (dashboard-insert-startupify-lists)
+                       (switch-to-buffer dashboard-buffer-name)
+                       (goto-char (point-min))
+                       (widget-forward 1)))
+           :map dashboard-mode-map
+           ("H" . browse-homepage)
+           ("E" . open-custom-file)
+           ("S" . desktop-read)
+           ("U" . update-centaur))
+    :hook ((after-init . dashboard-setup-startup-hook)
+           (emacs-startup . toggle-frame-maximized))
+    :config
+    (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
+    (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
+    (setq dashboard-items '((recents  . 10)
+                            (bookmarks . 5)
+                            (projects . 5)))
+
+    (defun dashboard-insert-buttons (list-size)
+      (insert "\n")
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
+      (widget-create 'url-link
+                     :tag (propertize "Homepage" 'face 'font-lock-keyword-face)
+                     :help-echo "Open the Centaur Emacs Github page"
+                     :mouse-face 'highlight
+                     centaur-homepage)
+      (insert " ")
+      (widget-create 'push-button
+                     :help-echo "Restore previous session"
+                     :action (lambda (&rest ignore) (desktop-read))
+                     :mouse-face 'highlight
+                     :button-prefix ""
+                     :button-suffix ""
+                     (propertize "Restore Session" 'face 'font-lock-keyword-face))
+      (insert " ")
+      (widget-create 'push-button
+                     :help-echo "Edit Personal Configurations"
+                     :action (lambda (&rest ignore) (open-custom-file))
+                     :mouse-face 'highlight
+                     :button-prefix ""
+                     :button-suffix ""
+                     (propertize "Edit Config" 'face 'font-lock-keyword-face))
+      (insert " ")
+      (widget-create 'push-button
+                     :help-echo "Update Centaur Emacs config and packages"
+                     :action (lambda (&rest ignore) (update-centaur))
+                     :mouse-face 'highlight
+                     (propertize "Update" 'face 'font-lock-keyword-face))
+      (insert "\n")
+      (insert "\n")
+      (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
+
+    (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
+    (add-to-list 'dashboard-items '(buttons))))
 
 (provide 'init-restore)
 
