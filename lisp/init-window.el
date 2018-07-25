@@ -143,6 +143,9 @@
           ;; Kill Ring
           ("*Kill Ring*" :dedicated t :position bottom)
 
+          ;; Org
+          ("*Org todo*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
+
           ;; Flycheck
           ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
 
