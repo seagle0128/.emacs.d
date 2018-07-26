@@ -37,11 +37,7 @@
 ;; Save and restore status
 (use-package desktop
   :ensure nil
-  :init
-  ;; If using dashboard, enable `desktop-save-mode' after startup.
-  (if centaur-dashboard
-      (add-hook 'after-init-hook #'desktop-save-mode)
-    (desktop-save-mode 1))
+  :init (unless centaur-dashboard (desktop-save-mode 1))
   :config
   ;; Restore frames into their original displays (if possible)
   (setq desktop-restore-in-current-display nil)
@@ -98,7 +94,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Restore previous session"
-                     :action (lambda (&rest ignore) (desktop-read))
+                     :action (lambda (&rest ignore) (desktop-save-mode 1) (desktop-read))
                      :mouse-face 'highlight
                      :button-prefix ""
                      :button-suffix ""
