@@ -78,6 +78,7 @@
   (setq recentf-max-saved-items 200)
   :config
   (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
+  (add-to-list 'recentf-exclude ".cask")
   (add-to-list 'recentf-exclude "bookmarks")
   (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
