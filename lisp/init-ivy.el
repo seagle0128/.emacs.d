@@ -128,6 +128,11 @@
           (t counsel-grep-base-command))))
     (setq counsel-grep-base-command command))
 
+  (when (executable-find "rg")
+    (setq counsel-git-cmd "rg --files")
+    (setq counsel-rg-base-command
+          "rg -i -M 120 --no-heading --line-number --color never %s ."))
+
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
