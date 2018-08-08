@@ -54,7 +54,6 @@
 ;; Search tools: `wgrep', `ag', `rg' and `pt'
 (use-package wgrep
   :init
-  (setq wgrep-enable-key "r")
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
