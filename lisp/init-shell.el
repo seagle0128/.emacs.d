@@ -60,13 +60,25 @@
     (setq comint-input-sender 'n-shell-simple-send))
   :hook ((shell-mode . ansi-color-for-comint-mode-on)
          (shell-mode . n-shell-mode-hook))
-  :config (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m))
+  :config
+  (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
 
-;; Company mode backend for shell functions
-(use-package company-shell
-  :after company
-  :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
-                    company-backends))
+  ;; Company mode backend for shell functions
+  (use-package company-shell
+    :after company
+    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
+                      company-backends))
+
+  ;; ANSI & XTERM 256 color support
+  (use-package xterm-color
+    :defines compilation-environment
+    :init
+    (setenv "TERM" "xterm-256color")
+    (setq comint-output-filter-functions
+          (remove 'ansi-color-process-output comint-output-filter-functions))
+
+    (add-hook 'shell-mode-hook
+              (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
 ;; Multi term
 (use-package multi-term)
