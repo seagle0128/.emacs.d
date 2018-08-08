@@ -34,7 +34,9 @@
 
 ;; Manage and navigate projects
 (use-package projectile
-  :bind (("s-t" . projectile-find-file)) ; `cmd-t' or `super-t'
+  :bind (("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
+         :map projectile-mode-map
+         ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :config
   (setq projectile-mode-line
