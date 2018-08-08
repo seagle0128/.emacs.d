@@ -32,7 +32,7 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :defines magit-completing-read-function
+  :defines (projectile-completion-system magit-completing-read-function)
   :bind (("C-s" . swiper)
          ("C-S-s" . swiper-all)
 
