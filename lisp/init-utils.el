@@ -112,6 +112,10 @@
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com" . gfm-mode))))
 
+;; Open files as another user
+(unless sys/win32p
+  (use-package sudo-edit))
+
 ;; Tramp
 (use-package docker-tramp)
 
@@ -141,7 +145,6 @@
 (use-package list-environment)
 (use-package memory-usage)
 (use-package open-junk-file)
-(use-package sudo-edit)                 ; Open files as another user
 (use-package try)
 (use-package ztree)                     ; text mode directory tree. Similar with beyond compare
 
