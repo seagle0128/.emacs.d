@@ -118,9 +118,22 @@
                    centaur-theme)))
       (load-theme theme t))
     :config
+    ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
-    (doom-themes-org-config)
 
+    ;; Corrects (and improves) org-mode's native fontification.
+    (with-eval-after-load 'org
+      (doom-themes-org-config))
+
+    ;; Enable custom treemacs theme (all-the-icons must be installed!)
+    (with-eval-after-load 'treemacs
+      (doom-themes-treemacs-config))
+
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (with-eval-after-load 'neotree
+      (doom-themes-neotree-config))
+
+    ;; Make certain buffers grossly incandescent
     (use-package solaire-mode
       :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
              (minibuffer-setup . solaire-mode-in-minibuffer)
