@@ -87,7 +87,7 @@
 (use-package switch-window
   :bind ([remap other-window] . switch-window)
   :config
-  (setq switch-window-shortcut-style 'qwerty)
+  ;; (setq switch-window-shortcut-style 'qwerty)
   (setq switch-window-minibuffer-shortcut ?0)
   (setq switch-window-multiple-frames t)
   (with-eval-after-load 'ivy
