@@ -61,7 +61,7 @@
   :defines projectile-command-map
   :init
   (with-eval-after-load 'projectile
-    (bind-key "s s" #'ag-project projectile-command-map))
+    (bind-key "s S" #'ag-project projectile-command-map))
   :config
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers t)
@@ -101,7 +101,7 @@
     (bind-key "c f" #'counsel-fzf rg-global-map))
 
   (with-eval-after-load 'counsel-projectile
-    (bind-key "s r" #'rg-project counsel-projectile-command-map)))
+    (bind-key "s R" #'rg-project counsel-projectile-command-map)))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
