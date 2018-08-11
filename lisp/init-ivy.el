@@ -172,8 +172,8 @@
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :disabled
-    :init (counsel-projectile-mode 1))
+    :preface (setq projectile-keymap-prefix (kbd "C-c p"))
+    :hook (after-init . counsel-projectile-mode))
 
   ;; Stylesheet-selector-aware swiper
   (use-package counsel-css
