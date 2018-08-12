@@ -159,13 +159,21 @@ switch manually via `M-x switch-package-archives` anytime.
 
 1. Why is the modline messy?
 
-   Powerline fonts or all-the-icons are missing on your system. Please install
-   [powerline-fonts](https://github.com/powerline/fonts) or `M-x all-the-icons-install-fonts`.
+    Powerline fonts or all-the-icons are missing on your system. Please install
+    [powerline-fonts](https://github.com/powerline/fonts) or `M-x all-the-icons-install-fonts`.
 
 1. How to search Chinese via pinyin?
 
-   In Emacs, `C-s :`. If you just want to search `:`, use `C-s \:`.
+    In Emacs, `C-s :`. If you just want to search `:`, use `C-s \:`.
+
+1. How to use the Centaur Dashboard?
+
+    Put `(setq centaur-dashboard t)` in `custom.el`. Dashboard will be opened at
+    startup. After startup, you could use `F2` to open it anytime.
+    In the dashboard, you could easily jump to Homepage(`H`), Restore
+    Session(`S`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
+    Bookmarks(`m`) and Projects(`p`).
 
 1. How to enable `plantuml` in `org-mode`?
 
-   Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
+    Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
