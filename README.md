@@ -151,6 +151,10 @@ switch manually via `M-x switch-package-archives` anytime.
 
 ![Doom](https://user-images.githubusercontent.com/140797/41302817-13cb7622-6e9e-11e8-894b-07aff95f91bc.png)
 
+### Dashboard (doom theme with [doom-modeline](https://github.com/seagle0128/doom-modeline))
+
+![Dashboard](https://user-images.githubusercontent.com/140797/43999598-6514db6c-9e42-11e8-8219-05d297fbbe8d.png)
+
 ## FAQ
 
 1. Why is the modline messy?
