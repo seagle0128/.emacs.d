@@ -44,7 +44,9 @@
 
   ;; Github integration
   (use-package magithub
-    :init (magithub-feature-autoinject t))
+    :init
+    (setq magithub-api-timeout 5)
+    (magithub-feature-autoinject t))
 
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow
