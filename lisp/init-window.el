@@ -128,17 +128,17 @@
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
         '(;; Emacs
-          ("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
+          ("*Help*" :dedicated t :position bottom :stick t :noselect t)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
-          ("^*Man.+*$" :regexp t :position bottom :stick nil :noselect nil :height 0.4)
+          ("^*Man.+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
           ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
-          ("^*helpful .+*$" :regexp t :position bottom :stick nil :noselect nil :height 0.4)
+          ("^*helpful .+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
 
           ;; Kill Ring
           ("*Kill Ring*" :dedicated t :position bottom)
