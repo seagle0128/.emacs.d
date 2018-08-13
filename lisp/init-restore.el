@@ -94,7 +94,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Restore previous session"
-                     :action (lambda (&rest ignore) (desktop-save-mode 1) (desktop-read))
+                     :action (lambda () (desktop-save-mode 1) (desktop-read))
                      :mouse-face 'highlight
                      :button-prefix ""
                      :button-suffix ""
@@ -102,7 +102,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Edit Personal Configurations"
-                     :action (lambda (&rest ignore) (open-custom-file))
+                     :action (lambda () (open-custom-file))
                      :mouse-face 'highlight
                      :button-prefix ""
                      :button-suffix ""
@@ -110,7 +110,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Update Centaur Emacs config and packages"
-                     :action (lambda (&rest ignore) (update-centaur))
+                     :action (lambda () (update-centaur))
                      :mouse-face 'highlight
                      (propertize "Update" 'face 'font-lock-keyword-face))
       (insert "\n")
