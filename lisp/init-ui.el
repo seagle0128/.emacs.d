@@ -115,6 +115,10 @@
  ((is-doom-theme-p centaur-theme)
   (use-package doom-themes
     :init
+    (with-eval-after-load 'doom-themes-common
+      (push '(anzu-replace-highlight :background base0 :foreground red :strike-through t :weight 'bold) doom-themes-common-faces)
+      (push '(anzu-replace-to :background base0 :foreground green :weight 'bold) doom-themes-common-faces))
+
     (let ((theme (if (eq centaur-theme 'doom)
                      'doom-one
                    centaur-theme)))
