@@ -62,15 +62,8 @@ Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
 ### Install
 
-Backup `.emacs.d` if need,
-
 ``` shell
 mv ~/.emacs.d ~/.emacs.d.bak
-```
-
-then
-
-``` shell
 git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
@@ -83,16 +76,8 @@ Enjoy!
 
 ### Update
 
-Run `M-x update-config` in Emacs, or
-
-``` shell
-cd ~/.emacs.d && git pull
-```
-
-### Upgrade packages
-
 ``` emacs-lisp
-M-x upgrade-packages
+M-x upgrade-centaur
 ```
 
 ## Customization
