@@ -99,11 +99,16 @@
 
   (defalias 'eshell/more 'eshell/less)
   :config
-  ;; Eshell prompt for git users
-  (use-package eshell-git-prompt
-    :hook (eshell-load
-           .
-           (lambda () (eshell-git-prompt-use-theme "robbyrussell"))))
+  (use-package eshell-prompt-extras
+    :after esh-opt
+    :defines eshell-highlight-prompt
+    :commands (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
+    :init (setq eshell-highlight-prompt nil
+                eshell-prompt-function 'epe-theme-lambda))
+
+  ;; Fish-like history autosuggestions
+  (use-package esh-autosuggest
+    :hook (eshell-mode . esh-autosuggest-mode))
 
   ;; cd to frequent directory in eshell
   (use-package eshell-z
