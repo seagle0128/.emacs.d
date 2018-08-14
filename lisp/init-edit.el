@@ -186,7 +186,8 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode))
+  :hook (after-init . electric-pair-mode)
+  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
