@@ -86,6 +86,8 @@
 ;; A *visual* way to switch window
 (use-package switch-window
   :bind ([remap other-window] . switch-window)
+  :custom-face
+  (switch-window-label ((t (:inherit font-lock-keyword-face :height 3.0))))
   :config
   ;; (setq switch-window-shortcut-style 'qwerty)
   (setq switch-window-minibuffer-shortcut ?0)
