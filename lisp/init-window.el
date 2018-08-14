@@ -55,27 +55,27 @@
   :disabled
   :bind ([remap other-window] . ace-window)
   :custom-face
-  (aw-leading-char-face ((t (:foreground "deep sky blue" :bold t :height 3.0))))
-  (aw-mode-line-face ((t (:inherit 'mode-line-buffer-id :foreground "yellow green"))))
+  (aw-leading-char-face ((t (:inherit 'font-lock-keyword-face :height 3.0))))
+  (aw-mode-line-face ((t (:inherit 'mode-line-emphasis))))
   :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  ;; (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
   (add-to-list 'aw-dispatch-alist '(?l balance-windows "Balance Windows") t)
   (add-to-list 'aw-dispatch-alist '(?u winner-undo "Switch back to an earlier config") t)
   (add-to-list 'aw-dispatch-alist '(?r winner-redo "Restore to a recent config") t)
 
   (when (package-installed-p 'hydra)
-    (defhydra hydra-window-size (:color red)
+    (defhydra hydra-window-size (:color blue)
       "Windows size"
       ("h" shrink-window-horizontally "shrink horizontal")
       ("j" shrink-window "shrink vertical")
       ("k" enlarge-window "enlarge vertical")
       ("l" enlarge-window-horizontally "enlarge horizontal"))
-    (defhydra hydra-window-frame (:color red)
+    (defhydra hydra-window-frame (:color blue)
       "Frame"
       ("f" make-frame "new frame")
       ("x" delete-frame "delete frame"))
-    (defhydra hydra-window-scroll (:color red)
+    (defhydra hydra-window-scroll (:color blue)
       "Scroll other window"
       ("n" scroll-other-window "scroll")
       ("p" scroll-other-window-down "scroll down"))
