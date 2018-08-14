@@ -95,7 +95,9 @@
   (with-eval-after-load 'ivy
     (setq switch-window-preferred 'ivy))
   (unless (display-graphic-p)
-    (setq switch-window-shortcut-appearance 'asciiart)))
+    (setq switch-window-shortcut-appearance 'asciiart))
+
+  )
 
 ;; Navigate windows and frames using numbers
 (use-package winum
@@ -135,6 +137,7 @@
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Pp Eval Output*" :dedicated t :position bottom :stick t :noselect t)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
           ("^*Man.+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
