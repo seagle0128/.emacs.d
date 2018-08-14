@@ -85,7 +85,10 @@
 
 ;; A *visual* way to switch window
 (use-package switch-window
-  :bind ([remap other-window] . switch-window)
+  :bind (([remap other-window] . switch-window)
+         :map switch-window-extra-map
+         ("u" . winner-undo)
+         ("r" . winner-redo))
   :custom-face
   (switch-window-label ((t (:inherit font-lock-keyword-face :height 3.0))))
   :config
@@ -95,9 +98,7 @@
   (with-eval-after-load 'ivy
     (setq switch-window-preferred 'ivy))
   (unless (display-graphic-p)
-    (setq switch-window-shortcut-appearance 'asciiart))
-
-  )
+    (setq switch-window-shortcut-appearance 'asciiart)))
 
 ;; Navigate windows and frames using numbers
 (use-package winum
