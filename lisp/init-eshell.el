@@ -99,6 +99,7 @@
 
   (defalias 'eshell/more 'eshell/less)
   :config
+  ;;  Display extra information for prompt
   (use-package eshell-prompt-extras
     :after esh-opt
     :defines eshell-highlight-prompt
@@ -110,7 +111,11 @@
   (use-package esh-autosuggest
     :hook (eshell-mode . esh-autosuggest-mode))
 
-  ;; cd to frequent directory in eshell
+  ;; Eldoc support
+  (use-package esh-help
+    :init (setup-esh-help-eldoc))
+
+  ;; `cd' to frequent directory in eshell
   (use-package eshell-z
     :hook (eshell-mode
            .
