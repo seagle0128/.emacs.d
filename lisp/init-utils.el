@@ -69,7 +69,6 @@
 
 (use-package rg
   :if (fboundp 'wgrep-ag-setup)
-  :defines counsel-projectile-command-map
   :hook (after-init . rg-enable-default-bindings)
   :config
   (setq rg-group-result t)
