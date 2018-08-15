@@ -68,7 +68,6 @@
   (use-package wgrep-ag))
 
 (use-package rg
-  :if (fboundp 'wgrep-ag-setup)
   :hook (after-init . rg-enable-default-bindings)
   :config
   (setq rg-group-result t)
