@@ -36,6 +36,7 @@
   :diminish lsp-mode
   :config
   (setq lsp-inhibit-message t)
+  (setq lsp-message-project-root-warning t)
 
   ;; https://emacs-china.org/t/topic/6392/2
   (defun restart-lsp-server ()
