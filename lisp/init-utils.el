@@ -87,7 +87,7 @@
     :hook (rg-mode . wgrep-ag-setup))
 
   (with-eval-after-load 'projectile
-    (bind-key "s r" #'rg-project projectile-command-map))
+    (bind-key "s R" #'rg-project projectile-command-map))
 
   (when (fboundp 'ag)
     (bind-key "a" #'ag rg-global-map))
@@ -98,10 +98,7 @@
     (bind-key "c r" #'counsel-rg rg-global-map)
     (bind-key "c s" #'counsel-ag rg-global-map)
     (bind-key "c p" #'counsel-pt rg-global-map)
-    (bind-key "c f" #'counsel-fzf rg-global-map))
-
-  (with-eval-after-load 'counsel-projectile
-    (bind-key "s R" #'rg-project counsel-projectile-command-map)))
+    (bind-key "c f" #'counsel-fzf rg-global-map)))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
