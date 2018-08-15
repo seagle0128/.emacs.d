@@ -51,7 +51,7 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search tools: `wgrep', `ag', `rg' and `pt'
+;; Search tools: `wgrep', `ag' and `rg'
 (use-package wgrep
   :init
   (setq wgrep-auto-save-buffer t)
@@ -66,12 +66,6 @@
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers t)
   (use-package wgrep-ag))
-
-(use-package pt
-  :init
-  (with-eval-after-load 'projectile
-    (bind-key "s p" #'projectile-pt projectile-command-map))
-  :config (use-package wgrep-pt))
 
 (use-package rg
   :if (fboundp 'wgrep-ag-setup)
@@ -91,8 +85,6 @@
 
   (when (fboundp 'ag)
     (bind-key "a" #'ag rg-global-map))
-  (when (fboundp 'pt-regexp)
-    (bind-key "P" #'pt-regexp rg-global-map))
 
   (with-eval-after-load 'counsel
     (bind-key "c r" #'counsel-rg rg-global-map)
