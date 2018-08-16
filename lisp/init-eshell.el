@@ -35,12 +35,20 @@
   :ensure nil
   :defines (compilation-last-buffer eshell-prompt-function)
   :commands (eshell-flatten-list eshell-interactive-output-p eshell-parse-command)
+  :hook (eshell-mode . (lambda ()
+                         (bind-key "C-l" 'eshell/clear eshell-mode-map)
+                         (eshell/alias "f" "find-file $1")
+                         (eshell/alias "fo" "find-file-other-window $1")
+                         (eshell/alias "d" "dired $1")
+                         (eshell/alias "ll" "ls -l")
+                         (eshell/alias "la" "ls -al")))
   :preface
   (defun eshell/clear ()
     "Clear the eshell buffer."
     (interactive)
     (let ((inhibit-read-only t))
-      (erase-buffer)))
+      (erase-buffer)
+      (eshell-send-input)))
 
   (defun eshell/emacs (&rest args)
     "Open a file (ARGS) in Emacs.  Some habits die hard."
