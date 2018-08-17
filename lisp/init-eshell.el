@@ -34,7 +34,9 @@
 (use-package eshell
   :ensure nil
   :defines (compilation-last-buffer eshell-prompt-function)
-  :commands (eshell-flatten-list eshell-interactive-output-p eshell-parse-command)
+  :commands (eshell/alias
+             eshell-send-input eshell-flatten-list
+             eshell-interactive-output-p eshell-parse-command)
   :hook (eshell-mode . (lambda ()
                          (bind-key "C-l" 'eshell/clear eshell-mode-map)
                          (eshell/alias "f" "find-file $1")
