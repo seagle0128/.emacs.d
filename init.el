@@ -4,7 +4,7 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 3.5.0
+;; Version: 3.6.0
 ;; Keywords: .emacs.d centaur
 
 ;; This file is not part of GNU Emacs.
