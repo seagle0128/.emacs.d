@@ -52,8 +52,8 @@
   (interactive)
   (message "Revert this buffer.")
   (revert-buffer t t))
-(bind-key "<f5>" #'revert-current-buffer)
-(bind-key "s-r" #'revert-current-buffer)
+(bind-keys ("<f5>" . revert-current-buffer)
+           ("s-r" . revert-current-buffer))
 
 ;; Browse the homepage
 (defun browse-homepage ()

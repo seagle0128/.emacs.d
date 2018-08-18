@@ -86,10 +86,11 @@
     (bind-key "a" #'ag rg-global-map))
 
   (with-eval-after-load 'counsel
-    (bind-key "c r" #'counsel-rg rg-global-map)
-    (bind-key "c s" #'counsel-ag rg-global-map)
-    (bind-key "c p" #'counsel-pt rg-global-map)
-    (bind-key "c f" #'counsel-fzf rg-global-map)))
+    (bind-keys :map rg-global-map
+               ("c r" . counsel-rg)
+               ("c s" . counsel-ag)
+               ("c p" . counsel-pt)
+               ("c f" . counsel-fzf))))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
