@@ -204,7 +204,7 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
 (setq scroll-step 1
-      scroll-margin 1
+      scroll-margin 0
       scroll-conservatively 100000)
 
 ;; Display Time
