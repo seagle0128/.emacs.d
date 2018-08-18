@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil
@@ -40,6 +43,23 @@
                            (setq tab-width 4)
                            (setq c-basic-offset 4)))
   :config
+  (unless 'centaur-lsp
+    (use-package irony-mode
+      :hook (((c-mode c++-mode objc-mode) . irony-mode)
+             (irony-mode . irony-cdb-autosetup-compile-options))
+      :config
+      (with-eval-after-load 'counsel
+        (bind-keys :map irony-mode-map
+                   ([remap completion-at-point] . counsel-irony)
+                   ([remap complete-symbol] . counsel-irony)))
+
+      ;; Windows performance tweaks
+      (when (boundp 'w32-pipe-read-delay)
+        (setq w32-pipe-read-delay 0))
+      ;; Set the buffer size to 64K on Windows (from the original 4K)
+      (when (boundp 'w32-pipe-buffer-size)
+        (setq irony-server-w32-pipe-buffer-size (* 64 1024)))))
+
   ;; Company mode backend for C/C++ header files
   (use-package company-c-headers
     :after company
