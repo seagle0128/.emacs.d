@@ -51,7 +51,7 @@
 
 (use-package lsp-ui
   :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ;; ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references] . lsp-ui-peek-find-references))
   :hook (lsp-mode . lsp-ui-mode))
 
