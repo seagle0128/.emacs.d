@@ -58,13 +58,13 @@
         (setq w32-pipe-read-delay 0))
       ;; Set the buffer size to 64K on Windows (from the original 4K)
       (when (boundp 'w32-pipe-buffer-size)
-        (setq irony-server-w32-pipe-buffer-size (* 64 1024)))))
+        (setq irony-server-w32-pipe-buffer-size (* 64 1024))))
 
-  ;; Company mode backend for C/C++ header files
-  (use-package company-c-headers
-    :after company
-    :functions company-backend-with-yas
-    :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends)))
+    ;; Company mode backend for C/C++ header files
+    (use-package company-c-headers
+      :after company
+      :functions company-backend-with-yas
+      :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends))))
 
 (provide 'init-c)
 
