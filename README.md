@@ -110,6 +110,8 @@ For Example:
 The default pacakge archives is `melpa`. You can change it in `custom.el`, or
 switch manually via `M-x switch-package-archives` anytime.
 
+For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
+
 ## Screenshots
 
 ### Main (default theme)

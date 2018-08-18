@@ -121,6 +121,11 @@
     (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
     (add-to-list 'dashboard-items '(buttons))))
 
+;; Load personal configurations
+(let ((file (expand-file-name "custom-post.el" user-emacs-directory)))
+  (if (file-exists-p file)
+      (load file)))
+
 (provide 'init-restore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
