@@ -64,6 +64,7 @@
   ;; Anaconda mode
   (unless centaur-lsp
     (use-package anaconda-mode
+      :defines anaconda-mode-localhost-address
       :diminish anaconda-mode
       :hook ((python-mode . anaconda-mode)
              (python-mode . anaconda-eldoc-mode))
