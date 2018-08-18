@@ -76,6 +76,7 @@
            ("U" . update-centaur))
     :hook ((after-init . dashboard-setup-startup-hook)
            (emacs-startup . toggle-frame-maximized))
+    :init (setq inhibit-startup-screen t)
     :config
     (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
     (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
