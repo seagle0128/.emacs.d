@@ -190,17 +190,6 @@
     :bind (:map counsel-mode-map
                 ("C-c c v" . counsel-tramp)))
 
-  ;; Ivy for GNU global
-  (use-package counsel-gtags
-    :diminish counsel-gtags-mode
-    :bind (:map counsel-gtags-mode-map
-                ("M-." . counsel-gtags-find-definition)
-                ("M-r" . counsel-gtags-find-reference)
-                ("M-s" . counsel-gtags-find-symbol)
-                ("M-," . counsel-gtags-go-backward))
-    :hook ((c-mode c++-mode) . counsel-gtags-mode)
-    :config (setq counsel-gtags-auto-update t))
-
   ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
   ;; search the selection or current symbol by default
   (eval-and-compile
