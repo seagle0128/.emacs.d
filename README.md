@@ -21,7 +21,7 @@ latest stable release - currently **26.1**.
 
 - Out of box.
 - Clean and Fast.
-- Quick fuzzy search (via `ivy`, `rg`, `ag` and `pt` etc.).
+- Quick fuzzy search.
 - Better Org support.
 - Support multiple programming languages
   - C/C++/C#/Java
