@@ -155,8 +155,15 @@
 ;; C/C++/Objective-C language server support for lsp-mode using clang
 ;; Install: brew install cquery or see https://github.com/cquery-project/cquery/releases
 (use-package cquery
+  :defines projectile-project-root-files-top-down-recurring
   :commands lsp-cquery-enable
-  :hook (c-mode-common . lsp-cquery-enable))
+  :hook ((c-mode c++-mode objc-mode) . lsp-cquery-enable)
+  :config
+  (with-eval-after-load 'projectile
+    (setq projectile-project-root-files-top-down-recurring
+          (append '("compile_commands.json"
+                    ".cquery")
+                  projectile-project-root-files-top-down-recurring))))
 
 ;; Rust support for lsp-mode using the Rust Language Server.
 ;; Install: rustup component add rls-preview rust-analysis rust-src
