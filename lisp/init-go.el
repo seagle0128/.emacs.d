@@ -38,7 +38,6 @@
 ;; Go packages:
 ;; go get -u github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
-;; go get -u github.com/golang/lint/golint
 ;; go get -u golang.org/x/tools/cmd/goimports
 ;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
@@ -63,6 +62,7 @@
   (use-package go-fill-struct)
   (use-package go-impl)
   (use-package go-playground)
+  (use-package go-rename)
   (use-package golint)
   (use-package govet)
 
