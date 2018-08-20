@@ -63,10 +63,11 @@
   :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
-;; Install: go get github.com/sourcegraph/go-langserver
+;; Install: go get -u github.com/sourcegraph/go-langserver
 (use-package lsp-go
   :commands lsp-go-enable
-  :hook (go-mode . lsp-go-enable))
+  :hook (go-mode . lsp-go-enable)
+  :config (setq lsp-go-gocode-completion-enabled t))
 
 ;; Python support for lsp-mode using pyls.
 ;; Install: pip install python-language-server
