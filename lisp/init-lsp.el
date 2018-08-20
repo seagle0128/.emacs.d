@@ -38,11 +38,12 @@
   (setq lsp-inhibit-message t)
   (setq lsp-message-project-root-warning t)
 
-  ;; https://emacs-china.org/t/topic/6392/2
+  ;; Restart server/workspace in case the lsp server exits unexpectedly.
+  ;; https://emacs-china.org/t/topic/6392
   (defun restart-lsp-server ()
     "Restart LSP server."
     (interactive)
-    (setq lsp--workspaces (make-hash-table :test #'equal))
+    (lsp-restart-workspace)
     (revert-buffer t t)
     (message "LSP server restarted."))
 
