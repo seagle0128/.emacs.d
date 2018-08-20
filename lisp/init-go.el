@@ -102,6 +102,7 @@
                   ([remap xref-find-references] . go-guru-referrers)))
 
     (use-package company-go
+      :defines company-backends
       :after company
       :functions company-backend-with-yas
       :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends))))
