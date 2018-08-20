@@ -83,16 +83,17 @@
     :bind (:map go-mode-map
                 ("C-c C-g" . go-gen-test-dwim)))
 
-  ;; Run: M-x `go-projectile-install-tools'
-  (use-package go-projectile
-    :after projectile
-    :commands (go-projectile-mode go-projectile-switch-project)
-    :hook ((go-mode . go-projectile-mode)
-           (projectile-after-switch-project . go-projectile-switch-project)))
-
   ;; LSP provides the functionalities.
   ;; NOTE: `go-langserver' doesn't support Windows so far.
   (unless centaur-lsp
+    ;; Go add-ons for Projectile
+    ;; Run: M-x `go-projectile-install-tools'
+    (with-eval-after-load 'projectile
+      (use-package go-projectile
+        :commands (go-projectile-mode go-projectile-switch-project)
+        :hook ((go-mode . go-projectile-mode)
+               (projectile-after-switch-project . go-projectile-switch-project))))
+
     (use-package go-eldoc
       :hook (go-mode . go-eldoc-setup))
 
@@ -101,11 +102,11 @@
                   ;; ([remap xref-find-definitions] . go-guru-definition)
                   ([remap xref-find-references] . go-guru-referrers)))
 
-    (use-package company-go
-      :defines company-backends
-      :after company
-      :functions company-backend-with-yas
-      :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends))))
+    (with-eval-after-load 'company
+      (use-package company-go
+        :defines company-backends
+        :functions company-backend-with-yas
+        :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))))
 
 (provide 'init-go)
 
