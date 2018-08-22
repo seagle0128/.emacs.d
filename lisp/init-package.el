@@ -88,10 +88,10 @@
   (package-install 'use-package))
 
 ;; Should set before loading `use-package'
-(defvar use-package-always-ensure t)
-(defvar use-package-always-defer t)
-(defvar use-package-expand-minimally t)
-(defvar use-package-enable-imenu-support t)
+(setq use-package-always-ensure t)
+(setq use-package-always-defer t)
+(setq use-package-expand-minimally t)
+(setq use-package-enable-imenu-support t)
 
 (eval-when-compile
   (require 'use-package))
