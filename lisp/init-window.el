@@ -187,7 +187,8 @@
           ;; (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.5)
 
           ;; Script
-          ("*shell*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*eshell*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
+          ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           ("*Python*" :dedicated t :position bottom :stick t :noselect t)
           ("*Ruby*" :dedicated t :position bottom :stick t :noselect t)
           ("*quickrun*" :dedicated t :position bottom :stick t :noselect t)
