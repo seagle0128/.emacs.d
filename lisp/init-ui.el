@@ -47,7 +47,11 @@
 
 (when sys/mac-x-p
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (setcdr (assq 'ns-appearance default-frame-alist)
+                      (frame-parameter nil 'background-mode)))))
 
 ;; Menu/Tool/Scroll bars
 (unless sys/mac-x-p (menu-bar-mode -1))
