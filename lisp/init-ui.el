@@ -84,7 +84,7 @@
     :functions powerline-reset
     :hook (after-init . spaceline-spacemacs-theme)
     :init
-    (setq powerline-default-separator (if (display-graphic-p) 'arrow 'utf-8))
+    (setq powerline-default-separator (or (and (display-graphic-p) 'arrow) 'utf-8))
     (setq powerline-image-apple-rgb sys/mac-x-p)
     :config
     (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
