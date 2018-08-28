@@ -156,9 +156,9 @@
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
     :init (ivy-rich-mode 1)
-    :config
-    (setq ivy-virtual-abbreviate 'full
-          ivy-rich-path-style 'abbrev))
+    :hook (ivy-rich-mode . (lambda ()
+                             (setq ivy-virtual-abbreviate
+                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
