@@ -69,7 +69,7 @@ git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 
 or download the [zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
-extract to `~./emacs.d`.
+extract to `~/.emacs.d`.
 
 Then start emacs. Wait for a while to install packages at the first startup.
 Enjoy!
