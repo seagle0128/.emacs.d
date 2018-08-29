@@ -57,10 +57,13 @@
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
-  (use-package go-playground)
   (use-package go-rename)
   (use-package golint)
   (use-package govet)
+
+  (use-package go-playground
+    :diminish go-playground-mode
+    :commands go-playground-mode)
 
   (use-package go-tag
     :bind (:map go-mode-map
