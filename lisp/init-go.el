@@ -54,10 +54,6 @@
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
-  ;; `goimports' or `gofmt'
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook #'gofmt-before-save)
-
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
@@ -86,6 +82,10 @@
   ;; LSP provides the functionalities.
   ;; NOTE: `go-langserver' doesn't support Windows so far.
   (unless centaur-lsp
+    ;; `goimports' or `gofmt'
+    (setq gofmt-command "goimports")
+    (add-hook 'before-save-hook #'gofmt-before-save)
+
     ;; Go add-ons for Projectile
     ;; Run: M-x `go-projectile-install-tools'
     (with-eval-after-load 'projectile
