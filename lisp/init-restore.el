@@ -59,7 +59,8 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :diminish dashboard-mode page-break-lines-mode
+    :diminish (dashboard-mode page-break-lines-mode)
+    :functions (dashboard-insert-startupify-lists widget-forward)
     :bind (("<f2>" . (lambda ()
                        "Open the *dashboard* buffer and jump to the first widget."
                        (interactive)
@@ -84,7 +85,7 @@
                             (bookmarks . 5)
                             (projects . 5)))
 
-    (defun dashboard-insert-buttons (list-size)
+    (defun dashboard-insert-buttons (_list-size)
       (insert "\n")
       (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
       (widget-create 'url-link
