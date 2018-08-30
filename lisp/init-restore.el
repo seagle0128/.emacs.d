@@ -60,7 +60,7 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
-    :funtions (dashboard-insert-startupify-lists widget-forward)
+    :functions (dashboard-insert-startupify-lists widget-forward)
     :bind (("<f2>" . (lambda ()
                        "Open the *dashboard* buffer and jump to the first widget."
                        (interactive)
