@@ -61,10 +61,6 @@
   (use-package golint)
   (use-package govet)
 
-  (use-package go-playground
-    :diminish go-playground-mode
-    :commands go-playground-mode)
-
   (use-package go-tag
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
@@ -110,6 +106,11 @@
         :defines company-backends
         :functions company-backend-with-yas
         :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))))
+
+;; Local Golang playground for short snippes
+(use-package go-playground
+  :diminish go-playground-mode
+  :commands go-playground-mode)
 
 (provide 'init-go)
 
