@@ -172,7 +172,7 @@
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :hook (after-init . counsel-projectile-mode))
+    :init (counsel-projectile-mode 1))
 
   ;; Stylesheet-selector-aware swiper
   (use-package counsel-css
