@@ -152,10 +152,8 @@
     "Show icons in all-the-icons."
     (when (featurep 'all-the-icons)
       (dolist (charset '(kana han cjk-misc bopomofo gb18030))
-        (set-fontset-font "fontset-default" charset "all-the-icons" nil 'append)
-        (set-fontset-font "fontset-default" charset "github-octicons" nil 'append)
-        (set-fontset-font "fontset-default" charset "FontAwesome" nil 'append)
-        (set-fontset-font "fontset-default" charset "Material Icons" nil 'append))))
+        (dolist (font '("all-the-icons" "github-octicons" "FontAwesome" "Material Icons"))
+          (set-fontset-font "fontset-default" charset font nil 'append)))))
   :hook ((after-init . cnfonts-enable)
          (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
   :config
