@@ -74,19 +74,6 @@
         (use-package flycheck-irony
           :hook (flycheck-mode . flycheck-irony-setup))))
 
-    ;; Ivy for GNU global
-    (with-eval-after-load 'counsel
-      (use-package counsel-gtags
-        :defines (counsel-gtags-mode-map counsel-gtags-auto-update)
-        :diminish counsel-gtags-mode
-        :bind (:map counsel-gtags-mode-map
-                    ("M-." . counsel-gtags-find-definition)
-                    ("M-r" . counsel-gtags-find-reference)
-                    ("M-s" . counsel-gtags-find-symbol)
-                    ("M-," . counsel-gtags-go-backward))
-        :hook ((c-mode c++-mode objc-mode) . counsel-gtags-mode)
-        :config (setq counsel-gtags-auto-update t)))
-
     ;; Company mode backend for C/C++ header files
     (with-eval-after-load 'company
       (use-package company-c-headers
