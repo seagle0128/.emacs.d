@@ -72,7 +72,7 @@
   "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will restore previous session."
   :type 'boolean)
 
-(defcustom centaur-lsp nil
+(defcustom centaur-lsp t
   "Enable language servers or not."
   :type 'boolean)
 
