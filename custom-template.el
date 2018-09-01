@@ -1,6 +1,6 @@
-;;; custom-example.el --- user customization file    -*- no-byte-compile: t -*-
+;;; custom.el --- user customization file    -*- no-byte-compile: t -*-
 ;;; Commentary:
-;;;       Copy custom-example.el to custom.el and change the configurations,
+;;;       Copy custom-template.el to custom.el and change the configurations,
 ;;;       then restart Emacs.
 ;;; Code:
 
@@ -35,4 +35,4 @@
  ;; If there is more than one, they won't work right.
  )
 
-;;; custom-example.el ends here
+;;; custom.el ends here

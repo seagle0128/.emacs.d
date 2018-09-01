@@ -89,7 +89,7 @@ then restart Emacs.
 
 ### Manual
 
-Copy `custom-example.el` to `custom.el` and change the configurations, then
+Copy `custom-template.el` to `custom.el` and change the configurations, then
 restart Emacs.
 
 For Example:
