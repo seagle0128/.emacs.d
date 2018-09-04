@@ -167,10 +167,10 @@
   ;; Set profiles
   (setq cnfonts-use-cache t)
   (setq cnfonts-profiles
-        '("program1" "program2" "program3" "org-mode" "read-book"))
-  (setq cnfonts--profiles-steps '(("program1" . 4)
-                                  ("program2" . 5)
-                                  ("program3" . 3)
+        '("program-normal" "program-large" "program-small" "org-mode" "read-book"))
+  (setq cnfonts--profiles-steps '(("program-normal" . 4)
+                                  ("program-large" . 5)
+                                  ("program-small" . 3)
                                   ("org-mode" . 6)
                                   ("read-book" . 8))))
 
