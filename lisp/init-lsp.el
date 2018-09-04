@@ -156,7 +156,7 @@
                            '("bash-language-server" "start")))
 
 ;; C/C++/Objective-C language server support for lsp-mode using clang
-;; Install: brew install cquery or see https://github.com/cquery-project/cquery/releases
+;; Install: brew install cquery or download binary from https://github.com/cquery-project/cquery/releases.
 (use-package cquery
   :defines projectile-project-root-files-top-down-recurring
   :commands lsp-cquery-enable
