@@ -147,7 +147,8 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 1. Why is the modline messy?
 
     Powerline fonts or all-the-icons are missing on your system. Please install
-    [powerline-fonts](https://github.com/powerline/fonts) or `M-x all-the-icons-install-fonts`.
+    [powerline-fonts](https://github.com/powerline/fonts) for `spaceline` or
+    run `M-x all-the-icons-install-fonts` for `doom-modeline`.
 
 1. How to search Chinese via pinyin?
 
@@ -164,7 +165,8 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 1. Does Centuar Emacs support Language Server Protocol (LSP)?
 
     LSP is supported and enabled by default in Centuar Emacs now. Please install
-    language servers as below.
+    language servers as below. LSP` feature performs better in Emacs26+. Use
+    `(setq centaur-lsp nil)` to disable LSP` if you don't like it.
     - `Golang`: `go get -u github.com/sourcegraph/go-langserver`
     - `Python`: `pip install python-language-server`
     - `Ruby`:  `gem install solargraph`
