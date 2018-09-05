@@ -141,6 +141,13 @@
   :commands lsp-html-enable
   :hook (html-mode . lsp-html-enable))
 
+;; PHP support for lsp-mode
+;; Install: composer require felixfbecker/language-server
+;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+(use-package lsp-php
+  :commands lsp-php-enable
+  :hook (php-mode . lsp-php-enable))
+
 ;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
 ;; Install: npm i -g bash-language-server
 ;; Require Python2.5+, use --python to specify.

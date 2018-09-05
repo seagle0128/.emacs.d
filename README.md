@@ -183,6 +183,12 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
         wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
         tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
         ```
+    - `PHP`: refer to https://github.com/felixfbecker/php-language-server#installation.
+        ```shell
+        composer require felixfbecker/language-server
+        composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+        ```
+    
 1. How to enable `plantuml` in `org-mode`?
 
     Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
