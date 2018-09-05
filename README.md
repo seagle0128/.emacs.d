@@ -156,8 +156,8 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 1. How to use the Centaur Dashboard?
 
-    Put `(setq centaur-dashboard t)` in `custom.el`. Dashboard will be opened at
-    startup. After startup, you could use `F2` to open it anytime.
+    Set `(setq centaur-dashboard t)` in `~/.emacs.d/custom.el`. Dashboard will
+    be opened at startup. After startup, you could use `F2` to reopen it anytime.
     In the dashboard, you could easily jump to Homepage(`H`), Restore
     Session(`S`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
     Bookmarks(`m`) and Projects(`p`).
