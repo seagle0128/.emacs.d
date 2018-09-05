@@ -79,43 +79,8 @@
 ;; Ruby support for lsp-mode using the solargraph gem.
 ;; Install: gem install solargraph
 (use-package lsp-ruby
-  :ensure nil
-  :after lsp-mode
   :commands lsp-ruby-enable
-  :hook (ruby-mode . lsp-ruby-enable)
-  :init
-  (defconst lsp-ruby--get-root
-    (lsp-make-traverser
-     #'(lambda (dir)
-         (directory-files dir nil "\\(Rakefile\\|Gemfile\\)"))))
-
-  (defun lsp-ruby--render-string (str)
-    "Render STR with `ruby-mode' syntax highlighting."
-    (ignore-errors
-      (with-temp-buffer
-        (ruby-mode)
-        (insert str)
-        (font-lock-ensure)
-        (buffer-string))))
-
-  (defun lsp-ruby--initialize-client (client)
-    "Initial setup for ruby LSP CLIENT."
-    (lsp-provide-marked-string-renderer
-     client "ruby" 'lsp-ruby--render-string))
-
-  (lsp-define-tcp-client
-   lsp-ruby "ruby"
-   lsp-ruby--get-root
-   '("solargraph" "socket")
-   "127.0.0.1"
-   7658
-   :initialize 'lsp-ruby--initialize-client)
-
-  (lsp-define-stdio-client
-   lsp-ruby-mtsmfm "ruby"
-   lsp-ruby--get-root
-   '("language_server-ruby" "--experimental-features")
-   :initialize 'lsp-ruby--initialize-client))
+  :hook (ruby-mode . lsp-ruby-enable))
 
 ;; Javascript, Typescript and Flow support for lsp-mode
 ;; Install: npm i -g javascript-typescript-langserver
