@@ -43,6 +43,10 @@
                            (setq tab-width 4)
                            (setq c-basic-offset 4)))
   :config
+  (use-package modern-cpp-font-lock
+    :diminish
+    :init (modern-c++-font-lock-global-mode t))
+
   (unless centaur-lsp
     (use-package irony
       :defines (irony-mode-map irony-server-w32-pipe-buffer-size)
