@@ -77,7 +77,7 @@ Enjoy!
 ### Update
 
 ``` emacs-lisp
-M-x upgrade-centaur
+M-x update-centaur
 ```
 
 ## Customization
