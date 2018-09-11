@@ -37,6 +37,7 @@
   :config
   (setq lsp-inhibit-message t)
   (setq lsp-message-project-root-warning t)
+  (setq create-lockfiles nil)
 
   ;; Restart server/workspace in case the lsp server exits unexpectedly.
   ;; https://emacs-china.org/t/topic/6392
