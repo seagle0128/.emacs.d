@@ -126,6 +126,11 @@
                            "afplay"
                            file)))))
 
+;; Bustling Image Manipulation Package
+(use-package blimp
+  :diminish
+  :hook (image-mode . blimp-mode))
+
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package diffview)                  ; side-by-side diff view
