@@ -127,6 +127,7 @@
                            file)))))
 
 ;; Bustling Image Manipulation Package
+;; The wrapper of imagemagick
 (use-package blimp
   :diminish
   :hook (image-mode . blimp-mode))
