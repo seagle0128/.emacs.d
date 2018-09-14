@@ -8,7 +8,7 @@
 ;; (setq centaur-full-name "user name")           ; User full name
 ;; (setq centaur-mail-address "user@email.com")   ; Email address
 ;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
-;; (setq centaur-package-archives 'melpa-mirror)  ; Package repo: melpa, melpa-mirror, emacs-china netease or tuna
+;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china netease or tuna
 ;; (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
 ;; (setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp nil)                         ; Enable language servers or not: t or nil
