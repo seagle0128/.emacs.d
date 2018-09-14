@@ -68,8 +68,7 @@
 ;; Install: go get -u github.com/sourcegraph/go-langserver
 (use-package lsp-go
   :commands lsp-go-enable
-  :hook (go-mode . lsp-go-enable)
-  :config (setq lsp-go-gocode-completion-enabled t))
+  :hook (go-mode . lsp-go-enable))
 
 ;; Python support for lsp-mode using pyls.
 ;; Install: pip install python-language-server
