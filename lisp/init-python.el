@@ -57,6 +57,9 @@
             pdb-path
             (file-name-nondirectory buffer-file-name)))))
 
+  ;; Live Coding in Python
+  (use-package live-py-mode)
+
   ;; Autopep8
   (use-package py-autopep8
     :hook (python-mode . py-autopep8-enable-on-save))
