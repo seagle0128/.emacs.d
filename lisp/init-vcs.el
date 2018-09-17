@@ -44,9 +44,11 @@
 
 ;; Github integration
 (use-package magithub
+  :after magit
   :init
+  (magithub-feature-autoinject t)
   (setq magithub-api-timeout 5)
-  (magithub-feature-autoinject t))
+  (setq magithub-clone-default-directory "~/workspace"))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
