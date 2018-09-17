@@ -31,7 +31,6 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'socks)
   (require 'init-const)
   (require 'init-custom))
 
