@@ -37,7 +37,7 @@
 
 ;; Highlight symbols
 (use-package symbol-overlay
-  :diminish symbol-overlay-mode
+  :diminish
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -58,6 +58,7 @@
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
+    :diminish
     :hook (prog-mode . highlight-indent-guides-mode)
     :config
     (setq highlight-indent-guides-method 'character)
@@ -65,7 +66,7 @@
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
-  :diminish rainbow-mode
+  :diminish
   :hook ((emacs-lisp-mode web-mode css-mode) . rainbow-mode))
 
 ;; Highlight brackets according to their depth
@@ -118,13 +119,13 @@
 
 ;; Highlight some operations
 (use-package volatile-highlights
-  :diminish volatile-highlights-mode
+  :diminish
   :hook (after-init . volatile-highlights-mode))
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
 (use-package whitespace
   :ensure nil
-  :diminish whitespace-mode
+  :diminish
   :hook ((prog-mode outline-mode conf-mode) . whitespace-mode)
   :config
   (setq whitespace-line-column fill-column) ;; limit line length
