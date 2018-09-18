@@ -129,10 +129,10 @@
 ;; Install: npm i -g bash-language-server
 ;; Require Python2.5+, use --python to specify.
 (use-package lsp-sh
-  :ensure-system-package
-  (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
   :ensure nil
   :after lsp-mode
+  :ensure-system-package
+  (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
   :commands lsp-sh-enable
   :hook (sh-mode . lsp-sh-enable)
   :init
