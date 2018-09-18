@@ -90,9 +90,6 @@
 (use-package diff-hl
   :defines desktop-minor-mode-table
   :commands diff-hl-magit-post-refresh
-  :custom ((diff-hl-draw-borders nil)
-           (fringes-outside-margins t)
-           (fringe-mode '(4 . 8)))
   :custom-face
   (diff-hl-change ((t (:background "DeepSkyBlue"))))
   (diff-hl-delete ((t (:background "OrangeRed"))))
@@ -104,6 +101,11 @@
   :config
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
+
+  ;; Set fringe style
+  (setq diff-hl-draw-borders nil)
+  (setq fringes-outside-margins t)
+  (set-fringe-mode '(4 . 8))
 
   (unless (display-graphic-p)
     ;; Fall back to the display margin since the fringe is unavailable in tty
