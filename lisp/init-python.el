@@ -37,6 +37,7 @@
 ;; Python Mode
 (use-package python
   :ensure nil
+  :ensure-system-package (pyflakes . "pip install -U pyflakes")
   :defines gud-pdb-command-name pdb-path
   :config
   ;; Disable readline based native completion
@@ -62,6 +63,7 @@
 
   ;; Autopep8
   (use-package py-autopep8
+    :ensure-system-package (autopep8 . "pip install -U autopep8")
     :hook (python-mode . py-autopep8-enable-on-save))
 
   ;; Anaconda mode

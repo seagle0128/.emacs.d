@@ -41,6 +41,7 @@
   ;; Code navigation, documentation lookup and completion for Ruby
   (unless centaur-lsp
     (use-package robe
+      :ensure-system-package (rubocop . "sudo gem install robe")
       :diminish robe-mode
       :defines company-backends
       :hook (ruby-mode . robe-mode)
@@ -60,6 +61,7 @@
 
   ;; Rubocop
   (use-package rubocop
+    :ensure-system-package (rubocop . "sudo gem install rubocop")
     :diminish rubocop-mode
     :hook (ruby-mode . rubocop-mode))
 

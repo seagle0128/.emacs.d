@@ -102,6 +102,8 @@
 (use-package diminish)
 (use-package bind-key)
 
+(use-package use-package-ensure-system-package)
+
 ;; Initialization benchmark
 (when centaur-benchmark
   (use-package benchmark-init
