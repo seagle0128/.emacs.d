@@ -34,29 +34,12 @@
   (require 'init-custom))
 
 ;; Golang
-;;
-;; Go packages:
-;; go get -u github.com/mdempsky/gocode # github.com/nsf/gocode
-;; go get -u github.com/rogpeppe/godef
-;; go get -u golang.org/x/tools/cmd/goimports
-;; go get -u golang.org/x/tools/cmd/guru
-;; go get -u golang.org/x/tools/cmd/gorename
-;; go get -u golang.org/x/tools/cmd/gotype
-;; go get -u golang.org/x/tools/cmd/godoc
-;; go get -u github.com/derekparker/delve/cmd/dlv
-;; go get -u github.com/josharian/impl
-;; go get -u github.com/cweill/gotests/...
-;; go get -u github.com/fatih/gomodifytags
-;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
-;;
 (use-package go-mode
   :ensure-system-package
   ((go . golang)
-   (gocode .  "go get -u github.com/mdempsky/gocode")
+   (gocode . "go get -u github.com/mdempsky/gocode")
    (godef . "go get -u github.com/rogpeppe/godef")
-   (gotype . "go get -u golang.org/x/tools/cmd/gotype")
-   (goimports . "go get -u golang.org/x/tools/cmd/goimports")
-   (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
+   (goimports . "go get -u golang.org/x/tools/cmd/goimports"))
   :bind (:map go-mode-map
               ([remap xref-find-definitions] . godef-jump)
               ("C-c R" . go-remove-unused-imports)
