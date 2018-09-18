@@ -67,7 +67,8 @@
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
 ;; Install: go get -u github.com/sourcegraph/go-langserver
 (use-package lsp-go
-  :ensure-system-package (go-langserver . "go get -u github.com/sourcegraph/go-langserver")
+  :ensure-system-package
+  (go-langserver . "go get -u github.com/sourcegraph/go-langserver")
   :commands lsp-go-enable
   :hook (go-mode . lsp-go-enable))
 
@@ -88,14 +89,16 @@
 ;; Javascript, Typescript and Flow support for lsp-mode
 ;; Install: npm i -g javascript-typescript-langserver
 (use-package lsp-javascript-typescript
-  :ensure-system-package (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
+  :ensure-system-package
+  (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
   :commands lsp-javascript-typescript-enable
   :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
 
 ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
 ;; Install: npm i -g vscode-css-languageserver-bin
 (use-package lsp-css
-  :ensure-system-package (vscode-css-languageserver-bin . "sudo npm i -g vscode-css-languageserver-bin")
+  :ensure-system-package
+  (vscode-css-languageserver-bin . "sudo npm i -g vscode-css-languageserver-bin")
   :commands (lsp-css-enable
              lsp-less-enable
              lsp-sass-enable
@@ -108,7 +111,8 @@
 ;; HTML support for lsp-mode using vscode-html-languageserver-bin
 ;; Install: npm i -g vscode-html-languageserver-bin
 (use-package lsp-html
-  :ensure-system-package (vscode-html-languageserver-bin . "sudo npm i -g vscode-html-languageserver-bin")
+  :ensure-system-package
+  (vscode-html-languageserver-bin . "sudo npm i -g vscode-html-languageserver-bin")
   :commands lsp-html-enable
   :hook (html-mode . lsp-html-enable))
 
@@ -116,7 +120,8 @@
 ;; Install: composer require felixfbecker/language-server
 ;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 (use-package lsp-php
-  :ensure-system-package (php-language-server . "composer require felixfbecker/language-server")
+  :ensure-system-package
+  (php-language-server . "composer require felixfbecker/language-server")
   :commands lsp-php-enable
   :hook (php-mode . lsp-php-enable))
 
@@ -124,7 +129,8 @@
 ;; Install: npm i -g bash-language-server
 ;; Require Python2.5+, use --python to specify.
 (use-package lsp-sh
-  :ensure-system-package (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
+  :ensure-system-package
+  (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
   :ensure nil
   :after lsp-mode
   :commands lsp-sh-enable
