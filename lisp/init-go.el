@@ -36,8 +36,7 @@
 ;; Golang
 (use-package go-mode
   :ensure-system-package
-  ((go . golang)
-   (gocode . "go get -u github.com/mdempsky/gocode")
+  ((gocode . "go get -u github.com/mdempsky/gocode")
    (godef . "go get -u github.com/rogpeppe/godef")
    (goimports . "go get -u golang.org/x/tools/cmd/goimports"))
   :bind (:map go-mode-map
