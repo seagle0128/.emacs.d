@@ -146,6 +146,7 @@
 
 ;; Format HTML, CSS and JavaScript/JSON by js-beautify
 (use-package web-beautify
+  :ensure-system-package (js-beautify . "sudo npm -g install js-beautify")
   :init
   (with-eval-after-load 'js-mode
     (bind-key "C-c b" #'web-beautify-js js-mode-map))
