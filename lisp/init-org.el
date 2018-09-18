@@ -60,10 +60,6 @@
       :hook (org-mode . org-fancy-priorities-mode)
       :config (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕"))))
 
-  ;; FIXME org-agenda-execute-calendar-command uses deprecated list-calendar-holidays
-  (unless (fboundp 'list-calendar-holidays)
-    (defalias 'list-calendar-holidays 'calendar-list-holidays))
-
   ;; Babel
   (setq org-confirm-babel-evaluate nil)
 
