@@ -37,36 +37,60 @@
    (mdl . "sudo gem install mdl"))
   :defines flycheck-markdown-markdownlint-cli-config
   :preface
-  ;; Render and preview via `grip'
-  (eval-and-compile
-    (defun markdown-to-html ()
-      (interactive)
-      (let ((port "6419"))
-        (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
-        (browse-url (format "http://localhost:%s/%s.%s"
-                            port
-                            (file-name-base)
-                            (file-name-extension
-                             (buffer-file-name)))))))
+  (defun markdown-preview-grip ()
+    "Render and preview with `grip'."
+    (interactive)
+    (let ((port "6419"))
+      (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
+      (browse-url (format "http://localhost:%s/%s.%s"
+                          port
+                          (file-name-base)
+                          (file-name-extension
+                           (buffer-file-name))))))
+
+  (defun set-flycheck-markdownlint ()
+    "Set the `mardkownlint' config file for the current buffer."
+    (when-let* ((md-lint ".markdownlint.json")
+                (md-file buffer-file-name)
+                (md-lint-dir (locate-dominating-file md-file md-lint)))
+      (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint))))
   :bind (:map markdown-mode-command-map
-              ("V" .  markdown-to-html))
+              ("g" .  markdown-preview-grip))
+  :hook ((markdown-mode . flyspell-mode)
+         (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
 
-  (with-eval-after-load 'flycheck
-    (eval-and-compile
-      (defun set-markdownlint-config ()
-        "Set the `mardkownlint' config file for the current buffer."
-        (when-let* ((md-lint ".markdownlint.json")
-                    (md-file buffer-file-name)
-                    (md-lint-dir (locate-dominating-file md-file md-lint)))
-          (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint))))
-      (add-hook 'markdown-mode-hook #'set-markdownlint-config)))
+  (setq markdown-command-needs-filename t)
 
   ;; Preview
-  (setq markdown-css-paths '("http://thomasf.github.io/solarized-css/solarized-light.min.css")))
+  (setq markdown-content-type "application/xhtml+xml")
+  (setq markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+                             "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"))
+  (setq markdown-xhtml-header-content "
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<style>
+body {
+  box-sizing: border-box;
+  max-width: 740px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+</style>
+<script src='http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('markdown-body');
+  document.querySelectorAll('pre[lang] > code').forEach((code) => {
+    code.classList.add(code.parentElement.lang);
+    hljs.highlightBlock(code);
+  });
+});
+</script>
+"))
 
 (provide 'init-markdown)
 
