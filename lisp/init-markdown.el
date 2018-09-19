@@ -35,7 +35,7 @@
   (markdown
    (grip . "pip install grip")
    (mdl . "sudo gem install mdl"))
-  :defines flycheck-markdown-markdownlint-cli-config
+  :defines (flycheck-markdown-markdownlint-cli-config md-lint md-file md-lint-dir)
   :preface
   (defun markdown-preview-grip ()
     "Render and preview with `grip'."
