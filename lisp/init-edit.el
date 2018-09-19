@@ -228,6 +228,8 @@
 (use-package flyspell
   :ensure nil
   :diminish flyspell-mode
+  :hook ((prog-mode . flyspell-prog-mode)
+         ((text-mode outline-mode) . flyspell-mode))
   :init (setq flyspell-issue-message-flag nil))
 
 ;; Goto last change
