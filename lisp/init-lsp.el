@@ -108,7 +108,8 @@
   :ensure-system-package
   (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
   :commands lsp-html-enable
-  :hook (html-mode . lsp-html-enable))
+  :hook ((html-mode . lsp-html-enable)
+         (web-mode . lsp-html-enable)))
 
 ;; PHP support for lsp-mode
 ;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
