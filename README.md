@@ -193,3 +193,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 1. How to enable `plantuml` in `org-mode`?
 
     Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
+
+1. Why the Emacs environment variables and `exec-path` are different between GUI
+   and terminal?
+
+    Please refer to #33. You should instead set environment variables in startup
+    files like .profile, .bash_profile or .zshenv, then `Centaur Emacs` is able
+    to recoginze and import the environment variables.
