@@ -93,7 +93,7 @@
 ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
 (use-package lsp-css
   :ensure-system-package
-  (vscode-css-languageserver-bin . "sudo npm i -g vscode-css-languageserver-bin")
+  (css-languageserver . "sudo npm i -g vscode-css-languageserver-bin")
   :commands (lsp-css-enable
              lsp-less-enable
              lsp-sass-enable
@@ -106,7 +106,7 @@
 ;; HTML support for lsp-mode using vscode-html-languageserver-bin
 (use-package lsp-html
   :ensure-system-package
-  (vscode-html-languageserver-bin . "sudo npm i -g vscode-html-languageserver-bin")
+  (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
   :commands lsp-html-enable
   :hook (html-mode . lsp-html-enable))
 
