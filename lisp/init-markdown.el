@@ -31,7 +31,25 @@
 ;;; Code:
 
 (use-package markdown-mode
+  :ensure-system-package
+  (markdown
+   (grip . "pip install grip")
+   (mdl . "sudo gem install mdl"))
   :defines flycheck-markdown-markdownlint-cli-config
+  :preface
+  ;; Render and preview via `grip'
+  (eval-and-compile
+    (defun markdown-to-html ()
+      (interactive)
+      (let ((port "6419"))
+        (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
+        (browse-url (format "http://localhost:%s/%s.%s"
+                            port
+                            (file-name-base)
+                            (file-name-extension
+                             (buffer-file-name)))))))
+  :bind (:map markdown-mode-command-map
+              ("V" .  markdown-to-html))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
   (when (executable-find "multimarkdown")
@@ -41,11 +59,10 @@
     (eval-and-compile
       (defun set-markdownlint-config ()
         "Set the `mardkownlint' config file for the current buffer."
-        (when (and (executable-find "markdownlint") buffer-file-name)
-          (let ((md-lint ".markdownlint.json"))
-            (let ((md-lint-dir (locate-dominating-file buffer-file-name md-lint)))
-              (if md-lint-dir
-                  (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint)))))))
+        (when-let* ((md-lint ".markdownlint.json")
+                    (md-file buffer-file-name)
+                    (md-lint-dir (locate-dominating-file md-file md-lint)))
+          (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint))))
       (add-hook 'markdown-mode-hook #'set-markdownlint-config)))
 
   ;; Preview
@@ -83,21 +100,7 @@
      });
    });
   </script>
-")))
-
-  ;; Render and preview via `grip'
-  (when (executable-find "grip")
-    (eval-and-compile
-      (defun markdown-to-html ()
-        (interactive)
-        (let ((port "6419"))
-          (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
-          (browse-url (format "http://localhost:%s/%s.%s"
-                              port
-                              (file-name-base)
-                              (file-name-extension
-                               (buffer-file-name)))))))
-    (bind-key "V" #'markdown-to-html markdown-mode-command-map)))
+"))))
 
 (provide 'init-markdown)
 
