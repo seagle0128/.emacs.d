@@ -73,7 +73,7 @@
 
 ;; Python support for lsp-mode using pyls.
 (use-package lsp-python
-  :ensure-system-package (pyls . "pip install -U python-language-server")
+  :ensure-system-package (pyls . "pip install python-language-server")
   :commands lsp-python-enable
   :hook (python-mode . lsp-python-enable))
 
