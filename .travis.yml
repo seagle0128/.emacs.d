@@ -1,5 +1,5 @@
 language: emacs-lisp
-sudo: false
+sudo: required
 
 env:
  - EVM_EMACS=emacs-25.1-travis
