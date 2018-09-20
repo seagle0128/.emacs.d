@@ -77,7 +77,7 @@
 
   (use-package go-gen-test
     :bind (:map go-mode-map
-                ("C-c C-g" . go-gen-test-dwim)))
+                ("C-c C-t" . go-gen-test-dwim)))
 
   ;; LSP provides the functionalities.
   ;; NOTE: `go-langserver' doesn't support Windows so far.
