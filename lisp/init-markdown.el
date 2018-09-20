@@ -32,8 +32,7 @@
 
 (use-package markdown-mode
   :ensure-system-package
-  ((github-markup . "sudo gem install github-markup")
-   (commonmarker . "sudo gem install commonmarker")
+  (markdown
    (grip . "pip install grip")
    (markdownlint . "sudo npm i -g markdownlint-cli"))
   :defines flycheck-markdown-markdownlint-cli-config
@@ -63,10 +62,7 @@
          (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
-  (setq markdown-command "github-markup")
   (setq markdown-command-needs-filename t)
-
-  ;; Preview
   (setq markdown-content-type "application/xhtml+xml")
   (setq markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
                              "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"))
