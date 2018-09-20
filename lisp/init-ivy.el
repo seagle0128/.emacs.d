@@ -168,7 +168,7 @@
   (use-package flyspell-correct-ivy
     :after flyspell
     :bind (:map flyspell-mode-map
-                ("C-;" . flyspell-correct-previous-word-generic)))
+                ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile

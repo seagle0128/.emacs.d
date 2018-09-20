@@ -228,8 +228,12 @@
 (use-package flyspell
   :ensure nil
   :diminish flyspell-mode
-  :hook ((prog-mode . flyspell-prog-mode)
-         ((text-mode outline-mode) . flyspell-mode))
+  :hook (((text-mode outline-mode) . flyspell-mode)
+         (prog-mode . flyspell-prog-mode)
+         (flyspell-mode . (lambda ()
+                            (unbind-key "C-;" flyspell-mode-map)
+                            (unbind-key "C-," flyspell-mode-map)
+                            (unbind-key "C-." flyspell-mode-map))))
   :init (setq flyspell-issue-message-flag nil))
 
 ;; Goto last change
