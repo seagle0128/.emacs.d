@@ -35,7 +35,7 @@
   ((github-markup . "sudo gem install github-markup")
    (commonmarker . "sudo gem install commonmarker")
    (grip . "pip install grip")
-   (mdl . "sudo gem install mdl"))
+   (markdownlint . "sudo npm i -g markdownlint-cli"))
   :defines (flycheck-markdown-markdownlint-cli-config md-lint md-file md-lint-dir)
   :preface
   (defun markdown-preview-grip ()
