@@ -32,7 +32,8 @@
 
 (use-package markdown-mode
   :ensure-system-package
-  (markdown
+  ((github-markup . "sudo gem install github-markup")
+   (commonmarker . "sudo gem install commonmarker")
    (grip . "pip install grip")
    (mdl . "sudo gem install mdl"))
   :defines (flycheck-markdown-markdownlint-cli-config md-lint md-file md-lint-dir)
@@ -60,9 +61,7 @@
          (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
-  (when (executable-find "multimarkdown")
-    (setq markdown-command "multimarkdown"))
-
+  (setq markdown-command "github-markup")
   (setq markdown-command-needs-filename t)
 
   ;; Preview
