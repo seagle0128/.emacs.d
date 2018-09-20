@@ -36,7 +36,7 @@
    (commonmarker . "sudo gem install commonmarker")
    (grip . "pip install grip")
    (markdownlint . "sudo npm i -g markdownlint-cli"))
-  :defines (flycheck-markdown-markdownlint-cli-config md-lint md-file md-lint-dir)
+  :defines flycheck-markdown-markdownlint-cli-config
   :preface
   (defun markdown-preview-grip ()
     "Render and preview with `grip'."
@@ -51,10 +51,12 @@
 
   (defun set-flycheck-markdownlint ()
     "Set the `mardkownlint' config file for the current buffer."
-    (when-let* ((md-lint ".markdownlint.json")
-                (md-file buffer-file-name)
-                (md-lint-dir (locate-dominating-file md-file md-lint)))
-      (setq-local flycheck-markdown-markdownlint-cli-config (concat md-lint-dir md-lint))))
+    (let* ((md-lint ".markdownlint.json")
+           (md-file buffer-file-name)
+           (md-lint-dir (and md-file
+                             (locate-dominating-file md-file md-lint))))
+      (setq-local flycheck-markdown-markdownlint-cli-config
+                  (concat md-lint-dir md-lint))))
   :bind (:map markdown-mode-command-map
               ("g" .  markdown-preview-grip))
   :hook ((markdown-mode . flyspell-mode)
