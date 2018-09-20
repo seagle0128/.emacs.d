@@ -225,7 +225,6 @@
   :hook (after-init . smart-region-on))
 
 ;; On-the-fly spell checker
-;; testssss
 (use-package flyspell
   :ensure-system-package aspell
   :ensure nil
