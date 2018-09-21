@@ -82,8 +82,7 @@
 
 ;; Initialize packages
 (setq package-enable-at-startup nil)    ; To prevent initialising twice
-(when (< emacs-major-version 27)
-  (package-initialize))
+(package-initialize)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
