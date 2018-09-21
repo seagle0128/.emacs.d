@@ -226,8 +226,8 @@
 
 ;; On-the-fly spell checker
 (use-package flyspell
-  :ensure-system-package aspell
   :ensure nil
+  :if (executable-find "aspell")
   :diminish flyspell-mode
   :hook (((text-mode outline-mode) . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
