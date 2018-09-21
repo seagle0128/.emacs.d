@@ -98,7 +98,6 @@
   :hook (emacs-startup . atomic-chrome-start-server)
   :config
   (setq atomic-chrome-buffer-open-style 'frame)
-  (setq atomic-chrome-default-major-mode 'markdown-mode)
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com" . gfm-mode))))
 
