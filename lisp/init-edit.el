@@ -236,9 +236,9 @@
                             (unbind-key "C-," flyspell-mode-map)
                             (unbind-key "C-." flyspell-mode-map))))
   :init
+  (setq flyspell-issue-message-flag nil)
   (setq ispell-program-name "aspell")
-  (setq ispell-local-dictionary "en_US")
-  (setq flyspell-issue-message-flag nil))
+  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Goto last change
 (use-package goto-chg
