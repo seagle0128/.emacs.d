@@ -102,7 +102,7 @@ For Example:
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease or tuna
 (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
 (setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
-(setq centaur-lsp nil)                         ; Enable language servers or not: t or nil
+(setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
@@ -164,9 +164,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 1. Does Centuar Emacs support Language Server Protocol (LSP)?
 
-    LSP is supported and enabled by default in Centuar Emacs now. Please install
-    language servers as below. Use `(setq centaur-lsp nil)` to disable `LSP` if
-    you don't like it.
+    LSP is supported and enabled by default in Centuar Emacs now. `eglot` is the
+    default client, and `lsp-mode` is another choice. Before use it you should
+    install language servers as below. Use `(setq centaur-lsp nil)` to disable
+    `LSP` if you don't like it.
     - Golang: `go get -u github.com/sourcegraph/go-langserver`
     - Python: `pip install python-language-server`
     - Ruby:  `gem install solargraph`

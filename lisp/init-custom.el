@@ -73,9 +73,12 @@
   "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will restore previous session."
   :type 'boolean)
 
-(defcustom centaur-lsp t
-  "Enable language servers or not."
-  :type 'boolean)
+(defcustom centaur-lsp 'eglot
+  "Set language server."
+  :type '(choice
+          (const :tag "LSP Mode" 'lsp-mode)
+          (const :tag "eglot" 'eglot)
+          nil))
 
 (defcustom centaur-company-enable-yas nil
   "Enable yasnippet for company backends or not."

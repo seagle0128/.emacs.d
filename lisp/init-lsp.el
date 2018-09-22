@@ -30,139 +30,150 @@
 
 ;;; Code:
 
-;; Emacs client for the Language Server Protocol
-;; https://github.com/emacs-lsp/lsp-mode
-(use-package lsp-mode
-  :diminish lsp-mode
-  :config
-  (setq lsp-inhibit-message t)
-  (setq lsp-message-project-root-warning t)
-  (setq create-lockfiles nil)
+(eval-when-compile
+  (require 'init-custom))
 
-  ;; Restart server/workspace in case the lsp server exits unexpectedly.
-  ;; https://emacs-china.org/t/topic/6392
-  (defun restart-lsp-server ()
-    "Restart LSP server."
-    (interactive)
-    (lsp-restart-workspace)
-    (revert-buffer t t)
-    (message "LSP server restarted."))
+(cond
+ ((eq centaur-lsp 'eglot)
+  (use-package eglot
+    :hook (prog-mode . eglot-ensure))))
 
-  (require 'lsp-imenu)
-  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
+(cond
+ ((eq centaur-lsp 'lsp-mode)
+  ;; Emacs client for the Language Server Protocol
+  ;; https://github.com/emacs-lsp/lsp-mode
+  (use-package lsp-mode
+    :diminish lsp-mode
+    :config
+    (setq lsp-inhibit-message t)
+    (setq lsp-message-project-root-warning t)
+    (setq create-lockfiles nil)
 
-(use-package lsp-ui
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references))
-  :hook (lsp-mode . lsp-ui-mode)
-  :init (setq scroll-margin 0))
+    ;; Restart server/workspace in case the lsp server exits unexpectedly.
+    ;; https://emacs-china.org/t/topic/6392
+    (defun restart-lsp-server ()
+      "Restart LSP server."
+      (interactive)
+      (lsp-restart-workspace)
+      (revert-buffer t t)
+      (message "LSP server restarted."))
 
-(use-package company-lsp
-  :after company
-  :defines company-backends
-  :functions company-backend-with-yas
-  :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
+    (require 'lsp-imenu)
+    (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
-;; Go support for lsp-mode using Sourcegraph's Go Language Server
-(use-package lsp-go
-  :ensure-system-package
-  (go-langserver . "go get -u github.com/sourcegraph/go-langserver")
-  :commands lsp-go-enable
-  :hook (go-mode . lsp-go-enable))
+  (use-package lsp-ui
+    :bind (:map lsp-ui-mode-map
+                ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+                ([remap xref-find-references] . lsp-ui-peek-find-references))
+    :hook (lsp-mode . lsp-ui-mode)
+    :init (setq scroll-margin 0))
 
-;; Python support for lsp-mode using pyls.
-(use-package lsp-python
-  :ensure-system-package (pyls . "pip install python-language-server")
-  :commands lsp-python-enable
-  :hook (python-mode . lsp-python-enable))
+  (use-package company-lsp
+    :after company
+    :defines company-backends
+    :functions company-backend-with-yas
+    :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
-;; Ruby support for lsp-mode using the solargraph gem.
-(use-package lsp-ruby
-  :ensure-system-package (solargraph . "sudo gem install solargraph")
-  :commands lsp-ruby-enable
-  :hook (ruby-mode . lsp-ruby-enable))
+  ;; Go support for lsp-mode using Sourcegraph's Go Language Server
+  (use-package lsp-go
+    :ensure-system-package
+    (go-langserver . "go get -u github.com/sourcegraph/go-langserver")
+    :commands lsp-go-enable
+    :hook (go-mode . lsp-go-enable))
 
-;; Javascript, Typescript and Flow support for lsp-mode
-(use-package lsp-javascript-typescript
-  :ensure-system-package
-  (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
-  :commands lsp-javascript-typescript-enable
-  :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
+  ;; Python support for lsp-mode using pyls.
+  (use-package lsp-python
+    :ensure-system-package (pyls . "pip install python-language-server")
+    :commands lsp-python-enable
+    :hook (python-mode . lsp-python-enable))
 
-;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
-(use-package lsp-css
-  :ensure-system-package
-  (css-languageserver . "sudo npm i -g vscode-css-languageserver-bin")
-  :commands (lsp-css-enable
-             lsp-less-enable
-             lsp-sass-enable
-             lsp-scss-enable)
-  :hook ((css-mode . lsp-css-enable)
-         (less-mode . lsp-less-enable)
-         (sass-mode . lsp-sass-enable)
-         (scss-mode . lsp-scss-enable)))
+  ;; Ruby support for lsp-mode using the solargraph gem.
+  (use-package lsp-ruby
+    :ensure-system-package (solargraph . "sudo gem install solargraph")
+    :commands lsp-ruby-enable
+    :hook (ruby-mode . lsp-ruby-enable))
 
-;; HTML support for lsp-mode using vscode-html-languageserver-bin
-(use-package lsp-html
-  :ensure-system-package
-  (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
-  :commands lsp-html-enable
-  :hook ((html-mode . lsp-html-enable)
-         (web-mode . lsp-html-enable)))
+  ;; Javascript, Typescript and Flow support for lsp-mode
+  (use-package lsp-javascript-typescript
+    :ensure-system-package
+    (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
+    :commands lsp-javascript-typescript-enable
+    :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
 
-;; PHP support for lsp-mode
-;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
-(use-package lsp-php
-  :ensure-system-package
-  (php-language-server . "composer require felixfbecker/language-server")
-  :commands lsp-php-enable
-  :hook (php-mode . lsp-php-enable))
+  ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
+  (use-package lsp-css
+    :ensure-system-package
+    (css-languageserver . "sudo npm i -g vscode-css-languageserver-bin")
+    :commands (lsp-css-enable
+               lsp-less-enable
+               lsp-sass-enable
+               lsp-scss-enable)
+    :hook ((css-mode . lsp-css-enable)
+           (less-mode . lsp-less-enable)
+           (sass-mode . lsp-sass-enable)
+           (scss-mode . lsp-scss-enable)))
 
-;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
-;; Require Python2.5+, use --python to specify.
-(use-package lsp-sh
-  :ensure nil
-  :after lsp-mode
-  :ensure-system-package
-  (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
-  :commands lsp-sh-enable
-  :hook (sh-mode . lsp-sh-enable)
-  :init
-  (lsp-define-stdio-client lsp-sh
-                           "sh"
-                           #'(lambda () default-directory)
-                           '("bash-language-server" "start")))
+  ;; HTML support for lsp-mode using vscode-html-languageserver-bin
+  (use-package lsp-html
+    :ensure-system-package
+    (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
+    :commands lsp-html-enable
+    :hook ((html-mode . lsp-html-enable)
+           (web-mode . lsp-html-enable)))
 
-;; C/C++/Objective-C language server support for lsp-mode using clang
-;; Install: brew install cquery or download binary from https://github.com/cquery-project/cquery/releases.
-(use-package cquery
-  :ensure-system-package cquery
-  :defines projectile-project-root-files-top-down-recurring
-  :commands lsp-cquery-enable
-  :hook ((c-mode c++-mode objc-mode) . lsp-cquery-enable)
-  :config
-  (with-eval-after-load 'projectile
-    (setq projectile-project-root-files-top-down-recurring
-          (append '("compile_commands.json"
-                    ".cquery")
-                  projectile-project-root-files-top-down-recurring))))
+  ;; PHP support for lsp-mode
+  ;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+  (use-package lsp-php
+    :ensure-system-package
+    (php-language-server . "composer require felixfbecker/language-server")
+    :commands lsp-php-enable
+    :hook (php-mode . lsp-php-enable))
 
-;; Rust support for lsp-mode using the Rust Language Server.
-(use-package lsp-rust
-  :ensure-system-package
-  ((rustup . "curl https://sh.rustup.rs -sSf | sh")
-   (rls . "rustup component add rls-preview rust-analysis rust-src"))
-  :commands lsp-rust-enable
-  :hook (rust-mode . lsp-rust-enable))
+  ;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
+  ;; Require Python2.5+, use --python to specify.
+  (use-package lsp-sh
+    :ensure nil
+    :after lsp-mode
+    :ensure-system-package
+    (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
+    :commands lsp-sh-enable
+    :hook (sh-mode . lsp-sh-enable)
+    :init
+    (lsp-define-stdio-client lsp-sh
+                             "sh"
+                             #'(lambda () default-directory)
+                             '("bash-language-server" "start")))
 
-;; Java support for lsp-mode using the Eclipse JDT Language Server.
-;; Install:
-;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
-;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
-(use-package lsp-java
-  :commands lsp-java-enable
-  :hook (java-mode . lsp-java-enable))
+  ;; C/C++/Objective-C language server support for lsp-mode using clang
+  ;; Install: brew install cquery or download binary from https://github.com/cquery-project/cquery/releases.
+  (use-package cquery
+    :ensure-system-package cquery
+    :defines projectile-project-root-files-top-down-recurring
+    :commands lsp-cquery-enable
+    :hook ((c-mode c++-mode objc-mode) . lsp-cquery-enable)
+    :config
+    (with-eval-after-load 'projectile
+      (setq projectile-project-root-files-top-down-recurring
+            (append '("compile_commands.json"
+                      ".cquery")
+                    projectile-project-root-files-top-down-recurring))))
+
+  ;; Rust support for lsp-mode using the Rust Language Server.
+  (use-package lsp-rust
+    :ensure-system-package
+    ((rustup . "curl https://sh.rustup.rs -sSf | sh")
+     (rls . "rustup component add rls-preview rust-analysis rust-src"))
+    :commands lsp-rust-enable
+    :hook (rust-mode . lsp-rust-enable))
+
+  ;; Java support for lsp-mode using the Eclipse JDT Language Server.
+  ;; Install:
+  ;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
+  ;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+  (use-package lsp-java
+    :commands lsp-java-enable
+    :hook (java-mode . lsp-java-enable))
+  ))
 
 (provide 'init-lsp)
 
