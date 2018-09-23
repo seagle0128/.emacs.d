@@ -36,16 +36,6 @@
 (cond
  ((eq centaur-lsp 'eglot)
   (use-package eglot
-    :ensure-system-package
-    ((go-langserver . "go get -u github.com/sourcegraph/go-langserver")
-     (pyls . "pip install python-language-server")
-     (solargraph . "sudo gem install solargraph")
-     (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
-     (css-languageserver . "sudo npm i -g vscode-css-languageserver-bin")
-     (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
-     (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
-     cquery
-     (rls . "rustup component add rls-preview rust-analysis rust-src"))
     :hook (prog-mode . eglot-ensure))))
 
 (cond
