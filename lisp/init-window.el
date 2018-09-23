@@ -133,7 +133,7 @@
   ;; don't use default value but manage it ourselves
   (setq popwin:special-display-config
         '(;; Emacs
-          ("*Help*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Help*" :dedicated t :position bottom :stick t :noselect nil)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
           ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
@@ -144,7 +144,7 @@
           ("^*Man.+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
           ("^*WoMan.+*$" :regexp t :position bottom)
           ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
-          ("^*helpful .+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
+          ("^*helpful .+*$" :regexp t :position bottom :stick t :noselect nil :height 0.4)
 
           ;; Kill Ring
           ("*Kill Ring*" :dedicated t :position bottom)
