@@ -73,7 +73,7 @@
   "Use dashboard at startup or not. If Non-nil, use dashboard, otherwise will restore previous session."
   :type 'boolean)
 
-(defcustom centaur-lsp 'eglot
+(defcustom centaur-lsp 'lsp-mode
   "Set language server."
   :type '(choice
           (const :tag "LSP Mode" 'lsp-mode)
