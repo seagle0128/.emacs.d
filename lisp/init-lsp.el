@@ -36,7 +36,8 @@
 (cond
  ((eq centaur-lsp 'eglot)
   (use-package eglot
-    :hook (prog-mode . eglot-ensure))))
+    :hook (prog-mode . eglot-ensure)
+    :init (add-to-list 'eglot-server-programs '((c++ mode c-mode) . (eglot-cquery "cquery"))))))
 
 (cond
  ((eq centaur-lsp 'lsp-mode)
