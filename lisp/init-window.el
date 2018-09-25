@@ -96,9 +96,7 @@
   (setq switch-window-minibuffer-shortcut ?0)
   (setq switch-window-multiple-frames t)
   (with-eval-after-load 'ivy
-    (setq switch-window-preferred 'ivy))
-  (unless (display-graphic-p)
-    (setq switch-window-shortcut-appearance 'asciiart)))
+    (setq switch-window-preferred 'ivy)))
 
 ;; Navigate windows and frames using numbers
 (use-package winum
