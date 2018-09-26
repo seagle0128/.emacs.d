@@ -35,10 +35,6 @@
 
 ;; Golang
 (use-package go-mode
-  :ensure-system-package
-  ((gocode . "go get -u github.com/mdempsky/gocode")
-   (godef . "go get -u github.com/rogpeppe/godef")
-   (goimports . "go get -u golang.org/x/tools/cmd/goimports"))
   :bind (:map go-mode-map
               ([remap xref-find-definitions] . godef-jump)
               ("C-c R" . go-remove-unused-imports)
@@ -105,6 +101,10 @@
 
     (with-eval-after-load 'company
       (use-package company-go
+        :ensure-system-package
+        ((gocode . "go get -u github.com/mdempsky/gocode")
+         (godef . "go get -u github.com/rogpeppe/godef")
+         (goimports . "go get -u golang.org/x/tools/cmd/goimports"))
         :defines company-backends
         :functions company-backend-with-yas
         :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))))
