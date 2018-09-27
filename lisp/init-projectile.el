@@ -40,9 +40,7 @@
               ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :config
-  (setq projectile-mode-line
-        '(:eval (format "[%s]" (projectile-project-name))))
-
+  (setq projectile-mode-line-lighter "")
   (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
 
