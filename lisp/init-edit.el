@@ -227,7 +227,6 @@
 ;; On-the-fly spell checker
 (use-package flyspell
   :ensure nil
-  :if (executable-find "aspell")
   :diminish flyspell-mode
   :hook (((text-mode outline-mode) . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
@@ -237,7 +236,7 @@
                             (unbind-key "C-." flyspell-mode-map))))
   :init
   (setq flyspell-issue-message-flag nil)
-  (setq ispell-program-name "aspell")
+  (setq ispell-program-name (executable-find "aspell"))
   (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Goto last change
