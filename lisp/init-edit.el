@@ -228,6 +228,7 @@
 (use-package flyspell
   :ensure nil
   :diminish flyspell-mode
+  :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
@@ -236,7 +237,7 @@
                             (unbind-key "C-." flyspell-mode-map))))
   :init
   (setq flyspell-issue-message-flag nil)
-  (setq ispell-program-name (executable-find "aspell"))
+  (setq ispell-program-name "aspell")
   (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Goto last change
