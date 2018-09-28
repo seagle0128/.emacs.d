@@ -76,35 +76,32 @@
     :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
   ;; Go support for lsp-mode using Sourcegraph's Go Language Server
+  ;; Install: go get -u github.com/sourcegraph/go-langserver
   (use-package lsp-go
-    :ensure-system-package
-    (go-langserver . "go get -u github.com/sourcegraph/go-langserver")
     :commands lsp-go-enable
     :hook (go-mode . lsp-go-enable))
 
   ;; Python support for lsp-mode using pyls.
+  ;; Install: pip install python-language-server
   (use-package lsp-python
-    :ensure-system-package (pyls . "pip install python-language-server")
     :commands lsp-python-enable
     :hook (python-mode . lsp-python-enable))
 
   ;; Ruby support for lsp-mode using the solargraph gem.
+  ;; Install: gem install solargraph
   (use-package lsp-ruby
-    :ensure-system-package (solargraph . "sudo gem install solargraph")
     :commands lsp-ruby-enable
     :hook (ruby-mode . lsp-ruby-enable))
 
   ;; Javascript, Typescript and Flow support for lsp-mode
+  ;; Install: npm i -g javascript-typescript-langserver
   (use-package lsp-javascript-typescript
-    :ensure-system-package
-    (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
     :commands lsp-javascript-typescript-enable
     :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
 
   ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
+  ;; Install: npm i -g vscode-css-languageserver-bin
   (use-package lsp-css
-    :ensure-system-package
-    (css-languageserver . "sudo npm i -g vscode-css-languageserver-bin")
     :commands (lsp-css-enable
                lsp-less-enable
                lsp-sass-enable
@@ -115,28 +112,25 @@
            (scss-mode . lsp-scss-enable)))
 
   ;; HTML support for lsp-mode using vscode-html-languageserver-bin
+  ;; Install: npm i -g vscode-html-languageserver-bin
   (use-package lsp-html
-    :ensure-system-package
-    (html-languageserver . "sudo npm i -g vscode-html-languageserver-bin")
     :commands lsp-html-enable
     :hook ((html-mode . lsp-html-enable)
            (web-mode . lsp-html-enable)))
 
   ;; PHP support for lsp-mode
-  ;; composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+  ;; Install: composer require felixfbecker/language-server
+  ;;          composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
   (use-package lsp-php
-    :ensure-system-package
-    (php-language-server . "composer require felixfbecker/language-server")
     :commands lsp-php-enable
     :hook (php-mode . lsp-php-enable))
 
   ;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
+  ;; Install: npm i -g bash-language-server@1.4.0
   ;; Require Python2.5+, use --python to specify.
   (use-package lsp-sh
     :ensure nil
     :after lsp-mode
-    :ensure-system-package
-    (bash-language-server . "sudo npm i -g bash-language-server@1.4.0")
     :commands lsp-sh-enable
     :hook (sh-mode . lsp-sh-enable)
     :init
@@ -148,7 +142,6 @@
   ;; C/C++/Objective-C language server support for lsp-mode using clang
   ;; Install: brew install cquery or download binary from https://github.com/cquery-project/cquery/releases.
   (use-package cquery
-    :ensure-system-package cquery
     :defines projectile-project-root-files-top-down-recurring
     :commands lsp-cquery-enable
     :hook ((c-mode c++-mode objc-mode) . lsp-cquery-enable)
@@ -160,10 +153,9 @@
                     projectile-project-root-files-top-down-recurring))))
 
   ;; Rust support for lsp-mode using the Rust Language Server.
+  ;; Install: curl https://sh.rustup.rs -sSf | sh
+  ;;          rustup component add rls-preview rust-analysis rust-src
   (use-package lsp-rust
-    :ensure-system-package
-    ((rustup . "curl https://sh.rustup.rs -sSf | sh")
-     (rls . "rustup component add rls-preview rust-analysis rust-src"))
     :commands lsp-rust-enable
     :hook (rust-mode . lsp-rust-enable))
 

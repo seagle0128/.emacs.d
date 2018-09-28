@@ -31,12 +31,9 @@
 ;;; Code:
 
 (use-package markdown-mode
-  :ensure-system-package
-  (markdown
-   (grip . "pip install grip")
-   (markdownlint . "sudo npm i -g markdownlint-cli"))
   :defines flycheck-markdown-markdownlint-cli-config
   :preface
+  ;; Install: pip install grip
   (defun markdown-preview-grip ()
     "Render and preview with `grip'."
     (interactive)
@@ -48,6 +45,7 @@
                           (file-name-extension
                            (buffer-file-name))))))
 
+  ;; Install: npm i -g markdownlint-cli
   (defun set-flycheck-markdownlint ()
     "Set the `mardkownlint' config file for the current buffer."
     (let* ((md-lint ".markdownlint.json")

@@ -29,6 +29,20 @@
 ;;
 
 ;;; Code:
+;;
+;; Go packages:
+;; go get -u github.com/mdempsky/gocode # github.com/nsf/gocode
+;; go get -u github.com/rogpeppe/godef
+;; go get -u golang.org/x/tools/cmd/goimports
+;; go get -u golang.org/x/tools/cmd/guru
+;; go get -u golang.org/x/tools/cmd/gorename
+;; go get -u golang.org/x/tools/cmd/gotype
+;; go get -u golang.org/x/tools/cmd/godoc
+;; go get -u github.com/derekparker/delve/cmd/dlv
+;; go get -u github.com/josharian/impl
+;; go get -u github.com/cweill/gotests/...
+;; go get -u github.com/fatih/gomodifytags
+;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
 
 (eval-when-compile
   (require 'init-custom))
@@ -40,31 +54,20 @@
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :config
-  (use-package go-dlv
-    :ensure-system-package (dlv . "go get -u github.com/derekparker/delve/cmd/dlv"))
-
-  (use-package go-fill-struct
-    :ensure-system-package (fillstruct . "go get -u github.com/davidrjenni/reftools/cmd/fillstruct"))
-
-  (use-package go-impl
-    :ensure-system-package (impl . "go get -u github.com/josharian/impl"))
-
-  (use-package go-rename
-    :ensure-system-package (gorename . "go get -u golang.org/x/tools/cmd/gorename"))
-
-  (use-package golint
-    :ensure-system-package (golint . "go get -u github.com/golang/lint/golint"))
+  (use-package go-dlv)
+  (use-package go-fill-struct)
+  (use-package go-impl)
+  (use-package go-rename)
+  (use-package golint)
   (use-package govet)
 
   (use-package go-tag
-    :ensure-system-package (gomodifytags . "go get -u github.com/fatih/gomodifytags")
     :bind (:map go-mode-map
                 ("C-c t" . go-tag-add)
                 ("C-c T" . go-tag-remove))
     :config (setq go-tag-args (list "-transform" "camelcase")))
 
   (use-package gotest
-    :ensure-system-package (gotests . "go get -u github.com/cweill/gotests/...")
     :bind (:map go-mode-map
                 ("C-c a" . go-test-current-project)
                 ("C-c m" . go-test-current-file)
@@ -94,17 +97,12 @@
       :hook (go-mode . go-eldoc-setup))
 
     (use-package go-guru
-      :ensure-system-package (guru . "go get -u golang.org/x/tools/cmd/guru")
       :bind (:map go-mode-map
                   ;; ([remap xref-find-definitions] . go-guru-definition)
                   ([remap xref-find-references] . go-guru-referrers)))
 
     (with-eval-after-load 'company
       (use-package company-go
-        :ensure-system-package
-        ((gocode . "go get -u github.com/mdempsky/gocode")
-         (godef . "go get -u github.com/rogpeppe/godef")
-         (goimports . "go get -u golang.org/x/tools/cmd/goimports"))
         :defines company-backends
         :functions company-backend-with-yas
         :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))))
