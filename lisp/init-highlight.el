@@ -180,7 +180,11 @@
       (nav-flash-show)
       ;; only show in the current window
       (overlay-put compilation-highlight-overlay 'window (selected-window))))
-  :hook ((imenu-after-jump switch-window-finish) . my-blink-cursor)
+  :hook ((imenu-after-jump
+          switch-window-finish
+          counsel-grep-post-action
+          dumb-jump-after-jump)
+         . my-blink-cursor)
   :init
   ;; NOTE In :feature jump `recenter' is hooked to a bunch of jumping commands,
   ;; which will trigger nav-flash.
