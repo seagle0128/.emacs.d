@@ -40,7 +40,9 @@
          ("C-c M-g" . magit-file-popup))
   :config
   (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass")))
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
+  (magit-define-popup-switch 'magit-fetch-popup
+    ?t "Fetch all tags" "--tags"))
 
 ;; Github integration
 (use-package magithub
