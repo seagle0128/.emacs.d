@@ -100,18 +100,19 @@
 
 ;; Navigate windows and frames using numbers
 (use-package winum
-  :bind (("C-`" . winum-select-window-by-number)
-         ("C-²" . winum-select-window-by-number)
-         ("M-0" . winum-select-window-0-or-10)
-         ("M-1" . winum-select-window-1)
-         ("M-2" . winum-select-window-2)
-         ("M-3" . winum-select-window-3)
-         ("M-4" . winum-select-window-4)
-         ("M-5" . winum-select-window-5)
-         ("M-6" . winum-select-window-6)
-         ("M-7" . winum-select-window-7)
-         ("M-8" . winum-select-window-8)
-         ("M-9" . winum-select-window-9))
+  :bind (:map winum-keymap
+              ("C-`" . winum-select-window-by-number)
+              ("C-²" . winum-select-window-by-number)
+              ("M-0" . winum-select-window-0-or-10)
+              ("M-1" . winum-select-window-1)
+              ("M-2" . winum-select-window-2)
+              ("M-3" . winum-select-window-3)
+              ("M-4" . winum-select-window-4)
+              ("M-5" . winum-select-window-5)
+              ("M-6" . winum-select-window-6)
+              ("M-7" . winum-select-window-7)
+              ("M-8" . winum-select-window-8)
+              ("M-9" . winum-select-window-9))
   :hook (after-init . winum-mode)
   :config
   (setq winum-auto-setup-mode-line nil)
