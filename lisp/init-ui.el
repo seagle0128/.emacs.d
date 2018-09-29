@@ -71,6 +71,11 @@
   (run-hooks 'after-load-theme-hook))
 
 ;; Modeline
+(defun mode-line-height ()
+  "Get current height of mode-line."
+  (- (elt (window-pixel-edges) 3)
+     (elt (window-inside-pixel-edges) 3)))
+
 (if (is-doom-theme-p centaur-theme)
     (use-package doom-modeline
       :hook ((after-load-theme . doom-modeline-init)
