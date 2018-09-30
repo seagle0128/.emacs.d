@@ -76,6 +76,7 @@
 (use-package dockerfile-mode)
 (use-package powershell)
 (use-package vimrc-mode)
+(use-package rmsbolt)                   ; A compiler output viewer
 
 ;; New `conf-toml-mode' in Emacs 26
 (unless (fboundp 'conf-toml-mode)
