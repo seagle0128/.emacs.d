@@ -35,5 +35,10 @@
 ;;                          ("melpa" . "http://melpa.org/packages/")))
 ;; (setq package-quickstart t)
 
+(unless (and (display-graphic-p) (eq system-type 'darwin)) (menu-bar-mode -1))
+(and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
+(and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
