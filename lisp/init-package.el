@@ -48,7 +48,7 @@
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 ;;
 (defun set-package-archives (archives)
-  "Switch to specific package ARCHIVES repository."
+  "Set specific package ARCHIVES repository."
   (interactive
    (list
     (intern (completing-read "Switch to archives: "
@@ -78,11 +78,10 @@
 
   (message "Set package archives to '%s'." archives))
 
-(set-package-archives centaur-package-archives)
-
 ;; Initialize packages
-(setq package-enable-at-startup nil)    ; To prevent initializing twice
-(unless (bound-and-true-p package--initialized) ; Avoid warnings in Emacs27
+(unless(< emacs-major-version 27)       ; To avoid warnings in Emacs27
+  (set-package-archives centaur-package-archives)
+  (setq package-enable-at-startup nil)  ; To prevent initializing twice
   (package-initialize))
 
 ;; Setup `use-package'
