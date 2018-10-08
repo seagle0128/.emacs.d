@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-;; (setq package-user-dir (concat "~/.emacs.d/elpa-" emacs-version))
+;; (setq package-user-dir (locate-user-emacs-file (format "elpa-%s" emacs-major-version)))
 ;; (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
 ;;                          ("melpa" . "http://melpa.org/packages/")))
 ;; (setq package-quickstart t)

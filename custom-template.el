@@ -16,11 +16,9 @@
 ;; (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 
 ;; For Emacs devel
-;; e.g. 24.5, 25.3 or 26.1 are releses, while 26.0.90 is a devel release.
-;; (when (= emacs-minor-version 0)
-;;   (setq package-user-dir (locate-user-emacs-file "elpa-devel"))
-;;   (setq desktop-base-file-name ".emacs-devel.desktop")
-;;   (setq desktop-base-lock-name ".emacs-devel.desktop.lock"))
+;; (setq package-user-dir (locate-user-emacs-file (format "elpa-%s" emacs-major-version)))
+;; (setq desktop-base-file-name (format ".emacs-%s.desktop" emacs-major-version))
+;; (setq desktop-base-lock-name (format ".emacs-%s.desktop.lock" emacs-major-version))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
