@@ -79,7 +79,7 @@
   (message "Set package archives to '%s'." archives))
 
 ;; Initialize packages
-(unless(< emacs-major-version 27)       ; To avoid warnings in Emacs27
+(unless (< emacs-major-version 27)      ; To avoid warnings in Emacs27
   (set-package-archives centaur-package-archives)
   (setq package-enable-at-startup nil)  ; To prevent initializing twice
   (package-initialize))
