@@ -57,8 +57,7 @@
 (when (< emacs-major-version 27)        ; Move to early init-file in 27
   (unless sys/mac-x-p (menu-bar-mode -1))
   (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
-  (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-  (and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1)))
+  (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1)))
 
 ;; Theme
 (defun is-doom-theme-p (theme)
