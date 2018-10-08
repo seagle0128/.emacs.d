@@ -42,14 +42,6 @@
   ;; Restore frames into their original displays (if possible)
   (setq desktop-restore-in-current-display nil)
 
-  ;; Don't restore UI configurations
-  (add-to-list 'desktop-minor-mode-table
-               '(menu-bar-mode nil))
-  (add-to-list 'desktop-minor-mode-table
-               '(tool-bar-mode nil))
-  (add-to-list 'desktop-minor-mode-table
-               '(scroll-bar-mode nil))
-
   (if (display-graphic-p)
       ;; Prevent desktop from holding onto theme elements
       (add-hook 'desktop-after-read-hook
