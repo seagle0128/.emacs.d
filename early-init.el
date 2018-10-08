@@ -31,10 +31,9 @@
 ;;; Code:
 
 ;; (setq package-user-dir (concat "~/.emacs.d/elpa-" emacs-version))
-(setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
-(setq package-quickstart t)
-(setq package-enable-at-startup nil)    ; To prevent initializing twice
+;; (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+;;                          ("melpa" . "http://melpa.org/packages/")))
+;; (setq package-quickstart t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here

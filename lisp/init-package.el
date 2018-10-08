@@ -78,11 +78,11 @@
 
   (message "Set package archives to '%s'." archives))
 
+(set-package-archives centaur-package-archives)
+
 ;; Initialize packages
-;; Move package configurations to early init-file in 27+.
-(when (< emacs-major-version 27)
-  (set-package-archives centaur-package-archives)
-  (setq package-enable-at-startup nil)  ; To prevent initializing twice
+(setq package-enable-at-startup nil)            ; To prevent initializing twice
+(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (package-initialize))
 
 ;; Setup `use-package'
