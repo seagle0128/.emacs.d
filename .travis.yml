@@ -21,7 +21,7 @@ before_script:
 script:
   - emacs --version
   - cd ~/.emacs.d
-  - emacs --batch -l early-init.el --eval "(package-initialize)" -l init.el
+  - emacs --batch -l early-init.el -l init.el
   # - emacs --version && emacs -Q --batch --eval '(byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0 0)'
 
   # - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l init.el &
