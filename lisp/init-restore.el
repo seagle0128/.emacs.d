@@ -52,7 +52,7 @@
     ;; Don't save/restore frames in TTY
     (setq desktop-restore-frames nil)))
 
-;; Persistent the scratch buffter
+;; Persistent the scratch buffer
 (use-package persistent-scratch
   :hook (after-init . persistent-scratch-setup-default))
 
