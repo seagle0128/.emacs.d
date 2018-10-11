@@ -78,7 +78,7 @@
 
 (if (is-doom-theme-p centaur-theme)
     (use-package doom-modeline
-      :hook ((after-load-theme . doom-modeline-init)
+      :hook ((after-init . doom-modeline-init)
              (dashboard-mode . doom-modeline-set-project-modeline)))
   (use-package spaceline-config
     :ensure spaceline
