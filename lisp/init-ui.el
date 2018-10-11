@@ -50,8 +50,9 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-hook 'after-load-theme-hook
             (lambda ()
-              (setcdr (assq 'ns-appearance default-frame-alist)
-                      (frame-parameter nil 'background-mode)))))
+              (let ((bg (frame-parameter nil 'background-mode)))
+                (set-frame-parameter nil 'ns-appearance bg)
+                (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
 ;; Menu/Tool/Scroll bars
 (when (< emacs-major-version 27)        ; Move to early init-file in 27
