@@ -86,6 +86,12 @@
 ;; A *visual* way to switch window
 (use-package switch-window
   :bind (([remap other-window] . switch-window)
+         ([remap dired-other-window] . switch-window-then-dired)
+         ([remap find-file-other-window] . switch-window-then-find-file)
+         ([remap find-file-read-only-other-window] . switch-window-then-find-file-read-only)
+         ([remap display-buffer] . switch-window-then-display-buffer)
+         ([remap kill-buffer-and-window] . switch-window-then-kill-buffer)
+         ("C-x 4 s" . switch-window-then-swap-buffer)
          :map switch-window-extra-map
          ("u" . winner-undo)
          ("r" . winner-redo))
