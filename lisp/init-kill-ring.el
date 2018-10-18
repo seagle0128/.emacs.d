@@ -40,11 +40,6 @@
   :bind (([remap kill-ring-save] . easy-kill)
          ([remap mark-sexp] . easy-mark)))
 
-;; Interactively insert items from kill-ring
-(use-package browse-kill-ring
-  :bind ("C-c k" . browse-kill-ring)
-  :hook (after-init . browse-kill-ring-default-keybindings))
-
 (provide 'init-kill-ring)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
