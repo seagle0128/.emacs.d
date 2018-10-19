@@ -146,7 +146,7 @@
   (use-package flx)
 
   ;; Enhance M-x
-  (use-package smex)
+  (use-package amx)
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
