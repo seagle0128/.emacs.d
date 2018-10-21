@@ -81,8 +81,8 @@
 (set-package-archives centaur-package-archives)
 
 ;; Initialize packages
-(setq package-enable-at-startup nil)            ; To prevent initializing twice
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+  (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
 ;; Setup `use-package'
