@@ -127,7 +127,7 @@
     (doom-themes-treemacs-config)
 
     ;; Enable custom neotree theme (all-the-icons must be installed!)
-    ;; (doom-themes-neotree-config)
+    (doom-themes-neotree-config)
 
     ;; Make certain buffers grossly incandescent
     (use-package solaire-mode

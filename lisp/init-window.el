@@ -52,39 +52,51 @@
 
 ;; Quickly switch windows
 (use-package ace-window
-  :disabled
   :bind ([remap other-window] . ace-window)
   :custom-face
   (aw-leading-char-face ((t (:inherit 'font-lock-keyword-face :height 3.0))))
-  (aw-mode-line-face ((t (:inherit 'mode-line-emphasis))))
+  (aw-mode-line-face ((t (:inherit 'mode-line-emphasis :bold t))))
+  :hook (after-init . ace-window-display-mode)
   :config
   ;; (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
-  (add-to-list 'aw-dispatch-alist '(?l balance-windows "Balance Windows") t)
-  (add-to-list 'aw-dispatch-alist '(?u winner-undo "Switch back to an earlier config") t)
-  (add-to-list 'aw-dispatch-alist '(?r winner-redo "Restore to a recent config") t)
-
   (when (package-installed-p 'hydra)
-    (defhydra hydra-window-size (:color blue)
-      "Windows size"
-      ("h" shrink-window-horizontally "shrink horizontal")
-      ("j" shrink-window "shrink vertical")
-      ("k" enlarge-window "enlarge vertical")
-      ("l" enlarge-window-horizontally "enlarge horizontal"))
-    (defhydra hydra-window-frame (:color blue)
-      "Frame"
-      ("f" make-frame "new frame")
-      ("x" delete-frame "delete frame"))
-    (defhydra hydra-window-scroll (:color blue)
-      "Scroll other window"
-      ("n" scroll-other-window "scroll")
-      ("p" scroll-other-window-down "scroll down"))
-    (add-to-list 'aw-dispatch-alist '(?w hydra-window-size/body) t)
-    (add-to-list 'aw-dispatch-alist '(?o hydra-window-scroll/body) t)
-    (add-to-list 'aw-dispatch-alist '(?\; hydra-window-frame/body) t)))
+    ;; https://github.com/abo-abo/ace-window/wiki/Hydra
+    ;; hydra-frame-window is designed from ace-window (C-x o w) and
+    ;; matches aw-dispatch-alist with a few extra
+    (defhydra hydra-frame-window (:color red :hint nil)
+      "
+^Delete^                       ^Frame resize^             ^Window^                Window Size^^^^^^   ^Text^                         (__)
+_0_: delete-frame              _g_: resize-frame-right    _t_: toggle               ^ ^ _k_ ^ ^        _K_                           (oo)
+_1_: delete-other-frames       _H_: resize-frame-left     _e_: ace-swap-win         _h_ ^+^ _l_        ^+^                     /------\\/
+_2_: make-frame                _F_: fullscreen            ^ ^                       ^ ^ _j_ ^ ^        _J_                    / |    ||
+_d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window    _b_alance^^^^      ^ ^                 *  /\\---/\\  ~~  C-x o w ;
+"
+      ("0" delete-frame :exit t)
+      ("1" delete-other-frames :exit t)
+      ("2" make-frame  :exit t)
+      ("b" balance-windows)o
+      ("d" kill-and-delete-frame :exit t)
+      ("e" ace-swap-window)
+      ("F" toggle-frame-fullscreen)   ;; is <f11>
+      ("g" resize-frame-right :exit t)
+      ("H" resize-frame-left :exit t)  ;; aw-dispatch-alist uses h, I rebind here so hjkl can be used for size
+      ("n" make-frame :exit t)
+      ;; ("r" reverse-windows)
+      ("t" toggle-window-spilt)
+      ("w" ace-delete-window :exit t)
+      ("x" delete-frame :exit t)
+      ("K" text-scale-decrease)
+      ("J" text-scale-increase)
+      ("h" shrink-window-horizontally)
+      ("k" shrink-window)
+      ("j" enlarge-window)
+      ("l" enlarge-window-horizontally))
+    (add-to-list 'aw-dispatch-alist '(?w hydra-frame-window/body) t)))q
 
 ;; A *visual* way to switch window
 (use-package switch-window
+  :disabled
   :bind (([remap other-window] . switch-window)
          ([remap dired-other-window] . switch-window-then-dired)
          ([remap find-file-other-window] . switch-window-then-find-file)
@@ -106,6 +118,7 @@
 
 ;; Navigate windows and frames using numbers
 (use-package winum
+  :disabled
   :bind (:map winum-keymap
               ("C-`" . winum-select-window-by-number)
               ("C-²" . winum-select-window-by-number)
