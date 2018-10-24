@@ -92,7 +92,7 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
       ("k" shrink-window)
       ("j" enlarge-window)
       ("l" enlarge-window-horizontally))
-    (add-to-list 'aw-dispatch-alist '(?w hydra-frame-window/body) t)))q
+    (add-to-list 'aw-dispatch-alist '(?w hydra-frame-window/body) t)))
 
 ;; A *visual* way to switch window
 (use-package switch-window
