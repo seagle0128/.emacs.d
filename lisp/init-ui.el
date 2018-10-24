@@ -81,8 +81,20 @@
     (use-package doom-modeline
       :hook ((after-init . doom-modeline-init)
              (dashboard-mode . doom-modeline-set-project-modeline)))
-  (use-package telephone-line
-    :hook (after-init . telephone-line-mode)))
+  (use-package spaceline-config
+    :ensure spaceline
+    :defines (powerline-default-separator
+              powerline-image-apple-rgb
+              spaceline-pre-hook
+              spaceline-highlight-face-func)
+    :functions powerline-reset
+    :hook (after-init . spaceline-spacemacs-theme)
+    :init
+    (setq powerline-default-separator (or (and (display-graphic-p) 'arrow) 'utf-8))
+    (setq powerline-image-apple-rgb sys/mac-x-p)
+    :config
+    (setq spaceline-pre-hook #'powerline-reset) ; For changing themes
+    (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode
