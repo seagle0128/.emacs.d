@@ -46,7 +46,6 @@
 
 ;; Github integration
 (use-package magithub
-  :disabled
   :after magit
   :init
   (magithub-feature-autoinject t)
