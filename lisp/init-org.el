@@ -39,14 +39,17 @@
   :functions hydra-org-template/body
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb))
-  :hook ((org-mode . org-indent-mode)
-         (org-indent-mode . (lambda() (diminish 'org-indent-mode))))
+  :hook (org-indent-mode . (lambda() (diminish 'org-indent-mode)))
   :config
-  (setq org-agenda-files '("~/org"))
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")))
-  (setq org-log-done 'time)
-  (setq org-src-fontify-natively t)
+  (setq org-agenda-files '("~/org")
+        org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)"
+                                      "|" "DONE(d)" "CANCEL(c)"))
+        org-log-done 'time
+        org-startup-indented t
+        org-ellipsis "  "
+        org-pretty-entities t
+        org-hide-emphasis-markers t)
+
   (add-to-list 'org-export-backends 'md)
 
   ;; More fancy UI
@@ -61,12 +64,15 @@
       :config (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕"))))
 
   ;; Babel
-  (setq org-confirm-babel-evaluate nil)
+  (setq org-confirm-babel-evaluate nil
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t)
 
   (defvar load-language-list '((emacs-lisp . t)
                                (perl . t)
                                (python . t)
                                (ruby . t)
+                               (js . t)
                                (plantuml . t)))
   (use-package ob-go
     :init
