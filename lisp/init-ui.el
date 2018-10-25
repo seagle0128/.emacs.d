@@ -151,34 +151,36 @@
   (ignore-errors (load-theme centaur-theme t))))
 
 ;; Fonts
-(use-package cnfonts
-  :preface
-  ;; Fallback to `all-the-icons'.
-  (defun cnfonts--set-all-the-icons-fonts (&optional _)
-    "Show icons in all-the-icons."
-    (when (featurep 'all-the-icons)
-      (dolist (charset '(kana han cjk-misc bopomofo gb18030))
-        (dolist (font '("all-the-icons" "github-octicons" "FontAwesome" "Material Icons"))
-          (set-fontset-font "fontset-default" charset font nil 'append)))))
-  :hook ((after-init . cnfonts-enable)
-         (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
-  :config
-  ;; NOTE: on macOS, the frame size is changed during the startup without below.
-  ;; Keep frame size
-  (setq cnfonts-keep-frame-size nil)
-  (add-hook 'window-setup-hook
-            (lambda ()
-              (setq cnfonts-keep-frame-size t)))
+(when (display-graphic-p)
+  ;; cnfonts doesn't support terminal
+  (use-package cnfonts
+    :preface
+    ;; Fallback to `all-the-icons'.
+    (defun cnfonts--set-all-the-icons-fonts (&optional _)
+      "Show icons in all-the-icons."
+      (when (featurep 'all-the-icons)
+        (dolist (charset '(kana han cjk-misc bopomofo gb18030))
+          (dolist (font '("all-the-icons" "github-octicons" "FontAwesome" "Material Icons"))
+            (set-fontset-font "fontset-default" charset font nil 'append)))))
+    :hook ((after-init . cnfonts-enable)
+           (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
+    :config
+    ;; NOTE: on macOS, the frame size is changed during the startup without below.
+    ;; Keep frame size
+    (setq cnfonts-keep-frame-size nil)
+    (add-hook 'window-setup-hook
+              (lambda ()
+                (setq cnfonts-keep-frame-size t)))
 
-  ;; Set profiles
-  (setq cnfonts-use-cache t)
-  (setq cnfonts-profiles
-        '("program-normal" "program-large" "program-small" "org-mode" "read-book"))
-  (setq cnfonts--profiles-steps '(("program-normal" . 4)
-                                  ("program-large" . 5)
-                                  ("program-small" . 3)
-                                  ("org-mode" . 6)
-                                  ("read-book" . 8))))
+    ;; Set profiles
+    (setq cnfonts-use-cache t)
+    (setq cnfonts-profiles
+          '("program-normal" "program-large" "program-small" "org-mode" "read-book"))
+    (setq cnfonts--profiles-steps '(("program-normal" . 4)
+                                    ("program-large" . 5)
+                                    ("program-small" . 3)
+                                    ("org-mode" . 6)
+                                    ("read-book" . 8)))))
 
 ;; Line and Column
 (setq-default fill-column 80)
