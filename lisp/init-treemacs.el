@@ -41,11 +41,12 @@
                treemacs-fringe-indicator-mode
                treemacs-git-mode)
     :bind (([f8]        . treemacs)
+           ("C-`"       . treemacs)
            ("M-9"       . treemacs-select-window)
            ("C-x 1"     . treemacs-delete-other-windows)
            ("C-x t 1"   . treemacs-delete-other-windows)
            ("C-x t t"   . treemacs)
-           ("C-x t B"   . treemacs-bookmark)
+           ("C-x t b"   . treemacs-bookmark)
            ("C-x t C-t" . treemacs-find-file)
            ("C-x t M-t" . treemacs-find-tag)
            :map treemacs-mode-map
