@@ -60,7 +60,8 @@
       ("x" dumb-jump-go-prefer-external-other-window "Go external other window")
       ("i" dumb-jump-go-prompt "Prompt")
       ("l" dumb-jump-quick-look "Quick look")
-      ("b" dumb-jump-back "Back"))
+      ("b" dumb-jump-back "Back")
+      ("q" nil "quit"))
     (bind-key "C-M-j" #'dumb-jump-hydra/body dumb-jump-mode-map)))
 
 (use-package nxml-mode

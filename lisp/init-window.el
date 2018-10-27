@@ -75,7 +75,7 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
       ("0" delete-frame :exit t)
       ("1" delete-other-frames :exit t)
       ("2" make-frame  :exit t)
-      ("b" balance-windows :exit t)
+      ("b" balance-windows)
       ("d" kill-and-delete-frame :exit t)
       ("e" ace-swap-window)
       ("F" toggle-frame-fullscreen)   ;; is <f11>
@@ -91,7 +91,8 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
       ("h" shrink-window-horizontally)
       ("k" shrink-window)
       ("j" enlarge-window)
-      ("l" enlarge-window-horizontally))
+      ("l" enlarge-window-horizontally)
+      ("q" nil "quit"))
     (add-to-list 'aw-dispatch-alist '(?w hydra-frame-window/body) t)))
 
 ;; A *visual* way to switch window
