@@ -142,87 +142,75 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
                   ((equal (buffer-name) " *Treemacs-Framebuffer-1*") 9)
                   ((equal (buffer-name) "*Flycheck errors*") 8)))))
 
-;; Popup Window Manager
-(use-package popwin
-  :commands popwin-mode
-  :hook (after-init . popwin-mode)
+;; Enforce rules for popups
+(use-package shackle
+  :hook (after-init . shackle-mode)
   :config
-  (bind-key "C-z" popwin:keymap)
+  ;; Add keyword: `autoclose'
+  (defvar shackle--popup-window-list nil) ; all popup windows
+  (defvar-local shackle--current-popup-window nil) ; current popup window
+  (put 'shackle--current-popup-window 'permanent-local t)
 
-  ;; don't use default value but manage it ourselves
-  (setq popwin:special-display-config
-        '(;; Emacs
-          ("*Help*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
-          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
-          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
-          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Pp Eval Output*" :dedicated t :position bottom :stick t :noselect t)
-          ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
-          ("^*Man.+*$" :regexp t :position bottom :stick t :noselect t :height 0.4)
-          ("^*WoMan.+*$" :regexp t :position bottom)
-          ("^*Backtrace.+*$" :regexp t :dedicated t :position bottom :stick t :noselect nil)
-          ("^*helpful .+*$" :regexp t :position bottom :stick t :noselect nil :height 0.4)
+  (defun shackle-display-buffer-hack (fn buffer alist plist)
+    (let ((window (funcall fn buffer alist plist)))
+      (setq shackle--current-popup-window window)
 
-          ;; Kill Ring
-          ("*Kill Ring*" :dedicated t :position bottom)
+      (when (plist-get plist :autoclose)
+        (push (cons window buffer) shackle--popup-window-list))
+      window))
 
-          ;; Org
-          ("*Org todo*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
+  (defun shackle-close-popup-window-hack (&rest _)
+    "Close current popup window via `C-g'."
+    (setq shackle--popup-window-list
+          (loop for (window . buffer) in shackle--popup-window-list
+                if (and (window-live-p window)
+                        (equal (window-buffer window) buffer))
+                collect (cons window buffer)))
+    ;; `C-g' can deactivate region
+    (when (and (called-interactively-p 'interactive)
+               (not (region-active-p)))
+      (let (window buffer)
+        (if (one-window-p)
+            (progn
+              (setq window (selected-window))
+              (when (equal (buffer-local-value 'shackle--current-popup-window
+                                               (window-buffer window))
+                           window)
+                (winner-undo)))
+          (setq window (caar shackle--popup-window-list))
+          (setq buffer (cdar shackle--popup-window-list))
+          (when (and (window-live-p window)
+                     (equal (window-buffer window) buffer))
+            (delete-window window)
 
-          ;; Flycheck
-          ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
+            (pop shackle--popup-window-list))))))
 
-          ;; Youdao dict
-          ("*Youdao Dictionary*" :dedicated t :position bottom)
+  (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
+  (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack)
 
-          ;; Paradox
-          ("*Paradox Report*" :dedicated t :position bottom :noselect nil)
-
-          ;; List
-          ("*Colors*" :dedicated t :position bottom)
-          ("*Process List*" :dedicated t :position bottom)
-          ("*Process-Environment*" :dedicated t :position bottom)
-
-          ;; undo-tree
-          (" *undo-tree*" :dedicated t :position right :stick t :noselect nil :width 60)
-
-          ;; Search
-          ("*grep*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*ag search*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
-          ("*rg*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
-          ("*pt-search*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
-          ("*Occur*" :dedicated t :position bottom :stick t :noselect nil)
-          ("\*ivy-occur.+*$" :regexp t :position bottom :stick t :noselect nil)
-          ;; ("*xref*" :dedicated t :position bottom :stick t :noselect nil)
-
-          ;; VC
-          ("*vc-diff*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*vc-change-log*" :dedicated t :position bottom :stick t :noselect nil)
-
-          ;; Magit
-          ;; (magit-status-mode :dedicated t :position bottom :stick t :height 0.5)
-          ;; (magit-diff-mode :dedicated t :position bottom :stick t :noselect t :height 0.5)
-
-          ;; Script
-          ("*eshell*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
-          ("*shell*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
-          ("*Python*" :dedicated t :position bottom :stick t :noselect t)
-          ("*Ruby*" :dedicated t :position bottom :stick t :noselect t)
-          ("*quickrun*" :dedicated t :position bottom :stick t :noselect t)
-
-          ;; Go
-          ("^*godoc.+*$" :regexp t :position bottom :stick nil :noselect nil)
-          ("*golint*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*govet*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*go-guru-output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Gofmt Errors*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Go Test*" :dedicated t :position bottom :stick t :noselect nil)
-
-          ;; Test
-          ("*ert*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*nosetests*" :dedicated t :position bottom :stick t :noselect nil))))
+  ;; rules
+  (setq shackle-default-size 0.4)
+  (setq shackle-rules
+        '(("*Help*" :select t :autoclose t :align 'below)
+          ("*compilation*" :size 0.25 :align 'below :autoclose t)
+          ("*Completions*" :size 0.3 :align 'below :autoclose t)
+          ("*Pp Eval Output*" :size 0.25 :align 'below :autoclose t)
+          ("*ert*" :same t)
+          ("*info*" :size 0.5 :select t :popup t)
+          ("*Backtrace*" :size 20 :align 'below)
+          ("*Warnings*" :size 12 :align 'below)
+          ("*Messages*" :size 12 :align 'below)
+          ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
+          ("\\*[Wo]*Man.*\\*" :regexp t :select t :other t)
+          ("*Calendar*" :select t :size 0.3 :align 'below)
+          (" *undo-tree*" :select t :popup t)
+          (apropos-mode :size 0.3 :align 'below :autoclose t)
+          (Buffer-menu-mode :size 20 :align 'below :autoclose t)
+          (comint-mode :noesc t :align 'below)
+          (grep-mode :size 25 :align 'below :autoclose t)
+          (profiler-report-mode :popup t)
+          (tabulated-list-mode :noesc t :align 'below)
+          ("^ ?\\*" :regexp t :select t :align 'below :autoclose t))))
 
 ;; Easy window config switching
 (use-package eyebrowse
