@@ -95,53 +95,6 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
       ("q" nil "quit"))
     (add-to-list 'aw-dispatch-alist '(?w hydra-frame-window/body) t)))
 
-;; A *visual* way to switch window
-(use-package switch-window
-  :disabled
-  :bind (([remap other-window] . switch-window)
-         ([remap dired-other-window] . switch-window-then-dired)
-         ([remap find-file-other-window] . switch-window-then-find-file)
-         ([remap find-file-read-only-other-window] . switch-window-then-find-file-read-only)
-         ([remap display-buffer] . switch-window-then-display-buffer)
-         ([remap kill-buffer-and-window] . switch-window-then-kill-buffer)
-         ("C-x 4 s" . switch-window-then-swap-buffer)
-         :map switch-window-extra-map
-         ("u" . winner-undo)
-         ("r" . winner-redo))
-  :custom-face
-  (switch-window-label ((t (:inherit font-lock-keyword-face :height 3.0))))
-  :config
-  ;; (setq switch-window-shortcut-style 'qwerty)
-  (setq switch-window-minibuffer-shortcut ?0)
-  (setq switch-window-multiple-frames t)
-  (with-eval-after-load 'ivy
-    (setq switch-window-preferred 'ivy)))
-
-;; Navigate windows and frames using numbers
-(use-package winum
-  :disabled
-  :bind (:map winum-keymap
-              ("C-`" . winum-select-window-by-number)
-              ("C-²" . winum-select-window-by-number)
-              ("M-0" . winum-select-window-0-or-10)
-              ("M-1" . winum-select-window-1)
-              ("M-2" . winum-select-window-2)
-              ("M-3" . winum-select-window-3)
-              ("M-4" . winum-select-window-4)
-              ("M-5" . winum-select-window-5)
-              ("M-6" . winum-select-window-6)
-              ("M-7" . winum-select-window-7)
-              ("M-8" . winum-select-window-8)
-              ("M-9" . winum-select-window-9))
-  :hook (after-init . winum-mode)
-  :config
-  (setq winum-auto-setup-mode-line nil)
-  (add-to-list 'winum-assign-functions
-               (lambda ()
-                 (cond
-                  ((equal (buffer-name) " *Treemacs-Framebuffer-1*") 9)
-                  ((equal (buffer-name) "*Flycheck errors*") 8)))))
-
 ;; Enforce rules for popups
 (use-package shackle
   :hook (after-init . shackle-mode)
