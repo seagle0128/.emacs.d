@@ -99,6 +99,13 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
 (use-package shackle
   :hook (after-init . shackle-mode)
   :config
+  (defun view-last-popup-buffer ()
+    "View last popup buffer."
+    (interactive)
+    (when shackle-last-buffer
+      (display-buffer shackle-last-buffer)))
+  (bind-key "C-h z" #'view-last-popup-buffer)
+
   ;; Add keyword: `autoclose'
   (defvar shackle--popup-window-list nil) ; all popup windows
   (defvar-local shackle--current-popup-window nil) ; current popup window
