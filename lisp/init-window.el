@@ -102,7 +102,7 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
   (defun view-last-popup-buffer ()
     "View last popup buffer."
     (interactive)
-    (when shackle-last-buffer
+    (ignore-errors
       (display-buffer shackle-last-buffer)))
   (bind-key "C-h z" #'view-last-popup-buffer)
 
