@@ -36,10 +36,8 @@
 (cond
  ((eq centaur-lsp 'eglot)
   (use-package eglot
-    :hook (prog-mode . eglot-ensure)
-    :config (add-to-list 'eglot-server-programs '((c++ mode c-mode) . (eglot-cquery "cquery"))))))
+    :hook (prog-mode . eglot-ensure)))
 
-(cond
  ((eq centaur-lsp 'lsp-mode)
   ;; Emacs client for the Language Server Protocol
   ;; https://github.com/emacs-lsp/lsp-mode
@@ -140,16 +138,17 @@
                              '("bash-language-server" "start")))
 
   ;; C/C++/Objective-C language server support for lsp-mode using clang
-  ;; Install: brew install cquery or download binary from https://github.com/cquery-project/cquery/releases.
-  (use-package cquery
+  ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
+  ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
+  (use-package ccls
     :defines projectile-project-root-files-top-down-recurring
-    :commands lsp-cquery-enable
-    :hook ((c-mode c++-mode objc-mode) . lsp-cquery-enable)
+    :commands lsp-ccls-enable
+    :hook ((c-mode c++-mode objc-mode) . lsp-ccls-enable)
     :config
     (with-eval-after-load 'projectile
       (setq projectile-project-root-files-top-down-recurring
             (append '("compile_commands.json"
-                      ".cquery")
+                      ".ccls")
                     projectile-project-root-files-top-down-recurring))))
 
   ;; Rust support for lsp-mode using the Rust Language Server.
