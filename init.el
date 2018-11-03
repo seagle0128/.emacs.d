@@ -83,6 +83,7 @@
 
 (require 'init-markdown)
 (require 'init-org)
+(require 'init-elfeed)
 
 (require 'init-utils)
 
