@@ -37,7 +37,7 @@
 (use-package elisp-mode
   :ensure nil
   :bind (:map emacs-lisp-mode-map
-              ("C-c C-z" . ielm)
+              ("C-c C-x" . ielm)
               ("C-c C-c" . eval-defun)
               ("C-c C-b" . eval-buffer)))
 
