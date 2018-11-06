@@ -11,6 +11,7 @@
 /.emacs*.desktop
 /.emacs*.desktop.lock
 /.emacs-buffers
+/.elfeed
 /.last-package-update-day
 /.markdown-preview.html
 /.mc-lists.el

@@ -33,6 +33,7 @@
 (use-package elfeed
   :bind ("C-x w" . elfeed)
   :config
+  (setq elfeed-db-directory (expand-file-name ".elfeed" user-emacs-directory))
   (setq elfeed-feeds
         '("http://planet.emacsen.org/atom.xml"
           "http://www.masteringemacs.org/feed/"
