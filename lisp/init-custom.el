@@ -88,7 +88,7 @@
   "Enable the init benchmark or not."
   :type 'boolean)
 
-;; Load `custome.el' file
+;; Load `custom-file'
 ;; If it doesn't exist, copy from the template, then load it.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 

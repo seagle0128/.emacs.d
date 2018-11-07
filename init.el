@@ -104,5 +104,10 @@
 ;; Restore
 (require 'init-restore)
 
+;; Load personal configurations
+(let ((file (expand-file-name "custom-post.el" user-emacs-directory)))
+  (if (file-exists-p file)
+      (load file)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
