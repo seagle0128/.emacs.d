@@ -19,13 +19,16 @@ before_script:
   # - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
 
 script:
-  - emacs --version
-  - cd ~/.emacs.d
-  - emacs --batch -l early-init.el -l init.el
-  # - emacs --version && emacs -Q --batch --eval '(byte-recompile-directory (expand-file-name "lisp" user-emacs-directory) 0 0)'
-
-  # - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l init.el &
-  # - sleep 180
-  # - emacs -Q --batch -l lib/elisp-lint.el -f elisp-lint-files-batch --no-indent --no-indent-character --no-fill-column init.el
-  # - cd lisp
-  # - emacs -Q --batch --eval '(add-to-list (quote load-path) (expand-file-name "lisp" user-emacs-directory))' --eval '(package-initialize)' -l ../lib/elisp-lint.el -f elisp-lint-files-batch --no-indent --no-indent-character --no-fill-column *.el
+  - ${EMACS:=emacs} --version
+  - echo "Attempting startup..."
+  - ${EMACS:=emacs} -nw --batch --eval '(let ((debug-on-error t)
+                              (url-show-status nil)
+                              (user-emacs-directory default-directory)
+                              (early-init-file (expand-file-name "early-init.el"))
+                              (user-init-file (expand-file-name "init.el"))
+                              (load-path (delq default-directory load-path)))
+                           (when (>= emacs-major-version 27) (load-file early-init-file))
+                           (load-file user-init-file)
+                           (run-hooks (quote after-init-hook)))'
+  - echo "Startup successful"
+  # - ${EMACS:=emacs} --batch -l ~/.emacs.d/early-init.el -l ~/.emacs.d/init.el
