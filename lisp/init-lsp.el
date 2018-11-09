@@ -57,6 +57,18 @@
       (revert-buffer t t)
       (message "LSP server restarted."))
 
+    (cl-defmacro org-babel-lsp (lang)
+      "Support LANG in org source code block. "
+      (cl-check-type lang string)
+      (let ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+            (client (intern (format "lsp-%s-enable" lang))))
+        `(progn
+           (defun ,edit-pre (babel-info)
+             (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                         (or (->> babel-info caddr (alist-get :file-name))
+                                             (buffer-file-name))))
+             (,client)))))
+
     (require 'lsp-imenu)
     (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
@@ -78,12 +90,7 @@
   (use-package lsp-go
     :commands lsp-go-enable
     :hook (go-mode . lsp-go-enable)
-    :config
-    (defun org-babel-edit-prep:go (babel-info)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                  (or (->> babel-info caddr (alist-get :file-name))
-                                      (buffer-file-name))))
-      (lsp-go-enable)))
+    :config (org-babel-lsp "go"))
 
   ;; Python support for lsp-mode using pyls.
   ;; Install: pip install python-language-server
@@ -91,29 +98,36 @@
     :commands lsp-python-enable
     :hook (python-mode . lsp-python-enable)
     :config
-    (defun org-babel-edit-prep:python (babel-info)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                  (or (->> babel-info caddr (alist-get :file-name))
-                                      (buffer-file-name))))
-      (lsp-python-enable)))
+    (org-babel-lsp "python")
+    (lsp-define-stdio-client lsp-python "python"
+                             (lsp-make-traverser #'(lambda (dir)
+                                                     (if lsp-python-use-init-for-project-root
+                                                         (not (directory-files dir nil "__init__.py"))
+                                                       (directory-files
+                                                        dir
+                                                        nil
+                                                        "setup.py\\|Pipfile\\|setup.cfg\\|tox.ini"))))
+                             nil
+                             :command-fn 'lsp-python--ls-command))
 
   ;; Ruby support for lsp-mode using the solargraph gem.
   ;; Install: gem install solargraph
   (use-package lsp-ruby
     :commands lsp-ruby-enable
     :hook (ruby-mode . lsp-ruby-enable)
-    :config
-    (defun org-babel-edit-prep:ruby (babel-info)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                  (or (->> babel-info caddr (alist-get :file-name))
-                                      (buffer-file-name))))
-      (lsp-ruby-enable)))
+    :config (org-babel-lsp "ruby"))
 
   ;; Javascript, Typescript and Flow support for lsp-mode
   ;; Install: npm i -g javascript-typescript-langserver
   (use-package lsp-javascript-typescript
     :commands lsp-javascript-typescript-enable
-    :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable))
+    :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable)
+    :config
+    (defun org-babel-edit-prep:js (babel-info)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                  (or (->> babel-info caddr (alist-get :file-name))
+                                      (buffer-file-name))))
+      (lsp-javascript-typescript-enable)))
 
   ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
   ;; Install: npm i -g vscode-css-languageserver-bin
@@ -155,7 +169,7 @@
                              #'(lambda () default-directory)
                              '("bash-language-server" "start")))
 
-  ;; C/C++/Objective-C language server support for lsp-mode using clang
+  ;; C/C++/Objective-C lang server support for lsp-mode using clang
   ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
   ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
   (use-package ccls
@@ -183,12 +197,7 @@
   (use-package lsp-java
     :commands lsp-java-enable
     :hook (java-mode . lsp-java-enable)
-    :config
-    (defun org-babel-edit-prep:java (babel-info)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                  (or (->> babel-info caddr (alist-get :file-name))
-                                      (buffer-file-name))))
-      (lsp-java-enable)))
+    :config (org-babel-lsp "java"))
   ))
 
 (provide 'init-lsp)
