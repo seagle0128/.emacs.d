@@ -57,11 +57,13 @@
       (revert-buffer t t)
       (message "LSP server restarted."))
 
-    (cl-defmacro org-babel-lsp (lang)
+    ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+    (cl-defmacro org-babel-lsp (lang &optional enable-name)
       "Support LANG in org source code block. "
       (cl-check-type lang string)
+      (cl-check-type enable-name (or null string))
       (let ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-            (client (intern (format "lsp-%s-enable" lang))))
+            (client (intern (format "lsp-%s-enable" (or enable-name lang)))))
         `(progn
            (defun ,edit-pre (babel-info)
              (setq-local lsp-buffer-uri (lsp--path-to-uri
@@ -99,6 +101,8 @@
     :hook (python-mode . lsp-python-enable)
     :config
     (org-babel-lsp "python")
+
+    ;; FIXME: https://github.com/emacs-lsp/lsp-python/issues/28
     (lsp-define-stdio-client lsp-python "python"
                              (lsp-make-traverser #'(lambda (dir)
                                                      (if lsp-python-use-init-for-project-root
@@ -122,12 +126,7 @@
   (use-package lsp-javascript-typescript
     :commands lsp-javascript-typescript-enable
     :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable)
-    :config
-    (defun org-babel-edit-prep:js (babel-info)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                  (or (->> babel-info caddr (alist-get :file-name))
-                                      (buffer-file-name))))
-      (lsp-javascript-typescript-enable)))
+    :config (org-babel-lsp "js" "javascript-typescript"))
 
   ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
   ;; Install: npm i -g vscode-css-languageserver-bin
