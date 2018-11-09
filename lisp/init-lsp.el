@@ -77,19 +77,37 @@
   ;; Install: go get -u github.com/sourcegraph/go-langserver
   (use-package lsp-go
     :commands lsp-go-enable
-    :hook (go-mode . lsp-go-enable))
+    :hook (go-mode . lsp-go-enable)
+    :config
+    (defun org-babel-edit-prep:go (babel-info)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                  (or (->> babel-info caddr (alist-get :file-name))
+                                      (buffer-file-name))))
+      (lsp-go-enable)))
 
   ;; Python support for lsp-mode using pyls.
   ;; Install: pip install python-language-server
   (use-package lsp-python
     :commands lsp-python-enable
-    :hook (python-mode . lsp-python-enable))
+    :hook (python-mode . lsp-python-enable)
+    :config
+    (defun org-babel-edit-prep:python (babel-info)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                  (or (->> babel-info caddr (alist-get :file-name))
+                                      (buffer-file-name))))
+      (lsp-python-enable)))
 
   ;; Ruby support for lsp-mode using the solargraph gem.
   ;; Install: gem install solargraph
   (use-package lsp-ruby
     :commands lsp-ruby-enable
-    :hook (ruby-mode . lsp-ruby-enable))
+    :hook (ruby-mode . lsp-ruby-enable)
+    :config
+    (defun org-babel-edit-prep:ruby (babel-info)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                  (or (->> babel-info caddr (alist-get :file-name))
+                                      (buffer-file-name))))
+      (lsp-ruby-enable)))
 
   ;; Javascript, Typescript and Flow support for lsp-mode
   ;; Install: npm i -g javascript-typescript-langserver
@@ -164,7 +182,13 @@
   ;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
   (use-package lsp-java
     :commands lsp-java-enable
-    :hook (java-mode . lsp-java-enable))
+    :hook (java-mode . lsp-java-enable)
+    :config
+    (defun org-babel-edit-prep:java (babel-info)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri
+                                  (or (->> babel-info caddr (alist-get :file-name))
+                                      (buffer-file-name))))
+      (lsp-java-enable)))
   ))
 
 (provide 'init-lsp)
