@@ -73,6 +73,16 @@
                (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
                (,client))))))
 
+    ;; FIXME: https://github.com/emacs-lsp/lsp-python/issues/28
+    (defun lsp--suggest-project-root ()
+      "Get project root."
+      (or
+       (when (featurep 'projectile) (projectile-project-root))
+       (when (featurep 'project)
+         (when-let ((project (project-current)))
+           (car (project-roots project))))
+       default-directory))
+
     (require 'lsp-imenu)
     (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
@@ -101,20 +111,7 @@
   (use-package lsp-python
     :commands lsp-python-enable
     :hook (python-mode . lsp-python-enable)
-    :config
-    (org-babel-lsp "python")
-
-    ;; FIXME: https://github.com/emacs-lsp/lsp-python/issues/28
-    (lsp-define-stdio-client lsp-python "python"
-                             (lsp-make-traverser #'(lambda (dir)
-                                                     (if lsp-python-use-init-for-project-root
-                                                         (not (directory-files dir nil "__init__.py"))
-                                                       (directory-files
-                                                        dir
-                                                        nil
-                                                        "setup.py\\|Pipfile\\|setup.cfg\\|tox.ini"))))
-                             nil
-                             :command-fn 'lsp-python--ls-command))
+    :config (org-babel-lsp "python"))
 
   ;; Ruby support for lsp-mode using the solargraph gem.
   ;; Install: gem install solargraph
