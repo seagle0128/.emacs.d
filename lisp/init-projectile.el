@@ -43,6 +43,7 @@
   (setq projectile-mode-line-prefix "")
   (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
+  (setq projectile-require-project-root nil)
   :config
   (projectile-update-mode-line)         ; Update mode-line at the first time
 
