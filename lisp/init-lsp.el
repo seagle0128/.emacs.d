@@ -75,6 +75,16 @@
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))
 
+    ;; FIXME: https://github.com/emacs-lsp/lsp-python/issues/28
+    (defun lsp--suggest-project-root ()
+      "Get project root."
+      (or
+       (when (featurep 'projectile) (projectile-project-root))
+       (when (featurep 'project)
+         (when-let ((project (project-current)))
+           (car (project-roots project))))
+       default-directory))
+
     (require 'lsp-imenu)
     (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
