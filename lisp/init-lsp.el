@@ -66,10 +66,12 @@
             (client (intern (format "lsp-%s-enable" (or enable-name lang)))))
         `(progn
            (defun ,edit-pre (babel-info)
-             (setq-local lsp-buffer-uri (lsp--path-to-uri
-                                         (or (->> babel-info caddr (alist-get :file-name))
-                                             (buffer-file-name))))
-             (,client)))))
+             "Prepare the local buffer environment for Org source block."
+             (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
+                                 buffer-file-name)))
+               (setq-local buffer-file-name lsp-file)
+               (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
+               (,client))))))
 
     (require 'lsp-imenu)
     (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
