@@ -73,6 +73,11 @@
                                (python . t)
                                (ruby . t)
                                (js . t)
+                               (css . t)
+                               (sass . t)
+                               (C . t)
+                               (java . t)
+                               (shell . t)
                                (plantuml . t)))
 
   (use-package ob-go
