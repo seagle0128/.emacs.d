@@ -162,15 +162,8 @@
   ;; Install: npm i -g bash-language-server@1.4.0
   ;; Require Python2.5+, use --python to specify.
   (use-package lsp-sh
-    :ensure nil
-    :after lsp-mode
     :commands lsp-sh-enable
     :hook (sh-mode . lsp-sh-enable)
-    :init
-    (lsp-define-stdio-client lsp-sh
-                             "sh"
-                             #'(lambda () default-directory)
-                             '("bash-language-server" "start"))
     :config (org-babel-lsp "shell" "sh"))
 
   ;; C/C++/Objective-C lang server support for lsp-mode using clang
