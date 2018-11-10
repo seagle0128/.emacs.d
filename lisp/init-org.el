@@ -74,14 +74,12 @@
                                (ruby . t)
                                (js . t)
                                (plantuml . t)))
+
   (use-package ob-go
-    :init
-    (if (executable-find "go")
-        (cl-pushnew '(go . t) load-language-list)))
+    :init (cl-pushnew '(go . t) load-language-list))
+
   (use-package ob-ipython
-    :init
-    (if (executable-find "jupyter")
-        (cl-pushnew '(ipython . t) load-language-list)))
+    :init (cl-pushnew '(ipython . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
