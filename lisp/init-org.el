@@ -77,8 +77,12 @@
                                (sass . t)
                                (C . t)
                                (java . t)
-                               (shell . t)
                                (plantuml . t)))
+
+  ;; ob-sh renamed to ob-shell since 26.
+  (if (featurep 'ob-shell)
+      (cl-pushnew '(shell . t) load-language-list)
+    (cl-pushnew '(sh . t) load-language-list))
 
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-list))
