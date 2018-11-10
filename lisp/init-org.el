@@ -83,6 +83,9 @@
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-list))
 
+  (use-package ob-rust
+    :init (cl-pushnew '(rust . t) load-language-list))
+
   (use-package ob-ipython
     :init (cl-pushnew '(ipython . t) load-language-list))
 
