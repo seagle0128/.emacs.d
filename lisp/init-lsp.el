@@ -66,12 +66,14 @@
             (client (intern (format "lsp-%s-enable" (or enable-name lang)))))
         `(progn
            (defun ,edit-pre (babel-info)
-             "Prepare the local buffer environment for Org source block."
              (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
                                  buffer-file-name)))
                (setq-local buffer-file-name lsp-file)
-               (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
-               (,client))))))
+               (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
+               (,client)))
+           (put ',edit-pre 'function-documentation
+                (format "Prepare local buffer environment for org source block (%s)."
+                        (upcase ,lang))))))
 
     ;; FIXME: https://github.com/emacs-lsp/lsp-python/issues/28
     (defun lsp--suggest-project-root ()
@@ -137,7 +139,10 @@
     :hook ((css-mode . lsp-css-enable)
            (less-mode . lsp-less-enable)
            (sass-mode . lsp-sass-enable)
-           (scss-mode . lsp-scss-enable)))
+           (scss-mode . lsp-scss-enable))
+    :config
+    (org-babel-lsp "css")
+    (org-babel-lsp "sass"))
 
   ;; HTML support for lsp-mode using vscode-html-languageserver-bin
   ;; Install: npm i -g vscode-html-languageserver-bin
@@ -165,7 +170,8 @@
     (lsp-define-stdio-client lsp-sh
                              "sh"
                              #'(lambda () default-directory)
-                             '("bash-language-server" "start")))
+                             '("bash-language-server" "start"))
+    :config (org-babel-lsp "shell" "sh"))
 
   ;; C/C++/Objective-C lang server support for lsp-mode using clang
   ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
