@@ -83,8 +83,9 @@
               ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
-  (dolist (keyword '("BUG" "DEFECT" "ISSUE" "WORKAROUND"))
-    (cl-pushnew `(,keyword . "#cd5c5c") hl-todo-keyword-faces)))
+  (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
+    (cl-pushnew `(,keyword . "#cd5c5c") hl-todo-keyword-faces))
+  (cl-pushnew '("WORKAROUND" . "#d0bf8f") hl-todo-keyword-faces))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
