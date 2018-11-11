@@ -126,7 +126,7 @@
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
   :hook ((after-init . global-aggressive-indent-mode)
-         ;; FIXME: Disable in big files due to the performance issues
+         ;; FIXME Disable in big files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
                         (if (> (buffer-size) (* 3000 80))

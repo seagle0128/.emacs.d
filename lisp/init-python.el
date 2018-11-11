@@ -75,7 +75,7 @@
       :hook ((python-mode . anaconda-mode)
              (python-mode . anaconda-eldoc-mode))
       :config
-      ;; Workaround: https://github.com/proofit404/anaconda-mode#faq
+      ;; WORKAROUND https://github.com/proofit404/anaconda-mode#faq
       (when sys/macp
         (setq anaconda-mode-localhost-address "localhost"))
       (use-package company-anaconda
