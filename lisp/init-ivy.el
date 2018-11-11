@@ -195,6 +195,7 @@
   (eval-and-compile
     (declare-function ivy-thing-at-point "ivy")
     (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+      "Search the selection or current symbol via `ag' by default."
       (unless initial-input
         (if (region-active-p)
             (setq initial-input (buffer-substring-no-properties
@@ -216,15 +217,18 @@
     :commands pinyinlib-build-regexp-string
     :preface
     (defun re-builder-pinyin (str)
+      "The regex builder wrapper to support pinyin."
       (or (pinyin-to-utf8 str)
           (ivy--regex-plus str)
           (ivy--regex-ignore-order str)))
     (defun my-pinyinlib-build-regexp-string (str)
+      "Build a pinyin regexp sequence from STR."
       (cond ((equal str ".*")
              ".*")
             (t
              (pinyinlib-build-regexp-string str t))))
     (defun my-pinyin-regexp-helper (str)
+      "Construct pinyin regexp for STR."
       (cond ((equal str " ")
              ".*")
             ((equal str "")
