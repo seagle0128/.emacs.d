@@ -30,9 +30,11 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Require >=25.2
-(when (or (>= emacs-major-version 26)
-          (and (= emacs-major-version 25) (>= emacs-minor-version 2)))
+(when emacs/>=25.2p
   ;; A tree layout file explorer
   (use-package treemacs
     :defines winum-keymap

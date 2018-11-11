@@ -80,7 +80,7 @@
                                (plantuml . t)))
 
   ;; ob-sh renamed to ob-shell since 26.
-  (if (>= emacs-major-version 26)
+  (if emacs/>=26p
       (cl-pushnew '(shell . t) load-language-list)
     (cl-pushnew '(sh . t) load-language-list))
 

@@ -31,6 +31,7 @@
 ;;; Code:
 
 (eval-when-compile
+  (require 'init-const)
   (require 'init-custom))
 
 (cond
@@ -164,7 +165,7 @@
     :commands lsp-sh-enable
     :hook (sh-mode . lsp-sh-enable)
     :config
-    (if (>= emacs-major-version 26)
+    (if emacs/>=26p
         (org-babel-lsp "shell" "sh")
       (org-babel-lsp "sh")))
 
