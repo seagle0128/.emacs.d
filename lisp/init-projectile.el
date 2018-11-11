@@ -78,7 +78,7 @@
       (setq projectile-indexing-method 'alien)
       (setq projectile-enable-caching nil))
 
-    ;; FIXME too slow while getting submodule files on Windows
+    ;; FIXME: too slow while getting submodule files on Windows
     (setq projectile-git-submodule-command ""))
 
   ;; Support Perforce project

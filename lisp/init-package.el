@@ -33,7 +33,7 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; HACK DO NOT copy package-selected-packages to init/custom file forcibly.
+;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-save-selected-packages (&optional value)
   "Set and (don't!) save `package-selected-packages' to VALUE."

@@ -77,7 +77,7 @@
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))
 
-    ;; HACK Project detection
+    ;; HACK: Project detection
     ;; If nil, use the current directory
     ;; https://github.com/emacs-lsp/lsp-python/issues/28
     (defun my-default-directory ()
