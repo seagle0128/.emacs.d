@@ -164,7 +164,10 @@
   (use-package lsp-sh
     :commands lsp-sh-enable
     :hook (sh-mode . lsp-sh-enable)
-    :config (org-babel-lsp "shell" "sh"))
+    :config
+    (if (>= emacs-major-version 26)
+        (org-babel-lsp "shell" "sh")
+      (org-babel-lsp "sh")))
 
   ;; C/C++/Objective-C lang server support for lsp-mode using clang
   ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
