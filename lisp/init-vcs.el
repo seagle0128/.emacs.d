@@ -51,10 +51,6 @@
   (setq magithub-api-timeout 5)
   (magithub-feature-autoinject t))
 
-;; GitHub pull requests extension for Magit
-(use-package magit-gh-pulls
-  :hook (magit-mode . turn-on-magit-gh-pulls))
-
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
   :diminish magit-gitflow-mode
