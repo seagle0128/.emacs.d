@@ -44,13 +44,16 @@
   (magit-define-popup-switch 'magit-fetch-popup
     ?t "Fetch all tags" "--tags"))
 
-;; Github integration
+;; Magit interfaces for GitHub
 (use-package magithub
   :after magit
   :init
-  (magithub-feature-autoinject t)
   (setq magithub-api-timeout 5)
-  (setq magithub-clone-default-directory "~/workspace"))
+  (magithub-feature-autoinject t))
+
+;; GitHub pull requests extension for Magit
+(use-package magit-gh-pulls
+  :hook (magit-mode . turn-on-magit-gh-pulls))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
