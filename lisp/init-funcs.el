@@ -64,18 +64,19 @@
 (defun open-custom-file()
   "Open custom.el if exists, otherwise create it."
   (interactive)
-  (let ((custom-example (expand-file-name "custom-example.el" user-emacs-directory)))
-    (if (not (file-exists-p custom-file))
-        (if (file-exists-p custom-example)
-            (copy-file custom-file)
-          (error "Unable to find custom-example.el")))
+  (let ((custom-example
+         (expand-file-name "custom-example.el" user-emacs-directory)))
+    (unless (file-exists-p custom-file)
+      (if (file-exists-p custom-example)
+          (copy-file custom-file)
+        (error "Unable to find \"%s\"" custom-example)))
     (find-file custom-file)))
 
 ;; Update
 (defun update-config ()
   "Update Emacs configurations to the latest version."
   (interactive)
-  (let ((dir (expand-file-name "~/.emacs.d/")))
+  (let ((dir (expand-file-name user-emacs-directory)))
     (if (file-exists-p dir)
         (progn
           (message "Updating Emacs configurations...")
@@ -101,7 +102,8 @@
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
-  (let ((dir (expand-file-name "~/.dotfiles/")))
+  (let ((dir (or (getenv "DOTFILES")
+                 (expand-file-name "~/.dotfiles/"))))
     (if (file-exists-p dir)
         (progn
           (message "Updating dotfiles...")
