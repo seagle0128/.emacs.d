@@ -68,6 +68,10 @@
   :diminish magit-svn-mode
   :hook (magit-mode . magit-svn-mode))
 
+;; Show source file TODOs in Magit
+(use-package magit-todos
+  :hook (magit-mode . magit-todos-mode))
+
 ;;; Pop up last commit information of current line
 (use-package git-messenger
   :commands git-messenger:copy-message
@@ -91,7 +95,7 @@
               ("C" . smeargle-commits)
               ("R" . smeargle-clear)))
 
-;; Git modes
+;; Git related modes
 (use-package gitattributes-mode)
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
