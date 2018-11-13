@@ -79,8 +79,8 @@
 
 (if (is-doom-theme-p centaur-theme)
     (use-package doom-modeline
-      :hook ((after-init . doom-modeline-init)
-             (dashboard-mode . doom-modeline-set-project-modeline)))
+      :init (doom-modeline-init)        ; Don't load after init time.
+      :hook (dashboard-mode . doom-modeline-set-project-modeline))
   (use-package spaceline-config
     :ensure spaceline
     :defines (powerline-default-separator
