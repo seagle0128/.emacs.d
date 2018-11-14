@@ -79,7 +79,7 @@
                                (java . t)
                                (plantuml . t)))
 
-  ;; ob-sh renamed to ob-shell since 26.
+  ;; ob-sh renamed to ob-shell since 26.1.
   (if emacs/>=26p
       (cl-pushnew '(shell . t) load-language-list)
     (cl-pushnew '(sh . t) load-language-list))
@@ -91,7 +91,7 @@
     :init (cl-pushnew '(rust . t) load-language-list))
 
   (use-package ob-ipython
-    :if (executable-find "jupyter")
+    :if (executable-find "jupyter")     ; DO NOT remove
     :init (cl-pushnew '(ipython . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
