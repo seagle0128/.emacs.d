@@ -91,6 +91,7 @@
     :init (cl-pushnew '(rust . t) load-language-list))
 
   (use-package ob-ipython
+    :if (executable-find "jupyter")
     :init (cl-pushnew '(ipython . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
