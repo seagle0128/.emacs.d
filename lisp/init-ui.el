@@ -104,51 +104,46 @@
           . hide-mode-line-mode)))
 
 ;; Color theme
-(cond
- ((eq centaur-theme 'default)
-  (use-package monokai-theme
-    :init (load-theme 'monokai t)))
+(pcase centaur-theme
+  ('default
+    (use-package monokai-theme
+      :init (load-theme 'monokai t)))
+  ('dark
+   (use-package spacemacs-theme
+     :init (load-theme 'spacemacs-dark t)))
+  ('light
+   (use-package spacemacs-theme
+     :init (load-theme 'spacemacs-light t)))
+  ('daylight
+   (use-package leuven-theme
+     :init (load-theme 'leuven t)))
+  (theme
+   (if (is-doom-theme-p theme)
+       (use-package doom-themes
+         :init
+         (let ((theme (if (eq centaur-theme 'doom)
+                          'doom-one
+                        centaur-theme)))
+           (load-theme theme t))
+         :config
+         ;; Enable flashing mode-line on errors
+         (doom-themes-visual-bell-config)
 
- ((eq centaur-theme 'dark)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-dark t)))
+         ;; Corrects (and improves) org-mode's native fontification.
+         (doom-themes-org-config)
 
- ((eq centaur-theme 'light)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-light t)))
+         ;; Enable custom treemacs theme (all-the-icons must be installed!)
+         (doom-themes-treemacs-config)
 
- ((eq centaur-theme 'daylight)
-  (use-package leuven-theme
-    :init (load-theme 'leuven t)))
+         ;; Enable custom neotree theme (all-the-icons must be installed!)
+         (doom-themes-neotree-config)
 
- ((is-doom-theme-p centaur-theme)
-  (use-package doom-themes
-    :init
-    (let ((theme (if (eq centaur-theme 'doom)
-                     'doom-one
-                   centaur-theme)))
-      (load-theme theme t))
-    :config
-    ;; Enable flashing mode-line on errors
-    (doom-themes-visual-bell-config)
-
-    ;; Corrects (and improves) org-mode's native fontification.
-    (doom-themes-org-config)
-
-    ;; Enable custom treemacs theme (all-the-icons must be installed!)
-    (doom-themes-treemacs-config)
-
-    ;; Enable custom neotree theme (all-the-icons must be installed!)
-    (doom-themes-neotree-config)
-
-    ;; Make certain buffers grossly incandescent
-    (use-package solaire-mode
-      :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-             (minibuffer-setup . solaire-mode-in-minibuffer)
-             (after-load-theme . solaire-mode-swap-bg)))))
-
- (t
-  (ignore-errors (load-theme centaur-theme t))))
+         ;; Make certain buffers grossly incandescent
+         (use-package solaire-mode
+           :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+                  (minibuffer-setup . solaire-mode-in-minibuffer)
+                  (after-load-theme . solaire-mode-swap-bg))))
+     (ignore-errors (load-theme theme t)))))
 
 ;; Fonts
 (when (display-graphic-p)
