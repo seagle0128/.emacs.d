@@ -51,7 +51,7 @@
 
      ;; Restart server/workspace in case the lsp server exits unexpectedly.
      ;; https://emacs-china.org/t/topic/6392
-     (defun restart-lsp-server ()
+     (defun lsp-restart-server ()
        "Restart LSP server."
        (interactive)
        (lsp-restart-workspace)
@@ -60,7 +60,7 @@
 
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-     (cl-defmacro org-babel-lsp (lang &optional enable-name)
+     (cl-defmacro lsp-org-babel-enbale (lang &optional enable-name)
        "Support LANG in org source code block. "
        (cl-check-type lang string)
        (cl-check-type enable-name (or null string))
@@ -106,28 +106,28 @@
    (use-package lsp-go
      :commands lsp-go-enable
      :hook (go-mode . lsp-go-enable)
-     :config (org-babel-lsp "go"))
+     :config (lsp-org-babel-enbale "go"))
 
    ;; Python support for lsp-mode using pyls.
    ;; Install: pip install python-language-server
    (use-package lsp-python
      :commands lsp-python-enable
      :hook (python-mode . lsp-python-enable)
-     :config (org-babel-lsp "python"))
+     :config (lsp-org-babel-enbale "python"))
 
    ;; Ruby support for lsp-mode using the solargraph gem.
    ;; Install: gem install solargraph
    (use-package lsp-ruby
      :commands lsp-ruby-enable
      :hook (ruby-mode . lsp-ruby-enable)
-     :config (org-babel-lsp "ruby"))
+     :config (lsp-org-babel-enbale "ruby"))
 
    ;; Javascript, Typescript and Flow support for lsp-mode
    ;; Install: npm i -g javascript-typescript-langserver
    (use-package lsp-javascript-typescript
      :commands lsp-javascript-typescript-enable
      :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable)
-     :config (org-babel-lsp "js" "javascript-typescript"))
+     :config (lsp-org-babel-enbale "js" "javascript-typescript"))
 
    ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
    ;; Install: npm i -g vscode-css-languageserver-bin
@@ -141,8 +141,8 @@
             (sass-mode . lsp-sass-enable)
             (scss-mode . lsp-scss-enable))
      :config
-     (org-babel-lsp "css")
-     (org-babel-lsp "sass"))
+     (lsp-org-babel-enbale "css")
+     (lsp-org-babel-enbale "sass"))
 
    ;; HTML support for lsp-mode using vscode-html-languageserver-bin
    ;; Install: npm i -g vscode-html-languageserver-bin
@@ -166,8 +166,8 @@
      :hook (sh-mode . lsp-sh-enable)
      :config
      (if emacs/>=26p
-         (org-babel-lsp "shell" "sh")
-       (org-babel-lsp "sh")))
+         (lsp-org-babel-enbale "shell" "sh")
+       (lsp-org-babel-enbale "sh")))
 
    ;; C/C++/Objective-C lang server support for lsp-mode using clang
    ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
@@ -197,7 +197,7 @@
    (use-package lsp-java
      :commands lsp-java-enable
      :hook (java-mode . lsp-java-enable)
-     :config (org-babel-lsp "java"))
+     :config (lsp-org-babel-enbale "java"))
    ))
 
 (provide 'init-lsp)
