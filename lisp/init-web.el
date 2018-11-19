@@ -65,6 +65,10 @@
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-highlight-unused-variables-mode))
   :config
+  ;; Use default keybindings for lsp
+  (if centaur-lsp
+      (unbind-key "M-." js2-mode-map))
+
   (with-eval-after-load 'flycheck
     (if (or (executable-find "eslint_d")
             (executable-find "eslint")
