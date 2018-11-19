@@ -151,13 +151,13 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
   ;; rules
   (setq shackle-default-size 0.4)
   (setq shackle-rules
-        '(("*Help*" :select t :autoclose t :align 'below)
+        '(("*Help*" :select t :align 'below :autoclose t)
           ("*compilation*" :size 0.25 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 0.25 :align 'below :autoclose t)
           ("*ert*" :same t)
           ("*info*" :select t :inhibit-window-quit t :same t)
-          ("*Backtrace*" :size 20 :align 'below :autoclose t)
+          ("*Backtrace*" :select t :size 20 :align 'below)
           ("*Warnings*" :size 12 :align 'below :autoclose t)
           ("*Messages*" :size 12 :align 'below :autoclose t)
           ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
@@ -166,10 +166,10 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
           (" *undo-tree*" :select t)
           (apropos-mode :size 0.3 :align 'below :autoclose t)
           (Buffer-menu-mode :size 20 :align 'below :autoclose t)
-          (comint-mode :noesc t :align 'below)
+          (comint-mode :align 'below)
           (grep-mode :size 25 :align 'below :autoclose t)
           (profiler-report-mode :popup t)
-          (tabulated-list-mode :noesc t :align 'below)
+          (tabulated-list-mode :align 'below)
           ("^ ?\\*" :regexp t :select t :align 'below :autoclose t))))
 
 ;; Easy window config switching
