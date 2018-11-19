@@ -65,17 +65,23 @@
        (cl-check-type lang string)
        (cl-check-type enable-name (or null string))
        (let ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+             (intern-pre (intern (format "lsp--org-babel-edit-prep:%s" lang)))
              (client (intern (format "lsp-%s-enable" (or enable-name lang)))))
          `(progn
-            (defun ,edit-pre (babel-info)
-              (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
+            (defun ,intern-pre (info)
+              (let ((lsp-file (or (->> info caddr (alist-get :file))
                                   buffer-file-name)))
                 (setq-local buffer-file-name lsp-file)
                 (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
                 (,client)))
-            (put ',edit-pre 'function-documentation
-                 (format "Prepare local buffer environment for org source block (%s)."
-                         (upcase ,lang))))))
+            (if (fboundp ',edit-pre)
+                (advice-add ',edit-pre :after ',intern-pre)
+              (progn
+                (defun ,edit-pre (info)
+                  (,intern-pre info))
+                (put ',edit-pre 'function-documentation
+                     (format "Prepare local buffer environment for org source block (%s)."
+                             (upcase ,lang))))))))
 
      ;; FIXME: Project detection
      ;; If nil, use the current directory
