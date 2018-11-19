@@ -119,7 +119,9 @@
    (use-package lsp-python
      :commands lsp-python-enable
      :hook (python-mode . lsp-python-enable)
-     :config (lsp-org-babel-enbale "python"))
+     :config
+     (lsp-org-babel-enbale "python")
+     (lsp-org-babel-enbale "ipython" "python"))
 
    ;; Ruby support for lsp-mode using the solargraph gem.
    ;; Install: gem install solargraph
@@ -194,7 +196,8 @@
    ;;          rustup component add rls-preview rust-analysis rust-src
    (use-package lsp-rust
      :commands lsp-rust-enable
-     :hook (rust-mode . lsp-rust-enable))
+     :hook (rust-mode . lsp-rust-enable)
+     :config (lsp-org-babel-enbale "rust"))
 
    ;; Java support for lsp-mode using the Eclipse JDT Language Server.
    ;; Install:
