@@ -179,7 +179,7 @@
     (interactive)
     (unless (minibufferp)
       (nav-flash-show)
-      ;; only show in the current window
+      ;; Only show in the current window
       (overlay-put compilation-highlight-overlay 'window (selected-window))))
   :hook ((imenu-after-jump
           switch-window-finish
@@ -191,6 +191,7 @@
   ;; which will trigger nav-flash.
   (advice-add #'windmove-do-window-select :around #'my-blink-cursor-maybe)
   (advice-add #'other-window :around #'my-blink-cursor-maybe)
+  (advice-add #'ace-window :around #'my-blink-cursor-maybe)
   (advice-add #'recenter :around #'my-blink-cursor-maybe))
 
 (provide 'init-highlight)
