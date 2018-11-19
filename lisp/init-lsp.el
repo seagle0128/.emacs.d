@@ -44,6 +44,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode
    (use-package lsp-mode
      :diminish lsp-mode
+     :hook (lsp-after-open . lsp-enable-imenu)
      :config
      (setq lsp-inhibit-message t)
      (setq lsp-message-project-root-warning t)
@@ -89,17 +90,14 @@
      (defun my-default-directory ()
        "Returns the current directory."
        default-directory)
-     (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory)
-
-     (require 'lsp-imenu)
-     (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
+     (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
                  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-                 ([remap xref-find-references] . lsp-ui-peek-find-references))
-     :hook (lsp-mode . lsp-ui-mode)
-     :init (setq scroll-margin 0))
+                 ([remap xref-find-references] . lsp-ui-peek-find-references)
+                 ("C-c u" . lsp-ui-imenu))
+     :hook (lsp-mode . lsp-ui-mode))
 
    (use-package company-lsp
      :after company
