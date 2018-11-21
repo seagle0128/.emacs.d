@@ -61,36 +61,39 @@
   (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1)))
 
 ;; Theme
-(defun is-doom-theme-p (theme)
-  "Check whether the THEME is a doom theme. THEME is a symbol."
-  (string-prefix-p "doom" (symbol-name theme)))
-
 (defvar after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 (defadvice load-theme (after run-after-load-theme-hook activate)
   "Run `after-load-theme-hook'."
   (run-hooks 'after-load-theme-hook))
 
-;; Color theme
+(defun is-doom-theme-p (theme)
+  "Check whether the THEME is a doom theme. THEME is a symbol."
+  (string-prefix-p "doom" (symbol-name theme)))
+
+(defun standardize-theme (theme)
+  "Standardize THEME."
+  (pcase theme
+    ('default 'doom-one)
+    ('classic 'doom-molokai)
+    ('doom 'doom-one)
+    ('dark 'doom-Iosvkem)
+    ('light 'doom-one-light)
+    ('daylight 'doom-tomorrow-day)
+    (t theme)))
+
 (defun centaur-load-theme (theme)
   "Set color THEME."
   (interactive
    (list
     (intern (completing-read "Load theme: "
                              '(default classic dark light daylight)))))
-  (let ((theme (pcase theme
-                 ('default 'doom-one)
-                 ('classic 'doom-molokai)
-                 ('doom 'doom-one)
-                 ('dark 'doom-Iosvkem)
-                 ('light 'doom-one-light)
-                 ('daylight 'doom-tomorrow-day)
-                 (t theme))))
+  (let ((theme (standardize-theme theme)))
     (if (boundp 'counsel-load-theme)
         (counsel-load-theme theme)
       (load-theme theme t))))
 
-(if (is-doom-theme-p centaur-theme)
+(if (is-doom-theme-p (standardize-theme centaur-theme))
     (progn
       (use-package doom-themes
         :init (centaur-load-theme centaur-theme)
