@@ -73,8 +73,8 @@
     (find-file custom-file)))
 
 ;; Update
-(defun update-config ()
-  "Update Emacs configurations to the latest version."
+(defun centaur-update-config ()
+  "Update Centaur Emacs configurations to the latest version."
   (interactive)
   (let ((dir (expand-file-name user-emacs-directory)))
     (if (file-exists-p dir)
@@ -86,20 +86,24 @@
       (message "\"%s\" doesn't exist." dir))))
 
 (declare-function upgrade-packages 'init-package)
-(defun update-centaur()
+(defun centaur-update-all()
   "Update confgiurations and packages."
   (interactive)
-  (update-config)
+  (centaur-update-config)
+  (centaur-update-org)
+  (centaur-update-dotfiles)
   (upgrade-packages nil))
 
 (declare-function upgrade-packages-and-restart 'init-package)
-(defun update-centaur-and-restart ()
+(defun centaur-update-and-restart ()
   "Update configurations and packages, then restart."
   (interactive)
-  (update-config)
+  (centaur-update-config)
+  (centaur-update-org)
+  (centaur-update-dotfiles)
   (upgrade-packages-and-restart nil))
 
-(defun update-dotfiles ()
+(defun centaur-update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
   (let ((dir (or (getenv "DOTFILES")
@@ -112,7 +116,7 @@
           (message "Update finished."))
       (message "\"%s\" doesn't exist." dir))))
 
-(defun update-org ()
+(defun centaur-update-org ()
   "Update Org files to the latest version."
   (interactive)
   (let ((dir (expand-file-name "~/org/")))
