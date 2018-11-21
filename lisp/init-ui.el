@@ -67,10 +67,6 @@
   "Run `after-load-theme-hook'."
   (run-hooks 'after-load-theme-hook))
 
-(defun is-doom-theme-p (theme)
-  "Check whether the THEME is a doom theme. THEME is a symbol."
-  (string-prefix-p "doom" (symbol-name theme)))
-
 (defun standardize-theme (theme)
   "Standardize THEME."
   (pcase theme
@@ -81,6 +77,10 @@
     ('light 'doom-one-light)
     ('daylight 'doom-tomorrow-day)
     (t theme)))
+
+(defun is-doom-theme-p (theme)
+  "Check whether the THEME is a doom theme. THEME is a symbol."
+  (string-prefix-p "doom" (symbol-name (standardize-theme theme))))
 
 (defun centaur-load-theme (theme)
   "Set color THEME."
@@ -93,7 +93,7 @@
         (counsel-load-theme theme)
       (load-theme theme t))))
 
-(if (is-doom-theme-p (standardize-theme centaur-theme))
+(if (is-doom-theme-p centaur-theme)
     (progn
       (use-package doom-themes
         :init (centaur-load-theme centaur-theme)
