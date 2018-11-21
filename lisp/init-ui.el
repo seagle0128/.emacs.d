@@ -71,19 +71,62 @@
   "Run `after-load-theme-hook'."
   (run-hooks 'after-load-theme-hook))
 
-;; Modeline
+;; Color theme
+(defun centaur-load-theme (theme)
+  "Set color THEME."
+  (interactive
+   (list
+    (intern (completing-read "Load theme: "
+                             '(default classic dark light daylight)))))
+  (let ((theme (pcase theme
+                 ('default 'doom-one)
+                 ('classic 'doom-molokai)
+                 ('doom 'doom-one)
+                 ('dark 'doom-Iosvkem)
+                 ('light 'doom-one-light)
+                 ('daylight 'doom-tomorrow-day)
+                 (t theme))))
+    (if (boundp 'counsel-load-theme)
+        (counsel-load-theme theme)
+      (load-theme theme t))))
+
+(if (is-doom-theme-p centaur-theme)
+    (progn
+      (use-package doom-themes
+        :init (centaur-load-theme centaur-theme)
+        :config
+        ;; Enable flashing mode-line on errors
+        (doom-themes-visual-bell-config)
+        ;; Corrects (and improves) org-mode's native fontification.
+        (doom-themes-org-config)
+        ;; Enable custom treemacs theme (all-the-icons must be installed!)
+        (doom-themes-treemacs-config)
+        ;; Enable custom neotree theme (all-the-icons must be installed!)
+        (doom-themes-neotree-config))
+
+      ;; Make certain buffers grossly incandescent
+      (use-package solaire-mode
+        :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+               (minibuffer-setup . solaire-mode-in-minibuffer)
+               (after-load-theme . solaire-mode-swap-bg)))
+
+      (use-package doom-modeline
+        :init (setq doom-modeline-icon (not sys/win32p))
+        :hook ((after-init . doom-modeline-init)
+               (dashboard-mode . doom-modeline-set-project-modeline))))
+  (progn
+    (ignore-errors
+      (centaur-load-theme centaur-theme))
+
+    (use-package telephone-line
+      :init (setq ns-use-srgb-colorspace nil)
+      :hook (after-init . telephone-line-mode))))
+
+;; Mode-line
 (defun mode-line-height ()
   "Get current height of mode-line."
   (- (elt (window-pixel-edges) 3)
      (elt (window-inside-pixel-edges) 3)))
-
-(if (is-doom-theme-p centaur-theme)
-    (use-package doom-modeline
-      :hook ((after-init . doom-modeline-init)
-             (dashboard-mode . doom-modeline-set-project-modeline)))
-  (use-package telephone-line
-    :init (setq ns-use-srgb-colorspace nil)
-    :hook (after-init . telephone-line-mode)))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode
@@ -91,48 +134,6 @@
            neotree-mode
            treemacs-mode)
           . hide-mode-line-mode)))
-
-;; Color theme
-(pcase centaur-theme
-  ('default
-    (use-package monokai-theme
-      :init (load-theme 'monokai t)))
-  ('dark
-   (use-package spacemacs-theme
-     :init (load-theme 'spacemacs-dark t)))
-  ('light
-   (use-package spacemacs-theme
-     :init (load-theme 'spacemacs-light t)))
-  ('daylight
-   (use-package leuven-theme
-     :init (load-theme 'leuven t)))
-  (theme
-   (if (is-doom-theme-p theme)
-       (use-package doom-themes
-         :init
-         (let ((theme (if (eq centaur-theme 'doom)
-                          'doom-one
-                        centaur-theme)))
-           (load-theme theme t))
-         :config
-         ;; Enable flashing mode-line on errors
-         (doom-themes-visual-bell-config)
-
-         ;; Corrects (and improves) org-mode's native fontification.
-         (doom-themes-org-config)
-
-         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-         (doom-themes-treemacs-config)
-
-         ;; Enable custom neotree theme (all-the-icons must be installed!)
-         (doom-themes-neotree-config)
-
-         ;; Make certain buffers grossly incandescent
-         (use-package solaire-mode
-           :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-                  (minibuffer-setup . solaire-mode-in-minibuffer)
-                  (after-load-theme . solaire-mode-swap-bg))))
-     (ignore-errors (load-theme theme t)))))
 
 ;; Fonts
 (when (display-graphic-p)

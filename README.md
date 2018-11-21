@@ -112,7 +112,7 @@ For Example:
 (setq centaur-mail-address "user@email.com")   ; Email address
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease or tuna
-(setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
+(setq centaur-theme classic)                   ; Color theme: default, classic, dark, light or daylight
 (setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
 (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
@@ -126,7 +126,15 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## Screenshots
 
-### Main (default theme)
+### Dashboard (default theme)
+
+![Dashboard](https://user-images.githubusercontent.com/140797/43999598-6514db6c-9e42-11e8-8219-05d297fbbe8d.png)
+
+### Replace (default theme with [doom-modeline](https://github.com/seagle0128/doom-modeline))
+
+![Replace](https://user-images.githubusercontent.com/140797/41302817-13cb7622-6e9e-11e8-894b-07aff95f91bc.png)
+
+### Main (classic theme)
 
 ![Main](https://user-images.githubusercontent.com/140797/30391180-20bd0ba8-987e-11e7-9cb4-2aa66a6fd69d.png)
 
@@ -145,14 +153,6 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 ### Magit (daylight theme)
 
 ![Magit](https://user-images.githubusercontent.com/140797/30391181-20bd848e-987e-11e7-9cda-3dac2865922e.png)
-
-### Dired and replace (doom theme with [doom-modeline](https://github.com/seagle0128/doom-modeline))
-
-![Doom](https://user-images.githubusercontent.com/140797/41302817-13cb7622-6e9e-11e8-894b-07aff95f91bc.png)
-
-### Dashboard (doom theme with [doom-modeline](https://github.com/seagle0128/doom-modeline))
-
-![Dashboard](https://user-images.githubusercontent.com/140797/43999598-6514db6c-9e42-11e8-8219-05d297fbbe8d.png)
 
 ## FAQ
 
