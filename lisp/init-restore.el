@@ -73,11 +73,15 @@
            :map dashboard-mode-map
            ("H" . browse-homepage)
            ("E" . open-custom-file)
-           ("S" . desktop-read)
+           ("R" . desktop-read)
            ("U" . centaur-update-all))
     :hook ((after-init . dashboard-setup-startup-hook)
-           (emacs-startup . toggle-frame-maximized))
-    :init (setq inhibit-startup-screen t)
+           (emacs-startup . toggle-frame-maximized)
+           (kill-emacs . (lambda ()
+                           (desktop-save user-emacs-directory nil t))))
+    :init
+    (setq inhibit-startup-screen t)
+    (setq desktop-load-locked-desktop t) ; Load anyway
     :config
     (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
     (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
