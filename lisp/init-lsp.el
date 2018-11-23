@@ -87,10 +87,11 @@
      ;; FIXME: Project detection
      ;; If nil, use the current directory
      ;; https://github.com/emacs-lsp/lsp-python/issues/28
-     (defun my-default-directory ()
-       "Returns the current directory."
-       default-directory)
-     (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory))
+     ;; (defun my-default-directory ()
+     ;;   "Returns the current directory."
+     ;;   default-directory)
+     ;; (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory)
+     )
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map

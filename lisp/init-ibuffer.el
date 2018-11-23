@@ -37,7 +37,9 @@
                       (ibuffer-projectile-set-filter-groups)
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
                         (ibuffer-do-sort-by-alphabetic)))))
-  :config (setq ibuffer-filter-group-name-face 'font-lock-function-name-face))
+  :config
+  (setq ibuffer-projectile-prefix "Project: ")
+  (setq ibuffer-filter-group-name-face 'font-lock-function-name-face))
 
 (provide 'init-ibuffer)
 
