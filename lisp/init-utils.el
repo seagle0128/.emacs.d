@@ -132,8 +132,6 @@
 (use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
-(use-package open-junk-file)
-(use-package try)
 (use-package ztree)                     ; text mode directory tree. Similar with beyond compare
 
 (provide 'init-utils)
