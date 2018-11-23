@@ -113,7 +113,7 @@ For Example:
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease or tuna
 (setq centaur-theme classic)                   ; Color theme: default, classic, dark, light or daylight
-(setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
+(setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil

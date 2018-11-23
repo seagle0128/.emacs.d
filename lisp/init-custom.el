@@ -69,7 +69,7 @@
           (const :tag "Doom theme" doom)
           symbol))
 
-(defcustom centaur-dashboard nil
+(defcustom centaur-dashboard t
   "Use dashboard at startup or not.
 
 If Non-nil, use dashboard, otherwise will restore previous session."

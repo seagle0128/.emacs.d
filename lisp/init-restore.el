@@ -74,7 +74,7 @@
            ("H" . browse-homepage)
            ("E" . open-custom-file)
            ("S" . desktop-read)
-           ("U" . update-centaur))
+           ("U" . centaur-update-all))
     :hook ((after-init . dashboard-setup-startup-hook)
            (emacs-startup . toggle-frame-maximized))
     :init (setq inhibit-startup-screen t)
@@ -112,7 +112,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Update Centaur Emacs config and packages"
-                     :action (lambda () (update-centaur))
+                     :action (lambda () (centaur-update-all))
                      :mouse-face 'highlight
                      (propertize "Update" 'face 'font-lock-keyword-face))
       (insert "\n")
