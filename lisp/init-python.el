@@ -63,12 +63,14 @@
   ;; Live Coding in Python
   (use-package live-py-mode)
 
-  ;; Autopep8
-  (use-package py-autopep8
-    :hook (python-mode . py-autopep8-enable-on-save))
+  ;; Format using YAPF
+  ;; Install: pip install yapf
+  (use-package yapfify
+    :diminish
+    :hook (python-mode . yapf-mode))
 
-  ;; Anaconda mode
   (unless centaur-lsp
+    ;; Anaconda mode
     (use-package anaconda-mode
       :defines anaconda-mode-localhost-address
       :diminish anaconda-mode
