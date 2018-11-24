@@ -184,6 +184,7 @@
      :commands lsp-ccls-enable
      :hook ((c-mode c++-mode objc-mode) . lsp-ccls-enable)
      :config
+     (lsp-org-babel-enbale "C" "ccls")
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
              (append '("compile_commands.json"
