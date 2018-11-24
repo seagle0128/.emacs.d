@@ -73,12 +73,13 @@
            :map dashboard-mode-map
            ("H" . browse-homepage)
            ("E" . open-custom-file)
-           ("R" . desktop-read)
+           ("R" . (lambda ()
+                    (interactive)
+                    (desktop-save-mode 1)
+                    (desktop-read)))
            ("U" . centaur-update-all))
     :hook ((after-init . dashboard-setup-startup-hook)
-           (emacs-startup . toggle-frame-maximized)
-           (kill-emacs . (lambda ()
-                           (desktop-save user-emacs-directory nil t))))
+           (emacs-startup . toggle-frame-maximized))
     :init
     (setq inhibit-startup-screen t)
     (setq desktop-load-locked-desktop t) ; Load anyway
