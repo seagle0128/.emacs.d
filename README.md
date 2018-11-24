@@ -162,7 +162,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 1. Why is the modline messy?
 
     Powerline fonts or all-the-icons are missing on your system. Please install
-    [powerline-fonts](https://github.com/powerline/fonts) for `spaceline` or
+    [powerline-fonts](https://github.com/powerline/fonts) for `telephone-line` or
     run `M-x all-the-icons-install-fonts` for `doom-modeline`.
 
 1. How to search Chinese via pinyin?
@@ -174,7 +174,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     Set `(setq centaur-dashboard t)` in `~/.emacs.d/custom.el`. Dashboard will
     be opened at startup. After startup, you could use `F2` to reopen it anytime.
     In the dashboard, you could easily jump to Homepage(`H`), Restore
-    Session(`S`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
+    Session(`R`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
     Bookmarks(`m`) and Projects(`p`).
 
 1. Does Centuar Emacs support Language Server Protocol (LSP)?
