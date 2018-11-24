@@ -177,7 +177,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     Session(`R`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
     Bookmarks(`m`) and Projects(`p`).
 
-1. Does Centuar Emacs support Language Server Protocol (LSP)?
+1. Does Centaur Emacs support Language Server Protocol (LSP)?
 
     LSP is supported and enabled by default in Centuar Emacs now. `eglot` is the
     default client, and `lsp-mode` is another choice. Before use it you should
