@@ -142,16 +142,7 @@
 (when (display-graphic-p)
   ;; cnfonts doesn't support terminal
   (use-package cnfonts
-    :preface
-    ;; Fallback to `all-the-icons'.
-    (defun cnfonts--set-all-the-icons-fonts (&optional _)
-      "Show icons in all-the-icons."
-      (when (featurep 'all-the-icons)
-        (dolist (charset '(kana han cjk-misc bopomofo gb18030))
-          (dolist (font '("all-the-icons" "github-octicons" "FontAwesome" "Material Icons"))
-            (set-fontset-font "fontset-default" charset font nil 'append)))))
-    :hook ((after-init . cnfonts-enable)
-           (cnfonts-set-font-finish . cnfonts--set-all-the-icons-fonts))
+    :hook (after-init . cnfonts-enable)
     :config
     ;; NOTE: on macOS, the frame size is changed during the startup without below.
     ;; Keep frame size
