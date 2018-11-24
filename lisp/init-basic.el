@@ -70,11 +70,11 @@
 (use-package recentf
   :ensure nil
   ;; lazy load recentf
-  :hook (find-file . (lambda () (unless recentf-mode
-                             (recentf-mode)
-                             (recentf-track-opened-file))))
+  ;; :hook (find-file . (lambda () (unless recentf-mode
+  ;;                            (recentf-mode)
+  ;;                            (recentf-track-opened-file))))
   :init
-  ;; (add-hook 'after-init-hook #'recentf-mode)
+  (add-hook 'after-init-hook #'recentf-mode)
   (setq recentf-max-saved-items 200)
   :config
   (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
