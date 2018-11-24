@@ -78,18 +78,21 @@ Enjoy!
 
 ``` emacs-lisp
 # Update Centaur Emacs (then restart), including configurations and packages
-M-x update-centaur
-M-x update-centaur-and-restart
+M-x centaur-update
+M-x centaur-update-and-restart
 
 # Update Emacs configurations only
-M-x update-config
+M-x centaur-update-config
 
 # Update ~/.dotfiles if it exists
-M-x update-dotfiles
+M-x centaur-update-dotfiles
 
 # Update packages only (then restart)
-M-x upgrade-packages
-M-x upgrade-packages-and-restart
+M-x centaur-update-packages
+M-x centaur-update-packages-and-restarut
+
+# Update all including configurations, packages and dotfiles
+M-x centuar-update-all
 ```
 
 ## Customization

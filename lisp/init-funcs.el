@@ -86,22 +86,29 @@
       (message "\"%s\" doesn't exist." dir))))
 
 (declare-function upgrade-packages 'init-package)
-(defun centaur-update-all()
+(defalias 'centaur-update-packages 'upgrade-packages)
+(defun centaur-update()
   "Update confgiurations and packages."
   (interactive)
   (centaur-update-config)
+  (centaur-update-packages nil))
+
+(defun centaur-update-all()
+  "Update dotfiles, org files, Emacs confgiurations and packages, ."
+  (interactive)
+  (centaur-update)
   (centaur-update-org)
-  (centaur-update-dotfiles)
-  (upgrade-packages nil))
+  (centaur-update-dotfiles))
 
 (declare-function upgrade-packages-and-restart 'init-package)
+(defalias 'centaur-update-packages-and-restarut 'upgrade-packages-and-restart)
 (defun centaur-update-and-restart ()
   "Update configurations and packages, then restart."
   (interactive)
   (centaur-update-config)
   (centaur-update-org)
   (centaur-update-dotfiles)
-  (upgrade-packages-and-restart nil))
+  (centaur-update-packages-and-restarut nil))
 
 (defun centaur-update-dotfiles ()
   "Update the dotfiles to the latest version."
