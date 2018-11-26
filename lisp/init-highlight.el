@@ -157,7 +157,7 @@
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
 
-;; Flash the current line
+;; Blink current line
 (use-package nav-flash
   :defines compilation-highlight-overlay
   :functions windmove-do-window-select
@@ -181,11 +181,13 @@
       (nav-flash-show)
       ;; Only show in the current window
       (overlay-put compilation-highlight-overlay 'window (selected-window))))
-  :hook ((imenu-after-jump
-          switch-window-finish
-          counsel-grep-post-action
-          dumb-jump-after-jump)
-         . my-blink-cursor)
+  :hook ((switch-window-finish . my-blink-cursor)
+         ((bookmark-after-jump
+           counsel-grep-post-action
+           dumb-jump-after-jump
+           imenu-after-jump
+           xref-after-jump
+           xref-after-return) . recenter))
   :init
   ;; NOTE In :feature jump `recenter' is hooked to a bunch of jumping commands,
   ;; which will trigger nav-flash.
