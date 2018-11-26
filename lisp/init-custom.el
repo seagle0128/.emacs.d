@@ -63,10 +63,11 @@
   "Set color theme."
   :type '(choice
           (const :tag "Default theme" default)
+          (const :tag "Classic theme" classic)
+          (const :tag "Doom theme" doom)
           (const :tag "Dark theme" dark)
           (const :tag "Light theme" light)
           (const :tag "Daylight theme" daylight)
-          (const :tag "Doom theme" doom)
           symbol))
 
 (defcustom centaur-cnfonts nil
