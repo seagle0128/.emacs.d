@@ -139,7 +139,7 @@
           . hide-mode-line-mode)))
 
 ;; Fonts
-(when (display-graphic-p)
+(when (and centaur-cnfonts (display-graphic-p))
   ;; cnfonts doesn't support terminal
   (use-package cnfonts
     :hook (after-init . cnfonts-enable)

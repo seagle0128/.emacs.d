@@ -10,6 +10,7 @@
 ;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 ;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china netease or tuna
 ;; (setq centaur-theme 'doom)                     ; Color theme: default, doom, dark, light or daylight
+;; (setq centaur-cnfonts t)                       ; Use cnfonts not: t or nil
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 ;; (setq centaur-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
@@ -19,6 +20,21 @@
 ;; (setq package-user-dir (locate-user-emacs-file (format "elpa-%s" emacs-major-version)))
 ;; (setq desktop-base-file-name (format ".emacs-%s.desktop" emacs-major-version))
 ;; (setq desktop-base-lock-name (format ".emacs-%s.desktop.lock" emacs-major-version))
+
+;; Fonts
+;; (when (and (not centaur-cnfonts) (display-graphic-p))
+;;   ;; Set a default font
+;;   (when (member "Source Code Pro" (font-family-list))
+;;     (set-face-attribute 'default nil :font "Source Code Pro"))
+
+;;   ;; Specify font for all unicode characters
+;;   (when (member "Symbola" (font-family-list))
+;;     (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
+;;   ;; Specify font for chinese characters
+;;   (when (member "WenQuanYi Micro Hei" (font-family-list))
+;;     (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+;;   )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

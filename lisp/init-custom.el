@@ -69,6 +69,10 @@
           (const :tag "Doom theme" doom)
           symbol))
 
+(defcustom centaur-cnfonts nil
+  "Use cnfonts or not."
+  :type 'boolean)
+
 (defcustom centaur-dashboard t
   "Use dashboard at startup or not.
 
