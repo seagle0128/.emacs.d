@@ -76,7 +76,7 @@
            ("R" . (lambda ()
                     "Restore the last session."
                     (interactive)
-                    (setq desktop-restore-frames nil) ; don't restore frame
+                    ;; (setq desktop-restore-frames nil) ; don't restore frame
                     (desktop-save-mode 1)
                     (desktop-read)))
            ("U" . centaur-update))
