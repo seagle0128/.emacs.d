@@ -162,7 +162,7 @@
                    '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
 
     (defun ivy-rich-switch-buffer-icon (candidate)
-      "Show `all-the-icons' in `ivy-rich'."
+      "Show buffer icons in `ivy-rich'."
       ;; Only on GUI
       (when (and (display-graphic-p) (featurep 'all-the-icons))
         (with-current-buffer (get-buffer candidate)
@@ -172,6 +172,17 @@
                  (all-the-icons-icon-for-mode 'text-mode)
                icon)
              'face `(:height 1.1 :family ,(all-the-icons-icon-family-for-mode major-mode) :inherit))))))
+
+    (defun ivy-rich-file-icon (candidate)
+      "Show file icons in `ivy-rich'."
+      ;; Only on GUI
+      (when (and (display-graphic-p) (featurep 'all-the-icons))
+        (let ((icon (all-the-icons-icon-for-file candidate)))
+          (propertize
+           (if (symbolp icon)
+               (all-the-icons-icon-for-mode 'text-mode)
+             icon)
+           'face `(:height 1.1 :family ,(all-the-icons-icon-family-for-mode major-mode) :inherit)))))
 
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
@@ -185,21 +196,53 @@
               (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
              :predicate
              (lambda (cand) (get-buffer cand)))
+            ivy-switch-buffer-other-window
+            (:columns
+             ((ivy-rich-switch-buffer-icon :width 2)
+              (ivy-rich-candidate (:width 30))
+              (ivy-rich-switch-buffer-size (:width 7))
+              (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+              (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+              (ivy-rich-switch-buffer-project (:width 15 :face success))
+              (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+             :predicate
+             (lambda (cand) (get-buffer cand)))
             counsel-M-x
             (:columns
-             ((counsel-M-x-transformer (:width 40))
+             ((counsel-M-x-transformer (:width 50))
               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
             counsel-describe-function
             (:columns
-             ((counsel-describe-function-transformer (:width 40))
+             ((counsel-describe-function-transformer (:width 50))
               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
             counsel-describe-variable
             (:columns
-             ((counsel-describe-variable-transformer (:width 40))
+             ((counsel-describe-variable-transformer (:width 50))
               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
+            counsel-find-file
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
+            counsel-file-jump
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
+            counsel-git
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
+            counsel-projectile-find-file
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
+            counsel-projectile-find-dir
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
             counsel-recentf
             (:columns
-             ((ivy-rich-candidate (:width 0.8))
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 0.8))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
     :init (ivy-rich-mode 1)
     :hook (ivy-rich-mode . (lambda ()
