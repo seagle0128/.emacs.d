@@ -155,7 +155,12 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
+    :defines all-the-icons-mode-icon-alist
     :preface
+    (with-eval-after-load 'all-the-icons
+      (add-to-list 'all-the-icons-mode-icon-alist
+                   '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
+
     (defun ivy-rich-switch-buffer-icon (candidate)
       "Show `all-the-icons' in `ivy-rich'."
       ;; Only on GUI
@@ -164,7 +169,7 @@
           (let ((icon (all-the-icons-icon-for-mode major-mode)))
             (propertize
              (if (symbolp icon)
-                 (all-the-icons-icon-for-mode 'fundamental-mode)
+                 (all-the-icons-icon-for-mode 'text-mode)
                icon)
              'face `(:height 1.1 :family ,(all-the-icons-icon-family-for-mode major-mode) :inherit))))))
 
