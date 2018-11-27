@@ -74,10 +74,12 @@
            ("H" . browse-homepage)
            ("E" . open-custom-file)
            ("R" . (lambda ()
+                    "Restore the last session."
                     (interactive)
+                    (setq desktop-restore-frames nil) ; don't restore frame
                     (desktop-save-mode 1)
                     (desktop-read)))
-           ("U" . centaur-update-all))
+           ("U" . centaur-update))
     :hook ((after-init . dashboard-setup-startup-hook)
            (emacs-startup . toggle-frame-maximized))
     :init
