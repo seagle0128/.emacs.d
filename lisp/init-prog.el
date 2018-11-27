@@ -68,9 +68,15 @@
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
 
+;; Run commands quickly
 (use-package quickrun
   :bind (("<f7>" . quickrun)
          ("C-c x" . quickrun)))
+
+;; Focus on writing
+(use-package darkroom
+  :commands (darkroom-mode darkroom-tentative-mode)
+  :bind ("C-<f6>" . darkroom-mode))
 
 (use-package cask-mode)
 (use-package csharp-mode)
