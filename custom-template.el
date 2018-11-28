@@ -37,6 +37,9 @@
    ((member "Consolas" (font-family-list))
     (set-face-attribute 'default nil :font "Consolas")))
 
+  (if sys/mac-x-p
+      (set-face-attribute 'default nil :height 130))
+
   ;; Specify font for all unicode characters
   (when (member "Symbola" (font-family-list))
     (set-fontset-font t 'unicode "Symbola" nil 'prepend))
