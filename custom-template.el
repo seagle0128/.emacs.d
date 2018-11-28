@@ -25,8 +25,17 @@
 ;; Fonts
 (when (and (not centaur-cnfonts) (display-graphic-p))
   ;; Set a default font
-  (when (member "Source Code Pro" (font-family-list))
+  (cond
+   ((member "Source Code Pro" (font-family-list))
     (set-face-attribute 'default nil :font "Source Code Pro"))
+   ((member "Menlo" (font-family-list))
+    (set-face-attribute 'default nil :font "Menlo"))
+   ((member "Monaco" (font-family-list))
+    (set-face-attribute 'default nil :font "Monaco"))
+   ((member "DejaVu Sans Mono" (font-family-list))
+    (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+   ((member "Consolas" (font-family-list))
+    (set-face-attribute 'default nil :font "Consolas")))
 
   ;; Specify font for all unicode characters
   (when (member "Symbola" (font-family-list))
