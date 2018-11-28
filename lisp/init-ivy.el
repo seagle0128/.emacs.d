@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
@@ -156,6 +159,7 @@
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
     :defines all-the-icons-mode-icon-alist
+    :functions all-the-icons-icon-family-for-mode
     :preface
     (with-eval-after-load 'all-the-icons
       (add-to-list 'all-the-icons-mode-icon-alist
@@ -164,7 +168,9 @@
     (defun ivy-rich-switch-buffer-icon (candidate)
       "Show buffer icons in `ivy-rich'."
       ;; Only on GUI
-      (when (and (display-graphic-p) (featurep 'all-the-icons))
+      (when (and centaur-ivy-icon
+                 (display-graphic-p)
+                 (featurep 'all-the-icons))
         (with-current-buffer (get-buffer candidate)
           (let ((icon (all-the-icons-icon-for-mode major-mode)))
             (propertize
@@ -173,13 +179,17 @@
                icon)
              'face `(:height 1.1
                              :family ,(all-the-icons-icon-family-for-mode
-                                       (if (symbolp icon) 'text-mode major-mode))
+                                       (if (symbolp icon)
+                                           'text-mode
+                                         major-mode))
                              :inherit))))))
 
     (defun ivy-rich-file-icon (candidate)
       "Show file icons in `ivy-rich'."
       ;; Only on GUI
-      (when (and (display-graphic-p) (featurep 'all-the-icons))
+      (when (and centaur-ivy-icon
+                 (display-graphic-p)
+                 (featurep 'all-the-icons))
         (let ((icon (all-the-icons-icon-for-file candidate)))
           (propertize
            (if (symbolp icon)
@@ -187,7 +197,9 @@
              icon)
            'face `(:height 1.1
                            :family ,(all-the-icons-icon-family-for-mode
-                                     (if (symbolp icon) 'text-mode major-mode))
+                                     (if (symbolp icon)
+                                         'text-mode
+                                       major-mode))
                            :inherit)))))
 
     (setq ivy-rich--display-transformers-list

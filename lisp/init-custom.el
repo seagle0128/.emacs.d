@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (defgroup centaur nil
   "Centaur Emacs customizations."
   :group 'convenience)
@@ -86,6 +89,10 @@ If Non-nil, use dashboard, otherwise will restore previous session."
           (const :tag "LSP Mode" 'lsp-mode)
           (const :tag "eglot" 'eglot)
           nil))
+
+(defcustom centaur-ivy-icon (and (not sys/win32p) (display-graphic-p))
+  "Display icons in ivy or not."
+  :type 'boolean)
 
 (defcustom centaur-company-enable-yas nil
   "Enable yasnippet for company backends or not."
