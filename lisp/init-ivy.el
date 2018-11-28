@@ -171,7 +171,10 @@
              (if (symbolp icon)
                  (all-the-icons-icon-for-mode 'text-mode)
                icon)
-             'face `(:height 1.1 :family ,(all-the-icons-icon-family-for-mode major-mode) :inherit))))))
+             'face `(:height 1.1
+                             :family ,(all-the-icons-icon-family-for-mode
+                                       (if (symbolp icon) 'text-mode major-mode))
+                             :inherit))))))
 
     (defun ivy-rich-file-icon (candidate)
       "Show file icons in `ivy-rich'."
@@ -182,7 +185,10 @@
            (if (symbolp icon)
                (all-the-icons-icon-for-mode 'text-mode)
              icon)
-           'face `(:height 1.1 :family ,(all-the-icons-icon-family-for-mode major-mode) :inherit)))))
+           'face `(:height 1.1
+                           :family ,(all-the-icons-icon-family-for-mode
+                                     (if (symbolp icon) 'text-mode major-mode))
+                           :inherit)))))
 
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
