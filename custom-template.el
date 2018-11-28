@@ -22,19 +22,19 @@
 ;; (setq desktop-base-lock-name (format ".emacs-%s.desktop.lock" emacs-major-version))
 
 ;; Fonts
-;; (when (and (not centaur-cnfonts) (display-graphic-p))
-;;   ;; Set a default font
-;;   (when (member "Source Code Pro" (font-family-list))
-;;     (set-face-attribute 'default nil :font "Source Code Pro"))
+(when (and (not centaur-cnfonts) (display-graphic-p))
+  ;; Set a default font
+  (when (member "Source Code Pro" (font-family-list))
+    (set-face-attribute 'default nil :font "Source Code Pro"))
 
-;;   ;; Specify font for all unicode characters
-;;   (when (member "Symbola" (font-family-list))
-;;     (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+  ;; Specify font for all unicode characters
+  (when (member "Symbola" (font-family-list))
+    (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
-;;   ;; Specify font for chinese characters
-;;   (when (member "WenQuanYi Micro Hei" (font-family-list))
-;;     (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
-;;   )
+  ;; Specify font for chinese characters
+  (when (member "WenQuanYi Micro Hei" (font-family-list))
+    (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
