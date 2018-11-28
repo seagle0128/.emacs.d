@@ -54,7 +54,20 @@
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
-  :hook (after-init . persistent-scratch-setup-default))
+  :preface
+  (defun my-save-buffer ()
+    "Save scratch and other buffer."
+    (interactive)
+    (let ((scratch-name "*scratch*"))
+      (if (string-equal (buffer-name) scratch-name)
+          (progn
+            (message "Saving %s..." scratch-name)
+            (persistent-scratch-save)
+            (message "Wrote %s" scratch-name))
+        (save-buffer))))
+  :hook (after-init . persistent-scratch-setup-default)
+  :bind (:map lisp-interaction-mode-map
+              ("C-x C-s" . my-save-buffer)))
 
 ;; Dashboard
 (when centaur-dashboard
