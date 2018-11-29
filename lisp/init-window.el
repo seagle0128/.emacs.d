@@ -173,10 +173,6 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
           (tabulated-list-mode :align 'below)
           ("^ ?\\*" :regexp t :select t :align 'below :autoclose t))))
 
-;; Easy window config switching
-(use-package eyebrowse
-  :hook (after-init . eyebrowse-mode))
-
 (provide 'init-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

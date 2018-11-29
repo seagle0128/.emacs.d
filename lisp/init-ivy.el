@@ -40,8 +40,9 @@
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
-         ("C-c v" . ivy-push-view)
-         ("C-c V" . ivy-pop-view)
+         ("C-c v p" . ivy-push-view)
+         ("C-c v o" . ivy-pop-view)
+         ("C-c v ." . ivy-switch-view)
 
          :map counsel-mode-map
          ([remap swiper] . counsel-grep-or-swiper)
