@@ -114,9 +114,7 @@
                (after-load-theme . solaire-mode-swap-bg)))
 
       (use-package doom-modeline
-        :init (setq doom-modeline-icon (not sys/win32p))
-        :hook ((after-init . doom-modeline-init)
-               (dashboard-mode . doom-modeline-set-project-modeline))))
+        :hook (after-init . doom-modeline-init)))
   (progn
     (ignore-errors
       (centaur-load-theme centaur-theme))
