@@ -178,12 +178,14 @@
              (if (symbolp icon)
                  (all-the-icons-icon-for-mode 'text-mode)
                icon)
-             'face `(:height 1.1
-                             :family ,(all-the-icons-icon-family-for-mode
-                                       (if (symbolp icon)
-                                           'text-mode
-                                         major-mode))
-                             :inherit))))))
+             'face `(
+                     :height 1.1
+                     :family ,(all-the-icons-icon-family-for-mode
+                               (if (symbolp icon)
+                                   'text-mode
+                                 major-mode))
+                     :inherit
+                     ))))))
 
     (defun ivy-rich-file-icon (candidate)
       "Show file icons in `ivy-rich'."
@@ -196,12 +198,11 @@
            (if (symbolp icon)
                (all-the-icons-icon-for-mode 'text-mode)
              icon)
-           'face `(:height 1.1
-                           :family ,(all-the-icons-icon-family-for-mode
-                                     (if (symbolp icon)
-                                         'text-mode
-                                       major-mode))
-                           :inherit)))))
+           'face `(
+                   :height 1.1
+                   :family ,(all-the-icons-icon-family-for-file candidate)
+                   :inherit
+                   )))))
 
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
@@ -261,7 +262,7 @@
             counsel-recentf
             (:columns
              ((ivy-rich-file-icon :width 2)
-              (ivy-rich-candidate (:width 0.8))
+              (ivy-rich-candidate (:width 90))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
     :init (ivy-rich-mode 1)
     :hook (ivy-rich-mode . (lambda ()

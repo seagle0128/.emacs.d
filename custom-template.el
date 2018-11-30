@@ -52,6 +52,9 @@
     (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
   )
 
+;; Misc.
+;; (setq confirm-kill-emacs 'y-or-n-p)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
