@@ -77,10 +77,12 @@
 (require 'init-yasnippet)
 
 (require 'init-calendar)
+(require 'init-dashboard)
 (require 'init-dired)
 (require 'init-highlight)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
+(require 'init-persp)
 (require 'init-window)
 (require 'init-treemacs)
 
@@ -106,9 +108,6 @@
 (require 'init-ruby)
 (require 'init-web)
 (require 'init-prog)
-
-;; Restore
-(require 'init-restore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

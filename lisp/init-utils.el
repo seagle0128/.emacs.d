@@ -124,6 +124,23 @@
                            "afplay"
                            file)))))
 
+;; Persistent the scratch buffer
+(use-package persistent-scratch
+  :preface
+  (defun my-save-buffer ()
+    "Save scratch and other buffer."
+    (interactive)
+    (let ((scratch-name "*scratch*"))
+      (if (string-equal (buffer-name) scratch-name)
+          (progn
+            (message "Saving %s..." scratch-name)
+            (persistent-scratch-save)
+            (message "Wrote %s" scratch-name))
+        (save-buffer))))
+  :hook (after-init . persistent-scratch-setup-default)
+  :bind (:map lisp-interaction-mode-map
+              ("C-x C-s" . my-save-buffer)))
+
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package daemons)                   ; system services/daemons
