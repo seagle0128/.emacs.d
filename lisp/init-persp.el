@@ -36,6 +36,8 @@
 ;; Windows/buffers sets shared among frames + save/load.
 (use-package persp-mode
   :diminish
+  :defines ivy-sort-functions-alist
+  :commands (get-current-persp persp-contain-buffer-p)
   :hook (after-init . (lambda ()
                         (unless centaur-dashboard
                           (toggle-frame-maximized)
@@ -43,13 +45,35 @@
   :init
   (setq persp-keymap-prefix (kbd "C-x p"))
   (setq persp-nil-name "main")
-  :config (add-to-list 'global-mode-string persp-lighter))
+  :config
+  (add-to-list 'global-mode-string persp-lighter)
+
+  (with-eval-after-load "ivy"
+    (add-hook 'ivy-ignore-buffers
+              #'(lambda (b)
+                  (when persp-mode
+                    (let ((persp (get-current-persp)))
+                      (if persp
+                          (not (persp-contain-buffer-p b persp))
+                        nil)))))
+
+    (setq ivy-sort-functions-alist
+          (append ivy-sort-functions-alist
+                  '((persp-kill-buffer   . nil)
+                    (persp-remove-buffer . nil)
+                    (persp-add-buffer    . nil)
+                    (persp-switch        . nil)
+                    (persp-window-switch . nil)
+                    (persp-frame-switch  . nil))))))
 
 ;; Projectile integration
+;; FIXME: void function make-persp-internal
 (use-package persp-mode-projectile-bridge
+  :disabled
+  :after projectile persp-mode
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives)
-  :hook ((after-init . persp-mode-projectile-bridge-mode)
+  :hook ((persp-mode . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode
           . (lambda ()
               (if persp-mode-projectile-bridge-mode
