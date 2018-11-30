@@ -39,8 +39,30 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
-    :functions widget-forward
+    :functions widget-forward winner-undo open-custom-file
     :commands dashboard-insert-startupify-lists
+    :preface
+    (defun restore-session ()
+      "Restore last session."
+      (interactive)
+      (when (boundp 'persp-mode)
+        (if persp-mode
+            (message "Session already restored.")
+          (progn
+            (message "Restoring session...")
+            (persp-mode 1)))))
+
+    (defun quit-dashboard ()
+      "Quit dashboard window."
+      (interactive)
+      (quit-window)
+      (winner-undo))
+
+    (defun dashboard-edit-config ()
+      "Open custom config file."
+      (interactive)
+      (quit-dashboard)
+      (open-custom-file))
     :bind (("<f2>" . (lambda ()
                        "Open the *dashboard* buffer and jump to the first widget."
                        (interactive)
@@ -53,17 +75,10 @@
                        (delete-other-windows)))
            :map dashboard-mode-map
            ("H" . browse-homepage)
-           ("E" . open-custom-file)
-           ("R" . (lambda ()
-                    "Restore previous session."
-                    (interactive)
-                    (when (boundp 'persp-mode)
-                      (if persp-mode
-                          (message "Session already restored.")
-                        (progn
-                          (message "Restoring session...")
-                          (persp-mode 1))))))
-           ("U" . centaur-update))
+           ("E" . dashboard-edit-config)
+           ("R" . restore-session)
+           ("U" . centaur-update)
+           ("q" . quit-dashboard))
     :hook ((after-init . dashboard-setup-startup-hook)
            (emacs-startup . toggle-frame-maximized))
     :init
@@ -86,7 +101,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Restore previous session"
-                     :action (lambda () (desktop-save-mode 1) (desktop-read))
+                     :action (lambda (&rest _) (restore-session))
                      :mouse-face 'highlight
                      :button-prefix ""
                      :button-suffix ""
@@ -94,7 +109,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Edit Personal Configurations"
-                     :action (lambda () (open-custom-file))
+                     :action (lambda (&rest _) (dashboard-edit-config))
                      :mouse-face 'highlight
                      :button-prefix ""
                      :button-suffix ""
@@ -102,7 +117,7 @@
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Update Centaur Emacs config and packages"
-                     :action (lambda () (centaur-update))
+                     :action (lambda (&rest _) (centaur-update))
                      :mouse-face 'highlight
                      (propertize "Update" 'face 'font-lock-keyword-face))
       (insert "\n")
