@@ -82,8 +82,10 @@
   (add-to-list 'recentf-exclude ".cask")
   (add-to-list 'recentf-exclude ".elfeed")
   (add-to-list 'recentf-exclude "bookmarks")
+  (add-to-list 'recentf-exclude "cache")
   (add-to-list 'recentf-exclude "persp-confs")
   (add-to-list 'recentf-exclude "recentf")
+  (add-to-list 'recentf-exclude "url")
   (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
 (use-package savehist
