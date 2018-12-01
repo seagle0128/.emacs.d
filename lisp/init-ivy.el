@@ -160,7 +160,7 @@
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
     :defines all-the-icons-mode-icon-alist
-    :functions all-the-icons-icon-family-for-mode
+    :functions (all-the-icons-icon-family-for-mode all-the-icons-icon-family-for-file)
     :preface
     (with-eval-after-load 'all-the-icons
       (add-to-list 'all-the-icons-mode-icon-alist
