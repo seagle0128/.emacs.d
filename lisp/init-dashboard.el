@@ -52,16 +52,16 @@
             (message "Restoring session...")
             (persp-mode 1)))))
 
-    (defun quit-dashboard ()
+    (defun exit-dashboard ()
       "Quit dashboard window."
       (interactive)
-      (quit-window)
+      (quit-window t)
       (winner-undo))
 
     (defun dashboard-edit-config ()
       "Open custom config file."
       (interactive)
-      (quit-dashboard)
+      (exit-dashboard)
       (open-custom-file))
     :bind (("<f2>" . (lambda ()
                        "Open the *dashboard* buffer and jump to the first widget."
@@ -78,7 +78,7 @@
            ("E" . dashboard-edit-config)
            ("R" . restore-session)
            ("U" . centaur-update)
-           ("q" . quit-dashboard))
+           ("q" . exit-dashboard))
     :hook ((after-init . dashboard-setup-startup-hook)
            (emacs-startup . toggle-frame-maximized))
     :init
