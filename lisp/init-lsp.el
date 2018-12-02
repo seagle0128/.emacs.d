@@ -109,14 +109,14 @@
      :functions company-backend-with-yas
      :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
-   ;; Go support for lsp-mode using Sourcegraph's Go Language Server
+   ;; Golang support
    ;; Install: go get -u github.com/sourcegraph/go-langserver
    (use-package lsp-go
      :commands lsp-go-enable
      :hook (go-mode . lsp-go-enable)
      :config (lsp-org-babel-enbale "go"))
 
-   ;; Python support for lsp-mode using pyls.
+   ;; Python support
    ;; Install: pip install python-language-server
    (use-package lsp-python
      :commands lsp-python-enable
@@ -125,21 +125,21 @@
      (lsp-org-babel-enbale "python")
      (lsp-org-babel-enbale "ipython" "python"))
 
-   ;; Ruby support for lsp-mode using the solargraph gem.
+   ;; Ruby support
    ;; Install: gem install solargraph
    (use-package lsp-ruby
      :commands lsp-ruby-enable
      :hook (ruby-mode . lsp-ruby-enable)
      :config (lsp-org-babel-enbale "ruby"))
 
-   ;; Javascript, Typescript and Flow support for lsp-mode
+   ;; Javascript, Typescript and Flow support
    ;; Install: npm i -g javascript-typescript-langserver
    (use-package lsp-javascript-typescript
      :commands lsp-javascript-typescript-enable
      :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable)
      :config (lsp-org-babel-enbale "js" "javascript-typescript"))
 
-   ;; CSS, LESS, and SCSS/SASS support for lsp-mode using vscode-css-languageserver-bin
+   ;; CSS, LESS, and SCSS/SASS support
    ;; Install: npm i -g vscode-css-languageserver-bin
    (use-package lsp-css
      :commands (lsp-css-enable
@@ -154,23 +154,34 @@
      (lsp-org-babel-enbale "css")
      (lsp-org-babel-enbale "sass"))
 
-   ;; HTML support for lsp-mode using vscode-html-languageserver-bin
+   ;; HTML support
    ;; Install: npm i -g vscode-html-languageserver-bin
    (use-package lsp-html
      :commands lsp-html-enable
      :hook ((html-mode . lsp-html-enable)
             (web-mode . lsp-html-enable)))
 
-   ;; PHP support for lsp-mode
+   ;; JSON support
+   ;; Install: npm i -g vscode-json-languageserver-bin
+   (use-package lsp-json
+     :ensure nil
+     :after lsp-mode
+     :commands lsp-json-enable
+     :hook (json-mode . lsp-json-enable)
+     :init
+     (lsp-define-stdio-client lsp-json "json"
+                              #'(lambda () default-directory)
+                              '("vscode-json-languageserver" "--stdio")))
+
+   ;; PHP support
    ;; Install: composer require felixfbecker/language-server
    ;;          composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
    (use-package lsp-php
      :commands lsp-php-enable
      :hook (php-mode . lsp-php-enable))
 
-   ;; Bash support for lsp-mode using Mads Hartmann's bash-language-server
-   ;; Install: npm i -g bash-language-server@1.4.0
-   ;; Require Python2.5+, use --python to specify.
+   ;; Bash support
+   ;; Install: npm i -g bash-language-server
    (use-package lsp-sh
      :commands lsp-sh-enable
      :hook (sh-mode . lsp-sh-enable)
@@ -179,7 +190,7 @@
          (lsp-org-babel-enbale "shell" "sh")
        (lsp-org-babel-enbale "sh")))
 
-   ;; C/C++/Objective-C lang server support for lsp-mode using clang
+   ;; C/C++/Objective-C support
    ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
    ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
    (use-package ccls
@@ -194,7 +205,7 @@
                        ".ccls")
                      projectile-project-root-files-top-down-recurring))))
 
-   ;; Rust support for lsp-mode using the Rust Language Server.
+   ;; Rust support
    ;; Install: curl https://sh.rustup.rs -sSf | sh
    ;;          rustup component add rls-preview rust-analysis rust-src
    (use-package lsp-rust
@@ -202,10 +213,9 @@
      :hook (rust-mode . lsp-rust-enable)
      :config (lsp-org-babel-enbale "rust"))
 
-   ;; Java support for lsp-mode using the Eclipse JDT Language Server.
-   ;; Install:
-   ;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
-   ;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+   ;; Java support
+   ;; Install: wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
+   ;;          tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
    (use-package lsp-java
      :commands lsp-java-enable
      :hook (java-mode . lsp-java-enable)
