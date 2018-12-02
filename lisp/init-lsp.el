@@ -44,11 +44,14 @@
    ;; https://github.com/emacs-lsp/lsp-mode
    (use-package lsp-mode
      :diminish lsp-mode
-     :hook (lsp-after-open . lsp-enable-imenu)
      :config
      (setq lsp-inhibit-message t)
      (setq lsp-message-project-root-warning t)
      (setq create-lockfiles nil)
+
+     (use-package lsp-imenu
+       :ensure nil
+       :hook (lsp-after-open . lsp-enable-imenu))
 
      ;; Restart server/workspace in case the lsp server exits unexpectedly.
      ;; https://emacs-china.org/t/topic/6392
@@ -91,11 +94,7 @@
      ;;   "Returns the current directory."
      ;;   default-directory)
      ;; (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory)
-
-     (use-package lsp-imenu
-       :ensure nil
-       :commands lsp-enable-imenu
-       :hook (lsp-after-open . lsp-enable-imenu)))
+     )
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
