@@ -91,7 +91,11 @@
      ;;   "Returns the current directory."
      ;;   default-directory)
      ;; (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory)
-     )
+
+     (use-package lsp-imenu
+       :ensure nil
+       :commands lsp-enable-imenu
+       :hook (lsp-after-open . lsp-enable-imenu)))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
