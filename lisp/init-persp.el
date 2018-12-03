@@ -46,8 +46,42 @@
   (setq persp-keymap-prefix (kbd "C-x p"))
   (setq persp-nil-name "main")
   :config
-  (add-to-list 'global-mode-string persp-lighter)
+  ;; NOTE: Redefine `persp-add-new' to address.
+  ;; Issue: Unable to create/handle persp-mode
+  ;; https://github.com/Bad-ptr/persp-mode.el/issues/96
+  ;; https://github.com/Bad-ptr/persp-mode-projectile-bridge.el/issues/4
+  ;; https://emacs-china.org/t/topic/6416/7
+  (defun* persp-add-new (name &optional (phash *persp-hash*))
+    "Create a new perspective with the given `NAME'. Add it to `PHASH'.
+  Return the created perspective."
+    (interactive "sA name for the new perspective: ")
+    (if (and name (not (equal "" name)))
+        (destructuring-bind (e . p)
+            (persp-by-name-and-exists name phash)
+          (if e p
+            (setq p (if (equal persp-nil-name name)
+                        nil (make-persp :name name)))
+            (persp-add p phash)
+            (run-hook-with-args 'persp-created-functions p phash)
+            p))
+      (message "[persp-mode] Error: Can't create a perspective with empty name.")
+      nil))
 
+  ;; Display on mode-line
+  (add-to-list 'global-mode-string
+               '(:eval
+                 (format
+                  (propertize
+                   " #%s "
+                   'face (let ((persp (get-current-persp)))
+                           (if persp
+                               (if (persp-contain-buffer-p (current-buffer) persp)
+                                   'persp-face-lighter-default
+                                 'persp-face-lighter-buffer-not-in-persp)
+                             'persp-face-lighter-nil-persp)))
+                  (safe-persp-name (get-current-persp)))))
+
+  ;; Integrate `ivy'
   (with-eval-after-load "ivy"
     (add-hook 'ivy-ignore-buffers
               #'(lambda (b)
@@ -67,9 +101,7 @@
                     (persp-frame-switch  . nil))))))
 
 ;; Projectile integration
-;; FIXME: void function make-persp-internal
 (use-package persp-mode-projectile-bridge
-  :disabled
   :after projectile persp-mode
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives)
