@@ -42,9 +42,7 @@
                         (unless centaur-dashboard
                           (toggle-frame-maximized)
                           (persp-mode 1))))
-  :init
-  (setq persp-keymap-prefix (kbd "C-x p"))
-  (setq persp-nil-name "main")
+  :init (setq persp-keymap-prefix (kbd "C-x p"))
   :config
   ;; NOTE: Redefine `persp-add-new' to address.
   ;; Issue: Unable to create/handle persp-mode
