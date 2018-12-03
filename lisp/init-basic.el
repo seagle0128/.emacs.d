@@ -100,18 +100,6 @@
                                               extended-command-history)
               savehist-autosave-interval 60))
 
-;; Save Emacs buffers when they lose focus
-(use-package super-save
-  :diminish
-  :hook (after-init . super-save-mode)
-  :init
-  (setq super-save-auto-save-when-idle t)
-  (setq auto-save-default nil)
-  :config
-  (with-eval-after-load 'ace-window
-    (add-to-list 'super-save-triggers 'ace-window))
-  (add-to-list 'super-save-hook-triggers 'find-file-hook))
-
 (provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
