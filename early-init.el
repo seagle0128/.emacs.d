@@ -40,9 +40,11 @@
 (setq package-enable-at-startup nil)
 
 ;; Prevent the glimpse of un-styled Emacs by setting these early.
-(unless (and (display-graphic-p) (eq system-type 'darwin)) (menu-bar-mode -1))
-(and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
-(and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(unless (and (display-graphic-p) (eq system-type 'darwin))
+  (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . 0))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
