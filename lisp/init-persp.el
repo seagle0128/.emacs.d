@@ -67,20 +67,6 @@
       (message "[persp-mode] Error: Can't create a perspective with empty name.")
       nil))
 
-  ;; Display on mode-line
-  (add-to-list 'global-mode-string
-               '(:eval
-                 (format
-                  (propertize
-                   " #%s "
-                   'face (let ((persp (get-current-persp)))
-                           (if persp
-                               (if (persp-contain-buffer-p (current-buffer) persp)
-                                   'persp-face-lighter-default
-                                 'persp-face-lighter-buffer-not-in-persp)
-                             'persp-face-lighter-nil-persp)))
-                  (safe-persp-name (get-current-persp)))))
-
   ;; Integrate IVY
   (with-eval-after-load "ivy"
     (add-hook 'ivy-ignore-buffers
