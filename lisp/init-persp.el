@@ -37,12 +37,14 @@
 (use-package persp-mode
   :diminish
   :defines ivy-sort-functions-alist
-  :commands (get-current-persp persp-contain-buffer-p)
-  :hook (after-init . (lambda ()
-                        (unless centaur-dashboard
-                          (toggle-frame-maximized)
-                          (persp-mode 1))))
-  :init (setq persp-keymap-prefix (kbd "C-x p"))
+  :commands (get-current-persp persp-contain-buffer-p persp-add persp-by-name-and-exists)
+  :hook ((after-init . persp-mode)
+         (emacs-startup . toggle-frame-maximized))
+  :init
+  (setq persp-keymap-prefix (kbd "C-x p"))
+  (setq persp-set-last-persp-for-new-frames nil)
+  (if centaur-dashboard
+      (setq persp-auto-resume-time 0))
   :config
   ;; NOTE: Redefine `persp-add-new' to address.
   ;; Issue: Unable to create/handle persp-mode
@@ -79,7 +81,7 @@
                              'persp-face-lighter-nil-persp)))
                   (safe-persp-name (get-current-persp)))))
 
-  ;; Integrate `ivy'
+  ;; Integrate IVY
   (with-eval-after-load "ivy"
     (add-hook 'ivy-ignore-buffers
               #'(lambda (b)
@@ -97,18 +99,6 @@
                     (persp-switch        . nil)
                     (persp-window-switch . nil)
                     (persp-frame-switch  . nil))))))
-
-;; Projectile integration
-(use-package persp-mode-projectile-bridge
-  :after projectile persp-mode
-  :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
-             persp-mode-projectile-bridge-kill-perspectives)
-  :hook ((persp-mode . persp-mode-projectile-bridge-mode)
-         (persp-mode-projectile-bridge-mode
-          . (lambda ()
-              (if persp-mode-projectile-bridge-mode
-                  (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
-                (persp-mode-projectile-bridge-kill-perspectives))))))
 
 (provide 'init-persp)
 

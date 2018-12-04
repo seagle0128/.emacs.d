@@ -39,18 +39,21 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
+    :defines persp-special-last-buffer
     :functions widget-forward winner-undo open-custom-file
     :commands dashboard-insert-startupify-lists
     :preface
     (defun restore-session ()
       "Restore last session."
       (interactive)
-      (when (boundp 'persp-mode)
-        (if persp-mode
-            (message "Session already restored.")
-          (progn
-            (message "Restoring session...")
-            (persp-mode 1)))))
+      (when (bound-and-true-p persp-mode)
+        (message "Restoring session...")
+        (condition-case-unless-debug err
+            (persp-load-state-from-file)
+          (error
+           (message "Error: Unable to restore last session -- %s" err)))
+        (when (persp-get-buffer-or-null persp-special-last-buffer)
+          (persp-switch-to-buffer persp-special-last-buffer))))
 
     (defun exit-dashboard ()
       "Quit dashboard window."
@@ -79,10 +82,8 @@
            ("R" . restore-session)
            ("U" . centaur-update)
            ("q" . exit-dashboard))
-    :hook ((after-init . dashboard-setup-startup-hook)
-           (emacs-startup . toggle-frame-maximized))
-    :init
-    (setq inhibit-startup-screen t)
+    :hook (after-init . dashboard-setup-startup-hook)
+    :init (setq inhibit-startup-screen t)
     :config
     (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
     (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
