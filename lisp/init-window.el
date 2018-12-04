@@ -122,10 +122,10 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
   (defun shackle-close-popup-window-hack (&rest _)
     "Close current popup window via `C-g'."
     (setq shackle--popup-window-list
-          (loop for (window . buffer) in shackle--popup-window-list
-                if (and (window-live-p window)
-                        (equal (window-buffer window) buffer))
-                collect (cons window buffer)))
+          (cl-loop for (window . buffer) in shackle--popup-window-list
+                   if (and (window-live-p window)
+                           (equal (window-buffer window) buffer))
+                   collect (cons window buffer)))
     ;; `C-g' can deactivate region
     (when (and (called-interactively-p 'interactive)
                (not (region-active-p)))
