@@ -149,7 +149,7 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
   (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack)
 
   ;; rules
-  (setq shackle-default-size 0.4)
+  (setq shackle-default-size 0.3)
   (setq shackle-rules
         '(("*Help*" :select t :align 'below :autoclose t)
           ("*compilation*" :size 0.25 :align 'below :autoclose t)
