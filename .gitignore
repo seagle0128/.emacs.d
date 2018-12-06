@@ -13,6 +13,7 @@
 /.emacs-buffers
 /.elfeed
 /.last-package-update-day
+/.lsp-session
 /.markdown-preview.html
 /.mc-lists.el
 /.org-id-locations

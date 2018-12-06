@@ -41,60 +41,18 @@
 
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
-   ;; https://github.com/emacs-lsp/lsp-mode
-   (use-package lsp-mode
+   ;; Install: https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md#supported-languages
+   (use-package lsp
+     :ensure lsp-mode
      :diminish lsp-mode
-     :config
-     (setq lsp-inhibit-message t)
-     (setq lsp-message-project-root-warning t)
-     (setq create-lockfiles nil)
-
-     (use-package lsp-imenu
-       :ensure nil
-       :hook (lsp-after-open . lsp-enable-imenu))
-
-     ;; Restart server/workspace in case the lsp server exits unexpectedly.
-     ;; https://emacs-china.org/t/topic/6392
-     (defun lsp-restart-server ()
-       "Restart LSP server."
-       (interactive)
-       (lsp-restart-workspace)
-       (revert-buffer t t)
-       (message "LSP server restarted."))
-
-     ;; Support LSP in org babel
-     ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-     (cl-defmacro lsp-org-babel-enbale (lang &optional enable-name)
-       "Support LANG in org source code block. "
-       (cl-check-type lang string)
-       (cl-check-type enable-name (or null string))
-       (let ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-             (intern-pre (intern (format "lsp--org-babel-edit-prep:%s" lang)))
-             (client (intern (format "lsp-%s-enable" (or enable-name lang)))))
-         `(progn
-            (defun ,intern-pre (info)
-              (let ((lsp-file (or (->> info caddr (alist-get :file))
-                                  buffer-file-name)))
-                (setq-local buffer-file-name lsp-file)
-                (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-                (,client)))
-            (if (fboundp ',edit-pre)
-                (advice-add ',edit-pre :after ',intern-pre)
-              (progn
-                (defun ,edit-pre (info)
-                  (,intern-pre info))
-                (put ',edit-pre 'function-documentation
-                     (format "Prepare local buffer environment for org source block (%s)."
-                             (upcase ,lang))))))))
-
-     ;; FIXME: Project detection
-     ;; If nil, use the current directory
-     ;; https://github.com/emacs-lsp/lsp-python/issues/28
-     ;; (defun my-default-directory ()
-     ;;   "Returns the current directory."
-     ;;   default-directory)
-     ;; (advice-add #'lsp--suggest-project-root :after-until #'my-default-directory)
-     )
+     :hook (((go-mode
+              python-mode ruby-mode php-mode
+              html-mode web-mode json-mode
+              css-mode less-mode sass-mode scss-mode
+              js-mode js2-mode typescript-mode
+              rust-mode groovy-mode) . lsp)
+            (lsp-after-open . lsp-enable-imenu))
+     :config (require 'lsp-clients))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
@@ -109,117 +67,26 @@
      :functions company-backend-with-yas
      :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
-   ;; Golang support
-   ;; Install: go get -u github.com/sourcegraph/go-langserver
-   (use-package lsp-go
-     :commands lsp-go-enable
-     :hook (go-mode . lsp-go-enable)
-     :config (lsp-org-babel-enbale "go"))
-
-   ;; Python support
-   ;; Install: pip install python-language-server
-   (use-package lsp-python
-     :commands lsp-python-enable
-     :hook (python-mode . lsp-python-enable)
-     :config
-     (lsp-org-babel-enbale "python")
-     (lsp-org-babel-enbale "ipython" "python"))
-
-   ;; Ruby support
-   ;; Install: gem install solargraph
-   (use-package lsp-ruby
-     :commands lsp-ruby-enable
-     :hook (ruby-mode . lsp-ruby-enable)
-     :config (lsp-org-babel-enbale "ruby"))
-
-   ;; Javascript, Typescript and Flow support
-   ;; Install: npm i -g javascript-typescript-langserver
-   (use-package lsp-javascript-typescript
-     :commands lsp-javascript-typescript-enable
-     :hook ((typescript-mode js2-mode) . lsp-javascript-typescript-enable)
-     :config (lsp-org-babel-enbale "js" "javascript-typescript"))
-
-   ;; CSS, LESS, and SCSS/SASS support
-   ;; Install: npm i -g vscode-css-languageserver-bin
-   (use-package lsp-css
-     :commands (lsp-css-enable
-                lsp-less-enable
-                lsp-sass-enable
-                lsp-scss-enable)
-     :hook ((css-mode . lsp-css-enable)
-            (less-mode . lsp-less-enable)
-            (sass-mode . lsp-sass-enable)
-            (scss-mode . lsp-scss-enable))
-     :config
-     (lsp-org-babel-enbale "css")
-     (lsp-org-babel-enbale "sass"))
-
-   ;; HTML support
-   ;; Install: npm i -g vscode-html-languageserver-bin
-   (use-package lsp-html
-     :commands lsp-html-enable
-     :hook ((html-mode . lsp-html-enable)
-            (web-mode . lsp-html-enable)))
-
-   ;; JSON support
-   ;; Install: npm i -g vscode-json-languageserver-bin
-   (use-package lsp-json
-     :ensure nil
-     :after lsp-mode
-     :commands lsp-json-enable
-     :hook (json-mode . lsp-json-enable)
-     :init
-     (lsp-define-stdio-client lsp-json "json"
-                              #'(lambda () default-directory)
-                              '("vscode-json-languageserver" "--stdio")))
-
-   ;; PHP support
-   ;; Install: composer require felixfbecker/language-server
-   ;;          composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
-   (use-package lsp-php
-     :commands lsp-php-enable
-     :hook (php-mode . lsp-php-enable))
-
-   ;; Bash support
-   ;; Install: npm i -g bash-language-server
-   (use-package lsp-sh
-     :commands lsp-sh-enable
-     :hook (sh-mode . lsp-sh-enable)
-     :config
-     (if emacs/>=26p
-         (lsp-org-babel-enbale "shell" "sh")
-       (lsp-org-babel-enbale "sh")))
-
    ;; C/C++/Objective-C support
    ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
    ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
    (use-package ccls
      :defines projectile-project-root-files-top-down-recurring
-     :commands lsp-ccls-enable
-     :hook ((c-mode c++-mode objc-mode) . lsp-ccls-enable)
+     :hook ((c-mode c++-mode objc-mode cuda-mode) . lsp)
      :config
-     (lsp-org-babel-enbale "C" "ccls")
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
              (append '("compile_commands.json"
                        ".ccls")
                      projectile-project-root-files-top-down-recurring))))
 
-   ;; Rust support
-   ;; Install: curl https://sh.rustup.rs -sSf | sh
-   ;;          rustup component add rls-preview rust-analysis rust-src
-   (use-package lsp-rust
-     :commands lsp-rust-enable
-     :hook (rust-mode . lsp-rust-enable)
-     :config (lsp-org-babel-enbale "rust"))
-
    ;; Java support
    ;; Install: wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
    ;;          tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
    (use-package lsp-java
+     :disabled
      :commands lsp-java-enable
-     :hook (java-mode . lsp-java-enable)
-     :config (lsp-org-babel-enbale "java"))
+     :hook (java-mode . lsp-java-enable))
    ))
 
 (provide 'init-lsp)
