@@ -41,7 +41,7 @@
 
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
-   ;; Install: https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md#supported-languages
+   ;; https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md#supported-languages
    (use-package lsp
      :ensure lsp-mode
      :diminish lsp-mode
@@ -76,10 +76,12 @@
                      (format "Prepare local buffer environment for org source block (%s)."
                              (upcase ,lang))))))))
 
-     (defvar org-babel-lang-list '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
+     (defvar org-babel-lang-list
+       '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
+
      :config (require 'lsp-clients))
 
    (use-package lsp-ui
@@ -114,9 +116,9 @@
    ;; Install: wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
    ;;          tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
    (use-package lsp-java
-     :disabled
-     :commands lsp-java-enable
-     :hook (java-mode . lsp-java-enable))
+     :hook (java-mode . (lambda ()
+                          (require 'lsp-java)
+                          (lsp))))
    ))
 
 (provide 'init-lsp)
