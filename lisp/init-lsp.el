@@ -52,14 +52,12 @@
               js-mode js2-mode typescript-mode
               rust-mode groovy-mode) . lsp)
             (lsp-after-open . lsp-enable-imenu))
-     :config
-     (require 'lsp-clients)
-
+     :init
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
      (cl-defmacro lsp-org-babel-enbale (lang)
        "Support LANG in org source code block."
-       (cl-check-type lang string)
+       ;; (cl-check-type lang symbolp)
        (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
               (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
          `(progn
@@ -78,20 +76,11 @@
                      (format "Prepare local buffer environment for org source block (%s)."
                              (upcase ,lang))))))))
 
-     (lsp-org-babel-enbale "go")
-     (lsp-org-babel-enbale "python")
-     (lsp-org-babel-enbale "ipython")
-     (lsp-org-babel-enbale "ruby")
-     (lsp-org-babel-enbale "js")
-     (lsp-org-babel-enbale "css")
-     (lsp-org-babel-enbale "sass")
-     (lsp-org-babel-enbale "C")
-     (lsp-org-babel-enbale "rust")
-     (lsp-org-babel-enbale "java")
-
-     (if emacs/>=26p
-         (lsp-org-babel-enbale "shell")
-       (lsp-org-babel-enbale "sh")))
+     (defvar org-babel-lang-list '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
+     (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
+     (dolist (lang org-babel-lang-list)
+       (eval `(lsp-org-babel-enbale ,lang)))
+     :config (require 'lsp-clients))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
