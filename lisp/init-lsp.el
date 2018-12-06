@@ -52,7 +52,46 @@
               js-mode js2-mode typescript-mode
               rust-mode groovy-mode) . lsp)
             (lsp-after-open . lsp-enable-imenu))
-     :config (require 'lsp-clients))
+     :config
+     (require 'lsp-clients)
+
+     ;; Support LSP in org babel
+     ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+     (cl-defmacro lsp-org-babel-enbale (lang)
+       "Support LANG in org source code block."
+       (cl-check-type lang string)
+       (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+              (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+         `(progn
+            (defun ,intern-pre (info)
+              (let ((lsp-file (or (->> info caddr (alist-get :file))
+                                  buffer-file-name)))
+                (setq-local buffer-file-name lsp-file)
+                (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
+                (lsp)))
+            (if (fboundp ',edit-pre)
+                (advice-add ',edit-pre :after ',intern-pre)
+              (progn
+                (defun ,edit-pre (info)
+                  (,intern-pre info))
+                (put ',edit-pre 'function-documentation
+                     (format "Prepare local buffer environment for org source block (%s)."
+                             (upcase ,lang))))))))
+
+     (lsp-org-babel-enbale "go")
+     (lsp-org-babel-enbale "python")
+     (lsp-org-babel-enbale "ipython")
+     (lsp-org-babel-enbale "ruby")
+     (lsp-org-babel-enbale "js")
+     (lsp-org-babel-enbale "css")
+     (lsp-org-babel-enbale "sass")
+     (lsp-org-babel-enbale "C")
+     (lsp-org-babel-enbale "rust")
+     (lsp-org-babel-enbale "java")
+
+     (if emacs/>=26p
+         (lsp-org-babel-enbale "shell")
+       (lsp-org-babel-enbale "sh")))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
