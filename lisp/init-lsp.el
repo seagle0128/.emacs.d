@@ -111,7 +111,9 @@
    ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
    (use-package ccls
      :defines projectile-project-root-files-top-down-recurring
-     :hook ((c-mode c++-mode objc-mode cuda-mode) . lsp)
+     :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
+                                                      (require 'ccls)
+                                                      (lsp)))
      :config
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
