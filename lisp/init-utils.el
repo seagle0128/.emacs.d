@@ -92,13 +92,13 @@
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
-  :after markdown-mode
   :hook ((emacs-startup . atomic-chrome-start-server)
          (atomic-chrome-edit-mode-hook . delete-other-windows))
   :config
   (setq atomic-chrome-buffer-open-style 'frame)
-  (setq atomic-chrome-url-major-mode-alist
-        '(("github\\.com" . gfm-mode))))
+  (if (fboundp 'gfm-mode)
+      (setq atomic-chrome-url-major-mode-alist
+            '(("github\\.com" . gfm-mode)))))
 
 ;; Open files as another user
 (unless sys/win32p
