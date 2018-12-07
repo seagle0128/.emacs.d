@@ -46,15 +46,9 @@
 ;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 
 (setq-default major-mode 'text-mode)
-(add-hook 'text-mode-hook
-          (lambda ()
-            (turn-on-auto-fill)
-            (diminish 'auto-fill-function)))
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
-
-(add-hook 'abbrev-mode-hook (lambda () (diminish 'abbrev-mode)))
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
