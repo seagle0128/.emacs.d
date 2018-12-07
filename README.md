@@ -89,7 +89,7 @@ M-x centaur-update-dotfiles
 
 # Update packages only (then restart)
 M-x centaur-update-packages
-M-x centaur-update-packages-and-restarut
+M-x centaur-update-packages-and-restart
 
 # Update all including configurations, packages and dotfiles
 M-x centuar-update-all
