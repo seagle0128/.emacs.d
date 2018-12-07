@@ -156,7 +156,7 @@ _d_: kill-and-delete-frame     _n_: make-frame            _w_: ace-delete-window
           ("*compilation*" :size 0.25 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 0.25 :align 'below :autoclose t)
-          ("*ert*" :same t)
+          ("*ert*" :align 'below :autoclose t)
           ("*Ibuffer*" :select t :inhibit-window-quit t :same t)
           ("*info*" :select t :inhibit-window-quit t :same t)
           ("*Backtrace*" :select t :size 20 :align 'below)
