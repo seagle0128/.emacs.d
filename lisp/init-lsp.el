@@ -118,7 +118,9 @@
    (use-package lsp-java
      :hook (java-mode . (lambda ()
                           (require 'lsp-java)
-                          (lsp))))
+                          (lsp)))
+     :config (with-eval-after-load 'treemacs
+               (require 'lsp-java-treemacs)))
    ))
 
 (provide 'init-lsp)
