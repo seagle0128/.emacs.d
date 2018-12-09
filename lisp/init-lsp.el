@@ -45,13 +45,12 @@
    (use-package lsp
      :ensure lsp-mode
      :diminish lsp-mode
-     :hook (((go-mode
-              python-mode ruby-mode php-mode sh-mode
-              html-mode web-mode json-mode
-              css-mode less-mode sass-mode scss-mode
-              js-mode js2-mode typescript-mode
-              rust-mode groovy-mode) . lsp)
-            (lsp-after-open . lsp-enable-imenu))
+     :hook ((go-mode
+             python-mode ruby-mode php-mode sh-mode
+             html-mode web-mode json-mode
+             css-mode less-mode sass-mode scss-mode
+             js-mode js2-mode typescript-mode
+             rust-mode groovy-mode) . lsp)
      :init
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
