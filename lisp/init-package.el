@@ -89,20 +89,22 @@
     (when (and (stringp custom-file)
                (file-readable-p custom-file)
                (file-writable-p custom-file))
-      (let ((buffer (find-buffer-visiting custom-file)))
+      (let ((buffer (find-buffer-visiting custom-file))
+            (regexp "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)")
+            (str (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
         (if buffer
             (with-current-buffer buffer
               (save-excursion
                 (save-restriction
                   (widen)
                   (goto-char (point-min))
-                  (when (re-search-forward "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)" nil t)
-                    (replace-match (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
+                  (when (re-search-forward regexp nil t)
+                    (replace-match str))
                   (save-buffer))))
           (with-current-buffer (find-file-noselect custom-file)
             (goto-char (point-min))
-            (when (re-search-forward "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)" nil t)
-              (replace-match (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
+            (when (re-search-forward regexp nil t)
+              (replace-match str))
             (save-buffer)
             (kill-buffer)))))))
 
