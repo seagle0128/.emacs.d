@@ -81,8 +81,8 @@
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
 
+     (setq lsp-auto-guess-root t)       ; Detect project root
      :config
-     (setq lsp-auto-guess-root t)
      (require 'lsp-clients))
 
    (use-package lsp-ui
