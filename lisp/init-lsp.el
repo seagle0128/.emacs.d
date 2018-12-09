@@ -46,7 +46,7 @@
      :ensure lsp-mode
      :diminish lsp-mode
      :hook (((go-mode
-              python-mode ruby-mode php-mode
+              python-mode ruby-mode php-mode sh-mode
               html-mode web-mode json-mode
               css-mode less-mode sass-mode scss-mode
               js-mode js2-mode typescript-mode
