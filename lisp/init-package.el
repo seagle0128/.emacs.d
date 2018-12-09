@@ -44,12 +44,13 @@
 ;;
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 ;;
-(defun set-package-archives (archives)
+(defun set-package-archives (&optional archives)
   "Set specific package ARCHIVES repository."
-  (interactive
-   (list
-    (intern (completing-read "Switch to archives: "
-                             '(melpa melpa-mirror emacs-china netease tuna)))))
+  (interactive)
+  (unless archives
+    (setq archives
+          (intern (completing-read "Switch to archives: "
+                                   '(melpa melpa-mirror emacs-china netease tuna)))))
 
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                       (not (gnutls-available-p))))
@@ -71,11 +72,39 @@
        (setq package-archives `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
                                 ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
       (archives
-       (error "Unknown archives: '%s'" `,archives))))
+       (error "Unknown archives: '%s'" archives))))
+
+  (setq centaur-package-archives archives)
 
   (message "Set package archives to '%s'." archives))
 
-(set-package-archives centaur-package-archives)
+;; Set package archives
+(if (file-exists-p (locate-user-emacs-file "elpa"))
+    (set-package-archives centaur-package-archives)
+  (progn
+    ;; First startup
+    (set-package-archives)
+
+    ;; Save to `custom-file'
+    (when (and (stringp custom-file)
+               (file-readable-p custom-file)
+               (file-writable-p custom-file))
+      (let ((buffer (find-buffer-visiting custom-file)))
+        (if buffer
+            (with-current-buffer buffer
+              (save-excursion
+                (save-restriction
+                  (widen)
+                  (goto-char (point-min))
+                  (when (re-search-forward "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)" nil t)
+                    (replace-match (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
+                  (save-buffer))))
+          (with-current-buffer (find-file-noselect custom-file)
+            (goto-char (point-min))
+            (when (re-search-forward "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)" nil t)
+              (replace-match (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
+            (save-buffer)
+            (kill-buffer)))))))
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
