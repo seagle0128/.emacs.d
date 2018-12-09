@@ -66,7 +66,7 @@
   ;; Format using YAPF
   ;; Install: pip install yapf
   (use-package yapfify
-    :diminish
+    :diminish yapf-mode
     :hook (python-mode . yapf-mode))
 
   (unless centaur-lsp
