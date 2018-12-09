@@ -37,13 +37,29 @@
   (defun markdown-preview-grip ()
     "Render and preview with `grip'."
     (interactive)
-    (let ((port "6419"))
-      (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) port)
+    (let ((program "grip")
+          (port "6419")
+          (buffer "*gfm-to-html*"))
+
+      ;; If process exists, kill it.
+      (markdown-preview-kill-grip buffer)
+
+      ;; Start a new `grip' process.
+      (start-process program buffer program (buffer-file-name) port)
+      (sleep-for 1) ; wait for process start
       (browse-url (format "http://localhost:%s/%s.%s"
                           port
                           (file-name-base)
                           (file-name-extension
                            (buffer-file-name))))))
+
+  (defun markdown-preview-kill-grip (&optional buffer)
+    "Kill `grip' process."
+    (interactive)
+    (let ((process (get-buffer-process (or buffer "*gfm-to-html*"))))
+      (when process
+        (kill-process process)
+        (message "Process %s killed" process))))
 
   ;; Install: npm i -g markdownlint-cli
   (defun set-flycheck-markdownlint ()
@@ -55,7 +71,8 @@
       (setq-local flycheck-markdown-markdownlint-cli-config
                   (concat md-lint-dir md-lint))))
   :bind (:map markdown-mode-command-map
-              ("g" .  markdown-preview-grip))
+              ("g" .  markdown-preview-grip)
+              ("k" .  markdown-preview-kill-grip))
   :hook ((markdown-mode . flyspell-mode)
          (markdown-mode . auto-fill-mode)
          (markdown-mode . set-flycheck-markdownlint))
