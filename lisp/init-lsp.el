@@ -81,7 +81,9 @@
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
 
-     :config (require 'lsp-clients))
+     :config
+     (setq lsp-auto-guess-root t)
+     (require 'lsp-clients))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
