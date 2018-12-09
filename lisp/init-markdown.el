@@ -57,6 +57,7 @@
   :bind (:map markdown-mode-command-map
               ("g" .  markdown-preview-grip))
   :hook ((markdown-mode . flyspell-mode)
+         (markdown-mode . auto-fill-mode)
          (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
