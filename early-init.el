@@ -39,12 +39,12 @@
 ;; initialization, so we must prevent Emacs from doing it early!
 (setq package-enable-at-startup nil)
 
-;; Prevent the glimpse of un-styled Emacs by setting these early.
+;; Faster to disable these here (before they've been initialized)
 (unless (and (display-graphic-p) (eq system-type 'darwin))
-  (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
-(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . 0))
-
+  (setq menu-bar-mode nil))
+(setq tool-bar-mode nil)
+(setq scroll-bar-mode nil)
+(modify-all-frames-parameters '((vertical-scroll-bars)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
