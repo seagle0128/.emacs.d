@@ -93,7 +93,7 @@
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
   :hook ((emacs-startup . atomic-chrome-start-server)
-         (atomic-chrome-edit-mode-hook . delete-other-windows))
+         (atomic-chrome-edit-mode . delete-other-windows))
   :config
   (setq atomic-chrome-buffer-open-style 'frame)
   (if (fboundp 'gfm-mode)
