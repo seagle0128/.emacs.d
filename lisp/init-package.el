@@ -44,69 +44,38 @@
 ;;
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 ;;
-(defun set-package-archives (&optional archives)
+(defun set-package-archives (archives)
   "Set specific package ARCHIVES repository."
-  (interactive)
-  (unless archives
-    (setq archives
-          (intern (completing-read "Switch to archives: "
-                                   '(melpa melpa-mirror emacs-china netease tuna)))))
+  (interactive
+   (list (intern (completing-read "Choose package archives: "
+                                  '(melpa melpa-mirror emacs-china netease tuna)))))
 
-  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                      (not (gnutls-available-p))))
-         (proto (if no-ssl "http" "https")))
-    (pcase archives
-      ('melpa
-       (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
-                                ,(cons "melpa" (concat proto "://melpa.org/packages/")))))
-      ('melpa-mirror
-       (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
-                                ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/")))))
-      ('emacs-china
-       (setq package-archives `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
-                                ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/")))))
-      ('netease
-       (setq package-archives `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
-                                ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/")))))
-      ('tuna
-       (setq package-archives `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
-                                ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
-      (archives
-       (error "Unknown archives: '%s'" archives))))
-
-  (setq centaur-package-archives archives)
+  (setq package-archives
+        (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                            (not (gnutls-available-p))))
+               (proto (if no-ssl "http" "https")))
+          (pcase archives
+            ('melpa
+             `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
+            ('melpa-mirror
+             `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))))
+            ('emacs-china
+             `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
+               ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/"))))
+            ('netease
+             `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
+            ('tuna
+             `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+            (archives
+             (error "Unknown archives: '%s'" archives)))))
 
   (message "Set package archives to '%s'." archives))
 
-;; Set package archives
-(if (file-exists-p (locate-user-emacs-file "elpa"))
-    (set-package-archives centaur-package-archives)
-  (progn
-    ;; First startup
-    (set-package-archives)
-
-    ;; Save to `custom-file'
-    (when (and (stringp custom-file)
-               (file-readable-p custom-file)
-               (file-writable-p custom-file))
-      (let ((buffer (find-buffer-visiting custom-file))
-            (regexp "^\\(;; +\\|.*\\)(setq centaur-package-archives '.+)")
-            (str (format "(setq centaur-package-archives '%s)" centaur-package-archives)))
-        (if buffer
-            (with-current-buffer buffer
-              (save-excursion
-                (save-restriction
-                  (widen)
-                  (goto-char (point-min))
-                  (when (re-search-forward regexp nil t)
-                    (replace-match str))
-                  (save-buffer))))
-          (with-current-buffer (find-file-noselect custom-file)
-            (goto-char (point-min))
-            (when (re-search-forward regexp nil t)
-              (replace-match str))
-            (save-buffer)
-            (kill-buffer)))))))
+(set-package-archives centaur-package-archives)
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
