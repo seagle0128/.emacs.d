@@ -69,14 +69,26 @@
                  (match-beginning 1) (match-end 1) icon)
                 (when props
                   (add-face-text-property
-                   (match-beginning 1) (match-end 1) props))))))))
+                   (match-beginning 1) (match-end 1) props)))))))))
+  :config
+  (when sys/win32p
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
+  (magit-define-popup-switch 'magit-fetch-popup
+    ?t "Fetch all tags" "--tags")
 
+  (when centaur-ivy-icon
     (with-eval-after-load 'all-the-icons
+      (setq pretty-magit-alist nil)
+      (setq pretty-magit-prompt nil)
+
       (pretty-magit "Feature"
                     (all-the-icons-faicon "map-signs")
                     '(:foreground "light green" :height 1.2))
       (pretty-magit "Add"
                     (all-the-icons-faicon "plus-square")
+                    '(:foreground "sky blue" :height 1.2))
+      (pretty-magit "New"
+                    (all-the-icons-faicon "file")
                     '(:foreground "sky blue" :height 1.2))
       (pretty-magit "Remove"
                     (all-the-icons-faicon "minus-square")
@@ -129,15 +141,7 @@
           (add-magit-faces))
 
         (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
-        (add-hook 'git-commit-setup-hook 'magit-commit-prompt))))
-  :config
-  (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass"))
-  (magit-define-popup-switch 'magit-fetch-popup
-    ?t "Fetch all tags" "--tags")
-
-  (with-eval-after-load 'all-the-icons
-    ))
+        (add-hook 'git-commit-setup-hook 'magit-commit-prompt)))))
 
 ;; Magit interfaces for GitHub
 (use-package magithub
