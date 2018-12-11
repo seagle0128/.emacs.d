@@ -91,7 +91,11 @@ If Non-nil, use dashboard, otherwise will restore previous session."
           nil))
 
 (defcustom centaur-ivy-icon (and (not sys/win32p) (display-graphic-p))
-  "Display icons in ivy or not."
+  "Display icons in `ivy' or not."
+  :type 'boolean)
+
+(defcustom centaur-pretty-magit t
+  "Prettify `magit' or not."
   :type 'boolean)
 
 (defcustom centaur-company-enable-yas nil
