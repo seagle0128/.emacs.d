@@ -42,7 +42,99 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
   (magit-define-popup-switch 'magit-fetch-popup
-    ?t "Fetch all tags" "--tags"))
+    ?t "Fetch all tags" "--tags")
+
+  (with-eval-after-load 'all-the-icons
+
+    (defvar pretty-magit-alist nil)
+    (defvar pretty-magit-prompt nil)
+
+    ;; Pretty magit http://www.modernemacs.com/post/pretty-magit
+    (defmacro pretty-magit (word icon props &optional no-prompt?)
+      "Replace sanitized WORD with ICON, PROPS and by default add to prompts."
+      `(prog1
+           (add-to-list 'pretty-magit-alist
+                        (list (rx bow (group ,word (eval (if ,no-prompt? "" ":"))))
+                              ,icon ,props))
+         (unless ,no-prompt?
+           (add-to-list 'pretty-magit-prompt (concat ,word ": ")))))
+
+    (setq pretty-magit-alist nil)
+    (setq pretty-magit-prompt nil)
+
+    (pretty-magit "Feature"
+                  (all-the-icons-faicon "map-signs")
+                  '(:foreground "light green" :height 1.2))
+    (pretty-magit "Add"
+                  (all-the-icons-faicon "plus-square")
+                  '(:foreground "sky blue" :height 1.2))
+    (pretty-magit "Remove"
+                  (all-the-icons-faicon "minus-square")
+                  '(:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Clean"
+                  (all-the-icons-faicon "scissors")
+                  '(:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Delete"
+                  (all-the-icons-faicon "trash")
+                  '(:foreground "#FFBB00" :height 1.2))
+    (pretty-magit "Fix"
+                  (all-the-icons-faicon "bug")
+                  '(:foreground "#FB6542" :height 1.2))
+    (pretty-magit "Enhance"
+                  (all-the-icons-faicon "magic")
+                  '(:foreground "yellow green" :height 1.2))
+    (pretty-magit "Improve"
+                  (all-the-icons-faicon "magic")
+                  '(:foreground "yellow green" :height 1.2))
+    (pretty-magit "Optimize"
+                  (all-the-icons-faicon "cogs")
+                  '(:foreground "yellow green" :height 1.2))
+    (pretty-magit "Refactor"
+                  (all-the-icons-faicon "wrench")
+                  '(:foreground "yellow green" :height 1.2))
+    (pretty-magit "Bump"
+                  (all-the-icons-faicon "anchor")
+                  '(:foreground "#3F681C" :height 1.2))
+    (pretty-magit "Docs"
+                  (all-the-icons-faicon "file-text")
+                  '(:foreground "#3F681C" :height 1.2))
+    (pretty-magit "master"
+                  (all-the-icons-alltheicon "git")
+                  '(:box t :height 1.2)
+                  t)
+    (pretty-magit "origin"
+                  (all-the-icons-faicon "github")
+                  '(:box t :height 1.2)
+                  t)
+
+    (defun add-magit-faces ()
+      "Add face properties and compose symbols for buffer from pretty-magit."
+      (interactive)
+      (with-silent-modifications
+        (--each pretty-magit-alist
+          (-let (((rgx icon props) it))
+            (save-excursion
+              (goto-char (point-min))
+              (while (search-forward-regexp rgx nil t)
+                (compose-region
+                 (match-beginning 1) (match-end 1) icon)
+                (when props
+                  (add-face-text-property
+                   (match-beginning 1) (match-end 1) props))))))))
+
+    (advice-add #'magit-status :after #'add-magit-faces)
+    (advice-add #'magit-refresh-buffer :after #'add-magit-faces)
+
+    (with-eval-after-load 'ivy
+      (defun magit-commit-prompt ()
+        "Magit prompt and insert commit header with faces."
+        (interactive)
+        (insert (ivy-read "Commit Type " pretty-magit-prompt
+                          :require-match t :sort t :preselect "Add: "))
+        (add-magit-faces))
+
+      (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
+      (add-hook 'git-commit-setup-hook 'magit-commit-prompt))))
 
 ;; Magit interfaces for GitHub
 (use-package magithub
