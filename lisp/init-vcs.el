@@ -70,6 +70,7 @@
                 (when props
                   (add-face-text-property
                    (match-beginning 1) (match-end 1) props)))))))))
+  :init (use-package ghub+ :commands ghubp-get-notifications)
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
