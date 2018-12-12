@@ -98,7 +98,7 @@
                                               search-ring
                                               regexp-search-ring
                                               extended-command-history)
-              savehist-autosave-interval 60))
+              savehist-autosave-interval 300))
 
 (provide 'init-basic)
 
