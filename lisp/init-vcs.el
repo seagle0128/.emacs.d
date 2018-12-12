@@ -103,10 +103,10 @@
                     (all-the-icons-faicon "bug")
                     '(:foreground "#FB6542" :height 1.2))
       (pretty-magit "Enhance"
-                    (all-the-icons-faicon "magic")
+                    (all-the-icons-faicon "cog")
                     '(:foreground "yellow green" :height 1.2))
       (pretty-magit "Improve"
-                    (all-the-icons-faicon "magic")
+                    (all-the-icons-faicon "cog")
                     '(:foreground "yellow green" :height 1.2))
       (pretty-magit "Optimize"
                     (all-the-icons-faicon "cogs")
