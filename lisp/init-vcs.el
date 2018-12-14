@@ -169,7 +169,7 @@
 
 ;; Show source file TODOs in Magit
 (use-package magit-todos
-  :hook (magit-mode . magit-todos-mode))
+  :hook (after-init . magit-todos-mode))
 
 ;;; Pop up last commit information of current line
 (use-package git-messenger
