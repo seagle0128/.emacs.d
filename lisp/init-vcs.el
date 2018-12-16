@@ -84,43 +84,38 @@
 
       (pretty-magit "Feature"
                     (all-the-icons-faicon "map-signs")
-                    '(:foreground "light green" :height 1.2))
-      (pretty-magit "Add"
-                    (all-the-icons-faicon "plus-square")
-                    '(:foreground "sky blue" :height 1.2))
-      (pretty-magit "New"
-                    (all-the-icons-faicon "file")
-                    '(:foreground "sky blue" :height 1.2))
-      (pretty-magit "Remove"
-                    (all-the-icons-faicon "minus-square")
-                    '(:foreground "#FFBB00" :height 1.2))
-      (pretty-magit "Clean"
-                    (all-the-icons-faicon "scissors")
-                    '(:foreground "#FFBB00" :height 1.2))
-      (pretty-magit "Delete"
-                    (all-the-icons-faicon "trash")
-                    '(:foreground "#FFBB00" :height 1.2))
-      (pretty-magit "Fix"
-                    (all-the-icons-faicon "bug")
-                    '(:foreground "#FB6542" :height 1.2))
+                    '(:foreground "#46D9FF" :height 1.2))
       (pretty-magit "Enhance"
                     (all-the-icons-faicon "cog")
-                    '(:foreground "yellow green" :height 1.2))
+                    '(:foreground "#ECBE7B" :height 1.2)
+                    t)
       (pretty-magit "Improve"
                     (all-the-icons-faicon "cog")
-                    '(:foreground "yellow green" :height 1.2))
+                    '(:foreground "#ECBE7B" :height 1.2))
       (pretty-magit "Optimize"
                     (all-the-icons-faicon "cogs")
-                    '(:foreground "yellow green" :height 1.2))
+                    '(:foreground "#51afef" :height 1.2))
+      (pretty-magit "Add"
+                    (all-the-icons-faicon "plus-square")
+                    '(:foreground "#c678dd" :height 1.2))
+      (pretty-magit "Remove"
+                    (all-the-icons-faicon "minus-square")
+                    '(:foreground "#da8548" :height 1.2))
+      (pretty-magit "Clean"
+                    (all-the-icons-faicon "scissors")
+                    '(:foreground "#da8548" :height 1.2))
+      (pretty-magit "Fix"
+                    (all-the-icons-faicon "bug")
+                    '(:foreground "#ff6c6b" :height 1.2))
       (pretty-magit "Refactor"
                     (all-the-icons-faicon "wrench")
-                    '(:foreground "yellow green" :height 1.2))
+                    '(:foreground "#51afef" :height 1.2))
       (pretty-magit "Bump"
                     (all-the-icons-faicon "anchor")
-                    '(:foreground "#3F681C" :height 1.2))
+                    '(:foreground "#98be65" :height 1.2))
       (pretty-magit "Docs"
                     (all-the-icons-faicon "file-text")
-                    '(:foreground "#3F681C" :height 1.2))
+                    '(:foreground "#98be65" :height 1.2))
       (pretty-magit "master"
                     (all-the-icons-alltheicon "git")
                     '(:box t :height 1.2)

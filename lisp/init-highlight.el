@@ -114,9 +114,9 @@
   :defines desktop-minor-mode-table
   :commands diff-hl-magit-post-refresh
   :custom-face
-  (diff-hl-change ((t (:background "DeepSkyBlue"))))
-  (diff-hl-delete ((t (:background "OrangeRed"))))
-  (diff-hl-insert ((t (:background "YellowGreen"))))
+  (diff-hl-change ((t (:background "#46D9FF"))))
+  (diff-hl-delete ((t (:background "#ff6c6b"))))
+  (diff-hl-insert ((t (:background "#98be65"))))
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
