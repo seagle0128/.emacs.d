@@ -105,7 +105,10 @@
   (use-package benchmark-init
     :commands (benchmark-init/activate)
     :hook (after-init . benchmark-init/deactivate)
-    :init (benchmark-init/activate)))
+    :init (benchmark-init/activate)
+    :config
+    (with-eval-after-load 'swiper
+      (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 
 ;; Extensions
 (use-package package-utils
