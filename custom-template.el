@@ -49,8 +49,11 @@
     (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
   ;; Specify font for chinese characters
-  (when (member "WenQuanYi Micro Hei" (font-family-list))
-    (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+  (cond
+   ((member "WenQuanYi Micro Hei" (font-family-list))
+    (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei"))
+   ((member "Microsoft Yahei" (font-family-list))
+    (set-fontset-font t '(#x4e00 . #x9fff) "Microsoft Yahei")))
   )
 
 ;; Misc.
