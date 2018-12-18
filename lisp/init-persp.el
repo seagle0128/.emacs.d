@@ -67,6 +67,12 @@
       (message "[persp-mode] Error: Can't create a perspective with empty name.")
       nil))
 
+  ;; Ignore temporary buffers
+  (add-hook 'persp-common-buffer-filter-functions
+            #'(lambda (b) (or
+                      (string-prefix-p "*" (buffer-name b))
+                      (string-prefix-p "magit" (buffer-name b)))))
+
   ;; Integrate IVY
   (with-eval-after-load "ivy"
     (add-hook 'ivy-ignore-buffers
