@@ -69,9 +69,8 @@
 
   ;; Ignore temporary buffers
   (add-hook 'persp-common-buffer-filter-functions
-            #'(lambda (b) (or
-                      (string-prefix-p "*" (buffer-name b))
-                      (string-prefix-p "magit" (buffer-name b)))))
+            (lambda (b) (or (string-prefix-p "*" (buffer-name b))
+                       (string-prefix-p "magit" (buffer-name b)))))
 
   ;; Integrate IVY
   (with-eval-after-load "ivy"

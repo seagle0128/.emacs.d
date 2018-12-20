@@ -70,7 +70,6 @@
                 (when props
                   (add-face-text-property
                    (match-beginning 1) (match-end 1) props)))))))))
-  :init (use-package ghub+ :commands ghubp-get-notifications)
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
@@ -139,12 +138,9 @@
         (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
         (add-hook 'git-commit-setup-hook 'magit-commit-prompt)))))
 
-;; Magit interfaces for GitHub
-(use-package magithub
-  :after magit
-  :init
-  (setq magithub-api-timeout 5)
-  (magithub-feature-autoinject t))
+;; Access Git forges from Magit
+(use-package forge :after magit)
+(use-package ghub+ :commands ghubp-get-notifications)
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
