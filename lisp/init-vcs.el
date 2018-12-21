@@ -140,7 +140,7 @@
 
 ;; Access Git forges from Magit
 (use-package forge)
-(use-package ghub+ :commands ghubp-get-notifications)
+;; (use-package ghub+ :commands ghubp-get-notifications)
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
