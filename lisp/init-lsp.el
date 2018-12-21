@@ -103,7 +103,8 @@
    (use-package lsp-java
      :hook (java-mode . (lambda ()
                           (require 'lsp-java)
-                          (lsp))))))
+                          (lsp))))
+   ))
 
 (provide 'init-lsp)
 

@@ -139,7 +139,7 @@
         (add-hook 'git-commit-setup-hook 'magit-commit-prompt)))))
 
 ;; Access Git forges from Magit
-(use-package forge :after magit)
+(use-package forge)
 (use-package ghub+ :commands ghubp-get-notifications)
 
 ;; Gitflow externsion for Magit
