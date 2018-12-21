@@ -41,8 +41,7 @@
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
-   (use-package lsp
-     :ensure lsp-mode
+   (use-package lsp-mode
      :diminish lsp-mode
      :hook (prog-mode . lsp)
      :init
