@@ -92,6 +92,7 @@
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
+  :disabled
   :hook ((emacs-startup . atomic-chrome-start-server)
          (atomic-chrome-edit-mode . delete-other-windows))
   :config
