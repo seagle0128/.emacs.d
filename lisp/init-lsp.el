@@ -31,7 +31,6 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const)
   (require 'init-custom))
 
 (pcase centaur-lsp
@@ -41,16 +40,11 @@
 
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
-   ;; https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md#supported-languages
+   ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp
      :ensure lsp-mode
      :diminish lsp-mode
-     :hook ((go-mode
-             python-mode ruby-mode php-mode sh-mode
-             html-mode web-mode json-mode
-             css-mode less-mode sass-mode scss-mode
-             js-mode js2-mode typescript-mode
-             rust-mode groovy-mode) . lsp)
+     :hook (prog-mode . lsp)
      :init
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
@@ -89,18 +83,11 @@
      :bind (:map lsp-ui-mode-map
                  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
-                 ("C-c u" . lsp-ui-imenu))
-     :hook (lsp-mode . lsp-ui-mode))
+                 ("C-c u" . lsp-ui-imenu)))
 
-   (use-package company-lsp
-     :after company
-     :defines company-backends
-     :functions company-backend-with-yas
-     :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
+   (use-package company-lsp)
 
    ;; C/C++/Objective-C support
-   ;; Install: brew tap twlz0ne/homebrew-ccls && brew install ccls
-   ;;          refer to  https://github.com/MaskRay/ccls/wiki/Getting-started
    (use-package ccls
      :defines projectile-project-root-files-top-down-recurring
      :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
@@ -114,13 +101,10 @@
                      projectile-project-root-files-top-down-recurring))))
 
    ;; Java support
-   ;; Install: wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
-   ;;          tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
    (use-package lsp-java
      :hook (java-mode . (lambda ()
                           (require 'lsp-java)
-                          (lsp))))
-   ))
+                          (lsp))))))
 
 (provide 'init-lsp)
 
