@@ -193,15 +193,11 @@
            imenu-after-jump
            xref-after-jump
            xref-after-return) . recenter))
-  :init
-  (advice-add #'recenter :after #'my-pulse-momentary)
-  (advice-add #'other-window :after #'my-pulse-momentary)
-  (advice-add #'ace-window :after #'my-pulse-momentary)
-  (advice-add #'windmove-do-window-select :after #'my-pulse-momentary)
-  (advice-add #'pager-page-down :after #'my-pulse-momentary)
-  (advice-add #'pager-page-up :after #'my-pulse-momentary)
-  (advice-add #'scroll-down :after #'my-pulse-momentary)
-  (advice-add #'scroll-up :after #'my-pulse-momentary))
+  :init (dolist (cmd '(recenter
+                       other-window ace-window windmove-do-window-select
+                       pager-page-down pager-page-up
+                       scroll-down scroll-up))
+          (advice-add cmd :after #'my-pulse-momentary)))
 
 (provide 'init-highlight)
 
