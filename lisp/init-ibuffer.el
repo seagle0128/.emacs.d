@@ -47,8 +47,7 @@
       (interactive
        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
                                   (if (buffer-live-p buf)
-                                      (with-current-buffer buf
-                                        default-directory)
+                                      (buffer-local-value 'default-directory buf)
                                     default-directory))))
          (counsel-find-file))))
     (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))

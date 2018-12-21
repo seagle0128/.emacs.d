@@ -75,8 +75,7 @@
        (eval `(lsp-org-babel-enbale ,lang)))
 
      (setq lsp-auto-guess-root t)       ; Detect project root
-     :config
-     (require 'lsp-clients))
+     :config (require 'lsp-clients))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map

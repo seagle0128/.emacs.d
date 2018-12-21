@@ -172,20 +172,21 @@
       (when (and centaur-ivy-icon
                  (display-graphic-p)
                  (featurep 'all-the-icons))
-        (with-current-buffer (get-buffer candidate)
-          (let ((icon (all-the-icons-icon-for-mode major-mode)))
-            (propertize
-             (if (symbolp icon)
-                 (all-the-icons-icon-for-mode 'text-mode)
-               icon)
-             'face `(
-                     :height 1.1
-                     :family ,(all-the-icons-icon-family-for-mode
-                               (if (symbolp icon)
-                                   'text-mode
-                                 major-mode))
-                     :inherit
-                     ))))))
+        (when-let* ((buffer (get-buffer candidate))
+                    (major-mode (buffer-local-value 'major-mode buffer))
+                    (icon (all-the-icons-icon-for-mode major-mode)))
+          (propertize
+           (if (symbolp icon)
+               (all-the-icons-icon-for-mode 'text-mode)
+             icon)
+           'face `(
+                   :height 1.1
+                   :family ,(all-the-icons-icon-family-for-mode
+                             (if (symbolp icon)
+                                 'text-mode
+                               major-mode))
+                   :inherit
+                   )))))
 
     (defun ivy-rich-file-icon (candidate)
       "Show file icons in `ivy-rich'."

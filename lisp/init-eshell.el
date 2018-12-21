@@ -85,7 +85,7 @@
     (interactive "fView file: ")
     (unless (file-exists-p file) (error "%s does not exist" file))
     (let ((buffer (find-file-noselect file)))
-      (if (eq (with-current-buffer buffer (get major-mode 'mode-class))
+      (if (eq (get (buffer-local-value 'major-mode buffer) 'mode-class)
               'special)
           (progn
             (switch-to-buffer buffer)
