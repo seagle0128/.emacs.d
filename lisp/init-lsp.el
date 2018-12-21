@@ -43,7 +43,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
-     ;; :hook (prog-mode . lsp)
+     :hook (prog-mode . lsp)
      :init
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
