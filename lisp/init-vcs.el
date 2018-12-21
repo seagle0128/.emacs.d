@@ -138,9 +138,10 @@
         (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
         (add-hook 'git-commit-setup-hook 'magit-commit-prompt)))))
 
+(use-package ghub+ :commands ghubp-get-notifications)
+
 ;; Access Git forges from Magit
 (use-package forge)
-;; (use-package ghub+ :commands ghubp-get-notifications)
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
