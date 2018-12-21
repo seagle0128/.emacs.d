@@ -179,31 +179,14 @@
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
 
-;; Blink current line
-(use-package nav-flash
-  :defines compilation-highlight-overlay
-  :functions windmove-do-window-select
+;; Pulse current line
+(use-package pulse
+  :ensure nil
   :preface
-  (defun my-blink-cursor-maybe (orig-fn &rest args)
-    "Blink current line if the window has moved."
-    (ignore-errors
-      (let ((point (save-excursion (goto-char (window-start))
-                                   (point-marker))))
-        (apply orig-fn args)
-        (unless (or (derived-mode-p 'term-mode)
-                    (equal point
-                           (save-excursion (goto-char (window-start))
-                                           (point-marker))))
-          (my-blink-cursor)))))
-
-  (defun my-blink-cursor (&rest _)
-    "Blink current line using `nav-flash'."
-    (interactive)
-    (unless (minibufferp)
-      (nav-flash-show)
-      ;; Only show in the current window
-      (overlay-put compilation-highlight-overlay 'window (selected-window))))
-  :hook ((switch-window-finish . my-blink-cursor)
+  (defun my-pulse-momentary (&rest _)
+    (let ((pulse-delay 0.05))
+      (pulse-momentary-highlight-one-line (point) 'next-error)))
+  :hook (((switch-window-finish) . my-pulse-momentary)
          ((bookmark-after-jump
            counsel-grep-post-action
            dumb-jump-after-jump
@@ -211,12 +194,14 @@
            xref-after-jump
            xref-after-return) . recenter))
   :init
-  ;; NOTE In :feature jump `recenter' is hooked to a bunch of jumping commands,
-  ;; which will trigger nav-flash.
-  (advice-add #'windmove-do-window-select :around #'my-blink-cursor-maybe)
-  (advice-add #'other-window :around #'my-blink-cursor-maybe)
-  (advice-add #'ace-window :around #'my-blink-cursor-maybe)
-  (advice-add #'recenter :around #'my-blink-cursor-maybe))
+  (advice-add #'recenter :after #'my-pulse-momentary)
+  (advice-add #'other-window :after #'my-pulse-momentary)
+  (advice-add #'ace-window :after #'my-pulse-momentary)
+  (advice-add #'windmove-do-window-select :after #'my-pulse-momentary)
+  (advice-add #'pager-page-down :after #'my-pulse-momentary)
+  (advice-add #'pager-page-up :after #'my-pulse-momentary)
+  (advice-add #'scroll-down :after #'my-pulse-momentary)
+  (advice-add #'scroll-up :after #'my-pulse-momentary))
 
 (provide 'init-highlight)
 
