@@ -45,8 +45,11 @@
     (set-face-attribute 'default nil :height 110)))
 
   ;; Specify font for all unicode characters
-  (when (member "Symbola" (font-family-list))
-    (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+  (cond
+   ((member "Apple Color Emoji" (font-family-list))
+    (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
+   ((member "Symbola" (font-family-list))
+    (set-fontset-font t 'unicode "Symbola" nil 'prepend)))
 
   ;; Specify font for chinese characters
   (cond
