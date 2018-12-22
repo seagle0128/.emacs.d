@@ -31,5 +31,4 @@ script:
                                           (load-file user-init-file))'
                                           # (run-hooks (quote after-init-hook))
                                           # (run-hooks (quote emacs-startup-hook)))'
-    - echo "Startup successful"
-  
+  - echo "Startup successful"
