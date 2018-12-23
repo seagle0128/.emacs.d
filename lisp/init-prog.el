@@ -75,6 +75,7 @@
 
 ;; Focus on writing
 (use-package darkroom
+  :diminish darkroom-tentative-mode
   :commands (darkroom-mode darkroom-tentative-mode)
   :bind ("C-<f6>" . darkroom-mode))
 
