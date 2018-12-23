@@ -103,9 +103,7 @@
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-        (doom-themes-treemacs-config)
-        ;; Enable custom neotree theme (all-the-icons must be installed!)
-        (doom-themes-neotree-config))
+        (doom-themes-treemacs-config))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
