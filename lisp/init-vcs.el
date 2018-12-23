@@ -76,8 +76,6 @@
   (magit-define-popup-switch 'magit-fetch-popup
     ?t "Fetch all tags" "--tags"))
 
-;; (use-package ghub+ :commands ghubp-get-notifications)
-
 ;; Access Git forges from Magit
 (use-package forge)
 
