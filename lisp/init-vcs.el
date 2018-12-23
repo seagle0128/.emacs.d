@@ -74,71 +74,9 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
   (magit-define-popup-switch 'magit-fetch-popup
-    ?t "Fetch all tags" "--tags")
+    ?t "Fetch all tags" "--tags"))
 
-  (when centaur-ivy-icon
-    (with-eval-after-load 'all-the-icons
-      (setq pretty-magit-alist nil)
-      (setq pretty-magit-prompt nil)
-
-      (pretty-magit "Feature"
-                    (all-the-icons-faicon "map-signs")
-                    '(:foreground "#46D9FF" :height 1.2))
-      (pretty-magit "Enhance"
-                    (all-the-icons-faicon "cog")
-                    '(:foreground "#ECBE7B" :height 1.2)
-                    t)
-      (pretty-magit "Improve"
-                    (all-the-icons-faicon "cog")
-                    '(:foreground "#ECBE7B" :height 1.2))
-      (pretty-magit "Optimize"
-                    (all-the-icons-faicon "cogs")
-                    '(:foreground "#51afef" :height 1.2))
-      (pretty-magit "Add"
-                    (all-the-icons-faicon "plus-square")
-                    '(:foreground "#c678dd" :height 1.2))
-      (pretty-magit "Remove"
-                    (all-the-icons-faicon "minus-square")
-                    '(:foreground "#da8548" :height 1.2))
-      (pretty-magit "Clean"
-                    (all-the-icons-faicon "scissors")
-                    '(:foreground "#da8548" :height 1.2))
-      (pretty-magit "Fix"
-                    (all-the-icons-faicon "bug")
-                    '(:foreground "#ff6c6b" :height 1.2))
-      (pretty-magit "Refactor"
-                    (all-the-icons-faicon "wrench")
-                    '(:foreground "#51afef" :height 1.2))
-      (pretty-magit "Bump"
-                    (all-the-icons-faicon "anchor")
-                    '(:foreground "#98be65" :height 1.2))
-      (pretty-magit "Docs"
-                    (all-the-icons-faicon "file-text")
-                    '(:foreground "#98be65" :height 1.2))
-      (pretty-magit "master"
-                    (all-the-icons-alltheicon "git")
-                    '(:box t :height 1.2)
-                    t)
-      (pretty-magit "origin"
-                    (all-the-icons-faicon "github")
-                    '(:box t :height 1.2)
-                    t)
-
-      (advice-add #'magit-status :after #'add-magit-faces)
-      (advice-add #'magit-refresh-buffer :after #'add-magit-faces)
-
-      (with-eval-after-load 'ivy
-        (defun magit-commit-prompt ()
-          "Magit prompt and insert commit header with faces."
-          (interactive)
-          (insert (ivy-read "Commit Type " pretty-magit-prompt
-                            :require-match t :sort t :preselect "Add: "))
-          (add-magit-faces))
-
-        (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
-        (add-hook 'git-commit-setup-hook 'magit-commit-prompt)))))
-
-(use-package ghub+ :commands ghubp-get-notifications)
+;; (use-package ghub+ :commands ghubp-get-notifications)
 
 ;; Access Git forges from Magit
 (use-package forge)
