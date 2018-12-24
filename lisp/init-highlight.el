@@ -191,6 +191,7 @@
            counsel-grep-post-action
            dumb-jump-after-jump
            imenu-after-jump
+           next-error
            xref-after-jump
            xref-after-return) . recenter))
   :init (dolist (cmd '(recenter
