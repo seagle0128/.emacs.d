@@ -285,6 +285,11 @@
               ("C-`" . hs-toggle-hiding))
   :diminish hs-minor-mode)
 
+;; Narrow/Widen
+(use-package fancy-narrow
+  :diminish
+  :hook (after-init . fancy-narrow-mode))
+
 (provide 'init-edit)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
