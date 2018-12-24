@@ -131,7 +131,7 @@
   ;; Set fringe style
   (setq diff-hl-draw-borders nil)
   (setq fringes-outside-margins t)
-  (unless sys/linux-x-p (set-fringe-mode '(4 . 8)))
+  (if sys/mac-x-p (set-fringe-mode '(4 . 8)))
 
   (unless (display-graphic-p)
     ;; Fall back to the display margin since the fringe is unavailable in tty
