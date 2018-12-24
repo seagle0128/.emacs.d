@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
@@ -128,7 +131,7 @@
   ;; Set fringe style
   (setq diff-hl-draw-borders nil)
   (setq fringes-outside-margins t)
-  (set-fringe-mode '(4 . 8))
+  (unless sys/linux-x-p (set-fringe-mode '(4 . 8)))
 
   (unless (display-graphic-p)
     ;; Fall back to the display margin since the fringe is unavailable in tty
