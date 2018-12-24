@@ -45,6 +45,9 @@
      :diminish lsp-mode
      :hook (prog-mode . lsp)
      :init
+     (setq lsp-auto-guess-root t)       ; Detect project root
+     (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
+
      ;; Support LSP in org babel
      ;; https://github.com/emacs-lsp/lsp-mode/issues/377
      (cl-defmacro lsp-org-babel-enbale (lang)
@@ -73,8 +76,6 @@
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
-
-     (setq lsp-auto-guess-root t)       ; Detect project root
      :config (require 'lsp-clients))
 
    (use-package lsp-ui
