@@ -146,11 +146,10 @@
 (use-package olivetti
   :diminish
   :bind ("C-<f6>" . olivetti-mode)
-  :hook (((org-mode markdown-mode) . olivetti-mode)
-         (olivetti-mode . (lambda ()
-                            (if olivetti-mode
-                                (text-scale-set 2)
-                              (text-scale-set 0)))))
+  :hook (olivetti-mode . (lambda ()
+                           (if olivetti-mode
+                               (text-scale-set 2)
+                             (text-scale-set 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Misc
