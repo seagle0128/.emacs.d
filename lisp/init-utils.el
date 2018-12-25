@@ -142,6 +142,17 @@
   :bind (:map lisp-interaction-mode-map
               ("C-x C-s" . my-save-buffer)))
 
+;; Nice writing
+(use-package olivetti
+  :diminish
+  :bind ("C-<f6>" . olivetti-mode)
+  :hook (((org-mode markdown-mode) . olivetti-mode)
+         (olivetti-mode . (lambda ()
+                            (if olivetti-mode
+                                (text-scale-set 2)
+                              (text-scale-set 0)))))
+  :init (setq olivetti-body-width 0.618))
+
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package daemons)                   ; system services/daemons

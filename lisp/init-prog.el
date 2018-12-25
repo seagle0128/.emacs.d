@@ -73,12 +73,6 @@
   :bind (("<f7>" . quickrun)
          ("C-c x" . quickrun)))
 
-;; Focus on writing
-(use-package darkroom
-  :diminish darkroom-tentative-mode
-  :commands (darkroom-mode darkroom-tentative-mode)
-  :bind ("C-<f6>" . darkroom-mode))
-
 (use-package cask-mode)
 (use-package csharp-mode)
 (use-package dockerfile-mode)
