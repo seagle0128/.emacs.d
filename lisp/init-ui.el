@@ -89,9 +89,8 @@
     (intern (completing-read "Load theme: "
                              '(default classic dark light daylight)))))
   (let ((theme (standardize-theme theme)))
-    (if (boundp 'counsel-load-theme)
-        (counsel-load-theme theme)
-      (load-theme theme t))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)))
 
 (if (is-doom-theme-p centaur-theme)
     (progn
