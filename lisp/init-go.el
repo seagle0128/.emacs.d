@@ -104,8 +104,7 @@
     (with-eval-after-load 'company
       (use-package company-go
         :defines company-backends
-        :functions company-backend-with-yas
-        :init (cl-pushnew (company-backend-with-yas 'company-go) company-backends)))))
+        :init (cl-pushnew 'company-go company-backends)))))
 
 ;; Local Golang playground for short snippes
 (use-package go-playground

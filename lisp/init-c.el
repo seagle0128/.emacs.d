@@ -70,9 +70,10 @@
 
       (with-eval-after-load 'company
         (use-package company-irony
-          :init (cl-pushnew (company-backend-with-yas 'company-irony) company-backends))
+          :defines company-backends
+          :init (cl-pushnew 'company-irony company-backends))
         (use-package company-irony-c-headers
-          :init (cl-pushnew (company-backend-with-yas 'company-irony-c-headers) company-backends)))
+          :init (cl-pushnew 'company-irony-c-headers company-backends)))
 
       (with-eval-after-load 'flycheck
         (use-package flycheck-irony
@@ -81,8 +82,8 @@
     ;; Company mode backend for C/C++ header files
     (with-eval-after-load 'company
       (use-package company-c-headers
-        :functions company-backend-with-yas
-        :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends)))))
+        :defines company-backends
+        :init (cl-pushnew 'company-c-headers company-backends)))))
 
 (provide 'init-c)
 

@@ -14,7 +14,6 @@
 ;; (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 ;; (setq centaur-ivy-icon nil)                    ; Display icons in ivy or not: t or nil
 ;; (setq centaur-pretty-magit nil)                ; Prettify magit or not: t or nil
-;; (setq centaur-company-enable-yas t)            ; Enable yasnippet for company or not: t or nil
 ;; (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 
 ;; For Emacs devel

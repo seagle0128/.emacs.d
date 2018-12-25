@@ -36,16 +36,6 @@
 (use-package company
   :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
-  :preface
-  (defvar company-enable-yas centaur-company-enable-yas
-    "Enable yasnippet for all backends.")
-
-  (defun company-backend-with-yas (backend)
-    (if (or (not company-enable-yas)
-            (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
   :bind (("M-/" . company-complete)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
@@ -75,11 +65,7 @@
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
       :hook (global-company-mode . company-quickhelp-mode)
-      :config (setq company-quickhelp-delay 0.8)))
-
-  ;; Support yas in commpany
-  ;; Note: Must be the last to involve all backends
-  (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+      :config (setq company-quickhelp-delay 0.8))))
 
 (provide 'init-company)
 

@@ -115,7 +115,7 @@
             nil))
 
     (with-eval-after-load 'company
-      (cl-pushnew (company-backend-with-yas 'company-tide) company-backends))))
+      (cl-pushnew 'company-tide company-backends))))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -130,9 +130,8 @@
   (unless centaur-lsp
     (use-package company-web
       :after company
-      :functions company-backend-with-yas
       :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
-              (cl-pushnew (company-backend-with-yas mode) company-backends)))))
+              (cl-pushnew mode company-backends)))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

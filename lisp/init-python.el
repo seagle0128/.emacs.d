@@ -73,8 +73,7 @@
       (use-package company-anaconda
         :after company
         :defines company-backends
-        :functions company-backend-with-yas
-        :init (cl-pushnew (company-backend-with-yas 'company-anaconda) company-backends)))))
+        :init (cl-pushnew 'company-anaconda company-backends)))))
 
 (provide 'init-python)
 
