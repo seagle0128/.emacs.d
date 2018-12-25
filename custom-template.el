@@ -10,7 +10,6 @@
 ;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 ;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china netease or tuna
 ;; (setq centaur-theme 'classic)                  ; Color theme: default, classic, doom, dark, light or daylight
-;; (setq centaur-cnfonts t)                       ; Use cnfonts not: t or nil
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
 ;; (setq centaur-ivy-icon nil)                    ; Display icons in ivy or not: t or nil
@@ -24,7 +23,7 @@
 ;; (setq desktop-base-lock-name (format ".emacs-%s.desktop.lock" emacs-major-version))
 
 ;; Fonts
-(when (and (not centaur-cnfonts) (display-graphic-p))
+(when (display-graphic-p)
   ;; Set a default font
   (cond
    ((member "Source Code Pro" (font-family-list))

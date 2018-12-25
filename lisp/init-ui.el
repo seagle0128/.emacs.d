@@ -138,29 +138,6 @@
            treemacs-mode)
           . hide-mode-line-mode)))
 
-;; Fonts
-(when (and centaur-cnfonts (display-graphic-p))
-  ;; cnfonts doesn't support terminal
-  (use-package cnfonts
-    :hook (after-init . cnfonts-enable)
-    :config
-    ;; NOTE: on macOS, the frame size is changed during the startup without below.
-    ;; Keep frame size
-    (setq cnfonts-keep-frame-size nil)
-    (add-hook 'window-setup-hook
-              (lambda ()
-                (setq cnfonts-keep-frame-size t)))
-
-    ;; Set profiles
-    (setq cnfonts-use-cache t)
-    (setq cnfonts-profiles
-          '("program-normal" "program-large" "program-small" "org-mode" "read-book"))
-    (setq cnfonts--profiles-steps '(("program-normal" . 4)
-                                    ("program-large" . 5)
-                                    ("program-small" . 3)
-                                    ("org-mode" . 6)
-                                    ("read-book" . 8)))))
-
 ;; Line and Column
 (setq-default fill-column 80)
 (setq column-number-mode t)
