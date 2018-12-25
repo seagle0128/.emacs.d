@@ -196,8 +196,8 @@
            imenu-after-jump
            next-error
            xref-after-jump
-           xref-after-return) . recenter))
-  :init (dolist (cmd '(recenter
+           xref-after-return) . recenter-top-bottom))
+  :init (dolist (cmd '(recenter-top-bottom
                        other-window ace-window windmove-do-window-select
                        pager-page-down pager-page-up
                        scroll-down scroll-up))
