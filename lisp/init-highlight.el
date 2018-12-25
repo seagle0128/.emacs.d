@@ -50,6 +50,10 @@
          ([M-f3] . symbol-overlay-remove-all))
   :hook (prog-mode . symbol-overlay-mode)
   :config
+  (defadvice symbol-overlay-basic-jump (after my-recenter-top-bootom activate)
+    "Recenter after jumping to the symbol."
+    (recenter-top-bottom '(middle)))
+
   (defun symbol-overlay-switch-first ()
     (interactive)
     (let* ((symbol (symbol-overlay-get-symbol))
