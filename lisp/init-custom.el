@@ -90,10 +90,6 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   "Display icons in `ivy' or not."
   :type 'boolean)
 
-(defcustom centaur-pretty-magit t
-  "Prettify `magit' or not."
-  :type 'boolean)
-
 (defcustom centaur-benchmark nil
   "Enable the init benchmark or not."
   :type 'boolean)

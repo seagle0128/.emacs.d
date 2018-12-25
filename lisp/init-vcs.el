@@ -41,35 +41,6 @@
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
-  :preface
-  (when centaur-pretty-magit
-    (defvar pretty-magit-alist nil)
-    (defvar pretty-magit-prompt nil)
-
-    ;; Pretty magit http://www.modernemacs.com/post/pretty-magit
-    (defmacro pretty-magit (word icon props &optional no-prompt?)
-      "Replace sanitized WORD with ICON, PROPS and by default add to prompts."
-      `(prog1
-           (add-to-list 'pretty-magit-alist
-                        (list (rx bow (group ,word (eval (if ,no-prompt? "" ":"))))
-                              ,icon ,props))
-         (unless ,no-prompt?
-           (add-to-list 'pretty-magit-prompt (concat ,word ": ")))))
-
-    (defun add-magit-faces ()
-      "Add face properties and compose symbols for buffer from pretty-magit."
-      (interactive)
-      (with-silent-modifications
-        (--each pretty-magit-alist
-          (-let (((rgx icon props) it))
-            (save-excursion
-              (goto-char (point-min))
-              (while (search-forward-regexp rgx nil t)
-                (compose-region
-                 (match-beginning 1) (match-end 1) icon)
-                (when props
-                  (add-face-text-property
-                   (match-beginning 1) (match-end 1) props)))))))))
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
