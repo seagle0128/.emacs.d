@@ -109,7 +109,11 @@
       (use-package solaire-mode
         :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
                (minibuffer-setup . solaire-mode-in-minibuffer)
-               (after-load-theme . solaire-mode-swap-bg)))
+               (after-load-theme . solaire-mode-swap-bg))
+        :config
+        (solaire-mode-swap-bg)
+        (advice-add #'persp-load-state-from-file
+                    :after #'solaire-mode-restore-persp-mode-buffers))
 
       (use-package doom-modeline
         :hook (after-init . doom-modeline-init)))
