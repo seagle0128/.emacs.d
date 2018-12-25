@@ -50,6 +50,10 @@
   "Revert the current buffer."
   (interactive)
   (message "Revert this buffer.")
+  (text-scale-set 0)
+  (widen)
+  (if (fboundp 'fancy-widen)
+      (ignore-errors (fancy-widen)))
   (revert-buffer t t))
 (bind-keys ("<f5>" . revert-current-buffer)
            ("s-r" . revert-current-buffer))
