@@ -131,8 +131,7 @@
                                     (org-remove-inline-images)
                                     (read-only-mode -1)
                                     (if (fboundp 'hide-mode-line-mode)
-                                        (hide-mode-line-mode -11))
-                                    (winner-undo))))
+                                        (hide-mode-line-mode -11)))))
     :config
     (org-tree-slide-simple-profile)
     (setq org-tree-slide-skip-outline-level 2))
@@ -165,8 +164,7 @@
                                       (org-present-read-write)
                                       (read-only-mode -1)
                                       (if (fboundp 'hide-mode-line-mode)
-                                          (hide-mode-line-mode -1))
-                                      (winner-undo)))))
+                                          (hide-mode-line-mode -1))))))
 
   ;; Pomodoro
   (use-package org-pomodoro
