@@ -50,10 +50,6 @@
          ([M-f3] . symbol-overlay-remove-all))
   :hook (prog-mode . symbol-overlay-mode)
   :config
-  (defadvice symbol-overlay-basic-jump (after my-recenter-top-bootom activate)
-    "Recenter after jumping to the symbol."
-    (recenter-top-bottom '(middle)))
-
   (defun symbol-overlay-switch-first ()
     (interactive)
     (let* ((symbol (symbol-overlay-get-symbol))
@@ -191,20 +187,28 @@
   :ensure nil
   :preface
   (defun my-pulse-momentary (&rest _)
+    "Pulse the current line."
     (let ((pulse-delay 0.05))
       (pulse-momentary-highlight-one-line (point) 'next-error)))
+
+  (defun my-recenter (&rest _)
+    "Recenter and pulse the current line."
+    (recenter)
+    (my-pulse-momentary))
   :hook (((switch-window-finish) . my-pulse-momentary)
          ((bookmark-after-jump
            counsel-grep-post-action
            dumb-jump-after-jump
            imenu-after-jump
+           magit-diff-visit-file
            next-error
            xref-after-jump
-           xref-after-return) . recenter-top-bottom))
+           xref-after-return) . my-recenter))
   :init (dolist (cmd '(recenter-top-bottom
                        other-window ace-window windmove-do-window-select
-                       pager-page-down pager-page-up
-                       scroll-down scroll-up))
+                       pop-to-mark-command pop-global-mark
+                       symbol-overlay-basic-jump
+                       pager-page-down pager-page-up))
           (advice-add cmd :after #'my-pulse-momentary)))
 
 (provide 'init-highlight)
