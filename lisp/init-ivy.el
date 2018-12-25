@@ -115,10 +115,6 @@
   (setq ivy-format-function 'ivy-format-function-arrow)
   ;; (setq ivy-initial-inputs-alist nil)
 
-  (setq ivy-re-builders-alist
-        '((read-file-name-internal . ivy--regex-fuzzy)
-          (t . ivy--regex-plus)))
-
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
@@ -351,8 +347,7 @@
             (t
              nil)))
     :init (setq ivy-re-builders-alist
-                '((read-file-name-internal . ivy--regex-fuzzy)
-                  (t . re-builder-pinyin)))))
+                '((t . re-builder-pinyin)))))
 
 (provide 'init-ivy)
 
