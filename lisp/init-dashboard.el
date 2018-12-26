@@ -86,7 +86,7 @@
     :init (setq inhibit-startup-screen t)
     :config
     (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
-    (setq dashboard-startup-banner (if centaur-logo centaur-logo 'official))
+    (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5)))
