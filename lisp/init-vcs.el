@@ -48,7 +48,9 @@
     ?t "Fetch all tags" "--tags"))
 
 ;; Access Git forges from Magit
-(use-package forge)
+;; https://github.com/skeeto/emacsql#windows-issues
+(unless sys/win32p
+  (use-package forge))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
