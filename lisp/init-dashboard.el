@@ -93,7 +93,7 @@
     :hook (after-init . dashboard-setup-startup-hook)
     :init (setq inhibit-startup-screen t)
     :config
-    (setq dashboard-banner-logo-title "Welcome to Centaur Emacs")
+    (setq dashboard-banner-logo-title "Centaur Emacs - Enjoy writing and programming")
     (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-items '((recents  . 10)
                             (bookmarks . 5)
@@ -129,6 +129,7 @@
                      :action (lambda (&rest _) (centaur-update))
                      :mouse-face 'highlight
                      (propertize "Update" 'face 'font-lock-keyword-face))
+      (insert "\n")
       (insert "\n")
       (insert "\n")
       (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
