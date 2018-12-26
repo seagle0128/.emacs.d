@@ -126,7 +126,9 @@
       (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
 
     (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
-    (add-to-list 'dashboard-items '(buttons))))
+    (add-to-list 'dashboard-items '(buttons))
+
+    (dashboard-insert-startupify-lists)))
 
 (provide 'init-dashboard)
 
