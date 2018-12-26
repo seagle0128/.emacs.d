@@ -43,6 +43,21 @@
     :functions widget-forward winner-undo open-custom-file
     :commands dashboard-insert-startupify-lists
     :preface
+    (defvar dashboard-winner nil)
+
+    (defun open-dashboard ()
+      "Open the *dashboard* buffer and jump to the first widget."
+      (interactive)
+      (if (get-buffer dashboard-buffer-name)
+          (kill-buffer dashboard-buffer-name))
+      (dashboard-insert-startupify-lists)
+      (switch-to-buffer dashboard-buffer-name)
+      (goto-char (point-min))
+      (widget-forward 1)
+      (if (> (length (window-list-1)) 1)
+          (setq dashboard-winner t))
+      (delete-other-windows))
+
     (defun restore-session ()
       "Restore last session."
       (interactive)
@@ -55,33 +70,26 @@
         (when (persp-get-buffer-or-null persp-special-last-buffer)
           (persp-switch-to-buffer persp-special-last-buffer))))
 
-    (defun exit-dashboard ()
+    (defun quit-dashboard ()
       "Quit dashboard window."
       (interactive)
       (quit-window t)
-      (winner-undo))
+      (when dashboard-winner
+        (winner-undo)
+        (setq dashboard-winner nil)))
 
     (defun dashboard-edit-config ()
       "Open custom config file."
       (interactive)
-      (exit-dashboard)
+      (quit-dashboard)
       (open-custom-file))
-    :bind (("<f2>" . (lambda ()
-                       "Open the *dashboard* buffer and jump to the first widget."
-                       (interactive)
-                       (if (get-buffer dashboard-buffer-name)
-                           (kill-buffer dashboard-buffer-name))
-                       (dashboard-insert-startupify-lists)
-                       (switch-to-buffer dashboard-buffer-name)
-                       (goto-char (point-min))
-                       (widget-forward 1)
-                       (delete-other-windows)))
+    :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
            ("E" . dashboard-edit-config)
            ("R" . restore-session)
            ("U" . centaur-update)
-           ("q" . exit-dashboard))
+           ("q" . quit-dashboard))
     :hook (after-init . dashboard-setup-startup-hook)
     :init (setq inhibit-startup-screen t)
     :config
