@@ -47,8 +47,8 @@
 
          ;; Integrate `expand-region'
          :map easy-kill-base-map
-         ("=" . easy-kill-er-expand)
-         ("-" . easy-kill-er-unexpand))
+         ("o" . easy-kill-er-expand)
+         ("i" . easy-kill-er-unexpand))
   :init
   (setq easy-kill-alist '((?w word           " ")
                           (?s sexp           "\n")
