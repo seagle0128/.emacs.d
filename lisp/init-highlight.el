@@ -188,8 +188,7 @@
   :preface
   (defun my-pulse-momentary (&rest _)
     "Pulse the current line."
-    (let ((pulse-delay 0.05))
-      (pulse-momentary-highlight-one-line (point) 'next-error)))
+    (pulse-momentary-highlight-one-line (point) 'next-error))
 
   (defun my-recenter (&rest _)
     "Recenter and pulse the current line."
