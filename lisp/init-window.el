@@ -93,11 +93,11 @@
       ;; matches aw-dispatch-alist with a few extra
       (defhydra hydra-frame-window (:color red :hint nil)
         "
-^Frame^                 ^Window^         Window Size^^^^^^  ^Text Zoom^                 (__)
-_0_: delete             _t_oggle           ^ ^ _k_ ^ ^        _=_                   (oo)
-_1_: delete others      _s_wap             _h_ ^+^ _l_        ^+^             /------\\/
-_2_: new                _d_elete           ^ ^ _j_ ^ ^        _-_            / |    ||
-_F_ullscreen            ^ ^                _b_alance^^^^      ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
+^Frame^                 ^Window^      Window Size^^^^^^    ^Text Zoom^               (__)
+_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _=_                   (oo)
+_1_: delete others      _s_wap          _h_ ^+^ _l_            ^+^             /------\\/
+_2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
+_F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
 "
         ("0" delete-frame :exit t)
         ("1" delete-other-frames :exit t)
