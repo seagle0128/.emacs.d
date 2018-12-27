@@ -40,10 +40,15 @@
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
     :defines persp-special-last-buffer
-    :functions widget-forward winner-undo open-custom-file
+    :functions (widget-forward
+                winner-undo
+                open-custom-file
+                persp-load-state-from-file
+                persp-get-buffer-or-null
+                persp-switch-to-buffer)
     :commands dashboard-insert-startupify-lists
     :preface
-    (defvar dashboard-winner nil)
+    (defvar dashboard-recover-layout-p nil)
 
     (defun open-dashboard ()
       "Open the *dashboard* buffer and jump to the first widget."
@@ -54,8 +59,13 @@
       (switch-to-buffer dashboard-buffer-name)
       (goto-char (point-min))
       (widget-forward 1)
-      (if (> (length (window-list-1)) 1)
-          (setq dashboard-winner t))
+      (if (> (length (window-list-1))
+             ;; exclude `treemacs' window
+             (if (and (fboundp 'treemacs-current-visibility)
+                      (eq (treemacs-current-visibility) 'visible))
+                 2
+               1))
+          (setq dashboard-recover-layout-p t))
       (delete-other-windows))
 
     (defun restore-session ()
@@ -74,9 +84,10 @@
       "Quit dashboard window."
       (interactive)
       (quit-window t)
-      (when dashboard-winner
+      (when (and dashboard-recover-layout-p
+                 (bound-and-true-p winner-mode))
         (winner-undo)
-        (setq dashboard-winner nil)))
+        (setq dashboard-recover-layout-p nil)))
 
     (defun dashboard-edit-config ()
       "Open custom config file."
