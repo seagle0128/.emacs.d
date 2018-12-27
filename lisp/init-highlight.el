@@ -194,15 +194,12 @@
     "Recenter and pulse the current line."
     (recenter)
     (my-pulse-momentary))
-  :hook (((switch-window-finish) . my-pulse-momentary)
-         ((bookmark-after-jump
-           counsel-grep-post-action
-           dumb-jump-after-jump
-           imenu-after-jump
-           magit-diff-visit-file
-           next-error
-           xref-after-jump
-           xref-after-return) . my-recenter))
+  :hook ((bookmark-after-jump
+          counsel-grep-post-action
+          dumb-jump-after-jump
+          imenu-after-jump
+          magit-diff-visit-file
+          next-error) . my-recenter)
   :init (dolist (cmd '(recenter-top-bottom
                        other-window ace-window windmove-do-window-select
                        pop-to-mark-command pop-global-mark

@@ -293,20 +293,18 @@
   ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
   ;; search the selection or current symbol by default
   (eval-and-compile
-    (declare-function ivy-thing-at-point "ivy")
+    (declare-function ivy-thing-at-point 'ivy)
     (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
       "Search the selection or current symbol via `ag' by default."
-      (unless initial-input
-        (if (region-active-p)
-            (setq initial-input (buffer-substring-no-properties
-                                 (region-beginning) (region-end)))
-          (setq initial-input (ivy-thing-at-point))))
-      (unless initial-directory
-        (setq initial-directory default-directory))
-      (message "input: %s" initial-input)
-      (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
-
-    (advice-add 'counsel-ag :around #'my-counsel-ag))
+      (funcall -counsel-ag
+               (or initial-input
+                   (if (region-active-p)
+                       (buffer-substring-no-properties (region-beginning) (region-end))
+                     (ivy-thing-at-point)))
+               (or initial-directory default-directory)
+               extra-ag-args
+               ag-prompt))
+    (advice-add #'counsel-ag :around #'my-counsel-ag))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
