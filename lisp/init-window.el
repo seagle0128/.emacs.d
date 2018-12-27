@@ -91,25 +91,24 @@
       ;; https://github.com/abo-abo/ace-window/wiki/Hydra
       ;; hydra-frame-window is designed from `ace-window' and
       ;; matches aw-dispatch-alist with a few extra
-      (defhydra hydra-frame-window (:color red :hint t)
+      (defhydra hydra-frame-window (:color red :hint nil)
         "
-^Frame^                         ^Window^         Window Size^^^^^^  ^Text^                 (__)
-_0_: delete-frame               _t_: toggle        ^ ^ _k_ ^ ^        _K_                   (oo)
-_1_: delete-other-frames        _e_: swap          _h_ ^+^ _l_        ^+^             /------\\/
-_2_: make-frame                 _w_: delete        ^ ^ _j_ ^ ^        _J_            / |    ||
-_F_: fullscreen                 ^ ^                _b_alance^^^^      ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
+^Frame^                 ^Window^         Window Size^^^^^^  ^Text Zoom^                 (__)
+_0_: delete             _t_oggle           ^ ^ _k_ ^ ^        _=_                   (oo)
+_1_: delete others      _s_wap             _h_ ^+^ _l_        ^+^             /------\\/
+_2_: new                _d_elete           ^ ^ _j_ ^ ^        _-_            / |    ||
+_F_ullscreen            ^ ^                _b_alance^^^^      ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
 "
         ("0" delete-frame :exit t)
         ("1" delete-other-frames :exit t)
         ("2" make-frame  :exit t)
         ("b" balance-windows)
-        ("e" ace-swap-window)
+        ("s" ace-swap-window)
         ("F" toggle-frame-fullscreen)
         ("t" toggle-window-split)
-        ("w" ace-delete-window :exit t)
-        ("x" delete-frame :exit t)
-        ("K" text-scale-decrease)
-        ("J" text-scale-increase)
+        ("d" ace-delete-window :exit t)
+        ("-" text-scale-decrease)
+        ("=" text-scale-increase)
         ("h" shrink-window-horizontally)
         ("k" shrink-window)
         ("j" enlarge-window)
