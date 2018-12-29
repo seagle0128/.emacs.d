@@ -58,7 +58,7 @@
       (dashboard-insert-startupify-lists)
       (switch-to-buffer dashboard-buffer-name)
       (goto-char (point-min))
-      (widget-forward 1)
+      (widget-forward 5)                ; move to recent files
       (if (> (length (window-list-1))
              ;; exclude `treemacs' window
              (if (and (fboundp 'treemacs-current-visibility)
