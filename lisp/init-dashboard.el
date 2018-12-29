@@ -58,7 +58,7 @@
       (dashboard-insert-startupify-lists)
       (switch-to-buffer dashboard-buffer-name)
       (goto-char (point-min))
-      (widget-forward 5)                ; move to recent files
+      (dashboard-goto-recent-files)
       (if (> (length (window-list-1))
              ;; exclude `treemacs' window
              (if (and (fboundp 'treemacs-current-visibility)
@@ -94,6 +94,22 @@
       (interactive)
       (quit-dashboard)
       (open-custom-file))
+
+    (defun dashboard-goto-recent-files ()
+      "Go to recent files."
+      (interactive)
+      (funcall (local-key-binding "r")))
+
+    (defun dashboard-goto-projects ()
+      "Go to projects."
+      (interactive)
+      (funcall (local-key-binding "p")))
+
+    (defun dashboard-goto-bookmarks ()
+      "Go to bookmarks."
+      (interactive)
+      (funcall (local-key-binding "m")))
+
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
@@ -148,7 +164,31 @@
     (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
     (add-to-list 'dashboard-items '(buttons))
 
-    (dashboard-insert-startupify-lists)))
+    (dashboard-insert-startupify-lists)
+
+    (with-eval-after-load 'hydra
+      (defhydra dashboard-hydra (:color red :columns 3)
+        "Help"
+        ("<tab>" widget-forward "Next Widget")
+        ("C-i" widget-forward "Prompt")
+        ("<backtab>" widget-backward "Previous Widget")
+        ("RET" widget-button-press "Press Widget" :exit t)
+        ("g" dashboard-refresh-buffer "Refresh" :exit t)
+        ("}" dashboard-next-section "Next Section")
+        ("{" dashboard-previous-section "Previous Section")
+        ("r" dashboard-goto-recent-files "Recent Files")
+        ("p" dashboard-goto-projects "Projects")
+        ("m" dashboard-goto-bookmarks "Bookmarks")
+        ("H" browse-homepage "Browse Homepage" :exit t)
+        ("R" restore-session "Restore Previous Session" :exit t)
+        ("E" dashboard-edit-config "Open custom file" :exit t)
+        ("U" centaur-update "Update Centaur Emacs" :exit t)
+        ("<f2>" open-dashboard "Open Dashboard" :exit t)
+        ("q" quit-dashboard "Quit Dashboard" :exit t)
+        ("C-g" nil "quit"))
+      (bind-keys :map dashboard-mode-map
+                 ("h" . dashboard-hydra/body)
+                 ("?" . dashboard-hydra/body)))))
 
 (provide 'init-dashboard)
 
