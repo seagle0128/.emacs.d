@@ -119,21 +119,6 @@
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
 
-  ;; Use faster search tools: ripgrep or the silver search
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
-          ((executable-find "ag")
-           "ag -i --noheading --nocolor --nofilename --numbers '%s' %s")
-          (t counsel-grep-base-command))))
-    (setq counsel-grep-base-command command))
-
-  (when (executable-find "rg")
-    (setq counsel-git-cmd "rg --files")
-    (setq counsel-rg-base-command
-          "rg -i -M 120 --no-heading --line-number --color never %s ."))
-
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
