@@ -123,9 +123,10 @@ _F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\
 (put 'shackle--current-popup-window 'permanent-local t)
 
 (use-package shackle
+  :commands shackle-display-buffer
   :hook (after-init . shackle-mode)
   :config
-  (eval-when-compile
+  (eval-and-compile
     (defun shackle-last-popup-buffer ()
       "View last popup buffer."
       (interactive)
