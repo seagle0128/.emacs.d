@@ -76,7 +76,10 @@
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
-     :config (require 'lsp-clients))
+     :config
+     (setq lsp-clients-typescript-server "typescript-language-server"
+           lsp-clients-typescript-server-args '("--stdio"))
+     (require 'lsp-clients))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
