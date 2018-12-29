@@ -72,7 +72,7 @@
 
       (with-eval-after-load 'all-the-icons
         (setq company-box-icons-unknown
-              (all-the-icons-faicon "question-circle" :v-adjust -0.0575))
+              (all-the-icons-octicon "file-text" :v-adjust -0.05))
 
         (setq company-box-icons-elisp
               (list
