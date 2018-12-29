@@ -64,6 +64,7 @@
     (use-package company-box
       :functions (all-the-icons-faicon
                   all-the-icons-material
+                  all-the-icons-octicon
                   all-the-icons-alltheicon)
       :hook (company-mode . company-box-mode)
       :init (setq company-box-enable-icon (display-graphic-p))
@@ -116,10 +117,11 @@
   ;; Popup documentation for completion candidates
   (when (and (not emacs/>=26p) (display-graphic-p))
     (use-package company-quickhelp
+      :defines company-quickhelp-delay
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
       :hook (global-company-mode . company-quickhelp-mode)
-      :config (setq company-quickhelp-delay 0.8))))
+      :init (setq company-quickhelp-delay 0.8))))
 
 (provide 'init-company)
 
