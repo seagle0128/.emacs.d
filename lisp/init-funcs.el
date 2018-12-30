@@ -158,14 +158,18 @@
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
-  (byte-recompile-directory package-user-dir nil t))
+  (if (fboundp 'async-byte-recompile-directory)
+      (async-byte-recompile-directory package-user-dir)
+    (byte-recompile-directory package-user-dir 0 t)))
 
 ;; Recompile site-lisp directory
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (byte-recompile-directory
-   (concat user-emacs-directory "site-lisp") 0 t))
+  (let ((dir (concat user-emacs-directory "site-lisp")))
+    (if (fboundp 'async-byte-recompile-directory)
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
 
 ;;
 ;; Network Proxy
