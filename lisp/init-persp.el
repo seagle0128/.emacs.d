@@ -70,7 +70,7 @@
   ;; Ignore temporary buffers
   (add-hook 'persp-common-buffer-filter-functions
             (lambda (b) (or (string-prefix-p "*" (buffer-name b))
-                       (string-match-p "-ls\\(<[0-9]*>\\|\\)$" (buffer-name b))
+                       (string-match-p ".*ls\\(<[0-9]*>\\|\\)$" (buffer-name b))
                        (string-match-p "^\\(ccls\\|cquery\\)$" (buffer-name b))
                        (string-prefix-p "magit" (buffer-name b)))))
 

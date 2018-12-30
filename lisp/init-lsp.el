@@ -43,6 +43,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
+     :defines (lsp-clients-typescript-server lsp-clients-typescript-server-args)
      :hook (prog-mode . lsp)
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
@@ -76,10 +77,9 @@
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
        (eval `(lsp-org-babel-enbale ,lang)))
-     :config
+
      (setq lsp-clients-typescript-server "typescript-language-server"
-           lsp-clients-typescript-server-args '("--stdio"))
-     (require 'lsp-clients))
+           lsp-clients-typescript-server-args '("--stdio")))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
@@ -87,7 +87,9 @@
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
                  ("C-c u" . lsp-ui-imenu)))
 
-   (use-package company-lsp)
+   (use-package company-lsp
+     :hook (lsp-after-open . (lambda ()
+                               (setq-local company-backends '((company-lsp :with company-yasnippet))))))
 
    ;; C/C++/Objective-C support
    (use-package ccls
