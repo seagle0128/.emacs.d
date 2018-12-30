@@ -36,19 +36,25 @@
 (use-package company
   :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  :commands company-abort
   :bind (("M-/" . company-complete)
          ("C-c C-y" . company-yasnippet)
+         ("<backtab>" . company-yasnippet)
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("TAB" . company-complete-common-or-cycle)
          ("<tab>" . company-complete-common-or-cycle)
-         ("S-TAB" . company-select-previous)
-         ("<backtab>" . company-select-previous)
+         ("<backtab>" . my-company-yasnippet)
+         ("C-c C-y" . my-company-yasnippet)
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
   :hook (after-init . global-company-mode)
+  :init
+  (defun my-company-yasnippet ()
+    (interactive)
+    (company-abort)
+    (call-interactively 'company-yasnippet))
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
