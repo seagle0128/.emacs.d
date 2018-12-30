@@ -88,10 +88,11 @@
   (package-install 'use-package))
 
 ;; Should set before loading `use-package'
-(setq use-package-always-ensure t)
-(setq use-package-always-defer t)
-(setq use-package-expand-minimally t)
-(setq use-package-enable-imenu-support t)
+(eval-and-compile
+  (setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
+  (setq use-package-expand-minimally t)
+  (setq use-package-enable-imenu-support t))
 
 (eval-when-compile
   (require 'use-package))
@@ -100,9 +101,18 @@
 (use-package diminish)
 (use-package bind-key)
 
+;; Asynchronous processing
+(use-package async
+  :defines async-bytecomp-allowed-packages
+  :init
+  (setq async-bytecomp-allowed-packages '(all))
+  (async-bytecomp-package-mode 1)
+  (dired-async-mode 1))
+
 ;; Initialization benchmark
 (when centaur-benchmark
   (use-package benchmark-init
+    :defines swiper-font-lock-exclude
     :commands (benchmark-init/activate)
     :hook (after-init . benchmark-init/deactivate)
     :init (benchmark-init/activate)
