@@ -105,7 +105,8 @@
 (use-package async
   :defines async-bytecomp-allowed-packages
   :init
-  (setq async-bytecomp-allowed-packages '(all))
+  (unless sys/win32p
+    (setq async-bytecomp-allowed-packages '(all)))
   (async-bytecomp-package-mode 1)
   (dired-async-mode 1))
 
