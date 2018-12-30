@@ -121,10 +121,13 @@
       (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 
 ;; Extensions
-(use-package package-utils
+(use-package paradox
+  :commands paradox-enable
+  :hook (after-init . paradox-enable)
   :init
-  (defalias 'upgrade-packages 'package-utils-upgrade-all)
-  (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart))
+  (setq paradox-execute-asynchronously t)
+  (setq paradox-github-token t)
+  (defalias 'upgrade-packages 'paradox-upgrade-packages))
 
 (provide 'init-package)
 

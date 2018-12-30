@@ -104,16 +104,6 @@
   (centaur-update-org)
   (centaur-update-dotfiles))
 
-(declare-function upgrade-packages-and-restart 'init-package)
-(defalias 'centaur-update-packages-and-restart 'upgrade-packages-and-restart)
-(defun centaur-update-and-restart ()
-  "Update configurations and packages, then restart."
-  (interactive)
-  (centaur-update-config)
-  (centaur-update-org)
-  (centaur-update-dotfiles)
-  (centaur-update-packages-and-restart nil))
-
 (defun centaur-update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
@@ -203,6 +193,8 @@
       (proxy-http-disable)
     (proxy-http-enable)))
 
+(defvar socks-noproxy)
+(defvar socks-server)
 (defun proxy-socks-enable ()
   "Enable Socks proxy."
   (interactive)
