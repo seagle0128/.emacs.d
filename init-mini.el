@@ -4,7 +4,7 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 5.0.0
+;; Version: 1.0.0
 ;; Keywords: .emacs.d centaur
 
 ;; This file is not part of GNU Emacs.
@@ -80,7 +80,7 @@
 
 ;; Basic modes
 (recentf-mode 1)
-(savehist-mode 1)
+(ignore-errors (savehist-mode 1))
 (save-place-mode 1)
 (show-paren-mode 1)
 (delete-selection-mode 1)
