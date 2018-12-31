@@ -36,12 +36,6 @@
     (set-face-attribute 'default nil :font "Consolas")))
 
   (cond
-   ((member "Baskerville" (font-family-list))
-    (set-face-attribute 'variable-pitch nil :font "Baskerville"))
-   ((member "Times New Roman" (font-family-list))
-    (set-face-attribute 'variable-pitch nil :font "Times New Roman")))
-
-  (cond
    (sys/mac-x-p
     (set-face-attribute 'default nil :height 130))
    (sys/win32p
