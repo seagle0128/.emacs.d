@@ -195,7 +195,7 @@ _F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\
           (grep-mode :size 25 :align 'below :autoclose t)
           (profiler-report-mode :popup t)
           (tabulated-list-mode :align 'below)
-          ("^ ?\\*" :regexp t :select t :align 'below :autoclose t))))
+          ("^ ?\\*" :regexp t :select t :align 'below))))
 
 (provide 'init-window)
 
