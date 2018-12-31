@@ -119,9 +119,17 @@
 
   ;; Fish-like history autosuggestions
   (use-package esh-autosuggest
-    :hook (eshell-mode . (lambda ()
-                           (setq-local company-backends
-                                       '((company-capf esh-autosuggest))))))
+    :defines ivy-display-functions-alist
+    :preface
+    (defun setup-eshell-ivy-completion ()
+      (when (featurep 'ivy)
+        (setq-local ivy-display-functions-alist
+                    (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+                          ivy-display-functions-alist))))
+    :bind (:map eshell-mode-map
+                ([remap eshell-pcomplete] . completion-at-point))
+    :hook ((eshell-mode . esh-autosuggest-mode)
+           (eshell-mode . setup-eshell-ivy-completion)))
 
   ;; Eldoc support
   (use-package esh-help
