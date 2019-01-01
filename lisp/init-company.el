@@ -68,6 +68,7 @@
   ;; Icons and quickhelp
   (when emacs/>=26p
     (use-package company-box
+      :diminish
       :functions (all-the-icons-faicon
                   all-the-icons-material
                   all-the-icons-octicon
