@@ -1,6 +1,6 @@
 ;; init-const.el --- Define constants.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2018 Vincent Zhang
+;; Copyright (C) 2019 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
