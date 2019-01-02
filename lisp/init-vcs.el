@@ -44,36 +44,34 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
   (magit-define-popup-switch 'magit-fetch-popup
-    ?t "Fetch all tags" "--tags"))
+    ?t "Fetch all tags" "--tags")
 
-;; Access Git forges from Magit
-;; https://github.com/skeeto/emacsql#windows-issues
-(unless sys/win32p
-  (use-package forge
-    :demand
-    :after magit))
+  ;; Access Git forges from Magit
+  ;; https://github.com/skeeto/emacsql#windows-issues
+  (unless sys/win32p
+    (use-package forge :demand))
 
-;; Gitflow externsion for Magit
-(use-package magit-gitflow
-  :diminish magit-gitflow-mode
-  :functions magit-define-popup-action
-  :bind (:map magit-status-mode-map
-              ("G" . magit-gitflow-popup))
-  :hook (magit-mode . turn-on-magit-gitflow)
-  :config
-  (magit-define-popup-action 'magit-dispatch-popup
-    ?G "GitFlow" #'magit-gitflow-popup ?!))
+  ;; Gitflow externsion for Magit
+  (use-package magit-gitflow
+    :diminish magit-gitflow-mode
+    :functions magit-define-popup-action
+    :bind (:map magit-status-mode-map
+                ("G" . magit-gitflow-popup))
+    :hook (magit-mode . turn-on-magit-gitflow)
+    :config
+    (magit-define-popup-action 'magit-dispatch-popup
+      ?G "GitFlow" #'magit-gitflow-popup ?!))
 
-;; Git-Svn extension for Magit
-(use-package magit-svn
-  :diminish magit-svn-mode
-  :hook (magit-mode . magit-svn-mode))
+  ;; Git-Svn extension for Magit
+  (use-package magit-svn
+    :diminish magit-svn-mode
+    :hook (magit-mode . magit-svn-mode))
 
-;; Show source file TODOs in Magit
-(use-package magit-todos
-  :hook (magit-status-mode . magit-todos-mode))
+  ;; Show source file TODOs in Magit
+  (use-package magit-todos
+    :init (magit-todos-mode 1)))
 
-;;; Pop up last commit information of current line
+;; Pop up last commit information of current line
 (use-package git-messenger
   :commands git-messenger:copy-message
   :bind (:map vc-prefix-map
