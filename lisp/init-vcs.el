@@ -37,7 +37,6 @@
 ;; Git
 (use-package magit
   :commands (magit-define-popup-switch magit-refresh-buffer)
-  :functions (all-the-icons-faicon all-the-icons-alltheicon)
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
@@ -50,7 +49,9 @@
 ;; Access Git forges from Magit
 ;; https://github.com/skeeto/emacsql#windows-issues
 (unless sys/win32p
-  (use-package forge))
+  (use-package forge
+    :demand
+    :after magit))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
