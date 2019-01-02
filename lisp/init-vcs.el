@@ -65,11 +65,7 @@
   ;; Git-Svn extension for Magit
   (use-package magit-svn
     :diminish magit-svn-mode
-    :hook (magit-mode . magit-svn-mode))
-
-  ;; Show source file TODOs in Magit
-  (use-package magit-todos
-    :init (magit-todos-mode 1)))
+    :hook (magit-mode . magit-svn-mode)))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
