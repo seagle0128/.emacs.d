@@ -67,9 +67,13 @@
     :diminish magit-svn-mode
     :hook (magit-mode . magit-svn-mode)))
 
+;; Walk through git revisions of a file
+(use-package git-timemachine
+  :bind (:map vc-prefix-map
+              ("t" . git-timemachine)))
+
 ;; Pop up last commit information of current line
 (use-package git-messenger
-  :commands git-messenger:copy-message
   :bind (:map vc-prefix-map
               ("p" . git-messenger:popup-message)
               :map git-messenger-map
@@ -78,11 +82,6 @@
   ;; Use magit-show-commit for showing status/diff commands
   (setq git-messenger:use-magit-popup t))
 
-;; Walk through git revisions of a file
-(use-package git-timemachine
-  :bind (:map vc-prefix-map
-              ("t" . git-timemachine)))
-
 ;; Highlighting regions by last updated time
 (use-package smeargle
   :bind (:map vc-prefix-map
@@ -90,13 +89,15 @@
               ("C" . smeargle-commits)
               ("R" . smeargle-clear)))
 
+;; Open github/gitlab/bitbucket page
+(use-package browse-at-remote
+  :bind (:map vc-prefix-map
+              ("B" . browse-at-remote)))
+
 ;; Git related modes
 (use-package gitattributes-mode)
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
-
-;; Open github/gitlab/bitbucket page
-(use-package browse-at-remote)
 
 (provide 'init-vcs)
 
