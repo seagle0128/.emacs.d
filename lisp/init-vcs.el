@@ -51,6 +51,10 @@
   (unless sys/win32p
     (use-package forge :demand))
 
+  ;; Show tasks
+  (use-package magit-todos
+    :init (magit-todos-mode 1))
+
   ;; Gitflow externsion for Magit
   (use-package magit-gitflow
     :diminish magit-gitflow-mode
