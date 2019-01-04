@@ -121,9 +121,14 @@
     (ignore-errors
       (centaur-load-theme centaur-theme))
 
-    (use-package telephone-line
-      :init (setq ns-use-srgb-colorspace nil)
-      :hook (after-init . telephone-line-mode))))
+    (use-package moody
+      :init
+      (setq x-underline-at-descent-line t)
+      :hook ((after-init . moody-replace-mode-line-buffer-identification)
+             (after-init . moody-replace-vc-mode))
+      :config
+      (use-package minions
+        :hook (after-init . minions)))))
 
 ;; Mode-line
 (defun mode-line-height ()
