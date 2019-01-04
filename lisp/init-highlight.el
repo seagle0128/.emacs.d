@@ -209,7 +209,6 @@
   :hook (((dumb-jump-after-jump
            imenu-after-jump) . my-recenter-and-pulse)
          ((bookmark-after-jump
-           counsel-grep-post-action
            magit-diff-visit-file
            next-error) . my-recenter-and-pulse-line))
   :init
