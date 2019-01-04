@@ -120,8 +120,10 @@
   (setq counsel-yank-pop-separator "\n-------\n")
 
   ;; Use faster search tools: ripgrep or the silver search
-  (let ((cmd (cond ((executable-find "rg") counsel-rg-base-command)
-                   ((executable-find "ag") counsel-ag-base-command)
+  (let ((cmd (cond ((executable-find "rg")
+                    "rg -S --no-heading --line-number --color never '%s' %s")
+                   ((executable-find "ag")
+                    "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
 
