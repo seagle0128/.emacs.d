@@ -119,6 +119,12 @@
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
 
+  ;; Use faster search tools: ripgrep or the silver search
+  (let ((cmd (cond ((executable-find "rg") counsel-rg-base-command)
+                   ((executable-find "ag") counsel-ag-base-command)
+                   (t counsel-grep-base-command))))
+    (setq counsel-grep-base-command cmd))
+
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
