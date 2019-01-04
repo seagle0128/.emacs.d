@@ -86,13 +86,6 @@
   ;; Use magit-show-commit for showing status/diff commands
   (setq git-messenger:use-magit-popup t))
 
-;; Highlighting regions by last updated time
-(use-package smeargle
-  :bind (:map vc-prefix-map
-              ("S" . smeargle)
-              ("C" . smeargle-commits)
-              ("R" . smeargle-clear)))
-
 ;; Resolve diff3 conflicts
 (use-package smerge-mode
   :ensure nil
