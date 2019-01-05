@@ -105,12 +105,13 @@
 (use-package async
   :defines async-bytecomp-allowed-packages
   :init
-  (unless sys/win32p
-    (setq async-bytecomp-allowed-packages
-          '(async
-            magit ivy swiper counsel yasnippet yasnippet-snippets
-            company flycheck treemacs lsp-mode all-the-icons
-            doom-themes doom-modeline telephone-line)))
+  (setq async-bytecomp-allowed-packages
+        '(async
+          paradox ghub magit forge expand-region multiple-cursors
+          ivy swiper counsel yasnippet yasnippet-snippets dashboard
+          company flycheck treemacs lsp-mode lsp-ui dap-mode diff-hl
+          all-the-icons js2-mode elfeed  easy-kill easy-kill-extras
+          doom-themes doom-modeline telephone-line))
   (async-bytecomp-package-mode 1)
   (dired-async-mode 1))
 
