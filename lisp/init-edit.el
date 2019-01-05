@@ -154,7 +154,7 @@
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
-  :bind ("M-;" . comment-dwim-2))
+  :bind ([remap comment-dwim] . comment-dwim-2)) ;
 
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
