@@ -254,7 +254,9 @@
              ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 90))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
-    :init (ivy-rich-mode 1)
+    :init
+    (setq ivy-rich-parse-remote-buffer nil)
+    (ivy-rich-mode 1)
     :hook (ivy-rich-mode . (lambda ()
                              (setq ivy-virtual-abbreviate
                                    (or (and ivy-rich-mode 'abbreviate) 'name)))))
