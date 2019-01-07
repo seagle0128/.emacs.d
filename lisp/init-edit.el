@@ -235,8 +235,7 @@
 
 ;; Goto last change
 (use-package goto-chg
-  :bind ("C-," . goto-last-change)
-  :config (advice-add #'goto-last-change :after #'recenter))
+  :bind ("C-," . goto-last-change))
 
 ;; Hungry deletion
 (use-package hungry-delete
