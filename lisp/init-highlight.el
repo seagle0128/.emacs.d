@@ -88,6 +88,7 @@
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
+    :unless emacs/>=27p
     :diminish
     :hook (prog-mode . highlight-indent-guides-mode)
     :config
