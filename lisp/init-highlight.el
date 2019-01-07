@@ -219,10 +219,11 @@
   :init
   (dolist (cmd '(recenter-top-bottom
                  other-window ace-window windmove-do-window-select
-                 goto-last-change
                  pager-page-down pager-page-up))
     (advice-add cmd :after #'my-pulse-momentary-line))
-  (dolist (cmd '(pop-to-mark-command pop-global-mark symbol-overlay-basic-jump))
+  (dolist (cmd '(pop-to-mark-command
+                 pop-global-mark symbol-overlay-basic-jump
+                 goto-last-change))
     (advice-add cmd :after #'my-recenter-and-pulse)))
 
 (provide 'init-highlight)
