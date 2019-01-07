@@ -69,7 +69,7 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :diminish auto-revert-mode
+  :diminish
   :hook (after-init . global-auto-revert-mode))
 
 ;; Pass a URL to a WWW browser
@@ -113,12 +113,12 @@
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
-  :diminish ace-pinyin-mode
+  :diminish
   :hook (after-init . ace-pinyin-global-mode))
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
-  :diminish aggressive-indent-mode
+  :diminish
   :hook ((after-init . global-aggressive-indent-mode)
          ;; FIXME: Disable in big files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
@@ -144,7 +144,7 @@
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
-  :diminish anzu-mode
+  :diminish
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
@@ -158,7 +158,7 @@
 
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
-  :diminish drag-stuff-mode
+  :diminish
   :commands drag-stuff-define-keys
   :hook (after-init . drag-stuff-global-mode)
   :config
@@ -221,7 +221,7 @@
 ;; On-the-fly spell checker
 (use-package flyspell
   :ensure nil
-  :diminish flyspell-mode
+  :diminish
   :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
@@ -233,13 +233,9 @@
   (setq ispell-program-name "aspell")
   (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
-;; Goto last change
-(use-package goto-chg
-  :bind ("C-," . goto-last-change))
-
 ;; Hungry deletion
 (use-package hungry-delete
-  :diminish hungry-delete-mode
+  :diminish
   :hook (after-init . global-hungry-delete-mode)
   :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
@@ -266,22 +262,28 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
-  :diminish undo-tree-mode
-  :hook (after-init . global-undo-tree-mode))
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :config
+  ;; FIXME:install `goto-chg' after loading `undo-tree'
+  ;; https://github.com/emacs-evil/goto-chg/issues/3#issuecomment-451976143
+  ;; Goto last change
+  (use-package goto-chg
+    :bind ("C-," . goto-last-change)))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :ensure nil
-  :diminish subword-mode
+  :diminish
   :hook ((prog-mode . subword-mode)
          (minibuffer-setup . subword-mode)))
 
 ;; Hideshow
 (use-package hideshow
   :ensure nil
+  :diminish hs-minor-mode
   :bind (:map hs-minor-mode-map
-              ("C-`" . hs-toggle-hiding))
-  :diminish hs-minor-mode)
+              ("C-`" . hs-toggle-hiding)))
 
 ;; Narrow/Widen
 (use-package fancy-narrow
