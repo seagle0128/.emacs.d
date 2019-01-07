@@ -101,20 +101,6 @@
 (use-package diminish)
 (use-package bind-key)
 
-;; Asynchronous processing
-(use-package async
-  :defines async-bytecomp-allowed-packages
-  :init
-  (setq async-bytecomp-allowed-packages
-        '(async
-          paradox ghub magit forge expand-region multiple-cursors
-          ivy swiper counsel yasnippet yasnippet-snippets dashboard
-          company flycheck treemacs lsp-mode lsp-ui dap-mode diff-hl
-          all-the-icons js2-mode elfeed  easy-kill easy-kill-extras
-          doom-themes doom-modeline telephone-line))
-  (async-bytecomp-package-mode 1)
-  (dired-async-mode 1))
-
 ;; Initialization benchmark
 (when centaur-benchmark
   (use-package benchmark-init
