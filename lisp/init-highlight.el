@@ -92,7 +92,18 @@
     :hook (prog-mode . highlight-indent-guides-mode)
     :config
     (setq highlight-indent-guides-method 'character)
-    (setq highlight-indent-guides-responsive t)))
+    (setq highlight-indent-guides-responsive t)
+
+    ;; Disable `highlight-indet-guides-mode' in `swiper'
+    ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
+    (with-eval-after-load 'ivy
+      (defadvice ivy-cleanup-string (after my-ivy-cleanup-hig activate)
+        (let ((pos 0) (next 0) (limit (length str)) (prop 'highlight-indent-guides-prop))
+          (while (and pos next)
+            (setq next (text-property-not-all pos limit prop nil str))
+            (when next
+              (setq pos (text-property-any next limit prop nil str))
+              (remove-text-properties next pos '(display nil face nil) str))))))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
