@@ -246,14 +246,14 @@
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+  :bind (([remap move-begginning-of-line] . mwim-beginning-of-code-or-line)
+         ([remap move-end-of-line] . mwim-end-of-code-or-line)))
 
 ;; Windows-scroll commands
 (use-package pager
-  :bind (("\C-v"   . pager-page-down)
+  :bind (([remap scroll-up-command] . pager-page-down)
          ([next]   . pager-page-down)
-         ("\ev"    . pager-page-up)
+         ([remap scroll-down-command] . pager-page-up)
          ([prior]  . pager-page-up)
          ([M-up]   . pager-row-up)
          ([M-kp-8] . pager-row-up)
