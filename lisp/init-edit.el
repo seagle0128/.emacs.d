@@ -246,7 +246,7 @@
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
-  :bind (([remap move-begginning-of-line] . mwim-beginning-of-code-or-line)
+  :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
          ([remap move-end-of-line] . mwim-end-of-code-or-line)))
 
 ;; Windows-scroll commands
