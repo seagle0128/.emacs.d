@@ -142,10 +142,6 @@
   :bind (:map lisp-interaction-mode-map
               ("C-x C-s" . my-save-buffer)))
 
-;; Disallow the *scratch* buffer from being killed
-(use-package unkillable-scratch
-  :hook (after-init . unkillable-scratch))
-
 ;; Nice writing
 (use-package olivetti
   :diminish
