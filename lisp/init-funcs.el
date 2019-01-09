@@ -60,7 +60,7 @@
 
 ;; Browse the homepage
 (defun browse-homepage ()
-  "Browse the Github page of Centuar Emacs."
+  "Browse the Github page of Centaur Emacs."
   (interactive)
   (browse-url centaur-homepage))
 
@@ -77,7 +77,7 @@
     (find-file custom-file)))
 
 ;; Update
-(defun centaur-update-config ()
+(defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
   (let ((dir (expand-file-name user-emacs-directory)))
@@ -88,23 +88,26 @@
           (shell-command "git pull")
           (message "Update finished. Restart Emacs to complete the process."))
       (message "\"%s\" doesn't exist." dir))))
+(defalias 'centaur-update-config 'update-config)
 
 (declare-function upgrade-packages 'init-package)
 (defalias 'centaur-update-packages 'upgrade-packages)
-(defun centaur-update()
+(defun update-centaur()
   "Update confgiurations and packages."
   (interactive)
-  (centaur-update-config)
-  (centaur-update-packages nil))
+  (update-config)
+  (upgrade-packages nil))
+(defalias 'centaur-update 'update-centaur)
 
-(defun centaur-update-all()
+(defun update-all()
   "Update dotfiles, org files, Emacs confgiurations and packages, ."
   (interactive)
-  (centaur-update)
-  (centaur-update-org)
-  (centaur-update-dotfiles))
+  (update-centaur)
+  (update-org)
+  (update-dotfiles))
+(defalias 'centaur-update-all 'update-all)
 
-(defun centaur-update-dotfiles ()
+(defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
   (let ((dir (or (getenv "DOTFILES")
@@ -116,8 +119,9 @@
           (shell-command "git pull")
           (message "Update finished."))
       (message "\"%s\" doesn't exist." dir))))
+(defalias 'centaur-update-dotfiles 'update-dotfiles)
 
-(defun centaur-update-org ()
+(defun update-org ()
   "Update Org files to the latest version."
   (interactive)
   (let ((dir (expand-file-name "~/org/")))
@@ -128,6 +132,7 @@
           (shell-command "git pull")
           (message "Update finished."))
       (message "\"%s\" doesn't exist." dir))))
+(defalias 'centaur-update-org 'update-org)
 
 ;; Create a new scratch buffer
 (defun create-scratch-buffer ()
