@@ -263,13 +263,17 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish
-  :hook (after-init . global-undo-tree-mode)
-  :config
-  ;; FIXME:install `goto-chg' after loading `undo-tree'
-  ;; https://github.com/emacs-evil/goto-chg/issues/3#issuecomment-451976143
-  ;; Goto last change
-  (use-package goto-chg
-    :bind ("C-," . goto-last-change)))
+  :hook (after-init . global-undo-tree-mode))
+
+;; FIXME:invalid function `undo-tree-node-p'
+;; https://github.com/emacs-evil/goto-chg/issues/3
+;; Goto last change
+(use-package goto-chg
+  :bind ("C-," . goto-last-change)
+  :preface
+  (defmacro undo-tree-node-p (n)
+    (let ((len (length (undo-tree-make-node nil nil))))
+      `(and (vectorp ,n) (= (length ,n) ,len)))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
