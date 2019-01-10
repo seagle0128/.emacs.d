@@ -44,7 +44,12 @@
             "Restore defalut values after init."
             (setq file-name-handler-alist default-file-name-handler-alist)
             (setq gc-cons-threshold 800000)
-            (add-hook 'focus-out-hook 'garbage-collect)))
+            (if (boundp 'after-focus-change-function)
+                (add-function :after after-focus-change-function
+                              (lambda ()
+                                (unless (frame-focus-state)
+                                  (garbage-collect))))
+              (add-hook 'focus-out-hook 'garbage-collect))))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
