@@ -265,15 +265,9 @@
   :diminish
   :hook (after-init . global-undo-tree-mode))
 
-;; FIXME:invalid function `undo-tree-node-p'
-;; https://github.com/emacs-evil/goto-chg/issues/3
 ;; Goto last change
 (use-package goto-chg
-  :bind ("C-," . goto-last-change)
-  :preface
-  (defmacro undo-tree-node-p (n)
-    (let ((len (length (undo-tree-make-node nil nil))))
-      `(and (vectorp ,n) (= (length ,n) ,len)))))
+  :bind ("C-," . goto-last-change))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
