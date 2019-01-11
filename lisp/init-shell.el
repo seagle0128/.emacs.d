@@ -62,6 +62,8 @@
   :hook ((shell-mode . ansi-color-for-comint-mode-on)
          (shell-mode . n-shell-mode-hook))
   :config
+  (setq system-uses-terminfo nil)       ; don't use system term info
+
   (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
 
   ;; Company mode backend for shell functions
