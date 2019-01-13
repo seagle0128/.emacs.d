@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (use-package flycheck
   :diminish flycheck-mode
   :hook (after-init . global-flycheck-mode)
@@ -42,9 +45,14 @@
 
   ;; Display Flycheck errors in GUI tooltips
   (if (display-graphic-p)
-      (use-package flycheck-pos-tip
-        :hook (global-flycheck-mode . flycheck-pos-tip-mode)
-        :config (setq flycheck-pos-tip-timeout 30))
+      (if emacs/>=26p
+          (use-package flycheck-posframe
+            :hook (flycheck-mode . flycheck-posframe-mode)
+            :config (flycheck-posframe-configure-pretty-defaults))
+        (use-package flycheck-pos-tip
+          :defines flycheck-pos-tip-timeout
+          :hook (global-flycheck-mode . flycheck-pos-tip-mode)
+          :config (setq flycheck-pos-tip-timeout 30)))
     (use-package flycheck-popup-tip
       :hook (global-flycheck-mode . flycheck-popup-tip-mode)))
 
