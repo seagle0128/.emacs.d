@@ -118,8 +118,8 @@
            ("U" . centaur-update)
            ("q" . quit-dashboard))
     :hook (after-init . dashboard-setup-startup-hook)
-    :init (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     :config
+    (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     (setq dashboard-banner-logo-title "Centaur Emacs - Enjoy writing and programming")
     (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-items '((recents  . 10)
