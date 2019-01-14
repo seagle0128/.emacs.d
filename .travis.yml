@@ -10,7 +10,7 @@ matrix:
   fast_finish: true
   allow_failures:
     env:
-      - EVM_EMACS=emacs-git-snapshot-travis
+      - EVM_EMACS=emacs-25.1-travis
 
 before_script:
   - mv -f ../.emacs.d ~/.emacs.d
