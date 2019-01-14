@@ -10,7 +10,7 @@ matrix:
   fast_finish: true
   allow_failures:
     env:
-      - EVM_EMACS=emacs-25.1-travis
+      - EVM_EMACS=emacs-git-snapshot-travis
 
 before_script:
   - mv -f ../.emacs.d ~/.emacs.d
@@ -29,6 +29,7 @@ script:
                                               (load-path (delq default-directory load-path)))
                                           (when (>= emacs-major-version 27) (load-file early-init-file))
                                           (load-file user-init-file)
-                                          (run-hooks (quote after-init-hook))
-                                          (run-hooks (quote emacs-startup-hook)))'
+                                          (when (>= emacs-major-version 26)
+                                            (run-hooks (quote after-init-hook))
+                                            (run-hooks (quote emacs-startup-hook))))'
   - echo "Startup successful"
