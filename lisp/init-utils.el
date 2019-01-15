@@ -144,10 +144,11 @@
 
 ;; PDF reader
 (use-package pdf-tools
-  :mode (("\\.pdf\\'" . pdf-view-mode))
+  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+  :magic ("%PDF" . pdf-view-mode)
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward))
-  :config (pdf-tools-install))
+  :config (pdf-tools-install t nil t nil))
 
 ;; Nice writing
 (use-package olivetti
