@@ -148,7 +148,9 @@
   :magic ("%PDF" . pdf-view-mode)
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward))
-  :config (pdf-tools-install t nil t nil))
+  :config
+  (setq pdf-view-midnight-colors '("#bbc2cf" . "#21242b"))
+  (pdf-tools-install t nil t nil))
 
 ;; Nice writing
 (use-package olivetti
