@@ -142,6 +142,11 @@
   :bind (:map lisp-interaction-mode-map
               ("C-x C-s" . my-save-buffer)))
 
+;; PDF reader
+(use-package pdf-tools
+  :mode (("\\.pdf\\'" . pdf-view-mode))
+  :config (pdf-tools-install))
+
 ;; Nice writing
 (use-package olivetti
   :diminish
