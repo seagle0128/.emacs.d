@@ -145,6 +145,8 @@
 ;; PDF reader
 (use-package pdf-tools
   :mode (("\\.pdf\\'" . pdf-view-mode))
+  :bind (:map pdf-view-mode-map
+              ("C-s" . isearch-forward))
   :config (pdf-tools-install))
 
 ;; Nice writing
