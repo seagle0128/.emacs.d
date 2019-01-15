@@ -47,9 +47,10 @@
     ?t "Fetch all tags" "--tags"))
 
 ;; Access Git forges from Magit
-(use-package forge
-  :after magit
-  :demand)
+(if (executable-find "cc")
+    (use-package forge
+      :after magit
+      :demand))
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow
