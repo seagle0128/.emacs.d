@@ -65,6 +65,14 @@
                 cal-china-x-general-holidays
                 holiday-other-holidays)))
 
+
+;; Better views of calendar
+(use-package calfw
+  :commands cfw:open-calendar-buffer)
+
+(use-package calfw-org
+  :commands cfw:opwn-org-calendar)
+
 (provide 'init-calendar)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
