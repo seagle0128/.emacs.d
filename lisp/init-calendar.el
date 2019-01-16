@@ -69,9 +69,8 @@
 ;; Better views of calendar
 (use-package calfw
   :commands cfw:open-calendar-buffer)
-
 (use-package calfw-org
-  :commands cfw:opwn-org-calendar)
+  :commands cfw:open-org-calendar)
 
 (provide 'init-calendar)
 

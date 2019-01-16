@@ -143,13 +143,21 @@
               ("C-x C-s" . my-save-buffer)))
 
 ;; PDF reader
-(use-package pdf-tools
+(use-package pdf-view
+  :ensure pdf-tools
+  :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode)
+  :preface
+  (defun set-pdf-view-midnight-colors ()
+    (setq pdf-view-midnight-colors
+          `(,(face-foreground 'default) . ,(face-background 'default))))
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward))
+  :hook ((pdf-view-mode . pdf-view-midnight-minor-mode)
+         (after-load-theme . set-pdf-view-midnight-colors))
   :config
-  (setq pdf-view-midnight-colors '("#bbc2cf" . "#21242b"))
+  (set-pdf-view-midnight-colors)
   (pdf-tools-install t nil t nil))
 
 ;; Nice writing
