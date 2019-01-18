@@ -116,7 +116,7 @@
                     :after #'solaire-mode-restore-persp-mode-buffers))
 
       (use-package doom-modeline
-        :hook (after-init . doom-modeline-init)))
+        :hook (after-init . doom-modeline-mode)))
   (progn
     (ignore-errors
       (centaur-load-theme centaur-theme))
