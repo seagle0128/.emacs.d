@@ -76,10 +76,7 @@
        '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
-       (eval `(lsp-org-babel-enbale ,lang)))
-
-     (setq lsp-clients-typescript-server "typescript-language-server"
-           lsp-clients-typescript-server-args '("--stdio")))
+       (eval `(lsp-org-babel-enbale ,lang))))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
