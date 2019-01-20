@@ -33,8 +33,9 @@
 ;; Chinese calendar
 ;; `pC' can show lunar details
 (use-package cal-china-x
+  :after calendar
   :commands cal-china-x-setup
-  :hook (calendar-load . cal-china-x-setup)
+  :init (cal-china-x-setup)
   :config
   ;; `S' can show the time of sunrise and sunset on Calendar
   (setq calendar-location-name "Chengdu"
