@@ -42,6 +42,7 @@
          (emacs-startup . toggle-frame-maximized))
   :init
   (setq persp-keymap-prefix (kbd "C-x p"))
+  (setq persp-nil-name "default")
   (setq persp-set-last-persp-for-new-frames nil)
   (if centaur-dashboard
       (setq persp-auto-resume-time 0))
