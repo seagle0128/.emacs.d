@@ -115,19 +115,20 @@
   ;; (setq ivy-initial-inputs-alist nil)
 
   (setq ivy-format-function 'ivy-format-function-arrow)
-  (with-eval-after-load 'all-the-icons
-    (defun my-ivy-format-function (cands)
-      "Transform CANDS into a string for minibuffer."
-      (ivy--format-function-generic
-       (lambda (str)
-         (concat (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1)
-                 " "
-                 (ivy--add-face str 'ivy-current-match)))
-       (lambda (str)
-         (concat "  " str))
-       cands
-       "\n"))
-    (setq ivy-format-function 'my-ivy-format-function))
+  (when (display-graphic-p)
+    (with-eval-after-load 'all-the-icons
+      (defun my-ivy-format-function (cands)
+        "Transform CANDS into a string for minibuffer."
+        (ivy--format-function-generic
+         (lambda (str)
+           (concat (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1)
+                   " "
+                   (ivy--add-face str 'ivy-current-match)))
+         (lambda (str)
+           (concat "  " str))
+         cands
+         "\n"))
+      (setq ivy-format-function 'my-ivy-format-function)))
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
