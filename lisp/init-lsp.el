@@ -78,7 +78,7 @@
        (eval `(lsp-org-babel-enbale ,lang)))
 
      ;; LSP clients
-     (setq 'lsp-clients-go-language-server-flags
+     (setq lsp-clients-go-language-server-flags
            '("-gocodecompletion" "--format-style=\"goimports\"")))
 
    (use-package lsp-ui
