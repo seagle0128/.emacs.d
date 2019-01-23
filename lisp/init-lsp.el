@@ -43,7 +43,6 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
-     :defines (lsp-clients-typescript-server lsp-clients-typescript-server-args)
      :hook (prog-mode . lsp)
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
@@ -76,7 +75,11 @@
        '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
      (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
      (dolist (lang org-babel-lang-list)
-       (eval `(lsp-org-babel-enbale ,lang))))
+       (eval `(lsp-org-babel-enbale ,lang)))
+
+     ;; LSP clients
+     (setq 'lsp-clients-go-language-server-flags
+           '("-gocodecompletion" "--format-style=\"goimports\"")))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
