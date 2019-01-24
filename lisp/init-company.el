@@ -84,14 +84,14 @@
 
         (setq company-box-icons-elisp
               (list
-               (all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'font-lock-constant-face)        ; Function
+               (all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'font-lock-constant-face)       ; Function
                (all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-keyword-face)         ; Variable
                (all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'font-lock-warning-face)         ; Feature
                (all-the-icons-material "palette" :v-adjust -0.2)      ; Face
                ))
 
         (setq company-box-icons-yasnippet
-              (all-the-icons-faicon "code" :v-adjust -0.0575))       ; Snippet
+              (all-the-icons-octicon "file-code" :v-adjust -0.05))    ; Snippet
 
         (setq company-box-icons-lsp
               `(( 1  . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575))     ; Text
