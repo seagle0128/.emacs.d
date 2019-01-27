@@ -149,16 +149,17 @@
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode)
   :preface
-  (defun set-pdf-view-midnight-colors ()
-    (setq pdf-view-midnight-colors
-          `(,(face-foreground 'default) . ,(face-background 'default))))
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward))
   :hook (pdf-view-mode . pdf-view-midnight-minor-mode)
   :config
+  (defun set-pdf-view-midnight-colors ()
+    (setq pdf-view-midnight-colors
+          `(,(face-foreground 'default) . ,(face-background 'default))))
   (set-pdf-view-midnight-colors)
   (add-hook 'after-load-theme-hook #'set-pdf-view-midnight-colors)
-  (pdf-tools-install t nil t nil))
+
+  (pdf-tools-install t nil t t))
 
 ;; Nice writing
 (use-package olivetti
