@@ -154,10 +154,10 @@
           `(,(face-foreground 'default) . ,(face-background 'default))))
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward))
-  :hook ((pdf-view-mode . pdf-view-midnight-minor-mode)
-         (after-load-theme . set-pdf-view-midnight-colors))
+  :hook (pdf-view-mode . pdf-view-midnight-minor-mode)
   :config
   (set-pdf-view-midnight-colors)
+  (add-hook 'after-load-theme-hook #'set-pdf-view-midnight-colors)
   (pdf-tools-install t nil t nil))
 
 ;; Nice writing
