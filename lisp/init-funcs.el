@@ -56,8 +56,9 @@
     (if (fboundp 'fancy-widen)
         (fancy-widen)))
   (revert-buffer t t))
-(bind-keys ("<f5>" . revert-current-buffer)
-           ("s-r" . revert-current-buffer))
+(bind-key "<f5>" #'revert-current-buffer)
+(if sys/mac-x-p
+    (bind-key "s-r" #'revert-current-buffer))
 
 ;; Browse the homepage
 (defun browse-homepage ()
