@@ -100,6 +100,7 @@ M-x centuar-update-all
 ``` shell
 cd ~/.emacs.d/Dockerfile
 docker build -t centaur/emacs .
+docker run -it centaur/emacs bash
 ```
 
 ## Customization
