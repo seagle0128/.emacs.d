@@ -160,7 +160,36 @@
     (set-pdf-view-midnight-colors)
     (add-hook 'after-load-theme-hook #'set-pdf-view-midnight-colors)
 
-    (pdf-tools-install t nil t t)))
+    (pdf-tools-install t nil t t)
+
+    ;; Workaround for pdf-tools not reopening to last-viewed page of the pdf:
+    ;; https://github.com/politza/pdf-tools/issues/18
+    (defun my-pdf-set-last-viewed-bookmark ()
+      (interactive)
+      (when (eq major-mode 'pdf-view-mode)
+        (bookmark-set (my-pdf-generate-bookmark-name))))
+
+    (defun my-pdf-jump-last-viewed-bookmark ()
+      (when
+          (my-pdf-has-last-viewed-bookmark)
+        (bookmark-jump (my-pdf-generate-bookmark-name))))
+
+    (defun my-pdf-has-last-viewed-bookmark ()
+      (assoc
+       (my-pdf-generate-bookmark-name) bookmark-alist))
+
+    (defun my-pdf-generate-bookmark-name ()
+      (concat "PDF-LAST-VIEWED: " (buffer-file-name)))
+
+    (defun my-pdf-set-all-last-viewed-bookmarks ()
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (my-pdf-set-last-viewed-bookmark))))
+
+    (add-hook 'kill-buffer-hook 'my-pdf-set-last-viewed-bookmark)
+    (add-hook 'pdf-view-mode-hook 'my-pdf-jump-last-viewed-bookmark)
+    (unless noninteractive  ; as `save-place-mode' does
+      (add-hook 'kill-emacs-hook #'my-pdf-set-all-last-viewed-bookmarks))))
 
 ;; Nice writing
 (use-package olivetti
