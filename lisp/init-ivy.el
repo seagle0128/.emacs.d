@@ -121,7 +121,7 @@
         "Transform CANDS into a string for minibuffer."
         (ivy--format-function-generic
          (lambda (str)
-           (concat (all-the-icons-octicon "chevron-right" :v-adjust -0.05)
+           (concat (all-the-icons-octicon "chevron-right" :v-adjust -0.04)
                    " "
                    (ivy--add-face str 'ivy-current-match)))
          (lambda (str)
