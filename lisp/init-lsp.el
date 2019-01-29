@@ -43,6 +43,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
+     :defines lsp-clients-go-language-server-flags
      :hook (prog-mode . lsp)
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
