@@ -120,11 +120,16 @@
     :hook (after-init . dashboard-setup-startup-hook)
     :config
     (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
-    (setq dashboard-banner-logo-title "Centaur Emacs - Enjoy writing and programming")
+    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
     (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5)))
+
+    (defun my-get-banner-path (&rest _)
+      "Return the full path to banner."
+      (expand-file-name "banner.txt" user-emacs-directory))
+    (advice-add #'dashboard-get-banner-path :override #'my-get-banner-path)
 
     (defun dashboard-insert-buttons (_list-size)
       (insert "\n")
