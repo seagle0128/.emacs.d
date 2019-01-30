@@ -56,8 +56,7 @@
 (defun update-load-path (&rest _)
   "Update `load-path'."
   (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
-  (push (expand-file-name "lisp" user-emacs-directory) load-path)
-  (push "." load-path))
+  (push (expand-file-name "lisp" user-emacs-directory) load-path))
 
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'."
