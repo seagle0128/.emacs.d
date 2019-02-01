@@ -229,10 +229,11 @@
   :init
   (dolist (cmd '(recenter-top-bottom
                  other-window ace-window windmove-do-window-select
-                 pager-page-down pager-page-up))
+                 pager-page-down pager-page-up
+                 symbol-overlay-basic-jump))
     (advice-add cmd :after #'my-pulse-momentary-line))
   (dolist (cmd '(pop-to-mark-command
-                 pop-global-mark symbol-overlay-basic-jump
+                 pop-global-mark
                  goto-last-change))
     (advice-add cmd :after #'my-recenter-and-pulse)))
 
