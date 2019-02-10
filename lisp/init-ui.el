@@ -138,6 +138,13 @@
            treemacs-mode)
           . hide-mode-line-mode)))
 
+;; Icons
+;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
+(use-package all-the-icons
+  :config
+  (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
+    (all-the-icons-install-fonts t)))
+
 ;; Line and Column
 (setq-default fill-column 80)
 (setq column-number-mode t)
