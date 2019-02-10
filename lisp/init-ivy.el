@@ -265,10 +265,6 @@
   (use-package ivy-xref
     :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
-  ;; Preview snippets with Ivy
-  (use-package ivy-yasnippet
-    :bind ("C-c C-y" . ivy-yasnippet))
-
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
     :after flyspell
