@@ -107,6 +107,7 @@
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
+        :functions persp-load-state-from-file
         :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
                (minibuffer-setup . solaire-mode-in-minibuffer)
                (after-load-theme . solaire-mode-swap-bg))
@@ -141,6 +142,7 @@
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
+  :if (display-graphic-p)
   :config
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t)))
