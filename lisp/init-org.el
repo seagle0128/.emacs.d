@@ -110,8 +110,7 @@
   (use-package org-tree-slide
     :diminish
     :functions (org-display-inline-images
-                org-remove-inline-images
-                winner-undo)
+                org-remove-inline-images)
     :bind (:map org-mode-map
                 ("C-<f9>" . org-tree-slide-mode)
                 :map org-tree-slide-mode-map
@@ -120,51 +119,17 @@
                 ("S-SPC" . org-tree-slide-move-previous-tree)
                 ("SPC" . org-tree-slide-move-next-tree))
     :hook ((org-tree-slide-play . (lambda ()
-                                    (text-scale-set 4)
+                                    (text-scale-increase 4)
                                     (org-display-inline-images)
                                     (read-only-mode 1)
-                                    (if (fboundp 'hide-mode-line-mode)
-                                        (hide-mode-line-mode 1))
                                     (delete-other-windows)))
            (org-tree-slide-stop . (lambda ()
-                                    (text-scale-set 0)
+                                    (text-scale-increase 0)
                                     (org-remove-inline-images)
-                                    (read-only-mode -1)
-                                    (if (fboundp 'hide-mode-line-mode)
-                                        (hide-mode-line-mode -1)))))
+                                    (read-only-mode -1))))
     :config
     (org-tree-slide-simple-profile)
     (setq org-tree-slide-skip-outline-level 2))
-
-  (use-package org-present
-    :diminish
-    :functions (org-display-inline-images
-                org-remove-inline-images
-                winner-undo)
-    :commands (org-present-big
-               org-present-hide-cursor
-               org-present-read-only
-               org-present-small
-               org-present-show-cursor
-               org-present-read-write)
-    :bind (:map org-mode-map
-                ("M-<f9>" . org-present))
-    :hook ((org-present-mode . (lambda ()
-                                 (org-present-big)
-                                 (org-display-inline-images)
-                                 (org-present-hide-cursor)
-                                 (org-present-read-only)
-                                 (if (fboundp 'hide-mode-line-mode)
-                                     (hide-mode-line-mode 1))
-                                 (delete-other-windows)))
-           (org-present-mode-quit . (lambda ()
-                                      (org-present-small)
-                                      (org-remove-inline-images)
-                                      (org-present-show-cursor)
-                                      (org-present-read-write)
-                                      (read-only-mode -1)
-                                      (if (fboundp 'hide-mode-line-mode)
-                                          (hide-mode-line-mode -1))))))
 
   ;; Pomodoro
   (use-package org-pomodoro

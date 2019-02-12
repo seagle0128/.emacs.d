@@ -194,8 +194,8 @@
   :bind ("C-<f6>" . olivetti-mode)
   :hook (olivetti-mode . (lambda ()
                            (if olivetti-mode
-                               (text-scale-set 1)
-                             (text-scale-set 0))))
+                               (text-scale-adjust 1)
+                             (text-scale-adjust 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Misc
