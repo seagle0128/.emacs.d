@@ -131,7 +131,7 @@
                                     (org-remove-inline-images)
                                     (read-only-mode -1)
                                     (if (fboundp 'hide-mode-line-mode)
-                                        (hide-mode-line-mode -11)))))
+                                        (hide-mode-line-mode -1)))))
     :config
     (org-tree-slide-simple-profile)
     (setq org-tree-slide-skip-outline-level 2))
