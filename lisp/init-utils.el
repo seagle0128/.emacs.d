@@ -162,8 +162,7 @@
         (bookmark-set (my-pdf-generate-bookmark-name))))
 
     (defun my-pdf-jump-last-viewed-bookmark ()
-      (when
-          (my-pdf-has-last-viewed-bookmark)
+      (when (my-pdf-has-last-viewed-bookmark)
         (bookmark-jump (my-pdf-generate-bookmark-name))))
 
     (defun my-pdf-has-last-viewed-bookmark ()
@@ -192,10 +191,7 @@
 (use-package olivetti
   :diminish
   :bind ("C-<f6>" . olivetti-mode)
-  :hook (olivetti-mode . (lambda ()
-                           (if olivetti-mode
-                               (text-scale-adjust 1)
-                             (text-scale-adjust 0))))
+  :hook (olivetti-mode . (lambda () (text-scale-increase (if olivetti-mode 1 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Misc

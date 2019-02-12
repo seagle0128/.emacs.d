@@ -52,7 +52,7 @@
   (message "Revert this buffer.")
   (ignore-errors
     (widen)
-    (text-scale-set 0)
+    (text-scale-increase 0)
     (if (fboundp 'fancy-widen)
         (fancy-widen)))
   (revert-buffer t t))
