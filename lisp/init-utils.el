@@ -152,17 +152,17 @@
     :preface
     :bind (:map pdf-view-mode-map
                 ("C-s" . isearch-forward))
-    :hook (pdf-view-mode . pdf-view-midnight-minor-mode)
     :config
+    (pdf-tools-install t nil t t)
+
+    ;; Set midnight colors
     (defun set-pdf-view-midnight-colors ()
       (setq pdf-view-midnight-colors
             `(,(face-foreground 'default) . ,(face-background 'default))))
     (set-pdf-view-midnight-colors)
     (add-hook 'after-load-theme-hook #'set-pdf-view-midnight-colors)
 
-    (pdf-tools-install t nil t t)
-
-    ;; Workaround for pdf-tools not reopening to last-viewed page of the pdf:
+    ;; Workaround for pdf-tools not reopening to last-viewed page
     ;; https://github.com/politza/pdf-tools/issues/18
     (defun my-pdf-set-last-viewed-bookmark ()
       (interactive)
