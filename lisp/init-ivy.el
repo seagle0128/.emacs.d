@@ -275,6 +275,15 @@
   (use-package counsel-projectile
     :init (counsel-projectile-mode 1))
 
+  ;; Quick launch apps
+  (cond
+   (sys/linux-x-p
+    (bind-key "C-<f6>" #'counsel-linux-app counsel-mode-map))
+   (sys/macp
+    (use-package counsel-osx-app
+      :bind (:map counsel-mode-map
+                  ("C-<f6>" . counsel-osx-app)))))
+
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map

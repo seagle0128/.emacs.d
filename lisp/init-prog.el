@@ -70,7 +70,7 @@
 
 ;; Run commands quickly
 (use-package quickrun
-  :bind (("<f7>" . quickrun)
+  :bind (("C-<f5>" . quickrun)
          ("C-c x" . quickrun)))
 
 (use-package cask-mode)

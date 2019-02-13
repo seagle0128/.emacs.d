@@ -112,7 +112,7 @@
     :functions (org-display-inline-images
                 org-remove-inline-images)
     :bind (:map org-mode-map
-                ("C-<f9>" . org-tree-slide-mode)
+                ("C-<f12>" . org-tree-slide-mode)
                 :map org-tree-slide-mode-map
                 ("<left>" . org-tree-slide-move-previous-tree)
                 ("<right>" . org-tree-slide-move-next-tree)
@@ -121,8 +121,7 @@
     :hook ((org-tree-slide-play . (lambda ()
                                     (text-scale-increase 4)
                                     (org-display-inline-images)
-                                    (read-only-mode 1)
-                                    (delete-other-windows)))
+                                    (read-only-mode 1)))
            (org-tree-slide-stop . (lambda ()
                                     (text-scale-increase 0)
                                     (org-remove-inline-images)
