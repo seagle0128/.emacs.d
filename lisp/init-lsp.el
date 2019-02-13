@@ -43,15 +43,18 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
-     :defines lsp-clients-go-language-server-flags
      :hook (prog-mode . lsp)
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
      (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
-
-     ;; LSP clients
-     (setq lsp-clients-go-language-server-flags
-           '("-gocodecompletion" "--format-style=\"goimports\"")))
+     :config
+     ;; Configure LSP clients
+     (use-package lsp-clients
+       :ensure nil
+       :init
+       (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
+       (setq lsp-clients-go-language-server-flags
+             '("-gocodecompletion" "--format-style=\"goimports\""))))
 
    (use-package lsp-ui
      :bind (:map lsp-ui-mode-map
