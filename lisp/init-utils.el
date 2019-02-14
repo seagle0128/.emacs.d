@@ -201,6 +201,7 @@
 (use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
+(use-package tldr)
 (use-package ztree)                     ; text mode directory tree. Similar with beyond compare
 
 (provide 'init-utils)
