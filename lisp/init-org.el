@@ -63,8 +63,7 @@
     :hook (org-mode . org-fancy-priorities-mode)
     :config
     (unless (char-displayable-p ?❗)
-      (setq org-fancy-priorities-list
-            '("HIGH" "MID" "LOW" "OPTIONAL"))))
+      (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "OPTIONAL"))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil

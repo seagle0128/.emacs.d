@@ -122,7 +122,7 @@
   ;; Use faster search tools: ripgrep or the silver search
   (let ((cmd (cond ((executable-find "rg")
                     "rg -S --no-heading --line-number --color never '%s' %s")
-                   ((executable-fiuuuuuuuund "ag")
+                   ((executable-find "ag")
                     "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
@@ -145,6 +145,11 @@
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
+
+  ;; Integrate yasnippet
+  (use-package ivy-yasnippet
+    :bind ("C-c C-y" . ivy-yasnippet)
+    :config (advice-add #'ivy-yasnippet--preview :override #'ignore))
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
