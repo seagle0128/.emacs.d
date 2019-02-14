@@ -46,7 +46,7 @@
                                       "|" "DONE(d)" "CANCEL(c)"))
         org-log-done 'time
         org-startup-indented t
-        org-ellipsis "  "
+        org-ellipsis (if (char-displayable-p ?) "  " nil)
         org-pretty-entities t
         org-hide-emphasis-markers t)
   :config
@@ -54,14 +54,17 @@
 
   ;; More fancy UI
   (use-package org-bullets
+    :if (char-displayable-p ?◉)
     :hook (org-mode . org-bullets-mode))
 
-  (unless sys/win32p
-    (use-package org-fancy-priorities
-      :diminish
-      :defines org-fancy-priorities-list
-      :hook (org-mode . org-fancy-priorities-mode)
-      :config (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕"))))
+  (use-package org-fancy-priorities
+    :diminish
+    :defines org-fancy-priorities-list
+    :hook (org-mode . org-fancy-priorities-mode)
+    :config
+    (unless (char-displayable-p ?❗)
+      (setq org-fancy-priorities-list
+            '("HIGH" "MID" "LOW" "OPTIONAL"))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
