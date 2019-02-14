@@ -112,7 +112,7 @@
     :functions (org-display-inline-images
                 org-remove-inline-images)
     :bind (:map org-mode-map
-                ("C-<f12>" . org-tree-slide-mode)
+                ("C-<f7>" . org-tree-slide-mode)
                 :map org-tree-slide-mode-map
                 ("<left>" . org-tree-slide-move-previous-tree)
                 ("<right>" . org-tree-slide-move-next-tree)

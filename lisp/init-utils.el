@@ -191,7 +191,6 @@
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :hook (olivetti-mode . (lambda () (text-scale-increase (if olivetti-mode 1 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Misc
