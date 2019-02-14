@@ -199,10 +199,11 @@ _F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\
           (pt-mode :select t :align 'below :autoclose t)
           (rg-mode :select t :align 'below :autoclose t)
 
-          (Buffer-menu-mode :size 20 :align 'below :autoclose t)
+          (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
           (comint-mode :align 'below)
           (helpful-mode :select t :size 0.4 :align 'below :autoclose t)
           (process-menu-mode :select t :size 0.3 :align 'below :autoclose t)
+          (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
           (profiler-report-mode :popup t)
           (tabulated-list-mode :align 'below))))
 
