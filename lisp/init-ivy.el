@@ -119,7 +119,7 @@
     "Transform CANDS into a string for minibuffer."
     (ivy--format-function-generic
      (lambda (str)
-       (concat (if (char-displayable-p ?⮞) "⮞ " "> ")
+       (concat (if (char-displayable-p ?▶) "▶ " "> ")
                (ivy--add-face str 'ivy-current-match)))
      (lambda (str)
        (concat "  " str))
