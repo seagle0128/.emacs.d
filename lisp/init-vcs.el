@@ -36,37 +36,23 @@
 
 ;; Git
 (use-package magit
-  :commands (magit-define-popup-switch magit-refresh-buffer)
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
-  (magit-define-popup-switch 'magit-fetch-popup
-    ?t "Fetch all tags" "--tags"))
+
+  ;; TODO: https://github.com/magit/magit/issues/3734
+  ;; (magit-define-popup-switch 'magit-fetch-popup
+  ;;   ?t "Fetch all tags" "--tags")
+  )
 
 ;; Access Git forges from Magit
 (if (executable-find "cc")
     (use-package forge
       :after magit
       :demand))
-
-;; Gitflow externsion for Magit
-(use-package magit-gitflow
-  :diminish magit-gitflow-mode
-  :functions magit-define-popup-action
-  :bind (:map magit-status-mode-map
-              ("G" . magit-gitflow-popup))
-  :hook (magit-mode . turn-on-magit-gitflow)
-  :config
-  (magit-define-popup-action 'magit-dispatch-popup
-    ?G "GitFlow" #'magit-gitflow-popup ?!))
-
-;; Git-Svn extension for Magit
-(use-package magit-svn
-  :diminish magit-svn-mode
-  :hook (magit-mode . magit-svn-mode))
 
 ;; Show tasks
 (use-package magit-todos
