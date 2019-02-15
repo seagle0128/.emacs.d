@@ -58,13 +58,18 @@
     (setq dired-listing-switches "-alh --group-directories-first")
 
     ;; Quick sort dired buffers via hydra
-    ;; bind key: `S'
     (use-package dired-quick-sort
-      :init (dired-quick-sort-setup)))
+      :bind (:map dired-mode-map
+                  ("S" . hydra-dired-quick-sort/body))))
 
   ;; Colourful dired
   (use-package diredfl
     :init (diredfl-global-mode 1))
+
+  ;; Shows icons
+  (use-package all-the-icons-dired
+    :if (display-graphic-p)
+    :hook (dired-mode . all-the-icons-dired-mode))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
