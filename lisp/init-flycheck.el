@@ -38,7 +38,7 @@
   :hook (after-init . global-flycheck-mode)
   :config
   (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-emacs-lisp-load-path (push "." load-path))
+  (setq flycheck-emacs-lisp-load-path 'inherit)
 
   ;; Only check while saving and opening files
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
