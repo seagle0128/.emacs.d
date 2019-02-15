@@ -191,6 +191,7 @@ _F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\
           ("\\*[Wo]*Man.*\\*" :regexp t :select t :other t :inhibit-window-quit t)
           ("*Calendar*" :select t :size 0.3 :align 'below)
           (" *undo-tree*" :select t)
+          ("*Paradox Report*" :size 0.3 :align 'below :autoclose t)
           ("*tldr*" :align 'below :autoclose t)
 
           (ag-mode :select t :align 'below :autoclose t)
