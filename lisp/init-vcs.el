@@ -43,10 +43,9 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  ;; TODO: https://github.com/magit/magit/issues/3734
-  ;; (magit-define-popup-switch 'magit-fetch-popup
-  ;;   ?t "Fetch all tags" "--tags")
-  )
+  ;; Add switch: --tags
+  (transient-insert-suffix 'magit-fetch
+    "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
 
 ;; Access Git forges from Magit
 (if (executable-find "cc")
