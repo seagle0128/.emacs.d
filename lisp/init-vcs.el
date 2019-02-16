@@ -36,6 +36,7 @@
 
 ;; Git
 (use-package magit
+  :commands transient-insert-suffix
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
@@ -76,11 +77,28 @@
 (use-package smerge-mode
   :ensure nil
   :diminish
+  :commands (smerge-mode
+             smerge-auto-leave
+             smerge-next
+             smerge-prev
+             smerge-keep-base
+             smerge-keep-upper
+             smerge-keep-lower
+             smerge-keep-all
+             smerge-keep-current
+             smerge-keep-current
+             smerge-diff-base-upper
+             smerge-diff-upper-lower
+             smerge-diff-base-lower
+             smerge-refine
+             smerge-ediff
+             smerge-combine-with-next
+             smerge-resolve
+             smerge-kill-current)
   :preface
-  (with-eval-after-load 'hydra
-    (defhydra smerge-hydra
-      (:color pink :hint nil :post (smerge-auto-leave))
-      "
+  (defhydra smerge-hydra
+    (:color pink :hint nil :post (smerge-auto-leave))
+    "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
 ^^-----------^^-------------------^^---------------------^^-------
 _n_ext       _b_ase               _<_: upper/base        _C_ombine
@@ -89,28 +107,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ^^           _a_ll                _R_efine
 ^^           _RET_: current       _E_diff
 "
-      ("n" smerge-next)
-      ("p" smerge-prev)
-      ("b" smerge-keep-base)
-      ("u" smerge-keep-upper)
-      ("l" smerge-keep-lower)
-      ("a" smerge-keep-all)
-      ("RET" smerge-keep-current)
-      ("\C-m" smerge-keep-current)
-      ("<" smerge-diff-base-upper)
-      ("=" smerge-diff-upper-lower)
-      (">" smerge-diff-base-lower)
-      ("R" smerge-refine)
-      ("E" smerge-ediff)
-      ("C" smerge-combine-with-next)
-      ("r" smerge-resolve)
-      ("k" smerge-kill-current)
-      ("ZZ" (lambda ()
-              (interactive)
-              (save-buffer)
-              (bury-buffer))
-       "Save and bury buffer" :color blue)
-      ("q" nil "cancel" :color blue)))
+    ("n" smerge-next)
+    ("p" smerge-prev)
+    ("b" smerge-keep-base)
+    ("u" smerge-keep-upper)
+    ("l" smerge-keep-lower)
+    ("a" smerge-keep-all)
+    ("RET" smerge-keep-current)
+    ("\C-m" smerge-keep-current)
+    ("<" smerge-diff-base-upper)
+    ("=" smerge-diff-upper-lower)
+    (">" smerge-diff-base-lower)
+    ("R" smerge-refine)
+    ("E" smerge-ediff)
+    ("C" smerge-combine-with-next)
+    ("r" smerge-resolve)
+    ("k" smerge-kill-current)
+    ("ZZ" (lambda ()
+            (interactive)
+            (save-buffer)
+            (bury-buffer))
+     "Save and bury buffer" :color blue)
+    ("q" nil "cancel" :color blue))
   :hook ((find-file . (lambda ()
                         (save-excursion
                           (goto-char (point-min))

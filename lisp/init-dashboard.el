@@ -171,29 +171,28 @@
 
     (dashboard-insert-startupify-lists)
 
-    (with-eval-after-load 'hydra
-      (defhydra dashboard-hydra (:color red :columns 3)
-        "Help"
-        ("<tab>" widget-forward "Next Widget")
-        ("C-i" widget-forward "Prompt")
-        ("<backtab>" widget-backward "Previous Widget")
-        ("RET" widget-button-press "Press Widget" :exit t)
-        ("g" dashboard-refresh-buffer "Refresh" :exit t)
-        ("}" dashboard-next-section "Next Section")
-        ("{" dashboard-previous-section "Previous Section")
-        ("r" dashboard-goto-recent-files "Recent Files")
-        ("p" dashboard-goto-projects "Projects")
-        ("m" dashboard-goto-bookmarks "Bookmarks")
-        ("H" browse-homepage "Browse Homepage" :exit t)
-        ("R" restore-session "Restore Previous Session" :exit t)
-        ("E" dashboard-edit-config "Open custom file" :exit t)
-        ("U" centaur-update "Update Centaur Emacs" :exit t)
-        ("<f2>" open-dashboard "Open Dashboard" :exit t)
-        ("q" quit-dashboard "Quit Dashboard" :exit t)
-        ("C-g" nil "quit"))
-      (bind-keys :map dashboard-mode-map
-                 ("h" . dashboard-hydra/body)
-                 ("?" . dashboard-hydra/body)))))
+    (defhydra dashboard-hydra (:color red :columns 3)
+      "Help"
+      ("<tab>" widget-forward "Next Widget")
+      ("C-i" widget-forward "Prompt")
+      ("<backtab>" widget-backward "Previous Widget")
+      ("RET" widget-button-press "Press Widget" :exit t)
+      ("g" dashboard-refresh-buffer "Refresh" :exit t)
+      ("}" dashboard-next-section "Next Section")
+      ("{" dashboard-previous-section "Previous Section")
+      ("r" dashboard-goto-recent-files "Recent Files")
+      ("p" dashboard-goto-projects "Projects")
+      ("m" dashboard-goto-bookmarks "Bookmarks")
+      ("H" browse-homepage "Browse Homepage" :exit t)
+      ("R" restore-session "Restore Previous Session" :exit t)
+      ("E" dashboard-edit-config "Open custom file" :exit t)
+      ("U" centaur-update "Update Centaur Emacs" :exit t)
+      ("<f2>" open-dashboard "Open Dashboard" :exit t)
+      ("q" quit-dashboard "Quit Dashboard" :exit t)
+      ("C-g" nil "quit"))
+    (bind-keys :map dashboard-mode-map
+               ("h" . dashboard-hydra/body)
+               ("?" . dashboard-hydra/body))))
 
 (provide 'init-dashboard)
 
