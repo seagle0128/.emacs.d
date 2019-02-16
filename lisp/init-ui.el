@@ -117,7 +117,10 @@
                     :after #'solaire-mode-restore-persp-mode-buffers))
 
       (use-package doom-modeline
-        :hook (after-init . doom-modeline-mode)))
+        :hook (after-init . doom-modeline-mode)
+        :init
+        (setq doom-modeline-github t)
+        (setq doom-modeline-major-mode-color-icon t)))
   (progn
     (ignore-errors
       (centaur-load-theme centaur-theme))
