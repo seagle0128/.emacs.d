@@ -239,6 +239,9 @@
   :hook (after-init . global-hungry-delete-mode)
   :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
+;; Make bindings that stick around
+(use-package hydra)
+
 ;; Framework for mode-specific buffer indexes
 (use-package imenu
   :ensure nil
