@@ -45,7 +45,7 @@
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
   ;; Add switch: --tags
-  (transient-insert-suffix 'magit-fetch
+  (transient-append-suffix 'magit-fetch
     "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
 
 ;; Access Git forges from Magit
