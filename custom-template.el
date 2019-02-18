@@ -12,7 +12,6 @@
 ;; (setq centaur-theme 'classic)                  ; Color theme: default, classic, doom, dark, light or daylight
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
-;; (setq centaur-ivy-icon nil)                    ; Display icons in ivy or not: t or nil
 ;; (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 
 ;; For Emacs devel

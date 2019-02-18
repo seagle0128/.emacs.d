@@ -174,8 +174,7 @@
 
     (defun ivy-rich-buffer-file-icon (candidate)
       "Display buffer-file icons in `ivy-rich'."
-      (when (and centaur-ivy-icon
-                 (display-graphic-p)  ;; Only on GUI
+      (when (and (display-graphic-p)
                  (featurep 'all-the-icons))
         (let ((icon (all-the-icons-icon-for-file candidate)))
           (unless (symbolp icon)
