@@ -41,6 +41,7 @@
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :defines iedit-mode
   :functions (symbol-overlay-switch-first symbol-overlay-switch-last)
   :commands (symbol-overlay-get-symbol
              symbol-overlay-assoc
@@ -53,7 +54,9 @@
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
-  :hook (prog-mode . symbol-overlay-mode)
+  :hook ((prog-mode . symbol-overlay-mode)
+         (iedit-mode . (lambda () (symbol-overlay-mode -1)))
+         (iedit-mode-end . symbol-overlay-mode))
   :config
   (defun symbol-overlay-switch-first ()
     (interactive)
