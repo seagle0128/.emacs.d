@@ -122,10 +122,9 @@
     :defines ivy-display-functions-alist
     :preface
     (defun setup-eshell-ivy-completion ()
-      (when (featurep 'ivy)
-        (setq-local ivy-display-functions-alist
-                    (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
-                          ivy-display-functions-alist))))
+      (setq-local ivy-display-functions-alist
+                  (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+                        ivy-display-functions-alist)))
     :bind (:map eshell-mode-map
                 ([remap eshell-pcomplete] . completion-at-point))
     :hook ((eshell-mode . esh-autosuggest-mode)

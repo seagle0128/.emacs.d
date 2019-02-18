@@ -172,11 +172,17 @@
       (add-to-list 'all-the-icons-mode-icon-alist
                    '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
 
-    (defun ivy-rich-buffer-file-icon (candidate)
-      "Display buffer-file icons in `ivy-rich'."
-      (when (and (display-graphic-p)
-                 (featurep 'all-the-icons))
-        (let ((icon (all-the-icons-icon-for-file candidate)))
+    (defun ivy-rich-buffer-icon (candidate)
+      "Display buffer icons in `ivy-rich'."
+      (when (display-graphic-p)
+        (when-let* ((buffer (get-buffer candidate))
+                    (major-mode (buffer-local-value 'major-mode buffer))
+                    (icon (if (and (buffer-file-name buffer)
+                                   (all-the-icons-auto-mode-match? candidate))
+                              (all-the-icons-icon-for-file candidate)
+                            (all-the-icons-icon-for-mode major-mode))))
+          (if (symbolp icon)
+              (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
           (unless (symbolp icon)
             (propertize icon
                         'face `(
@@ -185,10 +191,24 @@
                                 :inherit
                                 ))))))
 
+    (defun ivy-rich-file-icon (candidate)
+      "Display file icons in `ivy-rich'."
+      (when (display-graphic-p)
+        (let ((icon (all-the-icons-icon-for-file candidate)))
+          (if (symbolp icon)
+              (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
+          (unless (symbolp icon)
+            (propertize icon
+                        'face `(
+                                :height 1.1
+                                :family ,(all-the-icons-icon-family-for-file candidate)
+                                :inherit
+                                ))))))
+
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-buffer-icon :width 2)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -199,7 +219,7 @@
              (lambda (cand) (get-buffer cand)))
             ivy-switch-buffer-other-window
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-buffer-icon :width 2)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -222,27 +242,27 @@
               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
             counsel-find-file
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-file-jump
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-git
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-file
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-dir
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-recentf
             (:columns
-             ((ivy-rich-buffer-file-icon :width 2)
+             ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 90))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
     :init

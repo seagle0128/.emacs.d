@@ -32,16 +32,22 @@
 
 (use-package ibuffer
   :ensure nil
-  :commands (ibuffer-current-buffer ibuffer-find-file ibuffer-do-sort-by-alphabetic)
+  :functions (all-the-icons-icon-for-buffer
+              all-the-icons-icon-for-mode
+              all-the-icons-icon-family)
+  :commands (ibuffer-current-buffer
+             ibuffer-find-file
+             ibuffer-do-sort-by-alphabetic)
   :bind ("C-x C-b" . ibuffer)
   :init
   (setq ibuffer-filter-group-name-face '(:inherit (success bold)))
 
   ;; Display buffer icons on GUI
-  (when (and (display-graphic-p)
-             (featurep 'all-the-icons))
-    (define-ibuffer-column icon (:name " " :inline t)
-      (let ((icon (all-the-icons-icon-for-file (buffer-name))))
+  (when (display-graphic-p)
+    (define-ibuffer-column icon (:name " ")
+      (let ((icon (all-the-icons-icon-for-buffer)))
+        (if (symbolp icon)
+            (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
         (unless (symbolp icon)
           (propertize icon
                       'face `(
@@ -55,7 +61,6 @@
                                   " " (size 9 -1 :right)
                                   " " (mode 16 16 :left :elide) " " filename-and-process)
                             (mark " " (name 16 -1) " " filename))))
-
   :config
   (with-eval-after-load 'counsel
     (defalias 'ibuffer-find-file 'counsel-find-file))
@@ -69,8 +74,7 @@
                           (ibuffer-do-sort-by-alphabetic)))))
     :config
     (setq ibuffer-projectile-prefix
-          (if (and (display-graphic-p)
-                   (featurep 'all-the-icons))
+          (if (display-graphic-p)
               (concat
                (all-the-icons-octicon "file-directory"
                                       :face ibuffer-filter-group-name-face
