@@ -40,7 +40,7 @@
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb))
   :hook (org-indent-mode . (lambda() (diminish 'org-indent-mode)))
-  :init
+  :config
   (setq org-agenda-files '("~/org")
         org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)"
                                       "|" "DONE(d)" "CANCEL(c)"))
@@ -49,7 +49,7 @@
         org-ellipsis (if (char-displayable-p ?) "  " nil)
         org-pretty-entities t
         org-hide-emphasis-markers t)
-  :config
+
   (add-to-list 'org-export-backends 'md)
 
   ;; More fancy UI
