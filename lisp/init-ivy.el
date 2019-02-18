@@ -166,55 +166,30 @@
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
     :defines all-the-icons-mode-icon-alist
-    :functions (all-the-icons-icon-family-for-mode all-the-icons-icon-family-for-file)
+    :functions all-the-icons-icon-family
     :preface
     (with-eval-after-load 'all-the-icons
       (add-to-list 'all-the-icons-mode-icon-alist
                    '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
 
-    (defun ivy-rich-switch-buffer-icon (candidate)
-      "Show buffer icons in `ivy-rich'."
-      ;; Only on GUI
+    (defun ivy-rich-buffer-file-icon (candidate)
+      "Display buffer-file icons in `ivy-rich'."
       (when (and centaur-ivy-icon
-                 (display-graphic-p)
-                 (featurep 'all-the-icons))
-        (when-let* ((buffer (get-buffer candidate))
-                    (major-mode (buffer-local-value 'major-mode buffer))
-                    (icon (all-the-icons-icon-for-mode major-mode)))
-          (propertize
-           (if (symbolp icon)
-               (all-the-icons-icon-for-mode 'text-mode)
-             icon)
-           'face `(
-                   :height 1.1
-                   :family ,(all-the-icons-icon-family-for-mode
-                             (if (symbolp icon)
-                                 'text-mode
-                               major-mode))
-                   :inherit
-                   )))))
-
-    (defun ivy-rich-file-icon (candidate)
-      "Show file icons in `ivy-rich'."
-      ;; Only on GUI
-      (when (and centaur-ivy-icon
-                 (display-graphic-p)
+                 (display-graphic-p)  ;; Only on GUI
                  (featurep 'all-the-icons))
         (let ((icon (all-the-icons-icon-for-file candidate)))
-          (propertize
-           (if (symbolp icon)
-               (all-the-icons-icon-for-mode 'text-mode)
-             icon)
-           'face `(
-                   :height 1.1
-                   :family ,(all-the-icons-icon-family-for-file candidate)
-                   :inherit
-                   )))))
+          (unless (symbolp icon)
+            (propertize icon
+                        'face `(
+                                :height 1.1
+                                :family ,(all-the-icons-icon-family icon)
+                                :inherit
+                                ))))))
 
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
             (:columns
-             ((ivy-rich-switch-buffer-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -225,7 +200,7 @@
              (lambda (cand) (get-buffer cand)))
             ivy-switch-buffer-other-window
             (:columns
-             ((ivy-rich-switch-buffer-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -248,27 +223,27 @@
               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
             counsel-find-file
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-file-jump
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-git
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-file
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-dir
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
             counsel-recentf
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-buffer-file-icon :width 2)
               (ivy-rich-candidate (:width 90))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
     :init
