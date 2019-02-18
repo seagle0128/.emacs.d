@@ -30,27 +30,54 @@
 
 ;;; Code:
 
-;; Group ibuffer's list by project root
-(use-package ibuffer-projectile
+(use-package ibuffer
+  :ensure nil
+  :commands (ibuffer-current-buffer ibuffer-find-file ibuffer-do-sort-by-alphabetic)
   :bind ("C-x C-b" . ibuffer)
-  :hook ((ibuffer . (lambda ()
-                      (ibuffer-projectile-set-filter-groups)
-                      (unless (eq ibuffer-sorting-mode 'alphabetic)
-                        (ibuffer-do-sort-by-alphabetic)))))
-  :config
-  (setq ibuffer-projectile-prefix "Project: ")
-  (setq ibuffer-filter-group-name-face 'font-lock-function-name-face)
+  :init
+  (setq ibuffer-filter-group-name-face '(:inherit (success bold)))
 
+  ;; Display buffer icons on GUI
+  (when (and (display-graphic-p)
+             (featurep 'all-the-icons))
+    (define-ibuffer-column icon (:name " " :inline t)
+      (let ((icon (all-the-icons-icon-for-file (buffer-name))))
+        (unless (symbolp icon)
+          (propertize icon
+                      'face `(
+                              :height 1.1
+                              :family ,(all-the-icons-icon-family icon)
+                              :inherit
+                              )))))
+
+    (setq ibuffer-formats '((mark modified read-only locked
+                                  " " (icon 2 2 :left :elide) (name 18 18 :left :elide)
+                                  " " (size 9 -1 :right)
+                                  " " (mode 16 16 :left :elide) " " filename-and-process)
+                            (mark " " (name 16 -1) " " filename))))
+
+  :config
   (with-eval-after-load 'counsel
-    (defun my-ibuffer-find-file (file &optional wildcards)
-      "Like `find-file', but default to the directory of the buffer at point."
-      (interactive
-       (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                  (if (buffer-live-p buf)
-                                      (buffer-local-value 'default-directory buf)
-                                    default-directory))))
-         (counsel-find-file))))
-    (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
+    (defalias 'ibuffer-find-file 'counsel-find-file))
+
+  ;; Group ibuffer's list by project root
+  (use-package ibuffer-projectile
+    :functions all-the-icons-octicon
+    :hook ((ibuffer . (lambda ()
+                        (ibuffer-projectile-set-filter-groups)
+                        (unless (eq ibuffer-sorting-mode 'alphabetic)
+                          (ibuffer-do-sort-by-alphabetic)))))
+    :config
+    (setq ibuffer-projectile-prefix
+          (if (and (display-graphic-p)
+                   (featurep 'all-the-icons))
+              (concat
+               (all-the-icons-octicon "file-directory"
+                                      :face ibuffer-filter-group-name-face
+                                      :v-adjust -0.05
+                                      :height 1.25)
+               " ")
+            "Project: "))))
 
 (provide 'init-ibuffer)
 
