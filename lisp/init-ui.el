@@ -172,11 +172,14 @@
     (use-package hlinum
       :defines linum-highlight-in-all-buffersp
       :hook (global-linum-mode . hlinum-activate)
+      :custom-face (linum-highlight-face
+                    ((t `(
+                          :inherit 'default
+                          :background ,(face-background 'default)
+                          :foreground ,(face-foreground 'default)
+                          ))))
       :init
-      (setq linum-highlight-in-all-buffersp t)
-      (custom-set-faces
-       `(linum-highlight-face
-         ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))))
+      (setq linum-highlight-in-all-buffersp t))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
