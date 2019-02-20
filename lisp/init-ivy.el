@@ -165,8 +165,15 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :defines all-the-icons-mode-icon-alist
-    :functions all-the-icons-icon-family
+    :defines (all-the-icons-mode-icon-alist all-the-icons-dir-icon-alist)
+    :functions (all-the-icons-icon-family
+                all-the-icons-match-to-alist
+                all-the-icons-auto-mode-match?
+                all-the-icons-octicon
+                all-the-icons-dir-is-submodule)
+    :hook (ivy-rich-mode . (lambda ()
+                             (setq ivy-virtual-abbreviate
+                                   (or (and ivy-rich-mode 'abbreviate) 'name))))
     :preface
     (with-eval-after-load 'all-the-icons
       (add-to-list 'all-the-icons-mode-icon-alist
@@ -194,14 +201,25 @@
     (defun ivy-rich-file-icon (candidate)
       "Display file icons in `ivy-rich'."
       (when (display-graphic-p)
-        (let ((icon (all-the-icons-icon-for-file candidate)))
-          (if (symbolp icon)
-              (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
+        (let ((icon (if (file-directory-p candidate)
+                        (cond
+                         ((and (fboundp 'tramp-tramp-file-p)
+                               (tramp-tramp-file-p default-directory))
+                          (all-the-icons-octicon "file-directory"))
+                         ((file-symlink-p candidate)
+                          (all-the-icons-octicon "file-symlink-directory"))
+                         ((all-the-icons-dir-is-submodule candidate)
+                          (all-the-icons-octicon "file-submodule"))
+                         ((file-exists-p (format "%s/.git" candidate))
+                          (all-the-icons-octicon "repo"))
+                         (t (let ((matcher (all-the-icons-match-to-alist candidate all-the-icons-dir-icon-alist)))
+                              (apply (car matcher) (list (cadr matcher))))))
+                      (all-the-icons-icon-for-file candidate))))
           (unless (symbolp icon)
             (propertize icon
                         'face `(
                                 :height 1.1
-                                :family ,(all-the-icons-icon-family-for-file candidate)
+                                :family ,(all-the-icons-icon-family icon)
                                 :inherit
                                 ))))))
 
@@ -267,10 +285,7 @@
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
     :init
     (setq ivy-rich-parse-remote-buffer nil)
-    (ivy-rich-mode 1)
-    :hook (ivy-rich-mode . (lambda ()
-                             (setq ivy-virtual-abbreviate
-                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
+    (ivy-rich-mode 1))
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
