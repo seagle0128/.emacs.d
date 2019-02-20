@@ -266,6 +266,10 @@
             (:columns
              ((ivy-rich-file-icon :width 2)
               (ivy-rich-candidate (:width 30))))
+            counsel-dired-jump
+            (:columns
+             ((ivy-rich-file-icon :width 2)
+              (ivy-rich-candidate (:width 30))))
             counsel-git
             (:columns
              ((ivy-rich-file-icon :width 2)
