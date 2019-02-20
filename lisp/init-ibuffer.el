@@ -78,8 +78,8 @@
               (concat
                (all-the-icons-octicon "file-directory"
                                       :face ibuffer-filter-group-name-face
-                                      :v-adjust -0.05
-                                      :height 1.25)
+                                      :v-adjust -0.04
+                                      :height 1.1)
                " ")
             "Project: "))))
 
