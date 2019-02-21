@@ -31,7 +31,9 @@
 ;;; Code:
 
 (use-package elfeed
-  :bind ("C-x w" . elfeed)
+  :bind (("C-x w" . elfeed)
+         :map elfeed-search-mode-map
+         ("U" . elfeed-update))
   :config
   (setq elfeed-db-directory (expand-file-name ".elfeed" user-emacs-directory))
   (setq elfeed-feeds
