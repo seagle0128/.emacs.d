@@ -40,7 +40,7 @@
              ibuffer-do-sort-by-alphabetic)
   :bind ("C-x C-b" . ibuffer)
   :init
-  (setq ibuffer-filter-group-name-face '(:inherit (success bold)))
+  (setq ibuffer-filter-group-name-face '(:inherit (font-lock-keyword-face bold)))
 
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
