@@ -106,7 +106,8 @@
             (setq next (text-property-not-all pos limit prop nil str))
             (when next
               (setq pos (text-property-any next limit prop nil str))
-              (remove-text-properties next pos '(display nil face nil) str))))))))
+              (ignore-errors
+                (remove-text-properties next pos '(display nil face nil) str)))))))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
