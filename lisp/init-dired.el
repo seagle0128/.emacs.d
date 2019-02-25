@@ -121,8 +121,7 @@
               ("\\.\\(?:xcf\\)\\'" ,cmd)
               ("\\.csv\\'" ,cmd)
               ("\\.tex\\'" ,cmd)
-              ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'"
-               ,cmd)
+              ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
               ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
               ("\\.html?\\'" ,cmd)
               ("\\.md\\'" ,cmd))))
