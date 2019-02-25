@@ -147,7 +147,7 @@ background is COLOR. The foreground is computed using
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
-  :custom-face (hl-todo ((t (:box t :bold t))))
+  :custom-face (hl-todo ((t (:box t :inherit 'hl-todo))))
   :bind (:map hl-todo-mode-map
               ([C-f3] . hl-todo-occur)
               ("C-c t p" . hl-todo-previous)
@@ -156,8 +156,9 @@ background is COLOR. The foreground is computed using
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
-    (cl-pushnew `(,keyword . "#cd5c5c") hl-todo-keyword-faces))
-  (cl-pushnew '("WORKAROUND" . "#d0bf8f") hl-todo-keyword-faces))
+    (cl-pushnew `(,keyword . ,(face-foreground 'error)) hl-todo-keyword-faces))
+  (dolist (keyword '("WORKAROUND" "HACK" "TRICK"))
+    (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces)))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
