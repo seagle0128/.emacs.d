@@ -49,7 +49,7 @@
           (use-package flycheck-posframe
             :hook (flycheck-mode . (lambda ()
                                      (unless (and (bound-and-true-p lsp-mode)
-                                                  (bound-and-true-p lsp-ui-flycheck-enable))
+                                                  (not (bound-and-true-p lsp-prefer-flymake)))
                                        (flycheck-posframe-mode 1)))))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
@@ -58,7 +58,7 @@
     (use-package flycheck-popup-tip
       :hook (flycheck-mode . (lambda ()
                                (unless (and (bound-and-true-p lsp-mode)
-                                            (bound-and-true-p lsp-ui-flycheck-enable))
+                                            (not (bound-and-true-p lsp-prefer-flymake)))
                                  (flycheck-popup-tip-mode 1))))))
 
   ;; Jump to and fix syntax errors via `avy'
