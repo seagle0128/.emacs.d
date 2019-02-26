@@ -174,7 +174,7 @@
       :hook (global-linum-mode . hlinum-activate)
       :custom-face (linum-highlight-face
                     ((t `(
-                          :inherit 'default
+                          :inherit default
                           :background ,(face-background 'default)
                           :foreground ,(face-foreground 'default)
                           ))))
