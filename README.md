@@ -136,7 +136,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/49697925-400f3600-fbf8-11e8-8781-2e2ee6cd90c9.png
+![Dashboard](https://user-images.githubusercontent.com/140797/53445253-b75ba580-3a42-11e9-8be5-c774d65fd8eb.png
 "Dashboard (default theme)")
 
 ![markdown_magit](https://user-images.githubusercontent.com/140797/49694620-8ba9eb80-fbc8-11e8-9800-f2486ab41991.png
