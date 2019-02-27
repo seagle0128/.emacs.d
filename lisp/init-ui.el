@@ -138,7 +138,6 @@
 (use-package hide-mode-line
   :hook (((completion-list-mode
            completion-in-region-mode
-           lsp-ui-imenu-mode
            neotree-mode
            treemacs-mode)
           . hide-mode-line-mode)))
