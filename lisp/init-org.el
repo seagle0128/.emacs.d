@@ -104,6 +104,10 @@
     :bind (:map org-mode-map
                 ("C-M-y" . org-rich-yank)))
 
+  ;; Table of contents
+  (use-package toc-org
+    :hook (org-mode . toc-org-mode))
+
   ;; Preview
   (use-package org-preview-html
     :diminish org-preview-html-mode)

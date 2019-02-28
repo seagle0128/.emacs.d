@@ -102,7 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-"))
+")
+
+  ;; Table of contents
+  (use-package markdown-toc))
 
 (provide 'init-markdown)
 
