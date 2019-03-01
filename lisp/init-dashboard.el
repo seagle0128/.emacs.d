@@ -109,7 +109,6 @@
       "Go to bookmarks."
       (interactive)
       (funcall (local-key-binding "m")))
-
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
@@ -117,7 +116,11 @@
            ("R" . restore-session)
            ("U" . centaur-update)
            ("q" . quit-dashboard))
-    :hook (after-init . dashboard-setup-startup-hook)
+    :hook ((after-init . dashboard-setup-startup-hook)
+           (dashboard-mode . (lambda () (setq-local frame-title-format ""))))
+    :custom-face
+    (dashboard-banner-logo-title-face ((t (:inherit bold))))
+    (dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))))
     :config
     (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
@@ -164,9 +167,10 @@
       (insert "\n")
       (insert "\n")
       (insert "\n")
-      (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
+      (insert (format "[%d packages loaded in %s] (h/? for help)"
+                      (length package-activated-list) (emacs-init-time))))
 
-    (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
+    (add-to-list 'dashboard-item-generators '(buttons . dashboard-insert-buttons))
     (add-to-list 'dashboard-items '(buttons))
 
     (dashboard-insert-startupify-lists)
