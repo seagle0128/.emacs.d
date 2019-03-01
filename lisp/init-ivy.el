@@ -112,20 +112,8 @@
   (setq ivy-height 10)
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
-  ;; (setq ivy-format-function 'ivy-format-function-arrow)
+  (setq ivy-format-function 'ivy-format-function-arrow)
   ;; (setq ivy-initial-inputs-alist nil)
-
-  (defun my-ivy-format-function-arrow (cands)
-    "Transform CANDS into a string for minibuffer."
-    (ivy--format-function-generic
-     (lambda (str)
-       (concat (if (char-displayable-p ?▶) "▶ " "> ")
-               (ivy--add-face str 'ivy-current-match)))
-     (lambda (str)
-       (concat "  " str))
-     cands
-     "\n"))
-  (setq ivy-format-function 'my-ivy-format-function-arrow)
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
