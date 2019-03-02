@@ -38,27 +38,47 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
+    :after all-the-icons
     :diminish (dashboard-mode page-break-lines-mode)
     :defines persp-special-last-buffer
-    :functions (widget-forward
-                winner-undo
+    :functions (all-the-icons-faicon
+                all-the-icons-material
                 open-custom-file
-                persp-load-state-from-file
                 persp-get-buffer-or-null
-                persp-switch-to-buffer)
-    :commands dashboard-insert-startupify-lists
-    :preface
-    (defvar dashboard-recover-layout-p nil)
+                persp-load-state-from-file
+                persp-switch-to-buffer
+                winner-undo
+                widget-forward)
+    :bind (("<f2>" . open-dashboard)
+           :map dashboard-mode-map
+           ("H" . browse-homepage)
+           ("E" . dashboard-edit-config)
+           ("R" . restore-session)
+           ("U" . centaur-update)
+           ("q" . quit-dashboard))
+    :hook ((after-init . dashboard-setup-startup-hook)
+           (dashboard-mode . (lambda () (setq-local frame-title-format ""))))
+    :config
+    (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
+    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
+    (setq dashboard-startup-banner (or centaur-logo 'official))
+    (setq dashboard-show-shortcuts nil)
+    (setq dashboard-items '((recents  . 10)
+                            (bookmarks . 5)
+                            (projects . 5)))
+
+    (defun my-banner-path (&rest _)
+      "Return the full path to banner."
+      (expand-file-name "banner.txt" user-emacs-directory))
+    (advice-add #'dashboard-get-banner-path :override #'my-banner-path)
+
+    (defvar dashboard-recover-layout-p nil
+      "Wether recovers the layout.")
 
     (defun open-dashboard ()
       "Open the *dashboard* buffer and jump to the first widget."
       (interactive)
-      (if (get-buffer dashboard-buffer-name)
-          (kill-buffer dashboard-buffer-name))
-      (dashboard-insert-startupify-lists)
-      (switch-to-buffer dashboard-buffer-name)
-      (goto-char (point-min))
-      (dashboard-goto-recent-files)
+      ;; Check if need to recover layout
       (if (> (length (window-list-1))
              ;; exclude `treemacs' window
              (if (and (fboundp 'treemacs-current-visibility)
@@ -66,7 +86,18 @@
                  2
                1))
           (setq dashboard-recover-layout-p t))
-      (delete-other-windows))
+
+      (delete-other-windows)
+
+      ;; Refresh dashboard buffer
+      (if (get-buffer dashboard-buffer-name)
+          (kill-buffer dashboard-buffer-name))
+      (dashboard-insert-startupify-lists)
+      (switch-to-buffer dashboard-buffer-name)
+
+      ;; Jump to the first section
+      (goto-char (point-min))
+      (dashboard-goto-recent-files))
 
     (defun restore-session ()
       "Restore last session."
@@ -86,14 +117,9 @@
       (quit-window t)
       (when (and dashboard-recover-layout-p
                  (bound-and-true-p winner-mode))
+        (message "winner undo...")
         (winner-undo)
         (setq dashboard-recover-layout-p nil)))
-
-    (defun dashboard-edit-config ()
-      "Open custom config file."
-      (interactive)
-      (quit-dashboard)
-      (open-custom-file))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
@@ -109,66 +135,58 @@
       "Go to bookmarks."
       (interactive)
       (funcall (local-key-binding "m")))
-    :bind (("<f2>" . open-dashboard)
-           :map dashboard-mode-map
-           ("H" . browse-homepage)
-           ("E" . dashboard-edit-config)
-           ("R" . restore-session)
-           ("U" . centaur-update)
-           ("q" . quit-dashboard))
-    :hook ((after-init . dashboard-setup-startup-hook)
-           (dashboard-mode . (lambda () (setq-local frame-title-format ""))))
-    :custom-face
-    (dashboard-banner-logo-title-face ((t (:inherit bold))))
-    (dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))))
-    :config
-    (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
-    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
-    (setq dashboard-startup-banner (or centaur-logo 'official))
-    (setq dashboard-items '((recents  . 10)
-                            (bookmarks . 5)
-                            (projects . 5)))
-
-    (defun my-get-banner-path (&rest _)
-      "Return the full path to banner."
-      (expand-file-name "banner.txt" user-emacs-directory))
-    (advice-add #'dashboard-get-banner-path :override #'my-get-banner-path)
 
     (defun dashboard-insert-buttons (_list-size)
       (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 51) 2))) ?\ ))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 53) 2))) ?\ ))
       (widget-create 'url-link
-                     :tag (propertize "Homepage" 'face 'font-lock-keyword-face)
-                     :help-echo "Open the Centaur Emacs Github page"
+                     :tag (concat
+                           (if (display-graphic-p)
+                               (concat
+                                (all-the-icons-faicon "github" :height 1.2 :v-adjust -0.0575 :face 'font-lock-keyword-face)
+                                (propertize " " 'face 'variable-pitch)))
+                           (propertize "Homepage" 'face 'font-lock-keyword-face))
+                     :help-echo "Open Homepage"
                      :mouse-face 'highlight
                      centaur-homepage)
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Restore previous session"
-                     :action (lambda (&rest _) (restore-session))
                      :mouse-face 'highlight
-                     :button-prefix ""
-                     :button-suffix ""
-                     (propertize "Restore Session" 'face 'font-lock-keyword-face))
+                     :tag (concat
+                           (if (display-graphic-p)
+                               (concat
+                                (all-the-icons-material "restore" :height 1.2 :v-adjust -0.225 :face 'font-lock-keyword-face)
+                                (propertize " " 'face 'variable-pitch)))
+                           (propertize "Session" 'face 'font-lock-keyword-face)))
+      (insert " ")
+      (widget-create 'file-link
+                     :tag (concat
+                           (if (display-graphic-p)
+                               (concat
+                                (all-the-icons-material "settings" :height 1.2 :v-adjust -0.225 :face 'font-lock-keyword-face)
+                                (propertize " " 'face 'variable-pitch)))
+                           (propertize "Settings" 'face 'font-lock-keyword-face))
+                     :help-echo "Edit Settings"
+                     :mouse-face 'highlight
+                     custom-file)
       (insert " ")
       (widget-create 'push-button
-                     :help-echo "Edit Personal Configurations"
-                     :action (lambda (&rest _) (dashboard-edit-config))
-                     :mouse-face 'highlight
-                     :button-prefix ""
-                     :button-suffix ""
-                     (propertize "Edit Config" 'face 'font-lock-keyword-face))
-      (insert " ")
-      (widget-create 'push-button
-                     :help-echo "Update Centaur Emacs config and packages"
+                     :help-echo "Update configurations and packages"
                      :action (lambda (&rest _) (centaur-update))
                      :mouse-face 'highlight
-                     (propertize "Update" 'face 'font-lock-keyword-face))
+                     :tag (concat
+                           (if (display-graphic-p)
+                               (concat
+                                (all-the-icons-material "update" :height 1.2 :v-adjust -0.225 :face 'font-lock-keyword-face)
+                                (propertize " " 'face 'variable-pitch)))
+                           (propertize "Update" 'face 'font-lock-keyword-face)))
       (insert "\n")
       (insert "\n")
-      (insert "\n")
-      (insert (format "[%d packages loaded in %s] (h/? for help)"
-                      (length package-activated-list) (emacs-init-time))))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 50) 2))) ?\ ))
+      (insert (propertize (format "%d packages loaded in %s (h/? for help)"
+                                  (length package-activated-list) (emacs-init-time))
+                          'face 'font-lock-comment-face)))
 
     (add-to-list 'dashboard-item-generators '(buttons . dashboard-insert-buttons))
     (add-to-list 'dashboard-items '(buttons))
@@ -189,7 +207,7 @@
       ("m" dashboard-goto-bookmarks "Bookmarks")
       ("H" browse-homepage "Browse Homepage" :exit t)
       ("R" restore-session "Restore Previous Session" :exit t)
-      ("E" dashboard-edit-config "Open custom file" :exit t)
+      ("E" open-custom-file "Open custom file" :exit t)
       ("U" centaur-update "Update Centaur Emacs" :exit t)
       ("<f2>" open-dashboard "Open Dashboard" :exit t)
       ("q" quit-dashboard "Quit Dashboard" :exit t)
