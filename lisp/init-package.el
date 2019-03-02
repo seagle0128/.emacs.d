@@ -118,6 +118,7 @@
   :init
   (setq paradox-execute-asynchronously t)
   (setq paradox-github-token t)
+  (setq paradox-display-star-count nil)
 
   (defalias 'upgrade-packages 'paradox-upgrade-packages)
 
