@@ -56,8 +56,8 @@
            ("R" . restore-session)
            ("U" . centaur-update)
            ("q" . quit-dashboard))
-    :hook ((after-init . dashboard-setup-startup-hook)
-           (dashboard-mode . (lambda () (setq-local frame-title-format ""))))
+    :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
+    :init (dashboard-setup-startup-hook)
     :config
     (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
@@ -146,12 +146,13 @@
                                 (all-the-icons-faicon "github" :height 1.2 :v-adjust -0.0575 :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Homepage" 'face 'font-lock-keyword-face))
-                     :help-echo "Open Homepage"
+                     :help-echo "Browse homepage"
                      :mouse-face 'highlight
                      centaur-homepage)
       (insert " ")
       (widget-create 'push-button
                      :help-echo "Restore previous session"
+                     :action (lambda (&rest _) (restore-session))
                      :mouse-face 'highlight
                      :tag (concat
                            (if (display-graphic-p)
@@ -167,12 +168,12 @@
                                 (all-the-icons-material "settings" :height 1.2 :v-adjust -0.225 :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Settings" 'face 'font-lock-keyword-face))
-                     :help-echo "Edit Settings"
+                     :help-echo "Edit settings"
                      :mouse-face 'highlight
                      custom-file)
       (insert " ")
       (widget-create 'push-button
-                     :help-echo "Update configurations and packages"
+                     :help-echo "Update Centaur Emacs"
                      :action (lambda (&rest _) (centaur-update))
                      :mouse-face 'highlight
                      :tag (concat
@@ -207,7 +208,7 @@
       ("m" dashboard-goto-bookmarks "Bookmarks")
       ("H" browse-homepage "Browse Homepage" :exit t)
       ("R" restore-session "Restore Previous Session" :exit t)
-      ("E" open-custom-file "Open custom file" :exit t)
+      ("E" open-custom-file "Edit Settings" :exit t)
       ("U" centaur-update "Update Centaur Emacs" :exit t)
       ("<f2>" open-dashboard "Open Dashboard" :exit t)
       ("q" quit-dashboard "Quit Dashboard" :exit t)
