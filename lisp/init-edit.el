@@ -286,6 +286,30 @@
   :bind (:map hs-minor-mode-map
               ("C-`" . hs-toggle-hiding)))
 
+;; Flexible text folding
+(use-package origami
+  :hook (prog-mode . origami-mode)
+  :init (setq origami-show-fold-header t)
+  :config
+  (defhydra origami-hydra (:color blue :hint none)
+    "
+      _:_: recursively toggle node       _a_: toggle all nodes    _t_: toggle node
+      _o_: show only current node        _u_: undo                _r_: redo
+      _R_: reset
+      "
+    (":" origami-recursively-toggle-node)
+    ("a" origami-toggle-all-nodes)
+    ("t" origami-toggle-node)
+    ("o" origami-show-only-node)
+    ("u" origami-undo)
+    ("r" origami-redo)
+    ("R" origami-reset))
+
+  :bind (:map origami-mode-map
+              ("C-`" . origami-hydra/body))
+  :config
+  (face-spec-reset-face 'origami-fold-header-face))
+
 ;; Narrow/Widen
 (use-package fancy-narrow
   :diminish
