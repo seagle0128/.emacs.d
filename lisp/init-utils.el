@@ -170,7 +170,7 @@
        (my-pdf-generate-bookmark-name) bookmark-alist))
 
     (defun my-pdf-generate-bookmark-name ()
-      (concat "PDF-LAST-VIEWED: " (buffer-file-name)))
+      (concat "LAST-VIEWED: " (buffer-name)))
 
     (defun my-pdf-set-all-last-viewed-bookmarks ()
       (dolist (buf (buffer-list))
