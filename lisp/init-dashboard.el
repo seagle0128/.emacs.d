@@ -38,7 +38,7 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :after all-the-icons
+    :after all-the-icons projectile
     :diminish (dashboard-mode page-break-lines-mode)
     :defines persp-special-last-buffer
     :functions (all-the-icons-faicon
