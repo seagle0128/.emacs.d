@@ -78,46 +78,59 @@
       (setq company-box-backends-colors nil)
 
       (with-eval-after-load 'all-the-icons
+        (eval-and-compile
+          (defun my-company-box-icon (family icon &rest args)
+            "Defines icons using `all-the-icons' for `company-box'."
+            (when icon
+              (let ((icon (pcase family
+                            ('octicon (all-the-icons-octicon icon :v-adjust -0.05 args))
+                            ('faicon (all-the-icons-faicon icon :v-adjust -0.0575))
+                            ('material (all-the-icons-material icon :v-adjust -0.225 args))
+                            ('alltheicon (all-the-icons-alltheicon icon args)))))
+                (unless (symbolp icon)
+                  (concat icon
+                          (propertize " " 'face 'variable-pitch)))))))
+
         (setq company-box-icons-unknown
-              (all-the-icons-octicon "file-text" :v-adjust -0.05))
+              (my-company-box-icon 'octicon "file-text"))
 
         (setq company-box-icons-elisp
               (list
-               (all-the-icons-faicon "cube" :v-adjust -0.0575)        ; Function
-               (all-the-icons-faicon "tag" :v-adjust -0.0575)         ; Variable
-               (all-the-icons-faicon "cog" :v-adjust -0.0575)         ; Feature
-               (all-the-icons-material "palette" :v-adjust -0.2)      ; Face
+               (my-company-box-icon 'faicon "cube")        ; Function
+               (my-company-box-icon 'faicon "tag")         ; Variable
+               (my-company-box-icon 'faicon "cog")         ; Feature
+               (my-company-box-icon 'material "palette")   ; Face
                ))
 
         (setq company-box-icons-yasnippet
-              (all-the-icons-octicon "file-code" :v-adjust -0.05))    ; Snippet
+              (my-company-box-icon 'octicon "file-code"))  ; Snippet
 
         (setq company-box-icons-lsp
-              `(( 1  . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575))     ; Text
-                ( 2  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575))            ; Method
-                ( 3  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575))            ; Function
-                ( 4  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575))            ; Constructor
-                ( 5  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Field
-                ( 6  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Variable
-                ( 7  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575))             ; Class
-                ( 8  . ,(all-the-icons-faicon "cogs" :v-adjust -0.0575))            ; Interface
-                ( 9  . ,(all-the-icons-alltheicon "less"))                          ; Module
-                (10  . ,(all-the-icons-faicon "wrench" :v-adjust -0.0575))          ; Property
-                (11  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Unit
-                (12  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Value
-                (13  . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575))     ; Enum
-                (14  . ,(all-the-icons-material "format_align_center" :v-adjust -0.2)) ; Keyword
-                (15  . ,(all-the-icons-material "content_paste" :v-adjust -0.2))    ; Snippet
-                (16  . ,(all-the-icons-material "palette" :v-adjust -0.2))          ; Color
-                (17  . ,(all-the-icons-faicon "file" :v-adjust -0.0575))            ; File
-                (18  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Reference
-                (19  . ,(all-the-icons-faicon "folder" :v-adjust -0.0575))          ; Folder
-                (20  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; EnumMember
-                (21  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Constant
-                (22  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575))             ; Struct
-                (23  . ,(all-the-icons-faicon "bolt" :v-adjust -0.0575))            ; Event
-                (24  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Operator
-                (25  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575))             ; TypeParameter
+              `(( 1  . ,(my-company-box-icon 'faicon "file-text-o"))     ; Text
+                ( 2  . ,(my-company-box-icon 'faicon "cube"))            ; Method
+                ( 3  . ,(my-company-box-icon 'faicon "cube"))            ; Function
+                ( 4  . ,(my-company-box-icon 'faicon "cube"))            ; Constructor
+                ( 5  . ,(my-company-box-icon 'faicon "tag"))             ; Field
+                ( 6  . ,(my-company-box-icon 'faicon "tag"))             ; Variable
+                ( 7  . ,(my-company-box-icon 'faicon "cog"))             ; Class
+                ( 8  . ,(my-company-box-icon 'faicon "cogs"))            ; Interface
+                ( 9  . ,(my-company-box-icon 'alltheicon "less"))        ; Module
+                (10  . ,(my-company-box-icon 'faicon "wrench"))          ; Property
+                (11  . ,(my-company-box-icon 'faicon "tag"))             ; Unit
+                (12  . ,(my-company-box-icon 'faicon "tag"))             ; Value
+                (13  . ,(my-company-box-icon 'faicon "file-text-o"))     ; Enum
+                (14  . ,(my-company-box-icon 'material "format_align_center")) ; Keyword
+                (15  . ,(my-company-box-icon 'material "content_paste")) ; Snippet
+                (16  . ,(my-company-box-icon 'material "palette"))       ; Color
+                (17  . ,(my-company-box-icon 'faicon "file"))            ; File
+                (18  . ,(my-company-box-icon 'faicon "tag"))             ; Reference
+                (19  . ,(my-company-box-icon 'faicon "folder"))          ; Folder
+                (20  . ,(my-company-box-icon 'faicon "tag"))             ; EnumMember
+                (21  . ,(my-company-box-icon 'faicon "tag"))             ; Constant
+                (22  . ,(my-company-box-icon 'faicon "cog"))             ; Struct
+                (23  . ,(my-company-box-icon 'faicon "bolt"))            ; Event
+                (24  . ,(my-company-box-icon 'faicon "tag"))             ; Operator
+                (25  . ,(my-company-box-icon 'faicon "cog"))             ; TypeParameter
                 )))))
 
   ;; Popup documentation for completion candidates
