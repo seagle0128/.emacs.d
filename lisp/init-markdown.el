@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (use-package markdown-mode
   :defines flycheck-markdown-markdownlint-cli-config
   :preface
@@ -78,6 +81,11 @@
          (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
+  (when sys/macp
+    (let ((typora "/Applications/Typora.app/Contents/MacOS/Typora"))
+      (if (file-exists-p typora)
+          (setq markdown-open-command typora))))
+
   (setq markdown-content-type "application/xhtml+xml")
   (setq markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
                              "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"))
