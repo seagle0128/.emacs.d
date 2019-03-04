@@ -114,20 +114,16 @@
         :config
         (solaire-mode-swap-bg)
         (advice-add #'persp-load-state-from-file
-                    :after #'solaire-mode-restore-persp-mode-buffers))
-
-      (use-package doom-modeline
-        :hook (after-init . doom-modeline-mode)
-        :init (setq doom-modeline-github t)))
+                    :after #'solaire-mode-restore-persp-mode-buffers)))
   (progn
     (ignore-errors
-      (centaur-load-theme centaur-theme))
-
-    (use-package telephone-line
-      :init (setq ns-use-srgb-colorspace nil)
-      :hook (after-init . telephone-line-mode))))
+      (centaur-load-theme centaur-theme))))
 
 ;; Mode-line
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init (setq doom-modeline-github t))
+
 (defun mode-line-height ()
   "Get current height of mode-line."
   (- (elt (window-pixel-edges) 3)
