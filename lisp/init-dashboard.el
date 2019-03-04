@@ -138,7 +138,9 @@
 
     (defun dashboard-insert-buttons (_list-size)
       (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 53) 2))) ?\ ))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
+                                               (if (display-graphic-p) 53 42)
+                                               ) 2))) ?\ ))
       (widget-create 'url-link
                      :tag (concat
                            (if (display-graphic-p)
