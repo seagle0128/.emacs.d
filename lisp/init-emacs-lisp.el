@@ -60,7 +60,8 @@
       ;; Compatible with `lsp-mode'
       (with-eval-after-load 'lsp-mode
         (add-hook 'lsp-mode-hook (lambda ()
-                                   (eldoc-box-hover-mode -1)))))))
+                                   (if eldoc-box-hover-mode
+                                       (eldoc-box-hover-mode -1))))))))
 
 ;; Interactive macro expander
 (use-package macrostep
