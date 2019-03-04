@@ -139,7 +139,7 @@
     (defun dashboard-insert-buttons (_list-size)
       (insert "\n")
       (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
-                                               (if (display-graphic-p) 53 42)
+                                               (if (display-graphic-p) 50 42)
                                                ) 2))) ?\ ))
       (widget-create 'url-link
                      :tag (concat
@@ -186,7 +186,7 @@
                            (propertize "Update" 'face 'font-lock-keyword-face)))
       (insert "\n")
       (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 50) 2))) ?\ ))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 48) 2))) ?\ ))
       (insert (propertize (format "%d packages loaded in %s (h/? for help)"
                                   (length package-activated-list) (emacs-init-time))
                           'face 'font-lock-comment-face)))
