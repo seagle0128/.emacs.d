@@ -144,7 +144,7 @@
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
   :if (display-graphic-p)
-  :config
+  :init
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t)))
 
