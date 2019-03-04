@@ -168,8 +168,8 @@
       :custom-face (linum-highlight-face
                     ((t `(
                           :inherit default
-                          :background ,(face-background 'default)
-                          :foreground ,(face-foreground 'default)
+                          :background nil
+                          :foreground nil
                           ))))
       :init
       (setq linum-highlight-in-all-buffersp t))))

@@ -56,7 +56,7 @@
 
    (use-package lsp-ui
      :custom-face
-     (lsp-ui-doc-background ((t `(:background ,(face-background 'default)))))
+     (lsp-ui-doc-background ((t `(:background nil))))
      :bind (:map lsp-ui-mode-map
                  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
