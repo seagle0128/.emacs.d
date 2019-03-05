@@ -53,7 +53,6 @@
                       'face `(
                               :height 1.1
                               :family ,(all-the-icons-icon-family icon)
-                              :inherit
                               )))))
 
     (setq ibuffer-formats '((mark modified read-only locked

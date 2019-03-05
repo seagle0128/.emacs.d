@@ -186,7 +186,6 @@
                         'face `(
                                 :height 1.1
                                 :family ,(all-the-icons-icon-family icon)
-                                :inherit
                                 ))))))
 
     (defun ivy-rich-file-icon (candidate)
@@ -211,7 +210,6 @@
                         'face `(
                                 :height 1.1
                                 :family ,(all-the-icons-icon-family icon)
-                                :inherit
                                 ))))))
 
     (setq ivy-rich--display-transformers-list
