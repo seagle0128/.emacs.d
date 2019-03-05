@@ -42,7 +42,6 @@
 (use-package symbol-overlay
   :diminish
   :defines iedit-mode
-  :functions (symbol-overlay-switch-first symbol-overlay-switch-last)
   :commands (symbol-overlay-get-symbol
              symbol-overlay-assoc
              symbol-overlay-get-list
@@ -56,29 +55,7 @@
          ([M-f3] . symbol-overlay-remove-all))
   :hook ((prog-mode . symbol-overlay-mode)
          (iedit-mode . (lambda () (symbol-overlay-mode -1)))
-         (iedit-mode-end . symbol-overlay-mode))
-  :config
-  (defun symbol-overlay-switch-first ()
-    (interactive)
-    (let* ((symbol (symbol-overlay-get-symbol))
-           (keyword (symbol-overlay-assoc symbol))
-           (a-symbol (car keyword))
-           (before (symbol-overlay-get-list a-symbol 'car))
-           (count (length before)))
-      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count))))
-
-  (defun symbol-overlay-switch-last ()
-    (interactive)
-    (let* ((symbol (symbol-overlay-get-symbol))
-           (keyword (symbol-overlay-assoc symbol))
-           (a-symbol (car keyword))
-           (after (symbol-overlay-get-list a-symbol 'cdr))
-           (count (length after)))
-      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count 1))))
-
-  (bind-keys :map symbol-overlay-map
-             ("<" . symbol-overlay-switch-first)
-             (">" . symbol-overlay-switch-last)))
+         (iedit-mode-end . symbol-overlay-mode)))
 
 ;; Highlight matching paren
 (use-package paren
