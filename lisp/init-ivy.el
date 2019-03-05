@@ -153,7 +153,7 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :defines (all-the-icons-mode-icon-alist all-the-icons-dir-icon-alist)
+    :defines (all-the-icons-mode-icon-alist all-the-icons-dir-icon-alist bookmark-alist)
     :functions (all-the-icons-icon-family
                 all-the-icons-match-to-alist
                 all-the-icons-auto-mode-match?
@@ -166,6 +166,9 @@
     (with-eval-after-load 'all-the-icons
       (add-to-list 'all-the-icons-mode-icon-alist
                    '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
+
+    (defun ivy-rich-bookmark-name (candidate)
+      (car (assoc candidate bookmark-alist)))
 
     (defun ivy-rich-buffer-icon (candidate)
       "Display buffer icons in `ivy-rich'."
@@ -214,7 +217,7 @@
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
             (:columns
-             ((ivy-rich-buffer-icon :width 2)
+             ((ivy-rich-buffer-icon (:width 1))
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -225,7 +228,7 @@
              (lambda (cand) (get-buffer cand)))
             ivy-switch-buffer-other-window
             (:columns
-             ((ivy-rich-buffer-icon :width 2)
+             ((ivy-rich-buffer-icon)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
@@ -248,33 +251,39 @@
               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
             counsel-find-file
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-file-jump
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-dired-jump
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-git
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-file
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-projectile-find-dir
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
             counsel-recentf
             (:columns
-             ((ivy-rich-file-icon :width 2)
+             ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 90))
-              (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))))
+              (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))
+            counsel-bookmark
+            (:columns
+             ((ivy-rich-bookmark-type)
+              (ivy-rich-bookmark-name (:width 40))
+              (ivy-rich-bookmark-info)))
+            ))
     :init
     (setq ivy-rich-parse-remote-buffer nil)
     (ivy-rich-mode 1))
