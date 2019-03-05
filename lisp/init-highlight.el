@@ -104,7 +104,8 @@ background is COLOR. The foreground is computed using
                    'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
                                              "white" "black"))
                            (:background ,color)))
-      (overlay-put ov 'symbol 'ovrainbow)))
+      (ignore-errors
+        (overlay-put ov 'symbol 'ovrainbow))))
 
   (defun rainbow-turn-off ()
     "Turn off rainbow-mode."
@@ -116,7 +117,8 @@ background is COLOR. The foreground is computed using
        ,@rainbow-r-colors-font-lock-keywords
        ,@rainbow-html-colors-font-lock-keywords
        ,@rainbow-html-rgb-colors-font-lock-keywords))
-    (remove-overlays (point-min) (point-max) 'symbol 'ovrainbow)))
+    (ignore-errors
+      (remove-overlays (point-min) (point-max) 'symbol 'ovrainbow))))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
