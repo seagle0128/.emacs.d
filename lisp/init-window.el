@@ -87,6 +87,32 @@
   :config
   ;; (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
+  ;; Make window number order as `winum'
+  (defun my-aw-window< (wnd1 wnd2)
+    "Return true if WND1 is less than WND2.
+This is determined by their respective window coordinates.
+Windows are numbered left to right, top down."
+    (let* ((f1 (window-frame wnd1))
+           (f2 (window-frame wnd2))
+           (e1 (window-edges wnd1))
+           (e2 (window-edges wnd2))
+           (p1 (frame-position f1))
+           (p2 (frame-position f2))
+           (nl (or (null (car p1)) (null (car p2)))))
+      (cond ((and (not nl) (< (car p1) (car p2)))
+             (not aw-reverse-frame-list))
+            ((and (not nl) (> (car p1) (car p2)))
+             aw-reverse-frame-list)
+            ((< (caddr e1) (caddr e2))
+             t)
+            ((> (caddr e1) (caddr e2))
+             nil)
+            ((< (cadr e1) (cadr e2))
+             t))))
+  (advice-add #'aw-window< :override #'my-aw-window<)
+
+  (setq aw-reverse-frame-list nil)
+
   ;; https://github.com/abo-abo/ace-window/wiki/Hydra
   ;; hydra-frame-window is designed from `ace-window' and
   ;; matches aw-dispatch-alist with a few extra
