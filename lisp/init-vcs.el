@@ -36,17 +36,17 @@
 
 ;; Git
 (use-package magit
-  :commands transient-insert-suffix
   :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
+         ("C-x M-g" . magit-dispatch)
          ("C-c M-g" . magit-file-popup))
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  ;; Add switch: --tags
-  (transient-append-suffix 'magit-fetch
-    "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
+  (if (fboundp 'transient-append-suffix)
+      ;; Add switch: --tags
+      (transient-append-suffix 'magit-fetch
+        "-p" '("-t" "Fetch all tags" ("-t" "--tags")))))
 
 ;; Access Git forges from Magit
 (if (executable-find "cc")
