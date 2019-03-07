@@ -57,7 +57,7 @@
          (iedit-mode . (lambda () (symbol-overlay-mode -1)))
          (iedit-mode-end . symbol-overlay-mode)))
 
-;; Highlight matching paren
+;; Highlight matching parens
 (use-package paren
   :ensure nil
   :hook (after-init . show-paren-mode)

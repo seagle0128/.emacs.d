@@ -209,7 +209,10 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-;; Toggle fullscreen
+;; Fullscreen
+;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
+(when sys/mac-x-p
+  (setq ns-use-native-fullscreen nil))
 (bind-keys ("C-<f11>" . toggle-frame-fullscreen)
            ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
            ("S-s-<return>" . toggle-frame-fullscreen)
