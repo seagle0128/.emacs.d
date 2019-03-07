@@ -74,7 +74,7 @@
     (setq highlight-indent-guides-method 'character)
     (setq highlight-indent-guides-responsive t)
 
-    ;; Disable `highlight-indet-guides-mode' in `swiper'
+    ;; Disable `highlight-indent-guides-mode' in `swiper'
     ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
     (with-eval-after-load 'ivy
       (defadvice ivy-cleanup-string (after my-ivy-cleanup-hig activate)
