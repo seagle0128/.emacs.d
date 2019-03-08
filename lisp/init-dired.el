@@ -68,6 +68,7 @@
 
   ;; Shows icons
   (use-package all-the-icons-dired
+    :after all-the-icons
     :diminish
     :custom-face (all-the-icons-dired-dir-face ((t `(:foreground ,(face-background 'default)))))
     :hook (dired-mode . all-the-icons-dired-mode)
