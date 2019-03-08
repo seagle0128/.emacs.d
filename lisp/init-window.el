@@ -53,7 +53,7 @@
 
 ;; Quickly switch windows
 (use-package ace-window
-  :functions hydra-frame-window/body
+  :functions (hydra-frame-window/body my-aw-window<)
   :bind ([remap other-window] . ace-window)
   :custom-face
   (aw-leading-char-face ((t (:inherit error :bold t :height 1.1))))

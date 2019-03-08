@@ -215,7 +215,7 @@
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
             (:columns
-             ((ivy-rich-buffer-icon (:width 1))
+             ((ivy-rich-buffer-icon)
               (ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
