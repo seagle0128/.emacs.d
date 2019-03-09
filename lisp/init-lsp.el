@@ -56,20 +56,26 @@
 
    (use-package lsp-ui
      :custom-face
-     (lsp-ui-doc-background ((t `(:background nil))))
+     (lsp-ui-doc-background ((t (:background nil))))
+     (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
      :bind (:map lsp-ui-mode-map
                  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
                  ("C-c u" . lsp-ui-imenu))
      :init
      (setq lsp-ui-doc-enable t
+           lsp-ui-doc-header t
            lsp-ui-doc-include-signature t
-           lsp-ui-doc-position 'at-point
+           lsp-ui-doc-position 'top
            lsp-ui-doc-use-webkit t
            lsp-ui-doc-border (face-foreground 'default)
 
-           lsp-ui-sideline-enable nil
-           lsp-ui-sideline-ignore-duplicate t)
+           lsp-ui-sideline-enable t
+           lsp-ui-sideline-ignore-duplicate t
+           lsp-ui-sideline-show-diagnostics nil
+           lsp-ui-sideline-show-symbol t
+           lsp-ui-sideline-show-hover t
+           lsp-ui-sideline-show-code-actions t)
      :config
      ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
      ;; https://github.com/emacs-lsp/lsp-ui/issues/243
