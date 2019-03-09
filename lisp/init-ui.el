@@ -142,7 +142,10 @@
   :if (display-graphic-p)
   :init
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
-    (all-the-icons-install-fonts t)))
+    (all-the-icons-install-fonts t))
+  :config
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
 ;; Line and Column
 (setq-default fill-column 80)

@@ -146,27 +146,19 @@
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
 
-  ;; Integrate yasnippet
-  (use-package ivy-yasnippet
-    :bind ("C-c C-y" . ivy-yasnippet)
-    :config (advice-add #'ivy-yasnippet--preview :override #'ignore))
+  ;; Ivy integration for Projectile
+  (use-package counsel-projectile
+    :init (counsel-projectile-mode 1))
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :defines (all-the-icons-mode-icon-alist all-the-icons-dir-icon-alist bookmark-alist)
+    :defines (all-the-icons-dir-icon-alist bookmark-alist)
     :functions (all-the-icons-icon-family
                 all-the-icons-match-to-alist
                 all-the-icons-auto-mode-match?
                 all-the-icons-octicon
                 all-the-icons-dir-is-submodule)
-    :hook (ivy-rich-mode . (lambda ()
-                             (setq ivy-virtual-abbreviate
-                                   (or (and ivy-rich-mode 'abbreviate) 'name))))
     :preface
-    (with-eval-after-load 'all-the-icons
-      (add-to-list 'all-the-icons-mode-icon-alist
-                   '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
-
     (defun ivy-rich-bookmark-name (candidate)
       (car (assoc candidate bookmark-alist)))
 
@@ -211,7 +203,10 @@
                                 :height 1.1
                                 :family ,(all-the-icons-icon-family icon)
                                 ))))))
-
+    :hook (ivy-rich-mode . (lambda ()
+                             (setq ivy-virtual-abbreviate
+                                   (or (and ivy-rich-mode 'abbreviate) 'name))))
+    :init
     (setq ivy-rich--display-transformers-list
           '(ivy-switch-buffer
             (:columns
@@ -250,45 +245,50 @@
             counsel-find-file
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
+              (ivy-rich-candidate)))
             counsel-file-jump
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
+              (ivy-rich-candidate)))
             counsel-dired-jump
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
+              (ivy-rich-candidate)))
             counsel-git
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
-            counsel-projectile-find-file
-            (:columns
-             ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
-            counsel-projectile-find-dir
-            (:columns
-             ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
-            counsel-projectile-switch-project
-            (:columns
-             ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 30))))
+              (ivy-rich-candidate)))
             counsel-recentf
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate (:width 90))
+              (ivy-rich-candidate (:width 0.8))
               (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))
             counsel-bookmark
             (:columns
              ((ivy-rich-bookmark-type)
               (ivy-rich-bookmark-name (:width 40))
               (ivy-rich-bookmark-info)))
-            ))
-    :init
+            counsel-projectile-switch-project
+            (:columns
+             ((ivy-rich-file-icon)
+              (ivy-rich-candidate)))
+            counsel-projectile-find-file
+            (:columns
+             ((ivy-rich-file-icon)
+              (counsel-projectile-find-file-transformer)))
+            counsel-projectile-find-dir
+            (:columns
+             ((ivy-rich-file-icon)
+              (counsel-projectile-find-dir-transformer)))))
+
     (setq ivy-rich-parse-remote-buffer nil)
     (ivy-rich-mode 1))
+
+  ;; Integrate yasnippet
+  (use-package ivy-yasnippet
+    :commands ivy-yasnippet--preview
+    :bind ("C-c C-y" . ivy-yasnippet)
+    :config (advice-add #'ivy-yasnippet--preview :override #'ignore))
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
@@ -299,10 +299,6 @@
     :after flyspell
     :bind (:map flyspell-mode-map
                 ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
-
-  ;; Ivy integration for Projectile
-  (use-package counsel-projectile
-    :init (counsel-projectile-mode 1))
 
   ;; Quick launch apps
   (cond
