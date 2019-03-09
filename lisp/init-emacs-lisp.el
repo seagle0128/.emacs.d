@@ -97,8 +97,7 @@
       :hook ((eldoc-mode . (lambda ()
                              ;; Compatible with `lsp-mode'
                              (unless (bound-and-true-p lsp-mode)
-                               (eldoc-box-hover-mode 1)
-                               (eldoc-box-hover-at-point-mode 1))))
+                               (eldoc-box-hover-mode 1))))
              (lsp-mode . (lambda ()
                            ;; Compatible with `lsp-mode'
                            (if eldoc-box-hover-mode
