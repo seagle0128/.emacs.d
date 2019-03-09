@@ -271,6 +271,10 @@
             (:columns
              ((ivy-rich-file-icon)
               (ivy-rich-candidate (:width 30))))
+            counsel-projectile-switch-project
+            (:columns
+             ((ivy-rich-file-icon)
+              (ivy-rich-candidate (:width 30))))
             counsel-recentf
             (:columns
              ((ivy-rich-file-icon)
