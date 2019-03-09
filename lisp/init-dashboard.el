@@ -52,8 +52,8 @@
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
-           ("E" . dashboard-edit-config)
            ("R" . restore-session)
+           ("S" . open-custom-file)
            ("U" . centaur-update)
            ("q" . quit-dashboard))
     :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
@@ -117,7 +117,6 @@
       (quit-window t)
       (when (and dashboard-recover-layout-p
                  (bound-and-true-p winner-mode))
-        (message "winner undo...")
         (winner-undo)
         (setq dashboard-recover-layout-p nil)))
 
@@ -170,7 +169,7 @@
                                 (all-the-icons-material "settings" :height 1.2 :v-adjust -0.225 :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Settings" 'face 'font-lock-keyword-face))
-                     :help-echo "Edit settings"
+                     :help-echo "Open custom file"
                      :mouse-face 'highlight
                      custom-file)
       (insert " ")
@@ -210,7 +209,7 @@
       ("m" dashboard-goto-bookmarks "Bookmarks")
       ("H" browse-homepage "Browse Homepage" :exit t)
       ("R" restore-session "Restore Previous Session" :exit t)
-      ("E" open-custom-file "Edit Settings" :exit t)
+      ("S" open-custom-file "Settings" :exit t)
       ("U" centaur-update "Update Centaur Emacs" :exit t)
       ("<f2>" open-dashboard "Open Dashboard" :exit t)
       ("q" quit-dashboard "Quit Dashboard" :exit t)
