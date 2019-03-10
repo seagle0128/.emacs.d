@@ -38,9 +38,9 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :after all-the-icons projectile
+    :after all-the-icons projectile persp-mode
     :diminish (dashboard-mode page-break-lines-mode)
-    :defines persp-special-last-buffer
+    :defines (persp-save-dir persp-special-last-buffer)
     :functions (all-the-icons-faicon
                 all-the-icons-material
                 open-custom-file
@@ -53,6 +53,7 @@
            :map dashboard-mode-map
            ("H" . browse-homepage)
            ("R" . restore-session)
+           ("L" . persp-load-state-from-file)
            ("S" . open-custom-file)
            ("U" . centaur-update)
            ("q" . quit-dashboard))
@@ -209,6 +210,7 @@
       ("m" dashboard-goto-bookmarks "Bookmarks")
       ("H" browse-homepage "Browse Homepage" :exit t)
       ("R" restore-session "Restore Previous Session" :exit t)
+      ("L" persp-load-state-from-file "List Saved Sessions" :exit t)
       ("S" open-custom-file "Settings" :exit t)
       ("U" centaur-update "Update Centaur Emacs" :exit t)
       ("<f2>" open-dashboard "Open Dashboard" :exit t)
