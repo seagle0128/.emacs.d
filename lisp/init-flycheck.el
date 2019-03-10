@@ -54,11 +54,7 @@
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
           :config (setq flycheck-pos-tip-timeout 30)))
     (use-package flycheck-popup-tip
-      :hook (flycheck-mode . flycheck-popup-tip-mode)))
-
-  ;; Jump to and fix syntax errors via `avy'
-  (use-package avy-flycheck
-    :hook (global-flycheck-mode . avy-flycheck-setup)))
+      :hook (flycheck-mode . flycheck-popup-tip-mode))))
 
 (provide 'init-flycheck)
 
