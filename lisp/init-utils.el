@@ -40,7 +40,7 @@
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
   :hook (after-init . which-key-mode))
 
-;; Youdao Dictionay
+;; Youdao Dictionary
 (use-package youdao-dictionary
   :functions (posframe-show posframe-hide)
   :preface

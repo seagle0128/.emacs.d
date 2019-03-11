@@ -93,7 +93,7 @@
   (when emacs/>=26p
     ;; Display documentation in childframe
     (use-package eldoc-box
-      :diminish
+      :diminish eldoc-box-hover-mode
       :hook ((eldoc-mode . (lambda ()
                              ;; Compatible with `lsp-mode'
                              (unless (bound-and-true-p lsp-mode)
