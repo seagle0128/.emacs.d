@@ -48,13 +48,19 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package flycheck-posframe
-            :hook (flycheck-mode . flycheck-posframe-mode))
+            :hook (flycheck-mode . (lambda ()
+                                     (unless (and (bound-and-true-p lsp-mode)
+                                                  (not (bound-and-true-p lsp-prefer-flymake)))
+                                       (flycheck-posframe-mode 1)))))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
           :config (setq flycheck-pos-tip-timeout 30)))
     (use-package flycheck-popup-tip
-      :hook (flycheck-mode . flycheck-popup-tip-mode))))
+      :hook (flycheck-mode . (lambda ()
+                               (unless (and (bound-and-true-p lsp-mode)
+                                            (not (bound-and-true-p lsp-prefer-flymake)))
+                                 (flycheck-popup-tip-mode 1)))))))
 
 (provide 'init-flycheck)
 

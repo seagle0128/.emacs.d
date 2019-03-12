@@ -72,7 +72,7 @@
 
            lsp-ui-sideline-enable t
            lsp-ui-sideline-ignore-duplicate t
-           lsp-ui-sideline-show-diagnostics nil
+           lsp-ui-sideline-show-diagnostics t
            lsp-ui-sideline-show-symbol t
            lsp-ui-sideline-show-hover t
            lsp-ui-sideline-show-code-actions t)
