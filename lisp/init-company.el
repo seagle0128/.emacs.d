@@ -70,7 +70,51 @@
       :diminish
       :hook (company-mode . company-box-mode)
       :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
-      :config (setq company-box-backends-colors nil)))
+      :config
+      (setq company-box-backends-colors nil)
+
+      (with-eval-after-load 'all-the-icons
+        (eval-and-compile
+          (defun my-company-box-icon (family icon &rest args)
+            "Defines icons using `all-the-icons' for `company-box'."
+            (when icon
+              (let ((icon (pcase family
+                            ('octicon (all-the-icons-octicon icon :v-adjust -0.05 args))
+                            ('faicon (all-the-icons-faicon icon :v-adjust -0.0575))
+                            ('material (all-the-icons-material icon :v-adjust -0.225 args))
+                            ('alltheicon (all-the-icons-alltheicon icon args)))))
+                (unless (symbolp icon)
+                  (concat icon
+                          (propertize " " 'face 'variable-pitch)))))))
+
+        (setq company-box-icons-all-the-icons
+              `((Unknown . ,(my-company-box-icon 'octicon "file-text"))
+                (Text . ,(my-company-box-icon 'faicon "file-text-o"))
+                (Method . ,(my-company-box-icon 'faicon "cube"))
+                (Function . ,(my-company-box-icon 'faicon "cube"))
+                (Constructor . ,(my-company-box-icon 'faicon "cube"))
+                (Field . ,(my-company-box-icon 'faicon "tag"))
+                (Variable . ,(my-company-box-icon 'faicon "tag"))
+                (Class . ,(my-company-box-icon 'faicon "cog"))
+                (Interface . ,(my-company-box-icon 'faicon "cogs"))
+                (Module . ,(my-company-box-icon 'alltheicon "less"))
+                (Property . ,(my-company-box-icon 'faicon "wrench"))
+                (Unit . ,(my-company-box-icon 'faicon "tag"))
+                (Value . ,(my-company-box-icon 'faicon "tag"))
+                (Enum . ,(my-company-box-icon 'faicon "file-text-o"))
+                (Keyword . ,(my-company-box-icon 'material "format_align_center"))
+                (Snippet . ,(my-company-box-icon 'material "content_paste"))
+                (Color . ,(my-company-box-icon 'material "palette"))
+                (File . ,(my-company-box-icon 'faicon "file"))
+                (Reference . ,(my-company-box-icon 'faicon "tag"))
+                (Folder . ,(my-company-box-icon 'faicon "folder"))
+                (EnumMember . ,(my-company-box-icon 'faicon "tag"))
+                (Constant . ,(my-company-box-icon 'faicon "tag"))
+                (Struct . ,(my-company-box-icon 'faicon "cog"))
+                (Event . ,(my-company-box-icon 'faicon "bolt"))
+                (Operator . ,(my-company-box-icon 'faicon "tag"))
+                (TypeParameter . ,(my-company-box-icon 'faicon "cog"))
+                (Template . ,(my-company-box-icon 'octicon "file-code")))))))
 
   ;; Popup documentation for completion candidates
   (when (and (not emacs/>=26p) (display-graphic-p))
