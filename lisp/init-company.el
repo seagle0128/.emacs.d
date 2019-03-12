@@ -68,16 +68,9 @@
   (when emacs/>=26p
     (use-package company-box
       :diminish
-      :functions (all-the-icons-faicon
-                  all-the-icons-material
-                  all-the-icons-octicon
-                  all-the-icons-alltheicon)
       :hook (company-mode . company-box-mode)
-      :init (setq company-box-enable-icon (display-graphic-p))
-      :config
-      (setq company-box-backends-colors nil)
-      (if (display-graphic-p)
-          (setq company-box-icons-alist company-box-icons-all-the-icons))))
+      :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+      :config (setq company-box-backends-colors nil)))
 
   ;; Popup documentation for completion candidates
   (when (and (not emacs/>=26p) (display-graphic-p))
