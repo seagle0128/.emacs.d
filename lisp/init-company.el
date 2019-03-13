@@ -90,12 +90,11 @@
         (defun company-box-icons--elisp (candidate)
           (when (derived-mode-p 'emacs-lisp-mode)
             (let ((sym (intern candidate)))
-              ;; we even can move it to (predicate .  kind) alist
               (cond ((fboundp sym) 'Function)
                     ((featurep sym) 'Module)
                     ((facep sym) 'Color)
                     ((boundp sym) 'Variable)
-                    (t . Unknown)))))
+                    (t . t)))))
 
         (setq company-box-icons-all-the-icons
               `((Unknown . ,(my-company-box-icon 'octicon "file-text"))
