@@ -72,6 +72,8 @@
       :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
       :config
       (setq company-box-backends-colors nil)
+      (setq company-box-show-single-candidate t)
+      (setq company-box-max-candidates 50)
 
       (with-eval-after-load 'all-the-icons
         (eval-and-compile
@@ -79,10 +81,8 @@
             "Defines icons using `all-the-icons' for `company-box'."
             (when icon
               (let ((icon (pcase family
-                            ('octicon (apply #'all-the-icons-octicon icon :v-adjust -0.05 args))
-                            ('faicon (apply #'all-the-icons-faicon icon :v-adjust -0.0575 args))
-                            ('material (apply #'all-the-icons-material icon :v-adjust -0.225 args))
-                            ('alltheicon (apply #'all-the-icons-alltheicon icon args)))))
+                            ('faicon (apply #'all-the-icons-faicon icon :height 0.9 :v-adjust -0.05 args))
+                            ('material (apply #'all-the-icons-material icon :height 0.9 :v-adjust -0.15 args)))))
                 (unless (symbolp icon)
                   (concat icon
                           (propertize " " 'face 'variable-pitch)))))))
@@ -98,33 +98,33 @@
                     (t . nil)))))
 
         (setq company-box-icons-all-the-icons
-              `((Unknown . ,(my-company-box-icon 'octicon "file-text"))
+              `((Unknown . ,(my-company-box-icon 'material "find_in_page"))
                 (Text . ,(my-company-box-icon 'material "text_fields"))
-                (Method . ,(my-company-box-icon 'faicon "cube" :face 'font-lock-keyword-face))
-                (Function . ,(my-company-box-icon 'faicon "cube" :face 'font-lock-keyword-face))
-                (Constructor . ,(my-company-box-icon 'faicon "cube" :face 'font-lock-keyword-face))
-                (Field . ,(my-company-box-icon 'octicon "tag" :face 'font-lock-type-face))
-                (Variable . ,(my-company-box-icon 'octicon "tag" :face 'font-lock-type-face))
-                (Class . ,(my-company-box-icon 'faicon "cog" :face 'font-lock-type-face))
-                (Interface . ,(my-company-box-icon 'faicon "cogs" :face 'font-lock-keyword-face))
-                (Module . ,(my-company-box-icon 'alltheicon "less" :face 'font-lock-keyword-face))
-                (Property . ,(my-company-box-icon 'faicon "wrench" :face 'font-lock-type-face))
+                (Method . ,(my-company-box-icon 'faicon "cube" :face 'all-the-icons-purple))
+                (Function . ,(my-company-box-icon 'faicon "cube" :face 'all-the-icons-purple))
+                (Constructor . ,(my-company-box-icon 'faicon "cube" :face 'all-the-icons-purple))
+                (Field . ,(my-company-box-icon 'material "straighten" :face 'all-the-icons-blue))
+                (Variable . ,(my-company-box-icon 'material "straighten" :face 'all-the-icons-blue))
+                (Class . ,(my-company-box-icon 'material "settings_input_component" :face 'all-the-icons-orange))
+                (Interface . ,(my-company-box-icon 'material "share" :face 'all-the-icons-blue))
+                (Module . ,(my-company-box-icon 'material "view_module" :face 'all-the-icons-blue))
+                (Property . ,(my-company-box-icon 'faicon "wrench"))
                 (Unit . ,(my-company-box-icon 'material "settings_system_daydream"))
-                (Value . ,(my-company-box-icon 'faicon "cog" :face 'font-lock-type-face))
-                (Enum . ,(my-company-box-icon 'material "storage" :face 'font-lock-type-face))
-                (Keyword . ,(my-company-box-icon 'material "format_align_center"))
-                (Snippet . ,(my-company-box-icon 'material "closed_caption"))
+                (Value . ,(my-company-box-icon 'material "format_align_right" :face 'all-the-icons-blue))
+                (Enum . ,(my-company-box-icon 'material "storage" :face 'all-the-icons-orange))
+                (Keyword . ,(my-company-box-icon 'material "filter_center_focus"))
+                (Snippet . ,(my-company-box-icon 'material "format_align_center"))
                 (Color . ,(my-company-box-icon 'material "palette"))
                 (File . ,(my-company-box-icon 'faicon "file-o"))
-                (Reference . ,(my-company-box-icon 'material "refresh" :face 'font-lock-reference-face))
+                (Reference . ,(my-company-box-icon 'material "collections_bookmark"))
                 (Folder . ,(my-company-box-icon 'faicon "folder-open"))
-                (EnumMember . ,(my-company-box-icon 'material "format_align_right" :face font-lock-constant-face))
-                (Constant . ,(my-company-box-icon 'faicon "square-o" :face 'font-lock-constant-face))
-                (Struct . ,(my-company-box-icon 'faicon "cog" :face 'font-lock-type-face))
-                (Event . ,(my-company-box-icon 'faicon "bolt" :face 'font-lock-type-face))
-                (Operator . ,(my-company-box-icon 'faicon "square-o"))
+                (EnumMember . ,(my-company-box-icon 'material "format_align_right" :face 'all-the-icons-blueb))
+                (Constant . ,(my-company-box-icon 'faicon "square-o"))
+                (Struct . ,(my-company-box-icon 'material "settings_input_component" :face 'all-the-icons-orange))
+                (Event . ,(my-company-box-icon 'faicon "bolt" :face 'all-the-icons-orange))
+                (Operator . ,(my-company-box-icon 'material "control_point"))
                 (TypeParameter . ,(my-company-box-icon 'faicon "arrows"))
-                (Template . ,(my-company-box-icon 'octicon "file-code")))))))
+                (Template . ,(my-company-box-icon 'material "format_align_center")))))))
 
   ;; Popup documentation for completion candidates
   (when (and (not emacs/>=26p) (display-graphic-p))
