@@ -207,7 +207,7 @@
                              (setq ivy-virtual-abbreviate
                                    (or (and ivy-rich-mode 'abbreviate) 'name))))
     :init
-    (setq ivy-rich--display-transformers-list
+    (setq ivy-rich-display-transformers-list
           '(ivy-switch-buffer
             (:columns
              ((ivy-rich-buffer-icon)
