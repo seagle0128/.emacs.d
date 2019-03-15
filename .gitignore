@@ -67,3 +67,4 @@ ido.*
 flycheck_*.el*
 README.html
 *.sqlite
+.dap-*

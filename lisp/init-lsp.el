@@ -47,6 +47,7 @@
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
      (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
+     (setq flymake-fringe-indicator-position 'right-fringe)
      :config
      ;; Configure LSP clients
      (use-package lsp-clients
