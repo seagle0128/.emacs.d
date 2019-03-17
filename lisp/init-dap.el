@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package dap-mode
+  :diminish
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
 
