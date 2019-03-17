@@ -141,7 +141,7 @@ background is COLOR. The foreground is computed using
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
-  :defines desktop-minor-mode-table
+  :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
   :custom-face
   (diff-hl-change ((t (:background "#46D9FF"))))
@@ -156,11 +156,14 @@ background is COLOR. The foreground is computed using
   (diff-hl-flydiff-mode 1)
 
   ;; Set fringe style
+  (setq-default fringes-outside-margins t)
   (setq diff-hl-draw-borders nil)
-  (setq fringes-outside-margins t)
   (if sys/mac-x-p (set-fringe-mode '(4 . 8)))
 
   (unless (display-graphic-p)
+    (setq diff-hl-margin-symbols-alist
+          '((insert . " ") (delete . " ") (change . " ")
+            (unknown . " ") (ignored . " ")))
     ;; Fall back to the display margin since the fringe is unavailable in tty
     (diff-hl-margin-mode 1)
     ;; Avoid restoring `diff-hl-margin-mode'
