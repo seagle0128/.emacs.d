@@ -70,7 +70,7 @@
   (use-package all-the-icons-dired
     :after all-the-icons
     :diminish
-    :custom-face (all-the-icons-dired-dir-face ((t `(:foreground ,(face-background 'default)))))
+    :custom-face (all-the-icons-dired-dir-face ((t (:foreground nil))))
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
     (defun my-all-the-icons-dired--display ()
