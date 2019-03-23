@@ -22,25 +22,24 @@ latest stable release - currently **26.1**.
 - Out of box.
 - Clean and Fast.
 - Quick fuzzy search.
-- Better Org support.
+- Better Org/Markdown support.
 - Support multiple programming languages
-  - C/C++/C#/Java
-  - Ruby/Python/Perl/PHP/Shell/Powershell
+  - C/C++/Object-C/C#/Java
+  - Python/Ruby/Perl/PHP/Shell/Powershell
   - Javascript/Typescript/JSON/YAML
   - HTML/CSS/XML
-  - Golang/Swift
-  - Markdown
+  - Golang/Swift/Rust
   - ...
 - Auto completion.
 - Fly syntax check.
 - Fly spell check.
-- Git/SVN integration.
-- Projectile integration.
-- Workspace integration.
+- Git integration.
+- Project/Workspace integration.
 - Pomodor integration.
-- Youdao dictionary integration.
-- Support Chinese fonts and calendar.
-- Support Pinyin search.
+- Better Chinese support:
+  - Chinese calendar
+  - Youdao dictionary
+  - Pinyin search
 
 ## Prerequiste
 
@@ -48,7 +47,7 @@ latest stable release - currently **26.1**.
 
 - GNU Linux
 - macOS
-- Windows (Cygwin)
+- Windows (Cygwin/msys)
 
 ### GNU Emacs
 
