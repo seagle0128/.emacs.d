@@ -108,7 +108,7 @@
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
         :functions persp-load-state-from-file
-        :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+        :hook (((after-change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
                (minibuffer-setup . solaire-mode-in-minibuffer)
                (after-load-theme . solaire-mode-swap-bg))
         :config
