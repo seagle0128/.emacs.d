@@ -79,7 +79,8 @@
      (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
        (setq mode-line-format nil)))
 
-   (use-package company-lsp)
+   (use-package company-lsp
+     :init (setq company-lsp-cache-candidates 'auto))
 
    ;; C/C++/Objective-C support
    (use-package ccls
