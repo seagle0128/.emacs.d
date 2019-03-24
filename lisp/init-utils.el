@@ -227,6 +227,7 @@
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
+(use-package focus)                     ; Focus on the current region
 (use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
