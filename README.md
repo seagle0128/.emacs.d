@@ -165,7 +165,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     startup automatically. After startup, you could use `F2` to reopen it
     anytime. In the dashboard, please press `?` or `h` to get the help. You can
     easily jump to the sections or buttons with keybindings, e.g. Homepage(`H`),
-    Restore Session(`R`), Edit Config (`E`), Update(`U`), Recent Files (`r`),
+    Session(`R`, `L`), Settings(`S`), Update(`U`), Recent Files (`r`),
     Bookmarks(`m`) and Projects(`p`).
 
 1. Does Centaur Emacs support Language Server Protocol (LSP)?
