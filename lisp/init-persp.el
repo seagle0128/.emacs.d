@@ -51,6 +51,7 @@
                   "Ignore temporary buffers."
                   (or (string-prefix-p " " (buffer-name b))
                       (string-prefix-p "*" (buffer-name b))
+                      (eq major-mode 'nov-mode)
                       (string-prefix-p "magit" (buffer-name b))))))
   :config
   ;; Integrate IVY

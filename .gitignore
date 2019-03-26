@@ -30,6 +30,7 @@
 /custom.el
 /custom-post.el
 /history
+/nov-places
 /places
 /projectile-bookmarks.eld
 /projectile.cache
@@ -53,10 +54,11 @@ irony/
 magithub/
 persp-confs/
 persistent-scratch/
-/transient/
+request/
 server/
 thumbs/
 tldr/
+transient/
 tutorial/
 url/
 var/
