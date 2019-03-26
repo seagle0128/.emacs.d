@@ -61,7 +61,7 @@
     :init (dashboard-setup-startup-hook)
     :config
     (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
-    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy programming and writing")
+    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing")
     (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-show-shortcuts nil)
     (setq dashboard-items '((recents  . 10)
@@ -187,9 +187,12 @@
       (insert "\n")
       (insert "\n")
       (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 49) 2))) ?\ ))
-      (insert (propertize (format "%d packages loaded in %s (h/? for help)"
-                                  (length package-activated-list) (emacs-init-time))
-                          'face 'font-lock-comment-face)))
+      (insert (concat
+               (propertize (format "%d packages loaded in %s "
+                                   (length package-activated-list) (emacs-init-time))
+                           'face 'font-lock-comment-face)
+               (propertize "(h/? for help)"
+                           'face 'font-lock-doc-face))))
 
     (add-to-list 'dashboard-item-generators '(buttons . dashboard-insert-buttons))
     (add-to-list 'dashboard-items '(buttons))
