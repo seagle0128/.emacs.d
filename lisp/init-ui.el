@@ -58,7 +58,7 @@
 (unless emacs/>=27p        ; Move to early init-file in 27
   (unless sys/mac-x-p (menu-bar-mode -1))
   (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
-  (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1)))
+  (and (fboundp 'set-scroll-bar-mode) (set-scroll-bar-mode nil)))
 
 ;; Theme
 (defvar after-load-theme-hook nil
@@ -194,9 +194,14 @@
   (setq display-time-24hr-format t)
   (setq display-time-day-and-date t))
 
+;; Suppress GUI features
+(setq use-file-dialog nil)
+(setq use-dialog-box nil)
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-echo-area-message t)
+
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
-(setq inhibit-startup-screen t)
 (setq visible-bell t)
 (size-indication-mode 1)
 ;; (blink-cursor-mode -1)
