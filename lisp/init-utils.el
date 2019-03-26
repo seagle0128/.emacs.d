@@ -216,6 +216,16 @@
     :init (my-pdf-set-midnight-colors)
     :config (pdf-tools-install t nil t t)))
 
+;; Epub reader
+(use-package nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :preface
+  (defun my-nov-setup ()
+    (visual-line-mode 1)
+    (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5)
+    (if (fboundp 'olivetti-mode) (olivetti-mode 1)))
+  :hook (nov-mode . my-nov-setup))
+
 ;; Nice writing
 (use-package olivetti
   :diminish
