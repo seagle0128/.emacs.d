@@ -50,8 +50,8 @@
         (list #'(lambda (b)
                   "Ignore temporary buffers."
                   (or (string-prefix-p " " (buffer-name b))
-                      (string-prefix-p "*" (buffer-name b))
-                      (eq major-mode 'nov-mode)
+                      (and (string-prefix-p "*" (buffer-name b))
+                           (not (string-equal "*scratch*" (buffer-name b))))
                       (string-prefix-p "magit" (buffer-name b))))))
   :config
   ;; Integrate IVY
