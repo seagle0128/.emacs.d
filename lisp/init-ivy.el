@@ -303,7 +303,11 @@
             counsel-projectile-find-dir
             (:columns
              ((ivy-rich-file-icon)
-              (counsel-projectile-find-dir-transformer)))))
+              (counsel-projectile-find-dir-transformer)))
+            treemacs-projectile
+            (:columns
+             ((ivy-rich-file-icon)
+              (ivy-rich-candidate)))))
 
     (setq ivy-rich-parse-remote-buffer nil)
     (ivy-rich-mode 1))
