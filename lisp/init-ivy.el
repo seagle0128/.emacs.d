@@ -351,7 +351,9 @@
   ;; search the selection or current symbol by default
   (eval-and-compile
     (declare-function ivy-thing-at-point 'ivy)
-    (defun my-counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+    (defun my-counsel-ag(-counsel-ag
+                         &optional initial-input initial-directory extra-ag-args ag-prompt
+                         &key caller)
       "Search the selection or current symbol via `ag' by default."
       (funcall -counsel-ag
                (or initial-input
@@ -360,7 +362,8 @@
                      (ivy-thing-at-point)))
                (or initial-directory default-directory)
                extra-ag-args
-               ag-prompt))
+               ag-prompt
+               :caller caller))
     (advice-add #'counsel-ag :around #'my-counsel-ag))
 
   ;; Support pinyin in Ivy
