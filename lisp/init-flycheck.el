@@ -48,7 +48,9 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package flycheck-posframe
-            :hook (flycheck-mode . flycheck-posframe-mode))
+            :hook (flycheck-mode . flycheck-posframe-mode)
+            :config (add-to-list 'flycheck-posframe-inhibit-functions
+                                 #'(lambda () (bound-and-true-p company-backend))))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
