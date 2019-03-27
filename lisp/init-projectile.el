@@ -47,35 +47,17 @@
   :config
   ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 
-  ;; Use the faster searcher to handle project files:
-  ;; ripgrep `rg', the platinum searcher `pt' or the silver searcher `ag'
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           (let ((rg-cmd ""))
-             (dolist (dir projectile-globally-ignored-directories)
-               (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
-             (concat "rg -0 --files --color=never --hidden" rg-cmd)))
-          ((executable-find "pt")
-           (if sys/win32p
-               (concat "pt /0 /l /nocolor /hidden ."
-                       (mapconcat #'identity
-                                  (cons "" projectile-globally-ignored-directories)
-                                  " /ignore:"))
-             (concat "pt -0 -l --nocolor --hidden ."
-                     (mapconcat #'identity
-                                (cons "" projectile-globally-ignored-directories)
-                                " --ignore="))))
-          ((executable-find "ag")
-           (concat "ag -0 -l --nocolor --hidden"
-                   (mapconcat #'identity
-                              (cons "" projectile-globally-ignored-directories)
-                              " --ignore-dir="))))))
-    (setq projectile-generic-command command))
+  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  (when (executable-find "rg")
+    (setq projectile-generic-command
+          (let ((rg-cmd ""))
+            (dolist (dir projectile-globally-ignored-directories)
+              (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+            (concat "rg -0 --files --color=never --hidden" rg-cmd))))
 
   ;; Faster searching on Windows
   (when sys/win32p
-    (when (or (executable-find "rg") (executable-find "pt") (executable-find "ag"))
+    (when (executable-find "rg")
       (setq projectile-indexing-method 'alien)
       (setq projectile-enable-caching nil))
 

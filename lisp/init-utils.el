@@ -80,44 +80,41 @@
   ;; Enable Chinese word segmentation support (支持中文分词)
   (setq youdao-dictionary-use-chinese-word-segmentation t))
 
-;; Search tools: `wgrep', `ag' and `rg'
+;;
+;; Search tools
+;;
+
+;; Writable `grep' buffer
 (use-package wgrep
   :init
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
-(use-package ag
-  :defines projectile-command-map
-  :init
-  (with-eval-after-load 'projectile
-    (bind-key "s S" #'ag-project projectile-command-map))
-  :config
-  (setq ag-highlight-search t)
-  (setq ag-reuse-buffers t)
-  (setq ag-reuse-window t)
-  (use-package wgrep-ag))
+;; `find-dired' alternative using `fd'
+(when (executable-find "fd")
+  (use-package fd-dired))
 
-(use-package rg
-  :hook (after-init . rg-enable-default-bindings)
-  :config
-  (setq rg-group-result t)
-  (setq rg-show-columns t)
+;; `ripgrep'
+(when (executable-find "rg")
+  (use-package rg
+    :defines projectile-command-map
+    :hook (after-init . rg-enable-default-bindings)
+    :config
+    (setq rg-group-result t)
+    (setq rg-show-columns t)
 
-  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
+    (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
 
-  (with-eval-after-load 'projectile
-    (defalias 'projectile-ripgrep 'rg-project)
-    (bind-key "s R" #'rg-project projectile-command-map))
+    (with-eval-after-load 'projectile
+      (defalias 'projectile-ripgrep 'rg-project)
+      (bind-key "s R" #'rg-project projectile-command-map))
 
-  (when (fboundp 'ag)
-    (bind-key "a" #'ag rg-global-map))
-
-  (with-eval-after-load 'counsel
-    (bind-keys :map rg-global-map
-               ("c r" . counsel-rg)
-               ("c s" . counsel-ag)
-               ("c p" . counsel-pt)
-               ("c f" . counsel-fzf))))
+    (with-eval-after-load 'counsel
+      (bind-keys :map rg-global-map
+                 ("c r" . counsel-rg)
+                 ("c s" . counsel-ag)
+                 ("c p" . counsel-pt)
+                 ("c f" . counsel-fzf)))))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
