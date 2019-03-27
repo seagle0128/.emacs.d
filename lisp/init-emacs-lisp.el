@@ -88,20 +88,7 @@
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish
-  :config
-  (when emacs/>=26p
-    ;; Display documentation in childframe
-    (use-package eldoc-box
-      :diminish eldoc-box-hover-mode
-      :hook ((eldoc-mode . (lambda ()
-                             ;; Compatible with `lsp-mode'
-                             (unless (bound-and-true-p lsp-mode)
-                               (eldoc-box-hover-mode 1))))
-             (lsp-mode . (lambda ()
-                           ;; Compatible with `lsp-mode'
-                           (if eldoc-box-hover-mode
-                               (eldoc-box-hover-mode -1))))))))
+  :diminish)
 
 ;; Interactive macro expander
 (use-package macrostep
