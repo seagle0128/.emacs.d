@@ -52,6 +52,7 @@
                   (or (string-prefix-p " " (buffer-name b))
                       (and (string-prefix-p "*" (buffer-name b))
                            (not (string-equal "*scratch*" (buffer-name b))))
+                      (eq major-mode 'nov-mode)
                       (string-prefix-p "magit" (buffer-name b))))))
   :config
   ;; Integrate IVY
