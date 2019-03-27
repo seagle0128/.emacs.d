@@ -144,8 +144,12 @@
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t))
   :config
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.epub$" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
+               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
 
 ;; Line and Column
 (setq-default fill-column 80)
