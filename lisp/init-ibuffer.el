@@ -33,7 +33,6 @@
 (use-package ibuffer
   :ensure nil
   :functions (all-the-icons-icon-for-buffer
-              all-the-icons-icon-for-mode
               all-the-icons-icon-family)
   :commands (ibuffer-current-buffer
              ibuffer-find-file
