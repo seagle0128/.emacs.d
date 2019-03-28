@@ -47,7 +47,7 @@
     (define-ibuffer-column icon (:name " ")
       (let ((icon (all-the-icons-icon-for-buffer)))
         (if (symbolp icon)
-            (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
+            (setq icon (all-the-icons-faicon "file" :height 1.0 :v-adjust -0.0575)))
         (unless (symbolp icon)
           (propertize icon
                       'face `(

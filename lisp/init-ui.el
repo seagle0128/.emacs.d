@@ -145,19 +145,19 @@
     (all-the-icons-install-fonts t))
   :config
   (add-to-list 'all-the-icons-icon-alist
-               '("\\.ipynb" all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+               '("\\.ipynb" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebooklist-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-orange))
+               '(ein:notebooklist-mode all-the-icons-faicon "book" :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-icon-alist
-               '("\\.epub$" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+               '("\\.epub$" all-the-icons-faicon "book" :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+               '(nov-mode all-the-icons-faicon "book" :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
+               '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
 ;; Line and Column
 (setq-default fill-column 80)
