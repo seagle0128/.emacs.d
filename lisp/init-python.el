@@ -82,7 +82,8 @@
   :init
   (setq ein:completion-backend 'ein:use-company-backend)
   ;; WORKAROUND:https://github.com/millejoh/emacs-ipython-notebook/issues/496
-  (defalias 'ido-completing-read 'completing-read))
+  (with-eval-after-load 'ido
+    (defalias 'ido-completing-read 'completing-read)))
 
 (provide 'init-python)
 
