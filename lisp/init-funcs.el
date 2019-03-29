@@ -46,19 +46,20 @@
   (set-buffer-file-coding-system 'undecided-dos nil))
 
 ;; Revert buffer
-(defun revert-current-buffer ()
+(defun revert-this-buffer ()
   "Revert the current buffer."
   (interactive)
-  (message "Revert this buffer.")
-  (ignore-errors
-    (widen)
+  (unless (minibuffer-window-active-p (selected-window))
     (text-scale-increase 0)
-    (if (fboundp 'fancy-widen)
-        (fancy-widen)))
-  (revert-buffer t t))
-(bind-key "<f5>" #'revert-current-buffer)
+    (widen)
+    (if (and (fboundp 'fancy-narrow-active-p)
+             (fancy-narrow-active-p))
+        (fancy-widen))
+    (revert-buffer t t)
+    (message "Reverted this buffer.")))
+(bind-key "<f5>" #'revert-this-buffer)
 (if sys/mac-x-p
-    (bind-key "s-r" #'revert-current-buffer))
+    (bind-key "s-r" #'revert-this-buffer))
 
 ;; Browse the homepage
 (defun browse-homepage ()
