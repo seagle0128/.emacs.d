@@ -145,7 +145,10 @@
                      :tag (concat
                            (if (display-graphic-p)
                                (concat
-                                (all-the-icons-faicon "github" :height 1.2 :v-adjust -0.0575 :face 'font-lock-keyword-face)
+                                (all-the-icons-faicon "github"
+                                                      :height 1.2
+                                                      :v-adjust -0.0575
+                                                      :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Homepage" 'face 'font-lock-keyword-face))
                      :help-echo "Browse homepage"
@@ -159,7 +162,10 @@
                      :tag (concat
                            (if (display-graphic-p)
                                (concat
-                                (all-the-icons-material "restore" :height 1.3 :v-adjust -0.225 :face 'font-lock-keyword-face)
+                                (all-the-icons-material "restore"
+                                                        :height 1.3
+                                                        :v-adjust -0.225
+                                                        :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Session" 'face 'font-lock-keyword-face)))
       (insert " ")
@@ -167,7 +173,10 @@
                      :tag (concat
                            (if (display-graphic-p)
                                (concat
-                                (all-the-icons-faicon "cog" :height 1.2 :v-adjust -0.0575 :face 'font-lock-keyword-face)
+                                (all-the-icons-faicon "cog"
+                                                      :height 1.2
+                                                      :v-adjust -0.0575
+                                                      :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Settings" 'face 'font-lock-keyword-face))
                      :help-echo "Open custom file"
@@ -181,12 +190,17 @@
                      :tag (concat
                            (if (display-graphic-p)
                                (concat
-                                (all-the-icons-material "update" :height 1.3 :v-adjust -0.225 :face 'font-lock-keyword-face)
+                                (all-the-icons-material "update"
+                                                        :height 1.3
+                                                        :v-adjust -0.225
+                                                        :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Update" 'face 'font-lock-keyword-face)))
       (insert "\n")
       (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length 49) 2))) ?\ ))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
+                                               (if (display-graphic-p) 49 55))
+                                            2))) ?\ ))
       (insert (concat
                (propertize (format "%d packages loaded in %s "
                                    (length package-activated-list) (emacs-init-time))
