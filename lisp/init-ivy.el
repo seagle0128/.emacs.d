@@ -154,11 +154,12 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :defines (all-the-icons-dir-icon-alist bookmark-alist)
-    :functions (all-the-icons-icon-family
-                all-the-icons-match-to-alist
+    :defines bookmark-alist
+    :functions (all-the-icons-icon-for-file
+                all-the-icons-icon-for-mode
+                all-the-icons-icon-for-dir
+                all-the-icons-icon-family
                 all-the-icons-auto-mode-match?
-                all-the-icons-octicon
                 all-the-icons-dir-is-submodule)
     :preface
     (defun ivy-rich-bookmark-name (candidate)
@@ -174,7 +175,7 @@
                               (all-the-icons-icon-for-file candidate)
                             (all-the-icons-icon-for-mode major-mode))))
           (if (symbolp icon)
-              (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
+              (setq icon (all-the-icons-faicon "file" :height 1.0 :v-adjust -0.0575)))
           (unless (symbolp icon)
             (propertize icon
                         'face `(
@@ -186,18 +187,7 @@
       "Display file icons in `ivy-rich'."
       (when (display-graphic-p)
         (let ((icon (if (file-directory-p candidate)
-                        (cond
-                         ((and (fboundp 'tramp-tramp-file-p)
-                               (tramp-tramp-file-p default-directory))
-                          (all-the-icons-octicon "file-directory"))
-                         ((file-symlink-p candidate)
-                          (all-the-icons-octicon "file-symlink-directory"))
-                         ((all-the-icons-dir-is-submodule candidate)
-                          (all-the-icons-octicon "file-submodule"))
-                         ((file-exists-p (format "%s/.git" candidate))
-                          (all-the-icons-octicon "repo"))
-                         (t (let ((matcher (all-the-icons-match-to-alist candidate all-the-icons-dir-icon-alist)))
-                              (apply (car matcher) (list (cadr matcher))))))
+                        (all-the-icons-icon-for-dir candidate nil "")
                       (all-the-icons-icon-for-file candidate))))
           (unless (symbolp icon)
             (propertize icon
