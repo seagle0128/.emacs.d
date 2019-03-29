@@ -103,7 +103,25 @@
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-        (doom-themes-treemacs-config))
+        (doom-themes-treemacs-config)
+
+        ;; Improve file type icons
+        (with-eval-after-load 'treemacs
+          (when doom-treemacs-use-generic-icons
+            (let ((all-the-icons-default-adjust 0))
+              (setq treemacs-icon-fallback (concat (all-the-icons-faicon "file-text-o" :height 0.93) " ")
+                    treemacs-icon-text treemacs-icon-fallback)
+              (dolist (item all-the-icons-icon-alist)
+                (let* ((extension (car item))
+                       (icon (apply (cdr item))))
+                  (ht-set! treemacs-icons-hash
+                           (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension)
+                           (concat (propertize icon
+                                               'face `(:height
+                                                       1.1
+                                                       :family
+                                                       ,(all-the-icons-icon-family icon)))
+                                   " "))))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
