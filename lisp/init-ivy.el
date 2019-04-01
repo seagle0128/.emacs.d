@@ -127,6 +127,50 @@
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
 
+  ;; Pre-fill for commands
+  ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
+  (defvar my-ivy-fly-commands
+    '(query-replace-regexp
+      flush-lines
+      keep-lines))
+
+  (defun my-ivy-fly-back-to-present ()
+    (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
+    (cond ((and (memq last-command my-ivy-fly-commands)
+                (equal (this-command-keys-vector) (kbd "M-p")))
+           ;; repeat one time to get straight to the first history item
+           (setq unread-command-events
+                 (append unread-command-events
+                         (listify-key-sequence (kbd "M-p")))))
+          ((or (memq this-command '(self-insert-command))
+               (memq this-command '(ivy-yank-word)))
+           (delete-region (point)
+                          (point-max)))))
+
+  (defun my-ivy-fly-time-travel ()
+    (when (memq this-command my-ivy-fly-commands)
+      (let* ((kbd (kbd "M-n"))
+             (cmd (key-binding kbd))
+             (future (and cmd
+                          (with-temp-buffer
+                            (when (ignore-errors
+                                    (call-interactively cmd) t)
+                              (buffer-string))))))
+        (when future
+          (save-excursion
+            (insert (propertize future 'face 'shadow)))
+          (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
+
+  (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+
+  (push (cons 'swiper 'my-fly-swiper) ivy-hooks-alist)
+  (defun my-fly-swiper ()
+    (let ((sym (with-ivy-window (ivy-thing-at-point))))
+      (when sym
+        (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)
+        (save-excursion
+          (insert (propertize sym 'face 'shadow))))))
+
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
@@ -346,11 +390,8 @@
                          &key caller)
       "Search the selection or current symbol via `ag' by default."
       (funcall -counsel-ag
-               (or initial-input
-                   (if (region-active-p)
-                       (buffer-substring-no-properties (region-beginning) (region-end))
-                     (ivy-thing-at-point)))
-               (or initial-directory default-directory)
+               (or initial-input (ivy-thing-at-point))
+               initial-directory
                extra-ag-args
                ag-prompt
                :caller caller))
