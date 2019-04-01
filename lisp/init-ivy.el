@@ -132,7 +132,12 @@
   (defvar my-ivy-fly-commands
     '(query-replace-regexp
       flush-lines
-      keep-lines))
+      keep-lines
+      ivy-read
+      counsel-grep
+      counsel-ag
+      counsel-rg
+      counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
     (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
@@ -400,22 +405,6 @@ When INITIAL-INPUT is non-nil, use it in the minibuffer during completion."
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
                 ("C-c c v" . counsel-tramp)))
-
-  ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
-  ;; search the selection or current symbol by default
-  (eval-and-compile
-    (declare-function ivy-thing-at-point 'ivy)
-    (defun my-counsel-ag(-counsel-ag
-                         &optional initial-input initial-directory extra-ag-args ag-prompt
-                         &key caller)
-      "Search the selection or current symbol via `ag' by default."
-      (funcall -counsel-ag
-               (or initial-input (ivy-thing-at-point))
-               initial-directory
-               extra-ag-args
-               ag-prompt
-               :caller caller))
-    (advice-add #'counsel-ag :around #'my-counsel-ag))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
