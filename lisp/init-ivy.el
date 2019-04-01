@@ -190,6 +190,22 @@
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
 
+  ;; `counsel-dired'
+  (defun counsel-dired (&optional initial-input)
+    "Forward to `dired'.
+When INITIAL-INPUT is non-nil, use it in the minibuffer during completion."
+    (interactive)
+    (ivy-read "Dired (directory): " #'read-file-name-internal
+              :matcher #'counsel--find-file-matcher
+              :initial-input initial-input
+              :action (lambda (d) (dired (expand-file-name d)))
+              :preselect (counsel--preselect-file)
+              :require-match 'confirm-after-completion
+              :history 'file-name-history
+              :keymap counsel-find-file-map
+              :caller 'counsel-dired))
+  (bind-key [remap dired] #'counsel-dired)
+
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
     :init
@@ -305,6 +321,10 @@
              ((ivy-rich-file-icon)
               (ivy-rich-candidate)))
             counsel-file-jump
+            (:columns
+             ((ivy-rich-file-icon)
+              (ivy-rich-candidate)))
+            counsel-dired
             (:columns
              ((ivy-rich-file-icon)
               (ivy-rich-candidate)))
