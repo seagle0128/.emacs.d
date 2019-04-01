@@ -99,10 +99,9 @@
    (use-package lsp-java
      :hook (java-mode . (lambda ()
                           (require 'lsp-java)
-                          (lsp))))
-   ))
+                          (lsp))))))
 
-(unless centaur-lsp
+(when centaur-lsp
   ;; Enable LSP in org babel
   ;; https://github.com/emacs-lsp/lsp-mode/issues/377
   (cl-defmacro lsp-org-babel-enbale (lang)
@@ -112,13 +111,21 @@
            (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
       `(progn
          (defun ,intern-pre (info)
-           (let ((lsp-file (or (->> info caddr (alist-get :file))
+           (let ((filename (or (->> info caddr (alist-get :file))
                                buffer-file-name)))
-             (setq-local buffer-file-name lsp-file)
-             (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-             (pcase 'centaur-lsp
-               ('eglot (eglot))
-               ('lsp-mode (lsp)))))
+             (setq buffer-file-name filename)
+             (pcase centaur-lsp
+               ('eglot
+                (and (fboundp 'eglot) (eglot)))
+               ('lsp-mode
+                (and (fboundp 'lsp)
+                     ;; `lsp-auto-guess-root' MUST be non-nil.
+                     (setq lsp-buffer-uri (lsp--path-to-uri filename))
+                     (lsp))))))
+         (put ',intern-pre 'function-documentation
+              (format "Enable `%s' in the buffer of org source block (%s)."
+                      centaur-lsp (upcase ,lang)))
+
          (if (fboundp ',edit-pre)
              (advice-add ',edit-pre :after ',intern-pre)
            (progn
