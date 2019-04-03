@@ -117,6 +117,7 @@
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
+  (setq counsel-preselect-current-file t)
   (setq counsel-yank-pop-separator "\n-------\n")
 
   ;; Use faster search tools: ripgrep or the silver search
