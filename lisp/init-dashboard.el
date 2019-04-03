@@ -199,7 +199,7 @@
       (insert "\n")
       (insert "\n")
       (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
-                                               (if (display-graphic-p) 49 55))
+                                               (if (display-graphic-p) 49 51))
                                             2))) ?\ ))
       (insert (concat
                (propertize (format "%d packages loaded in %s "
