@@ -310,7 +310,7 @@
             counsel-find-file
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate)))
+              (ivy-read-file-transformer)))
             counsel-file-jump
             (:columns
              ((ivy-rich-file-icon)
@@ -318,7 +318,7 @@
             counsel-dired
             (:columns
              ((ivy-rich-file-icon)
-              (ivy-rich-candidate)))
+              (ivy-read-file-transformer)))
             counsel-dired-jump
             (:columns
              ((ivy-rich-file-icon)
