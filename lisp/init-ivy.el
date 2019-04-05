@@ -46,6 +46,7 @@
 
          :map counsel-mode-map
          ([remap swiper] . counsel-grep-or-swiper)
+         ([remap dired] . counsel-dired)
          ("C-x C-r" . counsel-recentf)
          ("C-x j" . counsel-mark-ring)
 
@@ -195,22 +196,6 @@
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
                 ("M-o" . ivy-dispatching-done-hydra)))
-
-  ;; `counsel-dired'
-  (defun counsel-dired (&optional initial-input)
-    "Forward to `dired'.
-When INITIAL-INPUT is non-nil, use it in the minibuffer during completion."
-    (interactive)
-    (ivy-read "Dired (directory): " #'read-file-name-internal
-              :matcher #'counsel--find-file-matcher
-              :initial-input initial-input
-              :action (lambda (d) (dired (expand-file-name d)))
-              :preselect (counsel--preselect-file)
-              :require-match 'confirm-after-completion
-              :history 'file-name-history
-              :keymap counsel-find-file-map
-              :caller 'counsel-dired))
-  (bind-key [remap dired] #'counsel-dired)
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
