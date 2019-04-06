@@ -91,7 +91,7 @@ M-x centaur-update-packages
 M-x centaur-update-packages-and-restart
 
 # Update all including configurations, packages and dotfiles
-M-x centuar-update-all
+M-x centaur-update-all
 ```
 
 ### Docker
