@@ -236,7 +236,7 @@
     (defun ivy-rich-file-icon (candidate)
       "Display file icons in `ivy-rich'."
       (when (display-graphic-p)
-        (let ((icon (if (file-directory-p candidate)
+        (let ((icon (if (file-directory-p (expand-file-name candidate))
                         (all-the-icons-icon-for-dir candidate nil "")
                       (all-the-icons-icon-for-file candidate))))
           (unless (symbolp icon)
