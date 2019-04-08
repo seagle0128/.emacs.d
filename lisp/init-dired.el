@@ -86,19 +86,10 @@
                                 '("." ".."))
                   (let* ((file (dired-get-filename nil t))
                          (icon (if (file-directory-p file)
-                                   (cond
-                                    ((and (fboundp 'tramp-tramp-file-p)
-                                          (tramp-tramp-file-p default-directory))
-                                     (all-the-icons-octicon "file-directory" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face :height 0.93))
-                                    ((file-symlink-p file)
-                                     (all-the-icons-octicon "file-symlink-directory" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face :height 0.93))
-                                    ((all-the-icons-dir-is-submodule file)
-                                     (all-the-icons-octicon "file-submodule" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face :height 0.93))
-                                    ((file-exists-p (format "%s/.git" file))
-                                     (all-the-icons-octicon "repo" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face :height 0.96))
-                                    (t (let ((matcher (all-the-icons-match-to-alist file all-the-icons-dir-icon-alist)))
-                                         (apply (car matcher) (list (cadr matcher) :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust :height 0.93)))))
-                                 (all-the-icons-icon-for-file file :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust :height 0.92))))
+                                   (all-the-icons-icon-for-dir file nil "")
+                                 (all-the-icons-icon-for-file file
+                                                              :v-adjust all-the-icons-dired-v-adjust
+                                                              :face 'all-the-icons-dired-dir-face))))
                     (insert (concat icon " ")))))
               (forward-line 1))))))
     (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
