@@ -177,7 +177,7 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(nov-mode all-the-icons-faicon "book" :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
+               '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-blue)))
 
 ;; Line and Column
 (setq-default fill-column 80)

@@ -71,9 +71,9 @@
              `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
                ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
             (archives
-             (error "Unknown archives: '%s'" archives)))))
+             (error "Unknown archives: `%s'" archives)))))
 
-  (message "Set package archives to '%s'." archives))
+  (message "Set package archives to `%s'." archives))
 
 (set-package-archives centaur-package-archives)
 
