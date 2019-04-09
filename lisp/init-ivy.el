@@ -204,12 +204,15 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :defines bookmark-alist
+    :defines (all-the-icons-icon-alist
+              all-the-icons-dir-icon-alist
+              bookmark-alist)
     :functions (all-the-icons-icon-for-file
                 all-the-icons-icon-for-mode
-                all-the-icons-icon-for-dir
                 all-the-icons-icon-family
-                all-the-icons-auto-mode-match?
+                all-the-icons-match-to-alist
+                all-the-icons-faicon
+                all-the-icons-octicon
                 all-the-icons-dir-is-submodule)
     :preface
     (defun ivy-rich-bookmark-name (candidate)
@@ -218,33 +221,46 @@
     (defun ivy-rich-buffer-icon (candidate)
       "Display buffer icons in `ivy-rich'."
       (when (display-graphic-p)
-        (when-let* ((buffer (get-buffer candidate))
-                    (major-mode (buffer-local-value 'major-mode buffer))
-                    (icon (if (and (buffer-file-name buffer)
-                                   (all-the-icons-auto-mode-match? candidate))
-                              (all-the-icons-icon-for-file candidate)
-                            (all-the-icons-icon-for-mode major-mode))))
+        (let* ((buffer (get-buffer candidate))
+               (buffer-file-name (buffer-file-name buffer))
+               (major-mode (buffer-local-value 'major-mode buffer))
+               (icon (if (and buffer-file-name
+                              (all-the-icons-match-to-alist buffer-file-name
+                                                            all-the-icons-icon-alist))
+                         (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
+                                                      :face nil
+                                                      :height 0.9
+                                                      :v-adjust -0.05)
+                       (all-the-icons-icon-for-mode major-mode
+                                                    :face nil
+                                                    :height 0.9
+                                                    :v-adjust -0.05))))
           (if (symbolp icon)
-              (setq icon (all-the-icons-faicon "file" :height 1.0 :v-adjust -0.0575)))
-          (unless (symbolp icon)
-            (propertize icon
-                        'face `(
-                                :height 1.1
-                                :family ,(all-the-icons-icon-family icon)
-                                ))))))
+              (setq icon (all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
+            icon))))
 
     (defun ivy-rich-file-icon (candidate)
       "Display file icons in `ivy-rich'."
       (when (display-graphic-p)
-        (let ((icon (if (file-directory-p (expand-file-name candidate))
-                        (all-the-icons-icon-for-dir candidate nil "")
-                      (all-the-icons-icon-for-file candidate))))
-          (unless (symbolp icon)
-            (propertize icon
-                        'face `(
-                                :height 1.1
-                                :family ,(all-the-icons-icon-family icon)
-                                ))))))
+        (let* ((path (expand-file-name candidate))
+               (icon (if (or (file-directory-p path)
+                             (string-equal (substring path -1) "/"))
+                         (cond
+                          ((and (fboundp 'tramp-tramp-file-p)
+                                (tramp-tramp-file-p default-directory))
+                           (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.01))
+                          ((file-symlink-p path)
+                           (all-the-icons-octicon "file-symlink-directory" :height 0.9 :v-adjust -0.01))
+                          ((all-the-icons-dir-is-submodule path)
+                           (all-the-icons-octicon "file-submodule" :height 0.9 :v-adjust -0.01))
+                          ((file-exists-p (format "%s/.git" path))
+                           (all-the-icons-octicon "repo" :height 0.9 :v-adjust -0.01))
+                          (t (let ((matcher (all-the-icons-match-to-alist path all-the-icons-dir-icon-alist)))
+                               (apply (car matcher) (list (cadr matcher) :height 0.9 :v-adjust -0.01)))))
+                       (all-the-icons-icon-for-file (file-name-nondirectory path) :face nil :height 0.9 :v-adjust -0.05))))
+          (if (symbolp icon)
+              (setq icon (all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
+            icon))))
     :hook (ivy-rich-mode . (lambda ()
                              (setq ivy-virtual-abbreviate
                                    (or (and ivy-rich-mode 'abbreviate) 'name))))

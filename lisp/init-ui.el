@@ -109,19 +109,22 @@
         (with-eval-after-load 'treemacs
           (when doom-treemacs-use-generic-icons
             (let ((all-the-icons-default-adjust 0))
-              (setq treemacs-icon-fallback (concat (all-the-icons-faicon "file-text-o" :height 0.93) " ")
+              (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
+                    treemacs-icon-fallback (concat (all-the-icons-faicon "file-text-o"
+                                                                         :height 0.9
+                                                                         :v-adjust -0.05)
+                                                   " ")
                     treemacs-icon-text treemacs-icon-fallback)
               (dolist (item all-the-icons-icon-alist)
                 (let* ((extension (car item))
-                       (icon (apply (cdr item))))
+                       (func (cadr item))
+                       (args (append (list (caddr item))
+                                     '(:height 0.9 :v-adjust -0.05 :face icons-in-terminal-white)
+                                     (cdddr item)))
+                       (icon (apply func args)))
                   (ht-set! treemacs-icons-hash
                            (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension)
-                           (concat (propertize icon
-                                               'face `(:height
-                                                       1.1
-                                                       :family
-                                                       ,(all-the-icons-icon-family icon)))
-                                   " "))))))))
+                           (concat icon " "))))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode

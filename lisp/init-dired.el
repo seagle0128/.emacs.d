@@ -77,20 +77,30 @@
       "Display the icons of files without colors in a dired buffer."
       (when (and (not all-the-icons-dired-displayed) dired-subdir-alist)
         (setq-local all-the-icons-dired-displayed t)
-        (let ((inhibit-read-only t))
+        (let ((inhibit-read-only t)
+              (remote-p (and (fboundp 'tramp-tramp-file-p)
+                             (tramp-tramp-file-p default-directory))))
           (save-excursion
             (goto-char (point-min))
             (while (not (eobp))
               (when (dired-move-to-filename nil)
-                (unless (member (dired-get-filename 'verbatim t)
-                                '("." ".."))
-                  (let* ((file (dired-get-filename nil t))
-                         (icon (if (file-directory-p file)
-                                   (all-the-icons-icon-for-dir file nil "")
-                                 (all-the-icons-icon-for-file file
-                                                              :v-adjust all-the-icons-dired-v-adjust
-                                                              :face 'all-the-icons-dired-dir-face))))
-                    (insert (concat icon " ")))))
+                (let ((file (dired-get-filename 'verbatim t)))
+                  (unless (member file '("." ".."))
+                    (let ((filename (dired-get-filename nil t)))
+                      (if (file-directory-p filename)
+                          (let* ((matcher (all-the-icons-match-to-alist file all-the-icons-dir-icon-alist))
+                                 (icon (cond
+                                        (remote-p
+                                         (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        ((file-symlink-p filename)
+                                         (all-the-icons-octicon "file-symlink-directory" :height 0.9 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        ((all-the-icons-dir-is-submodule filename)
+                                         (all-the-icons-octicon "file-submodule" :height 0.9 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        ((file-exists-p (format "%s/.git" filename))
+                                         (all-the-icons-octicon "repo" :height 0.9 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        (t (apply (car matcher) (list (cadr matcher) :height 0.9 :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust))))))
+                            (insert (concat icon " ")))
+                        (insert (concat (all-the-icons-icon-for-file file :face nil :height 0.9 :v-adjust all-the-icons-dired-v-adjust) " ")))))))
               (forward-line 1))))))
     (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
 
