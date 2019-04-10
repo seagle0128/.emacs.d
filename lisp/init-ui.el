@@ -105,26 +105,46 @@
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
         (doom-themes-treemacs-config)
 
-        ;; Improve file type icons
+        ;; Improve treemacs icons
         (with-eval-after-load 'treemacs
-          (when doom-treemacs-use-generic-icons
-            (let ((all-the-icons-default-adjust 0))
-              (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
-                    treemacs-icon-fallback (concat (all-the-icons-faicon "file-o"
-                                                                         :height 0.9
-                                                                         :v-adjust -0.05)
-                                                   " ")
-                    treemacs-icon-text treemacs-icon-fallback)
-              (dolist (item all-the-icons-icon-alist)
-                (let* ((extension (car item))
-                       (func (cadr item))
-                       (args (append (list (caddr item))
-                                     '(:height 0.9 :v-adjust -0.05)
-                                     (cdddr item)))
-                       (icon (apply func args)))
-                  (ht-set! treemacs-icons-hash
-                           (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension)
-                           (concat icon " "))))))))
+          (with-eval-after-load 'all-the-icons
+            (when doom-treemacs-use-generic-icons
+              (let ((all-the-icons-default-adjust 0))
+                (setq treemacs-icon-open-png
+                      (concat
+                       (all-the-icons-octicon "chevron-down"  :height 0.75 :v-adjust 0.15)
+                       " "
+                       (all-the-icons-octicon "file-directory" :v-adjust 0)
+                       " ")
+                      treemacs-icon-closed-png
+                      (concat
+                       (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.15 :face 'font-lock-doc-face)
+                       " "
+                       (all-the-icons-octicon "file-directory" :v-adjust 0 :face 'font-lock-doc-face)
+                       " "))
+
+                ;; File type icons
+                (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
+                      treemacs-icon-fallback (concat
+                                              "  "
+                                              (all-the-icons-faicon "file-o"
+                                                                    :face 'font-lock-doc-face
+                                                                    :height 0.9
+                                                                    :v-adjust -0.05)
+                                              " ")
+                      treemacs-icon-text treemacs-icon-fallback)
+
+                (dolist (item all-the-icons-icon-alist)
+                  (let* ((extension (car item))
+                         (func (cadr item))
+                         (args (append (list (caddr item))
+                                       '(:height 0.9 :v-adjust -0.05)
+                                       (cdddr item)))
+                         (icon (apply func args))
+                         (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
+                         (value (concat "  " icon " ")))
+                    (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value)
+                    (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value))))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
