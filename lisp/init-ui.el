@@ -119,7 +119,7 @@
                 (let* ((extension (car item))
                        (func (cadr item))
                        (args (append (list (caddr item))
-                                     '(:height 0.9 :v-adjust -0.05 :face nil)
+                                     '(:height 0.9 :v-adjust -0.05)
                                      (cdddr item)))
                        (icon (apply func args)))
                   (ht-set! treemacs-icons-hash

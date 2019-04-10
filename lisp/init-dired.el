@@ -100,7 +100,7 @@
                                          (all-the-icons-octicon "repo" :height 1.0 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
                                         (t (apply (car matcher) (list (cadr matcher) :height 0.93 :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust))))))
                             (insert (concat icon " ")))
-                        (insert (concat (all-the-icons-icon-for-file file :face nil :height 0.9 :v-adjust all-the-icons-dired-v-adjust) " ")))))))
+                        (insert (concat (all-the-icons-icon-for-file file :height 0.9 :v-adjust all-the-icons-dired-v-adjust) " ")))))))
               (forward-line 1))))))
     (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
 

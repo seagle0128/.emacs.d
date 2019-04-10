@@ -149,11 +149,11 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## FAQ
 
-1. Why is the modline messy?
+1. How to display icons correctly in `Centaur Emacs`?
 
-    Powerline fonts or all-the-icons are missing on your system. Please install
-    [powerline-fonts](https://github.com/powerline/fonts) for `telephone-line` or
-    run `M-x all-the-icons-install-fonts` for `doom-modeline`.
+    `all-the-icons` are necessary. Run `M-x all-the-icons-install-fonts` to
+    install the resource fonts. `all-the-icons` only support GUI. If you don't
+    like color icons, `(setq all-the-icons-color-icons nil)` to disable.
 
 1. How to search Chinese via pinyin?
 

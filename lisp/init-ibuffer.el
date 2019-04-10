@@ -49,13 +49,8 @@
                            (all-the-icons-match-to-alist buffer-file-name
                                                          all-the-icons-icon-alist))
                       (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
-                                                   :face nil
-                                                   :height 0.9
-                                                   :v-adjust -0.05)
-                    (all-the-icons-icon-for-mode major-mode
-                                                 :face nil
-                                                 :height 0.9
-                                                 :v-adjust -0.05))))
+                                                   :height 0.9 :v-adjust -0.05)
+                    (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
             (setq icon (all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
           icon)))
