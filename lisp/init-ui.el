@@ -110,7 +110,7 @@
           (when doom-treemacs-use-generic-icons
             (let ((all-the-icons-default-adjust 0))
               (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
-                    treemacs-icon-fallback (concat (all-the-icons-faicon "file-text-o"
+                    treemacs-icon-fallback (concat (all-the-icons-faicon "file-o"
                                                                          :height 0.9
                                                                          :v-adjust -0.05)
                                                    " ")
@@ -119,7 +119,7 @@
                 (let* ((extension (car item))
                        (func (cadr item))
                        (args (append (list (caddr item))
-                                     '(:height 0.9 :v-adjust -0.05 :face icons-in-terminal-white)
+                                     '(:height 0.9 :v-adjust -0.05 :face nil)
                                      (cdddr item)))
                        (icon (apply func args)))
                   (ht-set! treemacs-icons-hash
