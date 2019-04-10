@@ -49,19 +49,16 @@
                            (all-the-icons-match-to-alist buffer-file-name
                                                          all-the-icons-icon-alist))
                       (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
+                                                   :face nil
                                                    :height 0.9
                                                    :v-adjust -0.05)
                     (all-the-icons-icon-for-mode major-mode
+                                                 :face nil
                                                  :height 0.9
                                                  :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :height 1.0 :v-adjust -0.0575)))
-        (unless (symbolp icon)
-          (propertize icon
-                      'face `(
-                              :height 1.1
-                              :family ,(all-the-icons-icon-family icon)
-                              )))))
+            (setq icon (all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
+          icon)))
 
     (setq ibuffer-formats '((mark modified read-only locked
                                   " " (icon 2 2 :left :elide) (name 18 18 :left :elide)
@@ -85,7 +82,7 @@
               (concat
                (all-the-icons-octicon "file-directory"
                                       :face ibuffer-filter-group-name-face
-                                      :v-adjust -0.04
+                                      :v-adjust -0.1
                                       :height 1.1)
                " ")
             "Project: "))))
