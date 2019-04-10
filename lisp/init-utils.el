@@ -130,6 +130,11 @@
 (unless sys/win32p
   (use-package sudo-edit))
 
+;; Docker
+(use-package docker
+  :bind ("C-c d" . docker)
+  :custom (docker-image-run-arguments '("-i" "-t" "--rm")))
+
 ;; Tramp
 (use-package docker-tramp)
 
