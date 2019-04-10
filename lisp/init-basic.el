@@ -81,6 +81,7 @@
                           "ido.*"
                           "persp-confs"
                           "recentf"
+                          "undo-tree-hist"
                           "url"
                           "COMMIT_EDITMSG\\'")))
 
