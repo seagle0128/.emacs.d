@@ -128,7 +128,7 @@
                       treemacs-icon-fallback (concat
                                               "  "
                                               (all-the-icons-faicon "file-o"
-                                                                    :face 'font-lock-doc-face
+                                                                    :face 'all-the-icons-dsilver
                                                                     :height 0.9
                                                                     :v-adjust -0.05)
                                               " ")
@@ -183,6 +183,8 @@
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
   :if (display-graphic-p)
+  :custom-face
+  (all-the-icons-dsilver ((t (:foreground "#838484")))) ; Workaround to address color issue
   :init
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t))

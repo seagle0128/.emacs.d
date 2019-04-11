@@ -33,8 +33,10 @@
 (use-package ibuffer
   :ensure nil
   :defines all-the-icons-icon-alist
-  :functions (all-the-icons-icon-for-buffer
-              all-the-icons-icon-family)
+  :functions (all-the-icons-icon-for-file
+              all-the-icons-icon-for-mode
+              all-the-icons-match-to-alist
+              all-the-icons-faicon)
   :commands (ibuffer-current-buffer
              ibuffer-find-file
              ibuffer-do-sort-by-alphabetic)
@@ -52,7 +54,7 @@
                                                    :height 0.9 :v-adjust -0.05)
                     (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
+            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
           icon)))
 
     (setq ibuffer-formats '((mark modified read-only locked
