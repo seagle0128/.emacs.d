@@ -78,8 +78,7 @@
               ("k" .  markdown-preview-kill-grip))
   :hook ((markdown-mode . flyspell-mode)
          (markdown-mode . auto-fill-mode)
-         (markdown-mode . set-flycheck-markdownlint)
-         (kill-emacs . markdown-preview-kill-grip))
+         (markdown-mode . set-flycheck-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :config
   (when sys/macp
