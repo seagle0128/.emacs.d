@@ -36,7 +36,8 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
-  :bind (("C-s" . swiper)
+  :commands swiper-isearch
+  :bind (("C-s" . swiper-isearch)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
@@ -130,15 +131,17 @@
 
   ;; Pre-fill for commands
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
-  (defvar my-ivy-fly-commands
-    '(query-replace-regexp
-      flush-lines
-      keep-lines
-      ivy-read
-      counsel-grep
-      counsel-ag
-      counsel-rg
-      counsel-pt))
+  (setq my-ivy-fly-commands
+        '(query-replace-regexp
+          flush-lines
+          keep-lines
+          ivy-read
+          swiper
+          swiper-isearch
+          counsel-grep
+          counsel-ag
+          counsel-rg
+          counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
     (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
@@ -168,14 +171,6 @@
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
-
-  (push (cons 'swiper 'my-fly-swiper) ivy-hooks-alist)
-  (defun my-fly-swiper ()
-    (let ((sym (with-ivy-window (ivy-thing-at-point))))
-      (when sym
-        (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)
-        (save-excursion
-          (insert (propertize sym 'face 'shadow))))))
 
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
