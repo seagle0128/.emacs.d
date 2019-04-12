@@ -184,7 +184,13 @@
 (use-package all-the-icons
   :if (display-graphic-p)
   :custom-face
-  (all-the-icons-dsilver ((t (:foreground "#838484")))) ; Workaround to address color issue
+  ;; Reset colors since they are too dark in `doom-themes'
+  (all-the-icons-silver ((((background dark)) :foreground "#716E68")
+                         (((background light)) :foreground "#716E68")))
+  (all-the-icons-lsilver ((((background dark)) :foreground "#B9B6AA")
+                          (((background light)) :foreground "#7F7869")))
+  (all-the-icons-dsilver ((((background dark)) :foreground "#838484")
+                          (((background light)) :foreground "#838484")))
   :init
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t))
