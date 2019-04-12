@@ -41,7 +41,7 @@ latest stable release - currently **26.1**.
   - Youdao dictionary
   - Pinyin search
 
-## Prerequiste
+## Prerequisite
 
 ### OS
 
@@ -70,7 +70,7 @@ or download the [zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
 extract to `~/.emacs.d`.
 
-Then start emacs. Wait for a while to install packages at the first startup.
+Then start Emacs. Wait for a while to install packages at the first startup.
 Enjoy!
 
 ### Update
@@ -128,7 +128,7 @@ For Example:
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 
-The default pacakge archives is `melpa`. You can change it in `custom.el`, or
+The default package archives is `melpa`. You can change it in `custom.el`, or
 switch manually via `M-x switch-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
@@ -173,7 +173,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 1. Does Centaur Emacs support Language Server Protocol (LSP)?
 
-    The LSP feature is supported and enabled by default in Centuar Emacs.
+    The LSP feature is supported and enabled by default in Centaur Emacs.
     `lsp-mode` is the default client, and `eglot` is another choice. Use `(setq
     centaur-lsp nil)` to disable LSP if you don't like it.
 
@@ -192,4 +192,4 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
     Please refer to #33. You should instead set environment variables in startup
     files like .profile, .bash_profile or .zshenv, then `Centaur Emacs` is able
-    to recoginze and import the environment variables.
+    to recognize and import the environment variables.
