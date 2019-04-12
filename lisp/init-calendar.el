@@ -69,6 +69,7 @@
 ;; Better views of calendar
 (use-package calfw
   :commands cfw:open-calendar-buffer
+  :bind ("<C-f12>" . open-calendar)
   :init
   (use-package calfw-org
     :commands (cfw:open-org-calendar cfw:org-create-source))
