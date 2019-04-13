@@ -120,7 +120,7 @@
   (setq paradox-github-token t)
   (setq paradox-display-star-count nil)
 
-  (defalias 'upgrade-packages 'paradox-upgrade-packages)
+  (defalias #'upgrade-packages #'paradox-upgrade-packages)
 
   (defadvice list-packages (before my-list-packages activate)
     (paradox-enable)))

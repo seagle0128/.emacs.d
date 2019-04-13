@@ -37,11 +37,9 @@
               all-the-icons-icon-for-mode
               all-the-icons-match-to-alist
               all-the-icons-faicon)
-  :commands (ibuffer-current-buffer
-             ibuffer-find-file
-             ibuffer-do-sort-by-alphabetic)
+  :commands ibuffer-find-file
   :bind ("C-x C-b" . ibuffer)
-  :init
+  :config
   (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
   ;; Display buffer icons on GUI
@@ -62,13 +60,13 @@
                                   " " (size 9 -1 :right)
                                   " " (mode 16 16 :left :elide) " " filename-and-process)
                             (mark " " (name 16 -1) " " filename))))
-  :config
+
   (with-eval-after-load 'counsel
-    (defalias 'ibuffer-find-file 'counsel-find-file))
+    (defalias #'ibuffer-find-file #'counsel-find-file))
 
   ;; Group ibuffer's list by project root
   (use-package ibuffer-projectile
-    :functions all-the-icons-octicon
+    :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
     :hook ((ibuffer . (lambda ()
                         (ibuffer-projectile-set-filter-groups)
                         (unless (eq ibuffer-sorting-mode 'alphabetic)

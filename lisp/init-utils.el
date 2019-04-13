@@ -133,7 +133,7 @@
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)
-  :custom (docker-image-run-arguments '("-i" "-t" "--rm")))
+  :init (setq docker-image-run-arguments '("-i" "-t" "--rm")))
 
 ;; Tramp
 (use-package docker-tramp)

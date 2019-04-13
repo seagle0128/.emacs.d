@@ -32,8 +32,7 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-custom)
-  (require 'wid-edit))
+  (require 'init-custom))
 
 ;; Dashboard
 (when centaur-dashboard
