@@ -114,7 +114,6 @@
 
 ;; Extensions
 (use-package paradox
-  :commands paradox-enable
   :init
   (setq paradox-execute-asynchronously t)
   (setq paradox-github-token t)
@@ -122,6 +121,7 @@
 
   (defalias #'upgrade-packages #'paradox-upgrade-packages)
 
+  ;; Replace default `list-packages'
   (defadvice list-packages (before my-list-packages activate)
     (paradox-enable)))
 
