@@ -146,7 +146,7 @@
                                (concat
                                 (all-the-icons-faicon "github"
                                                       :height 1.2
-                                                      :v-adjust -0.0575
+                                                      :v-adjust -0.1
                                                       :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Homepage" 'face 'font-lock-keyword-face))
@@ -162,8 +162,8 @@
                            (if (display-graphic-p)
                                (concat
                                 (all-the-icons-material "restore"
-                                                        :height 1.3
-                                                        :v-adjust -0.225
+                                                        :height 1.35
+                                                        :v-adjust -0.25
                                                         :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Session" 'face 'font-lock-keyword-face)))
@@ -174,7 +174,7 @@
                                (concat
                                 (all-the-icons-faicon "cog"
                                                       :height 1.2
-                                                      :v-adjust -0.0575
+                                                      :v-adjust -0.1
                                                       :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Settings" 'face 'font-lock-keyword-face))
@@ -190,8 +190,8 @@
                            (if (display-graphic-p)
                                (concat
                                 (all-the-icons-material "update"
-                                                        :height 1.3
-                                                        :v-adjust -0.225
+                                                        :height 1.35
+                                                        :v-adjust -0.25
                                                         :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Update" 'face 'font-lock-keyword-face)))
