@@ -338,6 +338,11 @@
   ;; For better performance
   (setq ivy-rich-parse-remote-buffer nil)
 
+  ;; Setting tab size to 1, to insert tabs as delimiters
+  (add-hook 'minibuffer-setup-hook
+	    (lambda ()
+	      (setq tab-width 1)))
+
   (setq ivy-rich-display-transformers-list
         '(ivy-switch-buffer
           (:columns
@@ -349,7 +354,8 @@
             (ivy-rich-switch-buffer-project (:width 15 :face success))
             (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
            :predicate
-           (lambda (cand) (get-buffer cand)))
+           (lambda (cand) (get-buffer cand))
+	   :delimiter "\t")
           ivy-switch-buffer-other-window
           (:columns
            ((ivy-rich-buffer-icon)
@@ -360,7 +366,8 @@
             (ivy-rich-switch-buffer-project (:width 15 :face success))
             (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
            :predicate
-           (lambda (cand) (get-buffer cand)))
+           (lambda (cand) (get-buffer cand))
+	   :delimiter "\t")
           counsel-switch-buffer
           (:columns
            ((ivy-rich-buffer-icon)
@@ -371,7 +378,8 @@
             (ivy-rich-switch-buffer-project (:width 15 :face success))
             (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
            :predicate
-           (lambda (cand) (get-buffer cand)))
+           (lambda (cand) (get-buffer cand))
+	   :delimiter "\t")
           persp-switch-to-buffer
           (:columns
            ((ivy-rich-buffer-icon)
@@ -382,7 +390,8 @@
             (ivy-rich-switch-buffer-project (:width 15 :face success))
             (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
            :predicate
-           (lambda (cand) (get-buffer cand)))
+           (lambda (cand) (get-buffer cand))
+	   :delimiter "\t")
           counsel-M-x
           (:columns
            ((counsel-M-x-transformer (:width 50))
@@ -398,28 +407,34 @@
           counsel-find-file
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-read-file-transformer)))
+            (ivy-read-file-transformer))
+	   :delimiter "\t")
           counsel-file-jump
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-rich-candidate)))
+            (ivy-rich-candidate))
+	   :delimiter "\t")
           counsel-dired
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-read-file-transformer)))
+            (ivy-read-file-transformer))
+	   :delimiter "\t")
           counsel-dired-jump
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-rich-candidate)))
+            (ivy-rich-candidate))
+	   :delimiter "\t")
           counsel-git
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-rich-candidate)))
+            (ivy-rich-candidate))
+	   :delimiter "\t")
           counsel-recentf
           (:columns
            ((ivy-rich-file-icon)
             (ivy-rich-candidate (:width 0.8))
-            (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))
+            (ivy-rich-file-last-modified-time (:face font-lock-comment-face)))
+	   :delimiter "\t")
           counsel-bookmark
           (:columns
            ((ivy-rich-bookmark-type)
@@ -428,19 +443,23 @@
           counsel-projectile-switch-project
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-rich-candidate)))
+            (ivy-rich-candidate))
+	   :delimiter "\t")
           counsel-projectile-find-file
           (:columns
            ((ivy-rich-file-icon)
-            (counsel-projectile-find-file-transformer)))
+            (counsel-projectile-find-file-transformer))
+	   :delimiter "\t")
           counsel-projectile-find-dir
           (:columns
            ((ivy-rich-file-icon)
-            (counsel-projectile-find-dir-transformer)))
+            (counsel-projectile-find-dir-transformer))
+	   :delimiter "\t")
           treemacs-projectile
           (:columns
            ((ivy-rich-file-icon)
-            (ivy-rich-candidate))))))
+            (ivy-rich-candidate))
+	   :delimiter "\t"))))
 
 (provide 'init-ivy)
 
