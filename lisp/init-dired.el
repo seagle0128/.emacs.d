@@ -80,6 +80,7 @@
               (remote-p (and (fboundp 'tramp-tramp-file-p)
                              (tramp-tramp-file-p default-directory))))
           (save-excursion
+            (setq tab-width 1)
             (goto-char (point-min))
             (while (not (eobp))
               (when (dired-move-to-filename nil)
@@ -98,8 +99,8 @@
                                         ((file-exists-p (format "%s/.git" filename))
                                          (all-the-icons-octicon "repo" :height 1.0 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
                                         (t (apply (car matcher) (list (cadr matcher) :height 0.93 :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust))))))
-                            (insert (concat icon " ")))
-                        (insert (concat (all-the-icons-icon-for-file file :height 0.9 :v-adjust -0.05) " ")))))))
+                            (insert (concat " " icon "\t")))
+                        (insert (concat " " (all-the-icons-icon-for-file file :height 0.9 :v-adjust -0.05) "\t")))))))
               (forward-line 1))))))
     (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
 
