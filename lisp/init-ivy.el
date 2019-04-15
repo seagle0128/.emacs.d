@@ -369,6 +369,40 @@
         (if (symbolp icon)
             (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
           icon))))
+
+  (defun ivy-rich-function-icon (_candidate)
+    "Display function icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-purple)))
+
+  (defun ivy-rich-variable-icon (_candidate)
+    "Display variable icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+
+  (defun ivy-rich-face-icon (_candidate)
+    "Display face icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "palette" :height 1.0 :v-adjust -0.2)))
+
+  (defun ivy-rich-keybinding-icon (_candidate)
+    "Display keybindings icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "keyboard" :height 1.0 :v-adjust -0.2)))
+
+  (when (display-graphic-p)
+    (defun ivy-rich-bookmark-type-plus (candidate)
+      (let ((filename (ivy-rich-bookmark-filename candidate)))
+        (cond ((null filename)
+               (all-the-icons-material "block" :v-adjust -0.2 :face 'warning))  ; fixed #38
+              ((file-remote-p filename)
+               (all-the-icons-material "wifi_tethering" :v-adjust -0.2 :face 'mode-line-buffer-id))
+              ((not (file-exists-p filename))
+               (all-the-icons-material "block" :v-adjust -0.2 :face 'error))
+              ((file-directory-p filename)
+               (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.05))
+              (t (all-the-icons-icon-for-file filename :height 0.9 :v-adjust -0.05)))))
+    (advice-add #'ivy-rich-bookmark-type :override #'ivy-rich-bookmark-type-plus))
   :hook ((ivy-mode . ivy-rich-mode)
          (ivy-rich-mode . (lambda ()
                             (setq ivy-virtual-abbreviate
@@ -419,6 +453,18 @@
            :predicate
            (lambda (cand) (get-buffer cand))
            :delimiter "\t")
+          counsel-switch-buffer-other-window
+          (:columns
+           ((ivy-rich-buffer-icon)
+            (ivy-rich-candidate (:width 30))
+            (ivy-rich-switch-buffer-size (:width 7))
+            (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+            (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+            (ivy-rich-switch-buffer-project (:width 15 :face success))
+            (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+           :predicate
+           (lambda (cand) (get-buffer cand))
+           :delimiter "\t")
           persp-switch-to-buffer
           (:columns
            ((ivy-rich-buffer-icon)
@@ -433,16 +479,31 @@
            :delimiter "\t")
           counsel-M-x
           (:columns
-           ((counsel-M-x-transformer (:width 50))
+           ((ivy-rich-function-icon)
+            (counsel-M-x-transformer (:width 50))
             (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
           counsel-describe-function
           (:columns
-           ((counsel-describe-function-transformer (:width 50))
-            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
+           ((ivy-rich-function-icon)
+            (counsel-describe-function-transformer (:width 50))
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+           :delimiter "\t")
           counsel-describe-variable
           (:columns
-           ((counsel-describe-variable-transformer (:width 50))
-            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
+           ((ivy-rich-variable-icon)
+            (counsel-describe-variable-transformer (:width 50))
+            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
+           :delimiter "\t")
+          counsel-describe-face
+          (:columns
+           ((ivy-rich-face-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-descbinds
+          (:columns
+           ((ivy-rich-keybinding-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
           counsel-find-file
           (:columns
            ((ivy-rich-file-icon)
@@ -478,7 +539,8 @@
           (:columns
            ((ivy-rich-bookmark-type)
             (ivy-rich-bookmark-name (:width 40))
-            (ivy-rich-bookmark-info)))
+            (ivy-rich-bookmark-info))
+           :delimiter "\t")
           counsel-projectile-switch-project
           (:columns
            ((ivy-rich-file-icon)
