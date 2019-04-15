@@ -137,32 +137,39 @@
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
 
-  ;; Pre-fill for commands
+  ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
-  (setq my-ivy-fly-commands
-        '(query-replace-regexp
-          flush-lines
-          keep-lines
-          ivy-read
-          swiper
-          swiper-isearch
-          counsel-grep
-          counsel-ag
-          counsel-rg
-          counsel-pt))
+  (defvar my-ivy-fly-commands
+    '(query-replace-regexp
+      flush-lines
+      keep-lines
+      ivy-read
+      swiper
+      swiper-isearch
+      counsel-grep
+      counsel-ag
+      counsel-rg
+      counsel-pt))
+
+  (defvar my-ivy-fly-last-pos (- (point-min) 1))
 
   (defun my-ivy-fly-back-to-present ()
-    (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
+    ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
     (cond ((and (memq last-command my-ivy-fly-commands)
                 (equal (this-command-keys-vector) (kbd "M-p")))
            ;; repeat one time to get straight to the first history item
            (setq unread-command-events
                  (append unread-command-events
                          (listify-key-sequence (kbd "M-p")))))
-          ((or (memq this-command '(self-insert-command))
-               (memq this-command '(ivy-yank-word)))
+          ((memq this-command '(self-insert-command
+                                ivy-yank-word))
            (delete-region (point)
-                          (point-max)))))
+                          (point-max))
+           (when (and (memq this-command '(ivy-yank-word))
+                      (>= my-ivy-fly-last-pos (point-min)))
+             (with-ivy-window
+               (goto-char my-ivy-fly-last-pos)
+               (setq my-ivy-fly-last-pos 0))))))
 
   (defun my-ivy-fly-time-travel ()
     (when (memq this-command my-ivy-fly-commands)
@@ -174,11 +181,33 @@
                                     (call-interactively cmd) t)
                               (buffer-string))))))
         (when future
+          (with-ivy-window
+            (setq my-ivy-fly-last-pos (point)))
           (save-excursion
             (insert (propertize future 'face 'shadow)))
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+
+  ;; Improve search experience of `swiper'
+  ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
+  (defun my-swiper-toggle-counsel-rg ()
+    "Toggle `counsel-rg' with current swiper input."
+    (interactive)
+    (let ((text (replace-regexp-in-string
+                 "\n" ""
+                 (replace-regexp-in-string "^.*Swiper: " ""
+                                           (thing-at-point 'line t)))))
+      (ivy-quit-and-run
+        (counsel-rg text default-directory))))
+  (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
+
+  (with-eval-after-load 'rg
+    (defun my-swiper-toggle-rg-dwim ()
+      "Toggle `rg-dwim' with current swiper input."
+      (interactive)
+      (ivy-quit-and-run (rg-dwim default-directory)))
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map))
 
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
