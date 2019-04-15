@@ -115,7 +115,15 @@
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
   (setq ivy-format-function 'ivy-format-function-arrow)
-  ;; (setq ivy-initial-inputs-alist nil)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+        '((counsel-ag . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
+          (counsel-grep-or-swiper . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
@@ -240,7 +248,7 @@
     :functions ivy--regex-plus ivy--regex-ignore-order
     :commands pinyinlib-build-regexp-string
     :preface
-    (defun re-builder-pinyin (str)
+    (defun ivy--regex-pinyin (str)
       "The regex builder wrapper to support pinyin."
       (or (pinyin-to-utf8 str)
           (ivy--regex-plus str)
@@ -270,8 +278,10 @@
                         ""))
             (t
              nil)))
-    :init (setq ivy-re-builders-alist
-                '((t . re-builder-pinyin)))))
+    :init
+    (push '(swiper . ivy--regex-pinyin) ivy-re-builders-alist)
+    (push '(swiper-isearch . ivy--regex-pinyin) ivy-re-builders-alist)
+    (push '(counsel-grep-or-swiper . ivy--regex-pinyin) ivy-re-builders-alist)))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
