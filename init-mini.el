@@ -69,8 +69,14 @@
               indent-tabs-mode nil)
 
 ;; UI
-(tool-bar-mode -1)
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(unless (eq window-system 'ns)
+  (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+(when (fboundp 'horizontal-scroll-bar-mode)
+  (horizontal-scroll-bar-mode -1))
 
 ;; (global-hl-line-mode 1)
 
