@@ -144,10 +144,10 @@
                      :tag (concat
                            (if (display-graphic-p)
                                (concat
-                                (all-the-icons-faicon "github"
-                                                      :height 1.2
-                                                      :v-adjust -0.1
-                                                      :face 'font-lock-keyword-face)
+                                (all-the-icons-octicon "mark-github"
+                                                       :height 1.1
+                                                       :v-adjust 0.0
+                                                       :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Homepage" 'face 'font-lock-keyword-face))
                      :help-echo "Browse homepage"
@@ -163,7 +163,7 @@
                                (concat
                                 (all-the-icons-material "restore"
                                                         :height 1.35
-                                                        :v-adjust -0.25
+                                                        :v-adjust -0.24
                                                         :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Session" 'face 'font-lock-keyword-face)))
@@ -191,7 +191,7 @@
                                (concat
                                 (all-the-icons-material "update"
                                                         :height 1.35
-                                                        :v-adjust -0.25
+                                                        :v-adjust -0.24
                                                         :face 'font-lock-keyword-face)
                                 (propertize " " 'face 'variable-pitch)))
                            (propertize "Update" 'face 'font-lock-keyword-face)))
