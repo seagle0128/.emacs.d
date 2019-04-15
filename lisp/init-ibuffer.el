@@ -42,9 +42,14 @@
   :config
   (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (setq tab-width 1)))
+
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
-    (define-ibuffer-column icon (:name " ")
+    ;; To be correctly aligned, the size of the name field must be equal to that of the icon column below, plus 1 (for the tab I inserted)
+    (define-ibuffer-column icon (:name "   ")
       (let ((icon (if (and buffer-file-name
                            (all-the-icons-match-to-alist buffer-file-name
                                                          all-the-icons-icon-alist))
@@ -56,7 +61,10 @@
           icon)))
 
     (setq ibuffer-formats '((mark modified read-only locked
-                                  " " (icon 2 2 :left :elide) (name 18 18 :left :elide)
+                                  ;; Here you may adjust by replacing :right with :center or :left
+                                  ;; According to taste, if you want the icon further from the name
+                                  " " (icon 2 2 :right :elide)
+                                  "\t" (name 18 18 :left :elide)
                                   " " (size 9 -1 :right)
                                   " " (mode 16 16 :left :elide) " " filename-and-process)
                             (mark " " (name 16 -1) " " filename))))
