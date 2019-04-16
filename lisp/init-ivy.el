@@ -335,13 +335,15 @@
              (buffer-file-name (buffer-file-name buffer))
              (major-mode (buffer-local-value 'major-mode buffer))
              (icon (if (and buffer-file-name
-                            (all-the-icons-match-to-alist buffer-file-name
-                                                          all-the-icons-icon-alist))
+                            (all-the-icons-auto-mode-match?))
                        (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
                                                     :height 0.9 :v-adjust -0.05)
                      (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
+            (setq icon (all-the-icons-faicon "file-o"
+                                             :face 'all-the-icons-dsilver
+                                             :height 0.9
+                                             :v-adjust -0.05))
           icon))))
 
   (defun ivy-rich-file-icon (candidate)

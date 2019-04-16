@@ -32,10 +32,9 @@
 
 (use-package ibuffer
   :ensure nil
-  :defines all-the-icons-icon-alist
   :functions (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
-              all-the-icons-match-to-alist
+              all-the-icons-auto-mode-match?
               all-the-icons-faicon)
   :commands ibuffer-find-file
   :bind ("C-x C-b" . ibuffer)
@@ -48,16 +47,19 @@
 
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
-    ;; To be correctly aligned, the size of the name field must be equal to that of the icon column below, plus 1 (for the tab I inserted)
+    ;; To be correctly aligned, the size of the name field must be equal to that
+    ;; of the icon column below, plus 1 (for the tab I inserted)
     (define-ibuffer-column icon (:name "   ")
-      (let ((icon (if (and buffer-file-name
-                           (all-the-icons-match-to-alist buffer-file-name
-                                                         all-the-icons-icon-alist))
-                      (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
+      (let ((icon (if (and (buffer-file-name)
+                           (all-the-icons-auto-mode-match?))
+                      (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name))
                                                    :height 0.9 :v-adjust -0.05)
                     (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
+            (setq icon (all-the-icons-faicon "file-o"
+                                             :face 'all-the-icons-dsilver
+                                             :height 0.9
+                                             :v-adjust -0.05))
           icon)))
 
     (setq ibuffer-formats '((mark modified read-only locked
