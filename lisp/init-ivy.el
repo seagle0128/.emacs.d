@@ -401,7 +401,7 @@
                (all-the-icons-material "block" :v-adjust -0.2 :face 'error))
               ((file-directory-p filename)
                (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.05))
-              (t (all-the-icons-icon-for-file filename :height 0.9 :v-adjust -0.05)))))
+              (t (all-the-icons-icon-for-file (file-name-nondirectory filename) :height 0.9 :v-adjust -0.05)))))
     (advice-add #'ivy-rich-bookmark-type :override #'ivy-rich-bookmark-type-plus))
   :hook ((ivy-mode . ivy-rich-mode)
          (ivy-rich-mode . (lambda ()
