@@ -200,9 +200,13 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(Info-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1))
   (add-to-list 'all-the-icons-icon-alist
-               '("\\NEWS" all-the-icons-faicon "newspaper-o" :height 0.9 :v-adjust -0.2))
+               '("NEWS$" all-the-icons-faicon "newspaper-o" :height 0.9 :v-adjust -0.2))
   (add-to-list 'all-the-icons-icon-alist
-               '("\\.ipynb" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
+               '("Cask\\'" all-the-icons-fileicon "elisp" :height 1.0 :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(cask-mode all-the-icons-fileicon "elisp" :height 1.0 :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-icon-alist
+               '(".*\\.ipynb\\'" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(ein:notebooklist-mode all-the-icons-faicon "book" :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
@@ -210,9 +214,9 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-icon-alist
-               '("\\.epub$" all-the-icons-faicon "book" :face all-the-icons-green))
+               '("\\.epub\\'" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(nov-mode all-the-icons-faicon "book" :face all-the-icons-green))
+               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-blue)))
 
