@@ -109,19 +109,20 @@
         (with-eval-after-load 'treemacs
           (with-eval-after-load 'all-the-icons
             (when doom-treemacs-use-generic-icons
-              (let ((all-the-icons-default-adjust 0))
+              (let ((all-the-icons-default-adjust 0)
+                    (tab-width 1))
                 (setq treemacs-icon-open-png
                       (concat
                        (all-the-icons-octicon "chevron-down"  :height 0.75 :v-adjust 0.15)
-                       " "
+                       "\t"
                        (all-the-icons-octicon "file-directory" :v-adjust 0)
-                       " ")
+                       "\t")
                       treemacs-icon-closed-png
                       (concat
                        (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.15 :face 'font-lock-doc-face)
-                       " "
+                       "\t"
                        (all-the-icons-octicon "file-directory" :v-adjust 0 :face 'font-lock-doc-face)
-                       " "))
+                       "\t"))
 
                 ;; File type icons
                 (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
@@ -131,7 +132,7 @@
                                                                     :face 'all-the-icons-dsilver
                                                                     :height 0.9
                                                                     :v-adjust -0.05)
-                                              " ")
+                                              "\t")
                       treemacs-icon-text treemacs-icon-fallback)
 
                 (dolist (item all-the-icons-icon-alist)
@@ -142,7 +143,7 @@
                                        (cdddr item)))
                          (icon (apply func args))
                          (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
-                         (value (concat "  " icon " ")))
+                         (value (concat "  " icon "\t")))
                     (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value)
                     (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value))))))))
 

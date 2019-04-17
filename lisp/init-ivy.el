@@ -333,10 +333,7 @@
                                                     :height 0.9 :v-adjust -0.05)
                      (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o"
-                                             :face 'all-the-icons-dsilver
-                                             :height 0.9
-                                             :v-adjust -0.05))
+            (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05)
           icon))))
 
   (defun ivy-rich-file-icon (candidate)
@@ -362,7 +359,7 @@
                          ((not (string-empty-p file))
                           (all-the-icons-icon-for-file file :height 0.9 :v-adjust -0.05)))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
+            (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05)
           icon))))
 
   (defun ivy-rich-function-icon (_candidate)
