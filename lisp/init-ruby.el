@@ -38,16 +38,6 @@
   :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
   :interpreter "ruby"
   :config
-  ;; Code navigation, documentation lookup and completion for Ruby
-  (unless centaur-lsp
-    (use-package robe
-      :diminish robe-mode
-      :defines company-backends
-      :hook (ruby-mode . robe-mode)
-      :config
-      (with-eval-after-load 'company
-        (cl-pushnew 'company-robe company-backends))))
-
   ;; Ruby refactoring helpers
   (use-package ruby-refactor
     :diminish ruby-refactor-mode

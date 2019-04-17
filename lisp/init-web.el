@@ -92,31 +92,6 @@
 (use-package coffee-mode
   :config (setq coffee-tab-width 2))
 
-;; Typescript Interactive Development Environment
-(unless centaur-lsp
-  (use-package tide
-    :diminish tide-mode
-    :defines (company-backends tide-format-options)
-    :functions (tide-setup tide-hl-identifier-mode)
-    :preface
-    (defun setup-tide-mode ()
-      "Setup tide mode."
-      (interactive)
-      (tide-setup)
-      (eldoc-mode 1)
-      (tide-hl-identifier-mode 1))
-    :hook (((typescript-mode js2-mode) . setup-tide-mode)
-           (before-save . tide-format-before-save))
-    :config
-    (setq tide-format-options
-          '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions
-            t
-            :placeOpenBraceOnNewLineForFunctions
-            nil))
-
-    (with-eval-after-load 'company
-      (cl-pushnew 'company-tide company-backends))))
-
 ;; Major mode for editing web templates
 (use-package web-mode
   :defines company-backends
@@ -124,14 +99,7 @@
   :config
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-
-  ;; Complete for web,html,emmet,jade,slim modes
-  (unless centaur-lsp
-    (use-package company-web
-      :after company
-      :init (dolist (mode '(company-web-html company-web-jade company-web-slim))
-              (cl-pushnew mode company-backends)))))
+  (setq web-mode-code-indent-offset 2))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

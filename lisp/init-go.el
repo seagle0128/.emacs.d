@@ -76,35 +76,7 @@
 
   (use-package go-gen-test
     :bind (:map go-mode-map
-                ("C-c C-t" . go-gen-test-dwim)))
-
-  ;; LSP provides the functionalities.
-  ;; NOTE: `go-langserver' doesn't support Windows so far.
-  (unless centaur-lsp
-    ;; `goimports' or `gofmt'
-    (setq gofmt-command "goimports")
-    (add-hook 'before-save-hook #'gofmt-before-save)
-
-    ;; Go add-ons for Projectile
-    ;; Run: M-x `go-projectile-install-tools'
-    (with-eval-after-load 'projectile
-      (use-package go-projectile
-        :commands (go-projectile-mode go-projectile-switch-project)
-        :hook ((go-mode . go-projectile-mode)
-               (projectile-after-switch-project . go-projectile-switch-project))))
-
-    (use-package go-eldoc
-      :hook (go-mode . go-eldoc-setup))
-
-    (use-package go-guru
-      :bind (:map go-mode-map
-                  ;; ([remap xref-find-definitions] . go-guru-definition)
-                  ([remap xref-find-references] . go-guru-referrers)))
-
-    (with-eval-after-load 'company
-      (use-package company-go
-        :defines company-backends
-        :init (cl-pushnew 'company-go company-backends)))))
+                ("C-c C-t" . go-gen-test-dwim))))
 
 ;; Local Golang playground for short snippes
 (use-package go-playground
