@@ -117,12 +117,13 @@
   (setq ivy-format-function 'ivy-format-function-arrow)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
-        '((counsel-ag . ivy--regex-plus)
-          (counsel-rg . ivy--regex-plus)
-          (counsel-grep . ivy--regex-plus)
-          (counsel-grep-or-swiper . ivy--regex-plus)
-          (swiper . ivy--regex-plus)
+        '((swiper . ivy--regex-plus)
           (swiper-isearch . ivy--regex-plus)
+          (counsel-ag . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (counsel-pt . ivy--regex-plus)
+          (counsel-ack . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
 
   (setq swiper-action-recenter t)
@@ -147,6 +148,7 @@
       swiper
       swiper-isearch
       counsel-grep
+      counsel-ack
       counsel-ag
       counsel-rg
       counsel-pt))
