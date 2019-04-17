@@ -56,6 +56,18 @@
                                 ("not" . ?¬))))))
   :init (setq prettify-symbols-unprettify-at-point 'right-edge))
 
+;; Compilation Mode
+(use-package compile
+  :ensure nil
+  :preface
+  ;; ANSI Coloring
+  ;; @see https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
+  (defun my-colorize-compilation-buffer ()
+    "ANSI coloring in compilation buffers."
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  :hook (compilation-filter . my-colorize-compilation-buffer))
+
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
   :functions dumb-jump-hydra/body
