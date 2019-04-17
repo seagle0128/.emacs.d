@@ -139,6 +139,13 @@
 (use-package rust-mode
   :config (setq rust-format-on-save t))
 
+(use-package dart-mode
+  :init (setq dart-format-on-save t)
+  :config
+  (with-eval-after-load "projectile"
+    (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+    (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
+
 (use-package robot-mode
   :ensure nil
   :commands robot-mode
