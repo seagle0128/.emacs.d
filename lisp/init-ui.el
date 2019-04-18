@@ -113,7 +113,7 @@
                     (tab-width 1))
                 (setq treemacs-icon-open-png
                       (concat
-                       (all-the-icons-octicon "chevron-down"  :height 0.8 :v-adjust 0.1)
+                       (all-the-icons-octicon "chevron-down" :height 0.8 :v-adjust 0.1)
                        "\t"
                        (all-the-icons-octicon "file-directory" :v-adjust 0)
                        "\t")

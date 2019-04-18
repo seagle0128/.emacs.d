@@ -115,7 +115,7 @@
   (setq ivy-height 10)
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
-  (setq ivy-format-function 'ivy-format-function-arrow)
+  ;; (setq ivy-format-function 'ivy-format-function-arrow)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
         '((swiper . ivy--regex-plus)
@@ -127,6 +127,22 @@
           (counsel-ack . ivy--regex-plus)
           (counsel-grep . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
+
+  ;; For alignment `tab-width' must be 1 in minibuffer
+  (defun my-ivy-format-function-arrow (cands)
+    "Transform CANDS into a string for minibuffer."
+    (ivy--format-function-generic
+     (lambda (str)
+       (concat (if (display-graphic-p)
+                   (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
+                 ">")
+               "\t"
+               (ivy--add-face str 'ivy-current-match)))
+     (lambda (str)
+       (concat "\t\t" str))
+     cands
+     "\n"))
+  (setq ivy-format-function 'my-ivy-format-function-arrow)
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
