@@ -113,13 +113,13 @@
                     (tab-width 1))
                 (setq treemacs-icon-open-png
                       (concat
-                       (all-the-icons-octicon "chevron-down"  :height 0.75 :v-adjust 0.15)
+                       (all-the-icons-octicon "chevron-down"  :height 0.8 :v-adjust 0.1)
                        "\t"
                        (all-the-icons-octicon "file-directory" :v-adjust 0)
                        "\t")
                       treemacs-icon-closed-png
                       (concat
-                       (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.15 :face 'font-lock-doc-face)
+                       (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust 0.1 :face 'font-lock-doc-face)
                        "\t"
                        (all-the-icons-octicon "file-directory" :v-adjust 0 :face 'font-lock-doc-face)
                        "\t"))
@@ -127,7 +127,7 @@
                 ;; File type icons
                 (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
                       treemacs-icon-fallback (concat
-                                              "  "
+                                              "\t\t"
                                               (all-the-icons-faicon "file-o"
                                                                     :face 'all-the-icons-dsilver
                                                                     :height 0.9
@@ -143,7 +143,7 @@
                                        (cdddr item)))
                          (icon (apply func args))
                          (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
-                         (value (concat "  " icon "\t")))
+                         (value (concat "\t\t" icon "\t")))
                     (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value)
                     (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value))))))))
 
