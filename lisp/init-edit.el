@@ -272,7 +272,25 @@
               undo-tree-enable-undo-in-region nil
               undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(concat user-emacs-directory "undo-tree-hist/")))))
+              `(("." . ,(concat user-emacs-directory "undo-tree-hist/"))))
+  :config
+  ;; FIXME:  `undo-tree-visualizer-diff' is a local variable in *undo-tree* buffer.
+  (defun undo-tree-visualizer-show-diff (&optional node)
+    ;; show visualizer diff display
+    (setq-local undo-tree-visualizer-diff t)
+    (let ((buff (with-current-buffer undo-tree-visualizer-parent-buffer
+                  (undo-tree-diff node)))
+          (display-buffer-mark-dedicated 'soft)
+          win)
+      (setq win (split-window))
+      (set-window-buffer win buff)
+      (shrink-window-if-larger-than-buffer win)))
+
+  (defun undo-tree-visualizer-hide-diff ()
+    ;; hide visualizer diff display
+    (setq-local undo-tree-visualizer-diff nil)
+    (let ((win (get-buffer-window undo-tree-diff-buffer-name)))
+      (when win (with-selected-window win (kill-buffer-and-window))))))
 
 ;; Goto last change
 (use-package goto-chg
