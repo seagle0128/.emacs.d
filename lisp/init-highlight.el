@@ -95,34 +95,21 @@
   :diminish
   :hook (prog-mode . rainbow-mode)
   :config
-  ;; Override `hl-line' faces
-  ;; HACK: Use overlay instead of text properties.
-  ;; https://emacs.stackexchange.com/questions/23958/combine-highlight-symbol-mode-and-hl-line-mode
-  (defun rainbow-colorize-match (color &optional match)
-    "Return a matched string propertized with a face whose
-background is COLOR. The foreground is computed using
-`rainbow-color-luminance', and is either white or black."
+  ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
+  ;; @see https://emacs.stackexchange.com/questions/36420
+  (defun my-rainbow-colorize-match (color &optional match)
     (let* ((match (or match 0))
            (ov (make-overlay (match-beginning match) (match-end match))))
       (overlay-put ov
                    'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
                                              "white" "black"))
                            (:background ,color)))
-      (ignore-errors
-        (overlay-put ov 'symbol 'ovrainbow))))
+      (overlay-put ov 'ovrainbow t)))
+  (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defun rainbow-turn-off ()
-    "Turn off rainbow-mode."
-    (font-lock-remove-keywords
-     nil
-     `(,@rainbow-hexadecimal-colors-font-lock-keywords
-       ,@rainbow-x-colors-font-lock-keywords
-       ,@rainbow-latex-rgb-colors-font-lock-keywords
-       ,@rainbow-r-colors-font-lock-keywords
-       ,@rainbow-html-colors-font-lock-keywords
-       ,@rainbow-html-rgb-colors-font-lock-keywords))
-    (ignore-errors
-      (remove-overlays (point-min) (point-max) 'symbol 'ovrainbow))))
+  (defun my-rainbow-clear-overlays ()
+    (remove-overlays (point-min) (point-max) 'ovrainbow t))
+  (advice-add #'ranibow-turn-off :after #'my-rainbow-clear-overlays))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
