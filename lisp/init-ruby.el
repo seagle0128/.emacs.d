@@ -62,9 +62,6 @@
     :config (with-eval-after-load 'yasnippet
               (rspec-install-snippets)))
 
-  ;; Coverage for SimpleCov
-  (use-package coverage)
-
   ;; Yet Another RI interface for Emacs
   (use-package yari
     :bind (:map ruby-mode-map ([f1] . yari)))
