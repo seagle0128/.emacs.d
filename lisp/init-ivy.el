@@ -150,6 +150,7 @@
       swiper
       swiper-all
       swiper-isearch
+      counsel-grep-or-swiper
       counsel-grep
       counsel-ack
       counsel-ag
@@ -305,8 +306,8 @@
              nil)))
     :init
     (push '(swiper . ivy--regex-pinyin) ivy-re-builders-alist)
-    (push '(swiper-isearch . ivy--regex-pinyin) ivy-re-builders-alist)
-    (push '(counsel-grep-or-swiper . ivy--regex-pinyin) ivy-re-builders-alist)))
+    (push '(swiper-all . ivy--regex-pinyin) ivy-re-builders-alist)
+    (push '(swiper-isearch . ivy--regex-pinyin) ivy-re-builders-alist)))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
