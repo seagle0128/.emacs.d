@@ -37,7 +37,8 @@
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
   :commands swiper-isearch
-  :bind (("C-s" . swiper-isearch)
+  :bind (("C-s" . swiper)
+         ("s-f" . swiper-isearch)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
@@ -118,6 +119,7 @@
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
         '((swiper . ivy--regex-plus)
+          (swiper-all . ivy--regex-plus)
           (swiper-isearch . ivy--regex-plus)
           (counsel-ag . ivy--regex-plus)
           (counsel-rg . ivy--regex-plus)
@@ -146,6 +148,7 @@
       keep-lines
       ivy-read
       swiper
+      swiper-all
       swiper-isearch
       counsel-grep
       counsel-ack
