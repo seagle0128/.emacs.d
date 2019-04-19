@@ -88,19 +88,19 @@
                   (unless (member file '("." ".."))
                     (let ((filename (dired-get-filename nil t)))
                       (if (file-directory-p filename)
-                          (let* ((matcher (all-the-icons-match-to-alist file all-the-icons-dir-icon-alist))
-                                 (icon (cond
-                                        (remote-p
-                                         (all-the-icons-octicon "file-directory" :height 0.93 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
-                                        ((file-symlink-p filename)
-                                         (all-the-icons-octicon "file-symlink-directory" :height 0.93 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
-                                        ((all-the-icons-dir-is-submodule filename)
-                                         (all-the-icons-octicon "file-submodule" :height 0.93 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
-                                        ((file-exists-p (format "%s/.git" filename))
-                                         (all-the-icons-octicon "repo" :height 1.0 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
-                                        (t (apply (car matcher) (list (cadr matcher) :height 0.93 :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust))))))
+                          (let ((icon (cond
+                                       (remote-p
+                                        (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust all-the-icons-dired-v-adjust))
+                                       ((file-symlink-p filename)
+                                        (all-the-icons-octicon "file-symlink-directory" :height 1.0 :v-adjust all-the-icons-dired-v-adjust))
+                                       ((all-the-icons-dir-is-submodule filename)
+                                        (all-the-icons-octicon "file-submodule" :height 1.0 :v-adjust all-the-icons-dired-v-adjust))
+                                       ((file-exists-p (format "%s/.git" filename))
+                                        (all-the-icons-octicon "repo" :height 1.1 :v-adjust all-the-icons-dired-v-adjust ))
+                                       (t (let ((matcher (all-the-icons-match-to-alist file all-the-icons-dir-icon-alist)))
+                                            (apply (car matcher) (list (cadr matcher) :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust)))))))
                             (insert (concat "\t" icon "\t")))
-                        (insert (concat "\t" (all-the-icons-icon-for-file file :height 0.9 :v-adjust -0.05) "\t")))))))
+                        (insert (concat "\t" (all-the-icons-icon-for-file file :v-adjust -0.05) "\t")))))))
               (forward-line 1))))))
     (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
 

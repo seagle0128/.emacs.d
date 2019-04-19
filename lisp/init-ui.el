@@ -128,19 +128,14 @@
                 (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
                       treemacs-icon-fallback (concat
                                               "\t\t"
-                                              (all-the-icons-faicon "file-o"
-                                                                    :face 'all-the-icons-dsilver
-                                                                    :height 0.9
-                                                                    :v-adjust -0.05)
+                                              (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
                                               "\t")
                       treemacs-icon-text treemacs-icon-fallback)
 
                 (dolist (item all-the-icons-icon-alist)
                   (let* ((extension (car item))
                          (func (cadr item))
-                         (args (append (list (caddr item))
-                                       '(:height 0.9 :v-adjust -0.05)
-                                       (cdddr item)))
+                         (args (append (list (caddr item)) '(:v-adjust -0.05) (cdddr item)))
                          (icon (apply func args))
                          (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
                          (value (concat "\t\t" icon "\t")))

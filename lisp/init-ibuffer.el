@@ -48,14 +48,10 @@
     (define-ibuffer-column icon (:name "   ")
       (let ((icon (if (and (buffer-file-name)
                            (all-the-icons-auto-mode-match?))
-                      (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name))
-                                                   :height 0.9 :v-adjust -0.05)
-                    (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
+                      (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name)) :v-adjust -0.01)
+                    (all-the-icons-icon-for-mode major-mode :v-adjust -0.01))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o"
-                                             :face 'all-the-icons-dsilver
-                                             :height 0.9
-                                             :v-adjust -0.05))
+            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
           icon)))
 
     (let ((tab-width 1))
