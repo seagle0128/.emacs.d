@@ -76,7 +76,7 @@
                            (highlight-indent-guides-mode 1))))
     :config
     (setq highlight-indent-guides-method 'character)
-    (setq highlight-indent-guides-responsive t)
+    (setq highlight-indent-guides-responsive 'top)
 
     ;; Disable `highlight-indent-guides-mode' in `swiper'
     ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
