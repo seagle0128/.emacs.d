@@ -62,13 +62,14 @@
     (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing")
     (setq dashboard-startup-banner (or centaur-logo 'official))
+    (setq dashboard-center-content t)
     (setq dashboard-show-shortcuts nil)
     (setq dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5)))
 
     (defun my-banner-path (&rest _)
-      "Return the full path to banner."
+      "Return the full ,@restpath to banner."
       (expand-file-name "banner.txt" user-emacs-directory))
     (advice-add #'dashboard-get-banner-path :override #'my-banner-path)
 
@@ -135,82 +136,221 @@
       (interactive)
       (funcall (local-key-binding "m")))
 
-    (defun dashboard-insert-buttons (_list-size)
-      (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
-                                               (if (display-graphic-p) 51 42)
-                                               ) 2))) ?\ ))
-      (widget-create 'url-link
-                     :tag (concat
-                           (if (display-graphic-p)
-                               (concat
-                                (all-the-icons-octicon "mark-github"
-                                                       :height 1.1
-                                                       :v-adjust 0.0
-                                                       :face 'font-lock-keyword-face)
-                                (propertize " " 'face 'variable-pitch)))
-                           (propertize "Homepage" 'face 'font-lock-keyword-face))
-                     :help-echo "Browse homepage"
-                     :mouse-face 'highlight
-                     centaur-homepage)
-      (insert " ")
-      (widget-create 'push-button
-                     :help-echo "Restore previous session"
-                     :action (lambda (&rest _) (restore-session))
-                     :mouse-face 'highlight
-                     :tag (concat
-                           (if (display-graphic-p)
-                               (concat
-                                (all-the-icons-material "restore"
-                                                        :height 1.35
-                                                        :v-adjust -0.24
-                                                        :face 'font-lock-keyword-face)
-                                (propertize " " 'face 'variable-pitch)))
-                           (propertize "Session" 'face 'font-lock-keyword-face)))
-      (insert " ")
-      (widget-create 'file-link
-                     :tag (concat
-                           (if (display-graphic-p)
-                               (concat
-                                (all-the-icons-faicon "cog"
-                                                      :height 1.2
-                                                      :v-adjust -0.1
-                                                      :face 'font-lock-keyword-face)
-                                (propertize " " 'face 'variable-pitch)))
-                           (propertize "Settings" 'face 'font-lock-keyword-face))
-                     :help-echo "Open custom file"
-                     :mouse-face 'highlight
-                     custom-file)
-      (insert " ")
-      (widget-create 'push-button
-                     :help-echo "Update Centaur Emacs"
-                     :action (lambda (&rest _) (centaur-update))
-                     :mouse-face 'highlight
-                     :tag (concat
-                           (if (display-graphic-p)
-                               (concat
-                                (all-the-icons-material "update"
-                                                        :height 1.35
-                                                        :v-adjust -0.24
-                                                        :face 'font-lock-keyword-face)
-                                (propertize " " 'face 'variable-pitch)))
-                           (propertize "Update" 'face 'font-lock-keyword-face)))
-      (insert "\n")
-      (insert "\n")
-      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
-                                               (if (display-graphic-p) 49 51))
-                                            2))) ?\ ))
-      (insert (concat
-               (propertize (format "%d packages loaded in %s "
-                                   (length package-activated-list) (emacs-init-time))
-                           'face 'font-lock-comment-face)
-               (propertize "(h/? for help)"
-                           'face 'font-lock-doc-face))))
+    ;; Add heading icons
+    (defun dashboard-insert-heading-icon (heading &optional _shortcut)
+      (when (display-graphic-p)
+        (insert (cond
+                 ((string-equal heading "Recent Files:")
+                  (all-the-icons-octicon "history" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
+                 ((string-equal heading "Bookmarks:")
+                  (all-the-icons-octicon "bookmark" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
+                 ((string-equal heading "Projects:")
+                  (all-the-icons-octicon "file-directory" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))))
+        (insert " ")))
+    (advice-add #'dashboard-insert-heading :before #'dashboard-insert-heading-icon)
 
-    (add-to-list 'dashboard-item-generators '(buttons . dashboard-insert-buttons))
-    (add-to-list 'dashboard-items '(buttons))
+    ;; Add file icons
+    ;; MUST redefine the sections because of the macro `dashboard-insert-section-list'
+    (defmacro dashboard-insert-section-list (section-name list action &rest rest)
+      "Insert into SECTION-NAME a LIST of items, expanding ACTION and passing REST to widget creation."
+      `(when (car ,list)
+         (mapc (lambda (el)
+                 (let ((widget nil)
+                       (tab-width 1))
+                   (insert "\n    ")
+                   (when (display-graphic-p)
+                     (insert (when-let ((path (car (last (split-string ,@rest " - ")))))
+                               (if (file-directory-p path)
+                                   (cond
+                                    ((and (fboundp 'tramp-tramp-file-p)
+                                          (tramp-tramp-file-p default-directory))
+                                     (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust 0.01))
+                                    ((file-symlink-p path)
+                                     (all-the-icons-octicon "file-symlink-directory" :height 1.0 :v-adjust 0.01))
+                                    ((all-the-icons-dir-is-submodule path)
+                                     (all-the-icons-octicon "file-submodule" :height 1.0 :v-adjust 0.01))
+                                    ((file-exists-p (format "%s/.git" path))
+                                     (all-the-icons-octicon "repo" :height 1.1 :v-adjust 0.01))
+                                    (t (let ((matcher (all-the-icons-match-to-alist path all-the-icons-dir-icon-alist)))
+                                         (apply (car matcher) (list (cadr matcher) :v-adjust 0.01)))))
+                                 (all-the-icons-icon-for-file (file-name-nondirectory path)))))
+                     (insert "\t"))
+                   (setq widget
+                         (widget-create 'push-button
+                                        :action ,action
+                                        :mouse-face 'highlight
+                                        :button-prefix ""
+                                        :button-suffix ""
+                                        :format "%[%t%]"
+                                        ,@rest))))
+               ,list)))
 
-    (dashboard-insert-startupify-lists)
+    ;; Recentf
+    (defun dashboard-insert-recents (list-size)
+      "Add the list of LIST-SIZE items from recently edited files."
+      (recentf-mode)
+      (dashboard-insert-section
+       "Recent Files:"
+       recentf-list
+       list-size
+       "r"
+       `(lambda (&rest ignore) (find-file-existing ,el))
+       (abbreviate-file-name el)))
+
+    ;; Bookmarks
+    (defun dashboard-insert-bookmarks (list-size)
+      "Add the list of LIST-SIZE items of bookmarks."
+      (require 'bookmark)
+      (dashboard-insert-section
+       "Bookmarks:"
+       (dashboard-subseq (bookmark-all-names)
+                         0 list-size)
+       list-size
+       "m"
+       `(lambda (&rest ignore) (bookmark-jump ,el))
+       (let ((file (bookmark-get-filename el)))
+         (if file
+             (format "%s - %s" el (abbreviate-file-name file))
+           el))))
+
+    ;; Projectile
+    (defun dashboard-insert-projects (list-size)
+      "Add the list of LIST-SIZE items of projects."
+      (require 'projectile)
+      (projectile-load-known-projects)
+      (dashboard-insert-section
+       "Projects:"
+       (dashboard-subseq (projectile-relevant-known-projects)
+                         0 list-size)
+       list-size
+       "p"
+       `(lambda (&rest ignore) (projectile-switch-project-by-name ,el))
+       (abbreviate-file-name el)))
+
+
+    (defun dashboard-center-line (&optional real-width)
+      "When point is at the end of a line, center it.
+REAL-WIDTH: the real width of the line.  If the line contains an image, the size
+            of that image will be considered to be 1 by the calculation method
+            used in this function.  As a consequence, the caller must calculate
+            himself the correct length of the line taking into account the
+            images he inserted in it."
+      (let* ((width (or real-width (current-column)))
+             (margin (max 0 (floor (/ (- dashboard-banner-length width) 2)))))
+        (beginning-of-line)
+        (insert (make-string margin ?\s))
+        (end-of-line)))
+
+    (defun dashboard-insert-buttons ()
+      "Insert buttions after the banner."
+      (interactive)
+      (with-current-buffer (get-buffer dashboard-buffer-name)
+        (read-only-mode -1)
+        (goto-char (point-min))
+        (search-forward dashboard-banner-logo-title nil t)
+
+        (insert "\n\n\n")
+        (widget-create 'url-link
+                       :tag (concat
+                             (if (display-graphic-p)
+                                 (concat
+                                  (all-the-icons-octicon "mark-github"
+                                                         :height 1.1
+                                                         :v-adjust 0.0
+                                                         :face 'font-lock-keyword-face)
+                                  (propertize " " 'face 'variable-pitch)))
+                             (propertize "Homepage" 'face 'font-lock-keyword-face))
+                       :help-echo "Browse homepage"
+                       :mouse-face 'highlight
+                       centaur-homepage)
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Restore previous session"
+                       :action (lambda (&rest _) (restore-session))
+                       :mouse-face 'highlight
+                       :tag (concat
+                             (if (display-graphic-p)
+                                 (concat
+                                  (all-the-icons-material "restore"
+                                                          :height 1.35
+                                                          :v-adjust -0.24
+                                                          :face 'font-lock-keyword-face)
+                                  (propertize " " 'face 'variable-pitch)))
+                             (propertize "Session" 'face 'font-lock-keyword-face)))
+        (insert " ")
+        (widget-create 'file-link
+                       :tag (concat
+                             (if (display-graphic-p)
+                                 (concat
+                                  (all-the-icons-faicon "cog"
+                                                        :height 1.2
+                                                        :v-adjust -0.1
+                                                        :face 'font-lock-keyword-face)
+                                  (propertize " " 'face 'variable-pitch)))
+                             (propertize "Settings" 'face 'font-lock-keyword-face))
+                       :help-echo "Open custom file"
+                       :mouse-face 'highlight
+                       custom-file)
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Update Centaur Emacs"
+                       :action (lambda (&rest _) (centaur-update))
+                       :mouse-face 'highlight
+                       :tag (concat
+                             (if (display-graphic-p)
+                                 (concat
+                                  (all-the-icons-material "update"
+                                                          :height 1.35
+                                                          :v-adjust -0.24
+                                                          :face 'font-lock-keyword-face)
+                                  (propertize " " 'face 'variable-pitch)))
+                             (propertize "Update" 'face 'font-lock-keyword-face)))
+        (insert " ")
+        (widget-create 'push-button
+                       :help-echo "Help (?/h)"
+                       :action (lambda (&rest _) (dashboard-hydra/body))
+                       :mouse-face 'highlight
+                       :tag (concat
+                             (if (display-graphic-p)
+                                 (all-the-icons-faicon "question"
+                                                       :height 1.2
+                                                       :v-adjust -0.1
+                                                       :face 'font-lock-string-face)
+                               (propertize "?" 'face 'font-lock-string-face))))
+        (dashboard-center-line)
+        (insert "\n\n")
+
+        (insert (concat
+                 (propertize (format "%d packages loaded in %s"
+                                     (length package-activated-list) (emacs-init-time))
+                             'face 'font-lock-comment-face)))
+        (dashboard-center-line)
+
+        (read-only-mode 1)))
+
+    (add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
+
+    (defun dashboard-insert-footer ()
+      "Insert footer of dashboard."
+      (interactive)
+      (with-current-buffer (get-buffer dashboard-buffer-name)
+        (read-only-mode -1)
+        (goto-char (point-max))
+
+        (insert "\n\n")
+        (insert (if (display-graphic-p)
+                    (all-the-icons-faicon "heart"
+                                          :height 1.1
+                                          :v-adjust -0.05
+                                          :face 'error)
+                  "🧡"))
+        (insert (propertize
+                 (format " Powered by Vincent Zhang, %s" (format-time-string "%Y"))
+                 'face font-lock-doc-face))
+        (dashboard-center-line)
+
+        (read-only-mode 1)))
+    (add-hook 'dashboard-mode-hook #'dashboard-insert-footer)
 
     (defhydra dashboard-hydra (:color red :columns 3)
       "Help"

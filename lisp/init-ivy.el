@@ -372,7 +372,7 @@
                        (all-the-icons-octicon "file-submodule" :height 1.0 :v-adjust 0.01))
                       ((file-exists-p (format "%s/.git" path))
                        (all-the-icons-octicon "repo" :height 1.1 :v-adjust 0.01))
-                      (t (let ((matcher (all-the-icons-match-to-alist candidate all-the-icons-dir-icon-alist)))
+                      (t (let ((matcher (all-the-icons-match-to-alist path all-the-icons-dir-icon-alist)))
                            (apply (car matcher) (list (cadr matcher) :v-adjust 0.01))))))
                     ((string-match "^/.*:$" path)
                      (all-the-icons-material "settings_remote" :height 1.0 :v-adjust -0.2))
