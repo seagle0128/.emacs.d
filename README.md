@@ -135,10 +135,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/53698460-9c58af00-3e0f-11e9-9d32-8fd0c2c0ff77.png
+![Dashboard](https://user-images.githubusercontent.com/140797/56474936-9bf59f80-64b3-11e9-9d4c-5980e9e0ec5c.png
 "Dashboard (default theme)")
 
-![color_icons](https://user-images.githubusercontent.com/140797/55979433-b914bc00-5cc4-11e9-821f-5ea84c360916.png
+![color_icons](https://user-images.githubusercontent.com/140797/56474931-8bddc000-64b3-11e9-93d8-0204c3752790.png
 "Main (color icons)")
 
 ![markdown_magit](https://user-images.githubusercontent.com/140797/49694620-8ba9eb80-fbc8-11e8-9800-f2486ab41991.png
