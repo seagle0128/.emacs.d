@@ -1,4 +1,4 @@
-;; init-dap.el --- Initialize dap configurations.	-*- lexical-binding: t -*-
+;; init-dap.el --- Initialize DAP configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Debug Adapter Protocol configurations.
+;; Debug Adapter Protocol (DAP) configurations.
 ;;
 
 ;;; Code:

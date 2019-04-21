@@ -1,4 +1,4 @@
-;; init-lsp.el --- Initialize lsp configurations.	-*- lexical-binding: t -*-
+;; init-lsp.el --- Initialize LSP configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Language Server Protocol configurations.
+;; Language Server Protocol (LSP) configurations.
 ;;
 
 ;;; Code:
