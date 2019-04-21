@@ -344,9 +344,10 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                                           :height 1.1
                                           :v-adjust -0.05
                                           :face 'error)
-                  "🧡"))
+                  "🧡 "))
+        (insert " ")
         (insert (propertize
-                 (format " Powered by Vincent Zhang, %s" (format-time-string "%Y"))
+                 (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
                  'face font-lock-doc-face))
         (dashboard-center-line)
 
