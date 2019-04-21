@@ -60,7 +60,6 @@
     :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
     :init (dashboard-setup-startup-hook)
     :config
-    (setq initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing")
     (setq dashboard-startup-banner (or centaur-logo 'official))
     (setq dashboard-center-content t)
@@ -228,7 +227,6 @@
        `(lambda (&rest ignore) (projectile-switch-project-by-name ,el))
        (abbreviate-file-name el)))
 
-
     (defun dashboard-center-line (&optional real-width)
       "When point is at the end of a line, center it.
 REAL-WIDTH: the real width of the line.  If the line contains an image, the size
@@ -328,7 +326,6 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
         (dashboard-center-line)
 
         (read-only-mode 1)))
-
     (add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
 
     (defun dashboard-insert-footer ()
