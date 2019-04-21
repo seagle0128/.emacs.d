@@ -37,6 +37,7 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
+    :if (< (length command-line-args) 2) ; prevents from opening of any file as an argument
     :after all-the-icons projectile persp-mode
     :diminish (dashboard-mode page-break-lines-mode)
     :defines (persp-save-dir persp-special-last-buffer)
