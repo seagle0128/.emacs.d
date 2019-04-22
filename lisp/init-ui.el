@@ -38,11 +38,7 @@
 (setq fancy-splash-image centaur-logo)
 
 ;; Title
-(setq frame-title-format
-      '("Centaur Emacs - "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+(setq frame-title-format '("Centaur Emacs - %b"))
 (setq icon-title-format frame-title-format)
 
 (when sys/mac-x-p
