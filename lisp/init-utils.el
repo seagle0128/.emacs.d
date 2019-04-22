@@ -216,7 +216,12 @@
                            (unless noninteractive  ; as `save-place-mode' does
                              (my-pdf-set-all-last-viewed-bookmarks)))))
     :init (my-pdf-set-midnight-colors)
-    :config (pdf-tools-install t nil t t)))
+    :config
+    ;; WORKAROUND: Fix compilation errors on macOS.
+    ;; @see https://github.com/politza/pdf-tools/issues/480
+    (when sys/macp
+      (setenv "PKG_CONFIG_PATH" "/usr/local/lib/pkgconfig:/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig"))
+    (pdf-tools-install t nil t t)))
 
 ;; Epub reader
 (use-package nov
