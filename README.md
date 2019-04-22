@@ -124,7 +124,8 @@ For Example:
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease or tuna
 (setq centaur-theme classic)                   ; Color theme: default, classic, dark, light or daylight
 (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
-(setq centaur-lsp nil)                         ; Set LSP client: lsp-mode, eglot or nil
+(setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
+(setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 

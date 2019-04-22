@@ -86,6 +86,10 @@ If Non-nil, use dashboard, otherwise will restore previous session."
           (const :tag "eglot" 'eglot)
           nil))
 
+(defcustom centaur-chinese-calendar t
+  "Use Chinese calendar or not."
+  :type 'boolean)
+
 (defcustom centaur-benchmark nil
   "Enable the init benchmark or not."
   :type 'boolean)
