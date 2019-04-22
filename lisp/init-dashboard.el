@@ -37,7 +37,6 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :after all-the-icons projectile persp-mode
     :diminish (dashboard-mode page-break-lines-mode)
     :defines (persp-save-dir persp-special-last-buffer)
     :functions (all-the-icons-faicon
@@ -138,6 +137,10 @@
     ;; Add heading icons
     (defun dashboard-insert-heading-icon (heading &optional _shortcut)
       (when (display-graphic-p)
+        ;; Load `all-the-icons' if it's unavailable
+        (unless (featurep 'all-the-icons)
+          (require 'all-the-icons nil t))
+
         (insert (cond
                  ((string-equal heading "Recent Files:")
                   (all-the-icons-octicon "history" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
