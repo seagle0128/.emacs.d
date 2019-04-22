@@ -36,6 +36,8 @@
 ;; Directory operations
 (use-package dired
   :ensure nil
+  :bind (:map dired-mode-map
+              ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always)
