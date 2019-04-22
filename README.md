@@ -135,19 +135,19 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/56474936-9bf59f80-64b3-11e9-9d4c-5980e9e0ec5c.png
+![Dashboard](https://user-images.githubusercontent.com/140797/56488858-4e5c4f80-6512-11e9-9637-b9395c46400f.png
 "Dashboard (default theme)")
 
 ![color_icons](https://user-images.githubusercontent.com/140797/56474931-8bddc000-64b3-11e9-93d8-0204c3752790.png
 "Main (color icons)")
 
-![markdown_magit](https://user-images.githubusercontent.com/140797/49694620-8ba9eb80-fbc8-11e8-9800-f2486ab41991.png
+![markdown_magit](https://user-images.githubusercontent.com/140797/56489193-7f894f80-6513-11e9-9c95-ea1ef41efb1f.png
 "Markdown and Magit")
 
-![org](https://user-images.githubusercontent.com/140797/49694696-a761c180-fbc9-11e8-9edc-0199f4ea7ca0.png
+![org_classic](https://user-images.githubusercontent.com/140797/56489410-2837af00-6514-11e9-9e04-a1663ac479e8.png
 "Org (classic theme)")
 
-![main](https://user-images.githubusercontent.com/140797/49694704-cfe9bb80-fbc9-11e8-9506-df9fee48e304.png
+![main_light](https://user-images.githubusercontent.com/140797/56489516-85cbfb80-6514-11e9-9dd4-8602bf8a4ec7.png
 "Main (light theme)")
 
 ## FAQ
