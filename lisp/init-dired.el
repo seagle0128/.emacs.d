@@ -76,6 +76,11 @@
     :config
     (defun my-all-the-icons-dired--display ()
       "Display the icons of files without colors in a dired buffer."
+
+      ;; Fix: not display icons after dired commands (e.g insert-subdir, create-directory)
+      ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/11
+      (all-the-icons-dired--reset)
+
       (when (and (not all-the-icons-dired-displayed) dired-subdir-alist)
         (setq-local all-the-icons-dired-displayed t)
         (let ((inhibit-read-only t)

@@ -349,6 +349,7 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                  (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
                  'face font-lock-doc-face))
         (dashboard-center-line)
+        (insert "\n")
 
         (read-only-mode 1)))
     (add-hook 'dashboard-mode-hook #'dashboard-insert-footer)
