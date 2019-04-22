@@ -63,8 +63,17 @@
                                     " " (mode 16 16 :left :elide) " " filename-and-process)
                               (mark " " (name 16 -1) " " filename)))))
 
+  (defun my/ibuffer-find-file ()
+    (interactive)
+    (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+			       (if (buffer-live-p buf)
+				   (with-current-buffer buf
+				     default-directory)
+				 default-directory))))
+      (counsel-find-file default-directory)))
+
   (with-eval-after-load 'counsel
-    (defalias #'ibuffer-find-file #'counsel-find-file))
+    (advice-add #'ibuffer-find-file :override #'my/ibuffer-find-file))
 
   ;; Group ibuffer's list by project root
   (use-package ibuffer-projectile
