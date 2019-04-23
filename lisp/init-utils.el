@@ -180,48 +180,20 @@
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
-    :preface
-    (defun my-pdf-set-midnight-colors ()
-      (setq pdf-view-midnight-colors
-            `(,(face-foreground 'default) . ,(face-background 'default))))
-
-    ;; Workaround for pdf-tools not reopening to last-viewed page
-    ;; https://github.com/politza/pdf-tools/issues/18
-    (defun my-pdf-set-last-viewed-bookmark ()
-      (interactive)
-      (when (eq major-mode 'pdf-view-mode)
-        (bookmark-set (my-pdf-generate-bookmark-name))))
-
-    (defun my-pdf-jump-last-viewed-bookmark ()
-      (when (my-pdf-has-last-viewed-bookmark)
-        (bookmark-jump (my-pdf-generate-bookmark-name))))
-
-    (defun my-pdf-has-last-viewed-bookmark ()
-      (assoc
-       (my-pdf-generate-bookmark-name) bookmark-alist))
-
-    (defun my-pdf-generate-bookmark-name ()
-      (concat "LAST-VIEWED: " (buffer-name)))
-
-    (defun my-pdf-set-all-last-viewed-bookmarks ()
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (my-pdf-set-last-viewed-bookmark))))
     :bind (:map pdf-view-mode-map
                 ("C-s" . isearch-forward))
-    :hook ((after-load-theme . my-pdf-set-midnight-colors)
-           (kill-buffer . my-pdf-set-last-viewed-bookmark)
-           (pdf-view-mode . my-pdf-jump-last-viewed-bookmark)
-           (kill-emacs . (lambda ()
-                           (unless noninteractive  ; as `save-place-mode' does
-                             (my-pdf-set-all-last-viewed-bookmarks)))))
-    :init (my-pdf-set-midnight-colors)
     :config
+    (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
+
     ;; WORKAROUND: Fix compilation errors on macOS.
     ;; @see https://github.com/politza/pdf-tools/issues/480
     (when sys/macp
       (setenv "PKG_CONFIG_PATH" "/usr/local/lib/pkgconfig:/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig"))
-    (pdf-tools-install t nil t t)))
+    (pdf-tools-install t nil t t)
+
+    ;; Recover last viewed position
+    (use-package pdf-view-restore
+      :hook (pdf-view-mode . pdf-view-restore-mode))))
 
 ;; Epub reader
 (use-package nov
