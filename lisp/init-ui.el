@@ -135,8 +135,10 @@
                          (icon (apply func args))
                          (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
                          (value (concat "\t\t" icon "\t")))
-                    (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value)
-                    (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value))))))))
+                    (unless (ht-get treemacs-icons-hash (s-replace-regexp "\\?" "" key))
+                      (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value))
+                    (unless (ht-get treemacs-icons-hash (s-replace-regexp ".\\?" "" key))
+                      (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value)))))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
