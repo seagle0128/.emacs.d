@@ -47,6 +47,7 @@
                 persp-switch-to-buffer
                 winner-undo
                 widget-forward)
+    :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
