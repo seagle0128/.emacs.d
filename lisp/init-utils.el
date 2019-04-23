@@ -182,18 +182,20 @@
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
                 ("C-s" . isearch-forward))
+    :init (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
     :config
-    (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
-
     ;; WORKAROUND: Fix compilation errors on macOS.
     ;; @see https://github.com/politza/pdf-tools/issues/480
     (when sys/macp
-      (setenv "PKG_CONFIG_PATH" "/usr/local/lib/pkgconfig:/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig"))
+      (setenv "PKG_CONFIG_PATH"
+              "/usr/local/lib/pkgconfig:/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig"))
     (pdf-tools-install t nil t t)
 
     ;; Recover last viewed position
     (use-package pdf-view-restore
-      :hook (pdf-view-mode . pdf-view-restore-mode))))
+      :hook (pdf-view-mode . pdf-view-restore-mode)
+      :init (setq pdf-view-restore-filename
+                  (locate-user-emacs-file ".pdf-view-restore")))))
 
 ;; Epub reader
 (use-package nov
