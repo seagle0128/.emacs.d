@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; Explicitly set the prefered coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
@@ -314,7 +317,16 @@
 (use-package origami
   :hook (prog-mode . origami-mode)
   :init (setq origami-show-fold-header t)
+  :bind (:map origami-mode-map
+              ("C-`" . origami-hydra/body))
   :config
+  (face-spec-reset-face 'origami-fold-header-face)
+
+  (when centaur-lsp
+    ;; Support LSP
+    (use-package lsp-origami
+      :hook (origami-mode . lsp-origami-mode)))
+
   (defhydra origami-hydra (:color blue :hint none)
     "
       _:_: recursively toggle node       _a_: toggle all nodes    _t_: toggle node
@@ -327,12 +339,7 @@
     ("o" origami-show-only-node)
     ("u" origami-undo)
     ("r" origami-redo)
-    ("R" origami-reset))
-
-  :bind (:map origami-mode-map
-              ("C-`" . origami-hydra/body))
-  :config
-  (face-spec-reset-face 'origami-fold-header-face))
+    ("R" origami-reset)))
 
 ;; Narrow/Widen
 (use-package fancy-narrow
