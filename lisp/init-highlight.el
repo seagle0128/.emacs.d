@@ -109,7 +109,7 @@
 
   (defun my-rainbow-clear-overlays ()
     (remove-overlays (point-min) (point-max) 'ovrainbow t))
-  (advice-add #'ranibow-turn-off :after #'my-rainbow-clear-overlays))
+  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
