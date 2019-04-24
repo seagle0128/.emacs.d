@@ -188,6 +188,25 @@
                                         ,@rest))))
                ,list)))
 
+    (defmacro dashboard-insert-shortcut (shortcut-char
+                                         search-label
+                                         &optional no-next-line)
+      "Insert a shortcut SHORTCUT-CHAR for a given SEARCH-LABEL.
+Optionally, provide NO-NEXT-LINE to move the cursor forward a line."
+      `(progn
+         (eval-when-compile (defvar dashboard-mode-map))
+         (let ((sym (make-symbol (format "Jump to \"%s\"" ,search-label))))
+           (fset sym (lambda ()
+                       (interactive)
+                       (unless (search-forward ,search-label (point-max) t)
+                         (search-backward ,search-label (point-min) t))
+                       ,@(unless no-next-line
+                           '((forward-line 1)))
+                       (back-to-indentation)
+                       (if (display-graphic-p) (widget-forward 1))))
+           (eval-after-load 'dashboard
+             (define-key dashboard-mode-map ,shortcut-char sym)))))
+
     ;; Recentf
     (defun dashboard-insert-recents (list-size)
       "Add the list of LIST-SIZE items from recently edited files."
