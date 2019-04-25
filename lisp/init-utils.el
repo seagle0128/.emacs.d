@@ -175,15 +175,17 @@
 
 ;; PDF reader
 (when (display-graphic-p)
-  (use-package pdf-view
-    :ensure pdf-tools
+  (use-package pdf-tools
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
+    :defines pdf-annot-activate-created-annotations
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
                 ("C-s" . isearch-forward))
-    :init (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
     :config
+    (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
+    (setq pdf-annot-activate-created-annotations t)
+
     ;; WORKAROUND: Fix compilation errors on macOS.
     ;; @see https://github.com/politza/pdf-tools/issues/480
     (when sys/macp
