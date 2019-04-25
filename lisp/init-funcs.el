@@ -164,7 +164,7 @@
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (let ((dir (concat user-emacs-directory "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
         (async-byte-recompile-directory dir)
       (byte-recompile-directory dir 0 t))))

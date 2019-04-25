@@ -35,7 +35,7 @@
          :map elfeed-search-mode-map
          ("U" . elfeed-update))
   :config
-  (setq elfeed-db-directory (expand-file-name ".elfeed" user-emacs-directory))
+  (setq elfeed-db-directory (locate-user-emacs-file ".elfeed"))
   (setq elfeed-feeds
         '("http://planet.emacsen.org/atom.xml"
           "http://www.masteringemacs.org/feed/"

@@ -275,7 +275,7 @@
               undo-tree-enable-undo-in-region nil
               undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(concat user-emacs-directory "undo-tree-hist/"))))
+              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
   :config
   ;; FIXME:  `undo-tree-visualizer-diff' is a local variable in *undo-tree* buffer.
   (defun undo-tree-visualizer-show-diff (&optional node)
