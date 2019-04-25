@@ -40,7 +40,8 @@
         '("http://planet.emacsen.org/atom.xml"
           "http://www.masteringemacs.org/feed/"
           "https://oremacs.com/atom.xml"
-          "https://pinecast.com/feed/emacscast")))
+          "https://pinecast.com/feed/emacscast"
+          "https://www.reddit.com/r/emacs.rss")))
 
 (provide 'init-elfeed)
 
