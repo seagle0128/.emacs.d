@@ -67,9 +67,9 @@
                (this-win-edges (window-edges (selected-window)))
                (next-win-edges (window-edges (next-window)))
                (this-win-2nd (not (and (<= (car this-win-edges)
-                                          (car next-win-edges))
-                                       (<= (cadr this-win-edges)
-                                          (cadr next-win-edges)))))
+                                        (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                        (cadr next-win-edges)))))
                (splitter
                 (if (= (car this-win-edges)
                        (car (window-edges (next-window))))
@@ -90,13 +90,14 @@
   ;; https://github.com/abo-abo/ace-window/wiki/Hydra
   ;; hydra-frame-window is designed from `ace-window' and
   ;; matches aw-dispatch-alist with a few extra
-  (defhydra hydra-frame-window (:color red :hint nil)
+  (defhydra hydra-frame-window (:color pink :hint nil)
     "
-^Frame^                 ^Window^      Window Size^^^^^^    ^Text Zoom^               (__)
-_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _=_                   (oo)
-_1_: delete others      _s_wap          _h_ ^+^ _l_            ^+^             /------\\/
+^Frame^                 ^Window^      ^Window Size^^^^     ^Text Zoom^
+^^----------------------^^------------^^----------^^^^-----^^---------------         (__)
+_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _+_                   (oo)
+_1_: delete others      _s_wap          _h_ ^+^ _l_            _=_             /------\\/
 _2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
-_F_ullscreen            _o_ther         _b_alance^^^^          ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
+_F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\\-----/\\  ~~  C-c w/C-x o w
 "
     ("0" delete-frame :exit t)
     ("1" delete-other-frames :exit t)
@@ -108,7 +109,8 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^        *  /\\
     ("d" ace-delete-window :exit t)
     ("o" ace-window :exit t)
     ("-" text-scale-decrease)
-    ("=" text-scale-increase)
+    ("=" (text-scale-increase 0))
+    ("+" text-scale-increase)
     ("h" shrink-window-horizontally)
     ("k" shrink-window)
     ("j" enlarge-window)

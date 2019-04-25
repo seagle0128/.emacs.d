@@ -370,23 +370,33 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
           (insert "\n"))))
     (add-hook 'dashboard-mode-hook #'dashboard-insert-footer)
 
-    (defhydra dashboard-hydra (:color red :columns 3)
-      "Help"
-      ("<tab>" widget-forward "Next Widget")
-      ("C-i" widget-forward "Prompt")
-      ("<backtab>" widget-backward "Previous Widget")
-      ("RET" widget-button-press "Press Widget" :exit t)
-      ("g" dashboard-refresh-buffer "Refresh" :exit t)
-      ("}" dashboard-next-section "Next Section")
-      ("{" dashboard-previous-section "Previous Section")
-      ("r" dashboard-goto-recent-files "Recent Files")
-      ("p" dashboard-goto-projects "Projects")
-      ("m" dashboard-goto-bookmarks "Bookmarks")
-      ("H" browse-homepage "Browse Homepage" :exit t)
-      ("R" restore-session "Restore Previous Session" :exit t)
-      ("L" persp-load-state-from-file "List Saved Sessions" :exit t)
-      ("S" open-custom-file "Settings" :exit t)
-      ("U" centaur-update "Update Centaur Emacs" :exit t)
+    (defhydra dashboard-hydra (:color pink :hint nil)
+      "
+^Head^                       ^Section^                ^Item^
+^^---------------------------^^-----------------------^^--------------------
+_U_pdate                     _}_: Next                _RET_: Open
+_H_omePage                   _{_: Previous            _<tab>_/_C-i_: Next
+_R_ecover session            _r_: Recent Files        _<backtab>_: Previous
+_L_ist sessions              _m_: Bookmarks           _C-n_: Next line
+_S_ettings                   _p_: Projects            _C-p_: Previous Line
+"
+      ("<tab>" widget-forward)
+      ("C-i" widget-forward)
+      ("<backtab>" widget-backward)
+      ("RET" widget-button-press :exit t)
+      ("g" dashboard-refresh-buffer :exit t)
+      ("}" dashboard-next-section)
+      ("{" dashboard-previous-section)
+      ("r" dashboard-goto-recent-files)
+      ("p" dashboard-goto-projects)
+      ("m" dashboard-goto-bookmarks)
+      ("H" browse-homepage :exit t)
+      ("R" restore-session :exit t)
+      ("L" persp-load-state-from-file :exit t)
+      ("S" open-custom-file :exit t)
+      ("U" centaur-update :exit t)
+      ("C-n" next-line)
+      ("C-p" previous-line)
       ("<f2>" open-dashboard "Open Dashboard" :exit t)
       ("q" quit-dashboard "Quit Dashboard" :exit t)
       ("C-g" nil "quit"))

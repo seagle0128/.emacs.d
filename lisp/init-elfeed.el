@@ -32,8 +32,6 @@
 
 (use-package elfeed
   :bind (("C-x w" . elfeed)
-         :map elfeed-search-mode-map
-         ("U" . elfeed-update)
          :map elfeed-show-mode-map
          ("o" . ace-link)
          ("q" . delete-window))
@@ -47,7 +45,42 @@
           "http://www.masteringemacs.org/feed/"
           "https://oremacs.com/atom.xml"
           "https://pinecast.com/feed/emacscast"
-          "https://www.reddit.com/r/emacs.rss")))
+          "https://www.reddit.com/r/emacs.rss"))
+
+  (defhydra elfeed-hydra (:color pink :hint nil)
+    "
+^Search^                   ^Filter^                 ^Article^
+^^-------------------------^^-----------------------^^--------------------
+_g_: Refresh               _s_: Live filter         _b_: Browse
+_G_: Update                _S_: Set filter          _n_/_C-n_: Next
+_y_: Copy URL              _*_: Starred             _p_/_C-p_: Previous
+_+_: Tag all               _A_: All                 _u_: Mark read
+_-_: Untag all             _T_: Today               _r_: Mark unread
+"
+    ("G" elfeed-search-fetch)
+    ("Q" elfeed-search-quit-window "Quit Elfeed" :exit t)
+    ("S" elfeed-search-set-filter)
+    ("A" (elfeed-search-set-filter "@6-months-ago"))
+    ("T" (elfeed-search-set-filter "@1-day-ago"))
+    ("*" (elfeed-search-set-filter "@6-months-ago +star"))
+    ("+" elfeed-search-tag-all)
+    ("-" elfeed-search-untag-all)
+    ("b" elfeed-search-browse-url)
+    ("g" elfeed-search-update--force)
+    ("n" next-line)
+    ("C-n" next-line)
+    ("p" previous-line)
+    ("C-p" previous-line)
+    ("r" elfeed-search-untag-all-unread)
+    ("s" elfeed-search-live-filter)
+    ("u" elfeed-search-tag-all-unread)
+    ("y" elfeed-search-yank)
+    ("RET" elfeed-search-show-entry)
+    ("q" nil "quit" :exit t)
+    ("C-g" nil "quit" :exit t))
+  (bind-keys :map elfeed-search-mode-map
+             ("h" . elfeed-hydra/body)
+             ("?" . elfeed-hydra/body)))
 
 (provide 'init-elfeed)
 
