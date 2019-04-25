@@ -33,9 +33,15 @@
 (use-package elfeed
   :bind (("C-x w" . elfeed)
          :map elfeed-search-mode-map
-         ("U" . elfeed-update))
+         ("U" . elfeed-update)
+         :map elfeed-show-mode-map
+         ("o" . ace-link)
+         ("q" . delete-window))
   :config
-  (setq elfeed-db-directory (locate-user-emacs-file ".elfeed"))
+  (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
+        elfeed-show-entry-switch #'pop-to-buffer
+        elfeed-show-entry-delete #'delete-window)
+
   (setq elfeed-feeds
         '("http://planet.emacsen.org/atom.xml"
           "http://www.masteringemacs.org/feed/"
