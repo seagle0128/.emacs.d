@@ -56,7 +56,9 @@
            ("S" . open-custom-file)
            ("U" . centaur-update)
            ("q" . quit-dashboard))
-    :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
+    :hook (dashboard-mode . (lambda ()
+                              (setq-local frame-title-format "")
+                              (setq-local tab-width 1)))
     :init (dashboard-setup-startup-hook)
     :config
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing")
@@ -158,8 +160,7 @@
       "Insert into SECTION-NAME a LIST of items, expanding ACTION and passing REST to widget creation."
       `(when (car ,list)
          (mapc (lambda (el)
-                 (let ((widget nil)
-                       (tab-width 1))
+                 (let ((widget nil))
                    (insert "\n    ")
                    (when (display-graphic-p)
                      (insert (when-let ((path (car (last (split-string ,@rest " - ")))))
