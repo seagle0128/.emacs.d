@@ -47,18 +47,19 @@
           "https://pinecast.com/feed/emacscast"
           "https://www.reddit.com/r/emacs.rss"))
 
-  (defhydra elfeed-hydra (:color pink :hint nil)
+  (defhydra hydra-elfeed (:color red :hint none)
     "
 ^Search^                   ^Filter^                 ^Article^
-^^-------------------------^^-----------------------^^--------------------
+^^─────────────────────────^^───────────────────────^^────────────────────
 _g_: Refresh               _s_: Live filter         _b_: Browse
 _G_: Update                _S_: Set filter          _n_/_C-n_: Next
 _y_: Copy URL              _*_: Starred             _p_/_C-p_: Previous
 _+_: Tag all               _A_: All                 _u_: Mark read
 _-_: Untag all             _T_: Today               _r_: Mark unread
+_Q_: Quit
 "
     ("G" elfeed-search-fetch)
-    ("Q" elfeed-search-quit-window "Quit Elfeed" :exit t)
+    ("Q" elfeed-search-quit-window :exit t)
     ("S" elfeed-search-set-filter)
     ("A" (elfeed-search-set-filter "@6-months-ago"))
     ("T" (elfeed-search-set-filter "@1-day-ago"))
@@ -79,8 +80,8 @@ _-_: Untag all             _T_: Today               _r_: Mark unread
     ("q" nil "quit" :exit t)
     ("C-g" nil "quit" :exit t))
   (bind-keys :map elfeed-search-mode-map
-             ("h" . elfeed-hydra/body)
-             ("?" . elfeed-hydra/body)))
+             ("h" . hydra-elfeed/body)
+             ("?" . hydra-elfeed/body)))
 
 (provide 'init-elfeed)
 

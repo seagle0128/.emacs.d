@@ -330,7 +330,7 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
           (insert " ")
           (widget-create 'push-button
                          :help-echo "Help (?/h)"
-                         :action (lambda (&rest _) (dashboard-hydra/body))
+                         :action (lambda (&rest _) (hydra-dashboard/body))
                          :mouse-face 'highlight
                          :tag (concat
                                (if (display-graphic-p)
@@ -371,15 +371,15 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
           (insert "\n"))))
     (add-hook 'dashboard-mode-hook #'dashboard-insert-footer)
 
-    (defhydra dashboard-hydra (:color pink :hint nil)
+    (defhydra hydra-dashboard (:color red :hint none)
       "
-^Head^                       ^Section^                ^Item^
-^^---------------------------^^-----------------------^^--------------------
-_U_pdate                     _}_: Next                _RET_: Open
-_H_omePage                   _{_: Previous            _<tab>_/_C-i_: Next
-_R_ecover session            _r_: Recent Files        _<backtab>_: Previous
-_L_ist sessions              _m_: Bookmarks           _C-n_: Next line
-_S_ettings                   _p_: Projects            _C-p_: Previous Line
+^Head^               ^Section^            ^Item^                  ^Dashboard^
+^^───────────────────^^───────────────────^^──────────────────────^^───────────────
+_U_pdate             _}_: Next            _RET_: Open             _<f2>_: Open
+_H_omePage           _{_: Previous        _<tab>_/_C-i_: Next       _Q_: Quit
+_R_ecover session    _r_: Recent Files    _<backtab>_: Previous
+_L_ist sessions      _m_: Bookmarks       _C-n_: Next line
+_S_ettings           _p_: Projects        _C-p_: Previous Line
 "
       ("<tab>" widget-forward)
       ("C-i" widget-forward)
@@ -398,12 +398,13 @@ _S_ettings                   _p_: Projects            _C-p_: Previous Line
       ("U" centaur-update :exit t)
       ("C-n" next-line)
       ("C-p" previous-line)
-      ("<f2>" open-dashboard "Open Dashboard" :exit t)
-      ("q" quit-dashboard "Quit Dashboard" :exit t)
+      ("<f2>" open-dashboard :exit t)
+      ("Q" quit-dashboard :exit t)
+      ("q" nil "quit")
       ("C-g" nil "quit"))
     (bind-keys :map dashboard-mode-map
-               ("h" . dashboard-hydra/body)
-               ("?" . dashboard-hydra/body))))
+               ("h" . hydra-dashboard/body)
+               ("?" . hydra-dashboard/body))))
 
 (provide 'init-dashboard)
 

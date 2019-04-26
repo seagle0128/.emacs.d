@@ -88,12 +88,12 @@
   ;; (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
   ;; https://github.com/abo-abo/ace-window/wiki/Hydra
-  ;; hydra-frame-window is designed from `ace-window' and
-  ;; matches aw-dispatch-alist with a few extra
-  (defhydra hydra-frame-window (:color pink :hint nil)
+  ;; `hydra-frame-window' is designed from `ace-window' and
+  ;; matches `aw-dispatch-alist' with a few extra
+  (defhydra hydra-frame-window (:color red :hint none)
     "
 ^Frame^                 ^Window^      ^Window Size^^^^     ^Text Zoom^
-^^----------------------^^------------^^----------^^^^-----^^---------------         (__)
+^^──────────────────────^^────────────^^──────────^^^^─────^^───────────────         (__)
 _0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _+_                   (oo)
 _1_: delete others      _s_wap          _h_ ^+^ _l_            _=_             /------\\/
 _2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||

@@ -82,17 +82,24 @@
   (with-eval-after-load 'ivy
     (setq dumb-jump-selector 'ivy))
 
-  (defhydra dumb-jump-hydra (:color blue :columns 3)
-    "Dumb Jump"
+  (defhydra hydra-dumb-jump (:color blue :hint none)
+    "
+^Jump^                            ^Other^
+^^────────────────────────────────^^───────────────
+_j_: Go                           _i_: Prompt
+_o_: Go other window              _l_: Quick look
+_e_: Go external                  _b_: Back
+_x_: Go external other window
+"
     ("j" dumb-jump-go "Go")
-    ("o" dumb-jump-go-other-window "Other window")
+    ("o" dumb-jump-go-other-window "Go other window")
     ("e" dumb-jump-go-prefer-external "Go external")
     ("x" dumb-jump-go-prefer-external-other-window "Go external other window")
     ("i" dumb-jump-go-prompt "Prompt")
     ("l" dumb-jump-quick-look "Quick look")
     ("b" dumb-jump-back "Back")
     ("q" nil "quit"))
-  (bind-key "C-M-j" #'dumb-jump-hydra/body dumb-jump-mode-map))
+  (bind-key "C-M-j" #'hydra-dumb-jump/body dumb-jump-mode-map))
 
 (use-package nxml-mode
   :ensure nil

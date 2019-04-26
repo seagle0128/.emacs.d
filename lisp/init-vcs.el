@@ -99,16 +99,16 @@
              smerge-resolve
              smerge-kill-current)
   :preface
-  (defhydra smerge-hydra
-    (:color pink :hint nil :post (smerge-auto-leave))
+  (defhydra hydra-smerge
+    (:color red :hint none :post (smerge-auto-leave))
     "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
-^^-----------^^-------------------^^---------------------^^-------
+^^──────────-^^───────────────────^^─────────────────────^^──────────────────
 _n_ext       _b_ase               _<_: upper/base        _C_ombine
 _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ^^           _l_ower              _>_: base/lower        _k_ill current
-^^           _a_ll                _R_efine
-^^           _RET_: current       _E_diff
+^^           _a_ll                _R_efine               _ZZ_: Save and bury
+^^           _RET_: current       _E_diff                _q_: cancel
 "
     ("n" smerge-next)
     ("p" smerge-prev)
@@ -139,7 +139,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                             (smerge-mode 1)))))
          (magit-diff-visit-file . (lambda ()
                                     (when smerge-mode
-                                      (smerge-hydra/body))))))
+                                      (hydra-smerge/body))))))
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote

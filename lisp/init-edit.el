@@ -318,21 +318,26 @@
   :hook (prog-mode . origami-mode)
   :init (setq origami-show-fold-header t)
   :bind (:map origami-mode-map
-              ("C-`" . origami-hydra/body))
+              ("C-`" . hydra-origami/body))
   :config
   (face-spec-reset-face 'origami-fold-header-face)
 
   (when centaur-lsp
     ;; Support LSP
     (use-package lsp-origami
-      :hook (origami-mode . lsp-origami-mode)))
+      :hook (origami-mode . (lambda ()
+                              (if lsp-mode
+                                  (lsp-origami-mode))))))
 
-  (defhydra origami-hydra (:color blue :hint none)
+  (defhydra hydra-origami (:color blue :hint none)
     "
-      _:_: recursively toggle node       _a_: toggle all nodes    _t_: toggle node
-      _o_: show only current node        _u_: undo                _r_: redo
-      _R_: reset
-      "
+^Node^                     ^Other^
+^^─────────────────────────^^────────────
+_:_: toggle recursively    _u_: undo
+_a_: toggle all            _r_: redo
+_t_: toggle current        _R_: reset
+_o_: only show current
+"
     (":" origami-recursively-toggle-node)
     ("a" origami-toggle-all-nodes)
     ("t" origami-toggle-node)
