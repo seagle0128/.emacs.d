@@ -111,8 +111,22 @@
 
 ;; Quickly follow links
 (use-package ace-link
-  :bind (("M-o" . ace-link-addr))
-  :hook (after-init . ace-link-setup-default))
+  :defines (org-mode-map
+            gnus-summary-mode-map
+            gnus-article-mode-map
+            ert-results-mode-map)
+  :bind ("M-o" . ace-link-addr)
+  :hook (after-init . ace-link-setup-default)
+  :config
+  (with-eval-after-load 'org
+    (bind-key "M-o" #'ace-link-org org-mode-map))
+  (with-eval-after-load 'gnus
+    (bind-keys :map gnus-summary-mode-map
+               ("M-o" . ace-link-gnus)
+               :map gnus-article-mode-map
+               ("M-o" . ace-link-gnus)))
+  (with-eval-after-load 'ert
+    (bind-key "o" #'ace-link-help ert-results-mode-map)))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
