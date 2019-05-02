@@ -34,27 +34,28 @@
 ;; e.g. display “lambda” as “λ”
 (use-package prog-mode
   :ensure nil
-  :hook ((after-init . global-prettify-symbols-mode)
-         (prog-mode . (lambda ()
-                        (setq prettify-symbols-alist
-                              '(("lambda" . ?λ)
-                                ("->" . ?→)
-                                ("->>" . ?↠)
-                                ("=>" . ?⇒)
-                                ("map" . ?↦)
-                                ("/=" . ?≠)
-                                ("!=" . ?≠)
-                                ("==" . ?≡)
-                                ("<=" . ?≤)
-                                (">=" . ?≥)
-                                ("=<<" . (?= (Br . Bl) ?≪))
-                                (">>=" . (?≫ (Br . Bl) ?=))
-                                ("<=<" . ?↢)
-                                (">=>" . ?↣)
-                                ("&&" . ?∧)
-                                ("||" . ?∨)
-                                ("not" . ?¬))))))
-  :init (setq prettify-symbols-unprettify-at-point 'right-edge))
+  :hook (prog-mode . prettify-symbols-mode)
+  :init
+  (setq-default prettify-symbols-alist
+                '(("lambda" . ?λ)
+                  ("<-" . "←")
+                  ("->" . ?→)
+                  ("->>" . ?↠)
+                  ("=>" . ?⇒)
+                  ("map" . ?↦)
+                  ("/=" . ?≠)
+                  ("!=" . ?≠)
+                  ("==" . ?≡)
+                  ("<=" . ?≤)
+                  (">=" . ?≥)
+                  ("=<<" . (?= (Br . Bl) ?≪))
+                  (">>=" . (?≫ (Br . Bl) ?=))
+                  ("<=<" . ?↢)
+                  (">=>" . ?↣)
+                  ("&&" . ?∧)
+                  ("||" . ?∨)
+                  ("not" . ?¬)))
+  (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Compilation Mode
 (use-package compile
