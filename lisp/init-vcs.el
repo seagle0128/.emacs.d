@@ -52,7 +52,11 @@
 (if (executable-find "cc")
     (use-package forge
       :after magit
-      :demand))
+      :demand
+      :init
+      ;; WORKAROUND Fix error "BUG: missing headers nil"
+      ;; @see https://github.com/magit/ghub/issues/81#issuecomment-488660597
+      (advice-add #'gnutls-available-p :override #'ignore)))
 
 ;; Show tasks
 (use-package magit-todos
