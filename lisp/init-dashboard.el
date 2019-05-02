@@ -146,7 +146,7 @@
 
         (insert (cond
                  ((string-equal heading "Recent Files:")
-                  (all-the-icons-octicon "history" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
+                  (all-the-icons-octicon "file-text" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
                  ((string-equal heading "Bookmarks:")
                   (all-the-icons-octicon "bookmark" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
                  ((string-equal heading "Projects:")
@@ -304,10 +304,10 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                          :tag (concat
                                (if (display-graphic-p)
                                    (concat
-                                    (all-the-icons-faicon "cog"
-                                                          :height 1.2
-                                                          :v-adjust -0.1
-                                                          :face 'font-lock-keyword-face)
+                                    (all-the-icons-octicon "tools"
+                                                           :height 1.1
+                                                           :v-adjust 0.0
+                                                           :face 'font-lock-keyword-face)
                                     (propertize " " 'face 'variable-pitch)))
                                (propertize "Settings" 'face 'font-lock-keyword-face))
                          :help-echo "Open custom file"
