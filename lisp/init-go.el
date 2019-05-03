@@ -53,6 +53,10 @@
               ([remap xref-find-definitions] . godef-jump)
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
+  :init
+  (when (executable-find "goimports")
+    (setq gofmt-command "goimports"))
+
   :config
   (use-package go-dlv)
   (use-package go-fill-struct)
@@ -76,7 +80,10 @@
 
   (use-package go-gen-test
     :bind (:map go-mode-map
-                ("C-c C-t" . go-gen-test-dwim))))
+                ("C-c C-t" . go-gen-test-dwim)))
+
+  ;; call gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; Local Golang playground for short snippes
 (use-package go-playground
