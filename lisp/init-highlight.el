@@ -144,7 +144,7 @@
          (dired-mode . diff-hl-dired-mode))
   :config
   ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1)
+  (diff-hl-flydiff-mode -1)
 
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
