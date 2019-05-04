@@ -37,8 +37,8 @@
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
   :commands swiper-isearch
-  :bind (("C-s" . swiper)
-         ("s-f" . swiper-isearch)
+  :bind (("C-s" . swiper-isearch)
+         ("s-f" . swiper)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
