@@ -54,6 +54,9 @@
 
   (add-to-list 'org-export-backends 'md)
 
+  ;; Override `org-switch-to-buffer-other-window' for compatibility with `shackle'
+  (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
+
   ;; More fancy UI
   (use-package org-bullets
     :if (char-displayable-p ?◉)
