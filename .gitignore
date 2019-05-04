@@ -8,6 +8,7 @@
 .cache/
 .cask/
 .dap-*
+.extension/
 .vscode/
 /.agignore
 /.elfeed
