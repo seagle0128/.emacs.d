@@ -119,7 +119,6 @@
           (counsel-grep . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
 
-  ;; For alignment `tab-width' must be 1 in minibuffer
   (defun my-ivy-format-function-arrow (cands)
     "Transform CANDS into a string for minibuffer."
     (ivy--format-function-generic
@@ -127,10 +126,10 @@
        (concat (if (display-graphic-p)
                    (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
                  ">")
-               "\t"
+               (propertize " " 'display `(space :align-to 2))
                (ivy--add-face str 'ivy-current-match)))
      (lambda (str)
-       (concat "\t\t" str))
+       (concat (propertize " " 'display `(space :align-to 2)) str))
      cands
      "\n"))
   (setq ivy-format-function 'my-ivy-format-function-arrow)
