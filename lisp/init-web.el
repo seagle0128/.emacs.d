@@ -115,25 +115,12 @@
   (with-eval-after-load 'skewer-html
     (diminish 'skewer-html-mode)))
 
-;; Format HTML, CSS and JavaScript/JSON by js-beautify
-;; Insta;; npm -g install js-beautify
-(use-package web-beautify
-  :init
-  (with-eval-after-load 'js-mode
-    (bind-key "C-c b" #'web-beautify-js js-mode-map))
-  (with-eval-after-load 'js2-mode
-    (bind-key "C-c b" #'web-beautify-js js2-mode-map))
-  (with-eval-after-load 'json-mode
-    (bind-key "C-c b" #'web-beautify-js json-mode-map))
-  (with-eval-after-load 'web-mode
-    (bind-key "C-c b" #'web-beautify-html web-mode-map))
-  (with-eval-after-load 'sgml-mode
-    (bind-key "C-c b" #'web-beautify-html html-mode-map))
-  (with-eval-after-load 'css-mode
-    (bind-key "C-c b" #'web-beautify-css css-mode-map))
-  :config
-  ;; Set indent size to 2
-  (setq web-beautify-args '("-s" "2" "-f" "-")))
+;; Format HTML, CSS and JavaScript/JSON
+;; Install: npm -g install prettier
+(use-package prettier-js
+  :hook ((js-mode js2-mode json-mode web-mode css-mode sgml-mode html-mode)
+         .
+         prettier-js-mode))
 
 (use-package haml-mode)
 (use-package php-mode)
