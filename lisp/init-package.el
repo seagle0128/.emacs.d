@@ -112,18 +112,17 @@
     (with-eval-after-load 'swiper
       (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 
-;; Extensions
+;; A modern Packages Menu
 (use-package paradox
   :init
   (setq paradox-execute-asynchronously t)
   (setq paradox-github-token t)
   (setq paradox-display-star-count nil)
 
-  (defalias #'upgrade-packages #'paradox-upgrade-packages)
+  (defalias 'upgrade-packages #'paradox-upgrade-packages)
 
   ;; Replace default `list-packages'
-  (defadvice list-packages (before my-list-packages activate)
-    (paradox-enable)))
+  (advice-add #'list-packages :before #'paradox-enable))
 
 (provide 'init-package)
 
