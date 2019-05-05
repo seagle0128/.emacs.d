@@ -305,7 +305,7 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                                (if (display-graphic-p)
                                    (concat
                                     (all-the-icons-octicon "tools"
-                                                           :height 1.1
+                                                           :height 1.0
                                                            :v-adjust 0.0
                                                            :face 'font-lock-keyword-face)
                                     (propertize " " 'face 'variable-pitch)))

@@ -39,7 +39,8 @@
 (setq user-mail-address centaur-mail-address)
 
 ;; Key Modifiers
-(when sys/win32p
+(cond
+ (sys/win32p
   ;; make PC keyboard's Win key or other to type Super or Hyper
   ;; (setq w32-pass-lwindow-to-system nil)
   (setq w32-lwindow-modifier 'super)    ; Left Windows key
@@ -47,6 +48,19 @@
 
   ;; (w32-register-hot-key [s-])
   (w32-register-hot-key [s-t]))
+ ((and sys/macp (eq window-system 'mac))
+  ;; Compatible with Emacs Mac port
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'super)
+
+  (bind-keys ([(super a)] . mark-whole-buffer)
+             ([(super c)] . kill-ring-save)
+             ([(super l)] . goto-line)
+             ([(super q)] . save-buffers-kill-emacs)
+             ([(super s)] . save-buffer)
+             ([(super v)] . yank)
+             ([(super w)] . delete-frame)
+             ([(super z)] . undo))))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
