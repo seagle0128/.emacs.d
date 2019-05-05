@@ -43,9 +43,8 @@
 
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
-    ;; To be correctly aligned, the size of the name field must be equal to that
-    ;; of the icon column below, plus 1 (for the tab I inserted)
-    (define-ibuffer-column icon (:name "   ")
+    ;; For alignment, the size of the name field should be the width of an icon
+    (define-ibuffer-column icon (:name "  ")
       (let ((icon (if (and (buffer-file-name)
                            (all-the-icons-auto-mode-match?))
                       (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name)) :v-adjust -0.05)
@@ -54,14 +53,15 @@
             (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
           icon)))
 
-    (let ((tab-width 1))
-      (setq ibuffer-formats '((mark modified read-only locked
-                                    ;; Here you may adjust by replacing :right with :center or :left
-                                    ;; According to taste, if you want the icon further from the name
-                                    " " (icon 1 -1 :left :elide) "\t" (name 18 18 :left :elide)
-                                    " " (size 9 -1 :right)
-                                    " " (mode 16 16 :left :elide) " " filename-and-process)
-                              (mark " " (name 16 -1) " " filename)))))
+    (setq ibuffer-formats `((mark modified read-only locked
+                                  ;; Here you may adjust by replacing :right with :center or :left
+                                  ;; According to taste, if you want the icon further from the name
+                                  " " (icon 2 2 :left :elide)
+                                  ,(propertize " " 'display `(space :align-to 8))
+                                  (name 18 18 :left :elide)
+                                  " " (size 9 -1 :right)
+                                  " " (mode 16 16 :left :elide) " " filename-and-process)
+                            (mark " " (name 16 -1) " " filename))))
 
   (with-eval-after-load 'counsel
     (defun my-ibuffer-find-file ()
