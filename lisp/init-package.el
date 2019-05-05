@@ -122,7 +122,8 @@
   (defalias 'upgrade-packages #'paradox-upgrade-packages)
 
   ;; Replace default `list-packages'
-  (advice-add #'list-packages :before #'paradox-enable))
+  (defadvice list-packages (before my-list-packages activate)
+    (paradox-enable)))
 
 (provide 'init-package)
 
