@@ -52,11 +52,11 @@
               ([remap xref-find-definitions] . godef-jump)
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
-  :hook (before-save . gofmt-before-save)
   :config
   ;; Format with `goimports' if possible, otherwise using `gofmt'
   (when (executable-find "goimports")
     (setq gofmt-command "goimports"))
+  (add-hook 'before-save-hook #'gofmt-before-save)
 
   (use-package go-dlv)
   (use-package go-fill-struct)
