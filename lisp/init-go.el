@@ -53,11 +53,11 @@
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :hook (before-save . gofmt-before-save)
-  :init
+  :config
   ;; Format with `goimports' if possible, otherwise using `gofmt'
   (when (executable-find "goimports")
     (setq gofmt-command "goimports"))
-  :config
+
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
@@ -71,16 +71,16 @@
                 ("C-c T" . go-tag-remove))
     :config (setq go-tag-args (list "-transform" "camelcase")))
 
+  (use-package go-gen-test
+    :bind (:map go-mode-map
+                ("C-c C-t" . go-gen-test-dwim)))
+
   (use-package gotest
     :bind (:map go-mode-map
                 ("C-c a" . go-test-current-project)
                 ("C-c m" . go-test-current-file)
                 ("C-c ." . go-test-current-test)
-                ("C-c x" . go-run)))
-
-  (use-package go-gen-test
-    :bind (:map go-mode-map
-                ("C-c C-t" . go-gen-test-dwim))))
+                ("C-c x" . go-run))))
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
