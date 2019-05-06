@@ -52,4 +52,4 @@
     '(flycheck-credo-setup))
   )
 
-(provide 'init-python)
+(provide 'init-elixir)
