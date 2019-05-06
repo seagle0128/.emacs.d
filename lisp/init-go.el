@@ -34,7 +34,6 @@
 ;; go get -u github.com/mdempsky/gocode # github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
 ;; go get -u golang.org/x/tools/cmd/goimports
-;; go get -u golang.org/x/tools/cmd/guru
 ;; go get -u golang.org/x/tools/cmd/gorename
 ;; go get -u golang.org/x/tools/cmd/gotype
 ;; go get -u golang.org/x/tools/cmd/godoc
@@ -54,11 +53,11 @@
               ("C-c R" . go-remove-unused-imports)
               ("<f1>" . godoc-at-point))
   :hook (before-save . gofmt-before-save)
-  :config
+  :init
   ;; Format with `goimports' if possible, otherwise using `gofmt'
   (when (executable-find "goimports")
     (setq gofmt-command "goimports"))
-
+  :config
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
@@ -83,7 +82,7 @@
     :bind (:map go-mode-map
                 ("C-c C-t" . go-gen-test-dwim))))
 
-;; Local Golang playground for short snippes
+;; Local Golang playground for short snippets
 (use-package go-playground
   :diminish go-playground-mode
   :commands go-playground-mode)
