@@ -34,7 +34,7 @@
   (require 'init-const))
 
 (use-package org
-  :ensure nil
+  :pin org
   :commands org-try-structure-completion
   :functions hydra-org-template/body
   :bind (("C-c a" . org-agenda)
@@ -202,7 +202,13 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
                 (self-insert-command 1)))
             org-mode-map))
 
-(provide 'init-org)
+(use-package ox-reveal
+  :hook (org-mode . (lambda() (require 'ox-reveal)))
+  :config
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+  (setq org-reveal-mathjax t))
+
+  (provide 'init-org)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-org.el ends here

@@ -57,19 +57,24 @@
           (pcase archives
             ('melpa
              `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
-               ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
+               ,(cons "melpa" (concat proto "://melpa.org/packages/"))
+               ,(cons "org"   (concat proto "://orgmode.org/elpa/"))))
             ('melpa-mirror
              `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
-               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))))
+               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))
+               ,(cons "org"   (concat proto "://orgmode.org/elpa/"))))
             ('emacs-china
              `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
-               ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/"))))
+               ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/"))
+               ,(cons "org"   (concat proto "://orgmode.org/elpa/"))))
             ('netease
              `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
-               ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
+               ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))
+               ,(cons "org"   (concat proto "://orgmode.org/elpa/"))))
             ('tuna
              `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
-               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
+               ,(cons "org"   (concat proto "://orgmode.org/elpa/"))))
             (archives
              (error "Unknown archives: `%s'" archives)))))
 
