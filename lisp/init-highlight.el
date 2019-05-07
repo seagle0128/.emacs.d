@@ -42,15 +42,15 @@
 (use-package symbol-overlay
   :diminish
   :custom-face
-  (symbol-overlay-default-face ((t (:inherit secondary-selection))))
-  (symbol-overlay-face-1 ((t (:inherit highlight))))
-  (symbol-overlay-face-2 ((t (:inherit font-lock-builtin-face :inverse-video t))))
-  (symbol-overlay-face-3 ((t (:inherit warning :inverse-video t))))
-  (symbol-overlay-face-4 ((t (:inherit font-lock-constant-face :inverse-video t))))
-  (symbol-overlay-face-5 ((t (:inherit error :inverse-video t))))
-  (symbol-overlay-face-6 ((t (:inherit font-lock-function-name-face :inverse-video t))))
-  (symbol-overlay-face-7 ((t (:inherit success :inverse-video t))))
-  (symbol-overlay-face-8 ((t (:inherit lazy-highlight))))
+  (symbol-overlay-default-face ((t (:inherit 'region))))
+  (symbol-overlay-face-1 ((t (:inherit 'highlight))))
+  (symbol-overlay-face-2 ((t (:inherit 'font-lock-builtin-face :inverse-video t))))
+  (symbol-overlay-face-3 ((t (:inherit 'warning :inverse-video t))))
+  (symbol-overlay-face-4 ((t (:inherit 'font-lock-constant-face :inverse-video t))))
+  (symbol-overlay-face-5 ((t (:inherit 'error :inverse-video t))))
+  (symbol-overlay-face-6 ((t (:inherit 'dired-mark :inverse-video t :bold nil))))
+  (symbol-overlay-face-7 ((t (:inherit 'success :inverse-video t))))
+  (symbol-overlay-face-8 ((t (:inherit 'dired-symlink :inverse-video t :bold nil))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -140,9 +140,9 @@
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
   :custom-face
-  (diff-hl-change ((t (:inherit highlight))))
-  (diff-hl-delete ((t (:inherit error :inverse-video t))))
-  (diff-hl-insert ((t (:inherit success :inverse-video t))))
+  (diff-hl-change ((t (:inherit 'highlight))))
+  (diff-hl-delete ((t (:inherit 'error :inverse-video t))))
+  (diff-hl-insert ((t (:inherit 'success :inverse-video t))))
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
