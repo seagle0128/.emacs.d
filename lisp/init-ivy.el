@@ -51,6 +51,7 @@
          ([remap dired] . counsel-dired)
          ("C-x C-r" . counsel-recentf)
          ("C-x j" . counsel-mark-ring)
+         ("C-h F" . counsel-describe-face)
 
          ("C-c L" . counsel-load-library)
          ("C-c P" . counsel-package)
