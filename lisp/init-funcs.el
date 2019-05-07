@@ -152,6 +152,11 @@
   (set-buffer-file-coding-system 'utf-8)
   (save-buffer))
 
+(defun save-buffer-gbk-as-utf8 ()
+  "Revert a buffer with GBK and save as UTF-8."
+  (interactive)
+  (save-buffer-as-utf8 'gbk))
+
 ;; Recompile elpa directory
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."
