@@ -41,11 +41,16 @@
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
-  :defines iedit-mode
-  :commands (symbol-overlay-get-symbol
-             symbol-overlay-assoc
-             symbol-overlay-get-list
-             symbol-overlay-jump-call)
+  :custom-face
+  (symbol-overlay-default-face ((t (:inherit secondary-selection))))
+  (symbol-overlay-face-1 ((t (:inherit highlight))))
+  (symbol-overlay-face-2 ((t (:inherit font-lock-builtin-face :inverse-video t))))
+  (symbol-overlay-face-3 ((t (:inherit warning :inverse-video t))))
+  (symbol-overlay-face-4 ((t (:inherit font-lock-constant-face :inverse-video t))))
+  (symbol-overlay-face-5 ((t (:inherit error :inverse-video t))))
+  (symbol-overlay-face-6 ((t (:inherit font-lock-function-name-face :inverse-video t))))
+  (symbol-overlay-face-7 ((t (:inherit success :inverse-video t))))
+  (symbol-overlay-face-8 ((t (:inherit lazy-highlight))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -93,7 +98,7 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :hook (prog-mode . rainbow-mode)
+  :hook ((prog-mode help-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
@@ -135,9 +140,9 @@
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
   :custom-face
-  (diff-hl-change ((t (:background "#46D9FF"))))
-  (diff-hl-delete ((t (:background "#ff6c6b"))))
-  (diff-hl-insert ((t (:background "#98be65"))))
+  (diff-hl-change ((t (:inherit highlight))))
+  (diff-hl-delete ((t (:inherit error :inverse-video t))))
+  (diff-hl-insert ((t (:inherit success :inverse-video t))))
   :bind (:map diff-hl-command-map
               ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
