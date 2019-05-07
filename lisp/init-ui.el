@@ -280,8 +280,10 @@
 (setq line-move-visual nil)
 (setq inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
 
-;; Don't open a file in a new frame
-(when (boundp 'ns-pop-up-frames)
+(when sys/macp
+  ;; Render thinner fonts
+  (setq ns-use-thin-smoothing t)
+  ;; Don't open a file in a new frame
   (setq ns-pop-up-frames nil))
 
 ;; Don't use GTK+ tooltip
