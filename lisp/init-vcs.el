@@ -40,11 +40,6 @@
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch)
          ("C-c M-g" . magit-file-popup))
-  :hook
-  (after-init . (lambda ()
-                  ;; WORKAROUND Fix error "BUG: missing headers nil" by disabling TLS 1.3
-                  ;; @see https://github.com/magit/ghub/issues/81#issuecomment-488660597
-                  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")))
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
