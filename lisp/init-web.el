@@ -55,7 +55,7 @@
 ;; JSON mode
 (use-package json-mode)
 
-;; Improved JavaScript editing mode
+;; JavaScript
 (use-package js2-mode
   :defines flycheck-javascript-eslint-executable
   :mode (("\\.js\\'" . js2-mode)
@@ -83,6 +83,9 @@
     :diminish js2-refactor-mode
     :hook (js2-mode . js2-refactor-mode)
     :config (js2r-add-keybindings-with-prefix "C-c C-m")))
+
+;; Typescript
+(use-package typescript-mode)
 
 ;; Run Mocha or Jasmine tests
 (use-package mocha
