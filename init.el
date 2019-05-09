@@ -122,6 +122,7 @@
 (require 'init-ruby)
 (require 'init-web)
 (require 'init-prog)
+(require 'init-elixir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
