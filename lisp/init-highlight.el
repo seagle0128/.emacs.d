@@ -105,11 +105,10 @@
   (defun my-rainbow-colorize-match (color &optional match)
     (let* ((match (or match 0))
            (ov (make-overlay (match-beginning match) (match-end match))))
-      (overlay-put ov
-                   'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                             "white" "black"))
-                           (:background ,color)))
-      (overlay-put ov 'ovrainbow t)))
+      (overlay-put ov 'ovrainbow t)
+      (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+                                                "white" "black"))
+                              (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
   (defun my-rainbow-clear-overlays ()
