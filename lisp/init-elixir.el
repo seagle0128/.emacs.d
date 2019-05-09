@@ -30,26 +30,24 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
-
-(use-package elixir-mode)
-
-(use-package alchemist
-  :hook ((elixir-mode . alchemist-mode)
-         (elixir-mode . alchemist-phoenix-mode))
+(use-package elixir-mode
   :config
-  (add-hook 'elixir-mode-hook 'alchemist-mode)
-  (add-hook 'elixir-mode-hook 'alchemist-phoenix-mode))
+  (use-package alchemist
+    :hook ((elixir-mode . alchemist-mode)
+           (elixir-mode . alchemist-phoenix-mode))
+    :config
+    (add-hook 'elixir-mode-hook 'alchemist-mode)
+    (add-hook 'elixir-mode-hook 'alchemist-phoenix-mode))
 
-(use-package flycheck-mix
-  :config
-  (flycheck-mix-setup))
+  (use-package flycheck-mix
+    :after flycheck
+    :init (flycheck-mix-setup))
 
-(use-package flycheck-credo
-  :config
-  (eval-after-load 'flycheck
-    '(flycheck-credo-setup))
-  )
+  (use-package flycheck-credo
+    :after flycheck
+    :init (flycheck-credo-setup)))
 
 (provide 'init-elixir)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-elixir.el ends here

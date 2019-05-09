@@ -120,9 +120,9 @@
 (require 'init-go)
 (require 'init-python)
 (require 'init-ruby)
+(require 'init-elixir)
 (require 'init-web)
 (require 'init-prog)
-(require 'init-elixir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
