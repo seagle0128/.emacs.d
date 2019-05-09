@@ -133,7 +133,9 @@
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)
-  :init (setq docker-image-run-arguments '("-i" "-t" "--rm")))
+  :init
+  (setq docker-image-run-arguments '("-i" "-t" "--rm"))
+  (setq docker-container-shell-file-name "/bin/bash"))
 
 ;; Tramp
 (use-package docker-tramp)
