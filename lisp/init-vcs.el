@@ -57,7 +57,7 @@
 
 ;; Show tasks
 (use-package magit-todos
-  :hook (ater-init . magit-todos-mode))
+  :hook (after-init . magit-todos-mode))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
