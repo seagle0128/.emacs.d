@@ -68,6 +68,15 @@
   (use-package diredfl
     :init (diredfl-global-mode 1))
 
+  ;;; Make dired more like ranger
+  (use-package ranger
+    :bind ("C-<f9>" . ranger)
+    :init (setq ranger-override-dired nil
+                ranger-deer-show-details nil
+                ranger-max-preview-size 20
+                ranger-show-literal nil
+                dired-omit-verbose nil))
+
   ;; Shows icons
   (use-package all-the-icons-dired
     :diminish
