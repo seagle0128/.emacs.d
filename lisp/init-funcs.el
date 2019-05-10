@@ -61,6 +61,13 @@
 (if sys/mac-x-p
     (bind-key "s-r" #'revert-this-buffer))
 
+;; Reload configurations
+(defun reload-init-file ()
+  "Reload Emacs configurations."
+  (interactive)
+  (load-file user-init-file))
+(bind-key "C-c C-l" #'reload-init-file)
+
 ;; Browse the homepage
 (defun browse-homepage ()
   "Browse the Github page of Centaur Emacs."
