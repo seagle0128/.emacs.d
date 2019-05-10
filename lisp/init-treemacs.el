@@ -88,42 +88,13 @@
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
+    ;; (treemacs-fringe-indicator-mode t)
     (pcase (cons (not (null (executable-find "git")))
                  (not (null (executable-find "python3"))))
       (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
-       (treemacs-git-mode 'simple)))
-
-    (if (fboundp 'define-fringe-bitmap)
-        (define-fringe-bitmap 'treemacs--fringe-indicator-bitmap
-          (vector #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111
-                  #b00000111111))))
+       (treemacs-git-mode 'simple))))
 
   ;; Projectile integration for treemacs
   (use-package treemacs-projectile
