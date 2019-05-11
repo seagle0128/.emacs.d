@@ -192,7 +192,7 @@
     ;; @see https://github.com/politza/pdf-tools/issues/480
     (when sys/macp
       (setenv "PKG_CONFIG_PATH"
-              "/usr/local/lib/pkgconfig:/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig"))
+              "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
     (pdf-tools-install t nil t t)
 
     ;; Recover last viewed position
