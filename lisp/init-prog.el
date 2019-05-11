@@ -137,6 +137,8 @@ _x_: Go external other window
                        (add-hook 'before-save-hook
                                  #'fish_indent-before-save))))
 
+(use-package lua-mode)
+
 (use-package swift-mode
   :config
   (use-package flycheck-swift
