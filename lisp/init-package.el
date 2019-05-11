@@ -101,6 +101,9 @@
 (use-package diminish)
 (use-package bind-key)
 
+;; Update GPG keyring for GNU ELPA
+(use-package gnu-elpa-keyring-update)
+
 ;; Initialization benchmark
 (when centaur-benchmark
   (use-package benchmark-init
