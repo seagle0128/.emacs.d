@@ -190,6 +190,10 @@
     (all-the-icons-install-fonts t))
   :config
   (add-to-list 'all-the-icons-icon-alist
+               '("\\.lua$" all-the-icons-fileicon "lua" :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(lua-mode all-the-icons-fileicon "lua" :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-icon-alist
                '("\\.go$" all-the-icons-fileicon "go" :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(go-mode all-the-icons-fileicon "go" :face all-the-icons-blue))
