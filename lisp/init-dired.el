@@ -86,7 +86,7 @@
     (defun my-all-the-icons-dired--display ()
       "Display the icons of files without colors in a dired buffer."
 
-      ;; Fix: not display icons after dired commands (e.g insert-subdir, create-directory)
+      ;; Don't display icons after dired commands (e.g insert-subdir, create-directory)
       ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/11
       (all-the-icons-dired--reset)
 
