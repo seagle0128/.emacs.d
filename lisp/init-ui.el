@@ -190,6 +190,8 @@
     (all-the-icons-install-fonts t))
   :config
   (add-to-list 'all-the-icons-icon-alist
+               '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
+  (add-to-list 'all-the-icons-icon-alist
                '("\\.lua$" all-the-icons-fileicon "lua" :face all-the-icons-dblue))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(lua-mode all-the-icons-fileicon "lua" :face all-the-icons-dblue))
