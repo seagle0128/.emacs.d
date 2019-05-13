@@ -69,11 +69,11 @@
     (use-package company-box
       :diminish
       :hook (company-mode . company-box-mode)
-      :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
       :config
-      (setq company-box-backends-colors nil)
-      (setq company-box-show-single-candidate t)
-      (setq company-box-max-candidates 50)
+      (setq company-box-backends-colors nil
+            company-box-show-single-candidate t
+            company-box-max-candidates 50
+            company-box-icons-alist 'company-box-icons-all-the-icons)
 
       ;; Support `company-common'
       (defun my-company-box--make-line (candidate)
