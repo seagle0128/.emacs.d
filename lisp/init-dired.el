@@ -77,6 +77,7 @@
   (use-package ranger
     :bind ("C-<f9>" . ranger)
     :init (setq ranger-override-dired nil
+                ranger-key []
                 ranger-deer-show-details nil
                 ranger-max-preview-size 20
                 ranger-show-literal nil
