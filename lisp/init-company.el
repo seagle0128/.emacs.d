@@ -82,7 +82,7 @@
                 (color (company-box--get-color backend))
                 ((c-color a-color i-color s-color) (company-box--resolve-colors color))
                 (icon-string (and company-box--with-icons-p (company-box--add-icon candidate)))
-                (candidate-string (concat (propertize company-common 'face 'company-tooltip-common)
+                (candidate-string (concat (propertize (or company-common "") 'face 'company-tooltip-common)
                                           (substring (propertize candidate 'face 'company-box-candidate) (length company-common) nil)))
                 (align-string (when annotation
                                 (concat " " (and company-tooltip-align-annotations
