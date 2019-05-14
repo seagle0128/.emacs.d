@@ -57,7 +57,7 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
-        company-idle-delay .2               ; decrease delay before autocompletion popup shows
+        company-idle-delay 0                ; decrease delay before autocompletion popup shows
         company-echo-delay 0                ; remove annoying blinking
         company-minimum-prefix-length 2
         company-require-match nil
@@ -73,6 +73,7 @@
       (setq company-box-backends-colors nil
             company-box-show-single-candidate t
             company-box-max-candidates 50
+            company-box-doc-delay 0.2
             company-box-icons-alist 'company-box-icons-all-the-icons)
 
       ;; Support `company-common'
