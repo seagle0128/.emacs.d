@@ -66,12 +66,6 @@
 
   (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
 
-  ;; Company mode backend for shell functions
-  (use-package company-shell
-    :after company
-    :init (cl-pushnew '(company-shell company-shell-env company-fish-shell)
-                      company-backends))
-
   ;; Bash completion
   (use-package bash-completion
     :init (bash-completion-setup))
