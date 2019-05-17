@@ -27,10 +27,10 @@
     (dolist (font '("SF Mono" "Hack" "Source Code Pro" "Fira Code"
                     "Menlo" "Monaco" "DejaVu Sans Mono" "Consolas"))
       (when (member font (font-family-list))
-        (set-face-attribute 'default nil :font font)
-        (set-face-attribute 'default nil :height (cond (sys/macp 130)
-                                                       (sys/win32p 110)
-                                                       (t 120)))
+        (set-face-attribute 'default nil :font font :height (cond
+                                                             (sys/mac-x-p 130)
+                                                             (sys/win32p 110)
+                                                             (t 100)))
         (throw 'loop t))))
 
   ;; Specify font for all unicode characters
@@ -45,8 +45,7 @@
     (dolist (font '("WenQuanYi Micro Hei" "Microsoft Yahei"))
       (when (member font (font-family-list))
         (set-fontset-font t '(#x4e00 . #x9fff) font)
-        (throw 'loop t))))
-  )
+        (throw 'loop t)))))
 
 ;; Mail
 ;; (setq message-send-mail-function 'smtpmail-send-it
