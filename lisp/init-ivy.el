@@ -96,7 +96,11 @@
          ("C-h" . counsel-up-directory)
 
          :map swiper-map
-         ("M-%" . swiper-query-replace))
+         ("M-s" . swiper-isearch-toggle)
+         ("M-%" . swiper-query-replace)
+
+         :map isearch-mode-map
+         ("M-s" . swiper-isearch-toggle))
   :hook ((after-init . ivy-mode)
          (ivy-mode . counsel-mode))
   :config
