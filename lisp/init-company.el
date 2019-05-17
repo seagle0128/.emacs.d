@@ -64,6 +64,11 @@
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
 
+  ;; Better sorting and filtering
+  (use-package company-prescient
+    :init (company-prescient-mode 1)
+    :config (prescient-persist-mode 1))
+
   ;; Icons and quickhelp
   (when emacs/>=26p
     (use-package company-box

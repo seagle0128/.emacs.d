@@ -113,16 +113,6 @@
   (setq ivy-on-del-error-function nil)
   ;; (setq ivy-format-function 'ivy-format-function-arrow)
   (setq ivy-initial-inputs-alist nil)
-  (setq ivy-re-builders-alist
-        '((swiper . ivy--regex-plus)
-          (swiper-all . ivy--regex-plus)
-          (swiper-isearch . ivy--regex-plus)
-          (counsel-ag . ivy--regex-plus)
-          (counsel-rg . ivy--regex-plus)
-          (counsel-pt . ivy--regex-plus)
-          (counsel-ack . ivy--regex-plus)
-          (counsel-grep . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
 
   (defun my-ivy-format-function-arrow (cands)
     "Transform CANDS into a string for minibuffer."
@@ -232,11 +222,21 @@
   (with-eval-after-load 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
 
-  ;; Enhance fuzzy matching
-  (use-package flx)
-
   ;; Enhance M-x
   (use-package amx)
+
+  ;; Enhance fuzzy matching
+  (use-package flx
+    :config (setq ivy-re-builders-alist
+                  '((swiper . ivy--regex-plus)
+                    (swiper-all . ivy--regex-plus)
+                    (swiper-isearch . ivy--regex-plus)
+                    (counsel-ag . ivy--regex-plus)
+                    (counsel-rg . ivy--regex-plus)
+                    (counsel-pt . ivy--regex-plus)
+                    (counsel-ack . ivy--regex-plus)
+                    (counsel-grep . ivy--regex-plus)
+                    (t . ivy--regex-fuzzy))))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
