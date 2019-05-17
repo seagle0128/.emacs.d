@@ -66,10 +66,6 @@
 
   (add-hook 'comint-output-filter-functions #'comint-strip-ctrl-m)
 
-  ;; Bash completion
-  (use-package bash-completion
-    :init (bash-completion-setup))
-
   ;; ANSI & XTERM 256 color support
   (use-package xterm-color
     :defines compilation-environment
