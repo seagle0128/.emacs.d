@@ -223,7 +223,8 @@
     (setq magit-completing-read-function 'ivy-completing-read))
 
   ;; Enhance M-x
-  (use-package amx)
+  (use-package amx
+    :init (setq amx-history-length 20))
 
   ;; Enhance fuzzy matching
   (use-package flx
