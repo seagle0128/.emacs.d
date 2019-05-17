@@ -32,7 +32,7 @@
 
 (defconst centaur-homepage
   "https://github.com/seagle0128/.emacs.d"
-  "The Github page of Centuar Emacs.")
+  "The Github page of Centaur Emacs.")
 
 (defconst sys/win32p
   (eq system-type 'windows-nt)
