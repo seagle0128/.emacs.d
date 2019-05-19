@@ -109,7 +109,7 @@
                 (insert "\t")
                 (let ((file (dired-get-filename 'verbatim t)))
                   (unless (member file '("." ".."))
-                    (let ((filename (dired-get-filename nil t)))
+                    (let ((filename (file-local-name (dired-get-filename nil t))))
                       (if (file-directory-p filename)
                           (let ((icon
                                  (cond
