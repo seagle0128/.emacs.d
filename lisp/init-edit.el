@@ -325,7 +325,7 @@
     ;; Support LSP
     (use-package lsp-origami
       :hook (origami-mode . (lambda ()
-                              (if lsp-mode
+                              (if (bound-and-true-p lsp-mode)
                                   (lsp-origami-mode))))))
 
   (defhydra hydra-origami (:color blue :hint none)
@@ -349,6 +349,20 @@ _o_: only show current
 (use-package fancy-narrow
   :diminish
   :hook (after-init . fancy-narrow-mode))
+
+;; Edit text for browsers with GhostText or AtomicChrome extension
+(use-package atomic-chrome
+  :hook ((emacs-startup . atomic-chrome-start-server)
+         (atomic-chrome-edit-mode . delete-other-windows))
+  :init (setq atomic-chrome-buffer-open-style 'frame)
+  :config
+  (if (fboundp 'gfm-mode)
+      (setq atomic-chrome-url-major-mode-alist
+            '(("github\\.com" . gfm-mode)))))
+
+;; Open files as another user
+(unless sys/win32p
+  (use-package sudo-edit))
 
 (provide 'init-edit)
 

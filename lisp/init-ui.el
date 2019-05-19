@@ -56,6 +56,25 @@
   (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
   (and (fboundp 'set-scroll-bar-mode) (set-scroll-bar-mode nil)))
 
+;; Mode-line
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (unless after-init-time
+    ;; prevent flash of unstyled modeline at startup
+    (setq-default mode-line-format nil))
+  (setq doom-modeline-major-mode-color-icon t
+        doom-modeline-minor-modes nil
+        doom-modeline-mu4e nil
+        doom-modeline-github t))
+
+(use-package hide-mode-line
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           neotree-mode
+           treemacs-mode)
+          . hide-mode-line-mode)))
+
 ;; Theme
 (defvar after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -73,7 +92,7 @@
     ('dark 'doom-Iosvkem)
     ('light 'doom-one-light)
     ('daylight 'doom-tomorrow-day)
-    (_ theme)))
+    (_ (or theme 'doom-one))))
 
 (defun is-doom-theme-p (theme)
   "Check whether the THEME is a doom theme. THEME is a symbol."
@@ -153,25 +172,6 @@
   (progn
     (ignore-errors
       (centaur-load-theme centaur-theme))))
-
-;; Mode-line
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-major-mode-color-icon t)
-  (setq doom-modeline-github t))
-
-(defun mode-line-height ()
-  "Get current height of mode-line."
-  (- (elt (window-pixel-edges) 3)
-     (elt (window-inside-pixel-edges) 3)))
-
-(use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
-           neotree-mode
-           treemacs-mode)
-          . hide-mode-line-mode)))
 
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows

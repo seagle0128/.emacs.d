@@ -74,11 +74,9 @@
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
-    :hook (prog-mode . (lambda ()
-                         ;; WORKAROUND:Fix the issue of not displaying plots
-                         ;; @see https://github.com/DarthFennec/highlight-indent-guides/issues/55
-                         (unless (eq major-mode 'ein:notebook-multilang-mode)
-                           (highlight-indent-guides-mode 1))))
+    :hook ((prog-mode . highlight-indent-guides-mode)
+           ;; WORKAROUND:Fix the issue of not displaying plots
+           (ein:notebook-multilang-mode . (lambda () (highlight-indent-guides-mode -1))))
     :config
     (setq highlight-indent-guides-method 'character)
     (setq highlight-indent-guides-responsive 'top)

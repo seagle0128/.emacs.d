@@ -116,20 +116,6 @@
                  ("c p" . counsel-pt)
                  ("c f" . counsel-fzf)))))
 
-;; Edit text for browsers with GhostText or AtomicChrome extension
-(use-package atomic-chrome
-  :hook ((emacs-startup . atomic-chrome-start-server)
-         (atomic-chrome-edit-mode . delete-other-windows))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
-  :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
-
-;; Open files as another user
-(unless sys/win32p
-  (use-package sudo-edit))
-
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)

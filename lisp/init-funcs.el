@@ -61,6 +61,12 @@
 (if sys/mac-x-p
     (bind-key "s-r" #'revert-this-buffer))
 
+;; Mode line
+(defun mode-line-height ()
+  "Get the height of the mode-line."
+  (- (elt (window-pixel-edges) 3)
+     (elt (window-inside-pixel-edges) 3)))
+
 ;; Reload configurations
 (defun reload-init-file ()
   "Reload Emacs configurations."
@@ -102,19 +108,20 @@
 
 (declare-function upgrade-packages 'init-package)
 (defalias 'centaur-update-packages 'upgrade-packages)
-(defun update-centaur()
+
+(defun update-config-and-packages()
   "Update confgiurations and packages."
   (interactive)
   (update-config)
   (upgrade-packages nil))
-(defalias 'centaur-update 'update-centaur)
+(defalias 'centaur-update 'update-config-and-packages)
 
 (defun update-all()
-  "Update dotfiles, org files, Emacs confgiurations and packages, ."
+  "Update dotfiles, org files, Emacs confgiurations and packages to the latest versions ."
   (interactive)
-  (update-centaur)
   (update-org)
-  (update-dotfiles))
+  (update-dotfiles)
+  (update-config-and-packages))
 (defalias 'centaur-update-all 'update-all)
 
 (defun update-dotfiles ()
