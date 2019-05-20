@@ -198,6 +198,7 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
           ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
           ("*lsp-help*" :size 0.3 :align 'below :autoclose t)
+          ("*lsp session*" :size 0.4 :align 'below :autoclose t)
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
 
