@@ -35,7 +35,7 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :defines (projectile-completion-system magit-completing-read-function)
+  :defines (projectile-completion-system magit-completing-read-function recentf-list)
   :commands swiper-isearch
   :bind (("C-s" . swiper-isearch)
          ("s-f" . swiper)
@@ -140,6 +140,20 @@
                     "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
+
+  ;; Build abbreviated recent file list.
+  (defun my-counsel-recentf ()
+    "Find a file on `recentf-list'."
+    (interactive)
+    (require 'recentf)
+    (recentf-mode)
+    (ivy-read "Recentf: " (mapcar #'abbreviate-file-name recentf-list)
+              :action (lambda (f)
+                        (with-ivy-window
+                          (find-file f)))
+              :require-match t
+              :caller 'counsel-recentf))
+  (advice-add #'counsel-recentf :override #'my-counsel-recentf)
 
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
