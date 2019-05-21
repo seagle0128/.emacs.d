@@ -60,6 +60,7 @@
               (setq gc-cons-threshold 20000000))
 
             (defun my-minibuffer-exit-hook ()
+              (garbage-collect)
               (setq gc-cons-threshold 800000))
 
             (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
