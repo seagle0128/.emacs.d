@@ -190,6 +190,7 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
           ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
           ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
           ("*Calendar*" :select t :size 0.3 :align 'below)
+          ("\\*ivy-occur .*\\*" :regexp t :size 0.4 :select t :align 'below)
           (" *undo-tree*" :select t)
           ("*Paradox Report*" :size 0.3 :align 'below :autoclose t)
           ("*quickrun*" :select t :size 15 :align 'below)
@@ -204,7 +205,6 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)
-          (ivy-occur-grep-mode :select t :align 'below)
           (pt-mode :select t :align 'below)
           (rg-mode :select t :align 'below)
 
