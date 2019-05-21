@@ -177,17 +177,8 @@
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
   :if (display-graphic-p)
-  :custom-face
-  ;; Reset colors since they are too dark in `doom-themes'
-  (all-the-icons-silver ((((background dark)) :foreground "#716E68")
-                         (((background light)) :foreground "#716E68")))
-  (all-the-icons-lsilver ((((background dark)) :foreground "#B9B6AA")
-                          (((background light)) :foreground "#7F7869")))
-  (all-the-icons-dsilver ((((background dark)) :foreground "#838484")
-                          (((background light)) :foreground "#838484")))
-  :init
-  (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
-    (all-the-icons-install-fonts t))
+  :init (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
+          (all-the-icons-install-fonts t))
   :config
   (add-to-list 'all-the-icons-icon-alist
                '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
