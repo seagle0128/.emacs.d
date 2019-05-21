@@ -197,9 +197,19 @@
   (add-to-list 'all-the-icons-icon-alist
                '("NEWS$" all-the-icons-faicon "newspaper-o" :height 0.9 :v-adjust -0.2))
   (add-to-list 'all-the-icons-icon-alist
-               '("Cask\\'" all-the-icons-fileicon "elisp" :height 1.0 :face all-the-icons-blue))
+               '("\\.el$" all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-purple))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(cask-mode all-the-icons-fileicon "elisp" :height 1.0 :face all-the-icons-blue))
+               '(emacs-lisp-mode all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-purple))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(inferior-emacs-lisp-mode  all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-lblue))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(fundamental-mode all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-dsilver))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(special-mode all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-icon-alist
+               '("Cask\\'" all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(cask-mode all-the-icons-fileicon "elisp" :height 0.9 :v-adjust -0.1 :face all-the-icons-blue))
   (add-to-list 'all-the-icons-icon-alist
                '(".*\\.ipynb\\'" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
