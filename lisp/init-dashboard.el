@@ -61,11 +61,13 @@
                               (setq-local tab-width 1)))
     :init (dashboard-setup-startup-hook)
     :config
-    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing")
-    (setq dashboard-startup-banner (or centaur-logo 'official))
-    (setq dashboard-center-content t)
-    (setq dashboard-show-shortcuts nil)
-    (setq dashboard-items '((recents  . 10)
+    (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
+          dashboard-startup-banner (or centaur-logo 'official)
+          dashboard-center-content t
+          dashboard-set-heading-icons nil
+          dashboard-set-file-icons t
+          dashboard-show-shortcuts nil
+          dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5)))
 
@@ -137,8 +139,8 @@
       (interactive)
       (funcall (local-key-binding "m")))
 
-    ;; Add heading icons
-    (defun dashboard-insert-heading-icon (heading &optional _shortcut)
+    ;; Section heading
+    (defun my-dashboard-insert-heading (heading &optional _shortcut)
       (when (display-graphic-p)
         ;; Load `all-the-icons' if it's unavailable
         (unless (featurep 'all-the-icons)
@@ -149,122 +151,31 @@
                   (all-the-icons-octicon "file-text" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
                  ((string-equal heading "Bookmarks:")
                   (all-the-icons-octicon "bookmark" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
+                 ((string-equal heading "Agenda for today:")
+                  (all-the-icons-octicon "calendar" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
+                 ((string-equal heading "Registers:")
+                  (all-the-icons-octicon "database" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
                  ((string-equal heading "Projects:")
                   (all-the-icons-octicon "file-directory" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))))
         (insert " ")))
-    (advice-add #'dashboard-insert-heading :before #'dashboard-insert-heading-icon)
-
-    ;; Add file icons
-    ;; MUST redefine the sections because of the macro `dashboard-insert-section-list'
-    (defmacro dashboard-insert-section-list (section-name list action &rest rest)
-      "Insert into SECTION-NAME a LIST of items, expanding ACTION and passing REST to widget creation."
-      `(when (car ,list)
-         (mapc (lambda (el)
-                 (let ((widget nil))
-                   (insert "\n    ")
-                   (when (display-graphic-p)
-                     (insert (when-let ((path (car (last (split-string ,@rest " - ")))))
-                               (if (file-directory-p path)
-                                   (cond
-                                    ((and (fboundp 'tramp-tramp-file-p)
-                                          (tramp-tramp-file-p default-directory))
-                                     (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust 0.01))
-                                    ((file-symlink-p path)
-                                     (all-the-icons-octicon "file-symlink-directory" :height 1.0 :v-adjust 0.01))
-                                    ((all-the-icons-dir-is-submodule path)
-                                     (all-the-icons-octicon "file-submodule" :height 1.0 :v-adjust 0.01))
-                                    ((file-exists-p (format "%s/.git" path))
-                                     (all-the-icons-octicon "repo" :height 1.1 :v-adjust 0.01))
-                                    (t (let ((matcher (all-the-icons-match-to-alist path all-the-icons-dir-icon-alist)))
-                                         (apply (car matcher) (list (cadr matcher) :v-adjust 0.01)))))
-                                 (all-the-icons-icon-for-file (file-name-nondirectory path)))))
-                     (insert "\t"))
-                   (setq widget
-                         (widget-create 'push-button
-                                        :action ,action
-                                        :mouse-face 'highlight
-                                        :button-prefix ""
-                                        :button-suffix ""
-                                        :format "%[%t%]"
-                                        ,@rest))))
-               ,list)))
-
-    (defmacro dashboard-insert-shortcut (shortcut-char
-                                         search-label
-                                         &optional no-next-line)
-      "Insert a shortcut SHORTCUT-CHAR for a given SEARCH-LABEL.
-Optionally, provide NO-NEXT-LINE to move the cursor forward a line."
-      `(progn
-         (eval-when-compile (defvar dashboard-mode-map))
-         (let ((sym (make-symbol (format "Jump to \"%s\"" ,search-label))))
-           (fset sym (lambda ()
-                       (interactive)
-                       (unless (search-forward ,search-label (point-max) t)
-                         (search-backward ,search-label (point-min) t))
-                       ,@(unless no-next-line
-                           '((forward-line 1)))
-                       (back-to-indentation)
-                       (if (display-graphic-p) (widget-forward 1))))
-           (eval-after-load 'dashboard
-             (define-key dashboard-mode-map ,shortcut-char sym)))))
-
-    ;; Recentf
-    (defun dashboard-insert-recents (list-size)
-      "Add the list of LIST-SIZE items from recently edited files."
-      (recentf-mode)
-      (dashboard-insert-section
-       "Recent Files:"
-       recentf-list
-       list-size
-       "r"
-       `(lambda (&rest ignore) (find-file-existing ,el))
-       (abbreviate-file-name el)))
-
-    ;; Bookmarks
-    (defun dashboard-insert-bookmarks (list-size)
-      "Add the list of LIST-SIZE items of bookmarks."
-      (require 'bookmark)
-      (dashboard-insert-section
-       "Bookmarks:"
-       (dashboard-subseq (bookmark-all-names)
-                         0 list-size)
-       list-size
-       "m"
-       `(lambda (&rest ignore) (bookmark-jump ,el))
-       (let ((file (bookmark-get-filename el)))
-         (if file
-             (format "%s - %s" el (abbreviate-file-name file))
-           el))))
-
-    ;; Projectile
-    (defun dashboard-insert-projects (list-size)
-      "Add the list of LIST-SIZE items of projects."
-      (require 'projectile)
-      (projectile-load-known-projects)
-      (dashboard-insert-section
-       "Projects:"
-       (dashboard-subseq (projectile-relevant-known-projects)
-                         0 list-size)
-       list-size
-       "p"
-       `(lambda (&rest ignore) (projectile-switch-project-by-name ,el))
-       (abbreviate-file-name el)))
+    (advice-add #'dashboard-insert-heading :before #'my-dashboard-insert-heading)
 
     (defun dashboard-center-line (&optional real-width)
       "When point is at the end of a line, center it.
-REAL-WIDTH: the real width of the line.  If the line contains an image, the size
-            of that image will be considered to be 1 by the calculation method
-            used in this function.  As a consequence, the caller must calculate
-            himself the correct length of the line taking into account the
-            images he inserted in it."
+    REAL-WIDTH: the real width of the line.  If the line contains an image, the size
+                of that image will be considered to be 1 by the calculation method
+                used in this function.  As a consequence, the caller must calculate
+                himself the correct length of the line taking into account the
+                images he inserted in it."
       (let* ((width (or real-width (current-column)))
              (margin (max 0 (floor (/ (- dashboard-banner-length width) 2)))))
         (beginning-of-line)
         (insert (make-string margin ?\s))
         (end-of-line)))
 
-    (defun dashboard-insert-buttons ()
-      "Insert buttions after the banner."
+    ;; Navigator
+    (defun dashboard-insert-navigator ()
+      "Insert navigator buttions below the banner."
       (interactive)
       (with-current-buffer (get-buffer dashboard-buffer-name)
         (let ((inhibit-read-only t))
@@ -340,15 +251,10 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                                                          :face 'font-lock-string-face)
                                  (propertize "?" 'face 'font-lock-string-face))))
           (dashboard-center-line)
-          (insert "\n\n")
+          (insert "\n"))))
+    (add-hook 'dashboard-mode-hook #'dashboard-insert-navigator)
 
-          (insert (concat
-                   (propertize (format "%d packages loaded in %s"
-                                       (length package-activated-list) (emacs-init-time))
-                               'face 'font-lock-comment-face)))
-          (dashboard-center-line))))
-    (add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
-
+    ;; Footer
     (defun dashboard-insert-footer ()
       "Insert footer of dashboard."
       (interactive)
@@ -356,7 +262,7 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
         (let ((inhibit-read-only t))
           (goto-char (point-max))
 
-          (insert "\n\n")
+          (insert "\n")
           (insert (if (display-graphic-p)
                       (all-the-icons-faicon "heart"
                                             :height 1.1
@@ -367,8 +273,7 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
           (insert (propertize
                    (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
                    'face font-lock-doc-face))
-          (dashboard-center-line)
-          (insert "\n"))))
+          (dashboard-center-line))))
     (add-hook 'dashboard-mode-hook #'dashboard-insert-footer)
 
     (defhydra hydra-dashboard (:color red :hint none)
