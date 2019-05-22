@@ -226,7 +226,7 @@
                '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-blue)))
 
 ;; Line and Column
-(setq-default fill-column 80)
+(setq-default fill-column 100)
 (setq column-number-mode t)
 (setq line-number-mode t)
 
