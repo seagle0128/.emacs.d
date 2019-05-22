@@ -143,7 +143,10 @@ _x_: Go external other window
 ;; Rust
 (use-package rust-mode
   :init (setq rust-format-on-save t)
-  :config (use-package cargo))
+  :config (use-package cargo
+            :diminish cargo-minor-mode
+            :hook (rust-mode . cargo-minor-mode)))
+
 (use-package rust-playground)
 
 ;; Dart
