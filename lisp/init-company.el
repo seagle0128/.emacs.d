@@ -78,7 +78,7 @@
       (setq company-box-backends-colors nil
             company-box-show-single-candidate t
             company-box-max-candidates 50
-            company-box-doc-delay 0.8
+            company-box-doc-delay 0.5
             company-box-icons-alist 'company-box-icons-all-the-icons)
 
       ;; Support `company-common'
@@ -159,7 +159,7 @@
       :bind (:map company-active-map
                   ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
       :hook (global-company-mode . company-quickhelp-mode)
-      :init (setq company-quickhelp-delay 0.8))))
+      :init (setq company-quickhelp-delay 0.5))))
 
 (provide 'init-company)
 
