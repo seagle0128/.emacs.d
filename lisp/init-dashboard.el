@@ -56,15 +56,13 @@
            ("S" . open-custom-file)
            ("U" . update-config-and-packages)
            ("q" . quit-dashboard))
-    :hook (dashboard-mode . (lambda ()
-                              (setq-local frame-title-format "")
-                              (setq-local tab-width 1)))
+    :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
     :init (dashboard-setup-startup-hook)
     :config
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
           dashboard-center-content t
-          dashboard-set-heading-icons nil
+          dashboard-set-heading-icons t
           dashboard-set-file-icons t
           dashboard-show-shortcuts nil
           dashboard-items '((recents  . 10)
@@ -139,27 +137,6 @@
       (interactive)
       (funcall (local-key-binding "m")))
 
-    ;; Section heading
-    (defun my-dashboard-insert-heading (heading &optional _shortcut)
-      (when (display-graphic-p)
-        ;; Load `all-the-icons' if it's unavailable
-        (unless (featurep 'all-the-icons)
-          (require 'all-the-icons nil t))
-
-        (insert (cond
-                 ((string-equal heading "Recent Files:")
-                  (all-the-icons-octicon "file-text" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
-                 ((string-equal heading "Bookmarks:")
-                  (all-the-icons-octicon "bookmark" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
-                 ((string-equal heading "Agenda for today:")
-                  (all-the-icons-octicon "calendar" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
-                 ((string-equal heading "Registers:")
-                  (all-the-icons-octicon "database" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
-                 ((string-equal heading "Projects:")
-                  (all-the-icons-octicon "file-directory" :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))))
-        (insert " ")))
-    (advice-add #'dashboard-insert-heading :before #'my-dashboard-insert-heading)
-
     (defun dashboard-center-line (&optional real-width)
       "When point is at the end of a line, center it.
     REAL-WIDTH: the real width of the line.  If the line contains an image, the size
@@ -195,12 +172,18 @@
                                (propertize "Homepage" 'face 'font-lock-keyword-face))
                          :help-echo "Browse homepage"
                          :mouse-face 'highlight
+                         :button-prefix (propertize "[" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :button-suffix (propertize "]" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :format "%[%t%]"
                          centaur-homepage)
           (insert " ")
           (widget-create 'push-button
                          :help-echo "Restore previous session"
                          :action (lambda (&rest _) (restore-session))
                          :mouse-face 'highlight
+                         :button-prefix (propertize "[" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :button-suffix (propertize "]" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :format "%[%t%]"
                          :tag (concat
                                (if (display-graphic-p)
                                    (concat
@@ -223,12 +206,18 @@
                                (propertize "Settings" 'face 'font-lock-keyword-face))
                          :help-echo "Open custom file"
                          :mouse-face 'highlight
+                         :button-prefix (propertize "[" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :button-suffix (propertize "]" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :format "%[%t%]"
                          custom-file)
           (insert " ")
           (widget-create 'push-button
                          :help-echo "Update Centaur Emacs"
                          :action (lambda (&rest _) (centaur-update))
                          :mouse-face 'highlight
+                         :button-prefix (propertize "[" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :button-suffix (propertize "]" 'face '(:inherit (font-lock-keyword-face bold)))
+                         :format "%[%t%]"
                          :tag (concat
                                (if (display-graphic-p)
                                    (concat
@@ -243,6 +232,9 @@
                          :help-echo "Help (?/h)"
                          :action (lambda (&rest _) (hydra-dashboard/body))
                          :mouse-face 'highlight
+                         :button-prefix (propertize "[" 'face '(:inherit (font-lock-string-face bold)))
+                         :button-suffix (propertize "]" 'face '(:inherit (font-lock-string-face bold)))
+                         :format "%[%t%]"
                          :tag (concat
                                (if (display-graphic-p)
                                    (all-the-icons-faicon "question"
