@@ -48,6 +48,12 @@
     :hook ((ruby-mode . inf-ruby-minor-mode)
            (compilation-filter . inf-ruby-auto-enter)))
 
+  ;; Rails
+  (use-package projectile-rails
+    :after projectile
+    :diminish projectile-rails-mode
+    :hook (projectile-mode . projectile-rails-global-mode))
+
   ;; Rubocop
   ;; Install: gem install rubocop
   (use-package rubocop
