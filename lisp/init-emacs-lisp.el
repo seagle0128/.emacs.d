@@ -93,13 +93,11 @@
       (error "Only for help-mode"))
     (let ((orig-point (point)))
       (save-excursion
-        (when-let*
+        (when-let
             ((hook (progn (goto-char (point-min)) (symbol-at-point)))
              (func (when (and
-                          (or (re-search-forward
-                               (format "[%s|Its|global] value is[\s|\n]" hook) nil t)
-                              (re-search-forward
-                               (format "^Value:[\s|\n]") nil t))
+                          (or (re-search-forward (format "^Value:[\s|\n]") nil t)
+                              (goto-char orig-point))
                           (sexp-at-point))
                      (end-of-sexp)
                      (backward-char 1)
@@ -134,7 +132,6 @@
 
 ;; A better *Help* buffer
 (use-package helpful
-  :defines ivy-initial-inputs-alist
   :bind (("C-c C-d" . helpful-at-point)))
 
 (provide 'init-emacs-lisp)
