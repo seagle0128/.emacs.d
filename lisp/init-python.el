@@ -59,10 +59,6 @@
     :diminish yapf-mode
     :hook (python-mode . yapf-mode)))
 
-;; Emacs IPython Notebook
-(use-package ein
-  :diminish ein:notebook-mode)
-
 (provide 'init-python)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
