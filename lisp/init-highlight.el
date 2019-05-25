@@ -33,10 +33,25 @@
 (eval-when-compile
   (require 'init-const))
 
+;; Visualize TAB, (HARD) SPACE, NEWLINE
+(setq-default show-trailing-whitespace nil)
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook (lambda ()
+                   (setq show-trailing-whitespace t)
+                   (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))))
+
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
   :hook (after-init . global-hl-line-mode))
+
+;; Highlight matching parens
+(use-package paren
+  :ensure nil
+  :hook (after-init . show-paren-mode)
+  :config
+  (setq show-paren-when-point-inside-paren t)
+  (setq show-paren-when-point-in-periphery t))
 
 ;; Highlight symbols
 (use-package symbol-overlay
@@ -62,19 +77,18 @@
          (iedit-mode . (lambda () (symbol-overlay-mode -1)))
          (iedit-mode-end . symbol-overlay-mode)))
 
-;; Highlight matching parens
-(use-package paren
-  :ensure nil
-  :hook (after-init . show-paren-mode)
-  :config
-  (setq show-paren-when-point-inside-paren t)
-  (setq show-paren-when-point-in-periphery t))
-
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
-    :hook (prog-mode . highlight-indent-guides-mode)
+    ;; :hook (prog-mode . highlight-indent-guides-mode)
+    :init
+    (defun toggle-highlight-indent ()
+      "Highlight indention in buffers or not."
+      (interactive)
+      (highlight-indent-guides-mode
+       (or (and highlight-indent-guides-mode -1) 1)))
+    (defalias #'centaur-toggle-highlight-indent #'toggle-highlight-indent)
     :config
     (setq highlight-indent-guides-method 'character)
     (setq highlight-indent-guides-responsive 'top)
@@ -100,7 +114,13 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :hook ((prog-mode help-mode) . rainbow-mode)
+  :hook ((css-mode js-mode js2-mode html-mode web-mode) . rainbow-mode)
+  :init
+  (defun toggle-rainbow ()
+    "Colorize color names in buffers or not."
+    (interactive)
+    (rainbow-mode (or (and rainbow-mode -1) 1)))
+  (defalias #'centaur-toggle-rainbow #'toggle-rainbow)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
@@ -178,37 +198,6 @@
   :hook (after-init . volatile-highlights-mode))
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
-(use-package whitespace
-  :ensure nil
-  :diminish
-  :hook ((prog-mode outline-mode conf-mode) . whitespace-mode)
-  :config
-  (setq whitespace-line-column fill-column) ;; limit line length
-  ;; automatically clean up bad whitespace
-  (setq whitespace-action '(auto-cleanup))
-  ;; only show bad whitespace
-  (setq whitespace-style '(face
-                           trailing space-before-tab
-                           indentation empty space-after-tab))
-
-  (with-eval-after-load 'popup
-    ;; advice for whitespace-mode conflict with popup
-    (defvar my-prev-whitespace-mode nil)
-    (make-local-variable 'my-prev-whitespace-mode)
-
-    (defadvice popup-draw (before my-turn-off-whitespace activate compile)
-      "Turn off whitespace mode before showing autocomplete box."
-      (if whitespace-mode
-          (progn
-            (setq my-prev-whitespace-mode t)
-            (whitespace-mode -1))
-        (setq my-prev-whitespace-mode nil)))
-
-    (defadvice popup-delete (after my-restore-whitespace activate compile)
-      "Restore previous whitespace mode when deleting autocomplete box."
-      (if my-prev-whitespace-mode
-          (whitespace-mode 1)))))
-
 ;; Pulse current line
 (use-package pulse
   :ensure nil

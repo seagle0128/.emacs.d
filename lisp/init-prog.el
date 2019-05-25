@@ -136,9 +136,7 @@ _x_: Go external other window
 
 ;; Fish shell
 (use-package fish-mode
-  :hook (fish-mode . (lambda ()
-                       (add-hook 'before-save-hook
-                                 #'fish_indent-before-save))))
+  :hook (before-save . fish_indent-before-save))
 
 ;; Rust
 (use-package rust-mode
