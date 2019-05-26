@@ -147,6 +147,9 @@
   (dolist (mode '(asm-mode web-mode html-mode css-mode robot-mode go-mode))
     (push mode aggressive-indent-excluded-modes))
 
+  ;; Disable in some commands
+  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
+
   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
   (add-to-list
    'aggressive-indent-dont-indent-if
@@ -345,6 +348,10 @@ _o_: only show current
     ("r" origami-redo)
     ("R" origami-reset)))
 
+;; Open files as another user
+(unless sys/win32p
+  (use-package sudo-edit))
+
 ;; Narrow/Widen
 (use-package fancy-narrow
   :diminish
@@ -359,10 +366,6 @@ _o_: only show current
   (if (fboundp 'gfm-mode)
       (setq atomic-chrome-url-major-mode-alist
             '(("github\\.com" . gfm-mode)))))
-
-;; Open files as another user
-(unless sys/win32p
-  (use-package sudo-edit))
 
 (provide 'init-edit)
 
