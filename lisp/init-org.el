@@ -37,6 +37,8 @@
   :ensure nil
   :commands org-try-structure-completion
   :functions hydra-org-template/body
+  :custom-face
+  (org-ellipsis ((t (:foreground nil))))
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb))
   :hook (org-indent-mode . (lambda() (diminish 'org-indent-mode)))
@@ -56,9 +58,20 @@
   (add-to-list 'org-export-backends 'md)
 
   ;; Override `org-switch-to-buffer-other-window' for compatibility with `shackle'
-  (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
+  (with-eval-after-load 'shackle
+    (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window))
 
-  ;; More fancy UI
+  ;; Prettify UI
+  (add-hook 'org-mode-hook
+            (lambda ()
+              "Beautify Org Checkbox Symbol"
+              (push '("[ ]" . "☐") prettify-symbols-alist)
+              (push '("[X]" . "☑") prettify-symbols-alist)
+              (push '("[-]" . "❍") prettify-symbols-alist)
+              (push '("#+BEGIN_SRC" . "λ") prettify-symbols-alist)
+              (push '("#+END_SRC" . "λ") prettify-symbols-alist)
+              (prettify-symbols-mode)))
+
   (use-package org-bullets
     :if (char-displayable-p ?◉)
     :hook (org-mode . org-bullets-mode))

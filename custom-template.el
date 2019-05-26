@@ -35,7 +35,7 @@
 
   ;; Specify font for all unicode characters
   (catch 'loop
-    (dolist (font '("Apple Color Emoji" "Symbola"))
+    (dolist (font '("Symbola" "Apple Color Emoji"))
       (when (member font (font-family-list))
         (set-fontset-font t 'unicode font nil 'prepend)
         (throw 'loop t))))

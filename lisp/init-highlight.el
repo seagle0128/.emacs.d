@@ -35,7 +35,7 @@
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
 (setq-default show-trailing-whitespace nil)
-(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+(dolist (hook '(prog-mode-hook outline-mode-hook conf-mode-hook))
   (add-hook hook (lambda ()
                    (setq show-trailing-whitespace t)
                    (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))))
