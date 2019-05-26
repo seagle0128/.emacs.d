@@ -375,7 +375,7 @@
   (defun ivy-rich-file-icon (candidate)
     "Display file icons in `ivy-rich'."
     (when (display-graphic-p)
-      (let* ((path (concat ivy--directory candidate))
+      (let* ((path (file-local-name (concat ivy--directory candidate)))
              (file (file-name-nondirectory path))
              (icon (cond
                     ((file-directory-p path)
@@ -421,7 +421,7 @@
 
   (when (display-graphic-p)
     (defun ivy-rich-bookmark-type-plus (candidate)
-      (let ((filename (ivy-rich-bookmark-filename candidate)))
+      (let ((filename (file-local-name (ivy-rich-bookmark-filename candidate))))
         (cond ((null filename)
                (all-the-icons-material "block" :v-adjust -0.2 :face 'warning))  ; fixed #38
               ((file-remote-p filename)
