@@ -1,0 +1,51 @@
+version: 2.0
+
+# Default actions to perform on each Emacs version
+default: &default-steps
+  steps:
+    - checkout
+    - run: apt-get update && apt-get install -y git
+    - run: |
+        ${EMACS:=emacs} --version
+        echo "Attempting startup..."
+        ${EMACS:=emacs} -nw --batch --eval '(let ((debug-on-error (>=  emacs-major-version 26)) \
+        (url-show-status nil) \
+        (user-emacs-directory default-directory) \
+        (early-init-file (expand-file-name "early-init.el")) \
+        (user-init-file (expand-file-name "init.el")) \
+        (load-path (delq default-directory load-path))) \
+        (when (>= emacs-major-version 27) (load-file early-init-file)) \
+        (load-file user-init-file) \
+        (when (>= emacs-major-version 26) \
+        (run-hooks (quote after-init-hook)) \
+        (run-hooks (quote emacs-startup-hook))))'
+        echo "Startup successful"
+
+# Enumerated list of Emacs versions
+jobs:
+  test-emacs-25:
+    docker:
+      - image: silex/emacs:25.3
+        entrypoint: bash
+    <<: *default-steps
+
+  test-emacs-26:
+    docker:
+      - image: silex/emacs:26.2
+        entrypoint: bash
+    <<: *default-steps
+
+  test-emacs-master:
+    docker:
+      - image: silex/emacs:master
+        entrypoint: bash
+    <<: *default-steps
+
+# Executing in parallel
+workflows:
+  version: 2
+  ci-test-matrix:
+    jobs:
+      - test-emacs-25
+      - test-emacs-26
+      - test-emacs-master
