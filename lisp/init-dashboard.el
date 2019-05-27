@@ -65,6 +65,11 @@
           dashboard-set-heading-icons t
           dashboard-set-file-icons t
           dashboard-show-shortcuts nil
+          dashboard-heading-icons '((recents   . "file-text")
+                                    (bookmarks . "bookmark")
+                                    (agenda    . "calendar")
+                                    (projects  . "file-directory")
+                                    (registers . "database"))
           dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5)))
