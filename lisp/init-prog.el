@@ -157,12 +157,6 @@ _x_: Go external other window
     (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
     (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
 
-;; Robot
-(use-package robot-mode
-  :ensure nil
-  :commands robot-mode
-  :mode "\\.robot\\'")
-
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
