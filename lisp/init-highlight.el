@@ -144,7 +144,6 @@
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
-  :custom-face (hl-todo ((t (:box t :inherit))))
   :bind (:map hl-todo-mode-map
               ([C-f3] . hl-todo-occur)
               ("C-c t p" . hl-todo-previous)
@@ -155,7 +154,15 @@
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
     (cl-pushnew `(,keyword . ,(face-foreground 'error)) hl-todo-keyword-faces))
   (dolist (keyword '("WORKAROUND" "HACK" "TRICK"))
-    (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces)))
+    (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces))
+
+  ;; Set `hl-todo' faces
+  ;; Don't use `:custom-face' since it needs `hl-todo' face itself to evaluate
+  (custom-set-faces `(hl-todo ((t (:background
+                                   ,(if (fboundp 'doom-blend)
+                                        (doom-blend (face-foreground 'hl-todo)
+                                                    (face-background 'default)
+                                                    0.2))))))))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl
