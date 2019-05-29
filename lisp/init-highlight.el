@@ -75,7 +75,8 @@
          ([M-f3] . symbol-overlay-remove-all))
   :hook ((prog-mode . symbol-overlay-mode)
          (iedit-mode . (lambda () (symbol-overlay-mode -1)))
-         (iedit-mode-end . symbol-overlay-mode)))
+         (iedit-mode-end . symbol-overlay-mode))
+  :init (setq symbol-overlay-idle-time 0.01))
 
 ;; Highlight indentions
 (when (display-graphic-p)
