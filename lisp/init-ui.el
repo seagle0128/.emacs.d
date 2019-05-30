@@ -38,8 +38,8 @@
 (setq fancy-splash-image centaur-logo)
 
 ;; Title
-(setq frame-title-format '("Centaur Emacs - %b"))
-(setq icon-title-format frame-title-format)
+(setq frame-title-format '("Centaur Emacs - %b")
+      icon-title-format frame-title-format)
 
 (when sys/mac-x-p
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
@@ -69,11 +69,7 @@
         doom-modeline-github t))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
-           neotree-mode
-           treemacs-mode)
-          . hide-mode-line-mode)))
+  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
 
 ;; Theme
 (defvar after-load-theme-hook nil
@@ -170,8 +166,7 @@
         (advice-add #'persp-load-state-from-file
                     :after #'solaire-mode-restore-persp-mode-buffers)))
   (progn
-    (ignore-errors
-      (centaur-load-theme centaur-theme))))
+    (ignore-errors (centaur-load-theme centaur-theme))))
 
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
@@ -270,19 +265,25 @@
   :unless (display-graphic-p)
   :hook (after-init . display-time-mode)
   :init
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t))
+  (setq display-time-24hr-format t
+        display-time-day-and-date t))
 
 ;; Suppress GUI features
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-echo-area-message t)
+(setq use-file-dialog nil
+      use-dialog-box nil
+      inhibit-startup-screen t
+      inhibit-startup-echo-area-message t)
+
+;; Display dividers between windows
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(add-hook 'window-setup-hook #'window-divider-mode)
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
-(size-indication-mode 1)
+(add-hook 'window-setup-hook #'size-indication-mode)
 ;; (blink-cursor-mode -1)
 (setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
 (setq line-move-visual nil)
