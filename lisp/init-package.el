@@ -101,15 +101,6 @@
 (use-package diminish)
 (use-package bind-key)
 
-;; FIXME: make `custom-face' evaluating elisp.
-;; @see https://github.com/jwiegley/use-package/pull/773
-(defun my-use-package-handler/:custom-face (name _keyword args rest state)
-  "Generate use-package custom-face keyword code."
-  (use-package-concat
-   (mapcar #'(lambda (def) `(custom-set-faces (backquote ,def))) args)
-   (use-package-process-keywords name rest state)))
-(advice-add #'use-package-handler/:custom-face :override #'my-use-package-handler/:custom-face)
-
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 
