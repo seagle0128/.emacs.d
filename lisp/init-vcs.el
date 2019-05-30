@@ -53,8 +53,9 @@
       (use-package forge :demand)))
 
 ;; Show TODOs in magit
-(use-package magit-todos
-  :hook (emacs-startup . magit-todos-mode))
+(when emacs/>=25.2p
+  (use-package magit-todos
+    :hook (emacs-startup . magit-todos-mode)))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine

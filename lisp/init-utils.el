@@ -182,10 +182,11 @@
     (pdf-tools-install t nil t t)
 
     ;; Recover last viewed position
-    (use-package pdf-view-restore
-      :hook (pdf-view-mode . pdf-view-restore-mode)
-      :init (setq pdf-view-restore-filename
-                  (locate-user-emacs-file ".pdf-view-restore")))))
+    (when emacs/>=26p
+      (use-package pdf-view-restore
+        :hook (pdf-view-mode . pdf-view-restore-mode)
+        :init (setq pdf-view-restore-filename
+                    (locate-user-emacs-file ".pdf-view-restore"))))))
 
 ;; Epub reader
 (use-package nov

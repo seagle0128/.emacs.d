@@ -84,9 +84,10 @@
      :init (setq company-lsp-cache-candidates 'auto))
 
    ;; `lsp-mode' and `treemacs' integration.
-   (use-package lsp-treemacs
-     :bind (:map lsp-mode-map
-                 ("M-9" . lsp-treemacs-errors-list)))
+   (when emacs/>=25.2p
+     (use-package lsp-treemacs
+       :bind (:map lsp-mode-map
+                   ("M-9" . lsp-treemacs-errors-list))))
 
    ;; C/C++/Objective-C support
    (use-package ccls
