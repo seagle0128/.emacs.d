@@ -29,6 +29,7 @@ script:
     (user-init-file (expand-file-name "init.el"))
     (load-path (delq default-directory load-path)))
     (when (>= emacs-major-version 27) (load-file early-init-file))
+    (setq centaur-lsp nil)
     (load-file user-init-file)
     (when (>= emacs-major-version 26)
     (run-hooks (quote after-init-hook))
