@@ -81,6 +81,19 @@
    (use-package company-lsp
      :init (setq company-lsp-cache-candidates 'auto))
 
+   ;; Debug
+   (use-package dap-mode
+     :after lsp-mode
+     :diminish
+     :hook ((after-init . dap-mode)
+            (dap-mode . dap-ui-mode)
+
+            (python-mode . (lambda () (require 'dap-python)))
+            (go-mode . (lambda () (require 'dap-go)))
+            (java-mode . (lambda () (require 'dap-java)))
+            ((c-mode c++-mode objc-mode swift) . (lambda () (require 'dap-lldb)))
+            (php-mode . (lambda () (require 'dap-php)))))
+
    ;; `lsp-mode' and `treemacs' integration.
    (when emacs/>=25.2p
      (use-package lsp-treemacs

@@ -128,7 +128,6 @@
 (require 'init-flycheck)
 (require 'init-projectile)
 (require 'init-lsp)
-(require 'init-dap)
 
 (require 'init-emacs-lisp)
 (require 'init-c)
