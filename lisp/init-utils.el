@@ -170,10 +170,10 @@
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
                 ("C-s" . isearch-forward))
+    :init
+    (setq pdf-view-midnight-colors '("#ededed" . "#21242b")
+          pdf-annot-activate-created-annotations t)
     :config
-    (setq pdf-view-midnight-colors '("#ededed" . "#21242b"))
-    (setq pdf-annot-activate-created-annotations t)
-
     ;; WORKAROUND: Fix compilation errors on macOS.
     ;; @see https://github.com/politza/pdf-tools/issues/480
     (when sys/macp
