@@ -60,16 +60,14 @@
    (use-package lsp-ui
      :custom-face
      (lsp-ui-doc-background ((t (:background nil))))
-     (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
      :bind (:map lsp-ui-mode-map
                  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
                  ("C-c u" . lsp-ui-imenu))
-     :init (setq lsp-ui-doc-enable t
-                 lsp-ui-doc-header t
+     :init (setq lsp-ui-doc-use-webkit (featurep 'xwidget-internal)
+                 lsp-ui-doc-enable (not lsp-ui-doc-use-webkit)
                  lsp-ui-doc-include-signature t
-                 lsp-ui-doc-position 'top
-                 lsp-ui-doc-use-webkit t
+                 lsp-ui-doc-position 'at-point
                  lsp-ui-doc-border (face-foreground 'default)
 
                  lsp-ui-sideline-enable nil
