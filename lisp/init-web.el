@@ -80,7 +80,7 @@
         (setq flycheck-javascript-eslint-executable "eslint_d")))
 
   (use-package js2-refactor
-    :diminish js2-refactor-mode
+    :diminish
     :hook (js2-mode . js2-refactor-mode)
     :config (js2r-add-keybindings-with-prefix "C-c C-m")))
 
@@ -105,8 +105,8 @@
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
-  :diminish skewer-mode
-  :hook ((js2-mode . skewer-mode)
+  :diminish
+  :hook (((js-mode js2-mode). skewer-mode)
          (css-mode . skewer-css-mode)
          (web-mode . skewer-html-mode)
          (html-mode . skewer-html-mode))
