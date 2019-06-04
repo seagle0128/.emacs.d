@@ -254,9 +254,8 @@
   :ensure nil
   :unless (display-graphic-p)
   :hook (after-init . display-time-mode)
-  :init
-  (setq display-time-24hr-format t
-        display-time-day-and-date t))
+  :init (setq display-time-24hr-format t
+              display-time-day-and-date t))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
@@ -291,7 +290,7 @@
 
 ;; Fullscreen
 ;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
-(when sys/mac-x-p
+(when (and sys/mac-x-p emacs/>=26p)
   (setq ns-use-native-fullscreen nil))
 (bind-keys ("C-<f11>" . toggle-frame-fullscreen)
            ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS

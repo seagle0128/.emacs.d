@@ -241,6 +241,13 @@
                  pager-page-down pager-page-up
                  symbol-overlay-basic-jump))
     (advice-add cmd :after #'my-pulse-momentary-line))
+  (with-no-warnings
+    (if (boundp 'after-focus-change-function)
+        (add-function :after after-focus-change-function
+                      (lambda ()
+                        (when (frame-focus-state)
+                          (my-pulse-momentary-line))))
+      (add-hook 'focus-in-hook #'my-pulse-momentary-line t)))
   (dolist (cmd '(pop-to-mark-command
                  pop-global-mark
                  goto-last-change))
