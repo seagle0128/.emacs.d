@@ -63,13 +63,22 @@
           dashboard-startup-banner (or centaur-logo 'official)
           dashboard-center-content t
           dashboard-show-shortcuts nil
-          dashboard-set-file-icons t
+          dashboard-items '((recents  . 10)
+                            (bookmarks . 5)
+                            (projects . 5))
+
+          dashboard-set-init-info t
+          dashboard-init-info (format "%d packages loaded in %s"
+                                      (length package-activated-list) (emacs-init-time))
+
           dashboard-set-heading-icons t
+          dashboard-set-file-icons t
           dashboard-heading-icons '((recents   . "file-text")
                                     (bookmarks . "bookmark")
                                     (agenda    . "calendar")
                                     (projects  . "file-directory")
                                     (registers . "database"))
+
           dashboard-set-footer t
           dashboard-footer (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
           dashboard-footer-icon (cond ((display-graphic-p)
@@ -78,10 +87,57 @@
                                                              :v-adjust -0.05
                                                              :face 'error))
                                       ((char-displayable-p ?🧡) "🧡 ")
-                                      (t ">"))
-          dashboard-items '((recents  . 10)
-                            (bookmarks . 5)
-                            (projects . 5)))
+                                      (t (propertize ">" 'face 'font-lock-doc-face)))
+
+          dashboard-set-navigator t
+          dashboard-navigator-buttons
+          `((;; icon
+             ,(and (display-graphic-p)
+                   (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
+             ;; title
+             "Homepage"
+             ;; help
+             "Browse homepage"
+             ;; action
+             (lambda (&rest _) (browse-url centaur-homepage)))
+            (;; icon
+             ,(and (display-graphic-p)
+                   (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
+             ;; title
+             "Restore"
+             ;; help
+             "Restore previous session"
+             ;; action
+             (lambda (&rest _) (restore-session)))
+            (;; icon
+             ,(and (display-graphic-p)
+                   (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
+             ;; title
+             "Settings"
+             ;; help
+             "Open custom file"
+             ;; action
+             (lambda (&rest _) (find-file custom-file)))
+            (;; icon
+             ,(and (display-graphic-p)
+                   (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
+             ;; title
+             "Update"
+             ;; help
+             "Update Centaur Emacs"
+             ;; action
+             (lambda (&rest _) (centaur-update)))
+            (;; icon
+             ,(and (display-graphic-p)
+                   (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1))
+             ;; title
+             ,(unless (display-graphic-p) "?")
+             ;; help
+             "Help (?/h)"
+             ;; action
+             (lambda (&rest _) (hydra-dashboard/body))
+             ;; face
+             'font-lock-string-face)))
 
     (defun my-banner-path (&rest _)
       "Return the full path to banner."
@@ -150,117 +206,6 @@
       "Go to bookmarks."
       (interactive)
       (funcall (local-key-binding "m")))
-
-    (defun dashboard-center-line-1 (&optional real-width)
-      "When point is at the end of a line, center it.
-    REAL-WIDTH: the real width of the line.  If the line contains an image, the size
-                of that image will be considered to be 1 by the calculation method
-                used in this function.  As a consequence, the caller must calculate
-                himself the correct length of the line taking into account the
-                images he inserted in it."
-      (let* ((width (or real-width (current-column)))
-             (margin (max 0 (floor (/ (- dashboard-banner-length width) 2)))))
-        (beginning-of-line)
-        (insert (make-string margin ?\s))
-        (end-of-line)))
-
-    ;; Navigator
-    (defun dashboard-insert-navigator ()
-      "Insert navigator buttions below the banner."
-      (interactive)
-      (with-current-buffer (get-buffer dashboard-buffer-name)
-        (let ((inhibit-read-only t)
-              (prefix (propertize "[" 'face '(:inherit (font-lock-keyword-face bold))))
-              (suffix (propertize "]" 'face '(:inherit (font-lock-keyword-face bold)))))
-          (goto-char (point-min))
-          (search-forward dashboard-banner-logo-title nil t)
-
-          (insert "\n\n\n")
-          (widget-create 'url-link
-                         :tag (concat
-                               (if (display-graphic-p)
-                                   (concat
-                                    (all-the-icons-octicon "mark-github"
-                                                           :height 1.1
-                                                           :v-adjust 0.0
-                                                           :face 'font-lock-keyword-face)
-                                    (propertize " " 'face 'variable-pitch)))
-                               (propertize "Homepage" 'face 'font-lock-keyword-face))
-                         :help-echo "Browse homepage"
-                         :mouse-face 'highlight
-                         :button-prefix prefix
-                         :button-suffix suffix
-                         :format "%[%t%]"
-                         centaur-homepage)
-          (insert " ")
-          (widget-create 'push-button
-                         :tag (concat
-                               (if (display-graphic-p)
-                                   (concat
-                                    (all-the-icons-material "restore"
-                                                            :height 1.35
-                                                            :v-adjust -0.24
-                                                            :face 'font-lock-keyword-face)
-                                    (propertize " " 'face 'variable-pitch)))
-                               (propertize "Session" 'face 'font-lock-keyword-face))
-                         :help-echo "Restore previous session"
-                         :action (lambda (&rest _) (restore-session))
-                         :mouse-face 'highlight
-                         :button-prefix prefix
-                         :button-suffix suffix
-                         :format "%[%t%]")
-          (insert " ")
-          (widget-create 'file-link
-                         :tag (concat
-                               (if (display-graphic-p)
-                                   (concat
-                                    (all-the-icons-octicon "tools"
-                                                           :height 1.0
-                                                           :v-adjust 0.0
-                                                           :face 'font-lock-keyword-face)
-                                    (propertize " " 'face 'variable-pitch)))
-                               (propertize "Settings" 'face 'font-lock-keyword-face))
-                         :help-echo "Open custom file"
-                         :mouse-face 'highlight
-                         :button-prefix prefix
-                         :button-suffix suffix
-                         :format "%[%t%]"
-                         custom-file)
-          (insert " ")
-          (widget-create 'push-button
-                         :tag (concat
-                               (if (display-graphic-p)
-                                   (concat
-                                    (all-the-icons-material "update"
-                                                            :height 1.35
-                                                            :v-adjust -0.24
-                                                            :face 'font-lock-keyword-face)
-                                    (propertize " " 'face 'variable-pitch)))
-                               (propertize "Update" 'face 'font-lock-keyword-face))
-                         :help-echo "Update Centaur Emacs"
-                         :action (lambda (&rest _) (centaur-update))
-                         :mouse-face 'highlight
-                         :button-prefix prefix
-                         :button-suffix suffix
-                         :format "%[%t%]")
-          (insert " ")
-          (widget-create 'push-button
-                         :tag (concat
-                               (if (display-graphic-p)
-                                   (all-the-icons-faicon "question"
-                                                         :height 1.2
-                                                         :v-adjust -0.1
-                                                         :face 'font-lock-string-face)
-                                 (propertize "?" 'face 'font-lock-string-face)))
-                         :help-echo "Help (?/h)"
-                         :action (lambda (&rest _) (hydra-dashboard/body))
-                         :mouse-face 'highlight
-                         :button-prefix prefix
-                         :button-suffix suffix
-                         :format "%[%t%]")
-          (dashboard-center-line-1)
-          (insert "\n"))))
-    (add-hook 'dashboard-mode-hook #'dashboard-insert-navigator)
 
     (defhydra hydra-dashboard (:color red :hint none)
       "
