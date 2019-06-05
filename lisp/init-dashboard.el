@@ -38,7 +38,7 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
-    :defines (persp-save-dir persp-special-last-buffer)
+    :defines persp-special-last-buffer
     :functions (all-the-icons-faicon
                 all-the-icons-material
                 open-custom-file

@@ -45,7 +45,7 @@
   (setq persp-nil-name "default")
   (setq persp-set-last-persp-for-new-frames nil)
   (setq persp-kill-foreign-buffer-behaviour 'kill)
-  (when centaur-dashboard (setq persp-auto-resume-time 0))
+  (setq persp-auto-resume-time (if centaur-dashboard 0 1.0))
   (setq persp-common-buffer-filter-functions
         (list #'(lambda (b)
                   "Ignore temporary buffers."
