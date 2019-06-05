@@ -41,10 +41,9 @@
 
 ;; Faster to disable these here (before they've been initialized)
 (unless (and (display-graphic-p) (eq system-type 'darwin))
-  (setq menu-bar-mode nil))
-(setq tool-bar-mode nil)
-(setq scroll-bar-mode nil)
-(modify-all-frames-parameters '((vertical-scroll-bars)))
+  (push '(menu-bar-lines . 0) default-frame-alist))
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here

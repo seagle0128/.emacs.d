@@ -52,9 +52,10 @@
 
 ;; Menu/Tool/Scroll bars
 (unless emacs/>=27p        ; Move to early init-file in 27
-  (unless sys/mac-x-p (menu-bar-mode -1))
-  (and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
-  (and (fboundp 'set-scroll-bar-mode) (set-scroll-bar-mode nil)))
+  (unless sys/mac-x-p
+    (push '(menu-bar-lines . 0) default-frame-alist))
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist))
 
 ;; Mode-line
 (use-package doom-modeline
