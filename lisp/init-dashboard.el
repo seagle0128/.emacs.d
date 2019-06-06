@@ -137,7 +137,7 @@
              ;; action
              (lambda (&rest _) (hydra-dashboard/body))
              ;; face
-             'font-lock-string-face)))
+             font-lock-string-face)))
 
     (defun my-banner-path (&rest _)
       "Return the full path to banner."
