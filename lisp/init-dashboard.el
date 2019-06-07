@@ -68,11 +68,8 @@
                             (projects . 5))
 
           dashboard-set-init-info t
-          dashboard-init-info (format "%d packages loaded in %s"
-                                      (length package-activated-list) (emacs-init-time))
-
-          dashboard-set-heading-icons t
           dashboard-set-file-icons t
+          dashboard-set-heading-icons t
           dashboard-heading-icons '((recents   . "file-text")
                                     (bookmarks . "bookmark")
                                     (agenda    . "calendar")
@@ -91,53 +88,28 @@
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
-          `((;; icon
-             ,(and (display-graphic-p)
-                   (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
-             ;; title
-             "Homepage"
-             ;; help
-             "Browse homepage"
-             ;; action
-             (lambda (&rest _) (browse-url centaur-homepage)))
-            (;; icon
-             ,(and (display-graphic-p)
-                   (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
-             ;; title
-             "Restore"
-             ;; help
-             "Restore previous session"
-             ;; action
-             (lambda (&rest _) (restore-session)))
-            (;; icon
-             ,(and (display-graphic-p)
-                   (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
-             ;; title
-             "Settings"
-             ;; help
-             "Open custom file"
-             ;; action
-             (lambda (&rest _) (find-file custom-file)))
-            (;; icon
-             ,(and (display-graphic-p)
-                   (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
-             ;; title
-             "Update"
-             ;; help
-             "Update Centaur Emacs"
-             ;; action
-             (lambda (&rest _) (centaur-update)))
-            (;; icon
-             ,(and (display-graphic-p)
-                   (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1))
-             ;; title
-             ,(unless (display-graphic-p) "?")
-             ;; help
-             "Help (?/h)"
-             ;; action
-             (lambda (&rest _) (hydra-dashboard/body))
-             ;; face
-             font-lock-string-face)))
+          `(((,(when (display-graphic-p)
+                 (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
+              "Homepage" "Browse homepage"
+              (lambda (&rest _) (browse-url centaur-homepage)))
+             (,(when (display-graphic-p)
+                 (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
+              "Restore" "Restore previous session"
+              (lambda (&rest _) (restore-session)))
+             (,(when (display-graphic-p)
+                 (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
+              "Settings" "Open custom file"
+              (lambda (&rest _) (find-file custom-file)))
+             (,(when (display-graphic-p)
+                 (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
+              "Update" "Update Centaur Emacs"
+              (lambda (&rest _) (centaur-update)))
+             (,(if (display-graphic-p)
+                   (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1)
+                 "?")
+              "" "Help (?/h)"
+              (lambda (&rest _) (hydra-dashboard/body))
+              font-lock-string-face))))
 
     (defun my-banner-path (&rest _)
       "Return the full path to banner."
