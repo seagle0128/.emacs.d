@@ -57,7 +57,7 @@
             ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
             ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
             (defun my-minibuffer-setup-hook ()
-              (setq gc-cons-threshold 20000000))
+              (setq gc-cons-threshold 40000000))
 
             (defun my-minibuffer-exit-hook ()
               (garbage-collect)
