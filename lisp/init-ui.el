@@ -61,13 +61,15 @@
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :init
+  ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
-    ;; prevent flash of unstyled modeline at startup
     (setq-default mode-line-format nil))
+
   (setq doom-modeline-major-mode-color-icon t
         doom-modeline-minor-modes nil
         doom-modeline-mu4e nil
-        doom-modeline-github t))
+        doom-modeline-github t
+        doom-modeline-github-interval 300))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
