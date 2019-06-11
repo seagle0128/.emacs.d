@@ -43,7 +43,7 @@
   ;; Disable complilation on save
   (setq scss-compile-at-save nil))
 
-;; New `less-cs-mde' in Emacs 26
+;; New `less-css-mde' in Emacs 26
 (unless (fboundp 'less-css-mode)
   (use-package less-css-mode))
 
@@ -84,6 +84,20 @@
     :hook (js2-mode . js2-refactor-mode)
     :config (js2r-add-keybindings-with-prefix "C-c C-m")))
 
+;; Live browser JavaScript, CSS, and HTML interaction
+(use-package skewer-mode
+  :diminish
+  :hook (((js-mode js2-mode). skewer-mode)
+         (css-mode . skewer-css-mode)
+         (web-mode . skewer-html-mode)
+         (html-mode . skewer-html-mode))
+  :init
+  ;; diminish
+  (with-eval-after-load 'skewer-css
+    (diminish 'skewer-css-mode))
+  (with-eval-after-load 'skewer-html
+    (diminish 'skewer-html-mode)))
+
 ;; Typescript
 (use-package typescript-mode)
 
@@ -102,20 +116,6 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
-
-;; Live browser JavaScript, CSS, and HTML interaction
-(use-package skewer-mode
-  :diminish
-  :hook (((js-mode js2-mode). skewer-mode)
-         (css-mode . skewer-css-mode)
-         (web-mode . skewer-html-mode)
-         (html-mode . skewer-html-mode))
-  :init
-  ;; diminish
-  (with-eval-after-load 'skewer-css
-    (diminish 'skewer-css-mode))
-  (with-eval-after-load 'skewer-html
-    (diminish 'skewer-html-mode)))
 
 ;; Format HTML, CSS and JavaScript/JSON
 ;; Install: npm -g install prettier
