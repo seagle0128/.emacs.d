@@ -100,6 +100,9 @@
        :bind (:map lsp-mode-map
                    ("M-9" . lsp-treemacs-errors-list))))
 
+   ;; Microsoft python-language-server support
+   (use-package lsp-python-ms :demand)
+
    ;; C/C++/Objective-C support
    (use-package ccls
      :defines projectile-project-root-files-top-down-recurring
