@@ -36,7 +36,6 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function recentf-list)
-  :commands swiper-isearch
   :bind (("C-s" . swiper-isearch)
          ("s-f" . swiper)
          ("C-S-s" . swiper-all)
@@ -64,6 +63,7 @@
          ("C-c r" . counsel-rg)
          ("C-c z" . counsel-fzf)
 
+         ("C-c c F" . counsel-faces)
          ("C-c c L" . counsel-load-library)
          ("C-c c P" . counsel-package)
          ("C-c c a" . counsel-apropos)
@@ -87,7 +87,7 @@
          ;; Find counsel commands quickly
          ("<f6>" . (lambda ()
                      (interactive)
-                     (counsel-M-x "^counsel ")))
+                     (counsel-M-x "^counsel-")))
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
@@ -106,18 +106,20 @@
   :init
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
-  (setq ivy-use-selectable-prompt t)
-  (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
-  (setq ivy-height 10)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-on-del-error-function nil)
-  (setq ivy-initial-inputs-alist nil)
-  ;; (setq ivy-format-functions-alist '((t . ivy-format-function-arrow)))
+  (setq ivy-use-selectable-prompt t
+        ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
+        ivy-height 10
+        ivy-count-format "(%d/%d) "
+        ivy-on-del-error-function nil
+        ivy-initial-inputs-alist nil)
 
   (setq swiper-action-recenter t)
-  (setq counsel-find-file-at-point t)
-  (setq counsel-yank-pop-separator "\n────────\n")
+
+  (setq counsel-find-file-at-point t
+        counsel-yank-pop-separator "\n────────\n")
   :config
+  (add-to-list 'ivy-format-functions-alist '(counsel-describe-face . counsel--faces-format-function))
+
   ;; Use faster search tools: ripgrep or the silver search
   (let ((cmd (cond ((executable-find "rg")
                     "rg -S --no-heading --line-number --color never '%s' %s")
@@ -397,15 +399,30 @@
     (when (display-graphic-p)
       (all-the-icons-faicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue)))
 
-  (defun ivy-rich-face-icon (_candidate)
-    "Display face icons in `ivy-rich'."
+  (defun ivy-rich-symbol-icon (_candidate)
+    "Display symbol icons in `ivy-rich'."
     (when (display-graphic-p)
-      (all-the-icons-material "palette" :height 1.0 :v-adjust -0.2)))
+      (all-the-icons-octicon "gear" :height 0.9 :v-adjust -0.05)))
+
+  (defun ivy-rich-theme-icon (_candidate)
+    "Display theme icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "palette" :height 1.0 :v-adjust -0.2 :face 'all-the-icons-lblue)))
 
   (defun ivy-rich-keybinding-icon (_candidate)
     "Display keybindings icons in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-material "keyboard" :height 1.0 :v-adjust -0.2)))
+
+  (defun ivy-rich-library-icon (_candidate)
+    "Display library icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "view_module" :height 1.0 :v-adjust -0.2 :face 'all-the-icons-lblue)))
+
+  (defun ivy-rich-package-icon (_candidate)
+    "Display package icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "archive" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-silver)))
 
   (when (display-graphic-p)
     (defun ivy-rich-bookmark-type-plus (candidate)
@@ -511,9 +528,14 @@
             (counsel-describe-variable-transformer (:width 50))
             (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
            :delimiter "\t")
-          counsel-describe-face
+          counsel-apropos
           (:columns
-           ((ivy-rich-face-icon)
+           ((ivy-rich-symbol-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-info-lookup-symbol
+          (:columns
+           ((ivy-rich-symbol-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           counsel-descbinds
@@ -541,6 +563,11 @@
            ((ivy-rich-file-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
+          counsel-fzf
+          (:columns
+           ((ivy-rich-file-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
           counsel-git
           (:columns
            ((ivy-rich-file-icon)
@@ -557,6 +584,26 @@
            ((ivy-rich-bookmark-type)
             (ivy-rich-bookmark-name (:width 40))
             (ivy-rich-bookmark-info))
+           :delimiter "\t")
+          counsel-package
+          (:columns
+           ((ivy-rich-package-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-find-library
+          (:columns
+           ((ivy-rich-library-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-load-library
+          (:columns
+           ((ivy-rich-library-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-load-theme
+          (:columns
+           ((ivy-rich-theme-icon)
+            (ivy-rich-candidate))
            :delimiter "\t")
           counsel-projectile-switch-project
           (:columns
