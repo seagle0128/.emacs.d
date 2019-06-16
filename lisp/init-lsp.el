@@ -101,7 +101,13 @@
                    ("M-9" . lsp-treemacs-errors-list))))
 
    ;; Microsoft python-language-server support
-   (use-package lsp-python-ms :demand)
+   (use-package lsp-python-ms
+     :hook (python-mode . (lambda ()
+                            (when (or (executable-find "Microsoft.Python.LanguageServer")
+                                      (executable-find "Microsoft.Python.LanguageServer.LanguageServer")
+                                      (executable-find "Microsoft.Python.LanguageServer.exe"))
+                              (require 'lsp-python-ms)
+                              (lsp)))))
 
    ;; C/C++/Objective-C support
    (use-package ccls
