@@ -103,7 +103,7 @@
          ("M-s" . swiper-isearch-toggle))
   :hook ((after-init . ivy-mode)
          (ivy-mode . counsel-mode))
-  :config
+  :init
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
   (setq ivy-use-selectable-prompt t)
@@ -111,28 +111,13 @@
   (setq ivy-height 10)
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
-  ;; (setq ivy-format-function 'ivy-format-function-arrow)
   (setq ivy-initial-inputs-alist nil)
-
-  (defun my-ivy-format-function-arrow (cands)
-    "Transform CANDS into a string for minibuffer."
-    (ivy--format-function-generic
-     (lambda (str)
-       (concat (if (display-graphic-p)
-                   (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
-                 ">")
-               (propertize " " 'display `(space :align-to 2))
-               (ivy--add-face str 'ivy-current-match)))
-     (lambda (str)
-       (concat (propertize " " 'display `(space :align-to 2)) str))
-     cands
-     "\n"))
-  (setq ivy-format-function 'my-ivy-format-function-arrow)
+  ;; (setq ivy-format-functions-alist '((t . ivy-format-function-arrow)))
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
-  (setq counsel-yank-pop-separator "\n-------\n")
-
+  (setq counsel-yank-pop-separator "\n────────\n")
+  :config
   ;; Use faster search tools: ripgrep or the silver search
   (let ((cmd (cond ((executable-find "rg")
                     "rg -S --no-heading --line-number --color never '%s' %s")
