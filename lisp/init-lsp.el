@@ -65,7 +65,7 @@
                  ([remap xref-find-references] . lsp-ui-peek-find-references)
                  ("C-c u" . lsp-ui-imenu))
      :init (setq lsp-ui-doc-enable t
-                 lsp-ui-doc-use-webkit t
+                 lsp-ui-doc-use-webkit nil
                  lsp-ui-doc-include-signature t
                  lsp-ui-doc-position 'top
                  lsp-ui-doc-border (face-foreground 'default)
