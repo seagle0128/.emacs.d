@@ -37,16 +37,23 @@
   :ensure nil
   :commands org-try-structure-completion
   :functions hydra-org-template/body
-  :custom-face
-  (org-ellipsis ((t (:foreground nil))))
+  :custom-face (org-ellipsis ((t (:foreground nil))))
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb))
-  :hook (org-indent-mode . (lambda()
-                             (diminish 'org-indent-mode)
-                             ;; WORKAROUND: Prevent text moving around while using brackets
-                             ;; @see https://github.com/seagle0128/.emacs.d/issues/88
-                             (make-variable-buffer-local 'show-paren-mode)
-                             (setq show-paren-mode nil)))
+  :hook ((org-mode . (lambda ()
+                       "Beautify Org Checkbox Symbol"
+                       (push '("[ ]" . "☐") prettify-symbols-alist)
+                       (push '("[X]" . "☑") prettify-symbols-alist)
+                       (push '("[-]" . "❍") prettify-symbols-alist)
+                       (push '("#+BEGIN_SRC" . "λ") prettify-symbols-alist)
+                       (push '("#+END_SRC" . "λ") prettify-symbols-alist)
+                       (prettify-symbols-mode)))
+         (org-indent-mode . (lambda()
+                              (diminish 'org-indent-mode)
+                              ;; WORKAROUND: Prevent text moving around while using brackets
+                              ;; @see https://github.com/seagle0128/.emacs.d/issues/88
+                              (make-variable-buffer-local 'show-paren-mode)
+                              (setq show-paren-mode nil))))
   :config
   (setq org-agenda-files '("~/org")
         org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
@@ -60,23 +67,10 @@
         org-pretty-entities t
         org-hide-emphasis-markers t)
 
+  ;; Enable markdown backend
   (add-to-list 'org-export-backends 'md)
 
-  ;; Override `org-switch-to-buffer-other-window' for compatibility with `shackle'
-  (with-eval-after-load 'shackle
-    (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window))
-
   ;; Prettify UI
-  (add-hook 'org-mode-hook
-            (lambda ()
-              "Beautify Org Checkbox Symbol"
-              (push '("[ ]" . "☐") prettify-symbols-alist)
-              (push '("[X]" . "☑") prettify-symbols-alist)
-              (push '("[-]" . "❍") prettify-symbols-alist)
-              (push '("#+BEGIN_SRC" . "λ") prettify-symbols-alist)
-              (push '("#+END_SRC" . "λ") prettify-symbols-alist)
-              (prettify-symbols-mode)))
-
   (use-package org-bullets
     :if (char-displayable-p ?◉)
     :hook (org-mode . org-bullets-mode))

@@ -125,6 +125,7 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
 (put 'shackle--current-popup-window 'permanent-local t)
 
 (use-package shackle
+  :functions org-switch-to-buffer-other-window
   :commands shackle-display-buffer
   :hook (after-init . shackle-mode)
   :config
@@ -174,11 +175,14 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
     (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
     (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
 
+  ;; HACK: compatibility issuw with `org-switch-to-buffer-other-window'
+  (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
+
   ;; rules
-  (setq shackle-default-size 0.4)
-  (setq shackle-default-alignment 'below)
-  (setq shackle-default-rule nil)
-  (setq shackle-rules
+  (setq shackle-default-size 0.4
+        shackle-default-alignment 'below
+        shackle-default-rule nil
+        shackle-rules
         '(("*Help*" :select t :size 0.3 :align 'below :autoclose t)
           ("*compilation*" :size 0.3 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
