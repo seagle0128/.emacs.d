@@ -301,6 +301,10 @@
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
 
+;; Preview when `goto-line`
+(use-package goto-line-preview
+  :bind ([remap goto-line] . goto-line-preview))
+
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :ensure nil
