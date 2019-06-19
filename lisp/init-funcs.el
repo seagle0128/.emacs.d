@@ -193,14 +193,16 @@
 ;;
 
 (defun proxy-http-show ()
-  "Show http/https proxy."
+  "Show HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
       (message "Current HTTP proxy is \"%s\"" centaur-proxy)
-    (message "No proxy")))
+    (message "No HTTP proxy")))
+
+
 
 (defun proxy-http-enable ()
-  "Enable http/https proxy."
+  "Enable HTTP/HTTPS proxy."
   (interactive)
   (setq url-proxy-services `(("http" . ,centaur-proxy)
                              ("https" . ,centaur-proxy)
@@ -208,13 +210,13 @@
   (proxy-http-show))
 
 (defun proxy-http-disable ()
-  "Disable http/https proxy."
+  "Disable HTTP/HTTPS proxy."
   (interactive)
   (setq url-proxy-services nil)
   (proxy-http-show))
 
 (defun proxy-http-toggle ()
-  "Toggle http/https proxy."
+  "Toggle HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
       (proxy-http-disable)
@@ -222,20 +224,35 @@
 
 (defvar socks-noproxy)
 (defvar socks-server)
+(defun proxy-socks-show ()
+  "Show SOCKS proxy."
+  (interactive)
+  (if socks-noproxy
+      (message "Current SOCKS%d proxy is %s:%d"
+               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+    (message "No SOCKS proxy")))
+
 (defun proxy-socks-enable ()
-  "Enable Socks proxy."
+  "Enable SOCKS proxy."
   (interactive)
   (setq url-gateway-method 'socks)
   (setq socks-noproxy '("localhost"))
   (setq socks-server '("Default server" "127.0.0.1" 1086 5))
-  (message "Enable socks proxy."))
+  (proxy-socks-show))
 
 (defun proxy-socks-disable ()
-  "Disable Socks proxy."
+  "Disable SOCKS proxy."
   (interactive)
   (setq url-gateway-method 'native)
   (setq socks-noproxy nil)
-  (message "Disable socks proxy."))
+  (proxy-socks-show))
+
+(defun proxy-socks-toggle ()
+  "Toggle SOCKS proxy."
+  (interactive)
+  (if socks-noproxy
+      (proxy-socks-disable)
+    (proxy-socks-enable)))
 
 (provide 'init-funcs)
 
