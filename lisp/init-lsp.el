@@ -58,8 +58,8 @@
        (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))))
 
    (use-package lsp-ui
-     :custom-face
-     (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+     :commands lsp-ui-doc-hide
+     :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
      :hook (after-load-theme . (lambda ()
                                  (set-face-attribute 'lsp-ui-doc-background nil
                                                      :background (face-background 'tooltip))))
@@ -83,7 +83,7 @@
      (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
 
      ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-     ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+     ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243
      (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
        (setq mode-line-format nil)))
 
