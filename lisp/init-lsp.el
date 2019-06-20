@@ -111,12 +111,40 @@
 
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
-     :hook (python-mode . (lambda ()
-                            (when (or (executable-find "Microsoft.Python.LanguageServer")
-                                      (executable-find "Microsoft.Python.LanguageServer.LanguageServer")
-                                      (executable-find "Microsoft.Python.LanguageServer.exe"))
-                              (require 'lsp-python-ms)
-                              (lsp)))))
+     :demand
+     :config
+     (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
+           lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
+           lsp-python-ms-executable (concat lsp-python-ms-dir
+                                            "Microsoft.Python.LanguageServer"
+                                            (and sys/win32p ".exe")))
+
+     (defun lsp-python-ms-setup (&optional forced)
+       "Downloading Microsoft Python Language Server to path specified.
+With prefix, FORCED to redownload the server."
+       (interactive "P")
+       (unless (and (not forced)
+                    (file-exists-p lsp-python-ms-dir))
+         (let ((temp-file (make-temp-file "mspyls" nil ".zip"))
+               (unzip-script (cond ((executable-find "unzip")
+                                    "bash -c 'mkdir -p %2$s && unzip -qq %1$s -d %2$s'")
+                                   ((executable-find "powershell")
+                                    "powershell -noprofile -noninteractive \
+-nologo -ex bypass Expand-Archive -path '%s' -dest '%s'")
+                                   (t nil)))
+               (url (format
+                     "https://pvsc.azureedge.net/python-language-server-stable/Python-Language-Server-%s-x64.0.2.96.nupkg"
+                     (cond (sys/win32p "win")
+                           (sys/linuxp "linux")
+                           (sys/macp "osx")
+                           (t "")))))
+           (url-copy-file url temp-file 'overwrite)
+           (if (file-exists-p lsp-python-ms-dir) (delete-directory lsp-python-ms-dir 'recursive))
+           (shell-command (format unzip-script temp-file lsp-python-ms-dir))
+           (if (file-exists-p lsp-python-ms-executable) (chmod lsp-python-ms-executable #o755))
+
+           (message "Downloaded Microsoft Python Language Server!"))))
+     (lsp-python-ms-setup))
 
    ;; C/C++/Objective-C support
    (use-package ccls
