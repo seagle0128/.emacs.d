@@ -28,7 +28,7 @@ latest stable release - currently **26.2**.
   - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
   - Javascript/Typescript/JSON/YAML
   - HTML/CSS/XML
-  - Golang/Swift/Rust/Dart/Elirix
+  - Golang/Swift/Rust/Dart/Elixir
   - ...
 - Auto completion.
 - Fly syntax check.
