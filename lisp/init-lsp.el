@@ -112,7 +112,9 @@
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
      :demand
-     :hook (python-mode . lsp-python-ms-setup)
+     :hook (python-mode . (lambda ()
+                            (lsp-python-ms-setup)
+                            (lsp)))
      :init
      (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
            lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
