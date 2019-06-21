@@ -111,11 +111,12 @@
 
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
-     :demand
+     :commands lsp-python-ms-setup
      :hook (python-mode . (lambda ()
+                            (require 'lsp-python-ms)
                             (lsp-python-ms-setup)
                             (lsp)))
-     :init
+     :config
      (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
            lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
            lsp-python-ms-executable (concat lsp-python-ms-dir
@@ -135,12 +136,11 @@ With prefix, FORCED to redownload the server."
                                     "powershell -noprofile -noninteractive \
 -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'")
                                    (t nil)))
-               (url (format
-                     "https://pvsc.azureedge.net/python-language-server-stable/Python-Language-Server-%s-x64.0.2.96.nupkg"
-                     (cond (sys/win32p "win")
-                           (sys/linuxp "linux")
-                           (sys/macp "osx")
-                           (t "")))))
+               (url (format "https://pvsc.azureedge.net/python-language-server-stable/Python-Language-Server-%s-x64.0.2.96.nupkg"
+                            (cond (sys/win32p "win")
+                                  (sys/linuxp "linux")
+                                  (sys/macp "osx")
+                                  (t "")))))
            (url-copy-file url temp-file 'overwrite)
            (if (file-exists-p lsp-python-ms-dir) (delete-directory lsp-python-ms-dir 'recursive))
            (shell-command (format unzip-script temp-file lsp-python-ms-dir))
