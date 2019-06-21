@@ -112,7 +112,8 @@
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
      :demand
-     :config
+     :hook (python-mode . lsp-python-ms-setup)
+     :init
      (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
            lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
            lsp-python-ms-executable (concat lsp-python-ms-dir
@@ -143,8 +144,7 @@ With prefix, FORCED to redownload the server."
            (shell-command (format unzip-script temp-file lsp-python-ms-dir))
            (if (file-exists-p lsp-python-ms-executable) (chmod lsp-python-ms-executable #o755))
 
-           (message "Downloaded Microsoft Python Language Server!"))))
-     (lsp-python-ms-setup))
+           (message "Downloaded Microsoft Python Language Server!")))))
 
    ;; C/C++/Objective-C support
    (use-package ccls
