@@ -43,7 +43,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish lsp-mode
-     :hook (prog-mode . lsp)
+     :hook (prog-mode . lsp-deferred)
      :bind (:map lsp-mode-map
                  ("C-c C-d" . lsp-describe-thing-at-point))
      :init
@@ -115,7 +115,7 @@
      :hook (python-mode . (lambda ()
                             (require 'lsp-python-ms)
                             (lsp-python-ms-setup)
-                            (lsp)))
+                            (lsp-deferred)))
      :config
      (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
            lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
@@ -153,7 +153,7 @@ With prefix, FORCED to redownload the server."
      :defines projectile-project-root-files-top-down-recurring
      :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
                                                       (require 'ccls)
-                                                      (lsp)))
+                                                      (lsp-deferred)))
      :config
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
@@ -165,7 +165,7 @@ With prefix, FORCED to redownload the server."
    (use-package lsp-java
      :hook (java-mode . (lambda ()
                           (require 'lsp-java)
-                          (lsp))))))
+                          (lsp-deferred))))))
 
 (when centaur-lsp
   ;; Enable LSP in org babel
@@ -187,7 +187,7 @@ With prefix, FORCED to redownload the server."
                 (and (fboundp 'lsp)
                      ;; `lsp-auto-guess-root' MUST be non-nil.
                      (setq lsp-buffer-uri (lsp--path-to-uri filename))
-                     (lsp))))))
+                     (lsp-deferred))))))
          (put ',intern-pre 'function-documentation
               (format "Enable `%s' in the buffer of org source block (%s)."
                       centaur-lsp (upcase ,lang)))
