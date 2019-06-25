@@ -64,12 +64,10 @@
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
     (setq-default mode-line-format nil))
-
+  :config
   (setq doom-modeline-major-mode-color-icon t
         doom-modeline-minor-modes nil
-        doom-modeline-mu4e nil
-        doom-modeline-github t
-        doom-modeline-github-interval 300))
+        doom-modeline-mu4e nil))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
