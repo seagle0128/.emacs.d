@@ -38,7 +38,7 @@
   :init
   (setq-default prettify-symbols-alist
                 '(("lambda" . ?λ)
-                  ("<-" . "←")
+                  ("<-" . ?←)
                   ("->" . ?→)
                   ("->>" . ?↠)
                   ("=>" . ?⇒)
