@@ -389,6 +389,11 @@
             (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
           icon))))
 
+  (defun ivy-rich-dir-icon (candidate)
+    "Display directory icons in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust 0.01)))
+
   (defun ivy-rich-function-icon (_candidate)
     "Display function icons in `ivy-rich'."
     (when (display-graphic-p)
@@ -520,14 +525,12 @@
           (:columns
            ((ivy-rich-function-icon)
             (counsel-describe-function-transformer (:width 50))
-            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-           :delimiter "\t")
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
           counsel-describe-variable
           (:columns
            ((ivy-rich-variable-icon)
             (counsel-describe-variable-transformer (:width 50))
-            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
-           :delimiter "\t")
+            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
           counsel-apropos
           (:columns
            ((ivy-rich-symbol-icon)
@@ -617,7 +620,7 @@
            :delimiter "\t")
           counsel-projectile-find-dir
           (:columns
-           ((ivy-rich-file-icon)
+           ((ivy-rich-dir-icon)
             (counsel-projectile-find-dir-transformer))
            :delimiter "\t")
           treemacs-projectile
