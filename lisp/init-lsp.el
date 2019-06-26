@@ -136,11 +136,12 @@ With prefix, FORCED to redownload the server."
                                     "powershell -noprofile -noninteractive \
 -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'")
                                    (t nil)))
-               (url (format "https://pvsc.azureedge.net/python-language-server-stable/Python-Language-Server-%s-x64.0.2.96.nupkg"
-                            (cond (sys/win32p "win")
+               (url (format "https://pvsc.azureedge.net/python-language-server-stable/Python-Language-Server-%s-x64.0.3.20.nupkg"
+                            (cond (sys/macp "osx")
                                   (sys/linuxp "linux")
-                                  (sys/macp "osx")
-                                  (t "")))))
+                                  ((or sys/win32p sys/cygwinp) "win")
+                                  (t (user-error "Microsoft Python Language Server doesn't support '%s'!"
+                                                 system-type))))))
            (url-copy-file url temp-file 'overwrite)
            (if (file-exists-p lsp-python-ms-dir) (delete-directory lsp-python-ms-dir 'recursive))
            (shell-command (format unzip-script temp-file lsp-python-ms-dir))
