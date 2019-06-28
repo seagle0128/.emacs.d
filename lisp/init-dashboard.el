@@ -211,9 +211,10 @@ _S_ettings           _p_: Projects        _C-p_: Previous Line
       ("Q" quit-dashboard :exit t)
       ("q" nil "quit")
       ("C-g" nil "quit"))
-    (bind-keys :map dashboard-mode-map
-               ("h" . hydra-dashboard/body)
-               ("?" . hydra-dashboard/body))))
+    (bind-keys
+     :map dashboard-mode-map
+     ("h" . hydra-dashboard/body)
+     ("?" . hydra-dashboard/body))))
 
 (provide 'init-dashboard)
 

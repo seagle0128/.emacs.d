@@ -123,7 +123,7 @@
   ;; Rich text clipboard
   (use-package org-rich-yank
     :bind (:map org-mode-map
-                ("C-M-y" . org-rich-yank)))
+           ("C-M-y" . org-rich-yank)))
 
   ;; Table of contents
   (use-package toc-org
@@ -139,12 +139,12 @@
     :functions (org-display-inline-images
                 org-remove-inline-images)
     :bind (:map org-mode-map
-                ("C-<f7>" . org-tree-slide-mode)
-                :map org-tree-slide-mode-map
-                ("<left>" . org-tree-slide-move-previous-tree)
-                ("<right>" . org-tree-slide-move-next-tree)
-                ("S-SPC" . org-tree-slide-move-previous-tree)
-                ("SPC" . org-tree-slide-move-next-tree))
+           ("C-<f7>" . org-tree-slide-mode)
+           :map org-tree-slide-mode-map
+           ("<left>" . org-tree-slide-move-previous-tree)
+           ("<right>" . org-tree-slide-move-next-tree)
+           ("S-SPC" . org-tree-slide-move-previous-tree)
+           ("SPC" . org-tree-slide-move-next-tree))
     :hook ((org-tree-slide-play . (lambda ()
                                     (text-scale-increase 4)
                                     (org-display-inline-images)
@@ -161,7 +161,7 @@
   (use-package org-pomodoro
     :after org-agenda
     :bind (:map org-agenda-mode-map
-                ("P" . org-pomodoro)))
+           ("P" . org-pomodoro)))
 
   ;; Visually summarize progress
   (use-package org-dashboard)

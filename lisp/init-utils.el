@@ -110,11 +110,12 @@
       (bind-key "s R" #'rg-project projectile-command-map))
 
     (with-eval-after-load 'counsel
-      (bind-keys :map rg-global-map
-                 ("c r" . counsel-rg)
-                 ("c s" . counsel-ag)
-                 ("c p" . counsel-pt)
-                 ("c f" . counsel-fzf)))))
+      (bind-keys
+       :map rg-global-map
+       ("c r" . counsel-rg)
+       ("c s" . counsel-ag)
+       ("c p" . counsel-pt)
+       ("c f" . counsel-fzf)))))
 
 ;; Docker
 (use-package docker
@@ -159,7 +160,7 @@
         (save-buffer))))
   :hook (after-init . persistent-scratch-setup-default)
   :bind (:map lisp-interaction-mode-map
-              ("C-x C-s" . my-save-buffer)))
+         ("C-x C-s" . my-save-buffer)))
 
 ;; PDF reader
 (when (display-graphic-p)
@@ -169,7 +170,7 @@
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
-                ("C-s" . isearch-forward))
+           ("C-s" . isearch-forward))
     :init
     (setq pdf-view-midnight-colors '("#ededed" . "#21242b")
           pdf-annot-activate-created-annotations t)

@@ -79,9 +79,10 @@ _Q_: Quit
     ("RET" elfeed-search-show-entry)
     ("q" nil "quit" :exit t)
     ("C-g" nil "quit" :exit t))
-  (bind-keys :map elfeed-search-mode-map
-             ("h" . hydra-elfeed/body)
-             ("?" . hydra-elfeed/body)))
+  (bind-keys
+   :map elfeed-search-mode-map
+   ("h" . hydra-elfeed/body)
+   ("?" . hydra-elfeed/body)))
 
 (provide 'init-elfeed)
 

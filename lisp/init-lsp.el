@@ -45,7 +45,7 @@
      :diminish lsp-mode
      :hook (prog-mode . lsp-deferred)
      :bind (:map lsp-mode-map
-                 ("C-c C-d" . lsp-describe-thing-at-point))
+            ("C-c C-d" . lsp-describe-thing-at-point))
      :init
      (setq lsp-auto-guess-root t)       ; Detect project root
      (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
@@ -64,9 +64,9 @@
                                  (set-face-attribute 'lsp-ui-doc-background nil
                                                      :background (face-background 'tooltip))))
      :bind (:map lsp-ui-mode-map
-                 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-                 ([remap xref-find-references] . lsp-ui-peek-find-references)
-                 ("C-c u" . lsp-ui-imenu))
+            ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+            ([remap xref-find-references] . lsp-ui-peek-find-references)
+            ("C-c u" . lsp-ui-imenu))
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
                  lsp-ui-doc-delay 1.0
@@ -107,7 +107,7 @@
    (when emacs/>=25.2p
      (use-package lsp-treemacs
        :bind (:map lsp-mode-map
-                   ("M-9" . lsp-treemacs-errors-list))))
+              ("M-9" . lsp-treemacs-errors-list))))
 
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms

@@ -37,8 +37,8 @@
 (use-package projectile
   :diminish
   :bind (:map projectile-mode-map
-              ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
-              ("C-c p" . projectile-command-map))
+         ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
+         ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :init
   (setq projectile-mode-line-prefix ""

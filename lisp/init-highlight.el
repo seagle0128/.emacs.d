@@ -145,10 +145,10 @@
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
   :bind (:map hl-todo-mode-map
-              ([C-f3] . hl-todo-occur)
-              ("C-c t p" . hl-todo-previous)
-              ("C-c t n" . hl-todo-next)
-              ("C-c t o" . hl-todo-occur))
+         ([C-f3] . hl-todo-occur)
+         ("C-c t p" . hl-todo-previous)
+         ("C-c t n" . hl-todo-next)
+         ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
@@ -165,7 +165,7 @@
   (diff-hl-delete ((t (:inherit 'error :inverse-video t))))
   (diff-hl-insert ((t (:inherit 'success :inverse-video t))))
   :bind (:map diff-hl-command-map
-              ("SPC" . diff-hl-mark-hunk))
+         ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode))
   :config

@@ -37,11 +37,11 @@
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-              ("C-c C-p" . wdired-change-to-wdired-mode))
+         ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
   ;; Always delete and copy recursively
-  (setq dired-recursive-deletes 'always)
-  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always
+        dired-recursive-copies 'always)
 
   (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
@@ -62,12 +62,12 @@
     ;; Quick sort dired buffers via hydra
     (use-package dired-quick-sort
       :bind (:map dired-mode-map
-                  ("S" . hydra-dired-quick-sort/body))))
+             ("S" . hydra-dired-quick-sort/body))))
 
   ;; Allow rsync from dired buffers
   (use-package dired-rsync
     :bind (:map dired-mode-map
-                ("C-c C-r" . dired-rsync)))
+           ("C-c C-r" . dired-rsync)))
 
   ;; Colourful dired
   (use-package diredfl
@@ -103,15 +103,28 @@
                       (if (file-directory-p filename)
                           (let ((icon (cond
                                        (remote-p
-                                        (all-the-icons-octicon "file-directory" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        (all-the-icons-octicon "file-directory"
+                                                               :v-adjust all-the-icons-dired-v-adjust
+                                                               :face 'all-the-icons-dired-dir-face))
                                        ((file-symlink-p filename)
-                                        (all-the-icons-octicon "file-symlink-directory" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        (all-the-icons-octicon "file-symlink-directory"
+                                                               :v-adjust all-the-icons-dired-v-adjust
+                                                               :face 'all-the-icons-dired-dir-face))
                                        ((all-the-icons-dir-is-submodule filename)
-                                        (all-the-icons-octicon "file-submodule" :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
+                                        (all-the-icons-octicon "file-submodule"
+                                                               :v-adjust all-the-icons-dired-v-adjust
+                                                               :face 'all-the-icons-dired-dir-face))
                                        ((file-exists-p (format "%s/.git" filename))
-                                        (all-the-icons-octicon "repo" :height 1.1 :v-adjust all-the-icons-dired-v-adjust :face 'all-the-icons-dired-dir-face))
-                                       (t (let ((matcher (all-the-icons-match-to-alist file all-the-icons-dir-icon-alist)))
-                                            (apply (car matcher) (list (cadr matcher) :face 'all-the-icons-dired-dir-face :v-adjust all-the-icons-dired-v-adjust)))))))
+                                        (all-the-icons-octicon "repo"
+                                                               :height 1.1
+                                                               :v-adjust all-the-icons-dired-v-adjust
+                                                               :face 'all-the-icons-dired-dir-face))
+                                       (t (let ((matcher (all-the-icons-match-to-alist
+                                                          file all-the-icons-dir-icon-alist)))
+                                            (apply (car matcher)
+                                                   (list (cadr matcher)
+                                                         :face 'all-the-icons-dired-dir-face
+                                                         :v-adjust all-the-icons-dired-v-adjust)))))))
                             (insert icon))
                         (insert (all-the-icons-icon-for-file file :v-adjust all-the-icons-dired-v-adjust))))
                     (insert "\t"))))

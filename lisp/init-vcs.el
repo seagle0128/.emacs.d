@@ -63,14 +63,14 @@
   (git-timemachine-minibuffer-author-face ((t (:inherit success))))
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
-              ("t" . git-timemachine)))
+         ("t" . git-timemachine)))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
   :bind (:map vc-prefix-map
-              ("p" . git-messenger:popup-message)
-              :map git-messenger-map
-              ("m" . git-messenger:copy-message))
+         ("p" . git-messenger:popup-message)
+         :map git-messenger-map
+         ("m" . git-messenger:copy-message))
   :init
   ;; Use magit-show-commit for showing status/diff commands
   (setq git-messenger:use-magit-popup t))
@@ -143,7 +143,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
   :bind (:map vc-prefix-map
-              ("B" . browse-at-remote)))
+         ("B" . browse-at-remote)))
 
 ;; Git related modes
 (use-package gitattributes-mode)

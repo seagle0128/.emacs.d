@@ -121,10 +121,11 @@
   (with-eval-after-load 'org
     (bind-key "M-o" #'ace-link-org org-mode-map))
   (with-eval-after-load 'gnus
-    (bind-keys :map gnus-summary-mode-map
-               ("M-o" . ace-link-gnus)
-               :map gnus-article-mode-map
-               ("M-o" . ace-link-gnus)))
+    (bind-keys
+     :map gnus-summary-mode-map
+     ("M-o" . ace-link-gnus)
+     :map gnus-article-mode-map
+     ("M-o" . ace-link-gnus)))
   (with-eval-after-load 'ert
     (bind-key "o" #'ace-link-help ert-results-mode-map)))
 
@@ -317,14 +318,14 @@
   :ensure nil
   :diminish hs-minor-mode
   :bind (:map hs-minor-mode-map
-              ("C-`" . hs-toggle-hiding)))
+         ("C-`" . hs-toggle-hiding)))
 
 ;; Flexible text folding
 (use-package origami
   :hook (prog-mode . origami-mode)
   :init (setq origami-show-fold-header t)
   :bind (:map origami-mode-map
-              ("C-`" . hydra-origami/body))
+         ("C-`" . hydra-origami/body))
   :config
   (face-spec-reset-face 'origami-fold-header-face)
 

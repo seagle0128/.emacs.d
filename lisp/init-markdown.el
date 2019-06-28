@@ -74,8 +74,8 @@
       (setq-local flycheck-markdown-markdownlint-cli-config
                   (concat md-lint-dir md-lint))))
   :bind (:map markdown-mode-command-map
-              ("g" .  markdown-preview-grip)
-              ("k" .  markdown-preview-kill-grip))
+         ("g" .  markdown-preview-grip)
+         ("k" .  markdown-preview-kill-grip))
   :hook ((markdown-mode . flyspell-mode)
          (markdown-mode . auto-fill-mode)
          (markdown-mode . set-flycheck-markdownlint))
