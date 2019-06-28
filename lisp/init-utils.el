@@ -87,8 +87,8 @@
 ;; Writable `grep' buffer
 (use-package wgrep
   :init
-  (setq wgrep-auto-save-buffer t)
-  (setq wgrep-change-readonly-file t))
+  (setq wgrep-auto-save-buffer t
+        wgrep-change-readonly-file t))
 
 ;; `find-dired' alternative using `fd'
 (when (executable-find "fd")
@@ -100,8 +100,8 @@
     :defines projectile-command-map
     :hook (after-init . rg-enable-default-bindings)
     :config
-    (setq rg-group-result t)
-    (setq rg-show-columns t)
+    (setq rg-group-result t
+          rg-show-columns t)
 
     (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
 
@@ -120,9 +120,8 @@
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)
-  :init
-  (setq docker-image-run-arguments '("-i" "-t" "--rm"))
-  (setq docker-container-shell-file-name "/bin/bash"))
+  :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
+              docker-container-shell-file-name "/bin/bash"))
 
 ;; Tramp
 (use-package docker-tramp)

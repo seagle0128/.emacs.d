@@ -108,6 +108,18 @@
 (if (is-doom-theme-p centaur-theme)
     (progn
       (use-package doom-themes
+        :defines (doom-treemacs-use-generic-icons
+                  treemacs-icon-open-png
+                  treemacs-icon-closed-png
+                  treemacs-icon-text
+                  treemacs-icon-fallback
+                  treemacs-icons-hash)
+        :functions (all-the-icons-octicon
+                    all-the-icons-faicon
+                    s-replace-all
+                    s-replace-regexp
+                    ht-get
+                    ht-set!)
         :init (centaur-load-theme centaur-theme)
         :config
         ;; Enable flashing mode-line on errors
@@ -176,6 +188,8 @@
   :init (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
           (all-the-icons-install-fonts t))
   :config
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(vterm-mode all-the-icons-octicon "terminal" :v-adjust 0.2))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
   (add-to-list 'all-the-icons-icon-alist
