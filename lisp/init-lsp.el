@@ -117,8 +117,7 @@
                             (lsp-python-ms-setup)
                             (lsp-deferred)))
      :config
-     (setq lsp-python-ms-extra-paths '("/usr/local/" "/usr/")
-           lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
+     (setq lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
            lsp-python-ms-executable (concat lsp-python-ms-dir
                                             "Microsoft.Python.LanguageServer"
                                             (and sys/win32p ".exe")))
@@ -135,7 +134,7 @@
                       channel
                       (cond (sys/macp "osx")
                             (sys/linuxp "linux")
-                            ((or sys/win32p sys/cygwinp) "win")
+                            (sys/win32p "win")
                             (t (error (format "Unsupported system: %s" system-type))))))
            (goto-char (point-min))
            (re-search-forward "\n\n")
