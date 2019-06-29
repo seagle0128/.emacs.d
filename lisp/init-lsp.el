@@ -46,16 +46,14 @@
      :hook (prog-mode . lsp-deferred)
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point))
-     :init
-     (setq lsp-auto-guess-root t)       ; Detect project root
-     (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
-     (setq flymake-fringe-indicator-position 'right-fringe)
+     :init (setq lsp-auto-guess-root t       ; Detect project root
+                 lsp-prefer-flymake nil      ; Use lsp-ui and flycheck
+                 flymake-fringe-indicator-position 'right-fringe)
      :config
      ;; Configure LSP clients
      (use-package lsp-clients
        :ensure nil
-       :init
-       (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))))
+       :init (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))))
 
    (use-package lsp-ui
      :commands lsp-ui-doc-hide
@@ -163,7 +161,7 @@
 With prefix, FORCED to redownload the server."
        (interactive "P")
        (unless (and (not forced)
-                    (file-exists-p lsp-python-ms-dir))
+                    (file-exists-p lsp-python-ms-executable))
          (let ((temp-file (make-temp-file "mspyls" nil ".zip"))
                (unzip-script (cond ((executable-find "unzip")
                                     "bash -c 'mkdir -p %2$s && unzip -qq %1$s -d %2$s'")
