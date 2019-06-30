@@ -109,79 +109,9 @@
 
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
-     :commands lsp-python-ms-setup
      :hook (python-mode . (lambda ()
                             (require 'lsp-python-ms)
-                            (lsp-python-ms-setup)
-                            (lsp-deferred)))
-     :config
-     (setq lsp-python-ms-dir (expand-file-name "mspyls/" user-emacs-directory)
-           lsp-python-ms-executable (concat lsp-python-ms-dir
-                                            "Microsoft.Python.LanguageServer"
-                                            (and sys/win32p ".exe")))
-
-     (defun lsp-python-ms-latest-nupkg-url (&optional channel)
-       "Get the nupkg url of the latest Microsoft Python Language Server."
-       (let ((channel (or channel "stable")))
-         (unless (member channel '("stable" "beta" "daily"))
-           (error (format "Unknown channel: %s" channel)))
-         (with-current-buffer
-             (url-retrieve-synchronously
-              (format "https://pvsc.blob.core.windows.net/python-language-server-%s\
-?restype=container&comp=list&prefix=Python-Language-Server-%s-x64"
-                      channel
-                      (cond (sys/macp "osx")
-                            (sys/linuxp "linux")
-                            (sys/win32p "win")
-                            (t (error (format "Unsupported system: %s" system-type))))))
-           (goto-char (point-min))
-           (re-search-forward "\n\n")
-           (pcase (xml-parse-region (point) (point-max))
-             (`((EnumerationResults
-                 ((ContainerName . ,_))
-                 (Prefix nil ,_)
-                 (Blobs nil . ,blobs)
-                 (NextMarker nil)))
-              (cdar
-               (sort
-                (mapcar (lambda (blob)
-                          (pcase blob
-                            (`(Blob
-                               nil
-                               (Name nil ,_)
-                               (Url nil ,url)
-                               (Properties nil (Last-Modified nil ,last-modified) . ,_))
-                             (cons (encode-time (parse-time-string last-modified)) url))))
-                        blobs)
-                (lambda (t1 t2)
-                  (time-less-p (car t2) (car t1))))))))))
-
-     (defun lsp-python-ms-setup (&optional forced)
-       "Downloading Microsoft Python Language Server to path specified.
-With prefix, FORCED to redownload the server."
-       (interactive "P")
-       (unless (and (not forced)
-                    (file-exists-p lsp-python-ms-executable))
-         (let ((temp-file (make-temp-file "mspyls" nil ".zip"))
-               (unzip-script (cond ((executable-find "unzip")
-                                    "bash -c 'mkdir -p %2$s && unzip -qq %1$s -d %2$s'")
-                                   ((executable-find "powershell")
-                                    "powershell -noprofile -noninteractive \
--nologo -ex bypass Expand-Archive -path '%s' -dest '%s'")
-                                   (t nil))))
-           (url-copy-file (lsp-python-ms-latest-nupkg-url) temp-file 'overwrite)
-           (if (file-exists-p lsp-python-ms-dir) (delete-directory lsp-python-ms-dir 'recursive))
-           (shell-command (format unzip-script temp-file lsp-python-ms-dir))
-           (if (file-exists-p lsp-python-ms-executable) (chmod lsp-python-ms-executable #o755))
-
-           (message "Downloaded Microsoft Python Language Server!"))))
-
-     (defun lsp-python-ms-update-server ()
-       "Update Microsoft Python Language Server."
-       (interactive)
-       (message "Server update started...")
-       (lsp-python-ms-setup t)
-       (message "Server update finished...")))
+                            (lsp-deferred))))
 
    ;; C/C++/Objective-C support
    (use-package ccls
