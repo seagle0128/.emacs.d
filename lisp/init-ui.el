@@ -124,6 +124,10 @@
         :config
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
+        (set-face-attribute 'doom-visual-bell nil
+                            :background (face-foreground 'error)
+                            :foreground (face-background 'default)
+                            :inverse-video nil)
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
