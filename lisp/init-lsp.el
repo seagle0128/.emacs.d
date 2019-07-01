@@ -75,8 +75,6 @@
                  lsp-ui-sideline-enable nil
                  lsp-ui-sideline-ignore-duplicate t)
      :config
-     (add-to-list 'lsp-ui-doc-frame-parameters '(left-fringe . 0))
-
      ;; `C-g'to close doc
      (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
 
