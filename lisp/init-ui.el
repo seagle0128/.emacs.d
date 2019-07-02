@@ -108,18 +108,6 @@
 (if (is-doom-theme-p centaur-theme)
     (progn
       (use-package doom-themes
-        :defines (doom-treemacs-use-generic-icons
-                  treemacs-icon-open-png
-                  treemacs-icon-closed-png
-                  treemacs-icon-text
-                  treemacs-icon-fallback
-                  treemacs-icons-hash)
-        :functions (all-the-icons-octicon
-                    all-the-icons-faicon
-                    s-replace-all
-                    s-replace-regexp
-                    ht-get
-                    ht-set!)
         :init (centaur-load-theme centaur-theme)
         :config
         ;; Enable flashing mode-line on errors
@@ -131,46 +119,7 @@
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-        (doom-themes-treemacs-config)
-
-        ;; Improve treemacs icons
-        (with-eval-after-load 'treemacs
-          (with-eval-after-load 'all-the-icons
-            (when doom-treemacs-use-generic-icons
-              (let ((all-the-icons-default-adjust 0)
-                    (tab-width 1))
-                (setq treemacs-icon-open-png
-                      (concat
-                       (all-the-icons-octicon "chevron-down" :height 0.8 :v-adjust 0.1)
-                       "\t"
-                       (all-the-icons-octicon "file-directory" :v-adjust 0)
-                       "\t")
-                      treemacs-icon-closed-png
-                      (concat
-                       (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust 0.1 :face 'font-lock-doc-face)
-                       "\t"
-                       (all-the-icons-octicon "file-directory" :v-adjust 0 :face 'font-lock-doc-face)
-                       "\t"))
-
-                ;; File type icons
-                (setq treemacs-icons-hash (make-hash-table :size 200 :test #'equal)
-                      treemacs-icon-fallback (concat
-                                              "\t\t"
-                                              (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
-                                              "\t")
-                      treemacs-icon-text treemacs-icon-fallback)
-
-                (dolist (item all-the-icons-icon-alist)
-                  (let* ((extension (car item))
-                         (func (cadr item))
-                         (args (append (list (caddr item)) '(:v-adjust -0.05) (cdddr item)))
-                         (icon (apply func args))
-                         (key (s-replace-all '(("^" . "") ("\\" . "") ("$" . "") ("." . "")) extension))
-                         (value (concat "\t\t" icon "\t")))
-                    (unless (ht-get treemacs-icons-hash (s-replace-regexp "\\?" "" key))
-                      (ht-set! treemacs-icons-hash (s-replace-regexp "\\?" "" key) value))
-                    (unless (ht-get treemacs-icons-hash (s-replace-regexp ".\\?" "" key))
-                      (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value)))))))))
+        (doom-themes-treemacs-config))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
