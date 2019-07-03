@@ -77,6 +77,30 @@
     (add-hook 'shell-mode-hook
               (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
+;; Better term
+(use-package vterm
+  :preface
+  (defun vterm-module-compile ()
+    "This function compiles the vterm-module."
+    (interactive)
+    (let ((default-directory (file-name-directory (locate-library "vterm")))
+          (vterm-install-buffer-name " *Install vterm"))
+      (unless (file-executable-p (concat default-directory "vterm-module.so" ))
+        (let* ((buffer (get-buffer-create vterm-install-buffer-name))
+               (status (call-process "sh" nil buffer t "-c"
+                                     "mkdir -p build;                             \
+                                    cd build;                                   \
+                                    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..; \
+                                    make")))
+          (if (eq status 0)
+              (message "Compilation of emacs-libvterm module succeeded")
+            (pop-to-buffer vterm-install-buffer-name)
+            (error "Compilation of emacs-libvterm module failed!"))))))
+  :init
+  ;; FIXME: https://github.com/akermu/emacs-libvterm/issues/92
+  (unless (require 'vterm-module nil t)
+    (vterm-module-compile)))
+
 ;; Shell Pop
 (use-package shell-pop
   :bind ([f9] . shell-pop)
