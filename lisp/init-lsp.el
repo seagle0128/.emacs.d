@@ -72,14 +72,17 @@
                  lsp-ui-sideline-enable nil
                  lsp-ui-sideline-ignore-duplicate t)
      :config
+     (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
+
      ;; `C-g'to close doc
      (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
 
      ;; Reset `lsp-ui-doc-background' after loading theme
      (add-hook 'after-load-theme-hook
                (lambda ()
-                 (set-face-attribute 'lsp-ui-doc-background nil
-                                     :background (face-background 'tooltip))))
+                 (setq lsp-ui-doc-border (face-foreground 'default))
+                 (set-face-background 'lsp-ui-doc-background
+                                      (face-background 'tooltip))))
 
      ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
      ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243

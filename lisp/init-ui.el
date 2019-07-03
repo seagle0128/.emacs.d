@@ -128,6 +128,7 @@
                (minibuffer-setup . solaire-mode-in-minibuffer)
                (after-load-theme . solaire-mode-swap-bg))
         :config
+        (setq solaire-mode-remap-fringe nil)
         (solaire-global-mode 1)
         (solaire-mode-swap-bg)
         (advice-add #'persp-load-state-from-file
