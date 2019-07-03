@@ -205,6 +205,7 @@
   :init (setq olivetti-body-width 0.618))
 
 ;; Misc
+(use-package bongo)                     ; music player
 (use-package copyit)                    ; copy path, url, etc.
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
