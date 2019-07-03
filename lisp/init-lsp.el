@@ -58,9 +58,6 @@
    (use-package lsp-ui
      :commands lsp-ui-doc-hide
      :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
-     :hook (after-load-theme . (lambda ()
-                                 (set-face-attribute 'lsp-ui-doc-background nil
-                                                     :background (face-background 'tooltip))))
      :bind (:map lsp-ui-mode-map
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
             ([remap xref-find-references] . lsp-ui-peek-find-references)
@@ -77,6 +74,12 @@
      :config
      ;; `C-g'to close doc
      (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
+
+     ;; Reset `lsp-ui-doc-background' after loading theme
+     (add-hook 'after-load-theme-hook
+               (lambda ()
+                 (set-face-attribute 'lsp-ui-doc-background nil
+                                     :background (face-background 'tooltip))))
 
      ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
      ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243
