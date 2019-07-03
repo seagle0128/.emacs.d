@@ -93,7 +93,7 @@
               (persp-mode-projectile-bridge-kill-perspectives)))))
   :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
   :config
-  ;; HACK:Allow saving to files
+  ;; HACK: Allow saving to files
   (eval-and-compile
     (defun my-persp-mode-projectile-bridge-add-new-persp (name)
       (let ((persp (persp-get-by-name name *persp-hash* :nil)))

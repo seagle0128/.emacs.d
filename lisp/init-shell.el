@@ -77,18 +77,20 @@
     (add-hook 'shell-mode-hook
               (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
-;; Multi term
-(use-package multi-term)
-
 ;; Shell Pop
 (use-package shell-pop
   :bind ([f9] . shell-pop)
-  :init (let ((val
-               (if sys/win32p
-                   '("eshell" "*eshell*" (lambda () (eshell)))
-                 '("ansi-term" "*ansi-term*"
-                   (lambda () (ansi-term shell-pop-term-shell))))))
-          (setq shell-pop-shell-type val)))
+  :init
+  (setq shell-pop-window-size 35
+        shell-pop-full-span t
+        shell-pop-shell-type (cond
+                              (sys/win32p
+                               '("eshell" "*eshell*" (lambda () (eshell))))
+                              ((fboundp 'vterm)
+                               '("vterm" "*vterm*" (lambda () (vterm))))
+                              (t
+                               '("ansi-term" "*ansi-term*"
+                                 (lambda () (ansi-term shell-pop-term-shell)))))))
 
 (provide 'init-shell)
 
