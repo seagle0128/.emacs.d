@@ -49,8 +49,8 @@
         "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
 
   ;; Access Git forges from Magit
-  (if (executable-find "cc")
-      (use-package forge :demand)))
+  (when (executable-find "cc")
+    (use-package forge :demand)))
 
 ;; Show TODOs in magit
 (when emacs/>=25.2p

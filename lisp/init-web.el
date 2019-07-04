@@ -66,18 +66,18 @@
          (js2-mode . js2-highlight-unused-variables-mode))
   :config
   ;; Use default keybindings for lsp
-  (if centaur-lsp
-      (unbind-key "M-." js2-mode-map))
+  (when centaur-lsp
+    (unbind-key "M-." js2-mode-map))
 
   (with-eval-after-load 'flycheck
-    (if (or (executable-find "eslint_d")
-            (executable-find "eslint")
-            (executable-find "jshint"))
-        (setq js2-mode-show-strict-warnings nil))
-    (if (executable-find "eslint_d")
-        ;; https://github.com/mantoni/eslint_d.js
-        ;; npm -i -g eslint_d
-        (setq flycheck-javascript-eslint-executable "eslint_d")))
+    (when (or (executable-find "eslint_d")
+              (executable-find "eslint")
+              (executable-find "jshint"))
+      (setq js2-mode-show-strict-warnings nil))
+    (when (executable-find "eslint_d")
+      ;; https://github.com/mantoni/eslint_d.js
+      ;; npm -i -g eslint_d
+      (setq flycheck-javascript-eslint-executable "eslint_d")))
 
   (use-package js2-refactor
     :diminish
