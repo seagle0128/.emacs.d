@@ -91,9 +91,7 @@
 (use-package shell-pop
   :bind ([f9] . shell-pop)
   :init
-  (setq shell-pop-window-size 35
-        shell-pop-full-span t
-        shell-pop-shell-type (cond
+  (setq shell-pop-shell-type (cond
                               (sys/win32p
                                '("eshell" "*eshell*" (lambda () (eshell))))
                               ((fboundp 'vterm)
