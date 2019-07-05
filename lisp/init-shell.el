@@ -85,7 +85,8 @@
 ;; Better term
 (when (and (executable-find "cmake")
            (executable-find "make"))
-  (use-package vterm))
+  (use-package vterm
+    :init (defalias #'term #'vterm)))
 
 ;; Shell Pop
 (use-package shell-pop
