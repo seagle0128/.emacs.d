@@ -60,6 +60,7 @@
           (const :tag "Melpa Mirror" melpa-mirror)
           (const :tag "Emacs-China" emacs-china)
           (const :tag "Netease" netease)
+          (const :tag "Tencent" tencent)
           (const :tag "Tuna" tuna)))
 
 (defcustom centaur-theme 'default
