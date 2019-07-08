@@ -154,7 +154,8 @@
           (error
            (message "Error: Unable to restore last session -- %s" err)))
         (when (persp-get-buffer-or-null persp-special-last-buffer)
-          (persp-switch-to-buffer persp-special-last-buffer))))
+          (persp-switch-to-buffer persp-special-last-buffer))
+        (message "Done")))
 
     (defun quit-dashboard ()
       "Quit dashboard window."
