@@ -127,15 +127,9 @@
                                                          :v-adjust all-the-icons-dired-v-adjust)))))))
                             (insert icon))
                         (insert (all-the-icons-icon-for-file file :v-adjust all-the-icons-dired-v-adjust))))
-                    (insert "\t"))))
+                    (insert "\t "))))   ; Align and keep one space for refeshing after operations
               (forward-line 1))))))
-    (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display)
-
-    ;; TRICK: The buffer isn't refreshed after some operations due to the TAB
-    ;;        before the file name. Refresh it by force.
-    (advice-add #'dired-do-rename :after #'dired-revert)
-    (advice-add #'dired-do-delete :after #'dired-revert)
-    (advice-add #'dired-do-flagged-delete :after #'dired-revert))
+    (advice-add #'all-the-icons-dired--display :override #'my-all-the-icons-dired--display))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
