@@ -115,7 +115,8 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :hook ((css-mode js-mode js2-mode html-mode web-mode) . rainbow-mode)
+  :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
+  :bind ("C-<f9>" . toggle-rainbow)
   :init
   (defun toggle-rainbow ()
     "Colorize color names in buffers or not."
