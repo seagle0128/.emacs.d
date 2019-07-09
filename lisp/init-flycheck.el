@@ -37,12 +37,17 @@
   :diminish flycheck-mode
   :hook (after-init . global-flycheck-mode)
   :config
-  (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
   ;; Only check while saving and opening files
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+
+  ;; Set fringe style
+  (setq flycheck-indication-mode 'right-fringe)
+  (when (fboundp 'define-fringe-bitmap)
+    (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
+      [16 48 112 240 112 48 16] nil nil 'center))
 
   ;; Display Flycheck errors in GUI tooltips
   (if (display-graphic-p)
