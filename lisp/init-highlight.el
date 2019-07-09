@@ -161,10 +161,6 @@
 (use-package diff-hl
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
-  :custom-face
-  (diff-hl-change ((t (:inherit 'highlight))))
-  (diff-hl-delete ((t (:inherit 'error :inverse-video t))))
-  (diff-hl-insert ((t (:inherit 'success :inverse-video t))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -175,8 +171,14 @@
 
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
-  (setq diff-hl-draw-borders nil)
-  (if sys/mac-x-p (set-fringe-mode '(4 . 8)))
+
+  (defun my-diff-hl-fringe-bmp-function (_type _pos)
+    "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
+    (define-fringe-bitmap 'my-diff-hl-bmp
+      (vector #b11100000)
+      1 8
+      '(center t)))
+  (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
 
   (unless (display-graphic-p)
     (setq diff-hl-margin-symbols-alist
