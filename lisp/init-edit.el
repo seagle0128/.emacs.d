@@ -102,7 +102,10 @@
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0))
   :hook (after-init . avy-setup-default)
-  :config (setq avy-background t))
+  :config (setq avy-all-windows nil
+                avy-all-windows-alt t
+                avy-background t
+                avy-style 'pre))
 
 ;; Kill text between the point and the character CHAR
 (use-package avy-zap
