@@ -84,11 +84,6 @@
          ("C-c c w" . counsel-colors-web)
          ("C-c c z" . counsel-fzf)
 
-         ;; Find counsel commands quickly
-         ("<f6>" . (lambda ()
-                     (interactive)
-                     (counsel-M-x "^counsel-")))
-
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
 

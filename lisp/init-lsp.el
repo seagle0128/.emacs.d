@@ -95,6 +95,8 @@
    ;; Debug
    (use-package dap-mode
      :diminish
+     :bind (:map lsp-mode-map
+            ("<f6>" . dap-hydra))
      :hook ((after-init . dap-mode)
             (dap-mode . dap-ui-mode)
 
