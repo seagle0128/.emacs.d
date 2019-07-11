@@ -94,16 +94,18 @@
 
    ;; Debug
    (use-package dap-mode
-     :after lsp-mode
      :diminish
      :hook ((after-init . dap-mode)
             (dap-mode . dap-ui-mode)
 
             (python-mode . (lambda () (require 'dap-python)))
+            (ruby-mode . (lambda () (require 'dap-ruby)))
             (go-mode . (lambda () (require 'dap-go)))
             (java-mode . (lambda () (require 'dap-java)))
             ((c-mode c++-mode objc-mode swift) . (lambda () (require 'dap-lldb)))
-            (php-mode . (lambda () (require 'dap-php)))))
+            (php-mode . (lambda () (require 'dap-php)))
+            (elixir-mode . (lambda () (require 'dap-elixir)))
+            ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))))
 
    ;; `lsp-mode' and `treemacs' integration.
    (when emacs/>=25.2p
