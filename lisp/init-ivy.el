@@ -181,7 +181,12 @@
                               (buffer-string))))))
         (when future
           (save-excursion
-            (insert (propertize (substring-no-properties future 3 -3) 'face 'shadow)))
+            (insert (propertize (replace-regexp-in-string
+                                 "\\\\_<" ""
+                                 (replace-regexp-in-string
+                                  "\\\\_>" ""
+                                  future))
+                                'face 'shadow)))
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
