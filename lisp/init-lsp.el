@@ -95,10 +95,14 @@
    ;; Debug
    (use-package dap-mode
      :diminish
+     :functions dap-hydra/nil
      :bind (:map lsp-mode-map
-            ("<f6>" . dap-hydra))
+            ("<f6>" . dap-debug)
+            ("C-<f6>" . dap-hydra))
      :hook ((after-init . dap-mode)
             (dap-mode . dap-ui-mode)
+            (dap-session-created . (lambda (&_rest) (dap-hydra)))
+            (dap-terminated . (lambda (&_rest) (dap-hydra/nil)))
 
             (python-mode . (lambda () (require 'dap-python)))
             (ruby-mode . (lambda () (require 'dap-ruby)))
