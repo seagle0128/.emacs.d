@@ -83,7 +83,9 @@
                 (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
 ;; Better term
+;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and (executable-find "cmake")
+           (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
     :init (defalias #'term #'vterm)))
