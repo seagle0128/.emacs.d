@@ -50,11 +50,9 @@
       ;; Start a new `grip' process.
       (start-process program buffer program (buffer-file-name) port)
       (sleep-for 1) ; wait for process start
-      (browse-url (format "http://localhost:%s/%s.%s"
+      (browse-url (format "http://localhost:%s/%s"
                           port
-                          (file-name-base)
-                          (file-name-extension
-                           (buffer-file-name))))))
+                          (file-name-nondirectory (buffer-file-name))))))
 
   (defun markdown-preview-kill-grip (&optional buffer)
     "Kill `grip' process."
