@@ -129,7 +129,16 @@
 
   ;; Replace default `list-packages'
   (defadvice list-packages (before my-list-packages activate)
-    (paradox-enable)))
+    (paradox-enable))
+  :config
+  (when (fboundp 'page-break-lines-mode)
+    (add-hook 'paradox-after-execute-functions
+              (lambda (&rest _)
+                (let ((buf (get-buffer-create "*Paradox Report*"))
+                      (inhibit-read-only t))
+                  (with-current-buffer buf
+                    (page-break-lines-mode 1))))
+              t)))
 
 (provide 'init-package)
 

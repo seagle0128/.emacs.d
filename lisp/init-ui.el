@@ -64,7 +64,7 @@
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
     (setq-default mode-line-format nil))
-  :config
+
   (setq doom-modeline-major-mode-color-icon t
         doom-modeline-minor-modes nil
         doom-modeline-mu4e nil))
