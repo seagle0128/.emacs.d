@@ -31,58 +31,44 @@
 ;;; Code:
 
 (use-package elfeed
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square")
+    :color red :quit-key "q")
+   ("Search"
+    (("g" elfeed-search-update--force "refresh")
+     ("G" elfeed-search-fetch "update")
+     ("y" elfeed-search-yank "copy URL")
+     ("+" elfeed-search-tag-all "tag all")
+     ("-" elfeed-search-untag-all "untag all")
+     ("Q" elfeed-search-quit-window "quit" :exit t))
+    "Filter"
+    (("s" elfeed-search-live-filter "live filter")
+     ("S" elfeed-search-set-filter "set filter")
+     ("*" (elfeed-search-set-filter "@6-months-ago +star") "starred")
+     ("A" (elfeed-search-set-filter "@6-months-ago" "all"))
+     ("T" (elfeed-search-set-filter "@1-day-ago" "today")))
+    "Article"
+    (("b" elfeed-search-browse-url "browse")
+     ("n" next-line "next")
+     ("p" previous-line "previous")
+     ("u" elfeed-search-tag-all-unread "mark read")
+     ("r" elfeed-search-untag-all-unread "mark unread")
+     ("RET" elfeed-search-show-entry "show"))))
   :bind (("C-x w" . elfeed)
+         :map elfeed-search-mode-map
+         ("?" . elfeed-hydra/body)
          :map elfeed-show-mode-map
          ("o" . ace-link)
          ("q" . delete-window))
   :config
   (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
         elfeed-show-entry-switch #'pop-to-buffer
-        elfeed-show-entry-delete #'delete-window)
-
-  (setq elfeed-feeds
-        '("http://planet.emacsen.org/atom.xml"
-          "http://www.masteringemacs.org/feed/"
-          "https://oremacs.com/atom.xml"
-          "https://pinecast.com/feed/emacscast"
-          "https://www.reddit.com/r/emacs.rss"))
-
-  (defhydra hydra-elfeed (:color red :hint none)
-    "
-^Search^                   ^Filter^                 ^Article^
-^^─────────────────────────^^───────────────────────^^────────────────────
-_g_: Refresh               _s_: Live filter         _b_: Browse
-_G_: Update                _S_: Set filter          _n_/_C-n_: Next
-_y_: Copy URL              _*_: Starred             _p_/_C-p_: Previous
-_+_: Tag all               _A_: All                 _u_: Mark read
-_-_: Untag all             _T_: Today               _r_: Mark unread
-_Q_: Quit
-"
-    ("G" elfeed-search-fetch)
-    ("Q" elfeed-search-quit-window :exit t)
-    ("S" elfeed-search-set-filter)
-    ("A" (elfeed-search-set-filter "@6-months-ago"))
-    ("T" (elfeed-search-set-filter "@1-day-ago"))
-    ("*" (elfeed-search-set-filter "@6-months-ago +star"))
-    ("+" elfeed-search-tag-all)
-    ("-" elfeed-search-untag-all)
-    ("b" elfeed-search-browse-url)
-    ("g" elfeed-search-update--force)
-    ("n" next-line)
-    ("C-n" next-line)
-    ("p" previous-line)
-    ("C-p" previous-line)
-    ("r" elfeed-search-untag-all-unread)
-    ("s" elfeed-search-live-filter)
-    ("u" elfeed-search-tag-all-unread)
-    ("y" elfeed-search-yank)
-    ("RET" elfeed-search-show-entry)
-    ("q" nil "quit" :exit t)
-    ("C-g" nil "quit" :exit t))
-  (bind-keys
-   :map elfeed-search-mode-map
-   ("h" . hydra-elfeed/body)
-   ("?" . hydra-elfeed/body)))
+        elfeed-show-entry-delete #'delete-window
+        elfeed-feeds '("http://planet.emacsen.org/atom.xml"
+                       "http://www.masteringemacs.org/feed/"
+                       "https://oremacs.com/atom.xml"
+                       "https://pinecast.com/feed/emacscast"
+                       "https://www.reddit.com/r/emacs.rss")))
 
 (provide 'init-elfeed)
 

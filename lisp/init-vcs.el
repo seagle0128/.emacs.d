@@ -79,58 +79,36 @@
 (use-package smerge-mode
   :ensure nil
   :diminish
-  :commands (smerge-mode
-             smerge-auto-leave
-             smerge-next
-             smerge-prev
-             smerge-keep-base
-             smerge-keep-upper
-             smerge-keep-lower
-             smerge-keep-all
-             smerge-keep-current
-             smerge-keep-current
-             smerge-diff-base-upper
-             smerge-diff-upper-lower
-             smerge-diff-base-lower
-             smerge-refine
-             smerge-ediff
-             smerge-combine-with-next
-             smerge-resolve
-             smerge-kill-current)
-  :preface
-  (defhydra hydra-smerge
-    (:color red :hint none :post (smerge-auto-leave))
-    "
-^Move^       ^Keep^               ^Diff^                 ^Other^
-^^──────────-^^───────────────────^^─────────────────────^^──────────────────
-_n_ext       _b_ase               _<_: upper/base        _C_ombine
-_p_rev       _u_pper              _=_: upper/lower       _r_esolve
-^^           _l_ower              _>_: base/lower        _k_ill current
-^^           _a_ll                _R_efine               _ZZ_: Save and bury
-^^           _RET_: current       _E_diff                _q_: cancel
-"
-    ("n" smerge-next)
-    ("p" smerge-prev)
-    ("b" smerge-keep-base)
-    ("u" smerge-keep-upper)
-    ("l" smerge-keep-lower)
-    ("a" smerge-keep-all)
-    ("RET" smerge-keep-current)
-    ("\C-m" smerge-keep-current)
-    ("<" smerge-diff-base-upper)
-    ("=" smerge-diff-upper-lower)
-    (">" smerge-diff-base-lower)
-    ("R" smerge-refine)
-    ("E" smerge-ediff)
-    ("C" smerge-combine-with-next)
-    ("r" smerge-resolve)
-    ("k" smerge-kill-current)
-    ("ZZ" (lambda ()
-            (interactive)
-            (save-buffer)
-            (bury-buffer))
-     "Save and bury buffer" :color blue)
-    ("q" nil "cancel" :color blue))
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Smerge" 'octicon "diff")
+    :color red :quit-key "q")
+   ("Move"
+    (("n" smerge-next "next")
+     ("p" smerge-prev "previous"))
+    "Keep"
+    (("b" smerge-keep-base "base")
+     ("u" smerge-keep-upper "upper")
+     ("l" smerge-keep-lower "lower")
+     ("a" smerge-keep-all "all")
+     ("RET" smerge-keep-current "current")
+     ("C-m" smerge-keep-current "current"))
+    "Diff"
+    (("<" smerge-diff-base-upper "upper/base")
+     ("=" smerge-diff-upper-lower "upper/lower")
+     (">" smerge-diff-base-lower "upper/lower")
+     ("R" smerge-refine "refine")
+     ("E" smerge-ediff "ediff"))
+    "Other"
+    (("C" smerge-combine-with-next "combine")
+     ("r" smerge-resolve "resolve")
+     ("k" smerge-kill-current "kill")
+     ("ZZ" (lambda ()
+             (interactive)
+             (save-buffer)
+             (bury-buffer))
+      "Save and bury buffer" :exit t))))
+  :bind (:map smerge-mode-map
+         ("C-c m" . smerge-mode-hydra/body))
   :hook ((find-file . (lambda ()
                         (save-excursion
                           (goto-char (point-min))

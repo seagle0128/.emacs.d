@@ -263,9 +263,6 @@
   :hook (after-init . global-hungry-delete-mode)
   :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
-;; Make bindings that stick around
-(use-package hydra)
-
 ;; Framework for mode-specific buffer indexes
 (use-package imenu
   :ensure nil
@@ -325,36 +322,32 @@
 
 ;; Flexible text folding
 (use-package origami
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Origami" 'octicon "fold")
+    :color blue
+    :quit-key "q")
+   ("Node"
+    ((":" origami-recursively-toggle-node "toggle recursively")
+     ("a" origami-toggle-all-nodes "toggle all")
+     ("t" origami-toggle-node "toggle current")
+     ("o" origami-show-only-node "only show current"))
+    "Actions"
+    (("u" origami-undo "undo")
+     ("r" origami-redo "redo")
+     ("R" origami-reset "reset"))))
+  :bind (:map origami-mode-map
+         ("C-`" . origami-hydra/body))
   :hook (prog-mode . origami-mode)
   :init (setq origami-show-fold-header t)
-  :bind (:map origami-mode-map
-         ("C-`" . hydra-origami/body))
   :config
   (face-spec-reset-face 'origami-fold-header-face)
 
+  ;; Support LSP
   (when centaur-lsp
-    ;; Support LSP
     (use-package lsp-origami
       :hook (origami-mode . (lambda ()
                               (if (bound-and-true-p lsp-mode)
-                                  (lsp-origami-mode))))))
-
-  (defhydra hydra-origami (:color blue :hint none)
-    "
-^Node^                     ^Other^
-^^─────────────────────────^^────────────
-_:_: toggle recursively    _u_: undo
-_a_: toggle all            _r_: redo
-_t_: toggle current        _R_: reset
-_o_: only show current
-"
-    (":" origami-recursively-toggle-node)
-    ("a" origami-toggle-all-nodes)
-    ("t" origami-toggle-node)
-    ("o" origami-show-only-node)
-    ("u" origami-undo)
-    ("r" origami-redo)
-    ("R" origami-reset)))
+                                  (lsp-origami-mode)))))))
 
 ;; Open files as another user
 (unless sys/win32p

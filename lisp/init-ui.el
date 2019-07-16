@@ -267,6 +267,22 @@
            ("S-s-<return>" . toggle-frame-fullscreen)
            ("M-S-<return>" . toggle-frame-fullscreen))
 
+;; Nice looking hydras
+(use-package pretty-hydra
+  :demand
+  :config
+  (defun pretty-hydra-title (title &optional icon-type icon-name face)
+    "Pretty hydra title."
+    (let ((title-face (or face 'all-the-icons-blue)))
+      (concat
+       (when (and (display-graphic-p) icon-type icon-name)
+         (let ((f (intern (format "all-the-icons-%s" icon-type))))
+           (when (fboundp f)
+             (concat
+              (apply f (list icon-name :face title-face :v-adjust 0.0))
+              " "))))
+       (propertize title 'face title-face)))))
+
 (provide 'init-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

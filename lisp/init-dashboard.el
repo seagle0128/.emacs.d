@@ -49,6 +49,32 @@
                 winner-undo
                 widget-forward)
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+    :pretty-hydra
+    ((:title (pretty-hydra-title "Dashboard" 'octicon "dashboard")
+      :color red :quit-key "q")
+     ("Navigator"
+      (("U" update-config-and-packages "update" :exit t)
+       ("H" browse-homepage "homepage" :exit t)
+       ("R" restore-session "recover session" :exit t)
+       ("L" persp-load-state-from-file "list sessions" :exit t)
+       ("S" open-custom-file "settings" :exit t))
+      "Section"
+      (("}" dashboard-next-section "next")
+       ("{" dashboard-previous-section "previous")
+       ("r" dashboard-goto-recent-files "recent files")
+       ("m" dashboard-goto-bookmarks "projects")
+       ("p" dashboard-goto-projects "bookmarks"))
+      "Item"
+      (("RET" widget-button-press "open" :exit t)
+       ("<tab>" widget-forward "next")
+       ("C-i" widget-forward "next")
+       ("<backtab>" widget-backward "previous")
+       ("C-n" next-line "next line")
+       ("C-p" previous-line "previous  line"))
+      "Misc"
+      (("<f2>" open-dashboard "open" :exit t)
+       ("g" dashboard-refresh-buffer "refresh" :exit t)
+       ("Q" quit-dashboard "quit" :exit t))))
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
@@ -56,7 +82,9 @@
            ("L" . persp-load-state-from-file)
            ("S" . open-custom-file)
            ("U" . update-config-and-packages)
-           ("q" . quit-dashboard))
+           ("q" . quit-dashboard)
+           ("h" . dashboard-hydra/body)
+           ("?" . dashboard-hydra/body))
     :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
     :init (dashboard-setup-startup-hook)
     :config
@@ -179,43 +207,7 @@
     (defun dashboard-goto-bookmarks ()
       "Go to bookmarks."
       (interactive)
-      (funcall (local-key-binding "m")))
-
-    (defhydra hydra-dashboard (:color red :hint none)
-      "
-^Head^               ^Section^            ^Item^                  ^Dashboard^
-^^───────────────────^^───────────────────^^──────────────────────^^───────────────
-_U_pdate             _}_: Next            _RET_: Open             _<f2>_: Open
-_H_omePage           _{_: Previous        _<tab>_/_C-i_: Next       _Q_: Quit
-_R_ecover session    _r_: Recent Files    _<backtab>_: Previous
-_L_ist sessions      _m_: Bookmarks       _C-n_: Next line
-_S_ettings           _p_: Projects        _C-p_: Previous Line
-"
-      ("<tab>" widget-forward)
-      ("C-i" widget-forward)
-      ("<backtab>" widget-backward)
-      ("RET" widget-button-press :exit t)
-      ("g" dashboard-refresh-buffer :exit t)
-      ("}" dashboard-next-section)
-      ("{" dashboard-previous-section)
-      ("r" dashboard-goto-recent-files)
-      ("p" dashboard-goto-projects)
-      ("m" dashboard-goto-bookmarks)
-      ("H" browse-homepage :exit t)
-      ("R" restore-session :exit t)
-      ("L" persp-load-state-from-file :exit t)
-      ("S" open-custom-file :exit t)
-      ("U" update-config-and-packages :exit t)
-      ("C-n" next-line)
-      ("C-p" previous-line)
-      ("<f2>" open-dashboard :exit t)
-      ("Q" quit-dashboard :exit t)
-      ("q" nil "quit")
-      ("C-g" nil "quit"))
-    (bind-keys
-     :map dashboard-mode-map
-     ("h" . hydra-dashboard/body)
-     ("?" . hydra-dashboard/body))))
+      (funcall (local-key-binding "m")))))
 
 (provide 'init-dashboard)
 
