@@ -97,8 +97,8 @@
      :diminish
      :functions dap-hydra/nil
      :bind (:map lsp-mode-map
-            ("<f6>" . dap-debug)
-            ("C-<f6>" . dap-hydra))
+            ("<f5>" . dap-debug)
+            ("M-<f5>" . dap-hydra))
      :hook ((after-init . dap-mode)
             (dap-mode . dap-ui-mode)
             (dap-session-created . (lambda (&_rest) (dap-hydra)))

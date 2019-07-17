@@ -33,14 +33,13 @@
 (use-package elfeed
   :pretty-hydra
   ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square")
-    :color red :quit-key "q")
+    :color amaranth :quit-key "q")
    ("Search"
     (("g" elfeed-search-update--force "refresh")
      ("G" elfeed-search-fetch "update")
      ("y" elfeed-search-yank "copy URL")
      ("+" elfeed-search-tag-all "tag all")
-     ("-" elfeed-search-untag-all "untag all")
-     ("Q" elfeed-search-quit-window "quit" :exit t))
+     ("-" elfeed-search-untag-all "untag all"))
     "Filter"
     (("s" elfeed-search-live-filter "live filter")
      ("S" elfeed-search-set-filter "set filter")
@@ -51,8 +50,8 @@
     (("b" elfeed-search-browse-url "browse")
      ("n" next-line "next")
      ("p" previous-line "previous")
-     ("u" elfeed-search-tag-all-unread "mark read")
-     ("r" elfeed-search-untag-all-unread "mark unread")
+     ("u" elfeed-search-tag-all-unread "mark unread")
+     ("r" elfeed-search-untag-all-unread "mark read")
      ("RET" elfeed-search-show-entry "show"))))
   :bind (("C-x w" . elfeed)
          :map elfeed-search-mode-map

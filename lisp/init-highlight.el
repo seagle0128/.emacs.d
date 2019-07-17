@@ -90,10 +90,9 @@
       (highlight-indent-guides-mode
        (or (and highlight-indent-guides-mode -1) 1)))
     (defalias #'centaur-toggle-highlight-indent #'toggle-highlight-indent)
+    :init (setq highlight-indent-guides-method 'character
+                highlight-indent-guides-responsive 'top)
     :config
-    (setq highlight-indent-guides-method 'character)
-    (setq highlight-indent-guides-responsive 'top)
-
     ;; Don't display first level of indentation
     (defun my-indent-guides-for-all-but-first-column (level responsive display)
       (unless (< level 1)
@@ -117,12 +116,6 @@
   :diminish
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
   :bind ("C-<f9>" . toggle-rainbow)
-  :init
-  (defun toggle-rainbow ()
-    "Colorize color names in buffers or not."
-    (interactive)
-    (rainbow-mode (or (and rainbow-mode -1) 1)))
-  (defalias #'centaur-toggle-rainbow #'toggle-rainbow)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420

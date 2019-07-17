@@ -333,8 +333,8 @@
      ("o" origami-show-only-node "only show current"))
     "Actions"
     (("u" origami-undo "undo")
-     ("r" origami-redo "redo")
-     ("R" origami-reset "reset"))))
+     ("d" origami-redo "redo")
+     ("r" origami-reset "reset"))))
   :bind (:map origami-mode-map
          ("C-`" . origami-hydra/body))
   :hook (prog-mode . origami-mode)

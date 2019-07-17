@@ -57,9 +57,7 @@
         (fancy-widen))
     (revert-buffer t t)
     (message "Reverted this buffer.")))
-(bind-key "<f5>" #'revert-this-buffer)
-(if sys/mac-x-p
-    (bind-key "s-r" #'revert-this-buffer))
+(bind-key "s-r" #'revert-this-buffer)
 
 ;; Mode line
 (defun mode-line-height ()

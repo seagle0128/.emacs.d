@@ -105,6 +105,15 @@
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)))
 
+(defun centuar-dark-theme-p ()
+  "Check if the current theme is a dark theme."
+  (eq (frame-parameter nil 'background-mode) 'dark))
+
+(defun centaur-toggle-theme()
+  "Toggle dark and light theme."
+  (interactive)
+  (centaur-load-theme (if (centuar-dark-theme-p) 'light 'default)))
+
 (if (is-doom-theme-p centaur-theme)
     (progn
       (use-package doom-themes
@@ -137,7 +146,7 @@
     (ignore-errors (centaur-load-theme centaur-theme))))
 
 ;; Icons
-;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
+;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
 (use-package all-the-icons
   :if (display-graphic-p)
   :init (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
@@ -270,6 +279,7 @@
 ;; Nice looking hydras
 (use-package pretty-hydra
   :demand
+  :bind ("<f6>" . toggles-hydra/body)
   :config
   (defun pretty-hydra-title (title &optional icon-type icon-name face)
     "Pretty hydra title."
@@ -281,7 +291,34 @@
              (concat
               (apply f (list icon-name :face title-face :v-adjust 0.0))
               " "))))
-       (propertize title 'face title-face)))))
+       (propertize title 'face title-face))))
+
+  (pretty-hydra-define toggles-hydra
+    (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
+     :color amaranth :quit-key "q")
+    ("Basic"
+     (("d" centaur-toggle-theme "dark theme" :toggle (centuar-dark-theme-p))
+      ("n" display-line-numbers-mode "line number" :toggle t)
+      ("N" linum-mode "legacy line number" :toggle t)
+      ("w" show-trailing-whitespace "whitespace" :toggle t)
+      ("W" delete-trailing-whitespace "whitespace cleanup" :toggle t)
+      ("r" rainbow-mode "rainbow" :toggle t)
+      ("L" page-break-lines-mode "page break lines" :toggle t))
+     "Highlight"
+     (("i" highlight-indent-guides-mode "indentation" :toggle t)
+      ("l" hl-line-mode "line" :toggle t)
+      ("p" show-paren-mode "paren" :toggle t)
+      ("R" rainbow-delimiters-mode "delimiter" :toggle t)
+      ("s" symbol-overlay-mode "symbol" :toggle t)
+      ("t" hl-todo-mode "todo" :toggle t)
+      ("v" diff-hl-mode "vcs" :toggle t)
+      ("V" diff-hl-margin-mode "vcs margin" :toggle t))
+     "Coding"
+     (("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
+      ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit))
+      ("S" prettify-symbols-mode "pretty symbol" :toggle t)
+      ("f" flycheck-mode "flycheck" :toggle t)
+      ("F" flymake-mode "flymake" :toggle t)))))
 
 (provide 'init-ui)
 

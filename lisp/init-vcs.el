@@ -81,7 +81,7 @@
   :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "Smerge" 'octicon "diff")
-    :color red :quit-key "q")
+    :color pink :quit-key "q")
    ("Move"
     (("n" smerge-next "next")
      ("p" smerge-prev "previous"))
