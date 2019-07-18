@@ -107,7 +107,6 @@
 (use-package rainbow-mode
   :diminish
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
-  :bind ("C-<f9>" . toggle-rainbow)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
