@@ -290,9 +290,8 @@
               " "))))
        (propertize title 'face face))))
 
-  (pretty-hydra-define toggles-hydra
-    (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
-     :color amaranth :quit-key "q")
+  (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
+                                      :color amaranth :quit-key "q")
     ("Basic"
      (("n" display-line-numbers-mode "line number" :toggle t)
       ("N" linum-mode "legacy line number" :toggle t)
@@ -317,7 +316,6 @@
       ("F" flymake-mode "flymake" :toggle t)
       ("o" origami-mode "folding" :toggle t)
       ("O" hs-minor-mode "hideshow" :toggle t)
-      ("T" treemacs "file explorer" :toggle (eq (treemacs-current-visibility) 'visible))
       ("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
       ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
      "Version Control"
@@ -327,9 +325,8 @@
       ("e" diff-hl-dired-mode "dired gutter" :toggle t))))
 
   (with-eval-after-load 'doom-modeline
-    (pretty-hydra-define doom-modeline-hydra
-      (:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
-       :color amaranth :quit-key "q")
+    (pretty-hydra-define doom-modeline-hydra (:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
+                                              :color amaranth :quit-key "q")
       ("Icon"
        (("i" (setq doom-modeline-icon (not doom-modeline-icon)) "display" :toggle doom-modeline-icon)
         ("m" (setq doom-modeline-major-mode-icon (not doom-modeline-major-mode-icon))
