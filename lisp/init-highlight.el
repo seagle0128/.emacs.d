@@ -161,7 +161,7 @@
   (defun my-diff-hl-fringe-bmp-function (_type _pos)
     "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
     (define-fringe-bitmap 'my-diff-hl-bmp
-      (vector #b11100000)
+      (vector (if sys/macp #b11100000 #b11111100))
       1 8
       '(center t)))
   (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
