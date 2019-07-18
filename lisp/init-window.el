@@ -104,7 +104,10 @@
     (("+" text-scale-increase "in")
      ("=" text-scale-increase "in")
      ("-" text-scale-decrease "out")
-     ("0" (text-scale-increase 0) "reset"))))
+     ("0" (text-scale-increase 0) "reset"))
+    "Appearance"
+    (("F" set-frame-font "font")
+     ("T" centaur-load-theme "theme"))))
   :custom-face
   (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 3.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
