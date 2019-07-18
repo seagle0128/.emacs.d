@@ -80,8 +80,7 @@
             (if this-win-2nd (other-window 1))))))
   :pretty-hydra
   ((:title (pretty-hydra-title "Window Management" 'faicon "windows")
-    :foreign-keys warn
-    :quit-key "q")
+    :foreign-keys warn :quit-key "q")
    ("Actions"
     (("TAB" other-window "switch")
      ("x" ace-delete-window "delete")

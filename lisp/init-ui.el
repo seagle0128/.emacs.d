@@ -109,11 +109,6 @@
   "Check if the current theme is a dark theme."
   (eq (frame-parameter nil 'background-mode) 'dark))
 
-(defun centaur-toggle-theme()
-  "Toggle dark and light theme."
-  (interactive)
-  (centaur-load-theme (if (centuar-dark-theme-p) 'light 'default)))
-
 (if (is-doom-theme-p centaur-theme)
     (progn
       (use-package doom-themes
@@ -283,7 +278,7 @@
   :config
   (defun pretty-hydra-title (title &optional icon-type icon-name face height v-adjust)
     "Pretty hydra title."
-    (let ((face (or face 'all-the-icons-blue))
+    (let ((face (or face '(:inherit highlight :inverse-video t)))
           (height (or height 1.0))
           (v-adjust (or v-adjust 0.0)))
       (concat
@@ -299,28 +294,37 @@
     (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
      :color amaranth :quit-key "q")
     ("Basic"
-     (("d" centaur-toggle-theme "dark theme" :toggle (centuar-dark-theme-p))
-      ("n" display-line-numbers-mode "line number" :toggle t)
+     (("n" display-line-numbers-mode "line number" :toggle t)
       ("N" linum-mode "legacy line number" :toggle t)
-      ("w" (setq show-trailing-whitespace (not show-trailing-whitespace))
-       "whitespace" :toggle show-trailing-whitespace)
-      ("r" rainbow-mode "rainbow" :toggle t)
+      ("a" aggressive-indent-mode "aggressive indent" :toggle t)
+      ("h" hungry-delete-mode "hungry delete" :toggle t)
+      ("d" (centaur-load-theme (if (centuar-dark-theme-p) 'light 'default))
+       "dark theme" :toggle (centuar-dark-theme-p))
+      ("S" prettify-symbols-mode "pretty symbol" :toggle t)
       ("L" page-break-lines-mode "page break lines" :toggle t))
      "Highlight"
-     (("i" highlight-indent-guides-mode "indentation" :toggle t)
-      ("l" hl-line-mode "line" :toggle t)
+     (("l" global-hl-line-mode "line" :toggle t)
       ("p" show-paren-mode "paren" :toggle t)
-      ("R" rainbow-delimiters-mode "delimiter" :toggle t)
       ("s" symbol-overlay-mode "symbol" :toggle t)
-      ("t" hl-todo-mode "todo" :toggle t)
-      ("v" diff-hl-mode "vcs" :toggle t)
-      ("V" diff-hl-margin-mode "vcs margin" :toggle t))
+      ("r" rainbow-mode "rainbow" :toggle t)
+      ("w" (setq show-trailing-whitespace (not show-trailing-whitespace))
+       "whitespace" :toggle show-trailing-whitespace)
+      ("R" rainbow-delimiters-mode "delimiter" :toggle t)
+      ("i" highlight-indent-guides-mode "indent" :toggle t)
+      ("t" hl-todo-mode "todo" :toggle t))
      "Coding"
-     (("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-      ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit))
-      ("S" prettify-symbols-mode "pretty symbol" :toggle t)
-      ("f" flycheck-mode "flycheck" :toggle t)
-      ("F" flymake-mode "flymake" :toggle t)))))
+     (("f" flycheck-mode "flycheck" :toggle t)
+      ("F" flymake-mode "flymake" :toggle t)
+      ("o" origami-mode "folding" :toggle t)
+      ("O" hs-minor-mode "hideshow" :toggle t)
+      ("T" treemacs "file explorer" :toggle (eq (treemacs-current-visibility) 'visible))
+      ("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
+      ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
+     "Version Control"
+     (("g" diff-hl-mode "gutter" :toggle t)
+      ("v" diff-hl-flydiff-mode "live gutter" :toggle t)
+      ("m" diff-hl-margin-mode "margin gutter" :toggle t)
+      ("e" diff-hl-dired-mode "dired gutter" :toggle t)))))
 
 (provide 'init-ui)
 

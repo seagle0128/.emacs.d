@@ -80,16 +80,8 @@
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
-    :disabled
     :diminish
-    :hook (prog-mode . highlight-indent-guides-mode)
-    :init
-    (defun toggle-highlight-indent ()
-      "Highlight indention in buffers or not."
-      (interactive)
-      (highlight-indent-guides-mode
-       (or (and highlight-indent-guides-mode -1) 1)))
-    (defalias #'centaur-toggle-highlight-indent #'toggle-highlight-indent)
+    ;; :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
                 highlight-indent-guides-responsive 'top)
     :config

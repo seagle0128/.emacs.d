@@ -324,8 +324,7 @@
 (use-package origami
   :pretty-hydra
   ((:title (pretty-hydra-title "Origami" 'octicon "fold")
-    :color blue
-    :quit-key "q")
+    :color blue :quit-key "q")
    ("Node"
     ((":" origami-recursively-toggle-node "toggle recursively")
      ("a" origami-toggle-all-nodes "toggle all")
