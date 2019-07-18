@@ -154,6 +154,7 @@
 (use-package diff-hl
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
+  :custom-face (diff-hl-change ((t (:foreground ,(face-background 'highlight)))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
