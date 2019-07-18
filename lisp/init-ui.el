@@ -281,17 +281,19 @@
   :demand
   :bind ("<f6>" . toggles-hydra/body)
   :config
-  (defun pretty-hydra-title (title &optional icon-type icon-name face)
+  (defun pretty-hydra-title (title &optional icon-type icon-name face height v-adjust)
     "Pretty hydra title."
-    (let ((title-face (or face 'all-the-icons-blue)))
+    (let ((face (or face 'all-the-icons-blue))
+          (height (or height 1.0))
+          (v-adjust (or v-adjust 0.0)))
       (concat
        (when (and (display-graphic-p) icon-type icon-name)
          (let ((f (intern (format "all-the-icons-%s" icon-type))))
            (when (fboundp f)
              (concat
-              (apply f (list icon-name :face title-face :v-adjust 0.0))
+              (apply f (list icon-name :face face :height height :v-adjust v-adjust))
               " "))))
-       (propertize title 'face title-face))))
+       (propertize title 'face face))))
 
   (pretty-hydra-define toggles-hydra
     (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
@@ -300,8 +302,8 @@
      (("d" centaur-toggle-theme "dark theme" :toggle (centuar-dark-theme-p))
       ("n" display-line-numbers-mode "line number" :toggle t)
       ("N" linum-mode "legacy line number" :toggle t)
-      ("w" show-trailing-whitespace "whitespace" :toggle t)
-      ("W" delete-trailing-whitespace "whitespace cleanup" :toggle t)
+      ("w" (setq show-trailing-whitespace (not show-trailing-whitespace))
+       "whitespace" :toggle show-trailing-whitespace)
       ("r" rainbow-mode "rainbow" :toggle t)
       ("L" page-break-lines-mode "page break lines" :toggle t))
      "Highlight"

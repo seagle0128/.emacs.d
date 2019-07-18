@@ -149,14 +149,12 @@
       (message "\"%s\" doesn't exist." dir))))
 (defalias 'centaur-update-org 'update-org)
 
-;; Create a new scratch buffer
 (defun create-scratch-buffer ()
   "Create a scratch buffer."
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*"))
   (lisp-interaction-mode))
 
-;; Save a file as UTF-8
 (defun save-buffer-as-utf8 (coding-system)
   "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
   (interactive "zCoding system for visited file (default nil):")
@@ -169,7 +167,6 @@
   (interactive)
   (save-buffer-as-utf8 'gbk))
 
-;; Recompile elpa directory
 (defun recompile-elpa ()
   "Recompile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
@@ -177,7 +174,6 @@
       (async-byte-recompile-directory package-user-dir)
     (byte-recompile-directory package-user-dir 0 t)))
 
-;; Recompile site-lisp directory
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
