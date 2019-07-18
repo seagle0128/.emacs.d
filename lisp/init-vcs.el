@@ -63,7 +63,22 @@
   (git-timemachine-minibuffer-author-face ((t (:inherit success))))
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
-         ("t" . git-timemachine)))
+         ("t" . git-timemachine))
+  :config
+  ;; FIXME: https://gitlab.com/pidu/git-timemachine/issues/77#note_193244221
+  (defun my-git-timemachine-show-commit ()
+    (interactive)
+    (let ((rev (car git-timemachine-revision)))
+      (if (fboundp 'magit-revision-mode)
+          (with-temp-buffer
+            (save-excursion
+              (magit-setup-buffer #'magit-revision-mode nil
+                (magit-buffer-revision rev)
+                (magit-buffer-range (format "%s^..%s" rev rev))
+                (magit-buffer-diff-args nil)
+                (magit-buffer-diff-files nil))))
+        (message "You need to install magit to show commit"))))
+  (advice-add #'git-timemachine-show-commit :override #'my-git-timemachine-show-commit))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
