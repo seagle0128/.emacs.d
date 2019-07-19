@@ -35,7 +35,9 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :defines (projectile-completion-system magit-completing-read-function recentf-list)
+  :defines (projectile-completion-system
+            magit-completing-read-function
+            recentf-list)
   :bind (("C-s" . swiper-isearch)
          ("s-f" . swiper)
          ("C-S-s" . swiper-all)
@@ -123,36 +125,21 @@
                    (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
 
-  ;; Build abbreviated recent file list.
-  (defun my-counsel-recentf ()
-    "Find a file on `recentf-list'."
-    (interactive)
-    (require 'recentf)
-    (recentf-mode)
-    (ivy-read "Recentf: " (mapcar #'abbreviate-file-name recentf-list)
-              :action (lambda (f)
-                        (with-ivy-window
-                          (find-file f)))
-              :require-match t
-              :caller 'counsel-recentf))
-  (advice-add #'counsel-recentf :override #'my-counsel-recentf)
-
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
-  (defvar my-ivy-fly-commands
-    '(query-replace-regexp
-      flush-lines
-      keep-lines
-      ivy-read
-      swiper
-      swiper-all
-      swiper-isearch
-      counsel-grep-or-swiper
-      counsel-grep
-      counsel-ack
-      counsel-ag
-      counsel-rg
-      counsel-pt))
+  (defvar my-ivy-fly-commands '(query-replace-regexp
+                                flush-lines
+                                keep-lines
+                                ivy-read
+                                swiper
+                                swiper-all
+                                swiper-isearch
+                                counsel-grep-or-swiper
+                                counsel-grep
+                                counsel-ack
+                                counsel-ag
+                                counsel-rg
+                                counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
     ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
@@ -230,16 +217,16 @@
 
   ;; Enhance fuzzy matching
   (use-package flx
-    :config (setq ivy-re-builders-alist
-                  '((swiper . ivy--regex-plus)
-                    (swiper-all . ivy--regex-plus)
-                    (swiper-isearch . ivy--regex-plus)
-                    (counsel-ag . ivy--regex-plus)
-                    (counsel-rg . ivy--regex-plus)
-                    (counsel-pt . ivy--regex-plus)
-                    (counsel-ack . ivy--regex-plus)
-                    (counsel-grep . ivy--regex-plus)
-                    (t . ivy--regex-fuzzy))))
+    :init (setq ivy-re-builders-alist
+                '((swiper . ivy--regex-plus)
+                  (swiper-all . ivy--regex-plus)
+                  (swiper-isearch . ivy--regex-plus)
+                  (counsel-ag . ivy--regex-plus)
+                  (counsel-rg . ivy--regex-plus)
+                  (counsel-pt . ivy--regex-plus)
+                  (counsel-ack . ivy--regex-plus)
+                  (counsel-grep . ivy--regex-plus)
+                  (t . ivy--regex-fuzzy))))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
@@ -305,29 +292,22 @@
           (ivy--regex-ignore-order str)))
     (defun my-pinyinlib-build-regexp-string (str)
       "Build a pinyin regexp sequence from STR."
-      (cond ((equal str ".*")
-             ".*")
-            (t
-             (pinyinlib-build-regexp-string str t))))
+      (cond ((equal str ".*") ".*")
+            (t (pinyinlib-build-regexp-string str t))))
     (defun my-pinyin-regexp-helper (str)
       "Construct pinyin regexp for STR."
-      (cond ((equal str " ")
-             ".*")
-            ((equal str "")
-             nil)
-            (t
-             str)))
+      (cond ((equal str " ") ".*")
+            ((equal str "") nil)
+            (t str)))
     (defun pinyin-to-utf8 (str)
-      (cond ((equal 0 (length str))
-             nil)
+      (cond ((equal 0 (length str)) nil)
             ((equal (substring str 0 1) "!")
              (mapconcat 'my-pinyinlib-build-regexp-string
                         (remove nil (mapcar 'my-pinyin-regexp-helper
                                             (split-string
                                              (replace-regexp-in-string "!" "" str ) "")))
                         ""))
-            (t
-             nil)))
+            (t nil)))
     :init
     (push '(swiper . ivy--regex-pinyin) ivy-re-builders-alist)
     (push '(swiper-all . ivy--regex-pinyin) ivy-re-builders-alist)
