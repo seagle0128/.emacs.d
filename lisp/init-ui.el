@@ -1,4 +1,4 @@
-;; init-ui.el --- Initialize ui configurations.	-*- lexical-binding: t -*-
+;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Visual (UI) configurations.
+;; Visual (UI) configurations for better lookings and appearances.
 ;;
 
 ;;; Code:
@@ -33,6 +33,8 @@
 (eval-when-compile
   (require 'init-const)
   (require 'init-custom))
+
+(require 'init-funcs)
 
 ;; Logo
 (setq fancy-splash-image centaur-logo)
@@ -67,49 +69,84 @@
 
   (setq doom-modeline-major-mode-color-icon t
         doom-modeline-minor-modes nil
-        doom-modeline-mu4e nil))
+        doom-modeline-mu4e nil)
+  :bind ("C-<f6>" . doom-modeline-hydra/body)
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
+    :color amaranth :quit-key "q")
+   ("Icon"
+    (("i" (setq doom-modeline-icon (not doom-modeline-icon))
+      "display icons" :toggle doom-modeline-icon)
+     ("m" (setq doom-modeline-major-mode-icon (not doom-modeline-major-mode-icon))
+      "major mode" :toggle doom-modeline-major-mode-icon)
+     ("c" (setq doom-modeline-major-mode-color-icon (not doom-modeline-major-mode-color-icon))
+      "colorful major mode" :toggle doom-modeline-major-mode-color-icon)
+     ("s" (setq doom-modeline-buffer-state-icon (not doom-modeline-buffer-state-icon))
+      "buffer state" :toggle doom-modeline-buffer-state-icon)
+     ("d" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
+      "modification" :toggle doom-modeline-buffer-modification-icon)
+     ("p" (setq doom-modeline-persp-name-icon (not doom-modeline-persp-name-icon))
+      "perspective" :toggle doom-modeline-persp-name-icon))
+    "Segment"
+    (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
+      "minor modes" :toggle doom-modeline-minor-modes)
+     ("W" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
+      "word count" :toggle doom-modeline-enable-word-count)
+     ("E" (setq doom-modeline-buffer-encoding (not doom-modeline-buffer-encoding))
+      "encoding" :toggle doom-modeline-buffer-encoding)
+     ("I" (setq doom-modeline-indent-info (not doom-modeline-indent-info))
+      "indent" :toggle doom-modeline-indent-info)
+     ("L" (setq doom-modeline-lsp (not doom-modeline-lsp))
+      "lsp" :toggle doom-modeline-lsp)
+     ("P" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
+      "perspective" :toggle doom-modeline-persp-name)
+     ("G" (setq doom-modeline-github (not doom-modeline-github))
+      "github" :toggle doom-modeline-github)
+     ("U" (setq doom-modeline-mu4e (not doom-modeline-mu4e))
+      "mu4e" :toggle doom-modeline-mu4e)
+     ("R" (setq doom-modeline-irc (not doom-modeline-irc))
+      "irc" :toggle doom-modeline-irc)
+     ("S" (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
+      "simple checker" :toggle doom-modeline-checker-simple-format)
+     ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
+      "version" :toggle doom-modeline-env-version))
+    "Style"
+    (("t u" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+      "truncate upto project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-upto-project))
+     ("t f" (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
+      "truncate from project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-from-project))
+     ("t w" (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+      "truncate with project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-with-project))
+     ("t e" (setq doom-modeline-buffer-file-name-style 'truncate-except-project)
+      "truncate except project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-except-project))
+     ("t r" (setq doom-modeline-buffer-file-name-style 'truncate-upto-root)
+      "truncate upto root"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-upto-root))
+     ("t a" (setq doom-modeline-buffer-file-name-style 'truncate-all)
+      "truncate all"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-all))
+     ("r f" (setq doom-modeline-buffer-file-name-style 'relative-from-project)
+      "relative from project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'relative-from-project))
+     ("r t" (setq doom-modeline-buffer-file-name-style 'relative-to-project)
+      "relative to project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'relative-to-project))
+     ("f" (setq doom-modeline-buffer-file-name-style 'file-name)
+      "file name"
+      :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
+     ("b" (setq doom-modeline-buffer-file-name-style 'buffer-name)
+      "buffer name"
+      :toggle (eq doom-modeline-buffer-file-name-style 'buffer-name))))))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
 
 ;; Theme
-(defvar after-load-theme-hook nil
-  "Hook run after a color theme is loaded using `load-theme'.")
-(defun run-after-load-theme-hook (&rest _)
-  "Run `after-load-theme-hook'."
-  (run-hooks 'after-load-theme-hook))
-(advice-add #'load-theme :after #'run-after-load-theme-hook)
-
-(defun standardize-theme (theme)
-  "Standardize THEME."
-  (pcase theme
-    ('default 'doom-one)
-    ('classic 'doom-molokai)
-    ('doom 'doom-one)
-    ('dark 'doom-Iosvkem)
-    ('light 'doom-one-light)
-    ('daylight 'doom-tomorrow-day)
-    (_ (or theme 'doom-one))))
-
-(defun is-doom-theme-p (theme)
-  "Check whether the THEME is a doom theme. THEME is a symbol."
-  (string-prefix-p "doom" (symbol-name (standardize-theme theme))))
-
-(defun centaur-load-theme (theme)
-  "Set color THEME."
-  (interactive
-   (list
-    (intern (completing-read "Load theme: "
-                             '(default classic dark light daylight)))))
-  (let ((theme (standardize-theme theme)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme t)))
-
-(defun centuar-dark-theme-p ()
-  "Check if the current theme is a dark theme."
-  (eq (frame-parameter nil 'background-mode) 'dark))
-
-(if (is-doom-theme-p centaur-theme)
+(if (centaur-compatible-theme-p centaur-theme)
     (progn
       (use-package doom-themes
         :init (centaur-load-theme centaur-theme)
@@ -138,6 +175,7 @@
         (advice-add #'persp-load-state-from-file
                     :after #'solaire-mode-restore-persp-mode-buffers)))
   (progn
+    (user-error "The current theme may not be compatible with Centaur!")
     (ignore-errors (centaur-load-theme centaur-theme))))
 
 ;; Icons
@@ -270,106 +308,6 @@
            ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
            ("S-s-<return>" . toggle-frame-fullscreen)
            ("M-S-<return>" . toggle-frame-fullscreen))
-
-;; Nice looking hydras
-(use-package pretty-hydra
-  :demand
-  :bind ("<f6>" . toggles-hydra/body)
-  :config
-  (defun pretty-hydra-title (title &optional icon-type icon-name face height v-adjust)
-    "Pretty hydra title."
-    (let ((face (or face '(:inherit highlight :inverse-video t)))
-          (height (or height 1.0))
-          (v-adjust (or v-adjust 0.0)))
-      (concat
-       (when (and (display-graphic-p) icon-type icon-name)
-         (let ((f (intern (format "all-the-icons-%s" icon-type))))
-           (when (fboundp f)
-             (concat
-              (apply f (list icon-name :face face :height height :v-adjust v-adjust))
-              " "))))
-       (propertize title 'face face))))
-
-  (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
-                                      :color amaranth :quit-key "q")
-    ("Basic"
-     (("n" display-line-numbers-mode "line number" :toggle t)
-      ("N" linum-mode "legacy line number" :toggle t)
-      ("a" aggressive-indent-mode "aggressive indent" :toggle t)
-      ("h" hungry-delete-mode "hungry delete" :toggle t)
-      ("d" (centaur-load-theme (if (centuar-dark-theme-p) 'light 'default))
-       "dark theme" :toggle (centuar-dark-theme-p))
-      ("S" prettify-symbols-mode "pretty symbol" :toggle t)
-      ("L" page-break-lines-mode "page break lines" :toggle t))
-     "Highlight"
-     (("l" global-hl-line-mode "line" :toggle t)
-      ("p" show-paren-mode "paren" :toggle t)
-      ("s" symbol-overlay-mode "symbol" :toggle t)
-      ("r" rainbow-mode "rainbow" :toggle t)
-      ("w" (setq show-trailing-whitespace (not show-trailing-whitespace))
-       "whitespace" :toggle show-trailing-whitespace)
-      ("R" rainbow-delimiters-mode "delimiter" :toggle t)
-      ("i" highlight-indent-guides-mode "indent" :toggle t)
-      ("t" hl-todo-mode "todo" :toggle t))
-     "Coding"
-     (("f" flycheck-mode "flycheck" :toggle t)
-      ("F" flymake-mode "flymake" :toggle t)
-      ("o" origami-mode "folding" :toggle t)
-      ("O" hs-minor-mode "hideshow" :toggle t)
-      ("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-      ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
-     "Version Control"
-     (("g" diff-hl-mode "gutter" :toggle t)
-      ("v" diff-hl-flydiff-mode "live gutter" :toggle t)
-      ("m" diff-hl-margin-mode "margin gutter" :toggle t)
-      ("e" diff-hl-dired-mode "dired gutter" :toggle t))))
-
-  (with-eval-after-load 'doom-modeline
-    (pretty-hydra-define doom-modeline-hydra (:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
-                                              :color amaranth :quit-key "q")
-      ("Icon"
-       (("i" (setq doom-modeline-icon (not doom-modeline-icon)) "display" :toggle doom-modeline-icon)
-        ("m" (setq doom-modeline-major-mode-icon (not doom-modeline-major-mode-icon))
-         "major mode" :toggle doom-modeline-major-mode-icon)
-        ("c" (setq doom-modeline-major-mode-color-icon (not doom-modeline-major-mode-color-icon))
-         "colorful major mode" :toggle doom-modeline-major-mode-color-icon)
-        ("s" (setq doom-modeline-buffer-state-icon (not doom-modeline-buffer-state-icon))
-         "buffer state" :toggle doom-modeline-buffer-state-icon)
-        ("d" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
-         "modification" :toggle doom-modeline-buffer-modification-icon)
-        ("p" (setq doom-modeline-persp-name-icon (not doom-modeline-persp-name-icon))
-         "perspective" :toggle doom-modeline-persp-name-icon))
-       "Segment"
-       (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
-         "minor modes" :toggle doom-modeline-minor-modes)
-        ("W" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
-         "word count" :toggle doom-modeline-enable-word-count)
-        ("E" (setq doom-modeline-buffer-encoding (not doom-modeline-buffer-encoding))
-         "encoding" :toggle doom-modeline-buffer-encoding)
-        ("I" (setq doom-modeline-indent-info (not doom-modeline-indent-info))
-         "indent" :toggle doom-modeline-indent-info)
-        ("P" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
-         "perspective" :toggle doom-modeline-persp-name)
-        ("L" (setq doom-modeline-lsp (not doom-modeline-lsp)) "lsp" :toggle doom-modeline-lsp)
-        ("G" (setq doom-modeline-github (not doom-modeline-github)) "github" :toggle doom-modeline-github)
-        ("U" (setq doom-modeline-mu4e (not doom-modeline-mu4e)) "mu4e" :toggle doom-modeline-mu4e)
-        ("R" (setq doom-modeline-irc (not doom-modeline-irc)) "irc" :toggle doom-modeline-irc)
-        ("S" (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
-         "simple checker" :toggle doom-modeline-checker-simple-format)
-        ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
-         "version" :toggle doom-modeline-env-version))
-       "Style"
-       (("tu" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project) "truncate upto project")
-        ("tf" (setq doom-modeline-buffer-file-name-style 'truncate-from-project) "truncate from project")
-        ("tw" (setq doom-modeline-buffer-file-name-style 'truncate-with-project) "truncate with project")
-        ("te" (setq doom-modeline-buffer-file-name-style 'truncate-except-project) "truncate except project")
-        ("tr" (setq doom-modeline-buffer-file-name-style 'truncate-upto-root) "truncate upto root")
-        ("ta" (setq doom-modeline-buffer-file-name-style 'truncate-all) "truncate all")
-        ("rf" (setq doom-modeline-buffer-file-name-style 'relative-from-project) "relative from project")
-        ("rt" (setq doom-modeline-buffer-file-name-style 'relative-to-project) "relative to project")
-        ("f" (setq doom-modeline-buffer-file-name-style 'file-name) "file name")
-        ("b" (setq doom-modeline-buffer-file-name-style 'buffer-name) "buffer name"))))
-    (bind-key "C-<f6>" #'doom-modeline-hydra/body)))
 
 (provide 'init-ui)
 

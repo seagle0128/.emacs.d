@@ -97,6 +97,7 @@
 ;; Preferences
 (require 'init-basic)
 (require 'init-funcs)
+(require 'init-hydra)
 
 (require 'init-ui)
 (require 'init-edit)
