@@ -204,8 +204,11 @@
   :bind ("<f7>" . olivetti-mode)
   :init (setq olivetti-body-width 0.618))
 
+;; Music player
+(use-package bongo
+  :bind ("C-<f9>" . bongo))
+
 ;; Misc
-(use-package bongo)                     ; music player
 (use-package copyit)                    ; copy path, url, etc.
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
