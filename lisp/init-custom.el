@@ -35,7 +35,8 @@
 
 (defgroup centaur nil
   "Centaur Emacs customizations."
-  :group 'convenience)
+  :group 'convenience
+  :link '(url-link :tag "Homepage" "https://github.com/seagle0128/.emacs.d"))
 
 (defcustom centaur-logo (expand-file-name "logo.png" user-emacs-directory)
   "Set Centaur logo. nil means official logo."

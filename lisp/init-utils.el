@@ -42,7 +42,11 @@
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
-  :functions (posframe-show posframe-hide)
+  :functions (posframe-show
+              posframe-hide)
+  :commands (youdao-dictionary-mode
+             youdao-dictionary--region-or-word
+             youdao-dictionary--format-result)
   :bind (("C-c y" . my-youdao-search-at-point)
          ("C-c Y" . youdao-dictionary-search-at-point))
   :config
@@ -206,7 +210,29 @@
 
 ;; Music player
 (use-package bongo
-  :bind ("C-<f9>" . bongo))
+  :functions (bongo-add-dired-files
+              dired-get-filename
+              dired-marker-regexp
+              dired-move-to-filename)
+  :commands (bongo-buffer
+             bongo-library-buffer-p
+             bongo-library-buffer)
+  :bind ("C-<f9>" . bongo)
+  :init
+  (with-eval-after-load 'dired
+    (defun bongo-add-dired-files ()
+      "Add marked files to Bongo library"
+      (interactive)
+      (bongo-buffer)
+      (let (file (files nil))
+        (dired-map-over-marks
+         (setq file (dired-get-filename)
+               files (append files (list file)))
+         nil t)
+        (with-bongo-library-buffer
+          (mapc 'bongo-insert-file files)))
+      (bongo-switch-buffers))
+    (bind-key "b" #'bongo-add-dired-files dired-mode-map)))
 
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
@@ -218,7 +244,7 @@
 (use-package list-environment)
 (use-package memory-usage)
 (use-package tldr)
-(use-package ztree)                     ; text mode directory tree. Similar with beyond compare
+(use-package ztree)                     ; text mode directory tree
 
 (provide 'init-utils)
 
