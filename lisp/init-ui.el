@@ -175,8 +175,8 @@
         (advice-add #'persp-load-state-from-file
                     :after #'solaire-mode-restore-persp-mode-buffers)))
   (progn
-    (user-error "The current theme may not be compatible with Centaur!")
-    (ignore-errors (centaur-load-theme centaur-theme))))
+    (warn "The current theme may not be compatible with Centaur!")
+    (centaur-load-theme centaur-theme)))
 
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
