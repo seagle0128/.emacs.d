@@ -39,6 +39,7 @@
             magit-completing-read-function
             recentf-list)
   :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch-backward)
          ("s-f" . swiper)
          ("C-S-s" . swiper-all)
 
