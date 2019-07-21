@@ -100,7 +100,26 @@
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'light)))
       ("y" (centaur-load-theme 'daylight) "daylight"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'daylight)))
-      ("T" (counsel-load-theme) "others")))))
+      ("T" (counsel-load-theme) "others"))
+     "Package Archive"
+     (("k m" (progn (setq centaur-package-archives 'melpa)
+                    (set-package-archives centaur-package-archives))
+       "melpa" :toggle (eq centaur-package-archives 'melpa))
+      ("k i" (progn (setq centaur-package-archives 'melpa-mirror)
+                    (set-package-archives centaur-package-archives))
+       "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror))
+      ("k c" (progn (setq centaur-package-archives 'emacs-china)
+                    (set-package-archives centaur-package-archives))
+       "emacs china" :toggle (eq centaur-package-archives 'emacs-china))
+      ("k n" (progn (setq centaur-package-archives 'netease)
+                    (set-package-archives centaur-package-archives))
+       "netease" :toggle (eq centaur-package-archives 'netease))
+      ("k t" (progn (setq centaur-package-archives 'tencent)
+                    (set-package-archives centaur-package-archives))
+       "tencent" :toggle (eq centaur-package-archives 'tencent))
+      ("k u" (progn (setq centaur-package-archives 'tuna)
+                    (set-package-archives centaur-package-archives))
+       "tuna" :toggle (eq centaur-package-archives 'tuna))))))
 
 (provide 'init-hydra)
 
