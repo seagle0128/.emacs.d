@@ -36,8 +36,12 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system
-            magit-completing-read-function
-            recentf-list)
+            magit-completing-read-function)
+  :functions (my-ivy-fly-time-travel
+              my-swiper-toggle-counsel-rg
+              my-swiper-toggle-rg-dwim)
+  :commands (ivy--format-function-generic
+             ivy--add-face)
   :bind (("C-s" . swiper-isearch)
          ("C-r" . swiper-isearch-backward)
          ("s-f" . swiper)
@@ -111,20 +115,31 @@
         ivy-on-del-error-function nil
         ivy-initial-inputs-alist nil)
 
+  (defun my-ivy-format-function-arrow (cands)
+    "Transform CANDS into a string for minibuffer."
+    (ivy--format-function-generic
+     (lambda (str)
+       (concat (if (display-graphic-p)
+                   (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
+                 ">")
+               (propertize " " 'display `(space :align-to 2))
+               (ivy--add-face str 'ivy-current-match)))
+     (lambda (str)
+       (concat (propertize " " 'display `(space :align-to 2)) str))
+     cands
+     "\n"))
+  (setq ivy-format-functions-alist '((t . my-ivy-format-function-arrow)))
+
   (setq swiper-action-recenter t)
 
   (setq counsel-find-file-at-point t
         counsel-yank-pop-separator "\n────────\n")
+
+  ;; Use faster search tool: ripgrep (rg)
+  (when (executable-find "rg")
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' %s"))
   :config
   (add-to-list 'ivy-format-functions-alist '(counsel-describe-face . counsel--faces-format-function))
-
-  ;; Use faster search tools: ripgrep or the silver search
-  (let ((cmd (cond ((executable-find "rg")
-                    "rg -S --no-heading --line-number --color never '%s' %s")
-                   ((executable-find "ag")
-                    "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
-                   (t counsel-grep-base-command))))
-    (setq counsel-grep-base-command cmd))
 
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
@@ -325,10 +340,15 @@
   :functions (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
               all-the-icons-icon-family
-              all-the-icons-match-to-alist
               all-the-icons-faicon
               all-the-icons-octicon
-              all-the-icons-dir-is-submodule)
+              all-the-icons-material
+              all-the-icons-match-to-alist
+              all-the-icons-auto-mode-match?
+              all-the-icons-dir-is-submodule
+              my-ivy-rich-bookmark-type)
+  :commands (ivy-rich-bookmark-filename
+             ivy-rich-bookmark-type)
   :preface
   (defun ivy-rich-bookmark-name (candidate)
     (car (assoc candidate bookmark-alist)))
@@ -374,7 +394,7 @@
             (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
           icon))))
 
-  (defun ivy-rich-dir-icon (candidate)
+  (defun ivy-rich-dir-icon (_candidate)
     "Display directory icons in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust 0.01)))
@@ -415,7 +435,7 @@
       (all-the-icons-faicon "archive" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-silver)))
 
   (when (display-graphic-p)
-    (defun ivy-rich-bookmark-type-plus (candidate)
+    (defun my-ivy-rich-bookmark-type (candidate)
       (let ((filename (file-local-name (ivy-rich-bookmark-filename candidate))))
         (cond ((null filename)
                (all-the-icons-material "block" :v-adjust -0.2 :face 'warning))  ; fixed #38
@@ -426,7 +446,7 @@
               ((file-directory-p filename)
                (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.05))
               (t (all-the-icons-icon-for-file (file-name-nondirectory filename) :height 0.9 :v-adjust -0.05)))))
-    (advice-add #'ivy-rich-bookmark-type :override #'ivy-rich-bookmark-type-plus))
+    (advice-add #'ivy-rich-bookmark-type :override #'my-ivy-rich-bookmark-type))
   :hook ((ivy-mode . ivy-rich-mode)
          (ivy-rich-mode . (lambda ()
                             (setq ivy-virtual-abbreviate
