@@ -132,9 +132,12 @@
                                 keep-lines
                                 ivy-read
                                 swiper
+                                swiper-backward
                                 swiper-all
                                 swiper-isearch
+                                swiper-isearch-backward
                                 counsel-grep-or-swiper
+                                counsel-grep-or-swiper-backward
                                 counsel-grep
                                 counsel-ack
                                 counsel-ag
