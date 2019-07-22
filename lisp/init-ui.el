@@ -65,6 +65,7 @@
   :init
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
+    (setq doom-modeline--old-format mode-line-format)
     (setq-default mode-line-format nil))
 
   (setq doom-modeline-major-mode-color-icon t
@@ -222,11 +223,6 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-blue)))
 
-;; Line and Column
-(setq-default fill-column 100)
-(setq column-number-mode t)
-(setq line-number-mode t)
-
 ;; Show native line numbers if possible, otherwise use linum
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
@@ -243,31 +239,9 @@
     (use-package hlinum
       :defines linum-highlight-in-all-buffersp
       :hook (global-linum-mode . hlinum-activate)
-      :custom-face (linum-highlight-face
-                    ((t `(
-                          :inherit default
-                          :background nil
-                          :foreground nil
-                          ))))
-      :init
-      (setq linum-highlight-in-all-buffersp t))))
-
-;; Mouse & Smooth Scroll
-;; Scroll one line at a time (less "jumpy" than defaults)
-(when (display-graphic-p)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-        mouse-wheel-progressive-speed nil))
-(setq scroll-step 1
-      scroll-margin 0
-      scroll-conservatively 100000)
-
-;; Display Time
-(use-package time
-  :ensure nil
-  :unless (display-graphic-p)
-  :hook (after-init . display-time-mode)
-  :init (setq display-time-24hr-format t
-              display-time-day-and-date t))
+      :custom-face
+      (linum-highlight-face ((t `(:inherit default :background nil :foreground nil))))
+      :init (setq linum-highlight-in-all-buffersp t))))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
@@ -281,15 +255,6 @@
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
-;; Misc
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq visible-bell t)
-(add-hook 'window-setup-hook #'size-indication-mode)
-;; (blink-cursor-mode -1)
-(setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
-(setq line-move-visual nil)
-(setq inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
-
 (when sys/macp
   ;; Render thinner fonts
   (setq ns-use-thin-smoothing t)
@@ -299,15 +264,6 @@
 ;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
-
-;; Fullscreen
-;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
-(when (and sys/mac-x-p emacs/>=26p)
-  (setq ns-use-native-fullscreen nil))
-(bind-keys ("C-<f11>" . toggle-frame-fullscreen)
-           ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
-           ("S-s-<return>" . toggle-frame-fullscreen)
-           ("M-S-<return>" . toggle-frame-fullscreen))
 
 (provide 'init-ui)
 

@@ -94,7 +94,7 @@
 (require 'init-package)
 
 ;; Preferences
-(require 'init-basic)
+(require 'init-base)
 (require 'init-funcs)
 (require 'init-hydra)
 

@@ -1,4 +1,4 @@
-;; init-basic.el --- Initialize basic configurations.	-*- lexical-binding: t -*-
+;; init-base.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Basic configuration.
+;; Better defaults.
 ;;
 
 ;;; Code:
@@ -43,15 +43,15 @@
  (sys/win32p
   ;; make PC keyboard's Win key or other to type Super or Hyper
   ;; (setq w32-pass-lwindow-to-system nil)
-  (setq w32-lwindow-modifier 'super)    ; Left Windows key
-  (setq w32-apps-modifier 'hyper)       ; Menu/App key
+  (setq w32-lwindow-modifier 'super     ; Left Windows key
+        w32-apps-modifier 'hyper)       ; Menu/App key
 
   ;; (w32-register-hot-key [s-])
   (w32-register-hot-key [s-t]))
  ((and sys/macp (eq window-system 'mac))
   ;; Compatible with Emacs Mac port
-  (setq mac-option-modifier 'meta)
-  (setq mac-command-modifier 'super)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super)
 
   (bind-keys ([(super a)] . mark-whole-buffer)
              ([(super c)] . kill-ring-save)
@@ -66,9 +66,9 @@
 (when (or sys/mac-x-p sys/linux-x-p)
   (use-package exec-path-from-shell
     :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    (setq exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH"))
-    (setq exec-path-from-shell-arguments '("-l"))
+    (setq exec-path-from-shell-check-startup-files nil
+          exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH")
+          exec-path-from-shell-arguments '("-l"))
     (exec-path-from-shell-initialize)))
 
 ;; Start server
@@ -85,8 +85,8 @@
   :ensure nil
   :hook (after-init . recentf-mode)
   :init
-  (setq recentf-max-saved-items 200)
-  (setq recentf-exclude '((expand-file-name package-user-dir)
+  (setq recentf-max-saved-items 200
+        recentf-exclude '((expand-file-name package-user-dir)
                           ".cache"
                           ".cask"
                           ".elfeed"
@@ -111,7 +111,46 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
-(provide 'init-basic)
+(use-package time
+  :ensure nil
+  :unless (display-graphic-p)
+  :hook (after-init . display-time-mode)
+  :init (setq display-time-24hr-format t
+              display-time-day-and-date t))
+
+;; Line and Column
+(setq-default fill-column 100)
+(setq column-number-mode t
+      line-number-mode t)
+
+;; Mouse & Smooth Scroll
+;; Scroll one line at a time (less "jumpy" than defaults)
+(when (display-graphic-p)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+        mouse-wheel-progressive-speed nil))
+(setq scroll-step 1
+      scroll-margin 0
+      scroll-conservatively 100000)
+
+;; Misc
+(fset 'yes-or-no-p 'y-or-n-p)
+(add-hook 'window-setup-hook #'size-indication-mode)
+;; (blink-cursor-mode -1)
+(setq visible-bell t
+      line-move-visual nil
+      track-eol t                       ; Keep cursor at end of lines. Require line-move-visual is nil.
+      inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
+
+;; Fullscreen
+;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
+(when (and sys/mac-x-p emacs/>=26p)
+  (setq ns-use-native-fullscreen nil))
+(bind-keys ("C-<f11>" . toggle-frame-fullscreen)
+           ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
+           ("S-s-<return>" . toggle-frame-fullscreen)
+           ("M-S-<return>" . toggle-frame-fullscreen))
+
+(provide 'init-base)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-basic.el ends here
+;;; init-base.el ends here

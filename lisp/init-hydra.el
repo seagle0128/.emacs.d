@@ -40,6 +40,7 @@
              hydra-set-transient-map))
 
 (use-package pretty-hydra
+  :functions set-package-archives
   :bind ("<f6>" . toggles-hydra/body)
   :init
   (defun pretty-hydra-title (title &optional icon-type icon-name face height v-adjust)
