@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom))
 
 (use-package hydra
   :commands (hydra-default-pre
@@ -40,7 +41,7 @@
              hydra-set-transient-map))
 
 (use-package pretty-hydra
-  :functions set-package-archives
+  :functions set-package-archives centaur-load-theme
   :bind ("<f6>" . toggles-hydra/body)
   :init
   (defun pretty-hydra-title (title &optional icon-type icon-name face height v-adjust)
@@ -101,6 +102,7 @@
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'light)))
       ("y" (centaur-load-theme 'daylight) "daylight"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'daylight)))
+      ("M" doom-modeline-mode "modern mode-line" :toggle t)
       ("T" (counsel-load-theme) "others"))
      "Package Archive"
      (("k m" (progn (setq centaur-package-archives 'melpa)
