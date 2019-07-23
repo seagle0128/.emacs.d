@@ -65,7 +65,30 @@
 ;; Rectangle
 (use-package rect
   :ensure nil
-  :bind (("<C-return>" . rectangle-mark-mode)))
+  :bind (("<C-return>" . rect-hydra/body))
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
+    :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key "q")
+   ("Move"
+    (("h" backward-char "←")
+     ("j" next-line "↓")
+     ("k" previous-line "↑")
+     ("l" forward-char "→"))
+    "Action"
+    (("w" copy-rectangle-as-kill "copy") ; C-x r M-w
+     ("y" yank-rectangle "yank")         ; C-x r y
+     ("t" string-rectangle "string")     ; C-x r t
+     ("d" kill-rectangle "kill")         ; C-x r d
+     ("c" clear-rectangle "clear")       ; C-x r c
+     ("o" open-rectangle "open"))        ; C-x r o
+    "Misc"
+    (("N" rectangle-number-lines "number lines")        ; C-x r N
+     ("e" rectangle-exchange-point-and-mark "exchange") ; C-x C-x
+     ("u" undo "undo")
+     ("r" (if (region-active-p)
+              (deactivate-mark)
+            (rectangle-mark-mode 1))
+      "reset")))))
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
@@ -283,6 +306,8 @@
          ([M-kp-2] . pager-row-down)))
 
 ;; Treat undo history as a tree
+;; FIXME:  keep the diff window
+(make-variable-buffer-local 'undo-tree-visualizer-diff)
 (use-package undo-tree
   :diminish
   :hook (after-init . global-undo-tree-mode)
@@ -291,10 +316,7 @@
               undo-tree-enable-undo-in-region nil
               undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
-  :config
-  ;; FIXME:  keep the diff window
-  (make-variable-buffer-local 'undo-tree-visualizer-diff))
+              `(("." . ,(locate-user-emacs-file "undo-tree-hist/")))))
 
 ;; Goto last change
 (use-package goto-chg
