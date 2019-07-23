@@ -39,28 +39,26 @@
 (setq user-mail-address centaur-mail-address)
 
 ;; Key Modifiers
-(cond
- (sys/win32p
-  ;; make PC keyboard's Win key or other to type Super or Hyper
-  ;; (setq w32-pass-lwindow-to-system nil)
-  (setq w32-lwindow-modifier 'super     ; Left Windows key
-        w32-apps-modifier 'hyper)       ; Menu/App key
-
-  ;; (w32-register-hot-key [s-])
-  (w32-register-hot-key [s-t]))
- ((and sys/macp (eq window-system 'mac))
-  ;; Compatible with Emacs Mac port
-  (setq mac-option-modifier 'meta
-        mac-command-modifier 'super)
-
-  (bind-keys ([(super a)] . mark-whole-buffer)
-             ([(super c)] . kill-ring-save)
-             ([(super l)] . goto-line)
-             ([(super q)] . save-buffers-kill-emacs)
-             ([(super s)] . save-buffer)
-             ([(super v)] . yank)
-             ([(super w)] . delete-frame)
-             ([(super z)] . undo))))
+(with-no-warnings
+  (cond
+   (sys/win32p
+    ;; make PC keyboard's Win key or other to type Super or Hyper
+    ;; (setq w32-pass-lwindow-to-system nil)
+    (setq w32-lwindow-modifier 'super     ; Left Windows key
+          w32-apps-modifier 'hyper)       ; Menu/App key
+    (w32-register-hot-key [s-t]))
+   ((and sys/macp (eq window-system 'mac))
+    ;; Compatible with Emacs Mac port
+    (setq mac-option-modifier 'meta
+          mac-command-modifier 'super)
+    (bind-keys ([(super a)] . mark-whole-buffer)
+               ([(super c)] . kill-ring-save)
+               ([(super l)] . goto-line)
+               ([(super q)] . save-buffers-kill-emacs)
+               ([(super s)] . save-buffer)
+               ([(super v)] . yank)
+               ([(super w)] . delete-frame)
+               ([(super z)] . undo)))))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
@@ -84,20 +82,19 @@
 (use-package recentf
   :ensure nil
   :hook (after-init . recentf-mode)
-  :init
-  (setq recentf-max-saved-items 200
-        recentf-exclude '((expand-file-name package-user-dir)
-                          ".cache"
-                          ".cask"
-                          ".elfeed"
-                          "bookmarks"
-                          "cache"
-                          "ido.*"
-                          "persp-confs"
-                          "recentf"
-                          "undo-tree-hist"
-                          "url"
-                          "COMMIT_EDITMSG\\'")))
+  :init (setq recentf-max-saved-items 200
+              recentf-exclude '((expand-file-name package-user-dir)
+                                ".cache"
+                                ".cask"
+                                ".elfeed"
+                                "bookmarks"
+                                "cache"
+                                "ido.*"
+                                "persp-confs"
+                                "recentf"
+                                "undo-tree-hist"
+                                "url"
+                                "COMMIT_EDITMSG\\'")))
 
 (use-package savehist
   :ensure nil
@@ -118,10 +115,16 @@
   :init (setq display-time-24hr-format t
               display-time-day-and-date t))
 
-;; Line and Column
-(setq-default fill-column 100)
-(setq column-number-mode t
-      line-number-mode t)
+(use-package simple
+  :ensure nil
+  :hook (window-setup . size-indication-mode)
+  :init (setq column-number-mode t
+              line-number-mode t
+              kill-whole-line t              ; Kill line including '\n'
+              line-move-visual nil
+              track-eol t                    ; Keep cursor at end of lines. Require line-move-visual is nil.
+              set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
+  )
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -133,12 +136,9 @@
       scroll-conservatively 100000)
 
 ;; Misc
+(setq-default fill-column 100)
 (fset 'yes-or-no-p 'y-or-n-p)
-(add-hook 'window-setup-hook #'size-indication-mode)
-;; (blink-cursor-mode -1)
 (setq visible-bell t
-      line-move-visual nil
-      track-eol t                       ; Keep cursor at end of lines. Require line-move-visual is nil.
       inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
 
 ;; Fullscreen

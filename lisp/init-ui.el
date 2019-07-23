@@ -34,7 +34,9 @@
   (require 'init-const)
   (require 'init-custom))
 
-(require 'init-funcs)
+;; Suppress warnings in hydra
+(declare-function centaur-compatible-theme-p 'init-funcs)
+(declare-function centaur-load-theme 'init-funcs)
 
 ;; Logo
 (setq fancy-splash-image centaur-logo)

@@ -72,7 +72,14 @@
   (when emacs/>=26p
     (use-package company-box
       :diminish
-      :functions (my-company-box--make-line my-company-box-icons--elisp)
+      :functions (my-company-box--make-line
+                  my-company-box-icons--elisp)
+      :commands (company-box--get-color
+                 company-box--resolve-colors
+                 company-box--add-icon
+                 company-box--apply-color
+                 company-box--make-line
+                 company-box-icons--elisp)
       :hook (company-mode . company-box-mode)
       :config
       (setq company-box-backends-colors nil
