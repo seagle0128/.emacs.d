@@ -234,18 +234,31 @@
   (use-package amx
     :init (setq amx-history-length 20))
 
-  ;; Enhance fuzzy matching
-  (use-package flx
-    :init (setq ivy-re-builders-alist
-                '((swiper . ivy--regex-plus)
-                  (swiper-all . ivy--regex-plus)
-                  (swiper-isearch . ivy--regex-plus)
-                  (counsel-ag . ivy--regex-plus)
-                  (counsel-rg . ivy--regex-plus)
-                  (counsel-pt . ivy--regex-plus)
-                  (counsel-ack . ivy--regex-plus)
-                  (counsel-grep . ivy--regex-plus)
-                  (t . ivy--regex-fuzzy))))
+  ;; Better sorting and filtering
+  (use-package prescient
+    :commands prescient-persist-mode
+    :init
+    (setq prescient-filter-method '(literal regexp initialism fuzzy))
+    (prescient-persist-mode 1))
+
+  (use-package ivy-prescient
+    :commands ivy-prescient-re-builder
+    :preface
+    (defun ivy-prescient-non-fuzzy (str)
+      (let ((prescient-filter-method '(literal regexp)))
+        (ivy-prescient-re-builder str)))
+    :init
+    (setq ivy-prescient-enable-filtering t
+          ivy-prescient-retain-classic-highlighting t
+          ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
+                                  (counsel-rg . ivy-prescient-non-fuzzy)
+                                  (counsel-pt . ivy-prescient-non-fuzzy)
+                                  (counsel-grep . ivy-prescient-non-fuzzy)
+                                  (swiper . ivy-prescient-non-fuzzy)
+                                  (swiper-isearch . ivy-prescient-non-fuzzy)
+                                  (swiper-all . ivy-prescient-non-fuzzy)
+                                  (t . ivy-prescient-re-builder)))
+    (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
@@ -301,14 +314,14 @@
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
   ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
   (use-package pinyinlib
-    :functions ivy--regex-plus ivy--regex-ignore-order
+    :functions (ivy--regex-plus ivy-prescient-non-fuzzy)
     :commands pinyinlib-build-regexp-string
     :preface
     (defun ivy--regex-pinyin (str)
       "The regex builder wrapper to support pinyin."
       (or (pinyin-to-utf8 str)
-          (ivy--regex-plus str)
-          (ivy--regex-ignore-order str)))
+          (ivy-prescient-non-fuzzy str)
+          (ivy--regex-plus str)))
     (defun my-pinyinlib-build-regexp-string (str)
       "Build a pinyin regexp sequence from STR."
       (cond ((equal str ".*") ".*")
@@ -328,9 +341,8 @@
                         ""))
             (t nil)))
     :init
-    (push '(swiper . ivy--regex-pinyin) ivy-re-builders-alist)
-    (push '(swiper-all . ivy--regex-pinyin) ivy-re-builders-alist)
-    (push '(swiper-isearch . ivy--regex-pinyin) ivy-re-builders-alist)))
+    (dolist (fn '(swiper swiper-isearch swiper-all counsel-ag counsel-grep))
+      (setf (alist-get fn ivy-re-builders-alist) #'ivy--regex-pinyin))))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich

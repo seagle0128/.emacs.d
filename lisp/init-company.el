@@ -165,8 +165,9 @@
       :defines company-quickhelp-delay
       :bind (:map company-active-map
              ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-      :hook (global-company-mode . company-quickhelp-mode)
-      :init (setq company-quickhelp-delay 0.5))))
+      :init
+      (setq company-quickhelp-delay 0.5)
+      (company-quickhelp-mode 1))))
 
 (provide 'init-company)
 
