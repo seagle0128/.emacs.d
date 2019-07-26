@@ -212,20 +212,18 @@
                  :icon (format "  %s\t" (all-the-icons-octicon "file-zip" :v-adjust 0 :face 'all-the-icons-lmaroon))
                  :extensions ("tar" "rar" "tgz"))
                 (treemacs-create-icon
-                 :icon (format "  %s\t" (all-the-icons-octicon "settings":v-adjust 0.0 :face 'all-the-icons-dyellow))
-                 :extensions ("yaml" "yml"))
-                (treemacs-create-icon
                  :icon (format "  %s\t" (all-the-icons-faicon "file-o" :height 0.8 :v-adjust 0 :face 'all-the-icons-dsilver))
                  :extensions (fallback))
 
                 (defun get-extenstions (ext)
                   "Transfer EXT regexps to extension list."
                   (let* ((e (s-replace-all
-                             '((".\\?" . "") ("\\?" . "") ("\\." . "") ("\\" . "")
-                               ("^" . "") ("$" . "") ("'" . "") ("*." . "") ("*" . "")
-                               ("_?" . "") ("-?" . "") ("?" . ""))
+                             '((".\\?" . "") ("\\?" . "") ("\\." . "")
+                               ("\\" . "") ("^" . "") ("$" . "")
+                               ("'" . "") ("*." . "") ("*" . ""))
                              ext))
                          (exts (list e)))
+                    ;; Handle "[]"
                     (when-let* ((s (s-split "\\[\\|\\]" e))
                                 (f (car s))
                                 (m (cadr s))
@@ -234,7 +232,17 @@
                       (setq exts nil)
                       (dolist (c mcs)
                         (push (s-concat f c l) exts)))
+                    ;; Handle '?
+                    (dolist (ext exts)
+                      (when (s-match "?" ext)
+                        (when-let ((s (s-split "?" ext)))
+                          (setq exts nil)
+                          (push (s-join "" s) exts)
+                          (push (s-concat (if (> (length (car s)) 1)
+                                              (substring (car s) 0 -1))
+                                          (cadr s)) exts))))
                     exts))
+
                 (dolist (item all-the-icons-icon-alist)
                   (let* ((extensions (get-extenstions (car item)))
                          (func (cadr item))

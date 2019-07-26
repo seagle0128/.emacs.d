@@ -7,6 +7,23 @@
 ;; Version: 5.5.0
 ;; Keywords: .emacs.d centaur
 
+;;
+;;                          `..`
+;;                        ````+ `.`
+;;                    /o:``   :+ ``
+;;                .+//dho......y/..`
+;;                `sdddddhysso+h` ``
+;;                  /ddd+`..` +. .`
+;;                 -hos+    `.:```
+;;               `./dddyo+//osso/:`
+;;             `/o++dddddddddddddod-
+;;            `// -y+:sdddddsddsy.dy
+;;                /o   `..```h+`y+/h+`
+;;                .s       `++``o:  ``
+;;                        `:- `:-
+;;
+;;   CENTAUR EMACS - Enjoy Programming & Writing
+
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -28,22 +45,6 @@
 ;;; Commentary:
 ;;
 ;; Centaur Emacs - A Fancy and Fast Emacs Configuration.
-;;
-;;                          `..`
-;;                        ````+ `.`
-;;                    /o:``   :+ ``
-;;                .+//dho......y/..`
-;;                `sdddddhysso+h` ``
-;;                  /ddd+`..` +. .`
-;;                 -hos+    `.:```
-;;               `./dddyo+//osso/:`
-;;             `/o++dddddddddddddod-
-;;            `// -y+:sdddddsddsy.dy
-;;                /o   `..```h+`y+/h+`
-;;                .s       `++``o:  ``
-;;                        `:- `:-
-;;
-;;   CENTAUR EMACS - Enjoy Programming & Writing
 ;;
 
 
