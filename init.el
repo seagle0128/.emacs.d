@@ -1,4 +1,4 @@
-;;; init.el --- Centaur Emacs configurations.	-*- lexical-binding: t no-byte-compile: t; -*-
+;;; init.el --- A Fancy and Fast Emacs Configuration.	-*- lexical-binding: t no-byte-compile: t; -*-
 
 ;; Copyright (C) 2006-2019 Vincent Zhang
 
@@ -27,8 +27,25 @@
 
 ;;; Commentary:
 ;;
-;; Centaur Emacs configurations.
+;; Centaur Emacs - A Fancy and Fast Emacs Configuration.
 ;;
+;;                          `..`
+;;                        ````+ `.`
+;;                    /o:``   :+ ``
+;;                .+//dho......y/..`
+;;                `sdddddhysso+h` ``
+;;                  /ddd+`..` +. .`
+;;                 -hos+    `.:```
+;;               `./dddyo+//osso/:`
+;;             `/o++dddddddddddddod-
+;;            `// -y+:sdddddsddsy.dy
+;;                /o   `..```h+`y+/h+`
+;;                .s       `++``o:  ``
+;;                        `:- `:-
+;;
+;;   CENTAUR EMACS - Enjoy Programming & Writing
+;;
+
 
 ;;; Code:
 
