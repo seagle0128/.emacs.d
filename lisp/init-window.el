@@ -181,6 +181,7 @@
         shackle-default-rule nil
         shackle-rules
         '(("*Help*" :select t :size 0.3 :align 'below :autoclose t)
+          ("*Apropos*" :select t :size 0.3 :align 'below :autoclose t)
           ("*compilation*" :size 0.3 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 15 :align 'below :autoclose t)
