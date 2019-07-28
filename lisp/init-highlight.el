@@ -88,6 +88,8 @@
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
+    :commands highlight-indent-guides--highlighter-default
+    :functions my-indent-guides-for-all-but-first-column
     ;; :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
                 highlight-indent-guides-responsive 'top)
@@ -113,6 +115,8 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
+  :commands (rainbow-x-color-luminance rainbow-colorize-match)
+  :functions my-rainbow-colorize-match
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
@@ -126,9 +130,8 @@
                               (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defun my-rainbow-clear-overlays ()
-    (remove-overlays (point-min) (point-max) 'ovrainbow t))
-  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
+  (defadvice rainbow-turn-off (after clear-overlays activate)
+    (remove-overlays (point-min) (point-max) 'ovrainbow t)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
@@ -152,6 +155,7 @@
 (use-package diff-hl
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh
+  :functions  my-diff-hl-fringe-bmp-function
   :custom-face (diff-hl-change ((t (:foreground ,(face-background 'highlight)))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
