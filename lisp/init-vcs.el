@@ -65,18 +65,13 @@
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
   :config
-  ;; FIXME: https://gitlab.com/pidu/git-timemachine/issues/77#note_193244221
+  ;; FIXME: https://gitlab.com/pidu/git-timemachine/issues/77
   (defun my-git-timemachine-show-commit ()
     (interactive)
     (let ((rev (car git-timemachine-revision)))
-      (if (fboundp 'magit-revision-mode)
+      (if (fboundp 'magit-show-commit)
           (with-temp-buffer
-            (save-excursion
-              (magit-setup-buffer #'magit-revision-mode nil
-                (magit-buffer-revision rev)
-                (magit-buffer-range (format "%s^..%s" rev rev))
-                (magit-buffer-diff-args nil)
-                (magit-buffer-diff-files nil))))
+            (save-excursion (magit-show-commit rev)))
         (message "You need to install magit to show commit"))))
   (advice-add #'git-timemachine-show-commit :override #'my-git-timemachine-show-commit))
 
@@ -87,7 +82,7 @@
          :map git-messenger-map
          ("m" . git-messenger:copy-message))
   :init
-  ;; Use magit-show-commit for showing status/diff commands
+  ;; Use `magit-show-commit' to show status/diff commands
   (setq git-messenger:use-magit-popup t))
 
 ;; Resolve diff3 conflicts
