@@ -36,6 +36,14 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
+  :defines calculate-lisp-indent-last-sexp
+  :functions (helpful-update
+              my-lisp-indent-function
+              function-advices
+              add-button-to-remove-advice
+              describe-function-1@advice-remove-button
+              end-of-sexp
+              helpful-callable@advice-remove-button)
   :bind (:map emacs-lisp-mode-map
          ("C-c C-x" . ielm)
          ("C-c C-c" . eval-defun)
@@ -136,10 +144,10 @@ Lisp function does not specify a special indentation."
         (setq function-def (advice--cdr function-def)))
       ad-functions))
 
-  (define-advice describe-function-1 (:after (function) advice-remove-button)
+  (defun add-button-to-remove-advice (buffer-name function)
     "Add a button to remove advice."
-    (when (get-buffer "*Help*")
-      (with-current-buffer "*Help*"
+    (when (get-buffer buffer-name)
+      (with-current-buffer buffer-name
         (save-excursion
           (goto-char (point-min))
           (let ((ad-index 0)
@@ -160,23 +168,29 @@ Lisp function does not specify a special indentation."
                         (when (yes-or-no-p (format "Remove %s ? " ',advice))
                           (message "Removing %s of advice from %s" ',function ',advice)
                           (advice-remove ',function ',advice)
-                          (revert-buffer nil t)))
+                          (if (eq major-mode 'helpful-mode)
+                              (helpful-update)
+                            (revert-buffer nil t))))
                      'follow-link t))))
               (setq ad-index (1+ ad-index))))))))
+
+  (define-advice describe-function-1 (:after (function) advice-remove-button)
+    (add-button-to-remove-advice "*Help*" function))
 
   ;; Remove hook
   (defun remove-hook-at-point ()
     "Remove the hook at the point in the *Help* buffer."
     (interactive)
     (unless (or (eq major-mode 'help-mode)
+                (eq major-mode 'helpful-mode)
                 (string= (buffer-name) "*Help*"))
-      (error "Only for help-mode"))
+      (error "Only for help-mode or helpful-mode"))
     (let ((orig-point (point)))
       (save-excursion
         (when-let
             ((hook (progn (goto-char (point-min)) (symbol-at-point)))
              (func (when (and
-                          (or (re-search-forward (format "^Value:[\s|\n]") nil t)
+                          (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
                               (goto-char orig-point))
                           (sexp-at-point))
                      (end-of-sexp)
@@ -191,7 +205,9 @@ Lisp function does not specify a special indentation."
                              (throw 'break (sexp-at-point)))))))))
           (when (yes-or-no-p (format "Remove %s from %s? " func hook))
             (remove-hook hook func)
-            (revert-buffer nil t))))))
+            (if (eq major-mode 'helpful-mode)
+                (helpful-update)
+              (revert-buffer nil t)))))))
   (bind-key "C-c d" #'remove-hook-at-point help-mode-map))
 
 ;; Show function arglist or variable docstring
@@ -219,7 +235,36 @@ Lisp function does not specify a special indentation."
 
 ;; A better *Help* buffer
 (use-package helpful
-  :bind (("C-c C-d" . helpful-at-point)))
+  :defines (counsel-describe-function-function
+            counsel-describe-variable-function)
+  :commands helpful--buffer
+  :bind (([remap describe-key] . helpful-key)
+         ([remap describe-symbol] . helpful-symbol)
+         ("C-c C-d" . helpful-at-point)
+         :map helpful-mode-map
+         ("C-c d" . remove-hook-at-point))
+  :init
+  (with-eval-after-load 'counsel
+    (setq counsel-describe-function-function #'helpful-callable)
+    (setq counsel-describe-variable-function #'helpful-variable))
+
+  (with-eval-after-load 'apropos
+    ;; patch apropos buttons to call helpful instead of help
+    (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
+      (button-type-put
+       fun-bt 'action
+       (lambda (button)
+         (helpful-callable (button-get button 'apropos-symbol)))))
+    (dolist (var-bt '(apropos-variable apropos-user-option))
+      (button-type-put
+       var-bt 'action
+       (lambda (button)
+         (helpful-variable (button-get button 'apropos-symbol))))))
+
+  ;; Add remove buttons for advices
+  (add-hook 'helpful-mode-hook #'cursor-sensor-mode)
+  (define-advice helpful-callable (:after (function) advice-remove-button)
+    (add-button-to-remove-advice (helpful--buffer function t) function)))
 
 (provide 'init-emacs-lisp)
 
