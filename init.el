@@ -58,7 +58,7 @@
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
 
-(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 400000000 40000000)
+(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 400000000 100000000)
   "The temporary value for `gc-cons-threshold' to defer it.")
 
 (defvar default-file-name-handler-alist file-name-handler-alist)

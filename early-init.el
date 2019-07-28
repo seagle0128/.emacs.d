@@ -32,7 +32,7 @@
 ;;; Code:
 
 ;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold 80000000)
+(setq gc-cons-threshold (if (display-graphic-p) 400000000 100000000))
 
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package
