@@ -90,17 +90,32 @@
     :diminish
     :commands highlight-indent-guides--highlighter-default
     :functions my-indent-guides-for-all-but-first-column
-    ;; :hook (prog-mode . highlight-indent-guides-mode)
+    :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
                 highlight-indent-guides-responsive 'top)
     :config
+    ;; Don't display indentations while editing with `company'
+    (with-eval-after-load 'company
+      (add-hook 'company-completion-started-hook
+                (lambda (&rest _)
+                  "Trun off indentation highlighting."
+                  (when highlight-indent-guides-mode
+                    (highlight-indent-guides-mode -1))))
+      (add-hook 'company-after-completion-hook
+                (lambda (&rest _)
+                  "Trun on indentation highlighting."
+                  (when (and (derived-mode-p 'prog-mode)
+                             (not highlight-indent-guides-mode))
+                    (highlight-indent-guides-mode 1)))))
+
     ;; Don't display first level of indentation
     (defun my-indent-guides-for-all-but-first-column (level responsive display)
       (unless (< level 1)
         (highlight-indent-guides--highlighter-default level responsive display)))
-    (setq highlight-indent-guides-highlighter-function #'my-indent-guides-for-all-but-first-column)
+    (setq highlight-indent-guides-highlighter-function
+          #'my-indent-guides-for-all-but-first-column)
 
-    ;; Disable `highlight-indent-guides-mode' in `swiper'
+    ;; Don't display indentations in `swiper'
     ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
     (with-eval-after-load 'ivy
       (defadvice ivy-cleanup-string (after my-ivy-cleanup-hig activate)
