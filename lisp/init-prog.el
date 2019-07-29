@@ -58,17 +58,6 @@
                   ("not" . ?¬)))
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
-;; Compilation Mode
-(use-package compile
-  :ensure nil
-  :hook (compilation-filter . my-colorize-compilation-buffer)
-  :init
-  (declare-function ansi-color-apply-on-region 'ansi-color)
-  (defun my-colorize-compilation-buffer ()
-    ;; "ANSI coloring in compilation buffers."
-    (with-silent-modifications
-      (ansi-color-apply-on-region (point-min) (point-max)))))
-
 ;; Jump to definition
 (use-package dumb-jump
   :pretty-hydra
