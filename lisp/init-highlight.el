@@ -134,7 +134,7 @@
   :functions my-rainbow-colorize-match
   :commands (rainbow-x-color-luminance rainbow-colorize-match)
   :bind (:map help-mode-map
-         ("r" . rainbow-mode))
+         ("w" . rainbow-mode))
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.

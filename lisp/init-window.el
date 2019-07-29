@@ -182,7 +182,7 @@
         shackle-rules
         '(("*Help*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Apropos*" :select t :size 0.3 :align 'below :autoclose t)
-          ("*compilation*" :size 0.3 :align 'below :autoclose t)
+          ("*compilation*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 15 :align 'below :autoclose t)
           ("*ert*" :align 'below :autoclose t)
@@ -205,6 +205,7 @@
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
+          ("*Cargo Build*" :select t :size 0.3 :align 'below :autoclose t)
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)

@@ -67,7 +67,7 @@
     (with-silent-modifications
       (ansi-color-apply-on-region compilation-filter-start (point-max)))))
 
-;; Jump to definition via `ag'/`rg'/`grep'
+;; Jump to definition
 (use-package dumb-jump
   :pretty-hydra
   ((:title (pretty-hydra-title "Dump Jump" 'faicon "anchor")
@@ -134,9 +134,10 @@
 ;; Rust
 (use-package rust-mode
   :init (setq rust-format-on-save t)
-  :config (use-package cargo
-            :diminish cargo-minor-mode
-            :hook (rust-mode . cargo-minor-mode)))
+  :config
+  (use-package cargo
+    :diminish cargo-minor-mode
+    :hook (rust-mode . cargo-minor-mode)))
 
 (use-package rust-playground)
 

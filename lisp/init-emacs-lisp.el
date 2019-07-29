@@ -208,7 +208,7 @@ Lisp function does not specify a special indentation."
             (if (eq major-mode 'helpful-mode)
                 (helpful-update)
               (revert-buffer nil t)))))))
-  (bind-key "C-c d" #'remove-hook-at-point help-mode-map))
+  (bind-key "r" #'remove-hook-at-point help-mode-map))
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
@@ -242,11 +242,11 @@ Lisp function does not specify a special indentation."
          ([remap describe-symbol] . helpful-symbol)
          ("C-c C-d" . helpful-at-point)
          :map helpful-mode-map
-         ("C-c d" . remove-hook-at-point))
+         ("r" . remove-hook-at-point))
   :init
   (with-eval-after-load 'counsel
-    (setq counsel-describe-function-function #'helpful-callable)
-    (setq counsel-describe-variable-function #'helpful-variable))
+    (setq counsel-describe-function-function #'helpful-callable
+          counsel-describe-variable-function #'helpful-variable))
 
   (with-eval-after-load 'apropos
     ;; patch apropos buttons to call helpful instead of help
