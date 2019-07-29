@@ -62,11 +62,9 @@
   :ensure nil
   :hook (compilation-filter . my-colorize-compilation-buffer)
   :init
-  ;; ANSI Coloring
-  ;; @see https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
   (defun my-colorize-compilation-buffer ()
-    "ANSI coloring in compilation buffers."
-    (when (eq major-mode 'compilation-mode)
+    ;; "ANSI coloring in compilation buffers."
+    (with-silent-modifications
       (ansi-color-apply-on-region compilation-filter-start (point-max)))))
 
 ;; Jump to definition via `ag'/`rg'/`grep'
