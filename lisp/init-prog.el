@@ -30,6 +30,7 @@
 
 ;;; Code:
 
+
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
 (use-package prog-mode
@@ -62,6 +63,7 @@
   :ensure nil
   :hook (compilation-filter . my-colorize-compilation-buffer)
   :init
+  (declare-function ansi-color-apply-on-region 'ansi-color)
   (defun my-colorize-compilation-buffer ()
     ;; "ANSI coloring in compilation buffers."
     (with-silent-modifications

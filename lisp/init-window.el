@@ -205,7 +205,6 @@
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
-          ("*Cargo Build*" :select t :size 0.3 :align 'below :autoclose t)
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)
@@ -219,6 +218,7 @@
           (comint-mode :align 'below)
           (helpful-mode :select t :size 0.4 :align 'below :autoclose t)
           (process-menu-mode :select t :size 0.3 :align 'below :autoclose t)
+          (cargo-process-mode :select t :size 0.3 :align 'below :autoclose t)
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
           (profiler-report-mode :select t :size 0.5 :align 'below)
           (tabulated-list-mode :align 'below))))
