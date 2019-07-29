@@ -65,7 +65,7 @@
   (defun my-colorize-compilation-buffer ()
     ;; "ANSI coloring in compilation buffers."
     (with-silent-modifications
-      (ansi-color-apply-on-region compilation-filter-start (point-max)))))
+      (ansi-color-apply-on-region (point-min) (point-max)))))
 
 ;; Jump to definition
 (use-package dumb-jump
