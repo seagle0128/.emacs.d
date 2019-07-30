@@ -1,4 +1,4 @@
-;; init-emacs-lisp.el --- Initialize Emacs Lisp configurations.	-*- lexical-binding: t -*-
+;; init-elisp.el --- Initialize Emacs Lisp configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -266,7 +266,7 @@ Lisp function does not specify a special indentation."
   (define-advice helpful-callable (:after (function) advice-remove-button)
     (add-button-to-remove-advice (helpful--buffer function t) function)))
 
-(provide 'init-emacs-lisp)
+(provide 'init-elisp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-emacs-lisp.el ends here
+;;; init-elisp.el ends here

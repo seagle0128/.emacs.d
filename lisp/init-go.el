@@ -27,9 +27,6 @@
 ;;
 ;; Golang configurations.
 ;;
-
-;;; Code:
-;;
 ;; Go packages:
 ;; go get -u github.com/mdempsky/gocode
 ;; go get -u github.com/rogpeppe/godef
@@ -45,6 +42,9 @@
 ;; go get -u github.com/davidrjenni/reftools/cmd/fillstruct
 ;; go get -u github.com/uudashr/gopkgs/cmd/gopkgs
 ;; go get -u onnef.co/go/tools/...
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom))

@@ -155,14 +155,16 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-projectile)
 (require 'init-lsp)
 
-(require 'init-emacs-lisp)
+(require 'init-prog)
+(require 'init-elisp)
 (require 'init-c)
 (require 'init-go)
+(require 'init-rust)
 (require 'init-python)
 (require 'init-ruby)
+(require 'init-dart)
 (require 'init-elixir)
 (require 'init-web)
-(require 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

@@ -122,29 +122,6 @@
                        (add-hook 'before-save-hook
                                  #'fish_indent-before-save))))
 
-;; Rust
-(use-package rust-mode
-  :init (setq rust-format-on-save t)
-  :config
-  (use-package cargo
-    :diminish cargo-minor-mode
-    :hook (rust-mode . cargo-minor-mode)
-    :config
-    ;; To render buttons correctly, keep it at the last
-    (setq compilation-filter-hook
-          (append compilation-filter-hook '(cargo-process--add-errno-buttons)))))
-
-(use-package rust-playground)
-
-;; Dart
-(use-package dart-mode
-  :defines (projectile-project-root-files-bottom-up)
-  :init (setq dart-format-on-save t)
-  :config
-  (with-eval-after-load "projectile"
-    (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
-    (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
-
 (provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
