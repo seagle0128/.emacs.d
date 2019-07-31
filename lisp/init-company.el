@@ -81,13 +81,11 @@
                  company-box--make-line
                  company-box-icons--elisp)
       :hook (company-mode . company-box-mode)
+      :init (setq company-box-backends-colors nil
+                  company-box-show-single-candidate t
+                  company-box-max-candidates 50
+                  company-box-doc-delay 0.5)
       :config
-      (setq company-box-backends-colors nil
-            company-box-show-single-candidate t
-            company-box-max-candidates 50
-            company-box-doc-delay 0.5
-            company-box-icons-alist 'company-box-icons-all-the-icons)
-
       ;; Support `company-common'
       (defun my-company-box--make-line (candidate)
         (-let* (((candidate annotation len-c len-a backend) candidate)
@@ -127,7 +125,8 @@
                   (t . nil)))))
       (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
 
-      (with-eval-after-load 'all-the-icons
+      (when (and (display-graphic-p)
+                 (require 'all-the-icons nil t))
         (declare-function all-the-icons-faicon 'all-the-icons)
         (declare-function all-the-icons-material 'all-the-icons)
         (setq company-box-icons-all-the-icons
@@ -157,7 +156,8 @@
                 (Event . ,(all-the-icons-faicon "bolt" :height 0.85 :v-adjust -0.05 :face 'all-the-icons-orange))
                 (Operator . ,(all-the-icons-material "control_point" :height 0.9 :v-adjust -0.2))
                 (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.85 :v-adjust -0.05))
-                (Template . ,(all-the-icons-material "format_align_center" :height 0.9 :v-adjust -0.2)))))))
+                (Template . ,(all-the-icons-material "format_align_center" :height 0.9 :v-adjust -0.2)))
+              company-box-icons-alist 'company-box-icons-all-the-icons))))
 
   ;; Popup documentation for completion candidates
   (when (and (not emacs/>=26p) (display-graphic-p))
@@ -165,9 +165,8 @@
       :defines company-quickhelp-delay
       :bind (:map company-active-map
              ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-      :init
-      (setq company-quickhelp-delay 0.5)
-      (company-quickhelp-mode 1))))
+      :hook (global-company-mode . company-quickhelp-mode)
+      :init (setq company-quickhelp-delay 0.5))))
 
 (provide 'init-company)
 

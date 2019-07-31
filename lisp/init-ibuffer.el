@@ -45,7 +45,8 @@
   (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
   ;; Display buffer icons on GUI
-  (when (display-graphic-p)
+  (when (and (display-graphic-p)
+             (require 'all-the-icons nil t))
     ;; For alignment, the size of the name field should be the width of an icon
     (define-ibuffer-column icon (:name "  ")
       (let ((icon (if (and (buffer-file-name)
