@@ -48,10 +48,7 @@
                 persp-switch-to-buffer
                 winner-undo
                 widget-forward)
-    :custom-face
-    (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
-    (widget-button-pressed ((t (:inherit error))))
-    (widget-documentation ((t (:inherit success))))
+    :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :pretty-hydra
     ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.1 :v-adjust -0.225)
       :color pink :quit-key "q")
