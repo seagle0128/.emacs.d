@@ -56,9 +56,10 @@
     (with-eval-after-load 'winum
       (bind-key (kbd "M-9") #'treemacs-select-window winum-keymap))
     :config
-    (setq treemacs-collapse-dirs                 (if (executable-find "python") 3 0)
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
           treemacs-deferred-git-apply-delay      0.5
           treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
           treemacs-file-event-delay              5000
           treemacs-file-follow-delay             0.2
           treemacs-follow-after-init             t
