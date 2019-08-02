@@ -65,8 +65,14 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       (use-package doom-themes
+        :hook (after-load-theme . (lambda ()
+                                    (set-face-foreground
+                                     'mode-line
+                                     (face-foreground 'default))))
         :init (centaur-load-theme centaur-theme)
         :config
+        (set-face-foreground 'mode-line (face-foreground 'default))
+
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
         (set-face-attribute 'doom-visual-bell nil
@@ -192,12 +198,7 @@
 
 ;; Mode-line
 (use-package doom-modeline
-  :custom-face (mode-line ((t (:foreground ,(face-foreground 'default)))))
-  :hook ((after-init . doom-modeline-mode)
-         (after-load-theme . (lambda ()
-                               (set-face-foreground
-                                'mode-line
-                                (face-foreground 'default)))))
+  :hook (after-init . doom-modeline-mode)
   :init
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
