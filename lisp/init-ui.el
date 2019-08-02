@@ -71,6 +71,7 @@
                                      (face-foreground 'default))))
         :init (centaur-load-theme centaur-theme)
         :config
+        ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
         (set-face-foreground 'mode-line (face-foreground 'default))
 
         ;; Enable flashing mode-line on errors
