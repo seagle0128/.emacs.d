@@ -137,7 +137,7 @@
                    (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1)
                  "?")
               "" "Help (?/h)"
-              (lambda (&rest _) (hydra-dashboard/body))
+              (lambda (&rest _) (dashboard-hydra/body))
               font-lock-string-face))))
 
     (defun my-banner-path (&rest _)
