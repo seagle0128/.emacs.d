@@ -137,7 +137,7 @@
 
 ;; A Simmple and cool pomodoro timer
 (use-package pomidor
-  :bind ("<f12>" . pomidor)
+  :bind ("s-<f12>" . pomidor)
   :init
   (setq alert-default-style 'mode-line)
   (when sys/macp
