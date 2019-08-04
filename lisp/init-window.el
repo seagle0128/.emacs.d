@@ -216,7 +216,7 @@
 
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
           (comint-mode :align 'below)
-          (helpful-mode :select t :size 0.4 :align 'below :autoclose t)
+          (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           (process-menu-mode :select t :size 0.3 :align 'below :autoclose t)
           (cargo-process-mode :select t :size 0.3 :align 'below :autoclose t)
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
