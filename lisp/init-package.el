@@ -48,7 +48,7 @@
   "Set specific package ARCHIVES repository."
   (interactive
    (list (intern (completing-read "Choose package archives: "
-                                  '(melpa melpa-mirror emacs-china netease tuna)))))
+                                  '(melpa melpa-mirror emacs-china netease tencent tuna)))))
 
   (setq package-archives
         (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
