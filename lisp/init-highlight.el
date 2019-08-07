@@ -73,8 +73,7 @@
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
   :hook ((prog-mode . symbol-overlay-mode)
-         ;; Disable symbol highlighting in `iedit-mode'
-         (iedit-mode . (lambda () (symbol-overlay-mode -1)))
+         ((iedit-mode treemacs-mode) . (lambda () (symbol-overlay-mode -1)))
          (iedit-mode-end . symbol-overlay-mode))
   :init (setq symbol-overlay-idle-time 0.1)
   :config

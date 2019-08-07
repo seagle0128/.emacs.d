@@ -97,8 +97,8 @@
                    :extensions (root))
                   (treemacs-create-icon
                    :icon (format "%s\t%s\t"
-                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1)
-                                 (all-the-icons-octicon "file-directory" :v-adjust 0))
+                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1 :face face-spec)
+                                 (all-the-icons-octicon "file-directory" :v-adjust 0 :face face-spec))
                    :extensions (dir-open))
                   (treemacs-create-icon
                    :icon (format "%s\t%s\t"
