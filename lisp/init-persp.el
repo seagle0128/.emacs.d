@@ -52,9 +52,10 @@
                   (or (string-prefix-p " " (buffer-name b))
                       (and (string-prefix-p "*" (buffer-name b))
                            (not (string-equal "*scratch*" (buffer-name b))))
-                      (eq major-mode 'nov-mode)
-                      (eq major-mode 'vterm-mode)
-                      (string-prefix-p "magit" (buffer-name b))))))
+                      (string-prefix-p "magit" (buffer-name b))
+                      (string-prefix-p "Pfuture-Callback" (buffer-name b))
+                      (eq (buffer-local-value 'major-mode b) 'nov-mode)
+                      (eq (buffer-local-value 'major-mode b) 'vterm-mode)))))
   :config
   ;; Integrate IVY
   (with-eval-after-load 'ivy
