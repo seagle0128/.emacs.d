@@ -107,24 +107,25 @@
                    :extensions (dir-closed))
                   (treemacs-create-icon
                    :icon (format "  %s\t%s\t"
-                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1)
-                                 (all-the-icons-octicon "package" :v-adjust 0)) :extensions (tag-open))
+                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1 :face face-spec)
+                                 (all-the-icons-faicon "cube" :v-adjust -0.1 :face 'all-the-icons-purple))
+                   :extensions (tag-open))
                   (treemacs-create-icon
                    :icon (format "  %s\t%s\t"
                                  (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1 :face face-spec)
-                                 (all-the-icons-octicon "package" :v-adjust 0 :face face-spec))
+                                 (all-the-icons-faicon "cube" :v-adjust -0.1 :face 'all-the-icons-purple))
                    :extensions (tag-closed))
                   (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "tag" :height 0.9 :v-adjust 0 :face face-spec))
+                   :icon (format "  %s\t" (all-the-icons-octicon "tag" :height 0.9 :v-adjust 0 :face 'all-the-icons-lblue))
                    :extensions (tag-leaf))
                   (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "flame" :v-adjust 0 :face face-spec))
+                   :icon (format "  %s\t" (all-the-icons-octicon "flame" :v-adjust 0 :face 'error))
                    :extensions (error))
                   (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "stop" :v-adjust 0 :face face-spec))
+                   :icon (format "  %s\t" (all-the-icons-octicon "stop" :v-adjust 0 :face 'warning))
                    :extensions (warning))
                   (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "info" :height 0.75 :v-adjust 0.1 :face face-spec))
+                   :icon (format "  %s\t" (all-the-icons-octicon "info" :height 0.75 :v-adjust 0.1 :face 'success))
                    :extensions (info))
                   (treemacs-create-icon
                    :icon (format "  %s\t" (all-the-icons-octicon "file-binary" :v-adjust 0 :face face-spec))
@@ -132,6 +133,9 @@
                   (treemacs-create-icon
                    :icon (format "  %s\t" (all-the-icons-octicon "file-zip" :v-adjust 0 :face 'all-the-icons-lmaroon))
                    :extensions ("tar" "rar" "tgz"))
+                  (treemacs-create-icon
+                   :icon (format "  %s\t" (all-the-icons-fileicon "lua" :face 'all-the-icons-dblue))
+                   :extensions ("lua"))
                   (treemacs-create-icon
                    :icon (format "  %s\t" (all-the-icons-faicon "file-o" :height 0.8 :v-adjust 0 :face 'all-the-icons-dsilver))
                    :extensions (fallback))
@@ -153,7 +157,7 @@
                         (setq exts nil)
                         (dolist (c mcs)
                           (push (s-concat f c l) exts)))
-                      ;; Handle '?
+                      ;; Handle "?"
                       (dolist (ext exts)
                         (when (s-match "?" ext)
                           (when-let ((s (s-split "?" ext)))

@@ -419,7 +419,7 @@
   (defun ivy-rich-variable-icon (_candidate)
     "Display variable icons in `ivy-rich'."
     (when (display-graphic-p)
-      (all-the-icons-faicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+      (all-the-icons-octicon "tag" :height 0.9 :v-adjust 0 :face 'all-the-icons-lblue)))
 
   (defun ivy-rich-symbol-icon (_candidate)
     "Display symbol icons in `ivy-rich'."
