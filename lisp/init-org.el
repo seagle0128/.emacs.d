@@ -105,19 +105,18 @@
                               ;; @see https://github.com/seagle0128/.emacs.d/issues/88
                               (make-variable-buffer-local 'show-paren-mode)
                               (setq show-paren-mode nil))))
+  :init (setq org-agenda-files '("~/org")
+              org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
+                                  (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
+              org-todo-keyword-faces '(("HANGUP" . warning)
+                                       ("❓" . warning))
+              org-log-done 'time
+              org-catch-invisible-edits 'smart
+              org-startup-indented t
+              org-ellipsis (if (char-displayable-p ?) "  " nil)
+              org-pretty-entities nil
+              org-hide-emphasis-markers t)
   :config
-  (setq org-agenda-files '("~/org")
-        org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
-                            (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
-        org-todo-keyword-faces '(("HANGUP" . warning)
-                                 ("❓" . warning))
-        org-log-done 'time
-        org-catch-invisible-edits 'smart
-        org-startup-indented t
-        org-ellipsis (if (char-displayable-p ?) "  " nil)
-        org-pretty-entities nil
-        org-hide-emphasis-markers t)
-
   ;; Enable markdown backend
   (add-to-list 'org-export-backends 'md)
 
