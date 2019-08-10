@@ -38,12 +38,13 @@
   :functions (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
               all-the-icons-auto-mode-match?
-              all-the-icons-faicon)
-  :commands ibuffer-find-file
+              all-the-icons-faicon
+              my-ibuffer-find-file)
+  :commands (ibuffer-find-file
+             ibuffer-current-buffer)
   :bind ("C-x C-b" . ibuffer)
+  :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
-  (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
-
   ;; Display buffer icons on GUI
   (when (and (display-graphic-p)
              (require 'all-the-icons nil t))
