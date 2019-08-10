@@ -175,16 +175,32 @@
 
 ;; PDF reader
 (when (display-graphic-p)
-  (use-package pdf-tools
+  (use-package pdf-view
+    :ensure pdf-tools
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
+    :functions my-pdf-view-set-midnight-colors
+    :commands pdf-view-midnight-minor-mode
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
+    :hook (after-load-theme . my-pdf-view-set-dark-theme)
     :bind (:map pdf-view-mode-map
            ("C-s" . isearch-forward))
     :init
-    (setq pdf-view-midnight-colors '("#ededed" . "#21242b")
-          pdf-annot-activate-created-annotations t)
+    (setq pdf-annot-activate-created-annotations t)
+
+    (defun my-pdf-view-set-midnight-colors ()
+      "Set pdf-view midnight colors."
+      (setq pdf-view-midnight-colors
+            `(,(face-foreground 'default) . ,(face-background 'default))))
+
+    (defun my-pdf-view-set-dark-theme ()
+      "Set pdf-view midnight theme as color theme."
+      (my-pdf-view-set-midnight-colors)
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (eq major-mode 'pdf-view-mode)
+            (pdf-view-midnight-minor-mode (if pdf-view-midnight-minor-mode 1 -1))))))
     :config
     ;; WORKAROUND: Fix compilation errors on macOS.
     ;; @see https://github.com/politza/pdf-tools/issues/480
@@ -192,6 +208,8 @@
       (setenv "PKG_CONFIG_PATH"
               "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
     (pdf-tools-install t nil t t)
+
+    (my-pdf-view-set-midnight-colors)
 
     ;; Recover last viewed position
     (when emacs/>=26p
