@@ -65,6 +65,7 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       (use-package doom-themes
+        :defines doom-themes-treemacs-theme
         :hook (after-load-theme . (lambda ()
                                     (set-face-foreground
                                      'mode-line
@@ -81,108 +82,11 @@
                             :foreground (face-background 'default)
                             :inverse-video nil)
         ;; Corrects (and improves) org-mode's native fontification.
+        (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-org-config)
+
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-        (doom-themes-treemacs-config)
-
-        ;; Colorful icon theme
-	    (with-eval-after-load 'treemacs
-          (with-no-warnings
-            (when (require 'all-the-icons nil t)
-              (treemacs-create-theme "centaur"
-                :config
-                (let ((face-spec '(:inherit font-lock-doc-face :slant normal)))
-                  (treemacs-create-icon
-                   :icon (format " %s\t" (all-the-icons-octicon "repo" :v-adjust -0.1 :face face-spec))
-                   :extensions (root))
-                  (treemacs-create-icon
-                   :icon (format "%s\t%s\t"
-                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1 :face face-spec)
-                                 (all-the-icons-octicon "file-directory" :v-adjust 0 :face face-spec))
-                   :extensions (dir-open))
-                  (treemacs-create-icon
-                   :icon (format "%s\t%s\t"
-                                 (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1 :face face-spec)
-                                 (all-the-icons-octicon "file-directory" :v-adjust 0 :face face-spec))
-                   :extensions (dir-closed))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t%s\t"
-                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1 :face face-spec)
-                                 (all-the-icons-faicon "cube" :v-adjust -0.1 :face 'all-the-icons-purple))
-                   :extensions (tag-open))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t%s\t"
-                                 (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1 :face face-spec)
-                                 (all-the-icons-faicon "cube" :v-adjust -0.1 :face 'all-the-icons-purple))
-                   :extensions (tag-closed))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "tag" :height 0.9 :v-adjust 0 :face 'all-the-icons-lblue))
-                   :extensions (tag-leaf))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "flame" :v-adjust 0 :face 'error))
-                   :extensions (error))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "stop" :v-adjust 0 :face 'warning))
-                   :extensions (warning))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "info" :height 0.75 :v-adjust 0.1 :face 'success))
-                   :extensions (info))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "file-binary" :v-adjust 0 :face face-spec))
-                   :extensions ("exe" "obj" "so" "o" "out"))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-octicon "file-zip" :v-adjust 0 :face 'all-the-icons-lmaroon))
-                   :extensions ("tar" "rar" "tgz"))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-fileicon "lua" :face 'all-the-icons-dblue))
-                   :extensions ("lua"))
-                  (treemacs-create-icon
-                   :icon (format "  %s\t" (all-the-icons-faicon "file-o" :height 0.8 :v-adjust 0 :face 'all-the-icons-dsilver))
-                   :extensions (fallback))
-
-                  (defun get-extenstions (ext)
-                    "Transfer EXT regexps to extension list."
-                    (let* ((e (s-replace-all
-                               '((".\\?" . "") ("\\?" . "") ("\\." . "")
-                                 ("\\" . "") ("^" . "") ("$" . "")
-                                 ("'" . "") ("*." . "") ("*" . ""))
-                               ext))
-                           (exts (list e)))
-                      ;; Handle "[]"
-                      (when-let* ((s (s-split "\\[\\|\\]" e))
-                                  (f (car s))
-                                  (m (cadr s))
-                                  (l (caddr s))
-                                  (mcs (delete "" (s-split "" m))))
-                        (setq exts nil)
-                        (dolist (c mcs)
-                          (push (s-concat f c l) exts)))
-                      ;; Handle "?"
-                      (dolist (ext exts)
-                        (when (s-match "?" ext)
-                          (when-let ((s (s-split "?" ext)))
-                            (setq exts nil)
-                            (push (s-join "" s) exts)
-                            (push (s-concat (if (> (length (car s)) 1)
-                                                (substring (car s) 0 -1))
-                                            (cadr s)) exts))))
-                      exts))
-
-                  (dolist (item all-the-icons-icon-alist)
-                    (let* ((extensions (get-extenstions (car item)))
-                           (func (cadr item))
-                           (args (append (list (caddr item)) '(:v-adjust -0.05) (cdddr item)))
-                           (icon (apply func args)))
-                      (let* ((icon-pair (cons (format "  %s\t" icon) " "))
-                             (gui-icons (treemacs-theme->gui-icons treemacs--current-theme))
-                             (tui-icons (treemacs-theme->tui-icons treemacs--current-theme))
-                             (gui-icon  (car icon-pair))
-                             (tui-icon  (cdr icon-pair)))
-                        (--each extensions
-                          (ht-set! gui-icons it gui-icon)
-                          (ht-set! tui-icons it tui-icon)))))))
-
-              (treemacs-load-theme "centaur")))))
+        (doom-themes-treemacs-config))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
