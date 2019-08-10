@@ -248,8 +248,7 @@
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
     :init
-    (setq ivy-prescient-enable-filtering t
-          ivy-prescient-retain-classic-highlighting t
+    (setq ivy-prescient-retain-classic-highlighting t
           ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
                                   (counsel-rg . ivy-prescient-non-fuzzy)
                                   (counsel-pt . ivy-prescient-non-fuzzy)
@@ -341,7 +340,7 @@
                         ""))
             (t nil)))
     :init
-    (dolist (fn '(swiper swiper-isearch swiper-all counsel-ag counsel-grep))
+    (dolist (fn '(swiper swiper-isearch swiper-all counsel-ag counsel-rg counsel-pt counsel-grep))
       (setf (alist-get fn ivy-re-builders-alist) #'ivy--regex-pinyin))))
 
 ;; More friendly display transformer for Ivy
