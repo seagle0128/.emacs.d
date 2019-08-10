@@ -81,6 +81,7 @@
                             :background (face-foreground 'error)
                             :foreground (face-background 'default)
                             :inverse-video nil)
+
         ;; Corrects (and improves) org-mode's native fontification.
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-org-config)
@@ -245,15 +246,13 @@
     :demand
     :defines linum-format
     :hook (after-init . global-linum-mode)
+    :init (setq linum-format "%4d ")
     :config
-    (setq linum-format "%4d ")
-
     ;; Highlight current line number
     (use-package hlinum
       :defines linum-highlight-in-all-buffersp
+      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
       :hook (global-linum-mode . hlinum-activate)
-      :custom-face
-      (linum-highlight-face ((t `(:inherit default :background nil :foreground nil))))
       :init (setq linum-highlight-in-all-buffersp t))))
 
 ;; Suppress GUI features
