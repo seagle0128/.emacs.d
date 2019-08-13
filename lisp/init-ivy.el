@@ -243,6 +243,7 @@
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
+    :custom-face (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
     :preface
     (defun ivy-prescient-non-fuzzy (str)
       (let ((prescient-filter-method '(literal regexp)))
