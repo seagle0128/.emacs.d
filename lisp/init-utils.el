@@ -211,6 +211,34 @@
 
     (my-pdf-view-set-midnight-colors)
 
+    ;; FIXME: Support retina
+    ;; @see https://emacs-china.org/t/pdf-tools-mac-retina-display/10243/
+    ;; and https://github.com/politza/pdf-tools/pull/501/
+    (setq pdf-view-use-scaling t
+          pdf-view-use-imagemagick nil)
+    (with-no-warnings
+      (defun pdf-view-use-scaling-p ()
+        "Return t if scaling should be used."
+        (and (or (and (eq system-type 'darwin) (string-equal emacs-version "27.0.50"))
+                 (memq (pdf-view-image-type)
+                       '(imagemagick image-io)))
+             pdf-view-use-scaling))
+      (defun pdf-view-create-page (page &optional window)
+        "Create an image of PAGE for display on WINDOW."
+        (let* ((size (pdf-view-desired-image-size page window))
+               (width (if (not (pdf-view-use-scaling-p))
+                          (car size)
+                        (* 2 (car size))))
+               (data (pdf-cache-renderpage
+                      page width width))
+               (hotspots (pdf-view-apply-hotspot-functions
+                          window page size)))
+          (pdf-view-create-image data
+            :width width
+            :scale (if (pdf-view-use-scaling-p) 0.5 1)
+            :map hotspots
+            :pointer 'arrow))))
+
     ;; Recover last viewed position
     (when emacs/>=26p
       (use-package pdf-view-restore
