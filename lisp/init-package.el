@@ -128,8 +128,10 @@
   (defalias 'upgrade-packages #'paradox-upgrade-packages)
 
   ;; Replace default `list-packages'
-  (defadvice list-packages (before my-list-packages activate)
+  (defun my-paradox-enable (&rest _)
+    "Enable paradox, overriding the default package-menu."
     (paradox-enable))
+  (advice-add #'list-packages :before #'my-paradox-enable)
   :config
   (when (fboundp 'page-break-lines-mode)
     (add-hook 'paradox-after-execute-functions

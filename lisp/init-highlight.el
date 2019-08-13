@@ -55,6 +55,8 @@
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :functions (turn-off-symbol-overlay
+              turn-on-symbol-overlay)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit 'region))))
   (symbol-overlay-face-1 ((t (:inherit 'highlight))))
@@ -78,15 +80,24 @@
   :init (setq symbol-overlay-idle-time 0.1)
   :config
   ;; Disable symbol highlighting while selecting
-  (defadvice set-mark (after disable-symbol-overlay activate)
+  (defun turn-off-symbol-overlay (&rest _)
+    "Turn off symbol highlighting."
+    (interactive)
     (symbol-overlay-mode -1))
-  (defadvice deactivate-mark (after enable-symbol-overlay activate)
-    (symbol-overlay-mode 1)))
+  (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+
+  (defun turn-on-symbol-overlay (&rest _)
+    "Turn on symbol highlighting."
+    (interactive)
+    (symbol-overlay-mode 1))
+  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay))
 
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
+    :functions (ivy-cleanup-string
+                my-ivy-cleanup-indentation)
     :commands highlight-indent-guides--highlighter-default
     :functions my-indent-guides-for-all-but-first-column
     :hook (prog-mode . highlight-indent-guides-mode)
@@ -117,21 +128,26 @@
     ;; Don't display indentations in `swiper'
     ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
     (with-eval-after-load 'ivy
-      (defadvice ivy-cleanup-string (after my-ivy-cleanup-hig activate)
-        (let ((pos 0) (next 0) (limit (length str)) (prop 'highlight-indent-guides-prop))
+      (defun my-ivy-cleanup-indentation (str)
+        "Clean up indentation highlighting in ivy minibuffer."
+        (let ((pos 0)
+              (next 0)
+              (limit (length str))
+              (prop 'highlight-indent-guides-prop))
           (while (and pos next)
             (setq next (text-property-not-all pos limit prop nil str))
             (when next
               (setq pos (text-property-any next limit prop nil str))
               (ignore-errors
-                (remove-text-properties next pos '(display nil face nil) str)))))))))
+                (remove-text-properties next pos '(display nil face nil) str))))))
+      (advice-add #'ivy-cleanup-string :after #'my-ivy-cleanup-indentation))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
   :defines helpful-mode-map
-  :functions my-rainbow-colorize-match
-  :commands (rainbow-x-color-luminance rainbow-colorize-match)
+  :functions (my-rainbow-colorize-match my-rainbow-clear-overlays)
+  :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
          ("w" . rainbow-mode))
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
@@ -147,8 +163,10 @@
                               (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defadvice rainbow-turn-off (after clear-overlays activate)
-    (remove-overlays (point-min) (point-max) 'ovrainbow t)))
+  (defun my-rainbow-clear-overlays ()
+    "Clear all rainbow overlays."
+    (remove-overlays (point-min) (point-max) 'ovrainbow t))
+  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
