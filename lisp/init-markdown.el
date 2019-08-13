@@ -36,6 +36,7 @@
 (use-package markdown-mode
   :defines flycheck-markdown-markdownlint-cli-config
   :preface
+  ;; Preview via `grip'
   ;; Install: pip install grip
   (defun markdown-preview-grip ()
     "Render and preview with `grip'."
@@ -43,6 +44,9 @@
     (let ((program "grip")
           (port "6419")
           (buffer "*gfm-to-html*"))
+
+      (unless (executable-find program)
+        (user-error "Please install grip first."))
 
       ;; If process exists, kill it.
       (markdown-preview-kill-grip buffer)
@@ -57,13 +61,13 @@
   (defun markdown-preview-kill-grip (&optional buffer)
     "Kill `grip' process."
     (interactive)
-    (let ((process (get-buffer-process (or buffer "*gfm-to-html*"))))
-      (when process
-        (kill-process process)
-        (message "Process %s killed" process))))
+    (when-let ((process (get-buffer-process (or buffer "*gfm-to-html*"))))
+      (kill-process process)
+      (message "Process %s killed" process)))
 
+  ;; Lint
   ;; Install: npm i -g markdownlint-cli
-  (defun set-flycheck-markdownlint ()
+  (defun flycheck-enable-markdownlint ()
     "Set the `mardkownlint' config file for the current buffer."
     (let* ((md-lint ".markdownlint.json")
            (md-file buffer-file-name)
@@ -76,13 +80,13 @@
          ("k" .  markdown-preview-kill-grip))
   :hook ((markdown-mode . flyspell-mode)
          (markdown-mode . auto-fill-mode)
-         (markdown-mode . set-flycheck-markdownlint))
+         (markdown-mode . flycheck-enable-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
-  :config
+  :init
   (when sys/macp
     (let ((typora "/Applications/Typora.app/Contents/MacOS/Typora"))
-      (if (file-exists-p typora)
-          (setq markdown-open-command typora))))
+      (when (file-exists-p typora)
+        (setq markdown-open-command typora))))
 
   (setq markdown-content-type "application/xhtml+xml")
   (setq markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
@@ -109,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 ")
+  :config
+  ;; Preview via `vmd'
+  ;; Install: npm install -g vmd
+  (use-package vmd-mode
+    :bind (:map markdown-mode-command-map
+           ("d" .  vmd-mode)))
 
   ;; Table of contents
   (use-package markdown-toc))
