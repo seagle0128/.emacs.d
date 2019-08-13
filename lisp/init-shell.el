@@ -88,7 +88,7 @@
               (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))
 
   ;; For eshell
-  (with-eval-after-load 'eshell
+  (with-eval-after-load 'esh-mode
     (add-hook 'eshell-before-prompt-hook
               (lambda ()
                 (setq xterm-color-preserve-properties t)))
