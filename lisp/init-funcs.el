@@ -86,7 +86,7 @@
          (expand-file-name "custom-example.el" user-emacs-directory)))
     (unless (file-exists-p custom-file)
       (if (file-exists-p custom-example)
-          (copy-file custom-file)
+          (copy-file custom-example custom-file)
         (error "Unable to find \"%s\"" custom-example)))
     (find-file custom-file)))
 

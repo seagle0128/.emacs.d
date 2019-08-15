@@ -145,7 +145,6 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :defines helpful-mode-map
   :functions (my-rainbow-colorize-match my-rainbow-clear-overlays)
   :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
