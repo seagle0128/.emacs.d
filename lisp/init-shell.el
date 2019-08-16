@@ -69,10 +69,9 @@
 ;; ANSI & XTERM 256 color support
 (use-package xterm-color
   :defines (compilation-environment
-            compilation-filter-start
             eshell-preoutput-filter-functions
             eshell-output-filter-functions)
-  :functions compilation-filter
+  :functions (compilation-filter my-advice-compilation-filter)
   :init
   ;; For shell
   (setenv "TERM" "xterm-256color")
@@ -98,12 +97,9 @@
 
   ;; For compilation buffers
   (setq compilation-environment '("TERM=xterm-256color"))
-  (add-hook 'compilation-filter-hook
-            (lambda ()
-              (with-silent-modifications
-                (insert (xterm-color-filter
-                         (delete-and-extract-region compilation-filter-start
-                                                    (point-max))))))))
+  (defun my-advice-compilation-filter (f proc string)
+    (funcall f proc (xterm-color-filter string)))
+  (advice-add 'compilation-filter :around #'my-advice-compilation-filter))
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
