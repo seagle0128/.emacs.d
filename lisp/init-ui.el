@@ -235,7 +235,7 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-blue)))
+               '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
 ;; Show native line numbers if possible, otherwise use linum
 (if (fboundp 'display-line-numbers-mode)
