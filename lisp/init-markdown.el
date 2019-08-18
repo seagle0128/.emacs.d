@@ -50,7 +50,15 @@
          (markdown-mode . flycheck-enable-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
-  (setq markdown-content-type "application/xhtml+xml"
+  (setq markdown-enable-wiki-links t
+        markdown-italic-underscore t
+        markdown-asymmetric-header t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-gfm-uppercase-checkbox t
+        markdown-fontify-code-blocks-natively t
+        markdown-enable-math t
+
+        markdown-content-type "application/xhtml+xml"
         markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
                              "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
         markdown-xhtml-header-content "
