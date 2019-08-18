@@ -50,15 +50,10 @@
          (markdown-mode . flycheck-enable-markdownlint))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
-  (when sys/macp
-    (let ((typora "/Applications/Typora.app/Contents/MacOS/Typora"))
-      (when (file-exists-p typora)
-        (setq markdown-open-command typora))))
-
-  (setq markdown-content-type "application/xhtml+xml")
-  (setq markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
-                             "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"))
-  (setq markdown-xhtml-header-content "
+  (setq markdown-content-type "application/xhtml+xml"
+        markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+                             "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
+        markdown-xhtml-header-content "
 <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 <style>
 body {
