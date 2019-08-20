@@ -75,6 +75,10 @@
         ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
         (set-face-foreground 'mode-line (face-foreground 'default))
 
+        ;; Make swiper match clearer
+	    (with-eval-after-load 'swiper
+	      (set-face-background 'swiper-background-match-face-1 "SlateGray1"))
+
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
         (set-face-attribute 'doom-visual-bell nil
