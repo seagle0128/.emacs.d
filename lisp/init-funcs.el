@@ -55,7 +55,7 @@
     (if (and (fboundp 'fancy-narrow-active-p)
              (fancy-narrow-active-p))
         (fancy-widen))
-    (revert-buffer t t)
+    (revert-buffer nil t t)
     (message "Reverted this buffer.")))
 (bind-key "s-r" #'revert-this-buffer)
 
