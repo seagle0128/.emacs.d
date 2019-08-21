@@ -129,6 +129,7 @@
                  (require 'all-the-icons nil t))
         (declare-function all-the-icons-faicon 'all-the-icons)
         (declare-function all-the-icons-material 'all-the-icons)
+        (declare-function all-the-icons-octicon 'all-the-icons)
         (setq company-box-icons-all-the-icons
               `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.2))
                 (Text . ,(all-the-icons-faicon "text-width" :height 0.85 :v-adjust -0.05))
