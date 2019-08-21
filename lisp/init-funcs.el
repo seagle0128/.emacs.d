@@ -276,22 +276,23 @@
 (defun proxy-socks-enable ()
   "Enable SOCKS proxy."
   (interactive)
-  (setq url-gateway-method 'socks)
-  (setq socks-noproxy '("localhost"))
-  (setq socks-server '("Default server" "127.0.0.1" 1086 5))
+  (require 'socks)
+  (setq url-gateway-method 'socks
+        socks-noproxy '("localhost")
+        socks-server '("Default server" "127.0.0.1" 1086 5))
   (proxy-socks-show))
 
 (defun proxy-socks-disable ()
   "Disable SOCKS proxy."
   (interactive)
-  (setq url-gateway-method 'native)
-  (setq socks-noproxy nil)
+  (setq url-gateway-method 'native
+        socks-noproxy nil)
   (proxy-socks-show))
 
 (defun proxy-socks-toggle ()
   "Toggle SOCKS proxy."
   (interactive)
-  (if socks-noproxy
+  (if (bound-and-true-p socks-noproxy)
       (proxy-socks-disable)
     (proxy-socks-enable)))
 
