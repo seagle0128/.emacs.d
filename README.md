@@ -6,6 +6,27 @@
 
 ![Centaur Emacs](logo.png)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Centaur Emacs](#centaur-emacs)
+    - [Features](#features)
+    - [Prerequisite](#prerequisite)
+        - [OS](#os)
+        - [GNU Emacs](#gnu-emacs)
+        - [Dotfiles](#dotfiles)
+    - [Quick Start](#quick-start)
+        - [Install](#install)
+        - [Update](#update)
+        - [Docker](#docker)
+    - [Customization](#customization)
+        - [Customize-group](#customize-group)
+        - [Manual](#manual)
+    - [Screenshots](#screenshots)
+    - [FAQ](#faq)
+
+<!-- markdown-toc end -->
+
 This is an Emacs distribution that aims to enhance the default
 Emacs experience. It alters a lot of the default settings,
 bundles a plethora of additional packages and adds its own core
@@ -24,12 +45,12 @@ latest stable release - currently **26.2**.
 - Quick fuzzy search.
 - Better Org/Markdown support.
 - Support multiple programming languages
-  - C/C++/Object-C/C#/Java
-  - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
-  - Javascript/Typescript/JSON/YAML
-  - HTML/CSS/XML
-  - Golang/Swift/Rust/Dart/Elixir
-  - ...
+    - C/C++/Object-C/C#/Java
+    - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
+    - Javascript/Typescript/JSON/YAML
+    - HTML/CSS/XML
+    - Golang/Swift/Rust/Dart/Elixir
+    - ...
 - Auto completion.
 - Fly syntax check.
 - Fly spell check.
@@ -38,9 +59,9 @@ latest stable release - currently **26.2**.
 - Pomodor integration.
 - Support docker.
 - Better Chinese support:
-  - Chinese calendar
-  - Youdao dictionary
-  - Pinyin search
+    - Chinese calendar
+    - Youdao dictionary
+    - Pinyin search
 
 ## Prerequisite
 
@@ -48,7 +69,7 @@ latest stable release - currently **26.2**.
 
 - GNU Linux
 - macOS
-- Windows (Cygwin/msys)
+- Windows (Cygwin/MSYS)
 
 ### GNU Emacs
 
@@ -67,12 +88,9 @@ mv ~/.emacs.d ~/.emacs.d.bak
 git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-or download the [zip
-package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
-extract to `~/.emacs.d`.
+or download the [zip package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and extract to `~/.emacs.d`.
 
-Then start Emacs. Wait for a while to install packages at the first startup.
-Enjoy!
+Then start Emacs. Wait for a while to install packages at the first startup. Enjoy! :smile:
 
 ### Update
 
@@ -105,15 +123,13 @@ docker run -it centaur/emacs bash
 
 ## Customization
 
-### Customize-group
+### Customize Group
 
-`M-x customize-group` and select `centaur`. Set and save the configurations,
-then restart Emacs.
+`M-x customize-group` and select `centaur`. Set and save the configurations, then restart Emacs.
 
 ### Manual
 
-Copy `custom-template.el` to `custom.el` and change the configurations, then
-restart Emacs.
+Copy `custom-template.el` to `custom.el` and change the configurations, then restart Emacs.
 
 For Example:
 
@@ -130,8 +146,7 @@ For Example:
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 
-The default package archives is `melpa`. You can change it in `custom.el`, or
-switch manually via `M-x switch-package-archives` anytime.
+The default package archives is `melpa`. You can change it in `custom.el`, or switch manually via `M-x switch-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 

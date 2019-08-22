@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ;; Table of contents
   (use-package markdown-toc
     :bind (:map markdown-mode-command-map
-           ("r" . markdown-toc-generate-or-refresh-toc)))
+           ("r" . markdown-toc-generate-or-refresh-toc))))
 
 (provide 'init-markdown)
 
