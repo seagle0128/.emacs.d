@@ -254,6 +254,7 @@
                                   (counsel-rg . ivy-prescient-non-fuzzy)
                                   (counsel-pt . ivy-prescient-non-fuzzy)
                                   (counsel-grep . ivy-prescient-non-fuzzy)
+                                  (counsel-yank-pop . ivy-prescient-non-fuzzy)
                                   (swiper . ivy-prescient-non-fuzzy)
                                   (swiper-isearch . ivy-prescient-non-fuzzy)
                                   (swiper-all . ivy-prescient-non-fuzzy)
@@ -341,7 +342,14 @@
                         ""))
             (t nil)))
     :init
-    (dolist (fn '(swiper swiper-isearch swiper-all counsel-ag counsel-rg counsel-pt counsel-grep))
+    (dolist (fn '(swiper
+                  swiper-isearch
+                  swiper-all
+                  counsel-ag
+                  counsel-rg
+                  counsel-pt
+                  counsel-grep
+                  counsel-yank-pop))
       (setf (alist-get fn ivy-re-builders-alist) #'ivy--regex-pinyin))))
 
 ;; More friendly display transformer for Ivy
