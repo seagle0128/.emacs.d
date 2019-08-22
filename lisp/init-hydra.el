@@ -104,7 +104,9 @@
       ("y" (centaur-load-theme 'daylight) "daylight"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'daylight)))
       ("M" doom-modeline-mode "modern mode-line" :toggle t)
-      ("T" (counsel-load-theme) "others"))
+      ("T" (let ((ivy-initial-inputs-alist '((counsel-load-theme . "doom-"))))
+             (counsel-load-theme))
+       "others"))
      "Package Archive"
      (("k m" (progn (setq centaur-package-archives 'melpa)
                     (set-package-archives centaur-package-archives))
