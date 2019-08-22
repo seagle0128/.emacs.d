@@ -74,9 +74,14 @@
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
-  :hook ((after-change-major-mode . symbol-overlay-mode)
-         ((iedit-mode treemacs-mode) . (lambda () (symbol-overlay-mode -1)))
-         (iedit-mode-end . symbol-overlay-mode))
+  :hook ((prog-mode . symbol-overlay-mode)
+         ((iedit-mode treemacs-mode) . (lambda ()
+                                         "Disabled symbol highlighting."
+                                         (symbol-overlay-mode -1)))
+         (iedit-mode-end . (lambda ()
+                             "Enable symbol highlighting if necessary."
+                             (when (derived-mode-p 'prog-mode)
+                               (symbol-overlay-mode 1)))))
   :init (setq symbol-overlay-idle-time 0.1)
   :config
   ;; Disable symbol highlighting while selecting
