@@ -60,7 +60,7 @@
 
         markdown-content-type "application/xhtml+xml"
         markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
-                             "http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
+                             "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
         markdown-xhtml-header-content "
 <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 <style>
@@ -72,7 +72,7 @@ body {
   padding: 0 10px;
 }
 </style>
-<script src='http://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.add('markdown-body');
@@ -91,7 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
            ("g" . grip-mode)))
 
   ;; Table of contents
-  (use-package markdown-toc))
+  (use-package markdown-toc
+    :bind (:map markdown-mode-command-map
+           ("r" . markdown-toc-generate-or-refresh-toc)))
 
 (provide 'init-markdown)
 
