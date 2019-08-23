@@ -33,13 +33,6 @@
 (eval-when-compile
   (require 'init-const))
 
-;; Visualize TAB, (HARD) SPACE, NEWLINE
-(setq-default show-trailing-whitespace nil)
-(dolist (hook '(prog-mode-hook outline-mode-hook conf-mode-hook))
-  (add-hook hook (lambda ()
-                   (setq show-trailing-whitespace t)
-                   (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))))
-
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil

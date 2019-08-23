@@ -124,13 +124,22 @@
 
 (use-package simple
   :ensure nil
-  :hook (window-setup . size-indication-mode)
-  :init (setq column-number-mode t
-              line-number-mode t
-              ;; kill-whole-line t               ; Kill line including '\n'
-              line-move-visual nil
-              track-eol t                     ; Keep cursor at end of lines. Require line-move-visual is nil.
-              set-mark-command-repeat-pop t)) ; Repeating C-SPC after popping mark pops it again
+  :hook ((window-setup . size-indication-mode)
+         ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
+  :init
+  (setq column-number-mode t
+        line-number-mode t
+        ;; kill-whole-line t               ; Kill line including '\n'
+        line-move-visual nil
+        track-eol t                     ; Keep cursor at end of lines. Require line-move-visual is nil.
+        set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
+
+  ;; Visualize TAB, (HARD) SPACE, NEWLINE
+  (setq-default show-trailing-whitespace nil) ; Don't show trailing whitespace by default
+  (defun enable-trailing-whitespace ()
+    "Show trailing spaces and delete on saving."
+    (setq show-trailing-whitespace t)
+    (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
