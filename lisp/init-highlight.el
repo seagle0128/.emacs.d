@@ -68,13 +68,8 @@
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
   :hook ((prog-mode . symbol-overlay-mode)
-         ((iedit-mode treemacs-mode) . (lambda ()
-                                         "Disabled symbol highlighting."
-                                         (symbol-overlay-mode -1)))
-         (iedit-mode-end . (lambda ()
-                             "Enable symbol highlighting if necessary."
-                             (when (derived-mode-p 'prog-mode)
-                               (symbol-overlay-mode 1)))))
+         (iedit-mode . turn-off-symbol-overlay)
+         (iedit-mode-end . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.1)
   :config
   ;; Disable symbol highlighting while selecting
@@ -87,7 +82,8 @@
   (defun turn-on-symbol-overlay (&rest _)
     "Turn on symbol highlighting."
     (interactive)
-    (symbol-overlay-mode 1))
+    (when (derived-mode-p 'prog-mode)
+      (symbol-overlay-mode 1)))
   (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay))
 
 ;; Highlight indentions
