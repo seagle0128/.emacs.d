@@ -46,16 +46,22 @@
   (set-buffer-file-coding-system 'undecided-dos nil))
 
 ;; Revert buffer
+(declare-function flycheck-buffer 'flycheck)
+(declare-function flymake-start 'flymake)
 (defun revert-this-buffer ()
   "Revert the current buffer."
   (interactive)
   (unless (minibuffer-window-active-p (selected-window))
     (text-scale-increase 0)
-    (widen)
     (if (and (fboundp 'fancy-narrow-active-p)
              (fancy-narrow-active-p))
-        (fancy-widen))
+        (fancy-widen)
+      (widen))
     (revert-buffer nil t t)
+    (when (bound-and-true-p flycheck-mode)
+      (flycheck-buffer))
+    (when (bound-and-true-p flymake-mode)
+      (flymake-start))
     (message "Reverted this buffer.")))
 (bind-key "s-r" #'revert-this-buffer)
 
