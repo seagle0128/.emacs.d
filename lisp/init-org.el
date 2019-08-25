@@ -106,10 +106,15 @@
                               (make-variable-buffer-local 'show-paren-mode)
                               (setq show-paren-mode nil))))
   :init (setq org-agenda-files '("~/org")
-              org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
-                                  (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
+              org-todo-keywords
+              '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
+                (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
               org-todo-keyword-faces '(("HANGUP" . warning)
                                        ("❓" . warning))
+              org-priority-faces '((?A . error)
+                                   (?B . warning)
+                                   (?C . success))
+              org-tags-column -80
               org-log-done 'time
               org-catch-invisible-edits 'smart
               org-startup-indented t
@@ -127,11 +132,11 @@
 
   (use-package org-fancy-priorities
     :diminish
-    :defines org-fancy-priorities-list
     :hook (org-mode . org-fancy-priorities-mode)
-    :config
-    (unless (char-displayable-p ?❗)
-      (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "OPTIONAL"))))
+    :init (setq org-fancy-priorities-list
+                (if (char-displayable-p ?■)
+                    '("■" "■" "■" "■")
+                  '("HIGH" "MID" "LOW" "OPTIONAL"))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
