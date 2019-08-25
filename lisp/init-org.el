@@ -125,6 +125,9 @@
   ;; Enable markdown backend
   (add-to-list 'org-export-backends 'md)
 
+  (with-eval-after-load 'counsel
+    (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
+
   ;; Prettify UI
   (use-package org-bullets
     :if (char-displayable-p ?◉)
