@@ -131,7 +131,8 @@
   ;; Prettify UI
   (use-package org-bullets
     :if (char-displayable-p ?◉)
-    :hook (org-mode . org-bullets-mode))
+    :hook (org-mode . org-bullets-mode)
+    :init (setq org-bullets-bullet-list '("●" "◉" "⚫" "•")))
 
   (use-package org-fancy-priorities
     :diminish
@@ -139,7 +140,7 @@
     :init (setq org-fancy-priorities-list
                 (if (char-displayable-p ?■)
                     '("■" "■" "■" "■")
-                  '("HIGH" "MID" "LOW" "OPTIONAL"))))
+                  '("HIGH" "MIDIUM" "LOW" "OPTIONAL"))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
