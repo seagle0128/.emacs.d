@@ -111,11 +111,12 @@
 (defalias 'centaur-update-config 'update-config)
 
 (declare-function upgrade-packages 'init-package)
-(defun centaur-update-packages ()
+(defun update-packages ()
   "Refresh package contents and upgrade all packages."
   (interactive)
   (package-refresh-contents)
   (upgrade-packages))
+(defalias 'centaur-update-packages 'update-packages)
 
 (defun update-config-and-packages()
   "Update confgiurations and packages."
