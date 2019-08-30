@@ -105,8 +105,7 @@
 (use-package bind-key)
 
 ;; Update GPG keyring for GNU ELPA
-(use-package gnu-elpa-keyring-update
-  :init (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+(use-package gnu-elpa-keyring-update)
 
 ;; Initialization benchmark
 (when centaur-benchmark
