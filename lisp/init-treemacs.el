@@ -95,23 +95,23 @@
       (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
-       (treemacs-git-mode 'simple))))
+       (treemacs-git-mode 'simple)))
 
-  ;; Projectile integration for treemacs
-  (use-package treemacs-projectile
-    :after treemacs projectile
-    :bind (([M-f8] . treemacs-projectile)
-           :map projectile-command-map
-           ("h" . treemacs-projectile)))
+    ;; Projectile integration for treemacs
+    (use-package treemacs-projectile
+      :after projectile
+      :bind (([M-f8] . treemacs-projectile)
+             :map projectile-command-map
+             ("h" . treemacs-projectile)))
 
-  (use-package treemacs-magit
-    :after treemacs magit
-    :commands treemacs-magit--schedule-update
-    :hook ((magit-post-commit
-            git-commit-post-finish
-            magit-post-stage
-            magit-post-unstage)
-           . treemacs-magit--schedule-update)))
+    (use-package treemacs-magit
+      :after magit
+      :commands treemacs-magit--schedule-update
+      :hook ((magit-post-commit
+              git-commit-post-finish
+              magit-post-stage
+              magit-post-unstage)
+             . treemacs-magit--schedule-update))))
 
 (provide 'init-treemacs)
 
