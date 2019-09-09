@@ -36,7 +36,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :defines calculate-lisp-indent-last-sexp
+  :defines (flycheck-disabled-checkers calculate-lisp-indent-last-sexp)
   :functions (helpful-update
               my-lisp-indent-function
               function-advices
@@ -48,6 +48,9 @@
          ("C-c C-x" . ielm)
          ("C-c C-c" . eval-defun)
          ("C-c C-b" . eval-buffer))
+  :hook (emacs-lisp-mode . (lambda ()
+                             "Disable the checkdoc checker."
+                             (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
   :config
   (if (boundp 'elisp-flymake-byte-compile-load-path)
       (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
