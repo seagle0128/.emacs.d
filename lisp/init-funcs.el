@@ -52,16 +52,7 @@
   "Revert the current buffer."
   (interactive)
   (unless (minibuffer-window-active-p (selected-window))
-    (text-scale-increase 0)
-    (if (and (fboundp 'fancy-narrow-active-p)
-             (fancy-narrow-active-p))
-        (fancy-widen)
-      (widen))
-    (revert-buffer nil t t)
-    (when (bound-and-true-p flycheck-mode)
-      (flycheck-buffer))
-    (when (bound-and-true-p flymake-mode)
-      (flymake-start))
+    (revert-buffer t t)
     (message "Reverted this buffer.")))
 (bind-key "s-r" #'revert-this-buffer)
 
