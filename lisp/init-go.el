@@ -64,8 +64,6 @@
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-rename)
-  (use-package golint)
-  (use-package govet)
 
   ;; Install: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
   (use-package flycheck-golangci-lint
