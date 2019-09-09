@@ -58,7 +58,9 @@
    (use-package lsp-ui
      :functions my-lsp-ui-imenu-hide-mode-line
      :commands lsp-ui-doc-hide
-     :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+     :custom-face
+     (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+     (lsp-ui-sideline-code-action ((t (:inherit warning))))
      :bind (:map lsp-ui-mode-map
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
             ([remap xref-find-references] . lsp-ui-peek-find-references)
@@ -70,8 +72,12 @@
                  lsp-ui-doc-position 'at-point
                  lsp-ui-doc-border (face-foreground 'default)
 
-                 lsp-ui-sideline-enable nil
-                 lsp-ui-sideline-ignore-duplicate t)
+                 lsp-ui-sideline-enable t
+                 lsp-ui-sideline-show-hover nil
+                 lsp-ui-sideline-show-diagnostics nil
+                 lsp-ui-sideline-ignore-duplicate t
+
+                 lsp-eldoc-enable-hover nil)
      :config
      (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
 
