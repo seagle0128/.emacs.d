@@ -128,7 +128,8 @@
        (concat (propertize " " 'display `(space :align-to 2)) str))
      cands
      "\n"))
-  (setq ivy-format-functions-alist '((t . my-ivy-format-function-arrow)))
+  (setq ivy-format-functions-alist '((counsel-describe-face . counsel--faces-format-function)
+                                     (t . my-ivy-format-function-arrow)))
 
   (setq swiper-action-recenter t)
 
@@ -139,8 +140,6 @@
   (when (executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' %s"))
   :config
-  (add-to-list 'ivy-format-functions-alist '(counsel-describe-face . counsel--faces-format-function))
-
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
   (defvar my-ivy-fly-commands '(query-replace-regexp
