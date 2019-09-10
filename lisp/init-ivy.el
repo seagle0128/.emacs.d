@@ -161,7 +161,6 @@
                                 counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
-    ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
     (cond ((and (memq last-command my-ivy-fly-commands)
                 (equal (this-command-keys-vector) (kbd "M-p")))
            ;; repeat one time to get straight to the first history item
@@ -196,6 +195,9 @@
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+  (add-hook 'minibuffer-exit-hook
+            (lambda ()
+              (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
   ;; Improve search experience of `swiper'
   ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
