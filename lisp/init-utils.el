@@ -207,7 +207,7 @@
     (when sys/macp
       (setenv "PKG_CONFIG_PATH"
               "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
-    (pdf-loader-install t nil t t)
+    (pdf-tools-install t nil t t)
 
     (my-pdf-view-set-midnight-colors)
 
