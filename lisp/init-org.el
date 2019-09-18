@@ -38,13 +38,23 @@
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :preface
   (defun hot-expand (str &optional mod)
-    "Expand org template."
+    "Expand org template.
+
+STR is a structure template string recognised by org like <s. MOD is a
+string with additional parameters to add the begin line of the
+structure element. HEADER string includes more parameters that are
+prepended to the element after the #+HEADER: tag."
     (let (text)
       (when (region-active-p)
         (setq text (buffer-substring (region-beginning) (region-end)))
         (delete-region (region-beginning) (region-end)))
       (insert str)
-      (org-try-structure-completion)
+      (if (fboundp 'org-try-structure-completion)
+          (org-try-structure-completion) ; < org 9
+        (progn
+          ;; New template expansion since org 9
+          (require 'org-tempo nil t)
+          (org-tempo-complete-tag)))
       (when mod (insert mod) (forward-line))
       (when text (insert text))))
   :pretty-hydra
@@ -53,9 +63,12 @@
    ("Basic"
     (("a" (hot-expand "<a") "ascii")
      ("c" (hot-expand "<c") "center")
+     ("C" (hot-expand "<C") "comment")
      ("e" (hot-expand "<e") "example")
+     ("E" (hot-expand "<E") "export")
      ("h" (hot-expand "<h") "html")
      ("l" (hot-expand "<l") "latex")
+     ("n" (hot-expand "<n") "note")
      ("o" (hot-expand "<q") "quote")
      ("v" (hot-expand "<v") "verse"))
     "Head"
@@ -130,6 +143,9 @@
               org-pretty-entities nil
               org-hide-emphasis-markers t)
   :config
+  ;; Add new template
+  (add-to-list 'org-structure-template-alist '("n" . "note"))
+
   ;; Enable markdown backend
   (add-to-list 'org-export-backends 'md)
 
