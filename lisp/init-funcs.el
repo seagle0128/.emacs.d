@@ -56,6 +56,18 @@
     (message "Reverted this buffer.")))
 (bind-key "s-r" #'revert-this-buffer)
 
+;; Copy file name
+(defun copy-file-name ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (if-let ((filename (if (equal major-mode 'dired-mode)
+                         default-directory
+                       (buffer-file-name))))
+      (progn
+        (kill-new filename)
+        (message "Copied '%s'" filename))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
 ;; Mode line
 (defun mode-line-height ()
   "Get the height of the mode-line."
