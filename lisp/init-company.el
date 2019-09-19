@@ -51,6 +51,7 @@
   :hook (after-init . global-company-mode)
   :init
   (defun my-company-yasnippet ()
+    "Hide the current completeions and show snippets."
     (interactive)
     (company-abort)
     (call-interactively 'company-yasnippet))

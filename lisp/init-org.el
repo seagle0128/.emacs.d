@@ -244,10 +244,7 @@ prepended to the element after the #+HEADER: tag."
     (org-pomodoro-mode-line-overtime ((t (:inherit error))))
     (org-pomodoro-mode-line-break ((t (:inherit success))))
     :bind (:map org-agenda-mode-map
-           ("P" . org-pomodoro)))
-
-  ;; Visually summarize progress
-  (use-package org-dashboard))
+           ("P" . org-pomodoro))))
 
 (provide 'init-org)
 
