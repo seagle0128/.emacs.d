@@ -114,13 +114,12 @@ If Non-nil, use dashboard, otherwise will restore previous session."
            (not (file-exists-p custom-file)))
       (copy-file custom-template-file custom-file)))
 
-(if (file-exists-p custom-file)
-    (load custom-file))
-
 ;; Load `custom-post.el'
 ;; Put personal configurations to override defaults here.
 (add-hook 'after-init-hook
           (lambda ()
+            (if (file-exists-p custom-file)
+                 (load custom-file))
             (let ((file
                    (expand-file-name "custom-post.el" user-emacs-directory)))
               (if (file-exists-p file)
