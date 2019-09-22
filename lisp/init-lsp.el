@@ -67,9 +67,9 @@
             ("C-c u" . lsp-ui-imenu))
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
-                 lsp-ui-doc-delay 1.0
+                 lsp-ui-doc-delay 0.5
                  lsp-ui-doc-include-signature t
-                 lsp-ui-doc-position 'at-point
+                 lsp-ui-doc-position 'top
                  lsp-ui-doc-border (face-foreground 'default)
 
                  lsp-ui-sideline-enable t
