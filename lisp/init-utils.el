@@ -42,8 +42,6 @@
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
-  :functions (posframe-show
-              posframe-hide)
   :commands (youdao-dictionary-mode
              youdao-dictionary--region-or-word
              youdao-dictionary--format-result)
@@ -57,32 +55,33 @@
   (setq youdao-dictionary-use-chinese-word-segmentation t)
 
   (with-eval-after-load 'posframe
-    (defun youdao-dictionary-search-at-point-posframe ()
-      "Search word at point and display result with posframe."
-      (interactive)
-      (let ((word (youdao-dictionary--region-or-word)))
-        (if word
-            (progn
-              (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
-                (let ((inhibit-read-only t))
-                  (erase-buffer)
-                  (youdao-dictionary-mode)
-                  (insert (youdao-dictionary--format-result word))
-                  (goto-char (point-min))
-                  (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name :position (point))
-              (unwind-protect
-                  (push (read-event) unread-command-events)
-                (posframe-hide youdao-dictionary-buffer-name)))
-          (message "Nothing to look up")))))
+    (with-no-warnings
+      (defun youdao-dictionary-search-at-point-posframe ()
+        "Search word at point and display result with posframe."
+        (interactive)
+        (let ((word (youdao-dictionary--region-or-word)))
+          (if word
+              (progn
+                (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
+                  (let ((inhibit-read-only t))
+                    (erase-buffer)
+                    (youdao-dictionary-mode)
+                    (insert (youdao-dictionary--format-result word))
+                    (goto-char (point-min))
+                    (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
+                (posframe-show youdao-dictionary-buffer-name :position (point))
+                (unwind-protect
+                    (push (read-event) unread-command-events)
+                  (posframe-hide youdao-dictionary-buffer-name)))
+            (message "Nothing to look up")))))
 
-  (defun my-youdao-search-at-point ()
-    (interactive)
-    (if (display-graphic-p)
-        (if (fboundp 'youdao-dictionary-search-at-point-posframe)
-            (youdao-dictionary-search-at-point-posframe)
-          (youdao-dictionary-search-at-point-tooltip))
-      (youdao-dictionary-search-at-point))))
+    (defun my-youdao-search-at-point ()
+      (interactive)
+      (if (display-graphic-p)
+          (if (fboundp 'youdao-dictionary-search-at-point-posframe)
+              (youdao-dictionary-search-at-point-posframe)
+            (youdao-dictionary-search-at-point-tooltip))
+        (youdao-dictionary-search-at-point)))))
 
 ;;
 ;; Search tools
@@ -294,7 +293,6 @@
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
 (use-package focus)                     ; Focus on the current region
-(use-package htmlize)                   ; covert to html
 (use-package list-environment)
 (use-package memory-usage)
 (use-package tldr)
