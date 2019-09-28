@@ -102,7 +102,8 @@
              (if (eq major-mode 'rg-mode) ; compatible with `rg'
                  string
                (xterm-color-filter string))))
-  (advice-add 'compilation-filter :around #'my-advice-compilation-filter))
+  (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
+  (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
