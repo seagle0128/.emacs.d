@@ -221,3 +221,15 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     Please refer to #33. You should instead set environment variables in startup
     files like .profile, .bash_profile or .zshenv, then `Centaur Emacs` is able
     to recognize and import the environment variables.
+
+## Donate
+
+If you think it's helpful for you, please consider pay a cup of coffee for me. Thank you! :smile:
+
+<img
+src="https://user-images.githubusercontent.com/140797/65818854-44204900-e248-11e9-9cc5-3e6339587cd8.png"
+alt="Alipay" width="150"/>
+&nbsp;&nbsp;
+<img
+src="https://user-images.githubusercontent.com/140797/65818844-366ac380-e248-11e9-931c-4bd872d0566b.png"
+alt="Wechat" width="150"/>
