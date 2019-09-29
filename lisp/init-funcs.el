@@ -45,6 +45,15 @@
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
+(defun delete-carrage-returns ()
+  "Delete `^M' characters in the buffer.
+Same as `replace-string C-q C-m RET RET'."
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (while (search-forward "\r" nil :noerror)
+      (replace-match ""))))
+
 ;; Revert buffer
 (declare-function flycheck-buffer 'flycheck)
 (declare-function flymake-start 'flymake)
