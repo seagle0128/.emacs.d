@@ -61,8 +61,17 @@
     (setq gofmt-command "goimports"))
   (add-hook 'before-save-hook #'gofmt-before-save)
 
+  ;; List packages with `gopkgs' if possible
+  (when (executable-find "gopkgs")
+    (defun go-packages-gopkgs()
+      "Return a list of all Go packages, using `gopkgs'."
+      (sort (process-lines "gopkgs") #'string<))
+    (setq go-packages-function #'go-packages-gopkgs))
+  (setq go-packages-function #'go-packages-go-list)
+
   (use-package go-dlv)
   (use-package go-fill-struct)
+  (use-package go-impl)
   (use-package go-rename)
 
   ;; Install: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
@@ -79,36 +88,6 @@
                                                           go-test
                                                           go-errcheck))
                        (flycheck-golangci-lint-setup))))
-
-  (use-package go-impl
-    :functions (go-packages-gopkgs go-root-and-paths go-packages-fd)
-    :config
-    ;; `go-packages-native', remiplement it.
-    (cond
-     ((executable-find "gopkgs")
-      (defun go-packages-gopkgs()
-        "Return a list of all Go packages, using `gopkgs'."
-        (sort (process-lines "gopkgs") #'string<))
-      (setq go-packages-function #'go-packages-gopkgs))
-     ((executable-find "fd")
-      (defun go-packages-fd ()
-        "Return a list of all installed Go packages, using `fd'."
-        (sort
-         (delete-dups
-          (cl-mapcan
-           '(lambda (topdir)
-              (let ((pkgdir (concat topdir "/pkg/")))
-                (--> (shell-command-to-string (concat "fd -e a . " pkgdir))
-                     (split-string it "\n")
-                     (-map (lambda (str)
-	                         (--> (string-remove-prefix pkgdir str)
-		                          (string-trim-left it ".*?/")
-		                          (string-remove-suffix ".a" it)
-		                          )
-	                         ) it))))
-           (go-root-and-paths)))
-         #'string<))
-      (setq go-packages-function #'go-packages-fd))))
 
   (use-package go-tag
     :bind (:map go-mode-map
