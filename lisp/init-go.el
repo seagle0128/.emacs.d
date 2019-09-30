@@ -64,6 +64,7 @@
                       "github.com/uudashr/gopkgs/cmd/gopkgs"
                       "github.com/golangci/golangci-lint/cmd/golangci-lint")
     "All necessary go tools.")
+
   (defun go-update-tools ()
     "Install or update go tools."
     (interactive)
@@ -76,6 +77,9 @@
                             (lambda (proc _)
                               (when (= 0 (process-exit-status proc))
                                 (message "Installed %s" pkg))))))
+
+  (unless (executable-find "gopls")
+    (go-update-tools))
 
   (use-package go-dlv)
   (use-package go-fill-struct)
