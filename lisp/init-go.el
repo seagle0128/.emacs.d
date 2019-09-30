@@ -81,6 +81,7 @@
   (unless (executable-find "gopls")
     (go-update-tools))
 
+  ;; Misc
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
@@ -120,8 +121,7 @@
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
-  :diminish
-  :commands go-playground-mode)
+  :diminish)
 
 (provide 'init-go)
 
