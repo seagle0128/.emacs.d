@@ -47,13 +47,6 @@
     (setq gofmt-command "goimports"))
   (add-hook 'before-save-hook #'gofmt-before-save)
 
-  ;; List packages with `gopkgs' if possible
-  (when (executable-find "gopkgs")
-    (defun go-packages-gopkgs()
-      "Return a list of all Go packages, using `gopkgs'."
-      (sort (process-lines "gopkgs") #'string<))
-    (setq go-packages-function #'go-packages-gopkgs))
-
   ;; Install or update tools
   (defvar go--tools '("golang.org/x/tools/gopls"
                       "golang.org/x/tools/cmd/goimports"
@@ -65,7 +58,6 @@
                       "github.com/cweill/gotests/..."
                       "github.com/fatih/gomodifytags"
                       "github.com/davidrjenni/reftools/cmd/fillstruct"
-                      "github.com/uudashr/gopkgs/cmd/gopkgs"
                       "github.com/golangci/golangci-lint/cmd/golangci-lint")
     "All necessary go tools.")
 
