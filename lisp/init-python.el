@@ -40,15 +40,16 @@
 ;;   pip install autopep8
 (use-package python
   :ensure nil
-  :defines gud-pdb-command-name pdb-path
-  :config
+  :hook (inferior-python-mode . (lambda ()
+                                  (process-query-on-exit-flag
+                                   (get-process "Python"))))
+  :init
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
-
-  (add-hook 'inferior-python-mode-hook
-            (lambda ()
-              ;; (bind-key "C-c C-z" #'kill-buffer-and-window inferior-python-mode-map)
-              (process-query-on-exit-flag (get-process "Python"))))
+  :config
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-env "PYTHONPATH"))
 
   ;; Live Coding in Python
   (use-package live-py-mode)
