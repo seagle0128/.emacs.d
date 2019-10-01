@@ -205,9 +205,11 @@
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
           ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
-          ("*Gofmt Errors*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           (" *Install vterm" :size 0.3 :align 'below)
+
+          ("*Gofmt Errors*" :select t :size 0.3 :align 'below :autoclose t)
+          ("*Go Test*" :select t :size 0.3 :align 'below :autoclose t)
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)
