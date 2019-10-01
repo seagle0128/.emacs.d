@@ -32,12 +32,16 @@
 
 ;; Golang
 (use-package go-mode
-  :functions go-packages-gopkgs
+  :functions (go-packages-gopkgs go-update-tools)
   :bind (:map go-mode-map
          ([remap xref-find-definitions] . godef-jump)
          ("C-c R" . go-remove-unused-imports)
          ("<f1>" . godoc-at-point))
   :config
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-envs '("GOPATH" "GOPROXY")))
+
   ;; Format with `goimports' if possible, otherwise using `gofmt'
   (when (executable-find "goimports")
     (setq gofmt-command "goimports"))
@@ -51,7 +55,7 @@
     (setq go-packages-function #'go-packages-gopkgs))
 
   ;; Install or update tools
-  (defvar go--tools '("golang.org/x/tools/cmd/gopls"
+  (defvar go--tools '("golang.org/x/tools/gopls"
                       "golang.org/x/tools/cmd/goimports"
                       "golang.org/x/tools/cmd/gorename"
 
@@ -75,8 +79,10 @@
     (dolist (pkg go--tools)
       (set-process-sentinel (start-process "go-tools" nil "go" "get" "-u" pkg)
                             (lambda (proc _)
-                              (when (= 0 (process-exit-status proc))
-                                (message "Installed %s" pkg))))))
+                              (let ((status (process-exit-status proc)))
+                                (if (= 0 status)
+                                    (message "Installed %s" pkg)
+                                  (message "Failed to install %s: %d" pkg status)))))))
 
   (unless (executable-find "gopls")
     (go-update-tools))
