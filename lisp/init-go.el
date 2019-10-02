@@ -40,7 +40,7 @@
   :config
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GOPROXY")))
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
   ;; Format with `goimports' if possible, otherwise using `gofmt'
   (when (executable-find "goimports")
