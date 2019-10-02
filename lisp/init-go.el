@@ -69,7 +69,7 @@
 
     (message "Installing go tools...")
     (dolist (pkg go--tools)
-      (set-process-sentinel (start-process "go-tools" nil "go" "get" "-u" pkg)
+      (set-process-sentinel (start-process "go-tools" "*go-tools*" "go" "get" "-u" "-v" pkg)
                             (lambda (proc _)
                               (let ((status (process-exit-status proc)))
                                 (if (= 0 status)
