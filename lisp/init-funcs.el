@@ -88,6 +88,7 @@ Same as `replace-string C-q C-m RET RET'."
   "Reload Emacs configurations."
   (interactive)
   (load-file user-init-file))
+(defalias 'centaur-reload-init-file 'reload-init-file)
 (bind-key "C-c C-l" #'reload-init-file)
 
 ;; Browse the homepage
