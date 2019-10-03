@@ -194,7 +194,6 @@
           ("*Calendar*" :select t :size 0.3 :align 'below)
           ("\\*ivy-occur .*\\*" :regexp t :size 0.4 :select t :align 'below)
           (" *undo-tree*" :select t)
-          ("*Paradox Report*" :size 0.3 :align 'below :autoclose t)
           ("*quickrun*" :select t :size 15 :align 'below)
           ("*tldr*" :align 'below :autoclose t)
           ("*Youdao Dictionary*" :size 0.3 :align 'below :autoclose t)
@@ -207,6 +206,8 @@
           ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           (" *Install vterm" :size 0.3 :align 'below)
+          ("*Paradox Report*" :size 0.2 :align 'below :autoclose t)
+          ("*package update results*" :size 0.2 :align 'below :autoclose t)
 
           ("*Gofmt Errors*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Go Test*" :select t :size 0.3 :align 'below :autoclose t)
