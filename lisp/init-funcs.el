@@ -137,7 +137,7 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (update-config)
   (update-packages)
-  (message "Restart to complete process."))
+  (message "Restart to complete process"))
 (defalias 'centaur-update 'update-config-and-packages)
 
 (defun update-all()

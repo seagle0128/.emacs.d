@@ -76,7 +76,7 @@
             (archives
              (error "Unknown archives: `%s'" archives)))))
 
-  (message "Set package archives to `%s'." archives))
+  (message "Set package archives to `%s'" archives))
 
 (set-package-archives centaur-package-archives)
 
