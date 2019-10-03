@@ -121,9 +121,8 @@
 ;; A modern Packages Menu
 (use-package paradox
   :init
-  (setq paradox-execute-asynchronously t)
-  (setq paradox-github-token t)
-  (setq paradox-display-star-count nil)
+  (setq paradox-execute-asynchronously t
+        paradox-github-token t)
 
   (defalias 'upgrade-packages #'paradox-upgrade-packages)
 

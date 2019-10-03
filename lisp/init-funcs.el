@@ -129,8 +129,7 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (message "Updating packages...")
   (package-refresh-contents)
-  (upgrade-packages)
-  (message "Updated packages"))
+  (upgrade-packages))
 (defalias 'centaur-update-packages 'update-packages)
 
 (defun update-config-and-packages()
