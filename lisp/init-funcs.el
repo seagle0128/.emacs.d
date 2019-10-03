@@ -128,15 +128,16 @@ Same as `replace-string C-q C-m RET RET'."
   "Refresh package contents and upgrade all packages."
   (interactive)
   (message "Updating packages...")
-  (package-refresh-contents)
-  (upgrade-packages))
+  (upgrade-packages)
+  (message "Updated packages"))
 (defalias 'centaur-update-packages 'update-packages)
 
 (defun update-config-and-packages()
   "Update confgiurations and packages."
   (interactive)
   (update-config)
-  (update-packages))
+  (update-packages)
+  (message "Restart to complete process."))
 (defalias 'centaur-update 'update-config-and-packages)
 
 (defun update-all()

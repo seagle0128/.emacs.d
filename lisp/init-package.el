@@ -122,9 +122,8 @@
 (use-package paradox
   :init
   (setq paradox-execute-asynchronously t
-        paradox-github-token t)
-
-  (defalias 'upgrade-packages #'paradox-upgrade-packages)
+        paradox-github-token t
+        paradox--star-count nil)
 
   ;; Replace default `list-packages'
   (defun my-paradox-enable (&rest _)
@@ -140,6 +139,10 @@
                   (with-current-buffer buf
                     (page-break-lines-mode 1))))
               t)))
+
+;; Auto update packages
+(use-package auto-package-update
+  :init (defalias 'upgrade-packages #'auto-package-update-now))
 
 (provide 'init-package)
 
