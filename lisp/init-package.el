@@ -143,7 +143,8 @@
 ;; Auto update packages
 (use-package auto-package-update
   :init
-  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t)
   (defalias 'upgrade-packages #'auto-package-update-now))
 
 (provide 'init-package)
