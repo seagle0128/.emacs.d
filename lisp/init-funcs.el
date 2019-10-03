@@ -116,10 +116,10 @@ Same as `replace-string C-q C-m RET RET'."
   (let ((dir (expand-file-name user-emacs-directory)))
     (if (file-exists-p dir)
         (progn
-          (message "Updating Emacs configurations...")
+          (message "Updating configurations...")
           (cd dir)
           (shell-command "git pull")
-          (message "Update finished. Restart Emacs to complete the process."))
+          (message "Updated configurations"))
       (message "\"%s\" doesn't exist." dir))))
 (defalias 'centaur-update-config 'update-config)
 
@@ -127,15 +127,17 @@ Same as `replace-string C-q C-m RET RET'."
 (defun update-packages ()
   "Refresh package contents and upgrade all packages."
   (interactive)
+  (message "Updating packages...")
   (package-refresh-contents)
-  (upgrade-packages))
+  (upgrade-packages)
+  (message "Updated packages"))
 (defalias 'centaur-update-packages 'update-packages)
 
 (defun update-config-and-packages()
   "Update confgiurations and packages."
   (interactive)
   (update-config)
-  (centaur-update-packages))
+  (update-packages))
 (defalias 'centaur-update 'update-config-and-packages)
 
 (defun update-all()
