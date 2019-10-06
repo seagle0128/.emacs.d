@@ -43,18 +43,19 @@
   ;; Notification
   (use-package alert
     :init
-    (defun my-magit-process-finish (arg &optional _process-buf _command-buf
-                                        _default-dir _section)
-      (let ((title "Magit"))
-        (unless (integerp arg)
-          (setq title (capitalize (process-name arg)))
-          (setq arg (process-exit-status arg)))
-        (let ((alert-fade-time 1)
-              (alert-default-style 'mode-line))
-          (if (= arg 0)
-              (alert "Success" :title title :severity 'normal)
-            (alert "Failed" :tile title :severity 'urgent)))))
-    (advice-add #'magit-process-finish :after #'my-magit-process-finish))
+    (with-no-warnings
+      (defun my-magit-process-finish (arg &optional _process-buf _command-buf
+                                          _default-dir _section)
+        (let ((title "Magit"))
+          (unless (integerp arg)
+            (setq title (capitalize (process-name arg)))
+            (setq arg (process-exit-status arg)))
+          (let ((alert-fade-time 0.8)
+                (alert-default-style 'mode-line))
+            (if (= arg 0)
+                (alert "Success" :title title :severity 'normal)
+              (alert "Failed" :tile title :severity 'urgent)))))
+      (advice-add #'magit-process-finish :after #'my-magit-process-finish)))
 
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
