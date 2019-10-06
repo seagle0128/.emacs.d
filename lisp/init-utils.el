@@ -126,13 +126,8 @@
   :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
               docker-container-shell-file-name "/bin/bash"))
 
-;; Tramp
+;; Docker tramp
 (use-package docker-tramp)
-
-;; Discover key bindings and their meaning for the current Emacs major mode
-(use-package discover-my-major
-  :bind (("C-h M-m" . discover-my-major)
-         ("C-h M-M" . discover-my-mode)))
 
 ;; A Simmple and cool pomodoro timer
 (use-package pomidor
