@@ -19,15 +19,16 @@ before_script:
   # - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
 
 script:
-  - echo "Importing new elpa key..."
-  - mkdir -p ~/.emacs.d/elpa/gnupg
-  - chmod 700 ~/.emacs.d/elpa/gnupg 
-  - gpg --keyserver hkp://keys.gnupg.net --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
+  # - echo "Importing new elpa key..."
+  # - mkdir -p ~/.emacs.d/elpa/gnupg
+  # - chmod 700 ~/.emacs.d/elpa/gnupg 
+  # - gpg --keyserver hkp://keys.gnupg.net --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 
   - echo "Attempting startup..."
   - ${EMACS:=emacs} --version
   - ${EMACS:=emacs} -nw --batch --eval
     '(let ((debug-on-error (>=  emacs-major-version 26))
+           (package-check-signature nil)
            (url-show-status nil)
            (user-emacs-directory default-directory)
            (early-init-file (expand-file-name "early-init.el"))
