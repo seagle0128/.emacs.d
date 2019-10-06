@@ -52,8 +52,8 @@
                              "Disable the checkdoc checker."
                              (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
   :config
-  (if (boundp 'elisp-flymake-byte-compile-load-path)
-      (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
+  (when (boundp 'elisp-flymake-byte-compile-load-path)
+    (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
 
   ;; Align indent keywords
   ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned

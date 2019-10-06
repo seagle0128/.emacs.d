@@ -133,22 +133,22 @@
 (use-package pomidor
   :bind ("s-<f12>" . pomidor)
   :init
-  (setq alert-default-style 'mode-line)
+  (setq alert-default-style 'mode-line
+        alert-severity-colors
+        `((urgent   . ,(face-foreground 'error))
+          (high     . ,(face-foreground 'all-the-icons-orange))
+          (moderate . ,(face-foreground 'warning))
+          (normal   . ,(face-foreground 'success))
+          (low      . ,(face-foreground 'all-the-icons-blue))
+          (trivial  . ,(face-foreground 'all-the-icons-purple))))
+
   (when sys/macp
     (setq pomidor-play-sound-file
           (lambda (file)
             (start-process "pomidor-play-sound"
                            nil
                            "afplay"
-                           file))))
-  :config
-  (setq alert-severity-colors
-        `((urgent   . ,(face-foreground 'error))
-          (high     . ,(face-foreground 'all-the-icons-orange))
-          (moderate . ,(face-foreground 'warning))
-          (normal   . ,(face-foreground 'success))
-          (low      . ,(face-foreground 'all-the-icons-blue))
-          (trivial  . ,(face-foreground 'all-the-icons-purple)))))
+                           file)))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
