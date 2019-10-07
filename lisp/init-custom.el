@@ -77,7 +77,8 @@
           (const :tag "Classic theme" classic)
           (const :tag "Dark theme" dark)
           (const :tag "Light theme" light)
-          (const :tag "Daylight theme" daylight)
+          (const :tag "Day theme" day)
+          (const :tag "night theme" night)
           symbol))
 
 (defcustom centaur-dashboard t

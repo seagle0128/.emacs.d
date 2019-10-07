@@ -100,10 +100,14 @@
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'default)))
       ("c" (centaur-load-theme 'classic) "classic"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'classic)))
+      ("K" (centaur-load-theme 'dark) "dark"
+       :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'dark)))
       ("g" (centaur-load-theme 'light) "light"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'light)))
-      ("y" (centaur-load-theme 'daylight) "daylight"
-       :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'daylight)))
+      ("y" (centaur-load-theme 'day) "day"
+       :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'day)))
+      ("G" (centaur-load-theme 'night) "night"
+       :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'night)))
       ("M" doom-modeline-mode "modern mode-line" :toggle t)
       ("T" (let ((ivy-initial-inputs-alist '((counsel-load-theme . "doom-"))))
              (counsel-load-theme))

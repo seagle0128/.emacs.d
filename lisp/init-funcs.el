@@ -224,9 +224,10 @@ Same as `replace-string C-q C-m RET RET'."
   (pcase theme
     ('default 'doom-one)
     ('classic 'doom-molokai)
-    ('dark 'doom-Iosvkem)
+    ('dark 'doom-snazzy)
     ('light 'doom-one-light)
-    ('daylight 'doom-tomorrow-day)
+    ('day 'doom-solarized-light)
+    ('night 'doom-city-lights)
     (_ (or theme 'doom-one))))
 
 (defun centaur-compatible-theme-p (theme)
