@@ -81,19 +81,29 @@
 
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
-        (with-no-warnings
-          (defun doom-themes-visual-bell-fn ()
-            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-            (let ((doom-themes--bell-cookie (face-remap-add-relative
-                                             'mode-line
-                                             `(:background ,(face-foreground 'error)))))
+        ;; WORKAROUND: use legacy codes
+        (set-face-attribute 'doom-visual-bell nil
+                            :background (face-foreground 'error)
+                            :inverse-video nil)
+        (defvar doom-themes--bell-p nil)
+        (defun doom-themes-visual-bell-fn ()
+          "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+          (unless doom-themes--bell-p
+            (let ((old-remap (copy-alist face-remapping-alist)))
+              (setq doom-themes--bell-p t)
+              (setq face-remapping-alist
+                    (append (delete (assq 'mode-line face-remapping-alist)
+                                    face-remapping-alist)
+                            '((mode-line doom-visual-bell))))
               (force-mode-line-update)
               (run-with-timer 0.15 nil
-                              (lambda (cookie buf)
+                              (lambda (remap buf)
                                 (with-current-buffer buf
-                                  (face-remap-remove-relative cookie)
+                                  (when (assq 'mode-line face-remapping-alist)
+                                    (setq face-remapping-alist remap
+                                          doom-themes--bell-p nil))
                                   (force-mode-line-update)))
-                              doom-themes--bell-cookie
+                              old-remap
                               (current-buffer)))))
 
         ;; Corrects (and improves) org-mode's native fontification.
