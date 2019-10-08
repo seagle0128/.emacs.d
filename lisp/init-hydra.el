@@ -41,6 +41,7 @@
              hydra-set-transient-map))
 
 (use-package pretty-hydra
+  :defines (display-line-numbers-mode linum-mode)
   :functions set-package-archives centaur-load-theme
   :bind ("<f6>" . toggles-hydra/body)
   :init
@@ -63,24 +64,29 @@
   (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
                                       :color amaranth :quit-key "q")
     ("Basic"
-     (("n" display-line-numbers-mode "line number" :toggle t)
-      ("N" linum-mode "legacy line number" :toggle t)
+     (("n" (if (fboundp 'display-line-numbers-mode)
+               (display-line-numbers-mode (if display-line-numbers-mode -1 1))
+             (linum-mode (if linum-mode -1 1)))
+       "line number" :toggle (if (fboundp 'display-line-numbers-mode)
+                                 display-line-numbers-mode
+                               linum-mode))
       ("a" aggressive-indent-mode "aggressive indent" :toggle t)
       ("h" hungry-delete-mode "hungry delete" :toggle t)
       ("e" electric-pair-mode "electric pair" :toggle t)
-      ("P" flyspell-mode "spell check" :toggle t)
+      ("c" flyspell-mode "spell check" :toggle t)
       ("S" prettify-symbols-mode "pretty symbol" :toggle t)
-      ("L" page-break-lines-mode "page break lines" :toggle t))
+      ("L" page-break-lines-mode "page break lines" :toggle t)
+      ("M" doom-modeline-mode "modern mode-line" :toggle t))
      "Highlight"
      (("l" global-hl-line-mode "line" :toggle t)
-      ("p" show-paren-mode "paren" :toggle t)
+      ("P" show-paren-mode "paren" :toggle t)
       ("s" symbol-overlay-mode "symbol" :toggle t)
       ("r" rainbow-mode "rainbow" :toggle t)
       ("w" (setq show-trailing-whitespace (not show-trailing-whitespace))
        "whitespace" :toggle show-trailing-whitespace)
-      ("R" rainbow-delimiters-mode "delimiter" :toggle t)
+      ("d" rainbow-delimiters-mode "delimiter" :toggle t)
       ("i" highlight-indent-guides-mode "indent" :toggle t)
-      ("t" hl-todo-mode "todo" :toggle t))
+      ("T" hl-todo-mode "todo" :toggle t))
      "Coding"
      (("f" flycheck-mode "flycheck" :toggle t)
       ("F" flymake-mode "flymake" :toggle t)
@@ -88,47 +94,46 @@
       ("O" hs-minor-mode "hideshow" :toggle t)
       ("u" subword-mode "subword" :toggle t)
       ("W" which-function-mode "which function" :toggle t)
-      ("D" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-      ("X" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
+      ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
+      ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
      "Version Control"
      (("v" diff-hl-mode "gutter" :toggle t)
       ("V" diff-hl-flydiff-mode "live gutter" :toggle t)
       ("m" diff-hl-margin-mode "margin gutter" :toggle t)
-      ("E" diff-hl-dired-mode "dired gutter" :toggle t))
+      ("D" diff-hl-dired-mode "dired gutter" :toggle t))
      "Theme"
-     (("d" (centaur-load-theme 'default) "default"
+     (("t d" (centaur-load-theme 'default) "default"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'default)))
-      ("c" (centaur-load-theme 'classic) "classic"
+      ("t c" (centaur-load-theme 'classic) "classic"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'classic)))
-      ("K" (centaur-load-theme 'dark) "dark"
+      ("t k" (centaur-load-theme 'dark) "dark"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'dark)))
-      ("g" (centaur-load-theme 'light) "light"
+      ("t l" (centaur-load-theme 'light) "light"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'light)))
-      ("y" (centaur-load-theme 'day) "day"
+      ("t y" (centaur-load-theme 'day) "day"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'day)))
-      ("G" (centaur-load-theme 'night) "night"
+      ("t n" (centaur-load-theme 'night) "night"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'night)))
-      ("M" doom-modeline-mode "modern mode-line" :toggle t)
-      ("T" (let ((ivy-initial-inputs-alist '((counsel-load-theme . "doom-"))))
-             (counsel-load-theme))
+      ("t o" (let ((ivy-initial-inputs-alist '((counsel-load-theme . "doom-"))))
+               (counsel-load-theme))
        "others"))
      "Package Archive"
-     (("k m" (progn (setq centaur-package-archives 'melpa)
+     (("p m" (progn (setq centaur-package-archives 'melpa)
                     (set-package-archives centaur-package-archives))
        "melpa" :toggle (eq centaur-package-archives 'melpa))
-      ("k i" (progn (setq centaur-package-archives 'melpa-mirror)
+      ("p i" (progn (setq centaur-package-archives 'melpa-mirror)
                     (set-package-archives centaur-package-archives))
        "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror))
-      ("k c" (progn (setq centaur-package-archives 'emacs-china)
+      ("p c" (progn (setq centaur-package-archives 'emacs-china)
                     (set-package-archives centaur-package-archives))
        "emacs china" :toggle (eq centaur-package-archives 'emacs-china))
-      ("k n" (progn (setq centaur-package-archives 'netease)
+      ("p n" (progn (setq centaur-package-archives 'netease)
                     (set-package-archives centaur-package-archives))
        "netease" :toggle (eq centaur-package-archives 'netease))
-      ("k t" (progn (setq centaur-package-archives 'tencent)
+      ("p t" (progn (setq centaur-package-archives 'tencent)
                     (set-package-archives centaur-package-archives))
        "tencent" :toggle (eq centaur-package-archives 'tencent))
-      ("k u" (progn (setq centaur-package-archives 'tuna)
+      ("p u" (progn (setq centaur-package-archives 'tuna)
                     (set-package-archives centaur-package-archives))
        "tuna" :toggle (eq centaur-package-archives 'tuna))))))
 
