@@ -83,6 +83,7 @@
         (doom-themes-visual-bell-config)
         ;; WORKAROUND: use legacy codes
         (set-face-attribute 'doom-visual-bell nil
+                            :inherit 'mode-line
                             :background (face-foreground 'error)
                             :inverse-video nil)
         (defvar doom-themes--bell-p nil)
