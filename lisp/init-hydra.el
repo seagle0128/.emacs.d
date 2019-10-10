@@ -115,6 +115,7 @@
       ("t n" (centaur-load-theme 'night) "night"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'night)))
       ("t o" (let ((ivy-initial-inputs-alist '((counsel-load-theme . "doom-"))))
+               (ignore ivy-initial-inputs-alist)
                (counsel-load-theme))
        "others"))
      "Package Archive"
