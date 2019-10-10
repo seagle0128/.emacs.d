@@ -93,10 +93,6 @@
   (setq wgrep-auto-save-buffer t
         wgrep-change-readonly-file t))
 
-;; `find-dired' alternative using `fd'
-(when (executable-find "fd")
-  (use-package fd-dired))
-
 ;; Fast search tool: `ripgrep'
 (use-package rg
   :defines projectile-command-map
