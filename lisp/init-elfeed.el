@@ -60,17 +60,17 @@
            :map elfeed-show-mode-map
            ("o" . ace-link)
            ("q" . delete-window))
-    :config
-    (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
-          elfeed-show-entry-switch #'pop-to-buffer
-          elfeed-show-entry-delete #'delete-window
-          elfeed-feeds '("http://planet.emacsen.org/atom.xml"
-                         "http://www.masteringemacs.org/feed/"
-                         "https://oremacs.com/atom.xml"
-                         "https://pinecast.com/feed/emacscast"
-                         "https://www.reddit.com/r/emacs.rss"))))
+    :init (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
+                elfeed-show-entry-switch #'pop-to-buffer
+                elfeed-show-entry-delete #'delete-window
+                elfeed-feeds '("http://planet.emacsen.org/atom.xml"
+                               "http://www.masteringemacs.org/feed/"
+                               "https://oremacs.com/atom.xml"
+                               "https://pinecast.com/feed/emacscast"
+                               "https://www.reddit.com/r/emacs.rss"))
+    :config (push elfeed-db-directory recentf-exclude)))
 
-(provide 'init-elfeed)
+  (provide 'init-elfeed)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-elfeed.el ends here
