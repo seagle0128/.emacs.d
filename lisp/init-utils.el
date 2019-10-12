@@ -131,14 +131,16 @@
 (use-package pomidor
   :bind ("s-<f12>" . pomidor)
   :init
-  (setq alert-default-style 'mode-line
-        alert-severity-colors
-        `((urgent   . ,(face-foreground 'error))
-          (high     . ,(face-foreground 'all-the-icons-orange))
-          (moderate . ,(face-foreground 'warning))
-          (normal   . ,(face-foreground 'success))
-          (low      . ,(face-foreground 'all-the-icons-blue))
-          (trivial  . ,(face-foreground 'all-the-icons-purple))))
+  (setq alert-default-style 'mode-line)
+
+  (with-eval-after-load 'all-the-icons
+    (setq alert-severity-colors
+          `((urgent   . ,(face-foreground 'error))
+            (high     . ,(face-foreground 'all-the-icons-orange))
+            (moderate . ,(face-foreground 'warning))
+            (normal   . ,(face-foreground 'success))
+            (low      . ,(face-foreground 'all-the-icons-blue))
+            (trivial  . ,(face-foreground 'all-the-icons-purple)))))
 
   (when sys/macp
     (setq pomidor-play-sound-file
