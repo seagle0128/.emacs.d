@@ -128,16 +128,37 @@ Same as `replace-string C-q C-m RET RET'."
   "Refresh package contents and upgrade all packages."
   (interactive)
   (message "Updating packages...")
-  (upgrade-packages)
-  (message "Updated packages"))
+  (if (require 'async nil t)
+      (async-start
+       `(lambda ()
+          ,(async-inject-variables "\\`\\(load-path\\)\\'")
+          (require 'init-package)
+          (upgrade-packages))
+       (lambda (_result)
+         (message "Updated packages")))
+    (progn
+      (upgrade-packages)
+      (message "Updated packages"))))
 (defalias 'centaur-update-packages 'update-packages)
 
 (defun update-config-and-packages()
   "Update confgiurations and packages."
   (interactive)
-  (update-config)
-  (update-packages)
-  (message "Restart to complete process"))
+  (message "Updating Centaur Emacs...")
+  (if (require 'async nil t)
+      (async-start
+       `(lambda ()
+          ,(async-inject-variables "\\`\\(load-path\\)\\'")
+          (require 'init-package)
+          (require 'init-funcs)
+          (update-config)
+          (upgrade-packages))
+       (lambda (_result)
+         (message "Done. Restart to complete process")))
+    (progn
+      (update-config)
+      (upgrade-packages)
+      (message "Done. Restart to complete process"))))
 (defalias 'centaur-update 'update-config-and-packages)
 
 (defun update-all()
