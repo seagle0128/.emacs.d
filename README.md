@@ -228,8 +228,8 @@ If you think it's helpful for you, please consider pay a cup of coffee for me. T
 
 <img
 src="https://user-images.githubusercontent.com/140797/65818854-44204900-e248-11e9-9cc5-3e6339587cd8.png"
-alt="Alipay" width="150"/>
-&nbsp;&nbsp;
+alt="Alipay" width="120"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img
 src="https://user-images.githubusercontent.com/140797/65818844-366ac380-e248-11e9-931c-4bd872d0566b.png"
-alt="Wechat" width="150"/>
+alt="Wechat" width="120"/>
