@@ -124,6 +124,7 @@ Same as `replace-string C-q C-m RET RET'."
 (defalias 'centaur-update-config 'update-config)
 
 (declare-function upgrade-packages 'init-package)
+(declare-function async-inject-variables 'async)
 (defun update-packages (&optional sync)
   "Refresh package contents and update all packages.
 If SYNC is non-nil, the updating process is synchronous."
@@ -135,8 +136,11 @@ If SYNC is non-nil, the updating process is synchronous."
        `(lambda ()
           ,(async-inject-variables "\\`\\(load-path\\)\\'")
           (require 'init-package)
-          (upgrade-packages))
-       (lambda (_result)
+          (upgrade-packages)
+          (with-current-buffer auto-package-update-buffer-name
+            (buffer-string)))
+       (lambda (result)
+         (message "%s" result)
          (message "Updated packages")))
     (progn
       (upgrade-packages)
@@ -156,8 +160,11 @@ If SYNC is non-nil, the updating process is synchronous."
           (require 'init-package)
           (require 'init-funcs)
           (update-config)
-          (update-packages))
-       (lambda (_result)
+          (update-packages t)
+          (with-current-buffer auto-package-update-buffer-name
+            (buffer-string)))
+       (lambda (result)
+         (message "%s" result)
          (message "Done. Restart to complete process")))
     (progn
       (update-config)
