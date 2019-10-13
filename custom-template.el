@@ -59,6 +59,11 @@
 ;; Misc.
 ;; (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Display on the specific monitor
+;; (when (and (> (length (display-monitor-attributes-list)) 1)
+;;            (> (display-pixel-width) 1920))
+;;   (set-frame-parameter nil 'left 1920))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
