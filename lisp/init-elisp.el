@@ -55,6 +55,10 @@
   (when (boundp 'elisp-flymake-byte-compile-load-path)
     (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
 
+  ;; Syntax highlighting of known Elisp symbols
+  (use-package highlight-defined
+    :hook (emacs-lisp-mode . highlight-defined-mode))
+
   ;; Align indent keywords
   ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
   (defun my-lisp-indent-function (indent-point state)
