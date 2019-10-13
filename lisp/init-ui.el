@@ -141,7 +141,8 @@
 
   (setq doom-modeline-major-mode-color-icon t
         doom-modeline-minor-modes nil
-        doom-modeline-mu4e nil)
+        doom-modeline-mu4e nil
+        doom-modeline-mode-map nil)
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
