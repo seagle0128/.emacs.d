@@ -50,7 +50,7 @@
           (unless (integerp arg)
             (setq title (capitalize (process-name arg)))
             (setq arg (process-exit-status arg)))
-          (let ((alert-fade-time 0.8)
+          (let ((alert-fade-time 0.5)
                 (alert-default-style 'mode-line))
             (if (= arg 0)
                 (alert "Success" :title title :severity 'normal)

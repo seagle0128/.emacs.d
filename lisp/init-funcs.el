@@ -127,6 +127,7 @@ Same as `replace-string C-q C-m RET RET'."
 (declare-function async-inject-variables 'async)
 (defun update-packages (&optional sync)
   "Refresh package contents and update all packages.
+
 If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (message "Updating packages...")
@@ -149,6 +150,7 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun update-config-and-packages(&optional sync)
   "Update confgiurations and packages.
+
 If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (message "Updating Centaur Emacs...")
