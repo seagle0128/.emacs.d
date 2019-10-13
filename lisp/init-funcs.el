@@ -124,11 +124,13 @@ Same as `replace-string C-q C-m RET RET'."
 (defalias 'centaur-update-config 'update-config)
 
 (declare-function upgrade-packages 'init-package)
-(defun update-packages ()
-  "Refresh package contents and upgrade all packages."
+(defun update-packages (&optional sync)
+  "Refresh package contents and update all packages.
+If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (message "Updating packages...")
-  (if (require 'async nil t)
+  (if (and (not sync)
+           (require 'async nil t))
       (async-start
        `(lambda ()
           ,(async-inject-variables "\\`\\(load-path\\)\\'")
@@ -141,23 +143,25 @@ Same as `replace-string C-q C-m RET RET'."
       (message "Updated packages"))))
 (defalias 'centaur-update-packages 'update-packages)
 
-(defun update-config-and-packages()
-  "Update confgiurations and packages."
+(defun update-config-and-packages(&optional sync)
+  "Update confgiurations and packages.
+If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (message "Updating Centaur Emacs...")
-  (if (require 'async nil t)
+  (if (and (not sync)
+           (require 'async nil t))
       (async-start
        `(lambda ()
           ,(async-inject-variables "\\`\\(load-path\\)\\'")
           (require 'init-package)
           (require 'init-funcs)
           (update-config)
-          (upgrade-packages))
+          (update-packages))
        (lambda (_result)
          (message "Done. Restart to complete process")))
     (progn
       (update-config)
-      (upgrade-packages)
+      (update-packages t)
       (message "Done. Restart to complete process"))))
 (defalias 'centaur-update 'update-config-and-packages)
 
