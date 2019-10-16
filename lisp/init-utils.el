@@ -177,12 +177,18 @@
     :commands pdf-view-midnight-minor-mode
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
-    :hook (after-load-theme . my-pdf-view-set-dark-theme)
     :bind (:map pdf-view-mode-map
            ("C-s" . isearch-forward))
-    :init
-    (setq pdf-annot-activate-created-annotations t)
+    :init (setq pdf-annot-activate-created-annotations t)
+    :config
+    ;; WORKAROUND: Fix compilation errors on macOS.
+    ;; @see https://github.com/politza/pdf-tools/issues/480
+    (when sys/macp
+      (setenv "PKG_CONFIG_PATH"
+              "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
+    (pdf-tools-install t nil t t)
 
+    ;; Set dark theme
     (defun my-pdf-view-set-midnight-colors ()
       "Set pdf-view midnight colors."
       (setq pdf-view-midnight-colors
@@ -195,15 +201,9 @@
         (with-current-buffer buf
           (when (eq major-mode 'pdf-view-mode)
             (pdf-view-midnight-minor-mode (if pdf-view-midnight-minor-mode 1 -1))))))
-    :config
-    ;; WORKAROUND: Fix compilation errors on macOS.
-    ;; @see https://github.com/politza/pdf-tools/issues/480
-    (when sys/macp
-      (setenv "PKG_CONFIG_PATH"
-              "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
-    (pdf-tools-install t nil t t)
 
     (my-pdf-view-set-midnight-colors)
+    (add-hook 'after-load-theme-hook #'my-pdf-view-set-dark-theme)
 
     ;; FIXME: Support retina
     ;; @see https://emacs-china.org/t/pdf-tools-mac-retina-display/10243/
