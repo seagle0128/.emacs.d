@@ -212,6 +212,7 @@
           ("*Messages*" :size 0.3 :align 'below :autoclose t)
           ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
           ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
+          (("*shell*" "*eshell*" "*ielm*") :popup t :align 'below)
           ("*Calendar*" :select t :size 0.3 :align 'below)
           ("\\*ivy-occur .*\\*" :regexp t :select t :align 'below)
           (" *undo-tree*" :select t)
@@ -245,6 +246,7 @@
           (inferior-python-mode :align 'below)
           (inf-ruby-mode :align 'below)
           (swift-repl-mode :align 'below)
+          ("*prolog*" :align 'below)
 
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
