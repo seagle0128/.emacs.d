@@ -55,7 +55,7 @@
          :map counsel-mode-map
          ([remap swiper] . counsel-grep-or-swiper)
          ([remap dired] . counsel-dired)
-         ("C-x C-r" . counsel-recentf)
+         ("C-x C-r" . counsel-buffer-or-recentf)
          ("C-x j" . counsel-mark-ring)
          ("C-h F" . counsel-describe-face)
 
@@ -426,34 +426,39 @@
       (all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-purple)))
 
   (defun ivy-rich-variable-icon (_candidate)
-    "Display variable icons in `ivy-rich'."
+    "Display the variable icon in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-octicon "tag" :height 0.9 :v-adjust 0 :face 'all-the-icons-lblue)))
 
   (defun ivy-rich-symbol-icon (_candidate)
-    "Display symbol icons in `ivy-rich'."
+    "Display the symbol icon in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-octicon "gear" :height 0.9 :v-adjust -0.05)))
 
   (defun ivy-rich-theme-icon (_candidate)
-    "Display theme icons in `ivy-rich'."
+    "Display the theme icon in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-material "palette" :height 1.0 :v-adjust -0.2 :face 'all-the-icons-lblue)))
 
   (defun ivy-rich-keybinding-icon (_candidate)
-    "Display keybindings icons in `ivy-rich'."
+    "Display the keybindings icon in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-material "keyboard" :height 1.0 :v-adjust -0.2)))
 
   (defun ivy-rich-library-icon (_candidate)
-    "Display library icons in `ivy-rich'."
+    "Display the library icon in `ivy-rich'."
     (when (display-graphic-p)
       (all-the-icons-material "view_module" :height 1.0 :v-adjust -0.2 :face 'all-the-icons-lblue)))
 
   (defun ivy-rich-package-icon (_candidate)
-    "Display package icons in `ivy-rich'."
+    "Display the package icon in `ivy-rich'."
     (when (display-graphic-p)
-      (all-the-icons-faicon "archive" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-silver)))
+      (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
+
+  (defun ivy-rich-font-icon (_candidate)
+    "Display the font icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "font" :height 0.85 :v-adjust -0.05 :face 'all-the-icons-lblue)))
 
   (when (display-graphic-p)
     (defun my-ivy-rich-bookmark-type (candidate)
@@ -608,6 +613,12 @@
             (ivy-rich-candidate (:width 0.8))
             (ivy-rich-file-last-modified-time (:face font-lock-comment-face)))
            :delimiter "\t")
+          counsel-buffer-or-recentf
+          (:columns
+           ((ivy-rich-file-icon)
+            (counsel-buffer-or-recentf-transformer (:width 0.8))
+            (ivy-rich-file-last-modified-time (:face font-lock-comment-face)))
+           :delimiter "\t")
           counsel-bookmark
           (:columns
            ((ivy-rich-bookmark-type)
@@ -617,6 +628,16 @@
           counsel-package
           (:columns
            ((ivy-rich-package-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-fonts
+          (:columns
+           ((ivy-rich-font-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-major
+          (:columns
+           ((ivy-rich-function-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           counsel-find-library
