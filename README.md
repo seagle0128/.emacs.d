@@ -177,6 +177,11 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     `(setq all-the-icons-color-icons nil)` to disable. Please refer to
     [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for details.
 
+    If some icons are not displayed correctly although `all-the-icons` fonts are
+    installed correctly, please install [symbola](http://users.teilar.gr/~g1951d/).
+    Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121) for more
+    details.
+
 1. The packages cannot be installed, what should I do?
 
    Generally it's due to connection issue. Please refer to

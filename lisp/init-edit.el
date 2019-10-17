@@ -33,10 +33,6 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; Explicitly set the prefered coding systems to avoid annoying prompt
-;; from emacs (especially on Microsoft Windows)
-(prefer-coding-system 'utf-8)
-
 ;; Miscs
 ;; (setq initial-scratch-message nil)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
