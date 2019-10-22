@@ -103,7 +103,13 @@
                  string
                (xterm-color-filter string))))
   (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
-  (advice-add 'gud-filter :around #'my-advice-compilation-filter))
+  (advice-add 'gud-filter :around #'my-advice-compilation-filter)
+
+  ;; For prolog inferior
+  (with-eval-after-load 'prolog
+    (add-hook 'prolog-inferior-mode-hook
+              (lambda ()
+                (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
