@@ -150,6 +150,8 @@
    ("Icon"
     (("i" (setq doom-modeline-icon (not doom-modeline-icon))
       "display icons" :toggle doom-modeline-icon)
+     ("u" (setq doom-modeline-unicode-fallback (not doom-modeline-unicode-fallback))
+      "unicode fallback" :toggle doom-modeline-unicode-fallback)
      ("m" (setq doom-modeline-major-mode-icon (not doom-modeline-major-mode-icon))
       "major mode" :toggle doom-modeline-major-mode-icon)
      ("c" (setq doom-modeline-major-mode-color-icon (not doom-modeline-major-mode-color-icon))
