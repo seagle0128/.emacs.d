@@ -259,6 +259,7 @@
                                   (swiper . ivy-prescient-non-fuzzy)
                                   (swiper-isearch . ivy-prescient-non-fuzzy)
                                   (swiper-all . ivy-prescient-non-fuzzy)
+                                  (insert-char . ivy-prescient-non-fuzzy)
                                   (t . ivy-prescient-re-builder)))
     (ivy-prescient-mode 1))
 
