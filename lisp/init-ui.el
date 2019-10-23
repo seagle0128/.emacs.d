@@ -66,6 +66,7 @@
     (progn
       (use-package doom-themes
         :defines doom-themes-treemacs-theme
+        :functions doom-themes-hide-modeline
         :hook (after-load-theme . (lambda ()
                                     (set-face-foreground
                                      'mode-line
@@ -110,14 +111,18 @@
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
 
-        ;; Enable custom treemacs theme (all-the-icons must be installed!)
+        ;; Enable customized theme (`all-the-icons' must be installed!)
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)
-        (treemacs-modify-theme "doom-colors"
-          :config
-          (treemacs-create-icon
-           :icon (format "%s " (all-the-icons-octicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue))
-           :extensions (tag-leaf))))
+        (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)
+        (with-eval-after-load 'treemacs
+	      (when (require 'all-the-icons nil t)
+            (with-no-warnings
+              (treemacs-modify-theme "doom-colors"
+                :config
+                (treemacs-create-icon
+                 :icon (format "%s " (all-the-icons-octicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue))
+                 :extensions (tag-leaf)))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
