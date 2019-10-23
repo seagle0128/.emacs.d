@@ -40,22 +40,6 @@
          ("C-x M-g" . magit-dispatch)
          ("C-c M-g" . magit-file-popup))
   :config
-  ;; Notification
-  (use-package alert
-    :init
-    (with-no-warnings
-      (defun my-magit-process-finish (arg &rest _)
-        (let ((title "Magit"))
-          (unless (integerp arg)
-            (setq title (capitalize (process-name arg)))
-            (setq arg (process-exit-status arg)))
-          (let ((alert-fade-time 0.3)
-                (alert-default-style 'mode-line))
-            (if (= arg 0)
-                (alert "Success" :title title :severity 'normal)
-              (alert "Failed" :tile title :severity 'urgent)))))
-      (advice-add #'magit-process-finish :after #'my-magit-process-finish)))
-
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
