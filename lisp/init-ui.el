@@ -108,11 +108,16 @@
                               (current-buffer)))))
 
         ;; Corrects (and improves) org-mode's native fontification.
-        (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-org-config)
 
         ;; Enable custom treemacs theme (all-the-icons must be installed!)
-        (doom-themes-treemacs-config))
+        (setq doom-themes-treemacs-theme "doom-colors")
+        (doom-themes-treemacs-config)
+        (treemacs-modify-theme "doom-colors"
+          :config
+          (treemacs-create-icon
+           :icon (format "%s " (all-the-icons-octicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue))
+           :extensions (tag-leaf))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
