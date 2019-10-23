@@ -65,8 +65,6 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       (use-package doom-themes
-        :defines doom-themes-treemacs-theme
-        :functions doom-themes-hide-modeline
         :hook (after-load-theme . (lambda ()
                                     (set-face-foreground
                                      'mode-line
@@ -112,17 +110,21 @@
         (doom-themes-org-config)
 
         ;; Enable customized theme (`all-the-icons' must be installed!)
-        (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)
-        (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)
-        (with-eval-after-load 'treemacs
-	      (when (require 'all-the-icons nil t)
-            (with-no-warnings
+        (with-no-warnings
+          (setq doom-themes-treemacs-theme "doom-colors")
+          (with-eval-after-load 'treemacs
+            (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)
+	        (when (require 'all-the-icons nil t)
               (treemacs-modify-theme "doom-colors"
                 :config
-                (treemacs-create-icon
-                 :icon (format "%s " (all-the-icons-octicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue))
-                 :extensions (tag-leaf)))))))
+                (progn
+                  (treemacs-create-icon
+                   :icon (format " %s\t" (all-the-icons-octicon "repo" :height 1.2 :v-adjust -0.1 :face 'all-the-icons-green))
+                   :extensions (root) :fallback "")
+                  (treemacs-create-icon
+                   :icon (format "%s " (all-the-icons-octicon "tag" :v-adjust 0 :face 'all-the-icons-lblue))
+                   :extensions (tag-leaf))))))))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
