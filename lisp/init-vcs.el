@@ -44,13 +44,12 @@
   (use-package alert
     :init
     (with-no-warnings
-      (defun my-magit-process-finish (arg &optional _process-buf _command-buf
-                                          _default-dir _section)
+      (defun my-magit-process-finish (arg &rest _)
         (let ((title "Magit"))
           (unless (integerp arg)
             (setq title (capitalize (process-name arg)))
             (setq arg (process-exit-status arg)))
-          (let ((alert-fade-time 0.5)
+          (let ((alert-fade-time 0.3)
                 (alert-default-style 'mode-line))
             (if (= arg 0)
                 (alert "Success" :title title :severity 'normal)
