@@ -133,7 +133,7 @@
                                  (all-the-icons-octicon "package" :v-adjust 0 :face 'font-lock-doc-face))
                    :extensions (tag-closed))
                   (treemacs-create-icon
-                   :icon (format "%s " (all-the-icons-octicon "tag" :v-adjust 0 :face 'font-lock-doc-face))
+                   :icon (format "%s\t" (all-the-icons-octicon "tag" :v-adjust 0 :face 'font-lock-doc-face))
                    :extensions (tag-leaf))))))))
 
       ;; Make certain buffers grossly incandescent
