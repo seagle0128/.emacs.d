@@ -133,6 +133,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
+    :disabled
     :diminish
     :functions (ivy-cleanup-string
                 my-ivy-cleanup-indentation)
@@ -275,7 +276,7 @@ FACE defaults to inheriting from default and highlight."
   :preface
   (defun my-pulse-momentary-line (&rest _)
     "Pulse the current line."
-    (pulse-momentary-highlight-one-line (point) 'next-error))
+    (pulse-momentary-highlight-one-line (point) 'region))
 
   (defun my-pulse-momentary (&rest _)
     "Pulse the current line."
@@ -299,7 +300,8 @@ FACE defaults to inheriting from default and highlight."
            next-error) . my-recenter-and-pulse-line))
   :init
   (dolist (cmd '(recenter-top-bottom
-                 other-window ace-window windmove-do-window-select
+                 other-window windmove-do-window-select
+                 ace-window aw--select-window
                  pager-page-down pager-page-up
                  symbol-overlay-basic-jump))
     (advice-add cmd :after #'my-pulse-momentary-line))
