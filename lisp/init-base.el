@@ -167,7 +167,7 @@
       scroll-conservatively 100000)
 
 ;; Misc
-(setq-default fill-column 100)
+(setq-default fill-column 80)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t
       inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
