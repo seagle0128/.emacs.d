@@ -244,13 +244,15 @@
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
-    :custom-face (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
-    :preface
+    :custom-face
+    (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
+    :init
     (defun ivy-prescient-non-fuzzy (str)
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
-    :init
-    (setq ivy-prescient-retain-classic-highlighting t
+
+    (setq ivy-prescient-enable-filtering nil  ; we do this ourselves
+          ivy-prescient-retain-classic-highlighting t
           ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
                                   (counsel-rg . ivy-prescient-non-fuzzy)
                                   (counsel-pt . ivy-prescient-non-fuzzy)
