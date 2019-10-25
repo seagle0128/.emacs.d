@@ -133,7 +133,6 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
-    :disabled
     :diminish
     :functions (ivy-cleanup-string
                 my-ivy-cleanup-indentation)
