@@ -181,9 +181,7 @@
      ("s" (setq doom-modeline-buffer-state-icon (not doom-modeline-buffer-state-icon))
       "buffer state" :toggle doom-modeline-buffer-state-icon)
      ("d" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
-      "modification" :toggle doom-modeline-buffer-modification-icon)
-     ("p" (setq doom-modeline-persp-name-icon (not doom-modeline-persp-name-icon))
-      "perspective" :toggle doom-modeline-persp-name-icon))
+      "modification" :toggle doom-modeline-buffer-modification-icon))
     "Segment"
     (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
