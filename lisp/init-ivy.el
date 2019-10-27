@@ -251,9 +251,7 @@
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
 
-    (setq ivy-prescient-enable-filtering nil  ; we do this ourselves
-          ivy-prescient-retain-classic-highlighting t
-          ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
+    (setq ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
                                   (counsel-rg . ivy-prescient-non-fuzzy)
                                   (counsel-pt . ivy-prescient-non-fuzzy)
                                   (counsel-grep . ivy-prescient-non-fuzzy)
@@ -262,7 +260,10 @@
                                   (swiper-isearch . ivy-prescient-non-fuzzy)
                                   (swiper-all . ivy-prescient-non-fuzzy)
                                   (insert-char . ivy-prescient-non-fuzzy)
-                                  (t . ivy-prescient-re-builder)))
+                                  (t . ivy-prescient-re-builder))
+          ivy-prescient-enable-filtering t
+          ivy-prescient-retain-classic-highlighting t)
+
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
