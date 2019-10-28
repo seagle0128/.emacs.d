@@ -64,6 +64,11 @@
       :bind (:map dired-mode-map
              ("S" . hydra-dired-quick-sort/body))))
 
+  ;; Show git info in dired
+  (use-package dired-git-info
+    :bind (:map dired-mode-map
+           (")" . dired-git-info-mode)))
+
   ;; Allow rsync from dired buffers
   (use-package dired-rsync
     :bind (:map dired-mode-map
