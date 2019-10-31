@@ -106,6 +106,8 @@
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'default)))
       ("t c" (centaur-load-theme 'classic) "classic"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'classic)))
+      ("t r" (centaur-load-theme 'colorful) "colorful"
+       :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'colorfult)))
       ("t k" (centaur-load-theme 'dark) "dark"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'dark)))
       ("t l" (centaur-load-theme 'light) "light"

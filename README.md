@@ -36,7 +36,7 @@ Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 25.1 and above**. In general you're advised to always run with the
-latest stable release - currently **26.2**.
+latest stable release - currently **26.3**.
 
 ## Features
 
@@ -139,7 +139,7 @@ For Example:
 (setq centaur-mail-address "user@email.com")   ; Email address
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease or tuna
-(setq centaur-theme classic)                   ; Color theme: default, classic, dark, light or daylight
+(setq centaur-theme 'dark)                     ; Color theme: default, classic, colorful, dark, light, day or night
 (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
