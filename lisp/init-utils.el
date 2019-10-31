@@ -169,7 +169,7 @@
     :ensure pdf-tools
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
-    :functions my-pdf-view-set-midnight-colors
+    :functions (my-pdf-view-set-midnight-colors my-pdf-view-set-dark-theme)
     :commands pdf-view-midnight-minor-mode
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
