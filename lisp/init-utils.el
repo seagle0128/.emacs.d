@@ -47,13 +47,9 @@
              youdao-dictionary--format-result)
   :bind (("C-c y" . my-youdao-search-at-point)
          ("C-c Y" . youdao-dictionary-search-at-point))
+  :init (setq url-automatic-caching t
+              youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
   :config
-  ;; Cache documents
-  (setq url-automatic-caching t)
-
-  ;; Enable Chinese word segmentation support (支持中文分词)
-  (setq youdao-dictionary-use-chinese-word-segmentation t)
-
   (with-eval-after-load 'posframe
     (with-no-warnings
       (defun youdao-dictionary-search-at-point-posframe ()
