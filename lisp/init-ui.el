@@ -65,6 +65,8 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       (use-package doom-themes
+        :defines doom-themes-treemacs-theme
+        :functions doom-themes-hide-modeline
         :hook (after-load-theme . (lambda ()
                                     (set-face-foreground
                                      'mode-line
@@ -110,31 +112,10 @@
         (doom-themes-org-config)
 
         ;; Enable customized theme (`all-the-icons' must be installed!)
+        (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)
-        (with-no-warnings
-          (setq doom-themes-treemacs-theme "doom-colors")
-          (with-eval-after-load 'treemacs
-            (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)
-            ;; FIXME: Remove if PR #347 is merged into `doom-themes'
-	        (when (require 'all-the-icons nil t)
-              (treemacs-modify-theme "doom-colors"
-                :config
-                (progn
-                  (treemacs-create-icon
-                   :icon (format " %s\t" (all-the-icons-octicon "repo" :height 1.1 :v-adjust -0.1 :face 'font-lock-string-face))
-                   :extensions (root) :fallback "")
-                  (treemacs-create-icon
-                   :icon (format "%s\t%s\t"
-                                 (all-the-icons-octicon "chevron-down" :height 0.75 :v-adjust 0.1 :face 'font-lock-doc-face)
-                                 (all-the-icons-octicon "package" :v-adjust 0 :face 'font-lock-doc-face)) :extensions (tag-open))
-                  (treemacs-create-icon
-                   :icon (format "%s\t%s\t"
-                                 (all-the-icons-octicon "chevron-right" :height 0.75 :v-adjust 0.1 :face 'font-lock-doc-face)
-                                 (all-the-icons-octicon "package" :v-adjust 0 :face 'font-lock-doc-face))
-                   :extensions (tag-closed))
-                  (treemacs-create-icon
-                   :icon (format "%s\t" (all-the-icons-octicon "tag" :v-adjust 0 :face 'font-lock-doc-face))
-                   :extensions (tag-leaf))))))))
+        (with-eval-after-load 'treemacs
+          (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
 
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
