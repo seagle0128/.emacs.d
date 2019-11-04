@@ -230,7 +230,7 @@
           (" *Install vterm" :size 0.3 :align 'below)
           ("*Paradox Report*" :size 0.2 :align 'below :autoclose t)
           ("*package update results*" :size 0.2 :align 'below :autoclose t)
-
+          ("*Package-Lint*" :align 'below :autoclose t)
           ("*Gofmt Errors*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Go Test*" :select t :size 0.3 :align 'below :autoclose t)
 
