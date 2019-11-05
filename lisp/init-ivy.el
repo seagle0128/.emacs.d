@@ -462,6 +462,21 @@
     (when (display-graphic-p)
       (all-the-icons-faicon "font" :height 0.85 :v-adjust -0.05 :face 'all-the-icons-lblue)))
 
+  (defun ivy-rich-world-clock-icon (_candidate)
+    "Display the world clock icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "globe" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+
+  (defun ivy-rich-tramp-icon (_candidate)
+    "Display the tramp icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "settings_remote" :height 1.0 :v-adjust -0.2)))
+
+  (defun ivy-rich-git-branch-icon (_candidate)
+    "Display the git branch icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-octicon "git-branch" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-green)))
+
   (when (display-graphic-p)
     (defun my-ivy-rich-bookmark-type (candidate)
       (let ((filename (file-local-name (ivy-rich-bookmark-filename candidate))))
@@ -655,6 +670,21 @@
           counsel-load-theme
           (:columns
            ((ivy-rich-theme-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-world-clock
+          (:columns
+           ((ivy-rich-world-clock-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-tramp
+          (:columns
+           ((ivy-rich-tramp-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-git-checkout
+          (:columns
+           ((ivy-rich-git-branch-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           counsel-projectile-switch-project
