@@ -155,7 +155,7 @@
                 (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
                 (Constant . ,(all-the-icons-faicon "square-o" :height 0.85 :v-adjust -0.05))
                 (Struct . ,(all-the-icons-material "settings_input_component" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-orange))
-                (Event . ,(all-the-icons-faicon "bolt" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-orange))
+                (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
                 (Operator . ,(all-the-icons-material "control_point" :height 0.85 :v-adjust -0.2))
                 (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.05))
                 (Template . ,(all-the-icons-material "format_align_center" :height 0.85 :v-adjust -0.2)))
