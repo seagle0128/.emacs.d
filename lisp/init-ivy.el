@@ -267,9 +267,7 @@
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
-  (use-package ivy-hydra
-    :bind (:map ivy-minibuffer-map
-           ("M-o" . ivy-dispatching-done-hydra)))
+  (use-package ivy-hydra)
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
