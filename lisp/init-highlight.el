@@ -138,7 +138,7 @@ FACE defaults to inheriting from default and highlight."
                 my-ivy-cleanup-indentation)
     :commands highlight-indent-guides--highlighter-default
     :functions my-indent-guides-for-all-but-first-column
-    :hook (prog-mode . highlight-indent-guides-mode)
+    ;; :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
                 highlight-indent-guides-responsive 'top)
     :config
