@@ -127,7 +127,7 @@
           (when (and (window-live-p win)
                      (eq number (string-to-number (window-parameter win 'ace-window-path))))
             (setq found t)
-            (select-window win)))
+            (aw-switch-to-window win)))
         (unless found
           (message "No specified window: %d" number)))))
   (dotimes (n 9)
