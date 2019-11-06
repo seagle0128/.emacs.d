@@ -278,6 +278,23 @@
       (bongo-switch-buffers))
     (bind-key "b" #'bongo-add-dired-files dired-mode-map)))
 
+;; text mode directory tree
+(use-package ztree
+  :custom-face
+  (ztreep-header-face ((t (:inherit diff-header))))
+  (ztreep-arrow-face ((t (:inherit font-lock-comment-face))))
+  (ztreep-leaf-face ((t (:inherit diff-index))))
+  (ztreep-node-face ((t (:inherit font-lock-variable-name-face))))
+  (ztreep-expand-sign-face ((t (:inherit font-lock-function-name-face))))
+  (ztreep-diff-header-face ((t (:inherit (diff-header bold)))))
+  (ztreep-diff-header-small-face ((t (:inherit diff-file-header))))
+  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face))))
+  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
+  (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
+  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
+  :init (setq ztree-draw-unicode-lines t
+              ztree-show-number-of-children t))
+
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package daemons)                   ; system services/daemons
@@ -287,7 +304,6 @@
 (use-package list-environment)
 (use-package memory-usage)
 (use-package tldr)
-(use-package ztree)                     ; text mode directory tree
 
 (provide 'init-utils)
 
