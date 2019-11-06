@@ -292,6 +292,27 @@
   (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
   (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
   (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :height 1.2 :v-adjust 0)
+    :color pink :quit-key "q")
+   ("Diff"
+    (("C" ztree-diff-copy "copy" :exit t)
+     ("h" ztree-diff-toggle-show-equal-files "show/hide equals" :exit t)
+     ("H" ztree-diff-toggle-show-filtered-files "show/hide ignores" :exit t)
+     ("D" ztree-diff-delete-file "delete" :exit t)
+     ("v" ztree-diff-view-file "view" :exit t)
+     ("d" ztree-diff-simple-diff-files "simple diff" :exit t)
+     ("r" ztree-diff-partial-rescan "partial rescan" :exit t)
+     ("R" ztree-diff-full-rescan "full rescan" :exit t))
+    "View"
+    (("RET" ztree-perform-action "expand/collapse or view" :exit t)
+     ("SPC" ztree-perform-soft-action "expand/collapse or view in other" :exit t)
+     ("TAB" ztree-jump-side "jump side" :exit t)
+     ("g" ztree-refresh-buffer "refresh" :exit t)
+     ("x" ztree-toggle-expand-subtree "expand/collapse" :exit t)
+     ("<backspace>" ztree-move-up-in-tree "go to parent" :exit t))))
+  :bind (:map ztreediff-mode-map
+         ("C-<f5>" . ztree-hydra/body))
   :init (setq ztree-draw-unicode-lines t
               ztree-show-number-of-children t))
 
