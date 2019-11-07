@@ -274,9 +274,15 @@
                files (append files (list file)))
          nil t)
         (with-bongo-library-buffer
-          (mapc 'bongo-insert-file files)))
+         (mapc 'bongo-insert-file files)))
       (bongo-switch-buffers))
     (bind-key "b" #'bongo-add-dired-files dired-mode-map)))
+
+;; A stackoverflow and its sisters' sites reader
+(use-package howdoyou
+  :bind (:map howdoyou-mode-map
+         ("q" . kill-buffer-and-window))
+  :hook (howdoyou-mode . read-only-mode))
 
 ;; text mode directory tree
 (use-package ztree
