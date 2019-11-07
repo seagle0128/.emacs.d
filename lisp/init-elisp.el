@@ -57,7 +57,8 @@
 
   ;; Syntax highlighting of known Elisp symbols
   (use-package highlight-defined
-    :hook (emacs-lisp-mode . highlight-defined-mode))
+    :hook (emacs-lisp-mode . highlight-defined-mode)
+    :init (setq highlight-defined-face-use-itself t))
 
   ;; Align indent keywords
   ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
