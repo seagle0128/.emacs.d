@@ -251,10 +251,6 @@
                '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-dyellow))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(conf-toml-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-dyellow))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.lua$" all-the-icons-fileicon "lua" :face all-the-icons-dblue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(lua-mode all-the-icons-fileicon "lua" :face all-the-icons-dblue))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(help-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
   (add-to-list 'all-the-icons-mode-icon-alist
