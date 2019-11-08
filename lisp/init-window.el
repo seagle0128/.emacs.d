@@ -240,6 +240,7 @@
           (pt-mode :select t :align 'below)
           (rg-mode :select t :align 'below)
 
+          (" *Flycheck checkers*" :select t :size 0.4 :align 'below :autoclose t)
           (flycheck-error-list-mode :select t :size 0.3 :align 'below :autoclose t)
           (flymake-diagnostics-buffer-mode :select t :size 0.3 :align 'below :autoclose t)
 
