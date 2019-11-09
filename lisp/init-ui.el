@@ -146,7 +146,7 @@
         doom-modeline-minor-modes nil
         doom-modeline-mu4e nil)
   :bind (:map doom-modeline-mode-map
-         ("M-<f6>" . doom-modeline-hydra/body))
+         ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
     :color amaranth :quit-key "q")
