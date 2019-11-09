@@ -53,8 +53,7 @@
      ;; Configure LSP clients
      (use-package lsp-clients
        :ensure nil
-       :init (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/")
-                   lsp-rust-server 'rust-analyzer)))
+       :init (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))))
 
    (use-package lsp-ui
      :functions my-lsp-ui-imenu-hide-mode-line
