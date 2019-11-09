@@ -143,7 +143,9 @@
    ;; `lsp-mode' and `treemacs' integration.
    (when emacs/>=25.2p
      (use-package lsp-treemacs
-       :bind (("C-<f8>" . lsp-treemacs-errors-list)
+       :after lsp-mode
+       :bind (:map lsp-mode-map
+              ("C-<f8>" . lsp-treemacs-errors-list)
               ("M-<f8>" . lsp-treemacs-symbols)
               ("s-<f8>" . lsp-treemacs-java-deps-list))
        :config
