@@ -53,7 +53,10 @@
      ;; Configure LSP clients
      (use-package lsp-clients
        :ensure nil
-       :init (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))))
+       :init
+       (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
+       (unless (executable-find "rls")
+         (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))))
 
    (use-package lsp-ui
      :functions my-lsp-ui-imenu-hide-mode-line
