@@ -53,6 +53,8 @@
                                  (not (string-equal "*scratch*" (buffer-name b))))
                             (string-prefix-p "magit" (buffer-name b))
                             (string-prefix-p "Pfuture-Callback" (buffer-name b))
+                            (eq (buffer-local-value 'major-mode b) 'erc-mode)
+                            (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
                             (eq (buffer-local-value 'major-mode b) 'nov-mode)
                             (eq (buffer-local-value 'major-mode b) 'vterm-mode)))))
   :config
