@@ -209,7 +209,7 @@ Lisp function does not specify a special indentation."
                              (backward-sexp)
                            (scan-error (throw 'break nil)))
                          (let ((bounds (bounds-of-thing-at-point 'sexp)))
-                           (when (< (car bounds) orig-point (cdr bounds))
+                           (when (<= (car bounds) orig-point (cdr bounds))
                              (throw 'break (sexp-at-point)))))))))
           (when (yes-or-no-p (format "Remove %s from %s? " func hook))
             (remove-hook hook func)
