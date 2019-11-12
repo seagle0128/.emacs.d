@@ -20,16 +20,14 @@ before_script:
   - mv -f ../.emacs.d ~/.emacs.d
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
-  # - mkdir -p lib && curl https://raw.githubusercontent.com/nschum/elisp-lint/stable/elisp-lint.el > lib/elisp-lint.el
 
-script:
   - echo "Importing new elpa key..."
   - mkdir -p ~/.emacs.d/elpa/gnupg
   - chmod 700 ~/.emacs.d/elpa/gnupg 
   - gpg --keyserver hkp://keys.gnupg.net --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 
+script:
   - echo "Attempting startup..."
-  - ${EMACS:=emacs} --version
   - ${EMACS:=emacs} -nw --batch --eval
     '(let ((debug-on-error (>=  emacs-major-version 26))
            (url-show-status nil)
@@ -43,4 +41,6 @@ script:
     (when (>= emacs-major-version 26)
       (run-hooks (quote after-init-hook))
       (run-hooks (quote emacs-startup-hook))))'
+
+after_success:
   - echo "Startup successful"
