@@ -5,16 +5,16 @@ env:
   - EVM_EMACS=emacs-25.1-travis
   - EVM_EMACS=emacs-25.2-travis
   - EVM_EMACS=emacs-25.3-travis
-  - EVM_EMACS=emacs-26.1-travis
-  - EVM_EMACS=emacs-26.2-travis
-  - EVM_EMACS=emacs-26.3-travis
-  - EVM_EMACS=emacs-git-snapshot-travis
+  - EVM_EMACS=emacs-26.1-travis-linux-xenial
+  - EVM_EMACS=emacs-26.2-travis-linux-xenial
+  - EVM_EMACS=emacs-26.3-travis-linux-xenial
+  - EVM_EMACS=emacs-git-snapshot-travis-linux-xenial
 
 matrix:
   fast_finish: true
   allow_failures:
     env:
-      - EVM_EMACS=emacs-git-snapshot-travis
+      - EVM_EMACS=emacs-git-snapshot-travis-linux-xenial
 
 before_script:
   - mv -f ../.emacs.d ~/.emacs.d
