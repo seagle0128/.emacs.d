@@ -76,7 +76,7 @@
         ("d f" (setq lsp-ui-doc-alignment 'frame) "align frame" :toggle (eq lsp-ui-doc-alignment 'frame))
         ("d w" (setq lsp-ui-doc-alignment 'window) "align window" :toggle (eq lsp-ui-doc-alignment 'window)))
        "Sideline"
-       (("s e" lsp-ui-sideline-enable "enbale" :toggle t)
+       (("s e" lsp-ui-sideline-enable "enable" :toggle t)
         ("s h" lsp-ui-sideline-show-hover "hover" :toggle t)
         ("s d" lsp-ui-sideline-show-diagnostics "diagnostics" :toggle t)
         ("s s" lsp-ui-sideline-show-symbol "symbol" :toggle t)
@@ -356,7 +356,7 @@
 (when centaur-lsp
   ;; Enable LSP in org babel
   ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-  (cl-defmacro lsp-org-babel-enbale (lang)
+  (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (cl-check-type lang stringp)
     (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
@@ -391,7 +391,7 @@
     '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
   (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
   (dolist (lang org-babel-lang-list)
-    (eval `(lsp-org-babel-enbale ,lang))))
+    (eval `(lsp-org-babel-enable ,lang))))
 
 (provide 'init-lsp)
 
