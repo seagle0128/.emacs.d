@@ -53,6 +53,10 @@
      ;; Configure LSP clients
      (use-package lsp-clients
        :ensure nil
+       :hook (go-mode . (lambda ()
+                          "Format and add/delete imports."
+                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))
        :init
        (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
        (unless (executable-find "rls")

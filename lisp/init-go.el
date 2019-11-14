@@ -42,11 +42,6 @@
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
-  ;; Format with `goimports' if possible, otherwise using `gofmt'
-  (when (executable-find "goimports")
-    (setq gofmt-command "goimports"))
-  (add-hook 'before-save-hook #'gofmt-before-save)
-
   ;; Install or update tools
   (defvar go--tools '("golang.org/x/tools/cmd/goimports"
                       "golang.org/x/tools/cmd/gorename"
