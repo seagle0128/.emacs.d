@@ -131,10 +131,10 @@
 
   (with-eval-after-load 'all-the-icons
     (setq alert-severity-colors
-          `((urgent   . ,(face-foreground 'error))
+          `((urgent   . ,(face-foreground 'all-the-icons-red))
             (high     . ,(face-foreground 'all-the-icons-orange))
-            (moderate . ,(face-foreground 'warning))
-            (normal   . ,(face-foreground 'success))
+            (moderate . ,(face-foreground 'all-the-icons-yellow))
+            (normal   . ,(face-foreground 'all-the-icons-green))
             (low      . ,(face-foreground 'all-the-icons-blue))
             (trivial  . ,(face-foreground 'all-the-icons-purple)))))
 
