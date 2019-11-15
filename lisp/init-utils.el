@@ -278,6 +278,15 @@
       (bongo-switch-buffers))
     (bind-key "b" #'bongo-add-dired-files dired-mode-map)))
 
+;; IRC
+(use-package erc
+  :ensure nil
+  :defines erc-autojoin-channels-alist
+  :init (setq erc-rename-buffers t
+              erc-interpret-mirc-color t
+              erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+              erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
+
 ;; A stackoverflow and its sisters' sites reader
 (use-package howdoyou
   :bind (:map howdoyou-mode-map
