@@ -36,7 +36,7 @@
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
-  :custom-face (hl-line ((t (:extend t)))) ; FIXME: compatible with 27
+  :custom-face (hl-line ((t ,@(and emacs/>=27p '(:extend t)))))
   :hook (after-init . global-hl-line-mode))
 
 ;; Highlight matching parens
