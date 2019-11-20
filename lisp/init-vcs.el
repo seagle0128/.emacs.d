@@ -36,6 +36,7 @@
 
 ;; Git
 (use-package magit
+   :ensure t
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch)
          ("C-c M-g" . magit-file-popup))
@@ -47,15 +48,16 @@
       ;; Add switch: --tags
       (transient-append-suffix 'magit-fetch
         "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
+             
+    ;; Show TODOs in magit
+  (when emacs/>=25.2p
+    (use-package magit-todos
+      :ensure t
+      :config (magit-todos-mode)))
 
   ;; Access Git forges from Magit
   (when (executable-find "cc")
     (use-package forge :demand)))
-
-;; Show TODOs in magit
-(when emacs/>=25.2p
-  (use-package magit-todos
-    :hook (emacs-startup . magit-todos-mode)))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
