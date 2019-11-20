@@ -50,12 +50,12 @@
 
   ;; Access Git forges from Magit
   (when (executable-find "cc")
-    (use-package forge :demand)))
+    (use-package forge :demand))
 
-;; Show TODOs in magit
-(when emacs/>=25.2p
-  (use-package magit-todos
-    :hook (emacs-startup . magit-todos-mode)))
+  ;; Show TODOs in magit
+  (when emacs/>=25.2p
+    (use-package magit-todos
+      :init (magit-todos-mode 1))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
