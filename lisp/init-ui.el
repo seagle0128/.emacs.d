@@ -257,12 +257,6 @@
           (memoize f)))
       (message "Reset all-the-icons")))
 
-  ;; FIXME: https://github.com/domtronn/all-the-icons.el/pull/171
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.xml$" all-the-icons-faicon "file-code-o" :height 0.95 :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(nxml-mode all-the-icons-faicon "file-code-o" :height 0.95 :face all-the-icons-lorange))
-
   (add-to-list 'all-the-icons-mode-icon-alist
                '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
