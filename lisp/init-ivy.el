@@ -398,7 +398,7 @@
   (defun ivy-rich-file-icon (candidate)
     "Display file icons in `ivy-rich'."
     (when (display-graphic-p)
-      (let* ((path (file-local-name (concat ivy--directory candidate)))
+      (let* ((path (concat ivy--directory candidate))
              (file (file-name-nondirectory path))
              (icon (cond
                     ((file-directory-p path)
@@ -415,7 +415,7 @@
                       (t (let ((matcher (all-the-icons-match-to-alist path all-the-icons-dir-icon-alist)))
                            (apply (car matcher) (list (cadr matcher) :v-adjust 0.01))))))
                     ((string-match "^/.*:$" path)
-                     (all-the-icons-material "settings_remote" :height 1.0 :v-adjust -0.2))
+                     (all-the-icons-material "wifi_tethering" :height 1.0 :v-adjust -0.2))
                     ((not (string-empty-p file))
                      (all-the-icons-icon-for-file file :v-adjust -0.05)))))
         (if (symbolp icon)
@@ -475,7 +475,7 @@
   (defun ivy-rich-tramp-icon (_candidate)
     "Display the tramp icon in `ivy-rich'."
     (when (display-graphic-p)
-      (all-the-icons-material "settings_remote" :height 1.0 :v-adjust -0.2)))
+      (all-the-icons-material "wifi_tethering" :height 1.0 :v-adjust -0.2)))
 
   (defun ivy-rich-git-branch-icon (_candidate)
     "Display the git branch icon in `ivy-rich'."
@@ -489,13 +489,13 @@
 
   (when (display-graphic-p)
     (defun my-ivy-rich-bookmark-type (candidate)
-      (let ((filename (file-local-name (ivy-rich-bookmark-filename candidate))))
+      (let ((filename (ivy-rich-bookmark-filename candidate)))
         (cond ((null filename)
-               (all-the-icons-material "block" :v-adjust -0.2 :face 'warning))  ; fixed #38
+               (all-the-icons-material "block" :height 1.0 :v-adjust -0.2 :face 'warning))  ; fixed #38
               ((file-remote-p filename)
-               (all-the-icons-material "wifi_tethering" :v-adjust -0.2 :face 'mode-line-buffer-id))
+               (all-the-icons-material "wifi_tethering" :height 1.0 :v-adjust -0.2))
               ((not (file-exists-p filename))
-               (all-the-icons-material "block" :v-adjust -0.2 :face 'error))
+               (all-the-icons-material "block" :height 1.0 :v-adjust -0.2 :face 'error))
               ((file-directory-p filename)
                (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.05))
               (t (all-the-icons-icon-for-file (file-name-nondirectory filename) :height 0.9 :v-adjust -0.05)))))
