@@ -142,21 +142,13 @@
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
     (defvar my-ivy-fly-commands '(query-replace-regexp
-                                  flush-lines
-                                  keep-lines
-                                  ivy-read
-                                  swiper
-                                  swiper-backward
-                                  swiper-all
-                                  swiper-isearch
-                                  swiper-isearch-backward
-                                  counsel-grep-or-swiper
-                                  counsel-grep-or-swiper-backward
-                                  counsel-grep
-                                  counsel-ack
-                                  counsel-ag
-                                  counsel-rg
+                                  flush-lines keep-lines
+                                  ivy-read swiper swiper-backward swiper-all
+                                  swiper-isearch swiper-isearch-backward
+                                  counsel-grep-or-swiper counsel-grep-or-swiper-backward
+                                  counsel-grep counsel-ack counsel-ag counsel-rg
                                   counsel-pt))
+    (defvar-local my-ivy-fly--travel nil)
 
     (defun my-ivy-fly-back-to-present ()
       (cond ((and (memq last-command my-ivy-fly-commands)
@@ -166,12 +158,14 @@
                    (append unread-command-events
                            (listify-key-sequence (kbd "M-p")))))
             ((or (memq this-command '(self-insert-command
-                                      yank
-                                      ivy-yank-word
-                                      counsel-yank-pop))
+                                      yank ivy-forward-char
+                                      ivy-yank-word counsel-yank-pop))
                  (equal (this-command-keys-vector) (kbd "M-n")))
-             (delete-region (point)
-                            (point-max)))))
+             (unless my-ivy-fly--travel
+               (delete-region (point) (point-max))
+               (when (eq this-command 'ivy-forward-char)
+                 (insert (ivy-cleanup-string ivy-text)))
+               (setq my-ivy-fly--travel t)))))
 
     (defun my-ivy-fly-time-travel ()
       (when (memq this-command my-ivy-fly-commands)
