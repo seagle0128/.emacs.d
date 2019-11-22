@@ -257,16 +257,24 @@
           (memoize f)))
       (message "Reset all-the-icons")))
 
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.[bB][iI][nN]$" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.c?make$" all-the-icons-fileicon "gnu" :face all-the-icons-dorange))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.conf$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(conf-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(conf-space-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(vterm-mode all-the-icons-octicon "terminal" :v-adjust 0.2))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-dyellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(conf-toml-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-dyellow))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(help-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
   (add-to-list 'all-the-icons-mode-icon-alist
