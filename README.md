@@ -88,7 +88,9 @@ mv ~/.emacs.d ~/.emacs.d.bak
 git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
 
-or download the [zip package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and extract to `~/.emacs.d`.
+or download the [zip
+package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
+extract to `~/.emacs.d`.
 
 Then start Emacs. Wait for a while to install packages at the first startup. Enjoy! :smile:
 
@@ -146,7 +148,8 @@ For Example:
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 
-The default package archives is `melpa`. You can change it in `custom.el`, or switch manually via `M-x switch-package-archives` anytime.
+The default package archives is `melpa`. You can change it in `custom.el`, or
+switch manually via `M-x switch-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
@@ -229,7 +232,8 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 ## Donate
 
-If you think it's helpful for you, please consider paying a cup of coffee for me. Thank you! :smile:
+If you think the it's helpful for you, please consider paying a cup of coffee
+for me. Thank you! :smile:
 
 <img
 src="https://user-images.githubusercontent.com/140797/65818854-44204900-e248-11e9-9cc5-3e6339587cd8.png"
