@@ -141,13 +141,13 @@
   (with-no-warnings
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
-    (defvar my-ivy-fly-commands '(query-replace-regexp
-                                  flush-lines keep-lines
-                                  ivy-read swiper swiper-backward swiper-all
-                                  swiper-isearch swiper-isearch-backward
-                                  counsel-grep-or-swiper counsel-grep-or-swiper-backward
-                                  counsel-grep counsel-ack counsel-ag counsel-rg
-                                  counsel-pt))
+    (defvar my-ivy-fly-commands
+      '(query-replace-regexp
+        flush-lines keep-lines ivy-read
+        swiper swiper-backward swiper-all
+        swiper-isearch swiper-isearch-backward
+        counsel-grep-or-swiper counsel-grep-or-swiper-backward
+        counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
     (defvar-local my-ivy-fly--travel nil)
 
     (defun my-ivy-fly-back-to-present ()
@@ -421,7 +421,7 @@
     (defun ivy-rich-package-icon (_candidate)
       "Display the package icon in `ivy-rich'."
       (when (display-graphic-p)
-        (all-the-icons-faicon "archive" :height 0.85 :v-adjust -0.05 :face 'all-the-icons-silver)))
+        (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
 
     (defun ivy-rich-font-icon (_candidate)
       "Display the font icon in `ivy-rich'."
