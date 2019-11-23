@@ -242,5 +242,5 @@ alt="Wechat Pay" width="120"/>
 <a href="https://paypal.me/seagle0128" target="_blank">
 <img
 src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/optimize/Online_Primary_Acceptance_Mark_RGB_V2_medium.jpg"
-alt="Paypal"/>
+alt="PayPal"/>
 </a>
