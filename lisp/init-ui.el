@@ -161,8 +161,10 @@
       "colorful major mode" :toggle doom-modeline-major-mode-color-icon)
      ("s" (setq doom-modeline-buffer-state-icon (not doom-modeline-buffer-state-icon))
       "buffer state" :toggle doom-modeline-buffer-state-icon)
-     ("d" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
-      "modification" :toggle doom-modeline-buffer-modification-icon))
+     ("o" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
+      "modification" :toggle doom-modeline-buffer-modification-icon)
+     ("v" (setq doom-modeline-modal-icon (not doom-modeline-modal-icon))
+      "modal" :toggle doom-modeline-modal-icon))
     "Segment"
     (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
