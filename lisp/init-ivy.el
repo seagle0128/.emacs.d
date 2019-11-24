@@ -194,7 +194,7 @@
     ;; Improve search experience of `swiper'
     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
     (defun my-swiper-toggle-counsel-rg ()
-      "Toggle `counsel-rg' with current swiper input."
+      "Toggle `counsel-rg' with the current swiper input."
       (interactive)
       (let ((text (replace-regexp-in-string
                    "\n" ""
@@ -210,11 +210,20 @@
 
     (with-eval-after-load 'rg
       (defun my-swiper-toggle-rg-dwim ()
-        "Toggle `rg-dwim' with current swiper input."
+        "Toggle `rg-dwim' with the current swiper input."
         (interactive)
         (ivy-quit-and-run (rg-dwim default-directory)))
       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim ivy-minibuffer-map))
+
+    (defun my-swiper-toggle-swiper-isearch ()
+      "Toggle `swiper' and `swiper-isearch' with the current input."
+      (interactive)
+      (ivy-quit-and-run
+        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+            (swiper ivy-text)
+          (swiper-isearch ivy-text))))
+    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
 
     ;; Integration with `projectile'
     (with-eval-after-load 'projectile
