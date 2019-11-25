@@ -211,7 +211,6 @@
           ("*Calendar*" :select t :size 0.3 :align 'below)
           (("*shell*" "*eshell*" "*ielm*") :popup t :align 'below)
           ("^\\*vc-.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
-          ("*ert*" :size 15 :align 'below :autoclose t)
           ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
           ("\\*ivy-occur .*\\*" :regexp t :select t :align 'below)
           (" *undo-tree*" :select t)
@@ -228,6 +227,9 @@
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
           (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
           ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
+
+          ("*ert*" :size 15 :align 'below :autoclose t)
+          (overseer-buffer-mode :size 15 :align 'below :autoclose t)
 
           (" *Flycheck checkers*" :select t :size 0.4 :align 'below :autoclose t)
           ((flycheck-error-list-mode flymake-diagnostics-buffer-mode)
