@@ -244,7 +244,19 @@
     (visual-line-mode 1)
     (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5)
     (if (fboundp 'olivetti-mode) (olivetti-mode 1)))
-  :hook (nov-mode . my-nov-setup))
+  :hook (nov-mode . my-nov-setup)
+  :config
+  ;; FIXME: errors while opening `nov' files with Unicode characters
+  ;; @see https://github.com/wasamasa/nov.el/issues/63
+  (with-no-warnings
+    (defun my-nov-content-unique-identifier (content)
+      "Return the the unique identifier for CONTENT."
+      (when-let* ((name (nov-content-unique-identifier-name content))
+                  (selector (format "package>metadata>identifier[id='%s']"
+                                    (regexp-quote name)))
+                  (id (car (esxml-node-children (esxml-query selector content)))))
+        (intern id)))
+    (advice-add #'nov-content-unique-identifier :override #'my-nov-content-unique-identifier)))
 
 ;; Nice writing
 (use-package olivetti
