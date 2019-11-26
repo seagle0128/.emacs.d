@@ -399,6 +399,11 @@
       (when (display-graphic-p)
         (all-the-icons-octicon "file-directory" :height 1.0 :v-adjust 0.01)))
 
+    (defun ivy-rich-mode-icon (_candidate)
+      "Display mode icons in `ivy-rich'."
+      (when (display-graphic-p)
+        (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-blue)))
+
     (defun ivy-rich-function-icon (_candidate)
       "Display function icons in `ivy-rich'."
       (when (display-graphic-p)
@@ -703,6 +708,11 @@
           (:columns
            ((ivy-rich-project-icon)
             (counsel-projectile-find-dir-transformer))
+           :delimiter "\t")
+          counsel-minor
+          (:columns
+           ((ivy-rich-mode-icon)
+            (ivy-rich-candidate))
            :delimiter "\t")
           treemacs-projectile
           (:columns
