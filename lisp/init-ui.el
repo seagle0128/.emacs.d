@@ -259,6 +259,18 @@
           (memoize f)))
       (message "Reset all-the-icons")))
 
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(elfeed-search-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(elfeed-show-mode all-the-icons-octicon "rss" :v-adjust 0.0 :face all-the-icons-lorange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(newsticker-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(newsticker-treeview-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(newsticker-treeview-list-mode all-the-icons-octicon "rss" :v-adjust 0.0 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(newsticker-treeview-item-mode all-the-icons-octicon "rss" :v-adjust 0.0 :face all-the-icons-lorange))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.[bB][iI][nN]$" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow))
   (add-to-list 'all-the-icons-icon-alist
