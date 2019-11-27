@@ -63,7 +63,7 @@
     :init (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
                 elfeed-show-entry-switch #'pop-to-buffer
                 elfeed-show-entry-delete #'delete-window
-                elfeed-feeds '("http://planet.emacsen.org/atom.xml"
+                elfeed-feeds '("https://planet.emacslife.com/atom.xml"
                                "http://www.masteringemacs.org/feed/"
                                "https://oremacs.com/atom.xml"
                                "https://pinecast.com/feed/emacscast"
