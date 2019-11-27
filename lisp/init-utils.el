@@ -262,6 +262,10 @@
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
+  :hook (olivetti-mode . (lambda ()
+                           (if olivetti-mode
+                               (text-scale-set +2)
+                             (text-scale-set 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Music player

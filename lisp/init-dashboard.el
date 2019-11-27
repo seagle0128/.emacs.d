@@ -181,6 +181,7 @@
             (persp-load-state-from-file)
           (error
            (message "Error: Unable to restore last session -- %s" err)))
+        (quit-window t)
         (when (persp-get-buffer-or-null persp-special-last-buffer)
           (persp-switch-to-buffer persp-special-last-buffer))
         (message "Done")))
