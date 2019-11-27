@@ -1,4 +1,4 @@
-;; init-rss.el --- Initialize the RSS reader.	-*- lexical-binding: t -*-
+;; init-rss.el --- Initialize the RSS readers.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; The RSS feed reader.
+;; The RSS feed readers.
 ;;
 
 ;;; Code:
@@ -72,6 +72,18 @@
                                ("https://pinecast.com/feed/emacscast" emacscast)
                                ("https://www.reddit.com/r/emacs.rss" reddit)))
     :config (push elfeed-db-directory recentf-exclude)))
+
+;; Another Atom/RSS reader
+(use-package newsticker
+  :ensure nil
+  :bind ("C-x W" . newsticker-show-news)
+  :hook (newsticker-treeview-item-mode . (lambda () (text-scale-set +2)))
+  :init (setq newsticker-url-list
+              '(("Planet Emacslife" "https://planet.emacslife.com/atom.xml")
+                ("Mastering Emacs" "http://www.masteringemacs.org/feed/")
+                ("Oremacs" "https://oremacs.com/atom.xml")
+                ("EmacsCast" "https://pinecast.com/feed/emacscast")
+                ("Emacs Reddit" "https://www.reddit.com/r/emacs.rss"))))
 
 (provide 'init-rss)
 
