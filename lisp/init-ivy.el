@@ -163,12 +163,16 @@
                    (append unread-command-events
                            (listify-key-sequence (kbd "M-p")))))
             ((or (memq this-command '(self-insert-command
-                                      yank ivy-forward-char
-                                      ivy-yank-word counsel-yank-pop))
+                                      ivy-forward-char end-of-line mwim-end-of-line
+                                      mwim-end-of-code-or-line mwim-end-of-line-or-code
+                                      yank ivy-yank-word counsel-yank-pop))
                  (equal (this-command-keys-vector) (kbd "M-n")))
              (unless my-ivy-fly--travel
                (delete-region (point) (point-max))
-               (when (eq this-command 'ivy-forward-char)
+               (when (memq this-command '(ivy-forward-char
+                                          end-of-line mwim-end-of-line
+                                          mwim-end-of-code-or-line
+                                          mwim-end-of-line-or-code ))
                  (insert (ivy-cleanup-string ivy-text)))
                (setq my-ivy-fly--travel t)))))
 
