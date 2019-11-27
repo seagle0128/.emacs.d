@@ -149,7 +149,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-markdown)
 (require 'init-org)
 
-(require 'init-elfeed)
+(require 'init-rss)
 (require 'init-utils)
 
 ;; Programming

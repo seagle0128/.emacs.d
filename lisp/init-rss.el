@@ -1,4 +1,4 @@
-;; init-elfeed.el --- Initialize elfeed.	-*- lexical-binding: t -*-
+;; init-rss.el --- Initialize the RSS reader.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; A RSS feed reader.
+;; The RSS feed reader.
 ;;
 
 ;;; Code:
@@ -36,7 +36,8 @@
     ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square")
       :color amaranth :quit-key "q")
      ("Search"
-      (("g" elfeed-search-update--force "refresh")
+      (("c" elfeed-db-compact "compact db")
+       ("g" elfeed-search-update--force "refresh")
        ("G" elfeed-search-fetch "update")
        ("y" elfeed-search-yank "copy URL")
        ("+" elfeed-search-tag-all "tag all")
@@ -60,17 +61,19 @@
            :map elfeed-show-mode-map
            ("o" . ace-link)
            ("q" . delete-window))
-    :init (setq elfeed-db-directory (locate-user-emacs-file ".elfeed")
+    :hook (elfeed-show-mode . (lambda () (text-scale-set +2)))
+    :init (setq url-queue-timeout 30
+                elfeed-db-directory (locate-user-emacs-file ".elfeed")
                 elfeed-show-entry-switch #'pop-to-buffer
                 elfeed-show-entry-delete #'delete-window
-                elfeed-feeds '("https://planet.emacslife.com/atom.xml"
-                               "http://www.masteringemacs.org/feed/"
-                               "https://oremacs.com/atom.xml"
-                               "https://pinecast.com/feed/emacscast"
-                               "https://www.reddit.com/r/emacs.rss"))
+                elfeed-feeds '(("https://planet.emacslife.com/atom.xml" planet emacslife)
+                               ("http://www.masteringemacs.org/feed/" mastering)
+                               ("https://oremacs.com/atom.xml" oremacs)
+                               ("https://pinecast.com/feed/emacscast" emacscast)
+                               ("https://www.reddit.com/r/emacs.rss" reddit)))
     :config (push elfeed-db-directory recentf-exclude)))
 
-  (provide 'init-elfeed)
+(provide 'init-rss)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-elfeed.el ends here
+;;; init-rss.el ends here
