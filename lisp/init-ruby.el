@@ -50,7 +50,6 @@
 
   ;; Rails
   (use-package projectile-rails
-    :after projectile
     :diminish projectile-rails-mode
     :hook (projectile-mode . projectile-rails-global-mode))
 
