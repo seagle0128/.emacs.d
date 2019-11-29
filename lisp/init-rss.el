@@ -61,7 +61,7 @@
            :map elfeed-show-mode-map
            ("o" . ace-link)
            ("q" . delete-window))
-    :hook (elfeed-show-mode . (lambda () (text-scale-set +2)))
+    :hook (elfeed-show-mode . centaur-read-mode)
     :init (setq url-queue-timeout 30
                 elfeed-db-directory (locate-user-emacs-file ".elfeed")
                 elfeed-show-entry-switch #'pop-to-buffer
@@ -77,7 +77,7 @@
 (use-package newsticker
   :ensure nil
   :bind ("C-x W" . newsticker-show-news)
-  :hook (newsticker-treeview-item-mode . (lambda () (text-scale-set +2)))
+  :hook (newsticker-treeview-item-mode . centaur-read-mode)
   :init (setq newsticker-url-list
               '(("Planet Emacslife" "https://planet.emacslife.com/atom.xml")
                 ("Mastering Emacs" "http://www.masteringemacs.org/feed/")

@@ -109,6 +109,14 @@ Same as `replace-string C-q C-m RET RET'."
         (error "Unable to find \"%s\"" custom-example)))
     (find-file custom-file)))
 
+(defun centaur-read-mode ()
+  "Read articles with better views."
+  (when (fboundp 'olivetti-mode)
+    (olivetti-mode t))
+  (text-scale-set +2))
+
+
+
 ;; Update
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
