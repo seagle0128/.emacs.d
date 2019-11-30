@@ -86,7 +86,7 @@
         (set-face-attribute 'doom-visual-bell nil
                             :inherit 'mode-line
                             :background (face-foreground 'error)
-                            :inverse-video nil)
+                            :inverse-video 'unspecified)
         (defvar doom-themes--bell-p nil)
         (defun doom-themes-visual-bell-fn ()
           "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
