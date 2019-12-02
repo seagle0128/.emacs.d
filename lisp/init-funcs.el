@@ -109,6 +109,46 @@ Same as `replace-string C-q C-m RET RET'."
         (error "Unable to find \"%s\"" custom-example)))
     (find-file custom-file)))
 
+;; Misc
+(defun create-scratch-buffer ()
+  "Create a scratch buffer."
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*scratch*"))
+  (lisp-interaction-mode))
+
+(defun save-buffer-as-utf8 (coding-system)
+  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
+  (interactive "zCoding system for visited file (default nil):")
+  (revert-buffer-with-coding-system coding-system)
+  (set-buffer-file-coding-system 'utf-8)
+  (save-buffer))
+
+(defun save-buffer-gbk-as-utf8 ()
+  "Revert a buffer with GBK and save as UTF-8."
+  (interactive)
+  (save-buffer-as-utf8 'gbk))
+
+(defun recompile-elpa ()
+  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
+  (interactive)
+  (if (fboundp 'async-byte-recompile-directory)
+      (async-byte-recompile-directory package-user-dir)
+    (byte-recompile-directory package-user-dir 0 t)))
+
+(defun recompile-site-lisp ()
+  "Recompile packages in site-lisp directory."
+  (interactive)
+  (let ((dir (locate-user-emacs-file "site-lisp")))
+    (if (fboundp 'async-byte-recompile-directory)
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
+
+(defun centaur-read-mode ()
+  "Read articles with better views."
+  (when (fboundp 'olivetti-mode)
+    (olivetti-mode t))
+  (text-scale-set +2))
+
 ;; Pakcage archives
 (defun set-package-archives (archives)
   "Set specific package ARCHIVES repository."
@@ -146,12 +186,6 @@ Same as `replace-string C-q C-m RET RET'."
        (mapcar (lambda (url) (url-host (url-generic-parse-url url))) urls) "Elpa"
        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
     (message "%s" durations)))
-
-(defun centaur-read-mode ()
-  "Read articles with better views."
-  (when (fboundp 'olivetti-mode)
-    (olivetti-mode t))
-  (text-scale-set +2))
 
 
 
@@ -255,39 +289,6 @@ If SYNC is non-nil, the updating process is synchronous."
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist." dir))))
 (defalias 'centaur-update-org 'update-org)
-
-(defun create-scratch-buffer ()
-  "Create a scratch buffer."
-  (interactive)
-  (switch-to-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode))
-
-(defun save-buffer-as-utf8 (coding-system)
-  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
-  (interactive "zCoding system for visited file (default nil):")
-  (revert-buffer-with-coding-system coding-system)
-  (set-buffer-file-coding-system 'utf-8)
-  (save-buffer))
-
-(defun save-buffer-gbk-as-utf8 ()
-  "Revert a buffer with GBK and save as UTF-8."
-  (interactive)
-  (save-buffer-as-utf8 'gbk))
-
-(defun recompile-elpa ()
-  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
-  (interactive)
-  (if (fboundp 'async-byte-recompile-directory)
-      (async-byte-recompile-directory package-user-dir)
-    (byte-recompile-directory package-user-dir 0 t)))
-
-(defun recompile-site-lisp ()
-  "Recompile packages in site-lisp directory."
-  (interactive)
-  (let ((dir (locate-user-emacs-file "site-lisp")))
-    (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory dir)
-      (byte-recompile-directory dir 0 t))))
 
 ;;
 ;; UI
