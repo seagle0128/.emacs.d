@@ -54,7 +54,7 @@
   (error "This requires Emacs 25.1 and above!"))
 
 ;; Speed up startup
-(defvar centuar-gc-cons-threshold (if (display-graphic-p) 8000000 800000)
+(defvar centaur-gc-cons-threshold (if (display-graphic-p) 8000000 800000)
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
 
@@ -72,7 +72,7 @@ decrease this. If you experience stuttering, increase this.")
           (lambda ()
             "Restore defalut values after startup."
             (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold centuar-gc-cons-threshold)
+            (setq gc-cons-threshold centaur-gc-cons-threshold)
 
             ;; GC automatically while unfocusing the frame
             ;; `focus-out-hook' is obsolete since 27.1
@@ -89,7 +89,7 @@ decrease this. If you experience stuttering, increase this.")
               (setq gc-cons-threshold centaur-gc-cons-upper-limit))
 
             (defun my-minibuffer-exit-hook ()
-              (setq gc-cons-threshold centuar-gc-cons-threshold))
+              (setq gc-cons-threshold centaur-gc-cons-threshold))
 
             (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
             (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)))
