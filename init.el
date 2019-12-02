@@ -118,13 +118,15 @@ decrease this. If you experience stuttering, increase this.")
 ;; Customization
 (require 'init-custom)
 
+;; Functions
+(require 'init-funcs)
+
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
 (require 'init-package)
 
 ;; Preferences
 (require 'init-base)
-(require 'init-funcs)
 (require 'init-hydra)
 
 (require 'init-ui)

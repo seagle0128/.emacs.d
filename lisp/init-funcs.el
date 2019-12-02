@@ -63,7 +63,7 @@ Same as `replace-string C-q C-m RET RET'."
   (unless (minibuffer-window-active-p (selected-window))
     (revert-buffer t t)
     (message "Reverted this buffer.")))
-(bind-key "s-r" #'revert-this-buffer)
+(global-set-key (kbd "s-r") #'revert-this-buffer)
 
 ;; Copy file name
 (defun copy-file-name ()
@@ -89,7 +89,7 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (load-file user-init-file))
 (defalias 'centaur-reload-init-file 'reload-init-file)
-(bind-key "C-c C-l" #'reload-init-file)
+(global-set-key (kbd "C-c C-l") #'reload-init-file)
 
 ;; Browse the homepage
 (defun browse-homepage ()
@@ -108,6 +108,44 @@ Same as `replace-string C-q C-m RET RET'."
           (copy-file custom-example custom-file)
         (error "Unable to find \"%s\"" custom-example)))
     (find-file custom-file)))
+
+;; Pakcage archives
+(defun set-package-archives (archives)
+  "Set specific package ARCHIVES repository."
+  (interactive
+   (list
+    (intern (completing-read
+             "Choose package archives: "
+             (mapcar #'car centaur-package-archives-alist)))))
+  (customize-set-variable 'centaur-package-archives archives)
+  (message "Set package archives to `%s'" archives))
+
+;; Refer to https://emacs-china.org/t/elpa/11192
+(defun centaur-test-package-archives ()
+  "Test speed of all package archives and display on the chart."
+  (interactive)
+  (let* ((urls (mapcar
+                (lambda (url)
+                  (concat url "archive-contents"))
+                (mapcar #'cdr
+                        (mapcar #'cadr
+                                (mapcar #'cdr
+                                        centaur-package-archives-alist)))))
+         (durations (mapcar
+                     (lambda (url)
+                       (let ((start (current-time)))
+                         (message "Fetching %s" url)
+                         (call-process "curl" nil nil nil "--max-time" "10" url)
+                         (float-time (time-subtract (current-time) start))))
+                     urls)))
+    (message "%s" urls)
+    (when (require 'chart nil t)
+      (chart-bar-quickie
+       'horizontal
+       "Speed test for the ELPA mirrors"
+       (mapcar (lambda (url) (url-host (url-generic-parse-url url))) urls) "Elpa"
+       (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
+    (message "%s" durations)))
 
 (defun centaur-read-mode ()
   "Read articles with better views."
@@ -144,6 +182,7 @@ If SYNC is non-nil, the updating process is synchronous."
       (async-start
        `(lambda ()
           ,(async-inject-variables "\\`\\(load-path\\)\\'")
+          (require 'init-funcs)
           (require 'init-package)
           (upgrade-packages)
           (with-current-buffer auto-package-update-buffer-name
@@ -167,8 +206,8 @@ If SYNC is non-nil, the updating process is synchronous."
       (async-start
        `(lambda ()
           ,(async-inject-variables "\\`\\(load-path\\)\\'")
-          (require 'init-package)
           (require 'init-funcs)
+          (require 'init-package)
           (update-config)
           (update-packages t)
           (with-current-buffer auto-package-update-buffer-name

@@ -58,6 +58,7 @@
   :group 'centaur
   :type 'string)
 
+;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 (defcustom centaur-package-archives-alist
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                       (not (gnutls-available-p))))
@@ -75,7 +76,7 @@
              `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
                ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
       ,(cons 'tencent
-             `(,(cons "gnu"   (concat proto "://mirrors.cloud.tencent.com/elpa//gnu/"))
+             `(,(cons "gnu"   (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))
                ,(cons "melpa" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))))
       ,(cons 'tuna
              `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))

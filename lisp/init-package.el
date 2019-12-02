@@ -31,8 +31,10 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const)
   (require 'init-custom))
+
+;; Suppress warnings
+(declare-function set-package-archives 'init-funcs)
 
 ;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
@@ -42,16 +44,7 @@
     (setq package-selected-packages value)))
 (advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
 
-;;
-;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
-;;
-(defun set-package-archives (archives)
-  "Set specific package ARCHIVES repository."
-  (interactive
-   (list (intern (completing-read "Choose package archives: "
-                                  (mapcar 'car centaur-package-archives-alist)))))
-  (customize-set-variable 'centaur-package-archives archives)
-  (message "Set package archives to `%s'" archives))
+;; Set ELPA packages
 (set-package-archives centaur-package-archives)
 
 ;; Initialize packages
