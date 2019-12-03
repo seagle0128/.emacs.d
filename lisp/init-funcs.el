@@ -34,6 +34,13 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; Suppress warnings
+(declare-function async-inject-variables 'async)
+(declare-function chart-bar-quickie 'chart)
+(declare-function flycheck-buffer 'flycheck)
+(declare-function flymake-start 'flymake)
+(declare-function upgrade-packages 'init-package)
+
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
   "Convert the current buffer to UNIX file format."
@@ -55,8 +62,6 @@ Same as `replace-string C-q C-m RET RET'."
       (replace-match ""))))
 
 ;; Revert buffer
-(declare-function flycheck-buffer 'flycheck)
-(declare-function flymake-start 'flymake)
 (defun revert-this-buffer ()
   "Revert the current buffer."
   (interactive)
@@ -203,8 +208,6 @@ Same as `replace-string C-q C-m RET RET'."
       (message "\"%s\" doesn't exist." dir))))
 (defalias 'centaur-update-config 'update-config)
 
-(declare-function upgrade-packages 'init-package)
-(declare-function async-inject-variables 'async)
 (defun update-packages (&optional sync)
   "Refresh package contents and update all packages.
 
