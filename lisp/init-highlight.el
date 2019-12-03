@@ -37,7 +37,8 @@
 (use-package hl-line
   :ensure nil
   :custom-face (hl-line ((t (:extend t))))
-  :hook (after-init . global-hl-line-mode))
+  :hook ((after-init . global-hl-line-mode)
+         ((term-mode vterm-mode) . hl-line-unload-function)))
 
 ;; Highlight matching parens
 (use-package paren
