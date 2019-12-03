@@ -113,11 +113,13 @@
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
-(when (and (executable-find "cmake")
+(when (and module-file-suffix           ; dynamic module
+           (executable-find "cmake")
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
-    :init (defalias #'term #'vterm)))
+    :init (with-eval-after-load 'term
+            (defalias #'term #'vterm))))
 
 ;; Shell Pop
 (use-package shell-pop
