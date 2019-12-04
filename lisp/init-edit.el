@@ -193,6 +193,10 @@
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
   :hook (after-init . global-anzu-mode))
 
+;; Redefine M-< and M-> for some modes
+(use-package beginend
+  :hook (after-init . beginend-global-mode))
+
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :bind ([remap comment-dwim] . comment-dwim-2)) ;
