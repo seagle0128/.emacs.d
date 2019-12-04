@@ -53,9 +53,11 @@
     (use-package forge :demand))
 
   ;; Show TODOs in magit
-  (when emacs/>=25.2p
+  (when (and emacs/>=25.2p (not sys/win32p))
     (use-package magit-todos
-      :init (magit-todos-mode 1))))
+      :init
+      (setq magit-todos-nice (if (executable-find "nice") t nil))
+      (magit-todos-mode 1))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
