@@ -35,8 +35,6 @@
 
 (use-package ruby-mode
   :ensure nil
-  :mode "\\.\\(rb\\|rake\\|\\gemspec\\|ru\\|\\(Rake\\|Gem\\|Guard\\|Cap\\|Vagrant\\)file\\)$"
-  :interpreter "ruby"
   :config
   ;; Ruby refactoring helpers
   (use-package ruby-refactor
