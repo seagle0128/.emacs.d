@@ -74,7 +74,7 @@
       ("h" global-hungry-delete-mode "hungry delete" :toggle t)
       ("e" electric-pair-mode "electric pair" :toggle t)
       ("c" flyspell-mode "spell check" :toggle t)
-      ("S" global-prettify-symbols-mode "pretty symbol" :toggle t)
+      ("S" prettify-symbols-mode "pretty symbol" :toggle t)
       ("L" global-page-break-lines-mode "page break lines" :toggle t)
       ("M" doom-modeline-mode "modern mode-line" :toggle t))
      "Highlight"
@@ -92,7 +92,7 @@
       ("F" flymake-mode "flymake" :toggle t)
       ("o" origami-mode "folding" :toggle t)
       ("O" hs-minor-mode "hideshow" :toggle t)
-      ("u" global-subword-mode "subword" :toggle t)
+      ("u" subword-mode "subword" :toggle t)
       ("W" which-function-mode "which function" :toggle t)
       ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
       ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
