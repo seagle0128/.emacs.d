@@ -105,7 +105,7 @@
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
 
   (with-eval-after-load 'projectile
-    (defalias 'projectile-ripgrep 'rg-project)
+    (defalias 'projectile-ripgrep #'rg-project)
     (bind-key "s R" #'rg-project projectile-command-map))
 
   (with-eval-after-load 'counsel

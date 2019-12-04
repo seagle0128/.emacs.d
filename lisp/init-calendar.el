@@ -93,7 +93,7 @@
                 (when (bound-and-true-p centaur-ical)
                   (cfw:ical-create-source "gcal" centaur-ical "IndianRed")))))
       (cfw:open-calendar-buffer)))
-  (defalias 'centaur-open-calendar 'open-calendar))
+  (defalias 'centaur-open-calendar #'open-calendar))
 
 (provide 'init-calendar)
 

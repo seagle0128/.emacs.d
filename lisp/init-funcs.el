@@ -93,7 +93,7 @@ Same as `replace-string C-q C-m RET RET'."
   "Reload Emacs configurations."
   (interactive)
   (load-file user-init-file))
-(defalias 'centaur-reload-init-file 'reload-init-file)
+(defalias 'centaur-reload-init-file #'reload-init-file)
 (global-set-key (kbd "C-c C-l") #'reload-init-file)
 
 ;; Browse the homepage
@@ -206,7 +206,7 @@ Same as `replace-string C-q C-m RET RET'."
           (shell-command "git pull")
           (message "Updating configurations...done"))
       (message "\"%s\" doesn't exist." dir))))
-(defalias 'centaur-update-config 'update-config)
+(defalias 'centaur-update-config #'update-config)
 
 (defun update-packages (&optional sync)
   "Refresh package contents and update all packages.
@@ -230,7 +230,7 @@ If SYNC is non-nil, the updating process is synchronous."
     (progn
       (upgrade-packages)
       (message "Updating packages...done"))))
-(defalias 'centaur-update-packages 'update-packages)
+(defalias 'centaur-update-packages #'update-packages)
 
 (defun update-config-and-packages(&optional sync)
   "Update confgiurations and packages.
@@ -256,7 +256,7 @@ If SYNC is non-nil, the updating process is synchronous."
       (update-config)
       (update-packages t)
       (message "Done. Restart to complete process"))))
-(defalias 'centaur-update 'update-config-and-packages)
+(defalias 'centaur-update #'update-config-and-packages)
 
 (defun update-all()
   "Update dotfiles, org files, Emacs confgiurations and packages to the latest versions ."
@@ -264,7 +264,7 @@ If SYNC is non-nil, the updating process is synchronous."
   (update-org)
   (update-dotfiles)
   (update-config-and-packages))
-(defalias 'centaur-update-all 'update-all)
+(defalias 'centaur-update-all #'update-all)
 
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
@@ -278,7 +278,7 @@ If SYNC is non-nil, the updating process is synchronous."
           (shell-command "git pull")
           (message "Updating dotfiles...done"))
       (message "\"%s\" doesn't exist." dir))))
-(defalias 'centaur-update-dotfiles 'update-dotfiles)
+(defalias 'centaur-update-dotfiles #'update-dotfiles)
 
 (defun update-org ()
   "Update Org files to the latest version."
@@ -291,7 +291,7 @@ If SYNC is non-nil, the updating process is synchronous."
           (shell-command "git pull")
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist." dir))))
-(defalias 'centaur-update-org 'update-org)
+(defalias 'centaur-update-org #'update-org)
 
 ;;
 ;; UI
