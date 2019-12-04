@@ -177,13 +177,15 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     `all-the-icons` are necessary. Run `M-x all-the-icons-install-fonts` to
     install the resource fonts. On Windows, the fonts should be installed manually.
     `all-the-icons` only support GUI. If you don't like color icons,
-    `(setq all-the-icons-color-icons nil)` to disable. Please refer to
+    `(setq all-the-icons-color-icons nil)` to disable it. Please refer to
     [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for details.
 
-    If some icons are not displayed correctly although `all-the-icons` fonts are
-    installed correctly, please install [symbola](http://users.teilar.gr/~g1951d/).
-    Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121) for more
-    details.
+    If the icons are not displayed correctly although `all-the-icons` fonts are
+    installed correctly, please install the
+    [non-free](http://users.teilar.gr/~g1951d/License.pdf) font
+    [Symbola](http://users.teilar.gr/~g1951d/). This issue usually occurs on
+    Windows. Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121)
+    for more details.
 
 1. The packages cannot be installed, what should I do?
 
