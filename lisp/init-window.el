@@ -83,11 +83,11 @@
     :foreign-keys warn :quit-key "q")
    ("Actions"
     (("TAB" other-window "switch")
-     ("x" ace-delete-window "delete")
-     ("m" ace-delete-other-windows "maximize")
-     ("s" ace-swap-window "swap")
-     ("a" ace-select-window "select")
-     ("f" toggle-frame-fullscreen "fullscreen"))
+     ("x" ace-delete-window "delete" :exit t)
+     ("m" ace-delete-other-windows "maximize" :exit t)
+     ("s" ace-swap-window "swap" :exit t)
+     ("a" ace-select-window "select" :exit t)
+     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
     "Resize"
     (("h" shrink-window-horizontally "←")
      ("j" enlarge-window "↓")
@@ -238,7 +238,7 @@
           ((inferior-python-mode inf-ruby-mode swift-repl-mode) :size 0.4 :align 'below)
           ("*prolog*" :size 0.4 :align 'below)
 
-          ((grep-mode rg-mode ag-mode pt-mode) :select t :align 'below)
+          ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :align 'below)
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
