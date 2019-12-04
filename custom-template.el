@@ -27,10 +27,11 @@
     (dolist (font '("SF Mono" "Hack" "Source Code Pro" "Fira Code"
                     "Menlo" "Monaco" "DejaVu Sans Mono" "Consolas"))
       (when (member font (font-family-list))
-        (set-face-attribute 'default nil :font font :height (cond
-                                                             (sys/mac-x-p 130)
-                                                             (sys/win32p 110)
-                                                             (t 100)))
+        (set-face-attribute 'default nil
+                            :font font
+                            :height (cond (sys/mac-x-p 130)
+                                          (sys/win32p 110)
+                                          (t 100)))
         (throw 'loop t))))
 
   ;; Specify font for all unicode characters
