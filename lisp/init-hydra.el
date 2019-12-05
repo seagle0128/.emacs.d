@@ -42,7 +42,10 @@
 
 (use-package pretty-hydra
   :defines (display-line-numbers-mode linum-mode)
-  :functions set-package-archives centaur-load-theme
+  :functions (set-package-archives
+              centaur-load-theme
+              origami-mode
+              counsel-load-theme-action)
   :bind ("<f6>" . toggles-hydra/body)
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
@@ -117,7 +120,7 @@
       ("t n" (centaur-load-theme 'night) "night"
        :toggle (eq (centuar-current-theme) (centaur--standardize-theme 'night)))
       ("t o" (ivy-read "Load custom theme: "
-                       (mapcar 'symbol-name
+                       (mapcar #'symbol-name
                                (custom-available-themes))
                        :predicate (lambda (candidate)
                                     (string-prefix-p "doom-" candidate))

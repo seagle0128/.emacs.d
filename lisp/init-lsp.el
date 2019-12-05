@@ -123,8 +123,14 @@
        (setq mode-line-format nil))
      (advice-add #'lsp-ui-imenu :after #'my-lsp-ui-imenu-hide-mode-line))
 
+   ;; Completion
    (use-package company-lsp
      :init (setq company-lsp-cache-candidates 'auto))
+
+   ;; Ivy integration
+   (use-package lsp-ivy
+     :bind (:map lsp-mode-map
+            ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)))
 
    ;; Debug
    (use-package dap-mode
@@ -147,7 +153,7 @@
             (elixir-mode . (lambda () (require 'dap-elixir)))
             ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))))
 
-   ;; `lsp-mode' and `treemacs' integration.
+   ;; `lsp-mode' and `treemacs' integration
    (when emacs/>=25.2p
      (use-package lsp-treemacs
        :after lsp-mode

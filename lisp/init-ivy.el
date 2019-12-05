@@ -259,6 +259,8 @@
     (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
     :init
     (defun ivy-prescient-non-fuzzy (str)
+      "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
+This is for use in `ivy-re-builders-alist'."
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
 
@@ -272,6 +274,8 @@
                                   (swiper . ivy-prescient-non-fuzzy)
                                   (swiper-isearch . ivy-prescient-non-fuzzy)
                                   (swiper-all . ivy-prescient-non-fuzzy)
+                                  (lsp-ivy-workspace-symbol . ivy-prescient-non-fuzzy)
+                                  (lsp-ivy-global-workspace-symbol . ivy-prescient-non-fuzzy)
                                   (insert-char . ivy-prescient-non-fuzzy)
                                   (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands '(:not swiper swiper-isearch ivy-switch-buffer
@@ -331,42 +335,65 @@
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
   ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
   (use-package pinyinlib
-    :functions (ivy--regex-plus ivy-prescient-non-fuzzy)
     :commands pinyinlib-build-regexp-string
-    :preface
-    (defun ivy--regex-pinyin (str)
-      "The regex builder wrapper to support pinyin."
-      (or (pinyin-to-utf8 str)
-          (ivy-prescient-non-fuzzy str)
-          (ivy--regex-plus str)))
-    (defun my-pinyinlib-build-regexp-string (str)
-      "Build a pinyin regexp sequence from STR."
-      (cond ((equal str ".*") ".*")
-            (t (pinyinlib-build-regexp-string str t))))
-    (defun my-pinyin-regexp-helper (str)
-      "Construct pinyin regexp for STR."
-      (cond ((equal str " ") ".*")
-            ((equal str "") nil)
-            (t str)))
-    (defun pinyin-to-utf8 (str)
-      (cond ((equal 0 (length str)) nil)
-            ((equal (substring str 0 1) "!")
-             (mapconcat 'my-pinyinlib-build-regexp-string
-                        (remove nil (mapcar 'my-pinyin-regexp-helper
-                                            (split-string
-                                             (replace-regexp-in-string "!" "" str ) "")))
-                        ""))
-            (t nil)))
     :init
-    (dolist (fn '(swiper
-                  swiper-isearch swiper-all
-                  counsel-ag counsel-rg counsel-pt counsel-grep
-                  counsel-imenu counsel-yank-pop))
-      (setf (alist-get fn ivy-re-builders-alist) #'ivy--regex-pinyin))))
+    (with-no-warnings
+      (defun ivy--regex-pinyin (str)
+        "The regex builder wrapper to support pinyin."
+        (or (pinyin-to-utf8 str)
+            (ivy-prescient-non-fuzzy str)
+            (ivy--regex-plus str)))
+
+      (defun my-pinyinlib-build-regexp-string (str)
+        "Build a pinyin regexp sequence from STR."
+        (cond ((equal str ".*") ".*")
+              (t (pinyinlib-build-regexp-string str t))))
+
+      (defun my-pinyin-regexp-helper (str)
+        "Construct pinyin regexp for STR."
+        (cond ((equal str " ") ".*")
+              ((equal str "") nil)
+              (t str)))
+
+      (defun pinyin-to-utf8 (str)
+        "Convert STR to UTF-8."
+        (cond ((equal 0 (length str)) nil)
+              ((equal (substring str 0 1) "!")
+               (mapconcat
+                #'my-pinyinlib-build-regexp-string
+                (remove nil (mapcar
+                             #'my-pinyin-regexp-helper
+                             (split-string
+                              (replace-regexp-in-string "!" "" str )
+                              "")))
+                ""))
+              (t nil)))
+
+      (mapcar
+       (lambda (item)
+         (let ((key (car item))
+               (value (cdr item)))
+           (when (member value '(ivy-prescient-non-fuzzy
+                                 ivy--regex-plus))
+             (setf (alist-get key ivy-re-builders-alist)
+                   #'ivy--regex-pinyin))))
+       ivy-re-builders-alist))))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :preface
+  :hook ((ivy-mode . ivy-rich-mode)
+         (ivy-rich-mode . (lambda ()
+                            (setq ivy-virtual-abbreviate
+                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
+  :init
+  ;; For better performance
+  (setq ivy-rich-parse-remote-buffer nil)
+
+  ;; Setting tab size to 1, to insert tabs as delimiters
+  (add-hook 'minibuffer-setup-hook
+            (lambda ()
+              (setq tab-width 1)))
+
   (with-no-warnings
     (defun ivy-rich-bookmark-name (candidate)
       (car (assoc candidate bookmark-alist)))
@@ -481,18 +508,6 @@
                  (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust -0.05))
                 (t (all-the-icons-icon-for-file (file-name-nondirectory filename) :height 0.9 :v-adjust -0.05)))))
       (advice-add #'ivy-rich-bookmark-type :override #'my-ivy-rich-bookmark-type)))
-  :hook ((ivy-mode . ivy-rich-mode)
-         (ivy-rich-mode . (lambda ()
-                            (setq ivy-virtual-abbreviate
-                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :init
-  ;; For better performance
-  (setq ivy-rich-parse-remote-buffer nil)
-
-  ;; Setting tab size to 1, to insert tabs as delimiters
-  (add-hook 'minibuffer-setup-hook
-            (lambda ()
-              (setq tab-width 1)))
 
   (setq ivy-rich-display-transformers-list
         '(ivy-switch-buffer

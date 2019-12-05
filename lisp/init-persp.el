@@ -66,7 +66,7 @@
   ;; Don't save persp configs in `recentf'
   (push persp-save-dir recentf-exclude)
 
-  ;; Integrate IVY
+  ;; Ivy Integraticon
   (with-eval-after-load 'ivy
     (add-to-list 'ivy-ignore-buffers
                  #'(lambda (b)
@@ -76,7 +76,7 @@
                              (not (persp-contain-buffer-p b persp))
                            nil)))))))
 
-;; Integrate `projectile'
+;; Projectile integration
 (use-package persp-mode-projectile-bridge
   :after projectile
   :functions (persp-get-by-name
