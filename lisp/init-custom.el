@@ -134,6 +134,29 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type 'boolean)
 
+(defcustom centaur-prettify-symbols-alist
+  '(("lambda" . ?λ)
+    ("<-" . ?←)
+    ("->" . ?→)
+    ("->>" . ?↠)
+    ("=>" . ?⇒)
+    ("map" . ?↦)
+    ("/=" . ?≠)
+    ("!=" . ?≠)
+    ("==" . ?≡)
+    ("<=" . ?≤)
+    (">=" . ?≥)
+    ("=<<" . (?= (Br . Bl) ?≪))
+    (">>=" . (?≫ (Br . Bl) ?=))
+    ("<=<" . ?↢)
+    (">=>" . ?↣)
+    ("&&" . ?∧)
+    ("||" . ?∨)
+    ("not" . ?¬))
+  "Alist of symbol prettifications."
+  :group 'centaur
+  :type '(alist :key-type string :value-type (choice character sexp)))
+
 (defcustom centaur-benchmark nil
   "Enable the init benchmark or not."
   :group 'centaur

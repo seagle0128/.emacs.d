@@ -145,6 +145,7 @@ For Example:
 (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
+(setq centaur-prettify-symbols-alist nil)            ; Alist of symbol prettifications
 (setq centaur-benchmark t)                     ; Enable initialization benchmark or not: t or nil
 ```
 

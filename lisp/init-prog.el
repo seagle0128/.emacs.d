@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
 
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
@@ -37,24 +39,7 @@
   :ensure nil
   :hook (prog-mode . prettify-symbols-mode)
   :init
-  (setq-default prettify-symbols-alist '(("lambda" . ?λ)
-                                         ("<-" . ?←)
-                                         ("->" . ?→)
-                                         ("->>" . ?↠)
-                                         ("=>" . ?⇒)
-                                         ("map" . ?↦)
-                                         ("/=" . ?≠)
-                                         ("!=" . ?≠)
-                                         ("==" . ?≡)
-                                         ("<=" . ?≤)
-                                         (">=" . ?≥)
-                                         ("=<<" . (?= (Br . Bl) ?≪))
-                                         (">>=" . (?≫ (Br . Bl) ?=))
-                                         ("<=<" . ?↢)
-                                         (">=>" . ?↣)
-                                         ("&&" . ?∧)
-                                         ("||" . ?∨)
-                                         ("not" . ?¬)))
+  (setq-default prettify-symbols-alist centaur-prettify-symbols-alist)
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Jump to definition
