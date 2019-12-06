@@ -305,10 +305,11 @@
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
 
 ;; A stackoverflow and its sisters' sites reader
-(use-package howdoyou
-  :bind (:map howdoyou-mode-map
-         ("q" . kill-buffer-and-window))
-  :hook (howdoyou-mode . read-only-mode))
+(when emacs/>=26p
+  (use-package howdoyou
+    :bind (:map howdoyou-mode-map
+           ("q" . kill-buffer-and-window))
+    :hook (howdoyou-mode . read-only-mode)))
 
 ;; text mode directory tree
 (use-package ztree
