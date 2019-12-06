@@ -46,8 +46,9 @@
      :hook (prog-mode . lsp-deferred)
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point))
-     :init (setq lsp-auto-guess-root t       ; Detect project root
-                 lsp-prefer-flymake nil      ; Use lsp-ui and flycheck
+     :init (setq lsp-auto-guess-root t        ; Detect project root
+                 lsp-keep-workspace-alive nil ; Auto-kill LSP server
+                 lsp-prefer-flymake nil       ; Use lsp-ui and flycheck
                  flymake-fringe-indicator-position 'right-fringe)
      :config
      ;; Configure LSP clients
@@ -86,18 +87,18 @@
         ("s s" lsp-ui-sideline-show-symbol "symbol" :toggle t)
         ("s c" lsp-ui-sideline-show-code-actions "code actions" :toggle t)
         ("s i" lsp-ui-sideline-ignore-duplicate "ignore duplicate" :toggle t))))
-     :bind (:map lsp-ui-mode-map
+     :bind (("M-<f6>" . lsp-ui-hydra/body)
+            ("C-c u" . lsp-ui-imenu)
+            :map lsp-ui-mode-map
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-            ([remap xref-find-references] . lsp-ui-peek-find-references)
-            ("M-<f6>" . lsp-ui-hydra/body)
-            ("C-c u" . lsp-ui-imenu))
+            ([remap xref-find-references] . lsp-ui-peek-find-references))
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
                  lsp-ui-doc-delay 0.5
                  lsp-ui-doc-include-signature t
-                 lsp-ui-doc-position 'top
+                 lsp-ui-doc-position 'at-point
                  lsp-ui-doc-border (face-foreground 'default)
-                 lsp-eldoc-enable-hover nil ; Disableeldoc displays in minibuffer
+                 lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
 
                  lsp-ui-sideline-enable t
                  lsp-ui-sideline-show-hover nil
