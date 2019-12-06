@@ -1,4 +1,4 @@
-;; init-web.el --- Initialize web configurations.	-*- lexical-binding: t -*-
+;; init-scala.el --- Initialize web configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 Vincent Zhang
 
@@ -25,7 +25,9 @@
 
 ;;; Commentary:
 ;;
-;; Web configurations.
+;; Scala configurations.
+;; Based on Scala Metals
+;; https://scalameta.org/metals/
 ;;
 
 ;;; Code:
@@ -37,7 +39,7 @@
   :mode (("\\.s\\(cala\\|bt\\)$"    . scala-mode))
   :hook ((scala-mode-hook lsp)))
 
-(provide 'init-scala-metals)
+(provide 'init-scala)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-web.el ends here
+;;; init-scala.el ends here
