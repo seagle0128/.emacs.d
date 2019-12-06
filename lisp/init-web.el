@@ -99,7 +99,8 @@
     (diminish 'skewer-html-mode)))
 
 ;; Typescript
-(use-package typescript-mode)
+(use-package typescript-mode
+  :mode (("\\.ts[x]\\'" . typescript-mode)))
 
 ;; Run Mocha or Jasmine tests
 (use-package mocha
