@@ -36,26 +36,28 @@
 (use-package prog-mode
   :ensure nil
   :hook (prog-mode . prettify-symbols-mode)
-  :init
-  (setq-default prettify-symbols-alist '(("lambda" . ?λ)
-                                         ("<-" . ?←)
-                                         ("->" . ?→)
-                                         ("->>" . ?↠)
-                                         ("=>" . ?⇒)
-                                         ("map" . ?↦)
-                                         ("/=" . ?≠)
-                                         ("!=" . ?≠)
-                                         ("==" . ?≡)
-                                         ("<=" . ?≤)
-                                         (">=" . ?≥)
-                                         ("=<<" . (?= (Br . Bl) ?≪))
-                                         (">>=" . (?≫ (Br . Bl) ?=))
-                                         ("<=<" . ?↢)
-                                         (">=>" . ?↣)
-                                         ("&&" . ?∧)
-                                         ("||" . ?∨)
-                                         ("not" . ?¬)))
-  (setq prettify-symbols-unprettify-at-point 'right-edge))
+  ;; :init
+  ;; (setq-default prettify-symbols-alist '(("lambda" . ?λ)
+  ;;                                        ("<-" . ?←)
+  ;;                                        ("->" . ?→)
+  ;;                                        ("->>" . ?↠)
+  ;;                                        ("=>" . ?⇒)
+  ;;                                        ("map" . ?↦)
+  ;;                                        ("/=" . ?≠)
+  ;;                                        ("!=" . ?≠)
+  ;;                                        ("==" . ?≡)
+  ;;                                        ("<=" . ?≤)
+  ;;                                        (">=" . ?≥)
+  ;;                                        ("=<<" . (?= (Br . Bl) ?≪))
+  ;;                                        (">>=" . (?≫ (Br . Bl) ?=))
+  ;;                                        ("<=<" . ?↢)
+  ;;                                        (">=>" . ?↣)
+  ;;                                        ("&&" . ?∧)
+  ;;                                        ("||" . ?∨)
+  ;;                                        ("not" . ?¬)))
+  ;; (setq prettify-symbols-unprettify-at-point 'right-edge)
+
+  )
 
 ;; Jump to definition
 (use-package dumb-jump
