@@ -303,8 +303,6 @@
                '(conf-space-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(vterm-mode all-the-icons-octicon "terminal" :v-adjust 0.2))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
   (add-to-list 'all-the-icons-mode-icon-alist
