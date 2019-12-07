@@ -54,6 +54,7 @@
      ;; Configure LSP clients
      (use-package lsp-clients
        :ensure nil
+       :functions (lsp-format-buffer lsp-organize-imports)
        :hook (go-mode . (lambda ()
                           "Format and add/delete imports."
                           (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -64,8 +65,6 @@
          (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))))
 
    (use-package lsp-ui
-     :functions my-lsp-ui-imenu-hide-mode-line
-     :commands lsp-ui-doc-hide
      :custom-face
      (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
      (lsp-ui-sideline-code-action ((t (:inherit warning))))
