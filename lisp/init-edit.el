@@ -31,7 +31,7 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-custom))
+  (require 'init-const))
 
 ;; Miscs
 ;; (setq initial-scratch-message nil)
@@ -362,15 +362,7 @@
          ("C-`" . origami-hydra/body))
   :hook (prog-mode . origami-mode)
   :init (setq origami-show-fold-header t)
-  :config
-  (face-spec-reset-face 'origami-fold-header-face)
-
-  ;; Support LSP
-  (when centaur-lsp
-    (use-package lsp-origami
-      :hook (origami-mode . (lambda ()
-                              (if (bound-and-true-p lsp-mode)
-                                  (lsp-origami-mode)))))))
+  :config (face-spec-reset-face 'origami-fold-header-face))
 
 ;; Open files as another user
 (unless sys/win32p

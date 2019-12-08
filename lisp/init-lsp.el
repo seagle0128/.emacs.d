@@ -132,6 +132,11 @@
      :bind (:map lsp-mode-map
             ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)))
 
+   ;; Origami integration
+   (use-package lsp-origami
+     :after lsp-mode
+     :hook (origami-mode . lsp-origami-mode))
+
    ;; Debug
    (use-package dap-mode
      :diminish
