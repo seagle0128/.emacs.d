@@ -347,7 +347,10 @@
    (use-package lsp-python-ms
      :hook (python-mode . (lambda ()
                             (require 'lsp-python-ms)
-                            (lsp-deferred))))
+                            (lsp-deferred)))
+     :init
+     (when (executable-find "python3")
+       (setq lsp-python-ms-python-executable-cmd "python3")))
 
    ;; C/C++/Objective-C support
    (use-package ccls
