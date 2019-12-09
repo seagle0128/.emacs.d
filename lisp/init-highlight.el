@@ -224,7 +224,7 @@ FACE defaults to inheriting from default and highlight."
   (dolist (keyword '("WORKAROUND" "HACK" "TRICK"))
     (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces)))
 
-;; Highlight uncommitted changes
+;; Highlight uncommitted changes using VC
 (use-package diff-hl
   :defines (diff-hl-margin-symbols-alist desktop-minor-mode-table)
   :commands diff-hl-magit-post-refresh

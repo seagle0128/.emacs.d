@@ -100,6 +100,7 @@
          ("C-c C-z b" . browse-url-of-buffer)
          ("C-c C-z r" . browse-url-of-region)
          ("C-c C-z u" . browse-url)
+         ("C-c C-z e" . browse-url-emacs)
          ("C-c C-z v" . browse-url-of-file))
   :init
   (with-eval-after-load 'dired
