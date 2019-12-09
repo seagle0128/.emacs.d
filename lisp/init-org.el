@@ -111,9 +111,10 @@ prepended to the element after the #+HEADER: tag."
                        (push '("#+AUTHOR:" . ?👤) prettify-symbols-alist)
                        (push '("#+CREATOR:" . ?💁) prettify-symbols-alist)
                        (push '("#+DATE:" . ?📆) prettify-symbols-alist)
-                       (push '("#+DESCRIPTION:" . ?🗎) prettify-symbols-alist)
+                       (push '("#+DESCRIPTION:" . ?⸙) prettify-symbols-alist)
                        (push '("#+EMAIL:" . ?🖂) prettify-symbols-alist)
-                       (push '("#+OPTIONS:" . ?⚙) prettify-symbols-alist)
+                       (push '("#+OPTIONS:" . ?⛭) prettify-symbols-alist)
+                       (push '("#+SETUPFILE:" . ?⛮) prettify-symbols-alist)
                        (push '("#+TAGS:" . ?🏷) prettify-symbols-alist)
                        (push '("#+TITLE:" . ?🕮) prettify-symbols-alist)
 
