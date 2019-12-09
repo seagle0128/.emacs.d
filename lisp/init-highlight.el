@@ -267,49 +267,58 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight some operations
 (use-package volatile-highlights
   :diminish
-  :hook (after-init . volatile-highlights-mode))
+  :hook (after-init . volatile-highlights-mode)
+  :config
+  (with-no-warnings
+    (when (fboundp 'pulse-momentary-highlight-region)
+      (defun my-vhl-pulse (beg end &optional _buf face)
+        "Pulse the changes."
+        (pulse-momentary-highlight-region beg end face))
+      (advice-add #'vhl/.make-hl :override #'my-vhl-pulse))))
 
 ;; Visualize TAB, (HARD) SPACE, NEWLINE
 ;; Pulse current line
 (use-package pulse
   :ensure nil
-  :preface
-  (defun my-pulse-momentary-line (&rest _)
-    "Pulse the current line."
-    (pulse-momentary-highlight-one-line (point) 'region))
-
-  (defun my-pulse-momentary (&rest _)
-    "Pulse the current line."
-    (if (fboundp 'xref-pulse-momentarily)
-        (xref-pulse-momentarily)
-      (my-pulse-momentary-line)))
-
-  (defun my-recenter-and-pulse(&rest _)
-    "Recenter and pulse the current line."
-    (recenter)
-    (my-pulse-momentary))
-
-  (defun my-recenter-and-pulse-line (&rest _)
-    "Recenter and pulse the current line."
-    (recenter)
-    (my-pulse-momentary-line))
   :hook (((dumb-jump-after-jump
            imenu-after-jump) . my-recenter-and-pulse)
          ((bookmark-after-jump
            magit-diff-visit-file
            next-error) . my-recenter-and-pulse-line))
   :init
-  (dolist (cmd '(recenter-top-bottom
-                 other-window windmove-do-window-select
-                 ace-window aw--select-window
-                 pager-page-down pager-page-up
-                 treemacs-select-window
-                 symbol-overlay-basic-jump))
-    (advice-add cmd :after #'my-pulse-momentary-line))
-  (dolist (cmd '(pop-to-mark-command
-                 pop-global-mark
-                 goto-last-change))
-    (advice-add cmd :after #'my-recenter-and-pulse)))
+  (with-no-warnings
+    (defun my-pulse-momentary-line (&rest _)
+      "Pulse the current line."
+      (pulse-momentary-highlight-one-line (point) 'region))
+
+    (defun my-pulse-momentary (&rest _)
+      "Pulse the current line."
+      (if (fboundp 'xref-pulse-momentarily)
+          (xref-pulse-momentarily)
+        (my-pulse-momentary-line)))
+
+    (defun my-recenter-and-pulse(&rest _)
+      "Recenter and pulse the current line."
+      (recenter)
+      (my-pulse-momentary))
+
+    (defun my-recenter-and-pulse-line (&rest _)
+      "Recenter and pulse the current line."
+      (recenter)
+      (my-pulse-momentary-line))
+
+    (dolist (cmd '(recenter-top-bottom
+                   other-window windmove-do-window-select
+                   ace-window aw--select-window
+                   pager-page-down pager-page-up
+                   treemacs-select-window
+                   symbol-overlay-basic-jump))
+      (advice-add cmd :after #'my-pulse-momentary-line))
+
+    (dolist (cmd '(pop-to-mark-command
+                   pop-global-mark
+                   goto-last-change))
+      (advice-add cmd :after #'my-recenter-and-pulse))))
 
 (provide 'init-highlight)
 
