@@ -224,15 +224,15 @@
             (message "Fetching GitHub notifications...")
             (run-with-timer 300 nil #'doom-modeline--github-fetch-notifications)
             (browse-url "https://github.com/notifications"))
-      "github notifications" :color blue)
+      "github notifications" :exit t)
      ("e" (if (bound-and-true-p flycheck-mode)
               (flycheck-list-errors)
             (flymake-show-diagnostics-buffer))
-      "list errors" :color blue)
+      "list errors" :exit t)
      ("B" (if (bound-and-true-p grip-mode)
               (grip-browse-preview)
             (message "Not in preiew"))
-      "browse preivew" :color blue)))))
+      "browse preivew" :exit t)))))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
