@@ -121,7 +121,7 @@
                      (flycheck-mode -1)
                      (insert popuped-message)))
                  (posframe-show buffer-name
-                                :internal-border-width 10
+                                :internal-border-width 8
                                 :font centaur-childframe-font)
                  (unwind-protect
                      (push (read-event) unread-command-events)
