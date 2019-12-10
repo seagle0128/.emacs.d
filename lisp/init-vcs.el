@@ -114,7 +114,15 @@
         (git-messenger-hydra/body)
         (cond ((posframe-workable-p)
                (let ((buffer-name "*git-messenger*"))
-                 (posframe-show buffer-name :string popuped-message)
+                 (with-current-buffer (get-buffer-create buffer-name)
+                   (let ((inhibit-read-only t))
+                     (erase-buffer)
+                     (markdown-mode)
+                     (flycheck-mode -1)
+                     (insert popuped-message)))
+                 (posframe-show buffer-name
+                                :internal-border-width 10
+                                :font centaur-childframe-font)
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))

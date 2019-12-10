@@ -52,6 +52,9 @@
     (defun my-youdao-dictionary-search-at-point-posframe ()
       "Search word at point and display result with posframe."
       (interactive)
+      (unless (posframe-workable-p)
+        (error "Posframe not workable"))
+
       (let ((word (youdao-dictionary--region-or-word)))
         (if word
             (progn
@@ -62,7 +65,9 @@
                   (insert (youdao-dictionary--format-result word))
                   (goto-char (point-min))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name :position (point))
+              (posframe-show youdao-dictionary-buffer-name
+                             :internal-border-width 10
+                             :font centaur-childframe-font)
               (unwind-protect
                   (push (read-event) unread-command-events)
                 (posframe-hide youdao-dictionary-buffer-name)))
@@ -74,7 +79,7 @@
       "Search word at point and display result with `posframe', `pos-tip', or buffer."
       (interactive)
       (if (display-graphic-p)
-          (if (posframe-workable-p)
+          (if emacs/>=26p
               (youdao-dictionary-search-at-point-posframe)
             (youdao-dictionary-search-at-point-tooltip))
         (youdao-dictionary-search-at-point)))))

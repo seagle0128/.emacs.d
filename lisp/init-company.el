@@ -77,17 +77,20 @@
       :init (setq company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
-                  company-box-doc-delay 0.5)
+                  company-box-doc-delay 0.5
+                  company-box-doc-frame-parameters `((internal-border-width . 10)
+                                                     (font . ,centaur-childframe-font)))
       :config
       (with-no-warnings
-        ;; Support `company-common'
+        ;; Highlight `company-common'
         (defun my-company-box--make-line (candidate)
           (-let* (((candidate annotation len-c len-a backend) candidate)
                   (color (company-box--get-color backend))
                   ((c-color a-color i-color s-color) (company-box--resolve-colors color))
                   (icon-string (and company-box--with-icons-p (company-box--add-icon candidate)))
                   (candidate-string (concat (propertize (or company-common "") 'face 'company-tooltip-common)
-                                            (substring (propertize candidate 'face 'company-box-candidate) (length company-common) nil)))
+                                            (substring (propertize candidate 'face 'company-box-candidate)
+                                                       (length company-common) nil)))
                   (align-string (when annotation
                                   (concat " " (and company-tooltip-align-annotations
                                                    (propertize " " 'display `(space :align-to (- right-fringe ,(or len-a 0) 1)))))))

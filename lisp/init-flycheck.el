@@ -53,8 +53,31 @@
       (if emacs/>=26p
           (use-package flycheck-posframe
             :hook (flycheck-mode . flycheck-posframe-mode)
-            :config (add-to-list 'flycheck-posframe-inhibit-functions
-                                 #'(lambda () (bound-and-true-p company-backend))))
+            :config
+            (add-to-list 'flycheck-posframe-inhibit-functions
+                         #'(lambda () (bound-and-true-p company-backend)))
+
+            (with-no-warnings
+              (defun my-flycheck-posframe-show-posframe (errors)
+                "Display ERRORS, using posframe.el library."
+                (flycheck-posframe-hide-posframe)
+                (when (and errors
+                           (not (run-hook-with-args-until-success 'flycheck-posframe-inhibit-functions)))
+                  (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position))))
+                    (unless (functionp poshandler)
+                      (setq poshandler nil))
+                    (posframe-show
+                     flycheck-posframe-buffer
+                     :string (flycheck-posframe-format-errors errors)
+                     :background-color (face-background 'flycheck-posframe-background-face nil t)
+                     :position (point)
+                     :internal-border-width flycheck-posframe-border-width
+                     :internal-border-color (face-foreground'flycheck-posframe-border-face nil t)
+                     :font centaur-childframe-font
+                     :poshandler poshandler))
+                  (dolist (hook flycheck-posframe-hide-posframe-hooks)
+                    (add-hook hook #'flycheck-posframe-hide-posframe nil t))))
+              (advice-add #'flycheck-posframe-show-posframe :override #'my-flycheck-posframe-show-posframe)))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
