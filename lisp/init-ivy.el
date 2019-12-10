@@ -48,9 +48,9 @@
          :map counsel-mode-map
          ([remap swiper] . counsel-grep-or-swiper)
          ([remap swiper-backward] . counsel-grep-or-swiper-backward)
-         ([remap cd] . counsel-cd)
          ([remap dired] . counsel-dired)
          ([remap set-variable] . counsel-set-variable)
+         ([remap insert-char] . counsel-unicode-char)
 
          ("C-x C-r" . counsel-buffer-or-recentf)
          ("C-x j" . counsel-mark-ring)
@@ -277,6 +277,7 @@ This is for use in `ivy-re-builders-alist'."
                                   (lsp-ivy-workspace-symbol . ivy-prescient-non-fuzzy)
                                   (lsp-ivy-global-workspace-symbol . ivy-prescient-non-fuzzy)
                                   (insert-char . ivy-prescient-non-fuzzy)
+                                  (counsel-unicode-char . ivy-prescient-non-fuzzy)
                                   (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands '(:not swiper swiper-isearch ivy-switch-buffer
                                         counsel-grep counsel-ag counsel-yank-pop))
