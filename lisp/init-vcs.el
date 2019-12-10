@@ -82,8 +82,7 @@
      ("c" git-messenger:copy-commit-id "Copy hash")
      ;; ("d" git-messenger:popup-diff "Diff")
      ("m" git-messenger:copy-message "Copy message")
-     ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "Go Parent")
-     ("q" git-messenger:popup-close "Quit"))))
+     ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "Go Parent"))))
   :init
   (setq git-messenger:show-detail t
         git-messenger:use-magit-popup t)
@@ -115,7 +114,8 @@
         (cond ((posframe-workable-p)
                (let ((buffer-name "*git-messenger*"))
                  (with-current-buffer (get-buffer-create buffer-name)
-                   (let ((inhibit-read-only t))
+                   (let ((inhibit-read-only t)
+                         (markdown-enable-math nil))
                      (erase-buffer)
                      (markdown-mode)
                      (flycheck-mode -1)
