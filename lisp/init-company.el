@@ -73,58 +73,51 @@
   (when emacs/>=26p
     (use-package company-box
       :diminish
-      :functions (my-company-box--make-line
-                  my-company-box-icons--elisp)
-      :commands (company-box--get-color
-                 company-box--resolve-colors
-                 company-box--add-icon
-                 company-box--apply-color
-                 company-box--make-line
-                 company-box-icons--elisp)
       :hook (company-mode . company-box-mode)
       :init (setq company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
                   company-box-doc-delay 0.5)
       :config
-      ;; Support `company-common'
-      (defun my-company-box--make-line (candidate)
-        (-let* (((candidate annotation len-c len-a backend) candidate)
-                (color (company-box--get-color backend))
-                ((c-color a-color i-color s-color) (company-box--resolve-colors color))
-                (icon-string (and company-box--with-icons-p (company-box--add-icon candidate)))
-                (candidate-string (concat (propertize (or company-common "") 'face 'company-tooltip-common)
-                                          (substring (propertize candidate 'face 'company-box-candidate) (length company-common) nil)))
-                (align-string (when annotation
-                                (concat " " (and company-tooltip-align-annotations
-                                                 (propertize " " 'display `(space :align-to (- right-fringe ,(or len-a 0) 1)))))))
-                (space company-box--space)
-                (icon-p company-box-enable-icon)
-                (annotation-string (and annotation (propertize annotation 'face 'company-box-annotation)))
-                (line (concat (unless (or (and (= space 2) icon-p) (= space 0))
-                                (propertize " " 'display `(space :width ,(if (or (= space 1) (not icon-p)) 1 0.75))))
-                              (company-box--apply-color icon-string i-color)
-                              (company-box--apply-color candidate-string c-color)
-                              align-string
-                              (company-box--apply-color annotation-string a-color)))
-                (len (length line)))
-          (add-text-properties 0 len (list 'company-box--len (+ len-c len-a)
-                                           'company-box--color s-color)
-                               line)
-          line))
-      (advice-add #'company-box--make-line :override #'my-company-box--make-line)
+      (with-no-warnings
+        ;; Support `company-common'
+        (defun my-company-box--make-line (candidate)
+          (-let* (((candidate annotation len-c len-a backend) candidate)
+                  (color (company-box--get-color backend))
+                  ((c-color a-color i-color s-color) (company-box--resolve-colors color))
+                  (icon-string (and company-box--with-icons-p (company-box--add-icon candidate)))
+                  (candidate-string (concat (propertize (or company-common "") 'face 'company-tooltip-common)
+                                            (substring (propertize candidate 'face 'company-box-candidate) (length company-common) nil)))
+                  (align-string (when annotation
+                                  (concat " " (and company-tooltip-align-annotations
+                                                   (propertize " " 'display `(space :align-to (- right-fringe ,(or len-a 0) 1)))))))
+                  (space company-box--space)
+                  (icon-p company-box-enable-icon)
+                  (annotation-string (and annotation (propertize annotation 'face 'company-box-annotation)))
+                  (line (concat (unless (or (and (= space 2) icon-p) (= space 0))
+                                  (propertize " " 'display `(space :width ,(if (or (= space 1) (not icon-p)) 1 0.75))))
+                                (company-box--apply-color icon-string i-color)
+                                (company-box--apply-color candidate-string c-color)
+                                align-string
+                                (company-box--apply-color annotation-string a-color)))
+                  (len (length line)))
+            (add-text-properties 0 len (list 'company-box--len (+ len-c len-a)
+                                             'company-box--color s-color)
+                                 line)
+            line))
+        (advice-add #'company-box--make-line :override #'my-company-box--make-line)
 
-      ;; Prettify icons
-      (defun my-company-box-icons--elisp (candidate)
-        (when (derived-mode-p 'emacs-lisp-mode)
-          (let ((sym (intern candidate)))
-            (cond ((fboundp sym) 'Function)
-                  ((featurep sym) 'Module)
-                  ((facep sym) 'Color)
-                  ((boundp sym) 'Variable)
-                  ((symbolp sym) 'Text)
-                  (t . nil)))))
-      (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
+        ;; Prettify icons
+        (defun my-company-box-icons--elisp (candidate)
+          (when (derived-mode-p 'emacs-lisp-mode)
+            (let ((sym (intern candidate)))
+              (cond ((fboundp sym) 'Function)
+                    ((featurep sym) 'Module)
+                    ((facep sym) 'Color)
+                    ((boundp sym) 'Variable)
+                    ((symbolp sym) 'Text)
+                    (t . nil)))))
+        (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp))
 
       (when (and (display-graphic-p)
                  (require 'all-the-icons nil t))
