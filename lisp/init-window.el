@@ -235,6 +235,9 @@
           ((flycheck-error-list-mode flymake-diagnostics-buffer-mode)
            :select t :size 0.3 :align 'below :autoclose t)
 
+          (profiler-report-mode :select t :size 0.5 :align 'below)
+          ("*ELP Profiling Restuls*" :select t :size 0.5 :align 'below)
+
           ((inferior-python-mode inf-ruby-mode swift-repl-mode) :size 0.4 :align 'below)
           ("*prolog*" :size 0.4 :align 'below)
 
@@ -243,7 +246,6 @@
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
-          (profiler-report-mode :select t :size 0.5 :align 'below)
           (tabulated-list-mode :size 0.4 :align 'below))))
 
 (provide 'init-window)
