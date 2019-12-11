@@ -73,19 +73,18 @@
          ("p" . git-messenger:popup-message)
          :map git-messenger-map
          ("m" . git-messenger:copy-message))
-  :init
-  (setq git-messenger:show-detail t
-        git-messenger:use-magit-popup t)
-
-  (with-eval-after-load 'hydra
-    (defhydra git-messenger-hydra (:color blue)
-      ("s" git-messenger:popup-show "show")
-      ("c" git-messenger:copy-commit-id "copy hash")
-      ("m" git-messenger:copy-message "copy message")
-      ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
-      ("q" git-messenger:popup-close "quit")))
+  :init (setq git-messenger:show-detail t
+              git-messenger:use-magit-popup t)
   :config
   (with-no-warnings
+    (with-eval-after-load 'hydra
+      (defhydra git-messenger-hydra (:color blue)
+        ("s" git-messenger:popup-show "show")
+        ("c" git-messenger:copy-commit-id "copy hash")
+        ("m" git-messenger:copy-message "copy message")
+        ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
+        ("q" git-messenger:popup-close "quit")))
+
     (defun my-git-messenger:format-detail (vcs commit-id author message)
       (if (eq vcs 'git)
           (let ((date (git-messenger:commit-date commit-id)))
