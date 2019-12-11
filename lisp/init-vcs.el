@@ -73,21 +73,31 @@
          ("p" . git-messenger:popup-message)
          :map git-messenger-map
          ("m" . git-messenger:copy-message))
-  :pretty-hydra
-  ((:title (pretty-hydra-title "Git Messenger" 'alltheicon "git")
-    :color blue :quit-key "q")
-   ("Actions"
-    (("s" git-messenger:popup-show "Show")
-     ;; ("S" git-messenger:popup-show-verbose "Show verbose")
-     ("c" git-messenger:copy-commit-id "Copy hash")
-     ;; ("d" git-messenger:popup-diff "Diff")
-     ("m" git-messenger:copy-message "Copy message")
-     ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "Go Parent"))))
   :init
   (setq git-messenger:show-detail t
         git-messenger:use-magit-popup t)
 
+  (with-eval-after-load 'hydra
+    (defhydra git-messenger-hydra (:color blue)
+      ("s" git-messenger:popup-show "show")
+      ("c" git-messenger:copy-commit-id "copy hash")
+      ("m" git-messenger:copy-message "copy message")
+      ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
+      ("q" git-messenger:popup-close "quit")))
+  :config
   (with-no-warnings
+    (defun my-git-messenger:format-detail (vcs commit-id author message)
+      (if (eq vcs 'git)
+          (let ((date (git-messenger:commit-date commit-id)))
+            (concat
+             (propertize (format "Commit : %s \nAuthor : %s\nDate   : %s \n"
+                                 (substring commit-id 0 8) author date)
+                         'face 'font-lock-string-face)
+             (propertize "─────────────────────────────────" 'face 'font-lock-comment-face)
+             message
+             (propertize "\nPress q to quit" 'face '(:inherit (font-lock-doc-face italic)))))
+        (git-messenger:format-detail vcs commit-id author message)))
+
     (defun my-git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
       (interactive)
@@ -99,7 +109,7 @@
              (author (cdr commit-info))
              (msg (git-messenger:commit-message vcs commit-id))
              (popuped-message (if (git-messenger:show-detail-p commit-id)
-                                  (git-messenger:format-detail vcs commit-id author msg)
+                                  (my-git-messenger:format-detail vcs commit-id author msg)
                                 (cl-case vcs
                                   (git msg)
                                   (svn (if (string= commit-id "-")
@@ -107,20 +117,14 @@
                                          (git-messenger:svn-message msg)))
                                   (hg msg)))))
         (setq git-messenger:vcs vcs
-              git-messenger:last-message popuped-message
+              git-messenger:last-message msg
               git-messenger:last-commit-id commit-id)
         (run-hook-with-args 'git-messenger:before-popup-hook popuped-message)
         (git-messenger-hydra/body)
         (cond ((posframe-workable-p)
                (let ((buffer-name "*git-messenger*"))
-                 (with-current-buffer (get-buffer-create buffer-name)
-                   (let ((inhibit-read-only t)
-                         (markdown-enable-math nil))
-                     (erase-buffer)
-                     (markdown-mode)
-                     (flycheck-mode -1)
-                     (insert popuped-message)))
                  (posframe-show buffer-name
+                                :string popuped-message
                                 :internal-border-width 8
                                 :font centaur-childframe-font)
                  (unwind-protect
