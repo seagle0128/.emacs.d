@@ -99,6 +99,12 @@
                  lsp-ui-doc-border (face-foreground 'default)
                  lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
 
+                 lsp-ui-imenu-enable t
+                 lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+                                       ,(face-foreground 'font-lock-string-face)
+                                       ,(face-foreground 'font-lock-constant-face)
+                                       ,(face-foreground 'font-lock-variable-name-face))
+
                  lsp-ui-sideline-enable t
                  lsp-ui-sideline-show-hover nil
                  lsp-ui-sideline-show-diagnostics nil
