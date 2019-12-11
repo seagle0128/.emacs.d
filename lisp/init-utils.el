@@ -65,9 +65,7 @@
                   (insert (youdao-dictionary--format-result word))
                   (goto-char (point-min))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name
-                             :internal-border-width 10
-                             :font centaur-childframe-font)
+              (posframe-show youdao-dictionary-buffer-name :internal-border-width 10)
               (unwind-protect
                   (push (read-event) unread-command-events)
                 (posframe-hide youdao-dictionary-buffer-name)))

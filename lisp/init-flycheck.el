@@ -73,7 +73,6 @@
                      :position (point)
                      :internal-border-width flycheck-posframe-border-width
                      :internal-border-color (face-foreground'flycheck-posframe-border-face nil t)
-                     :font centaur-childframe-font
                      :poshandler poshandler))
                   (dolist (hook flycheck-posframe-hide-posframe-hooks)
                     (add-hook hook #'flycheck-posframe-hide-posframe nil t))))

@@ -77,9 +77,7 @@
       :init (setq company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
-                  company-box-doc-delay 0.5
-                  company-box-doc-frame-parameters `((internal-border-width . 10)
-                                                     (font . ,centaur-childframe-font)))
+                  company-box-doc-delay 0.5)
       :config
       (with-no-warnings
         ;; Highlight `company-common'

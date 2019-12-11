@@ -157,13 +157,6 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
-(defcustom centaur-childframe-font
-  (cond ((member "Tahoma" (font-family-list)) "Tahoma")
-        ((member "Arial" (font-family-list)) "Arial"))
-  "The font displayed in the child frame."
-  :group 'centaur
-  :type 'string)
-
 (defcustom centaur-benchmark nil
   "Enable the init benchmark or not."
   :group 'centaur
