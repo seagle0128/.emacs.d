@@ -87,14 +87,19 @@
 
     (defun my-git-messenger:format-detail (vcs commit-id author message)
       (if (eq vcs 'git)
-          (let ((date (git-messenger:commit-date commit-id)))
+          (let ((date (git-messenger:commit-date commit-id))
+                (colon (propertize ":" 'face 'font-lock-comment-face)))
             (concat
-             (propertize (format "Commit : %s \nAuthor : %s\nDate   : %s \n"
-                                 (substring commit-id 0 8) author date)
-                         'face 'font-lock-string-face)
-             (propertize "─────────────────────────────────" 'face 'font-lock-comment-face)
+             (format "%s%s %s \n%s%s %s\n%s  %s %s \n"
+                     (propertize "Commit" 'face 'font-lock-keyword-face) colon
+                     (propertize (substring commit-id 0 8) 'face 'font-lock-comment-face)
+                     (propertize "Author" 'face 'font-lock-keyword-face) colon
+                     (propertize author 'face 'font-lock-string-face)
+                     (propertize "Date" 'face 'font-lock-keyword-face) colon
+                     (propertize date 'face 'font-lock-string-face))
+             (propertize (make-string 38 ?─) 'face 'font-lock-comment-face)
              message
-             (propertize "\nPress q to quit" 'face '(:inherit (font-lock-doc-face italic)))))
+             (propertize "\nPress q to quit" 'face '(:inherit (font-lock-comment-face italic)))))
         (git-messenger:format-detail vcs commit-id author message)))
 
     (defun my-git-messenger:popup-message ()
