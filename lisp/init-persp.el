@@ -57,7 +57,6 @@
                               (string-suffix-p ".zip" bname)
                               (string-prefix-p "magit" bname)
                               (string-prefix-p "Pfuture-Callback" bname)
-                              (string-prefix-p "magit" bname)
                               (string-match-p ".elfeed" bname)
                               (eq (buffer-local-value 'major-mode b) 'erc-mode)
                               (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
