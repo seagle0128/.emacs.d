@@ -115,11 +115,11 @@ decrease this. If you experience stuttering, increase this.")
 ;; Constants
 (require 'init-const)
 
-;; Customization
-(require 'init-custom)
-
 ;; Functions
 (require 'init-funcs)
+
+;; Customization
+(require 'init-custom)
 
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here

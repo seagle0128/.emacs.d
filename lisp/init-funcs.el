@@ -31,15 +31,26 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+  (require 'init-const))
 
 ;; Suppress warnings
+(defvar centaur-package-archives-alist)
+(defvar centaur-proxy)
+(defvar socks-noproxy)
+(defvar socks-server)
+
 (declare-function async-inject-variables 'async)
 (declare-function chart-bar-quickie 'chart)
 (declare-function flycheck-buffer 'flycheck)
 (declare-function flymake-start 'flymake)
 (declare-function upgrade-packages 'init-package)
+
+
+
+;; Font
+(defun font-installed-p (font-name)
+  "Check if font with FONT-NAME is available."
+  (find-font (font-spec :name font-name)))
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
@@ -324,10 +335,9 @@ If SYNC is non-nil, the updating process is synchronous."
       (message "\"%s\" doesn't exist." dir))))
 (defalias 'centaur-update-org #'update-org)
 
-;;
-;; UI
-;;
+
 
+;; UI
 (defvar after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 (defun run-after-load-theme-hook (&rest _)
@@ -369,18 +379,15 @@ If SYNC is non-nil, the updating process is synchronous."
   "The current enabled theme."
   (car custom-enabled-themes))
 
-;;
-;; Network Proxy
-;;
+
 
+;; Network Proxy
 (defun proxy-http-show ()
   "Show HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
       (message "Current HTTP proxy is \"%s\"" centaur-proxy)
     (message "No HTTP proxy")))
-
-
 
 (defun proxy-http-enable ()
   "Enable HTTP/HTTPS proxy."
@@ -403,8 +410,6 @@ If SYNC is non-nil, the updating process is synchronous."
       (proxy-http-disable)
     (proxy-http-enable)))
 
-(defvar socks-noproxy)
-(defvar socks-server)
 (defun proxy-socks-show ()
   "Show SOCKS proxy."
   (interactive)
