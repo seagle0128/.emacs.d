@@ -1,6 +1,6 @@
 ;;; custom.el --- user customization file    -*- no-byte-compile: t -*-
 ;;; Commentary:
-;;;       Copy custom-template.el to custom.el and change the configurations, then restart Emacs.
+;;;       Add or change the configurations in custom.el, then restart Emacs.
 ;;;       Put your own configurations in custom-post.el to override default configurations.
 ;;; Code:
 
@@ -29,7 +29,7 @@
            when (font-installed-p font)
            return (set-face-attribute 'default nil
                                       :font font
-                                      :height (cond (sys/mac-x-p 120)
+                                      :height (cond (sys/mac-x-p 130)
                                                     (sys/win32p 110)
                                                     (t 100))))
 

@@ -131,7 +131,7 @@ docker run -it centaur/emacs bash
 
 ### Manual
 
-Copy `custom-template.el` to `custom.el` and change the configurations, then restart Emacs.
+Add or change the configurations in `custom.el`, then restart Emacs.
 
 For Example:
 

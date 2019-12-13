@@ -166,11 +166,11 @@ If Non-nil, use dashboard, otherwise will restore previous session."
 ;; If it doesn't exist, copy from the template, then load it.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(let ((custom-template-file
-       (expand-file-name "custom-template.el" user-emacs-directory)))
-  (if (and (file-exists-p custom-template-file)
+(let ((custom-example-file
+       (expand-file-name "custom-example.el" user-emacs-directory)))
+  (if (and (file-exists-p custom-example-file)
            (not (file-exists-p custom-file)))
-      (copy-file custom-template-file custom-file)))
+      (copy-file custom-example-file custom-file)))
 
 (if (file-exists-p custom-file)
     (load custom-file))
