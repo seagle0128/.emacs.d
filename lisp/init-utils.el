@@ -49,31 +49,6 @@
         youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
   (with-no-warnings
-    ;; FIXME: https://github.com/xuchunyang/youdao-dictionary.el/pull/38
-    (defun my-youdao-dictionary-search-at-point-posframe ()
-      "Search word at point and display result with posframe."
-      (interactive)
-      (unless (and (require 'posframe nil t) (posframe-workable-p))
-        (error "Posframe not workable"))
-
-      (let ((word (youdao-dictionary--region-or-word)))
-        (if word
-            (progn
-              (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
-                (let ((inhibit-read-only t))
-                  (erase-buffer)
-                  (youdao-dictionary-mode)
-                  (insert (youdao-dictionary--format-result word))
-                  (goto-char (point-min))
-                  (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name :internal-border-width 10)
-              (unwind-protect
-                  (push (read-event) unread-command-events)
-                (posframe-delete youdao-dictionary-buffer-name)))
-          (message "Nothing to look up"))))
-    (advice-add #'youdao-dictionary-search-at-point-posframe
-                :override #'my-youdao-dictionary-search-at-point-posframe)
-
     (defun my-youdao-search-at-point ()
       "Search word at point and display result with `posframe', `pos-tip', or buffer."
       (interactive)
