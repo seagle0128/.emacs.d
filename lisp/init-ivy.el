@@ -151,6 +151,7 @@
         flush-lines keep-lines ivy-read
         swiper swiper-backward swiper-all
         swiper-isearch swiper-isearch-backward
+        lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol
         counsel-grep-or-swiper counsel-grep-or-swiper-backward
         counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
     (defvar-local my-ivy-fly--travel nil)

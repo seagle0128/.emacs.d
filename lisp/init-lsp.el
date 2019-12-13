@@ -135,8 +135,10 @@
 
    ;; Ivy integration
    (use-package lsp-ivy
+     :after lsp-mode
      :bind (:map lsp-mode-map
-            ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)))
+            ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
+            ("C-s-." . lsp-ivy-global-workspace-symbol)))
 
    ;; Origami integration
    (use-package lsp-origami
