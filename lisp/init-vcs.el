@@ -129,7 +129,10 @@
                (let ((buffer-name "*git-messenger*"))
                  (posframe-show buffer-name
                                 :string popuped-message
-                                :internal-border-width 8)
+                                :left-fringe 8
+                                :right-fringe 8
+                                :internal-border-color (face-foreground 'default)
+                                :internal-border-width 1)
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))
