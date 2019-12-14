@@ -308,18 +308,21 @@
          ([M-kp-2] . pager-row-down)))
 
 ;; Treat undo history as a tree
-;; FIXME:  keep the diff window
-(make-variable-buffer-local 'undo-tree-visualizer-diff)
 (use-package undo-tree
   :diminish
   :defines recentf-exclude
   :hook (after-init . global-undo-tree-mode)
-  :init (setq undo-tree-visualizer-timestamps t
-              undo-tree-visualizer-diff t
-              undo-tree-enable-undo-in-region nil
-              undo-tree-auto-save-history nil
-              undo-tree-history-directory-alist
-              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil
+        undo-tree-history-directory-alist
+        `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
+
+  ;; WORKAROUND:  keep the diff window
+  (with-no-warnings
+    (make-variable-buffer-local 'undo-tree-visualizer-diff)
+    (setq-default undo-tree-visualizer-diff t))
   :config (dolist (dir undo-tree-history-directory-alist)
             (push (expand-file-name (cdr dir)) recentf-exclude)))
 
@@ -327,7 +330,17 @@
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
 
-;; Preview when `goto-line`
+;; Record and jump to the last point in the buffer
+(use-package goto-last-point
+  :diminish
+  :bind ("C-M-," . goto-last-point)
+  :hook (after-init . goto-last-point-mode))
+
+;; Preview when `goto-char'
+(use-package goto-char-preview
+  :bind ([remap goto-char] . goto-char-preview))
+
+;; Preview when `goto-line'
 (use-package goto-line-preview
   :bind ([remap goto-line] . goto-line-preview))
 
