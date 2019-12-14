@@ -125,7 +125,7 @@
               git-messenger:last-commit-id commit-id)
         (run-hook-with-args 'git-messenger:before-popup-hook popuped-message)
         (git-messenger-hydra/body)
-        (cond ((posframe-workable-p)
+        (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
                (let ((buffer-name "*git-messenger*"))
                  (posframe-show buffer-name
                                 :string popuped-message
@@ -136,7 +136,8 @@
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))
-              ((fboundp 'pos-tip-show) (pos-tip-show popuped-message))
+              ((and (fboundp 'pos-tip-show) (display-graphic-p))
+               (pos-tip-show popuped-message))
               ((fboundp 'lv-message)
                (lv-message popuped-message)
                (unwind-protect
