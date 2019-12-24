@@ -97,9 +97,8 @@ Then start Emacs. Wait for a while to install packages at the first startup. Enj
 ### Update
 
 ``` emacs-lisp
-# Update Centaur Emacs (then restart), including configurations and packages
+# Update Centaur Emacs, including configurations and packages
 M-x centaur-update
-M-x centaur-update-and-restart
 
 # Update Emacs configurations only
 M-x centaur-update-config
@@ -107,9 +106,8 @@ M-x centaur-update-config
 # Update ~/.dotfiles if it exists
 M-x centaur-update-dotfiles
 
-# Update packages only (then restart)
+# Update packages only
 M-x centaur-update-packages
-M-x centaur-update-packages-and-restart
 
 # Update all including configurations, packages and dotfiles
 M-x centaur-update-all
