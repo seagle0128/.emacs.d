@@ -182,7 +182,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     If the icons are not displayed correctly although `all-the-icons` fonts are
     installed correctly, please install the
     [non-free](http://users.teilar.gr/~g1951d/License.pdf) font
-    [Symbola](http://users.teilar.gr/~g1951d/). This issue usually occurs on
+    [Symbola](http://users.teilar.gr/~g1951d/Symbola.zip). This issue usually occurs on
     Windows. Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121)
     for more details.
 
