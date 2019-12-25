@@ -238,9 +238,6 @@ Lisp function does not specify a special indentation."
               (set-face-background 'macrostep-expansion-highlight-face
                                    (face-background 'tooltip)))))
 
-;; Semantic code search for emacs lisp
-(use-package elisp-refs)
-
 ;; A better *Help* buffer
 (use-package helpful
   :defines (counsel-describe-function-function
@@ -284,6 +281,11 @@ Lisp function does not specify a special indentation."
                                          (marker-buffer button)))
         (helpful--goto-char-widen pos)))
     (advice-add #'helpful--navigate :override #'my-helpful--navigate)))
+
+;; For ERT
+(use-package overseer
+  :diminish
+  :hook (emacs-lisp-mode . overseer-mode))
 
 (provide 'init-elisp)
 
