@@ -79,15 +79,8 @@
 ;; Projectile integration
 (use-package persp-mode-projectile-bridge
   :after projectile
-  :functions (persp-get-by-name
-              persp-add-new
-              persp-add-buffer
-              set-persp-parameter
-              my-persp-mode-projectile-bridge-add-new-persp)
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
-             persp-mode-projectile-bridge-kill-perspectives
-             persp-mode-projectile-bridge-add-new-persp
-             projectile-project-buffers)
+             persp-mode-projectile-bridge-kill-perspectives)
   :hook ((persp-mode . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode
           .
@@ -98,18 +91,19 @@
   :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
   :config
   ;; HACK: Allow saving to files
-  (defun my-persp-mode-projectile-bridge-add-new-persp (name)
-    (let ((persp (persp-get-by-name name *persp-hash* :nil)))
-      (if (eq :nil persp)
-          (prog1
-              (setq persp (persp-add-new name))
-            (when persp
-              (set-persp-parameter 'persp-mode-projectile-bridge t persp)
-              (persp-add-buffer (projectile-project-buffers)
-                                persp nil nil)))
-        persp)))
-  (advice-add #'persp-mode-projectile-bridge-add-new-persp
-              :override #'my-persp-mode-projectile-bridge-add-new-persp))
+  (with-no-warnings
+    (defun my-persp-mode-projectile-bridge-add-new-persp (name)
+      (let ((persp (persp-get-by-name name *persp-hash* :nil)))
+        (if (eq :nil persp)
+            (prog1
+                (setq persp (persp-add-new name))
+              (when persp
+                (set-persp-parameter 'persp-mode-projectile-bridge t persp)
+                (persp-add-buffer (projectile-project-buffers)
+                                  persp nil nil)))
+          persp)))
+    (advice-add #'persp-mode-projectile-bridge-add-new-persp
+                :override #'my-persp-mode-projectile-bridge-add-new-persp)))
 
 (provide 'init-persp)
 
