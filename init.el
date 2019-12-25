@@ -170,7 +170,6 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-dart)
 (require 'init-elixir)
 (require 'init-web)
-(require 'init-scala)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

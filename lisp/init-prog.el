@@ -87,6 +87,7 @@
 (use-package rmsbolt)                   ; A compiler output viewer
 (use-package swift-mode)
 (use-package vimrc-mode)
+(use-package scala-mode)
 
 (use-package nxml-mode
   :ensure nil
