@@ -37,6 +37,7 @@
 ;; Suppress warnings in hydra
 (declare-function centaur-compatible-theme-p 'init-funcs)
 (declare-function centaur-load-theme 'init-funcs)
+(declare-function font-installed-p 'init-funcs)
 
 ;; Logo
 (setq fancy-splash-image centaur-logo)
@@ -67,10 +68,6 @@
       (use-package doom-themes
         :defines doom-themes-treemacs-theme
         :functions doom-themes-hide-modeline
-        :hook (after-load-theme . (lambda ()
-                                    (set-face-foreground
-                                     'mode-line
-                                     (face-foreground 'default))))
         :init (centaur-load-theme centaur-theme)
         :config
         ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
