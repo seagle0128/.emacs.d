@@ -86,9 +86,9 @@
         ("s s" lsp-ui-sideline-show-symbol "symbol" :toggle t)
         ("s c" lsp-ui-sideline-show-code-actions "code actions" :toggle t)
         ("s i" lsp-ui-sideline-ignore-duplicate "ignore duplicate" :toggle t))))
-     :bind (("M-<f6>" . lsp-ui-hydra/body)
-            ("C-c u" . lsp-ui-imenu)
+     :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
+            ("M-<f6>" . lsp-ui-hydra/body)
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
             ([remap xref-find-references] . lsp-ui-peek-find-references))
      :init (setq lsp-ui-doc-enable t
