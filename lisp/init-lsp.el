@@ -42,7 +42,7 @@
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
-     :diminish lsp-mode
+     :diminish
      :hook (prog-mode . lsp-deferred)
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point))

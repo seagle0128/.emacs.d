@@ -38,7 +38,7 @@
   :config
   ;; Ruby refactoring helpers
   (use-package ruby-refactor
-    :diminish ruby-refactor-mode
+    :diminish
     :hook (ruby-mode . ruby-refactor-mode-launch))
 
   ;; Run a Ruby process in a buffer
@@ -48,19 +48,19 @@
 
   ;; Rails
   (use-package projectile-rails
-    :diminish projectile-rails-mode
+    :diminish
     :after projectile
     :hook (after-init . projectile-rails-global-mode))
 
   ;; Rubocop
   ;; Install: gem install rubocop
   (use-package rubocop
-    :diminish rubocop-mode
+    :diminish
     :hook (ruby-mode . rubocop-mode))
 
   ;; RSpec
   (use-package rspec-mode
-    :diminish rspec-mode
+    :diminish
     :commands rspec-install-snippets
     :hook (dired-mode . rspec-dired-mode)
     :config (with-eval-after-load 'yasnippet
@@ -72,7 +72,7 @@
 
   ;; Ruby YARD comments
   (use-package yard-mode
-    :diminish yard-mode
+    :diminish
     :hook (ruby-mode . yard-mode)))
 
 ;; YAML mode

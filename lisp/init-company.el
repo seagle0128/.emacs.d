@@ -34,7 +34,7 @@
   (require 'init-custom))
 
 (use-package company
-  :diminish company-mode
+  :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :commands company-abort
   :bind (("M-/" . company-complete)

@@ -217,7 +217,7 @@ prepended to the element after the #+HEADER: tag."
 
   ;; Preview
   (use-package org-preview-html
-    :diminish org-preview-html-mode)
+    :diminish)
 
   ;; Presentation
   (use-package org-tree-slide

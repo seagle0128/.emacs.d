@@ -34,7 +34,7 @@
   (require 'init-const))
 
 (use-package flycheck
-  :diminish flycheck-mode
+  :diminish
   :hook (after-init . global-flycheck-mode)
   :config
   (setq flycheck-emacs-lisp-load-path 'inherit)

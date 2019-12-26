@@ -69,7 +69,7 @@
         dumb-jump-selector 'ivy))
 
 (use-package editorconfig
-  :diminish editorconfig-mode
+  :diminish
   :hook (after-init . editorconfig-mode))
 
 ;; Run commands quickly
@@ -100,7 +100,7 @@
 ;; Batch Mode eXtras
 (use-package bmx-mode
   :after company
-  :diminish bmx-mode
+  :diminish
   :hook (after-init . bmx-mode-setup-defaults))
 
 ;; Fish shell
