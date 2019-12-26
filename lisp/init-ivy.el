@@ -235,6 +235,45 @@
           (swiper-isearch ivy-text))))
     (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
 
+    ;; Prettify `counsel-imenu'
+    (defun my-counsel-imenu-get-candidates-from (alist &optional prefix)
+      "Create a list of (key . value) from ALIST.
+PREFIX is used to create the key."
+      (cl-mapcan
+       (lambda (elm)
+         (if (imenu--subalist-p elm)
+             (counsel-imenu-get-candidates-from
+              (cl-loop for (e . v) in (cdr elm) collect
+                       (cons e (if (integerp v) (copy-marker v) v)))
+              ;; pass the prefix to next recursive call
+              (concat prefix (if prefix ".") (car elm)))
+           (let ((key (concat
+                       (when prefix
+                         (if (display-graphic-p)
+                             (progn
+                               (pcase prefix
+                                 ("Packages"
+                                  (setq prefix (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
+                                 ((or "Types" "Type")
+                                  (setq prefix (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05)))
+                                 ((or "Functions" "Function")
+                                  (setq prefix (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple)))
+                                 ((or "Variables" "Variable")
+                                  (setq prefix (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue)))
+                                 ("Class"
+                                  (setq prefix (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))))
+                               (concat prefix "\t"))
+                           (concat
+                            (propertize prefix 'face 'ivy-grep-info)
+                            ": ")))
+                       (car elm))))
+             (list (cons key
+                         (cons key (if (overlayp (cdr elm))
+                                       (overlay-start (cdr elm))
+                                     (cdr elm))))))))
+       alist))
+    (advice-add #'counsel-imenu-get-candidates-from :override #'my-counsel-imenu-get-candidates-from)
+
     ;; Integration with `projectile'
     (with-eval-after-load 'projectile
       (setq projectile-completion-system 'ivy))
