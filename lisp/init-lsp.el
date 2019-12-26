@@ -93,7 +93,7 @@
             ([remap xref-find-references] . lsp-ui-peek-find-references))
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
-                 lsp-ui-doc-delay 0.5
+                 lsp-ui-doc-delay 0.2
                  lsp-ui-doc-include-signature t
                  lsp-ui-doc-position 'at-point
                  lsp-ui-doc-border (face-foreground 'default)
@@ -391,12 +391,15 @@
          (defun ,intern-pre (info)
            (let ((filename (or (->> info caddr (alist-get :file))
                                buffer-file-name)))
+             (unless filename
+               (user-error "LSP:: specify `:file' property to enable."))
+
              (setq buffer-file-name filename)
              (pcase centaur-lsp
                ('eglot
                 (and (fboundp 'eglot) (eglot)))
                ('lsp-mode
-                (and (fboundp 'lsp)
+                (and (fboundp 'lsp-deferred)
                      ;; `lsp-auto-guess-root' MUST be non-nil.
                      (setq lsp-buffer-uri (lsp--path-to-uri filename))
                      (lsp-deferred))))))
