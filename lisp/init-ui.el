@@ -70,9 +70,6 @@
         :functions doom-themes-hide-modeline
         :init (centaur-load-theme centaur-theme)
         :config
-        ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
-        (set-face-foreground 'mode-line (face-foreground 'default))
-
         ;; Make swiper match clearer
 	    (with-eval-after-load 'swiper
 	      (set-face-background 'swiper-background-match-face-1 "SlateGray1"))
