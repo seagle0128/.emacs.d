@@ -194,6 +194,8 @@ Same as `replace-string C-q C-m RET RET'."
   "Read articles with better views."
   (when (fboundp 'olivetti-mode)
     (olivetti-mode t))
+  (when (fboundp 'mixed-pitch-mode)
+    (mixed-pitch-mode t))
   (text-scale-set +2))
 
 ;; Pakcage archives

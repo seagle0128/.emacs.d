@@ -330,7 +330,7 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
-;; Show native line numbers if possible, otherwise use linum
+;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
@@ -359,6 +359,10 @@
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
+
+;; Use fixed pitch where it's sensible
+(use-package mixed-pitch
+  :diminish)
 
 (when sys/macp
   ;; Render thinner fonts
