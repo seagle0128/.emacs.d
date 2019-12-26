@@ -85,9 +85,9 @@
 (use-package plantuml-mode)
 (use-package powershell)
 (use-package rmsbolt)                   ; A compiler output viewer
+(use-package scala-mode)
 (use-package swift-mode)
 (use-package vimrc-mode)
-(use-package scala-mode)
 
 (use-package nxml-mode
   :ensure nil

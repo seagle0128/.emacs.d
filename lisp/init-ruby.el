@@ -49,7 +49,8 @@
   ;; Rails
   (use-package projectile-rails
     :diminish projectile-rails-mode
-    :hook (projectile-mode . projectile-rails-global-mode))
+    :after projectile
+    :hook (after-init . projectile-rails-global-mode))
 
   ;; Rubocop
   ;; Install: gem install rubocop
