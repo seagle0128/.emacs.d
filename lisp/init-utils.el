@@ -219,12 +219,14 @@
 ;; Epub reader
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
-  :preface
-  (defun my-nov-setup ()
-    (visual-line-mode 1)
-    (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5)
-    (if (fboundp 'olivetti-mode) (olivetti-mode 1)))
+  :functions centaur-read-mode
   :hook (nov-mode . my-nov-setup)
+  :init
+  (defun my-nov-setup ()
+    "Setup `nov-mode' for better reading experience."
+    (visual-line-mode 1)
+    (centaur-read-mode)
+    (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5))
   :config
   ;; FIXME: errors while opening `nov' files with Unicode characters
   ;; @see https://github.com/wasamasa/nov.el/issues/63
