@@ -55,6 +55,7 @@
                               (string-suffix-p ".elc" bname)
                               (string-suffix-p ".gz" bname)
                               (string-suffix-p ".zip" bname)
+                              (string-prefix-p ".newsrc" bname)
                               (string-prefix-p "magit" bname)
                               (string-prefix-p "Pfuture-Callback" bname)
                               (string-match-p ".elfeed" bname)
