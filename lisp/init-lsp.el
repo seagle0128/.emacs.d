@@ -325,7 +325,7 @@
                 :icon (format "%s " (all-the-icons-faicon "link" :height 0.9 :v-adjust -0.05 :face 'font-lock-doc-face))
                 :extensions (icon-link))
                (treemacs-create-icon
-                :icon (format "%s " (all-the-icons-faicon "refresh" :height 0.9 :v-adjust -0.05 :face 'font-lock-doc-face))
+                :icon (format "%s " (all-the-icons-faicon "refresh" :height 0.9 :v-adjust -0.05 :face 'font-lock-doc-face))
                 :extensions (icon-refresh))
                (treemacs-create-icon
                 :icon (format "%s " (all-the-icons-faicon "chain-broken" :height 0.9 :v-adjust -0.05 :face 'font-lock-doc-face))
@@ -343,7 +343,7 @@
                 :icon (format "%s " (all-the-icons-octicon "file-directory" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-lblue))
                 :extensions (packagefolder))
                (treemacs-create-icon
-                :icon (format "%s " (all-the-icons-octicon "package" :height 0.9 :v-adjust 0.0 :face 'font-lock-doc-face))
+                :icon (format "%s " (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'font-lock-doc-face))
                 :extensions (package))
                (treemacs-create-icon
                 :icon (format "%s " (all-the-icons-octicon "repo" :height 1.0 :v-adjust -0.1 :face 'all-the-icons-blue))
