@@ -145,6 +145,26 @@
       (expand-file-name "banner.txt" user-emacs-directory))
     (advice-add #'dashboard-get-banner-path :override #'my-banner-path)
 
+    ;; WORKAROUND: fix differnct background color of the banner image.
+    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/203
+    (defun my-dashboard-insert-image-banner (banner)
+      "Display an image BANNER."
+      (when (file-exists-p banner)
+        (let* ((title dashboard-banner-logo-title)
+               (spec (create-image banner))
+               (size (image-size spec))
+               (width (car size))
+               (left-margin (max 0 (floor (- dashboard-banner-length width) 2))))
+          (goto-char (point-min))
+          (insert "\n")
+          (insert (make-string left-margin ?\ ))
+          (insert-image spec)
+          (insert "\n\n")
+          (when title
+            (dashboard-center-line title)
+            (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
+    (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
+
     (defvar dashboard-recover-layout-p nil
       "Wether recovers the layout.")
 
