@@ -47,12 +47,12 @@
                       "golang.org/x/tools/cmd/gorename"
 
                       ;; "github.com/rogpeppe/godef"
+                      ;; "github.com/golangci/golangci-lint/cmd/golangci-lint"
                       "github.com/go-delve/delve/cmd/dlv"
                       "github.com/josharian/impl"
                       "github.com/cweill/gotests/..."
                       "github.com/fatih/gomodifytags"
-                      "github.com/davidrjenni/reftools/cmd/fillstruct"
-                      "github.com/golangci/golangci-lint/cmd/golangci-lint")
+                      "github.com/davidrjenni/reftools/cmd/fillstruct")
     "All necessary go tools.")
 
   ;; Do not use the -u flag for gopls, as it will update the dependencies to incompatible versions
