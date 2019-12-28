@@ -157,8 +157,8 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
-(defcustom centaur-benchmark nil
-  "Enable the init benchmark or not."
+(defcustom centaur-benchmark-init nil
+  "Enable the initialization benchmark or not."
   :group 'centaur
   :type 'boolean)
 

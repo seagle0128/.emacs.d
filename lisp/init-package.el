@@ -75,7 +75,7 @@
 (use-package gnu-elpa-keyring-update)
 
 ;; Initialization benchmark
-(when centaur-benchmark
+(when centaur-benchmark-init
   (use-package benchmark-init
     :defines swiper-font-lock-exclude
     :commands (benchmark-init/activate)
