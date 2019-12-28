@@ -215,6 +215,13 @@ prepended to the element after the #+HEADER: tag."
   (use-package toc-org
     :hook (org-mode . toc-org-mode))
 
+  ;; Export text/html MIME emails
+  (use-package org-mime
+    :bind (:map message-mode-map
+           ("C-c M-o" . org-mime-htmlize)
+           :map org-mode-map
+           ("C-c M-o" . org-mime-org-buffer-htmlize)))
+
   ;; Preview
   (use-package org-preview-html
     :diminish)
