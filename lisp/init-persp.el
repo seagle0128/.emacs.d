@@ -44,28 +44,26 @@
               persp-nil-name "default"
               persp-set-last-persp-for-new-frames nil
               persp-kill-foreign-buffer-behaviour 'kill
-              persp-auto-resume-time (if centaur-dashboard 0 1.0)
-              persp-common-buffer-filter-functions
-              (list #'(lambda (b)
-                        "Ignore temporary buffers."
-                        (let ((bname (file-name-nondirectory (buffer-name b))))
-                          (or (string-prefix-p " " bname)
-                              (and (string-prefix-p "*" bname)
-                                   (not (string-equal "*scratch*" bname)))
-                              (string-suffix-p ".elc" bname)
-                              (string-suffix-p ".gz" bname)
-                              (string-suffix-p ".zip" bname)
-                              (string-prefix-p ".newsrc" bname)
-                              (string-prefix-p "magit" bname)
-                              (string-prefix-p "Pfuture-Callback" bname)
-                              (string-match-p ".elfeed" bname)
-                              (eq (buffer-local-value 'major-mode b) 'erc-mode)
-                              (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
-                              (eq (buffer-local-value 'major-mode b) 'nov-mode)
-                              (eq (buffer-local-value 'major-mode b) 'vterm-mode))))))
+              persp-auto-resume-time (if centaur-dashboard 0 1.0))
   :config
+  (add-to-list 'persp-common-buffer-filter-functions
+               (lambda (b)
+                 "Ignore temporary buffers."
+                 (let ((bname (file-name-nondirectory (buffer-name b))))
+                   (or (and (string-prefix-p "*" bname)
+                            (not (string-equal "*scratch*" bname)))
+                       (string-match-p "\\.elc\\|\\.tar\\|\\.gz\\|\\.zip\\'" bname)
+                       (string-prefix-p ".newsrc" bname)
+                       (string-prefix-p "magit" bname)
+                       (string-prefix-p "Pfuture-Callback" bname)
+                       (eq (buffer-local-value 'major-mode b) 'erc-mode)
+                       (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
+                       (eq (buffer-local-value 'major-mode b) 'nov-mode)
+                       (eq (buffer-local-value 'major-mode b) 'vterm-mode)))))
+
   ;; Don't save persp configs in `recentf'
-  (push persp-save-dir recentf-exclude)
+  (with-eval-after-load 'recentf
+    (push persp-save-dir recentf-exclude))
 
   ;; Ivy Integraticon
   (with-eval-after-load 'ivy
