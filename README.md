@@ -173,11 +173,13 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
 1. How to display icons correctly in `Centaur Emacs`?
 
-    `all-the-icons` are necessary. Run `M-x all-the-icons-install-fonts` to
-    install the resource fonts. On Windows, the fonts should be installed manually.
-    `all-the-icons` only support GUI. If you don't like color icons,
-    `(setq all-the-icons-color-icons nil)` to disable it. Please refer to
-    [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for details.
+    [all-the-icons](https://github.com/domtronn/all-the-icons.el) are necessary.
+    Run `M-x all-the-icons-install-fonts` to install the resource fonts. On
+    Windows, the fonts should be installed manually. `all-the-icons` only
+    support GUI. If you don't like color icons, `(setq all-the-icons-color-icons
+    nil)` to disable it. Please refer to
+    [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for
+    details.
 
     If the icons are not displayed correctly although `all-the-icons` fonts are
     installed correctly, please install the
@@ -185,6 +187,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
     [Symbola](http://users.teilar.gr/~g1951d/Symbola.zip). This issue usually occurs on
     Windows. Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121)
     for more details.
+
+    If you are using [cnfonts](https://github.com/tumashu/cnfonts), it will
+    conflict with `all-the-icons`. The workaround is
+    [here](https://github.com/seagle0128/doom-modeline/issues/278#issuecomment-569510336).
 
 1. The packages cannot be installed, what should I do?
 
