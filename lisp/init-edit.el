@@ -64,7 +64,7 @@
   :bind (("<C-return>" . rect-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
-    :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key "q")
+    :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
    ("Move"
     (("h" backward-char "←")
      ("j" next-line "↓")
