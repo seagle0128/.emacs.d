@@ -55,7 +55,7 @@
     (use-package forge :demand))
 
   ;; Show TODOs in magit
-  (when (and emacs/>=25.2p (not sys/win32p))
+  (when emacs/>=25.2p
     (use-package magit-todos
       :init
       (setq magit-todos-nice (if (executable-find "nice") t nil))
