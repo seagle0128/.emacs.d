@@ -353,9 +353,7 @@
 
    ;; Microsoft python-language-server support
    (use-package lsp-python-ms
-     :hook (python-mode . (lambda ()
-                            (require 'lsp-python-ms)
-                            (lsp-deferred)))
+     :hook (python-mode . (lambda () (require 'lsp-python-ms)))
      :init
      (when (executable-find "python3")
        (setq lsp-python-ms-python-executable-cmd "python3")))
@@ -363,9 +361,7 @@
    ;; C/C++/Objective-C support
    (use-package ccls
      :defines projectile-project-root-files-top-down-recurring
-     :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
-                                                      (require 'ccls)
-                                                      (lsp-deferred)))
+     :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls)))
      :config
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
@@ -375,9 +371,7 @@
 
    ;; Java support
    (use-package lsp-java
-     :hook (java-mode . (lambda ()
-                          (require 'lsp-java)
-                          (lsp-deferred))))))
+     :hook (java-mode . (lambda () (require 'lsp-java))))))
 
 (when centaur-lsp
   ;; Enable LSP in org babel
