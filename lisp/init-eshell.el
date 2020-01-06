@@ -37,11 +37,17 @@
   :functions eshell/alias
   :hook (eshell-mode . (lambda ()
                          (bind-key "C-l" 'eshell/clear eshell-mode-map)
+                         ;; Aliases
                          (eshell/alias "f" "find-file $1")
                          (eshell/alias "fo" "find-file-other-window $1")
                          (eshell/alias "d" "dired $1")
+                         (eshell/alias "l" "ls -lFh")
                          (eshell/alias "ll" "ls -l")
-                         (eshell/alias "la" "ls -al")))
+                         (eshell/alias "la" "ls -lAFh")
+                         (eshell/alias "lr" "ls -tRFh")
+                         (eshell/alias "lrt" "ls -lFcrt")
+                         (eshell/alias "lsa" "ls -lah")
+                         (eshell/alias "lt" "ls -ltFh")))
   :config
   (with-no-warnings
     (unless (fboundp 'flatten-tree)
