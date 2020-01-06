@@ -63,7 +63,11 @@
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil)
+        company-dabbrev-downcase nil
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
+        company-backends '(company-capf)
+        company-frontends '(company-pseudo-tooltip-frontend
+                            company-echo-metadata-frontend))
 
   ;; Better sorting and filtering
   (use-package company-prescient
