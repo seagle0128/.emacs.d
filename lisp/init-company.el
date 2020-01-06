@@ -152,7 +152,7 @@
                 (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
                 (Operator . ,(all-the-icons-material "control_point" :height 0.85 :v-adjust -0.2))
                 (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.05))
-                (Template . ,(all-the-icons-material "format_align_center" :height 0.85 :v-adjust -0.2)))
+                (Template . ,(all-the-icons-material "format_align_left" :height 0.85 :v-adjust -0.2)))
               company-box-icons-alist 'company-box-icons-all-the-icons))))
 
   ;; Popup documentation for completion candidates
