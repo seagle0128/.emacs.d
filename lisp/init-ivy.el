@@ -137,7 +137,7 @@
 
   ;; Use the faster search tool: ripgrep (`rg')
   (when (executable-find "rg")
-    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' %s")
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")
     (when (and sys/macp (executable-find "gls"))
       (setq counsel-find-file-occur-use-find nil
             counsel-find-file-occur-cmd
