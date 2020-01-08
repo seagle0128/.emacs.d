@@ -141,7 +141,7 @@
          (concat (propertize " " 'display `(space :align-to 2)) str))
        cands
        "\n"))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+    ;; (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
