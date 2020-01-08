@@ -35,9 +35,9 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :bind (("C-s" . swiper-isearch)
-         ("C-r" . swiper-isearch-backward)
-         ("s-f" . swiper)
+  :bind (("C-s"   . swiper-isearch)
+         ("C-r"   . swiper-isearch-backward)
+         ("s-f"   . swiper)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
@@ -53,10 +53,12 @@
          ([remap insert-char] . counsel-unicode-char)
 
          ("C-x C-r" . counsel-buffer-or-recentf)
-         ("C-x j" . counsel-mark-ring)
-         ("C-h F" . counsel-faces)
+         ("C-x j"   . counsel-mark-ring)
+         ("C-h F"   . counsel-faces)
 
+         ("C-c B" . counsel-bookmarked-directory)
          ("C-c L" . counsel-load-library)
+         ("C-c O" . counsel-find-file-extern)
          ("C-c P" . counsel-package)
          ("C-c f" . counsel-find-library)
          ("C-c g" . counsel-grep)
@@ -67,8 +69,10 @@
          ("C-c r" . counsel-rg)
          ("C-c z" . counsel-fzf)
 
+         ("C-c c B" . counsel-bookmarked-directory)
          ("C-c c F" . counsel-faces)
          ("C-c c L" . counsel-load-library)
+         ("C-c c O" . counsel-find-file-extern)
          ("C-c c P" . counsel-package)
          ("C-c c a" . counsel-apropos)
          ("C-c c e" . counsel-colors-emacs)
@@ -86,6 +90,7 @@
          ("C-c c t" . counsel-load-theme)
          ("C-c c u" . counsel-unicode-char)
          ("C-c c w" . counsel-colors-web)
+         ("C-c c v" . counsel-set-variable)
          ("C-c c z" . counsel-fzf)
 
          :map ivy-minibuffer-map
@@ -327,7 +332,8 @@ This is for use in `ivy-re-builders-alist'."
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
-  (use-package ivy-hydra)
+  (use-package ivy-hydra
+    :init (setq ivy-read-action-function #'ivy-hydra-read-action))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -371,7 +377,7 @@ This is for use in `ivy-re-builders-alist'."
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-           ("C-c c v" . counsel-tramp)))
+           ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
