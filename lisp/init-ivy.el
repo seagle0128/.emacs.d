@@ -54,7 +54,7 @@
 
          ("C-x C-r" . counsel-buffer-or-recentf)
          ("C-x j" . counsel-mark-ring)
-         ("C-h F" . counsel-describe-face)
+         ("C-h F" . counsel-faces)
 
          ("C-c L" . counsel-load-library)
          ("C-c P" . counsel-package)
@@ -113,23 +113,6 @@
         ivy-on-del-error-function nil
         ivy-initial-inputs-alist nil)
 
-  (with-no-warnings
-    (defun my-ivy-format-function-arrow (cands)
-      "Transform CANDS into a string for minibuffer."
-      (ivy--format-function-generic
-       (lambda (str)
-         (concat (if (display-graphic-p)
-                     (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
-                   ">")
-                 (propertize " " 'display `(space :align-to 2))
-                 (ivy--add-face str 'ivy-current-match)))
-       (lambda (str)
-         (concat (propertize " " 'display `(space :align-to 2)) str))
-       cands
-       "\n"))
-    (setq ivy-format-functions-alist '((counsel-describe-face . counsel--faces-format-function)
-                                       (t . my-ivy-format-function-arrow))))
-
   (setq swiper-action-recenter t)
 
   (setq counsel-find-file-at-point t
@@ -144,6 +127,22 @@
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
   :config
   (with-no-warnings
+    ;; Display an arrow with the selected item
+    (defun my-ivy-format-function-arrow (cands)
+      "Transform CANDS into a string for minibuffer."
+      (ivy--format-function-generic
+       (lambda (str)
+         (concat (if (display-graphic-p)
+                     (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
+                   ">")
+                 (propertize " " 'display `(space :align-to 2))
+                 (ivy--add-face str 'ivy-current-match)))
+       (lambda (str)
+         (concat (propertize " " 'display `(space :align-to 2)) str))
+       cands
+       "\n"))
+    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
     (defvar my-ivy-fly-commands
