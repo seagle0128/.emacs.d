@@ -8,7 +8,7 @@
 ;; (setq centaur-full-name "user name")           ; User full name
 ;; (setq centaur-mail-address "user@email.com")   ; Email address
 ;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
-;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease, tencent or tuna
+;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, melpa-mirror, emacs-china, netease, ustsc, tencent or tuna
 ;; (setq centaur-theme 'light)                    ; Color theme: default, classic, colorful, dark, light, day or night
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil

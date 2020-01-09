@@ -75,6 +75,9 @@
       ,(cons 'netease
              `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
                ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
+      ,(cons 'ustsc
+             `(,(cons "gnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/gnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.ustc.edu.cn/elpa/melpa/"))))
       ,(cons 'tencent
              `(,(cons "gnu"   (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))
                ,(cons "melpa" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))))
