@@ -190,8 +190,7 @@
 (when (display-graphic-p)
   ;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
   (when (and sys/mac-cocoa-p emacs/>=26p)
-    (add-hook 'window-setup-hook (lambda ()
-                                   (setq ns-use-native-fullscreen nil))))
+    (add-hook 'window-setup-hook (lambda () (setq ns-use-native-fullscreen nil))))
 
   (bind-keys ("C-<f11>" . toggle-frame-fullscreen)
              ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS

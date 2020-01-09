@@ -81,6 +81,7 @@
 (use-package csharp-mode)
 (use-package csv-mode)
 (use-package dockerfile-mode)
+(use-package julia-mode)
 (use-package lua-mode)
 (use-package plantuml-mode)
 (use-package powershell)

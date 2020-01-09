@@ -371,6 +371,10 @@
                        ".ccls")
                      projectile-project-root-files-top-down-recurring))))
 
+   ;; Julia support
+   (use-package lsp-julia
+     :hook (julia-mode . (lambda () (require 'lsp-julia))))
+
    ;; Java support
    (use-package lsp-java
      :hook (java-mode . (lambda () (require 'lsp-java))))))
