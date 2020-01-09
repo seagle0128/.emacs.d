@@ -35,7 +35,7 @@ install:
 script:
   - echo "Attempting startup..."
   - ${EMACS:=emacs} -nw --batch --eval
-    '(let ((debug-on-error t)
+    '(let ((debug-on-error (>=  emacs-major-version 26))
            (url-show-status nil)
            (user-emacs-directory default-directory)
            (early-init-file (expand-file-name "early-init.el"))
