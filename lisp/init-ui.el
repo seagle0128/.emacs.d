@@ -59,9 +59,8 @@
 (setq frame-inhibit-implied-resize t)
 
 ;; Menu/Tool/Scroll bars
-(unless emacs/>=27p        ; Move to early init-file in 27
-  (unless sys/mac-x-p
-    (push '(menu-bar-lines . 0) default-frame-alist))
+(unless emacs/>=27p
+  (push '(menu-bar-lines . 0) default-frame-alist)
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
