@@ -244,6 +244,16 @@
                              (text-scale-set 0))))
   :init (setq olivetti-body-width 0.618))
 
+;; Edit text for browsers with GhostText or AtomicChrome extension
+(use-package atomic-chrome
+  :hook ((after-init . atomic-chrome-start-server)
+         (atomic-chrome-edit-mode . delete-other-windows))
+  :init (setq atomic-chrome-buffer-open-style 'frame)
+  :config
+  (if (fboundp 'gfm-mode)
+      (setq atomic-chrome-url-major-mode-alist
+            '(("github\\.com" . gfm-mode)))))
+
 ;; Music player
 (use-package bongo
   :functions (bongo-add-dired-files
