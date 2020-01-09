@@ -134,7 +134,7 @@
 
 (use-package simple
   :ensure nil
-  :hook ((window-setup . size-indication-mode)
+  :hook ((after-init . size-indication-mode)
          ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
   :init
   (setq column-number-mode t

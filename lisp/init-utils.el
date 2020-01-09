@@ -259,7 +259,7 @@
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
-  :hook ((after-init . atomic-chrome-start-server)
+  :hook ((server-mode . atomic-chrome-start-server)
          (atomic-chrome-edit-mode . delete-other-windows))
   :init (setq atomic-chrome-buffer-open-style 'frame)
   :config
