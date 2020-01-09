@@ -209,8 +209,9 @@
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
-(use-package minions
-  :hook (doom-modeline-mode . minions-mode))
+(when emacs/>=25.2p
+  (use-package minions
+    :hook (doom-modeline-mode . minions-mode)))
 
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
