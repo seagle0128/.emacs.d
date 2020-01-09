@@ -55,6 +55,9 @@
                 (set-frame-parameter nil 'ns-appearance bg)
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
+;; Inhibit resizing frame
+(setq frame-inhibit-implied-resize t)
+
 ;; Menu/Tool/Scroll bars
 (unless emacs/>=27p        ; Move to early init-file in 27
   (unless sys/mac-x-p

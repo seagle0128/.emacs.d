@@ -50,6 +50,10 @@
   (and (display-graphic-p) sys/macp)
   "Are we running under X on a Mac system?")
 
+(defconst sys/mac-cocoa-p
+  (featurep 'cocoa)
+  "Are we running with Cocoa on a Mac system?")
+
 (defconst sys/linux-x-p
   (and (display-graphic-p) sys/linuxp)
   "Are we running under X on a GNU/Linux system?")

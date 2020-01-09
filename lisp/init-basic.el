@@ -1,4 +1,4 @@
-;; init-base.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; init-basic.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2020 Vincent Zhang
 
@@ -42,8 +42,8 @@
     (car (car (cdr x)))))
 
 ;; Personal information
-(setq user-full-name centaur-full-name)
-(setq user-mail-address centaur-mail-address)
+(setq user-full-name centaur-full-name
+      user-mail-address centaur-mail-address)
 
 ;; Key Modifiers
 (with-no-warnings
@@ -132,13 +132,6 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
-(use-package time
-  :ensure nil
-  :unless (display-graphic-p)
-  :hook (after-init . display-time-mode)
-  :init (setq display-time-24hr-format t
-              display-time-day-and-date t))
-
 (use-package simple
   :ensure nil
   :hook ((window-setup . size-indication-mode)
@@ -158,6 +151,13 @@
     (setq show-trailing-whitespace t)
     (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
 
+(use-package time
+  :ensure nil
+  :unless (display-graphic-p)
+  :hook (after-init . display-time-mode)
+  :init (setq display-time-24hr-format t
+              display-time-day-and-date t))
+
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
 (when (display-graphic-p)
@@ -168,22 +168,37 @@
       scroll-conservatively 100000)
 
 ;; Misc
-(setq-default fill-column 80)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq-default major-mode 'text-mode
+              fill-column 80
+              tab-width 4
+              indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
+
 (setq visible-bell t
-      inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
+      inhibit-compacting-font-caches t  ; Don’t compact font caches during GC.
+      delete-by-moving-to-trash t       ; Deleting files go to OS's trash folder
+      make-backup-files nil             ; Forbide to make backup files
+      auto-save-default nil             ; Disable auto save
+
+      uniquify-buffer-name-style 'post-forward-angle-brackets ; Show path if names are same
+      adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
+      adaptive-fill-first-line-regexp "^* *$"
+      sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
+      sentence-end-double-space nil)
 
 ;; Fullscreen
-;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
-(when (and sys/mac-x-p emacs/>=26p)
-  (add-hook 'window-setup-hook (lambda ()
-                                 (setq ns-use-native-fullscreen nil))))
-(bind-keys ("C-<f11>" . toggle-frame-fullscreen)
-           ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
-           ("S-s-<return>" . toggle-frame-fullscreen)
-           ("M-S-<return>" . toggle-frame-fullscreen))
+(when (display-graphic-p)
+  ;; WORKAROUND: To address blank screen issue with child-frame in fullscreen
+  (when (and sys/mac-cocoa-p emacs/>=26p)
+    (add-hook 'window-setup-hook (lambda ()
+                                   (setq ns-use-native-fullscreen nil))))
 
-(provide 'init-base)
+  (bind-keys ("C-<f11>" . toggle-frame-fullscreen)
+             ("C-s-f" . toggle-frame-fullscreen) ; Compatible with macOS
+             ("S-s-<return>" . toggle-frame-fullscreen)
+             ("M-S-<return>" . toggle-frame-fullscreen)))
+
+(provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-base.el ends here
+;;; init-basic.el ends here
