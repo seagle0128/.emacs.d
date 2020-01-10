@@ -295,21 +295,16 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish
-  :defines recentf-exclude
   :hook (after-init . global-undo-tree-mode)
   :init
   (setq undo-tree-visualizer-timestamps t
         undo-tree-enable-undo-in-region nil
-        undo-tree-auto-save-history nil
-        undo-tree-history-directory-alist
-        `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
+        undo-tree-auto-save-history nil)
 
   ;; WORKAROUND:  keep the diff window
   (with-no-warnings
     (make-variable-buffer-local 'undo-tree-visualizer-diff)
-    (setq-default undo-tree-visualizer-diff t))
-  :config (dolist (dir undo-tree-history-directory-alist)
-            (push (expand-file-name (cdr dir)) recentf-exclude)))
+    (setq-default undo-tree-visualizer-diff t)))
 
 ;; Goto last change
 (use-package goto-chg

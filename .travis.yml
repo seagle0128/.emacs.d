@@ -37,9 +37,8 @@ script:
   - ${EMACS:=emacs} -nw --batch --eval
     '(let ((debug-on-error (>=  emacs-major-version 26))
            (url-show-status nil)
-           (user-emacs-directory default-directory)
-           (early-init-file (expand-file-name "early-init.el"))
-           (user-init-file (expand-file-name "init.el"))
+           (early-init-file (locate-user-emacs-file "early-init.el"))
+           (user-init-file (locate-user-emacs-file "init.el"))
            (load-path (delq default-directory load-path)))
     (when (>= emacs-major-version 27)
       (load-file early-init-file))
