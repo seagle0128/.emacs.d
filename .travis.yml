@@ -43,7 +43,7 @@ script:
     (when (>= emacs-major-version 27)
       (load-file early-init-file))
     (load-file user-init-file)
-    (when (>= emacs-major-version 30)
+    (when (>= emacs-major-version 26)
       (run-hooks (quote after-init-hook))
       (run-hooks (quote emacs-startup-hook))))'
 
