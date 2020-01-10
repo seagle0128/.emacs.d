@@ -336,6 +336,7 @@ This is for use in `ivy-re-builders-alist'."
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
+    :commands ivy-hydra-read-action
     :init (setq ivy-read-action-function #'ivy-hydra-read-action))
 
   ;; Ivy integration for Projectile
