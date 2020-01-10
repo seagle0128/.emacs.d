@@ -35,7 +35,7 @@ install:
 script:
   - echo "Attempting startup..."
   - ${EMACS:=emacs} -nw --batch --eval
-    '(let ((debug-on-error (>=  emacs-major-version 26))
+    '(let ((debug-on-error t)
            (url-show-status nil)
            (early-init-file (locate-user-emacs-file "early-init.el"))
            (user-init-file (locate-user-emacs-file "init.el"))
@@ -43,10 +43,9 @@ script:
     (when (>= emacs-major-version 27)
       (load-file early-init-file))
     (load-file user-init-file)
-    (when (>= emacs-major-version 26)
-      (run-hooks (quote after-init-hook))
-      (run-hooks (quote emacs-startup-hook))
-      (run-hooks (quote window-setup-hook))))'
+    (run-hooks (quote after-init-hook))
+    (run-hooks (quote emacs-startup-hook))
+    (run-hooks (quote window-setup-hook)))'
 
 after_success:
   - echo "Startup successful"
