@@ -2,7 +2,7 @@ language: emacs-lisp
 sudo: false
 
 env:
-  - EVM_EMACS=emacs-25.1-travis
+  # - EVM_EMACS=emacs-25.1-travis
   - EVM_EMACS=emacs-25.2-travis
   - EVM_EMACS=emacs-25.3-travis
   - EVM_EMACS=emacs-26.1-travis-linux-xenial
@@ -38,11 +38,10 @@ script:
     '(let ((debug-on-error (>= emacs-major-version 26))
            (url-show-status nil)
            (early-init-file (locate-user-emacs-file "early-init.el"))
-           (user-init-file (locate-user-emacs-file "init.el"))
-           (load-path (delq default-directory load-path)))
+           (user-init-file (locate-user-emacs-file "init.el")))
     (when (>= emacs-major-version 27)
-      (load-file early-init-file))
-    (load-file user-init-file)
+      (load early-init-file))
+    (load user-init-file)
     (run-hooks (quote after-init-hook))
     (run-hooks (quote emacs-startup-hook))
     (run-hooks (quote window-setup-hook)))'
