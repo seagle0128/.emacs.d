@@ -170,7 +170,7 @@ prepended to the element after the #+HEADER: tag."
     :init (setq org-fancy-priorities-list
                 (if (char-displayable-p ?⯀)
                     '("⯀" "⯀" "⯀" "⯀")
-                  '("HIGH" "MIDIUM" "LOW" "OPTIONAL"))))
+                  '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
