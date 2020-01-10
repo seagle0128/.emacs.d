@@ -44,7 +44,7 @@
    (use-package lsp-mode
      :diminish
      :hook (prog-mode . (lambda ()
-                          (unless (member major-mode '(emacs-lisp-mode lisp-mode))
+                          (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
                             (lsp-deferred))))
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point))
