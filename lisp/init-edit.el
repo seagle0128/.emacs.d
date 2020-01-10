@@ -284,8 +284,8 @@
 ;; Windows-scroll commands
 (use-package pager
   :bind (([remap scroll-up-command] . pager-page-down)
-         ([next]   . pager-page-down)
          ([remap scroll-down-command] . pager-page-up)
+         ([next]   . pager-page-down)
          ([prior]  . pager-page-up)
          ([M-up]   . pager-row-up)
          ([M-kp-8] . pager-row-up)

@@ -45,7 +45,8 @@ script:
     (load-file user-init-file)
     (when (>= emacs-major-version 26)
       (run-hooks (quote after-init-hook))
-      (run-hooks (quote emacs-startup-hook))))'
+      (run-hooks (quote emacs-startup-hook))
+      (run-hooks (quote window-setup-hook))))'
 
 after_success:
   - echo "Startup successful"
