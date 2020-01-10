@@ -216,7 +216,7 @@
           (" *undo-tree*" :select t)
           ("*quickrun*" :select t :size 15 :align 'below)
           ("*tldr*" :size 0.4 :align 'below :autoclose t)
-          ("*Youdao Dictionary*" :size 0.3 :align 'below :autoclose t)
+          ("*Youdao Dictionary*" :size 15 :align 'below :autoclose t)
           ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
