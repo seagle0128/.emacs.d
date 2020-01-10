@@ -205,30 +205,26 @@
               (lambda ()
                 (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
-    ;; Improve search experience of `swiper'
+    ;; Improve search experience of `swiper' and `counsel'
     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
     (defun my-swiper-toggle-counsel-rg ()
-      "Toggle `counsel-rg' with the current swiper input."
+      "Toggle `counsel-rg' and `swiper-isearch' with the current input."
       (interactive)
-      (let ((text (replace-regexp-in-string
-                   "\n" ""
-                   (replace-regexp-in-string
-                    "\\\\_<" ""
-                    (replace-regexp-in-string
-                     "\\\\_>" ""
-                     (replace-regexp-in-string "^.*Swiper: " ""
-                                               (thing-at-point 'line t)))))))
-        (ivy-quit-and-run
-          (counsel-rg text default-directory))))
+      (ivy-quit-and-run
+        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+            (counsel-rg ivy-text default-directory)
+          (swiper-isearch ivy-text))))
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
+    (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
     (with-eval-after-load 'rg
       (defun my-swiper-toggle-rg-dwim ()
-        "Toggle `rg-dwim' with the current swiper input."
+        "Toggle `rg-dwim' with the current input."
         (interactive)
-        (ivy-quit-and-run (rg-dwim default-directory)))
+        (ivy-quit-and-run
+          (rg-dwim default-directory)))
       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
-      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim ivy-minibuffer-map))
+      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
 
     (defun my-swiper-toggle-swiper-isearch ()
       "Toggle `swiper' and `swiper-isearch' with the current input."
@@ -238,6 +234,13 @@
             (swiper ivy-text)
           (swiper-isearch ivy-text))))
     (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
+    (defun my-counsel-find-file-toggle-fzf ()
+      "Toggle `counsel-fzf' with the current `counsel-find-file' input."
+      (interactive)
+      (ivy-quit-and-run
+        (counsel-fzf (or ivy-text "") default-directory)))
+    (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
 
     ;; Prettify `counsel-imenu'
     (defun my-counsel-imenu-get-candidates-from (alist &optional prefix)
