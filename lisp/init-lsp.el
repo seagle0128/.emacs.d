@@ -142,11 +142,6 @@
             ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
             ("C-s-." . lsp-ivy-global-workspace-symbol)))
 
-   ;; Origami integration
-   (use-package lsp-origami
-     :after lsp-mode
-     :hook (origami-mode . lsp-origami-mode))
-
    ;; Debug
    (use-package dap-mode
      :diminish
