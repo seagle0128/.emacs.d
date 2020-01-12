@@ -221,7 +221,6 @@
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
           ((" *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.4 :align 'below :autoclose t)
-          (("*lsp-help*" "*lsp session*") :size 0.3 :align 'below :autoclose t)
           (" *Install vterm" :size 0.35 :same t :align 'below)
           (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
@@ -235,6 +234,9 @@
           ((flycheck-error-list-mode flymake-diagnostics-buffer-mode)
            :select t :size 0.3 :align 'below :autoclose t)
 
+          (("*lsp-help*" "*lsp session*") :size 0.3 :align 'below :autoclose t)
+          (dap-server-log-mode :align 'below :autoclose t)
+
           (profiler-report-mode :select t :size 0.5 :align 'below)
           ("*ELP Profiling Restuls*" :select t :size 0.5 :align 'below)
 
@@ -243,6 +245,7 @@
 
           ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :align 'below)
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
+          (gnus-article-mode :select t :size 0.7 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
