@@ -46,15 +46,19 @@
               persp-kill-foreign-buffer-behaviour 'kill
               persp-auto-resume-time (if centaur-dashboard 0 1.0))
   :config
-  (add-to-list 'persp-common-buffer-filter-functions
+  (add-to-list 'persp-filter-save-buffers-functions
+               (lambda (b)
+                 "Ignore dead buffers."
+                 (not (buffer-live-p b))))
+  (add-to-list 'persp-filter-save-buffers-functions
                (lambda (b)
                  "Ignore temporary buffers."
                  (let ((bname (file-name-nondirectory (buffer-name b))))
-                   (or (string-prefix-p "*" bname)
-                       (string-prefix-p ".newsrc" bname)
+                   (or (string-prefix-p ".newsrc" bname)
                        (string-prefix-p "magit" bname)
                        (string-prefix-p "Pfuture-Callback" bname)
                        (string-match-p "\\.elc\\|\\.tar\\|\\.gz\\|\\.zip\\'" bname)
+                       (string-match-p "\\.bin\\|\\.so\\|\\.dll\\|\\.exe\\'" bname)
                        (eq (buffer-local-value 'major-mode b) 'erc-mode)
                        (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
                        (eq (buffer-local-value 'major-mode b) 'nov-mode)
