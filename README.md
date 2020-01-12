@@ -148,7 +148,7 @@ For Example:
 ```
 
 The default package archives is `melpa`. You can change it in `custom.el`, or
-switch manually via `M-x switch-package-archives` anytime.
+set manually via `M-x set-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
 
