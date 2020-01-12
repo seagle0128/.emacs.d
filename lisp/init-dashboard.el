@@ -42,10 +42,6 @@
     :defines persp-special-last-buffer
     :functions (all-the-icons-faicon
                 all-the-icons-material
-                open-custom-file
-                persp-get-buffer-or-null
-                persp-load-state-from-file
-                persp-switch-to-buffer
                 winner-undo
                 widget-forward)
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
@@ -55,8 +51,8 @@
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
        ("H" browse-homepage "homepage" :exit t)
-       ("R" restore-session "recover session" :exit t)
-       ("L" persp-load-state-from-file "list sessions" :exit t)
+       ("R" restore-previous-session "recover session" :exit t)
+       ("L" restore-session "list sessions" :exit t)
        ("S" open-custom-file "settings" :exit t))
       "Section"
       (("}" dashboard-next-section "next")
@@ -78,8 +74,8 @@
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
-           ("R" . restore-session)
-           ("L" . persp-load-state-from-file)
+           ("R" . restore-previous-session)
+           ("L" . restore-session)
            ("S" . open-custom-file)
            ("U" . update-config-and-packages)
            ("q" . quit-dashboard)
@@ -124,7 +120,7 @@
              (,(when (display-graphic-p)
                  (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
               "Restore" "Restore previous session"
-              (lambda (&rest _) (restore-session)))
+              (lambda (&rest _) (restore-previous-session)))
              (,(when (display-graphic-p)
                  (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
               "Settings" "Open custom file"
@@ -192,20 +188,6 @@
       (goto-char (point-min))
       (dashboard-goto-recent-files))
 
-    (defun restore-session ()
-      "Restore last session."
-      (interactive)
-      (when (bound-and-true-p persp-mode)
-        (message "Restoring session...")
-        (condition-case-unless-debug err
-            (persp-load-state-from-file)
-          (error
-           (message "Error: Unable to restore last session -- %s" err)))
-        (quit-window t)
-        (when (persp-get-buffer-or-null persp-special-last-buffer)
-          (persp-switch-to-buffer persp-special-last-buffer))
-        (message "Done")))
-
     (defun quit-dashboard ()
       "Quit dashboard window."
       (interactive)
@@ -214,6 +196,23 @@
                  (bound-and-true-p winner-mode))
         (winner-undo)
         (setq dashboard-recover-layout-p nil)))
+
+    (defun restore-previous-session ()
+      "Restore the previous session."
+      (interactive)
+      (restore-session persp-auto-save-fname))
+
+    (defun restore-session (fname)
+      "Restore the specified session."
+      (interactive (list (read-file-name "Load perspectives from a file: "
+                                         persp-save-dir)))
+      (when (bound-and-true-p persp-mode)
+        (message "Restoring session...")
+        (quit-window t)
+        (condition-case-unless-debug err
+            (persp-load-state-from-file fname)
+          (error "Error: Unable to restore session -- %s" err))
+        (message "Done")))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
