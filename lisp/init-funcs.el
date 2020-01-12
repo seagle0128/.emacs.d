@@ -191,12 +191,22 @@ Same as `replace-string C-q C-m RET RET'."
         (async-byte-recompile-directory dir)
       (byte-recompile-directory dir 0 t))))
 
-(defun centaur-read-mode ()
-  "Read articles with better views."
-  (when (fboundp 'olivetti-mode)
-    (olivetti-mode 1))
-  (when (fboundp 'mixed-pitch-mode)
-    (mixed-pitch-mode 1)))
+(define-minor-mode centaur-read-mode
+  "Minor Mode for better reading experience."
+  :init-value nil
+  :group centaur
+  (if centaur-read-mode
+      (progn
+        (when (fboundp 'olivetti-mode)
+          (olivetti-mode 1))
+        (when (fboundp 'mixed-pitch-mode)
+          (mixed-pitch-mode 1)))
+    (progn
+      (when (fboundp 'olivetti-mode)
+        (olivetti-mode -1))
+      (when (fboundp 'mixed-pitch-mode)
+        (mixed-pitch-mode -1)))))
+(global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage archives
 (defun set-package-archives (archives)
