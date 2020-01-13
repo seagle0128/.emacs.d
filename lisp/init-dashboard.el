@@ -39,7 +39,6 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish (dashboard-mode page-break-lines-mode)
-    :defines persp-special-last-buffer
     :functions (all-the-icons-faicon
                 all-the-icons-material
                 winner-undo
@@ -200,7 +199,8 @@
     (defun restore-previous-session ()
       "Restore the previous session."
       (interactive)
-      (restore-session persp-auto-save-fname))
+      (when (bound-and-true-p persp-mode)
+        (restore-session persp-auto-save-fname)))
 
     (defun restore-session (fname)
       "Restore the specified session."

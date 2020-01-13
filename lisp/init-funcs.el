@@ -135,7 +135,7 @@ Same as `replace-string C-q C-m RET RET'."
 (defun reload-init-file ()
   "Reload Emacs configurations."
   (interactive)
-  (load-file user-init-file))
+  (load user-init-file))
 (defalias 'centaur-reload-init-file #'reload-init-file)
 (global-set-key (kbd "C-c C-l") #'reload-init-file)
 
