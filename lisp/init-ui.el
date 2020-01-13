@@ -56,7 +56,8 @@
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
 ;; Inhibit resizing frame
-(setq frame-inhibit-implied-resize t)
+(setq frame-inhibit-implied-resize t
+      frame-resize-pixelwise t)
 
 ;; Menu/Tool/Scroll bars
 (unless emacs/>=27p

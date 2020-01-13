@@ -85,7 +85,7 @@
     :config
     (with-no-warnings
       (defun my-all-the-icons-dired--display ()
-        "Display the icons of files without colors in a dired buffer."
+        "Display the icons of files in a dired buffer."
         (when dired-subdir-alist
           (let ((inhibit-read-only t))
             (save-excursion
