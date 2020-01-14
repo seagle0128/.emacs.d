@@ -40,8 +40,8 @@
   :functions persp--frame-parameter
   :commands (get-current-persp persp-contain-buffer-p)
   :hook ((after-init . persp-mode)
-         (kill-emacs . persp-save-frame)
-         (persp-mode . persp-load-frame))
+         (persp-mode . persp-load-frame)
+         (kill-emacs . persp-save-frame))
   :init (setq persp-keymap-prefix (kbd "C-x p")
               persp-nil-name "default"
               persp-set-last-persp-for-new-frames nil

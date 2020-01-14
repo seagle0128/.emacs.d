@@ -114,20 +114,20 @@
 
   (use-package go-tag
     :bind (:map go-mode-map
-           ("C-c t" . go-tag-add)
-           ("C-c T" . go-tag-remove))
-    :config (setq go-tag-args (list "-transform" "camelcase")))
+           ("C-c t t" . go-tag-add)
+           ("C-c t T" . go-tag-remove))
+    :init (setq go-tag-args (list "-transform" "camelcase")))
 
   (use-package go-gen-test
     :bind (:map go-mode-map
-           ("C-c C-t" . go-gen-test-dwim)))
+           ("C-c t g" . go-gen-test-dwim)))
 
   (use-package gotest
     :bind (:map go-mode-map
-           ("C-c a" . go-test-current-project)
-           ("C-c m" . go-test-current-file)
-           ("C-c ." . go-test-current-test)
-           ("C-c x" . go-run))))
+           ("C-c t a" . go-test-current-project)
+           ("C-c t m" . go-test-current-file)
+           ("C-c t ." . go-test-current-test)
+           ("C-c t x" . go-run))))
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
