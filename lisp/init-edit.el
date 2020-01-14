@@ -84,7 +84,9 @@
          ("C-c C-z v" . browse-url-of-file))
   :init
   (with-eval-after-load 'dired
-    (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)))
+    (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map))
+  (when (featurep 'xwidget-internal)
+    (bind-key "C-c C-z w" #'xwidget-webkit-browse-url)))
 
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
