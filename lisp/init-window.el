@@ -209,7 +209,7 @@
           ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
           ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
           ("*Calendar*" :select t :size 0.3 :align 'below)
-          (("*shell*" "*eshell*" "*ielm*") :popup t :align 'below)
+          (("*shell*" "*eshell*" "*ielm*") :popup t :size 0.3 :align 'below)
           ("^\\*vc-.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
           ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
           ("\\*ivy-occur .*\\*" :regexp t :select t :size 0.3 :align 'below)

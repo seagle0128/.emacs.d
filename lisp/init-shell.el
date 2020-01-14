@@ -35,36 +35,37 @@
 
 (use-package shell
   :ensure nil
-  :commands comint-send-string comint-simple-send comint-strip-ctrl-m
-  :hook ((shell-mode . ansi-color-for-comint-mode-on)
-         (shell-mode . n-shell-mode-hook)
+  :hook ((shell-mode . my-shell-mode-hook)
          (comint-output-filter-functions . comint-strip-ctrl-m))
   :init
   (setq system-uses-terminfo nil)
 
-  (defun n-shell-simple-send (proc command)
-    "Various PROC COMMANDs pre-processing before sending to shell."
-    (cond
-     ;; Checking for clear command and execute it.
-     ((string-match "^[ \t]*clear[ \t]*$" command)
-      (comint-send-string proc "\n")
-      (erase-buffer))
-     ;; Checking for man command and execute it.
-     ((string-match "^[ \t]*man[ \t]*" command)
-      (comint-send-string proc "\n")
-      (setq command (replace-regexp-in-string "^[ \t]*man[ \t]*" "" command))
-      (setq command (replace-regexp-in-string "[ \t]+$" "" command))
-      ;;(message (format "command %s command" command))
-      (funcall 'man command))
-     ;; Send other commands to the default handler.
-     (t (comint-simple-send proc command))))
+  (with-no-warnings
+    (defun my-shell-simple-send (proc command)
+      "Various PROC COMMANDs pre-processing before sending to shell."
+      (cond
+       ;; Checking for clear command and execute it.
+       ((string-match "^[ \t]*clear[ \t]*$" command)
+        (comint-send-string proc "\n")
+        (erase-buffer))
+       ;; Checking for man command and execute it.
+       ((string-match "^[ \t]*man[ \t]*" command)
+        (comint-send-string proc "\n")
+        (setq command (replace-regexp-in-string "^[ \t]*man[ \t]*" "" command))
+        (setq command (replace-regexp-in-string "[ \t]+$" "" command))
+        ;;(message (format "command %s command" command))
+        (funcall 'man command))
+       ;; Send other commands to the default handler.
+       (t (comint-simple-send proc command))))
 
-  (defun n-shell-mode-hook ()
-    "Shell mode customizations."
-    (local-set-key '[up] 'comint-previous-input)
-    (local-set-key '[down] 'comint-next-input)
-    (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
-    (setq comint-input-sender 'n-shell-simple-send)))
+    (defun my-shell-mode-hook ()
+      "Shell mode customizations."
+      (local-set-key '[up] 'comint-previous-input)
+      (local-set-key '[down] 'comint-next-input)
+      (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
+
+      (ansi-color-for-comint-mode-on)
+      (setq comint-input-sender 'my-shell-simple-send))))
 
 ;; ANSI & XTERM 256 color support
 (use-package xterm-color
@@ -122,12 +123,12 @@
 ;; Shell Pop
 (use-package shell-pop
   :bind ([f9] . shell-pop)
-  :init
-  (setq shell-pop-window-size 35
-        shell-pop-shell-type
-        (cond (sys/win32p '("eshell" "*eshell*" (lambda () (eshell))))
-              ((fboundp 'vterm) '("vterm" "*vterm*" (lambda () (vterm))))
-              (t '("terminal" "*terminal*" (lambda () (term shell-pop-term-shell)))))))
+  :init (setq shell-pop-window-size 30
+              shell-pop-shell-type
+              (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
+                    (sys/win32p '("eshell" "*eshell*" #'eshell))
+                    (t '("terminal" "*terminal*"
+                         (lambda () (term shell-pop-term-shell)))))))
 
 (provide 'init-shell)
 
