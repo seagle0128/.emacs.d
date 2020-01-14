@@ -127,36 +127,36 @@
   (persp-def-buffer-save/load
    :mode 'shell-mode :tag-symbol 'def-shell-buffer
    :mode-restore-function (lambda (_) (shell))
-   :save-vars '(major-mode default-directory))
+   :save-vars '(major-mode default-directory)))
 
-  ;; Projectile integration
-  (use-package persp-mode-projectile-bridge
-    :after projectile
-    :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
-               persp-mode-projectile-bridge-kill-perspectives)
-    :hook ((after-init . persp-mode-projectile-bridge-mode)
-           (persp-mode-projectile-bridge-mode
-            .
-            (lambda ()
-              (if persp-mode-projectile-bridge-mode
-                  (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
-                (persp-mode-projectile-bridge-kill-perspectives)))))
-    :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
-    :config
-    ;; HACK: Allow saving to files
-    (with-no-warnings
-      (defun my-persp-mode-projectile-bridge-add-new-persp (name)
-        (let ((persp (persp-get-by-name name *persp-hash* :nil)))
-          (if (eq :nil persp)
-              (prog1
-                  (setq persp (persp-add-new name))
-                (when persp
-                  (set-persp-parameter 'persp-mode-projectile-bridge t persp)
-                  (persp-add-buffer (projectile-project-buffers)
-                                    persp nil nil)))
-            persp)))
-      (advice-add #'persp-mode-projectile-bridge-add-new-persp
-                  :override #'my-persp-mode-projectile-bridge-add-new-persp))))
+;; Projectile integration
+(use-package persp-mode-projectile-bridge
+  :after projectile persp-mode
+  :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
+             persp-mode-projectile-bridge-kill-perspectives)
+  :hook ((after-init . persp-mode-projectile-bridge-mode)
+         (persp-mode-projectile-bridge-mode
+          .
+          (lambda ()
+            (if persp-mode-projectile-bridge-mode
+                (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
+              (persp-mode-projectile-bridge-kill-perspectives)))))
+  :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
+  :config
+  ;; HACK: Allow saving to files
+  (with-no-warnings
+    (defun my-persp-mode-projectile-bridge-add-new-persp (name)
+      (let ((persp (persp-get-by-name name *persp-hash* :nil)))
+        (if (eq :nil persp)
+            (prog1
+                (setq persp (persp-add-new name))
+              (when persp
+                (set-persp-parameter 'persp-mode-projectile-bridge t persp)
+                (persp-add-buffer (projectile-project-buffers)
+                                  persp nil nil)))
+          persp)))
+    (advice-add #'persp-mode-projectile-bridge-add-new-persp
+                :override #'my-persp-mode-projectile-bridge-add-new-persp)))
 
 (provide 'init-persp)
 
