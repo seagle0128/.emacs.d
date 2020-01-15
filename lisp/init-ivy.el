@@ -362,7 +362,8 @@ This is for use in `ivy-re-builders-alist'."
   (use-package flyspell-correct-ivy
     :after flyspell
     :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
+           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
+    :init (setq flyspell-correct-interface #'flyspell-correct-ivy))
 
   ;; Quick launch apps
   (cond
