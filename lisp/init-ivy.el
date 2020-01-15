@@ -394,7 +394,8 @@ This is for use in `ivy-re-builders-alist'."
       (defun ivy--regex-pinyin (str)
         "The regex builder wrapper to support pinyin."
         (or (pinyin-to-utf8 str)
-            (ivy-prescient-non-fuzzy str)
+            (and (fboundp 'ivy-prescient-non-fuzzy)
+                 (ivy-prescient-non-fuzzy str))
             (ivy--regex-plus str)))
 
       (defun my-pinyinlib-build-regexp-string (str)
