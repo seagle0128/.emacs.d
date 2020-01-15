@@ -44,7 +44,6 @@
 
   ;; Install or update tools
   (defvar go--tools '("golang.org/x/tools/cmd/goimports"
-                      "golang.org/x/tools/cmd/gorename"
 
                       ;; "github.com/rogpeppe/godef"
                       ;; "github.com/golangci/golangci-lint/cmd/golangci-lint"
@@ -95,7 +94,6 @@
   (use-package go-dlv)
   (use-package go-fill-struct)
   (use-package go-impl)
-  (use-package go-rename)
 
   ;; Install: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
   (use-package flycheck-golangci-lint
