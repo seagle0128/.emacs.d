@@ -409,9 +409,8 @@ This is for use in `ivy-re-builders-alist'."
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :init
-    (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-    (counsel-projectile-mode 1))
+    :hook (counsel-mode . counsel-projectile-mode)
+    :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
 
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
