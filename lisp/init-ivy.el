@@ -301,14 +301,14 @@
      'swiper-isearch
      '(("r" my-ivy-switch-to-counsel-rg "rg")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
-       ("s" my-swiper-toggle-swiper-isearch "swiper")
+       ("s" my-ivy-switch-to-swiper "swiper")
        ("a" my-ivy-switch-to-swiper-all "swiper all")))
 
     (ivy-add-actions
      'swiper
      '(("r" my-ivy-switch-to-counsel-rg "rg")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
-       ("s" my-swiper-toggle-swiper-isearch "swiper isearch")
+       ("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
        ("a" my-ivy-switch-to-swiper-all "swiper all")))
 
     (ivy-add-actions
