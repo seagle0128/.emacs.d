@@ -230,7 +230,7 @@ Return a list of strings as the completion candidates."
                 :icon (format "%s " (all-the-icons-material "palette" :height 0.95 :v-adjust -0.15))
                 :extensions (color-palette))
                (treemacs-create-icon
-                :icon (format "%s " (all-the-icons-faicon "square-o" :height 0.95 :v-adjust -0.05))
+                :icon (format "%s " (all-the-icons-faicon "square-o" :height 0.95 :v-adjust -0.15))
                 :extensions (constant))
                (treemacs-create-icon
                 :icon (format "%s " (all-the-icons-faicon "file-text-o" :height 0.95 :v-adjust -0.05))

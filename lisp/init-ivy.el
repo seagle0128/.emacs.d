@@ -349,47 +349,6 @@
      '(("f" my-ivy-switch-to-counsel-find-file "find file")
        ("g" my-ivy-switch-to-counsel-git "git")))
 
-    ;; Prettify `counsel-imenu'
-    (defun my-counsel-imenu-get-candidates-from (alist &optional prefix)
-      "Create a list of (key . value) from ALIST.
-PREFIX is used to create the key."
-      (cl-mapcan
-       (lambda (elm)
-         (if (imenu--subalist-p elm)
-             (counsel-imenu-get-candidates-from
-              (cl-loop for (e . v) in (cdr elm) collect
-                       (cons e (if (integerp v) (copy-marker v) v)))
-              ;; pass the prefix to next recursive call
-              (concat prefix (if prefix ".") (car elm)))
-           (let ((key (concat
-                       (when prefix
-                         (if (display-graphic-p)
-                             (progn
-                               (cond
-                                ((string-match-p "Packages?" prefix)
-                                 (setq prefix (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
-                                ((string-match-p "Types?" prefix)
-                                 (setq prefix (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05)))
-                                ((string-match-p "Functions?" prefix)
-                                 (setq prefix (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple)))
-                                ((string-match-p "\\(Variables?\\)\\|\\(Fields?\\)" prefix)
-                                 (setq prefix (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue)))
-                                ((string-match-p "\\(Class\\)\\|\\(Structs?\\)" prefix)
-                                 (setq prefix (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange)))
-                                ((string-match-p "Lists?" prefix)
-                                 (setq prefix (all-the-icons-material "list" :height 0.9 :v-adjust -0.15))))
-                               (concat prefix "\t"))
-                           (concat
-                            (propertize prefix 'face 'ivy-grep-info)
-                            ": ")))
-                       (car elm))))
-             (list (cons key
-                         (cons key (if (overlayp (cdr elm))
-                                       (overlay-start (cdr elm))
-                                     (cdr elm))))))))
-       alist))
-    (advice-add #'counsel-imenu-get-candidates-from :override #'my-counsel-imenu-get-candidates-from)
-
     ;; Integration with `projectile'
     (with-eval-after-load 'projectile
       (setq projectile-completion-system 'ivy))
@@ -659,6 +618,35 @@ This is for use in `ivy-re-builders-alist'."
       (when (display-graphic-p)
         (all-the-icons-faicon "bolt" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-lblue)))
 
+    (defun ivy-rich-imenu-icon (candidate)
+      "Display the imenu icon in `ivy-rich'."
+      (when (display-graphic-p)
+        (let ((case-fold-search nil))
+          (cond
+           ((string-match-p "Type Parameters?[:)]" candidate)
+            (all-the-icons-faicon "arrows" :height 0.85 :v-adjust -0.05))
+           ((string-match-p "\\(Variables?\\)\\|\\(Fields?\\)\\|\\(Parameters?\\)[:)]" candidate)
+            (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue))
+           ((string-match-p "Constants?[:)]" candidate)
+            (all-the-icons-faicon "square-o" :height 0.95 :v-adjust -0.15))
+           ((string-match-p "Enum\\(erations?\\)?[:)]" candidate)
+            (all-the-icons-material "storage" :height 0.95 :v-adjust -0.2 :face 'all-the-icons-orange))
+           ((string-match-p "References?[:)]" candidate)
+            (all-the-icons-material "collections_bookmark" :height 0.95 :v-adjust -0.2))
+           ((string-match-p "\\(Types?\\)\\|\\(Property\\)[:)]" candidate)
+            (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05))
+           ((string-match-p "\\(Functions?\\)\\|\\(Methods?\\)\\|\\(Constructors?\\)[:)]" candidate)
+            (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple))
+           ((string-match-p "\\(Class\\)\\|\\(Structs?\\)[:)]" candidate)
+            (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))
+           ((string-match-p "Interfaces?[:)]" candidate)
+            (all-the-icons-material "share" :height 0.95 :v-adjust -0.2 :face 'all-the-icons-lblue))
+           ((string-match-p "Modules?[:)]" candidate)
+            (all-the-icons-material "view_module" :height 0.95 :v-adjust -0.15 :face 'all-the-icons-lblue))
+           ((string-match-p "Packages?[:)]" candidate)
+            (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver))
+           (t (all-the-icons-faicon "question-circle-o" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lilver))))))
+
     (when (display-graphic-p)
       (defun my-ivy-rich-bookmark-type (candidate)
         (let ((filename (ivy-rich-bookmark-filename candidate)))
@@ -895,6 +883,11 @@ This is for use in `ivy-re-builders-alist'."
           counsel-minor
           (:columns
            ((ivy-rich-mode-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-imenu
+          (:columns
+           ((ivy-rich-imenu-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           treemacs-projectile

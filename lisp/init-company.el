@@ -130,7 +130,7 @@
         (declare-function all-the-icons-material 'all-the-icons)
         (declare-function all-the-icons-octicon 'all-the-icons)
         (setq company-box-icons-all-the-icons
-              `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.85 :v-adjust -0.2))
+              `((Unknown . ,(all-the-icons-faicon "question-circle-o" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-silver))
                 (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.05))
                 (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
                 (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
@@ -151,7 +151,7 @@
                 (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.85 :v-adjust -0.2))
                 (Folder . ,(all-the-icons-faicon "folder-open" :height 0.85 :v-adjust -0.05))
                 (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
-                (Constant . ,(all-the-icons-faicon "square-o" :height 0.85 :v-adjust -0.05))
+                (Constant . ,(all-the-icons-faicon "square-o" :height 0.85 :v-adjust -0.1))
                 (Struct . ,(all-the-icons-material "settings_input_component" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-orange))
                 (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
                 (Operator . ,(all-the-icons-material "control_point" :height 0.85 :v-adjust -0.2))
