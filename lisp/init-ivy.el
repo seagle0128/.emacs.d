@@ -365,17 +365,19 @@ PREFIX is used to create the key."
                        (when prefix
                          (if (display-graphic-p)
                              (progn
-                               (pcase prefix
-                                 ("Packages"
-                                  (setq prefix (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
-                                 ((or "Types" "Type")
-                                  (setq prefix (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05)))
-                                 ((or "Functions" "Function")
-                                  (setq prefix (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple)))
-                                 ((or "Variables" "Variable")
-                                  (setq prefix (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue)))
-                                 ("Class"
-                                  (setq prefix (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))))
+                               (cond
+                                ((string-match-p "Packages?" prefix)
+                                 (setq prefix (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
+                                ((string-match-p "Types?" prefix)
+                                 (setq prefix (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05)))
+                                ((string-match-p "Functions?" prefix)
+                                 (setq prefix (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple)))
+                                ((string-match-p "\\(Variables?\\)\\|\\(Fields?\\)" prefix)
+                                 (setq prefix (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue)))
+                                ((string-match-p "\\(Class\\)\\|\\(Structs?\\)" prefix)
+                                 (setq prefix (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange)))
+                                ((string-match-p "Lists?" prefix)
+                                 (setq prefix (all-the-icons-material "list" :height 0.9 :v-adjust -0.15))))
                                (concat prefix "\t"))
                            (concat
                             (propertize prefix 'face 'ivy-grep-info)
