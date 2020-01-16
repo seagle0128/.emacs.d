@@ -205,15 +205,53 @@
               (lambda ()
                 (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
+    ;;
     ;; Improve search experience of `swiper' and `counsel'
+    ;;
+    (defun my-ivy-switch-to-swiper (&rest _)
+      "Switch to `swiper' with the current input."
+      (swiper ivy-text))
+
+    (defun my-ivy-switch-to-swiper-isearch (&rest _)
+      "Switch to `swiper-isearch' with the current input."
+      (swiper-isearch ivy-text))
+
+    (defun my-ivy-switch-to-swiper-all (&rest _)
+      "Switch to `swiper-all' with the current input."
+      (swiper-all ivy-text))
+
+    (defun my-ivy-switch-to-rg-dwim (&rest _)
+      "Switch to `rg-dwim' with the current input."
+      (rg-dwim default-directory))
+
+    (defun my-ivy-switch-to-counsel-rg (&rest _)
+      "Switch to `counsel-rg' with the current input."
+      (counsel-rg ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-git-grep (&rest _)
+      "Switch to `counsel-git-grep' with the current input."
+      (counsel-git-grep ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-find-file (&rest _)
+      "Switch to `counsel-find-file' with the current input."
+      (counsel-find-file ivy-text))
+
+    (defun my-ivy-switch-to-counsel-fzf (&rest _)
+      "Switch to `counsel-fzf' with the current input."
+      (counsel-fzf ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-git (&rest _)
+      "Switch to `counsel-git' with the current input."
+      (counsel-git ivy-text))
+
     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
     (defun my-swiper-toggle-counsel-rg ()
-      "Toggle `counsel-rg' and `swiper-isearch' with the current input."
+      "Toggle `counsel-rg' and `swiper'/`swiper-isearch' with the current input."
       (interactive)
       (ivy-quit-and-run
-        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
-            (counsel-rg ivy-text default-directory)
-          (swiper-isearch ivy-text))))
+        (if (memq (ivy-state-caller ivy-last) '(swiper swiper-isearch))
+            (my-ivy-switch-to-counsel-rg)
+          (my-ivy-switch-to-swiper-isearch))))
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
@@ -241,6 +279,75 @@
       (ivy-quit-and-run
         (counsel-fzf (or ivy-text "") default-directory)))
     (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
+
+    (defun my-swiper-toggle-rg-dwim ()
+      "Toggle `rg-dwim' with the current input."
+      (interactive)
+      (ivy-quit-and-run (my-ivy-switch-to-rg-dwim)))
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map)
+
+    (defun my-swiper-toggle-swiper-isearch ()
+      "Toggle `swiper' and `swiper-isearch' with the current input."
+      (interactive)
+      (ivy-quit-and-run
+        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+            (my-ivy-switch-to-swiper)
+          (my-ivy-switch-to-swiper-isearch))))
+    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
+    ;; More actions
+    (ivy-add-actions
+     'swiper-isearch
+     '(("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-swiper-toggle-swiper-isearch "swiper")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'swiper
+     '(("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-swiper-toggle-swiper-isearch "swiper isearch")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'swiper-all
+     '(("g" my-ivy-switch-to-counsel-git-grep "git grep")
+       ("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-swiper-toggle-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")))
+
+    (ivy-add-actions
+     'counsel-rg
+     '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")))
+
+    (ivy-add-actions
+     'counsel-git-grep
+     '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")
+       ("r" my-ivy-switch-to-rg-dwim "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'counsel-find-file
+     '(("g" my-ivy-switch-to-counsel-git "git")
+       ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+    (ivy-add-actions
+     'counsel-git
+     '(("f" my-ivy-switch-to-counsel-find-file "find file")
+       ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+    (ivy-add-actions
+     'counsel-fzf
+     '(("f" my-ivy-switch-to-counsel-find-file "find file")
+       ("g" my-ivy-switch-to-counsel-git "git")))
 
     ;; Prettify `counsel-imenu'
     (defun my-counsel-imenu-get-candidates-from (alist &optional prefix)
