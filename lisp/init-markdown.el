@@ -34,20 +34,7 @@
   (require 'init-const))
 
 (use-package markdown-mode
-  :defines flycheck-markdown-markdownlint-cli-config
-  :preface
-  ;; Lint: npm i -g markdownlint-cli
-  (defun flycheck-enable-markdownlint ()
-    "Set the `mardkownlint' config file for the current buffer."
-    (let* ((md-lint ".markdownlint.json")
-           (md-file buffer-file-name)
-           (md-lint-dir (and md-file
-                             (locate-dominating-file md-file md-lint))))
-      (setq-local flycheck-markdown-markdownlint-cli-config
-                  (concat md-lint-dir md-lint))))
-  :hook ((markdown-mode . flyspell-mode)
-         (markdown-mode . auto-fill-mode)
-         (markdown-mode . flycheck-enable-markdownlint))
+  :hook ((markdown-mode . auto-fill-mode))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
   (setq markdown-enable-wiki-links t
