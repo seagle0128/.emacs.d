@@ -85,6 +85,21 @@
     (when (file-readable-p persp-frame-file)
       (load persp-frame-file)))
 
+  ;; Don't save if the sate is not loaded
+  (with-no-warnings
+    (defvar persp-state-loaded nil
+      "Whether the state is loaded.")
+
+    (defun my-pserp-after-load-state (&rest _)
+      (setq persp-state-loaded t))
+    (advice-add #'persp-load-state-from-file :after #'my-pserp-after-load-state)
+
+    (defun my-persp-asave-on-exit (fn &optional interactive-query)
+      (if persp-state-loaded
+          (funcall fn interactive-query)
+        t))
+    (advice-add #'persp-asave-on-exit :around #'my-persp-asave-on-exit))
+
   ;; Don't save dead or temporary buffers
   (add-to-list 'persp-filter-save-buffers-functions
                (lambda (b)
