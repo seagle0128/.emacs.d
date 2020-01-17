@@ -644,7 +644,7 @@ This is for use in `ivy-re-builders-alist'."
             (all-the-icons-material "view_module" :height 0.95 :v-adjust -0.15 :face 'all-the-icons-lblue))
            ((string-match-p "Packages?[:)]" candidate)
             (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver))
-           (t (all-the-icons-faicon "question-circle-o" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lilver))))))
+           (t (all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.125))))))
 
     (when (display-graphic-p)
       (defun my-ivy-rich-bookmark-type (candidate)

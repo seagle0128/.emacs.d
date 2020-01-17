@@ -130,7 +130,7 @@
         (declare-function all-the-icons-material 'all-the-icons)
         (declare-function all-the-icons-octicon 'all-the-icons)
         (setq company-box-icons-all-the-icons
-              `((Unknown . ,(all-the-icons-faicon "question-circle-o" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-silver))
+              `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.85 :v-adjust -0.2))
                 (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.05))
                 (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
                 (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
