@@ -150,7 +150,9 @@ For Example:
 The default package archives is `melpa`. You can change it in `custom.el`, or
 set manually via `M-x set-package-archives` anytime.
 
-For the personal configurations, you could put to `~/.emacs.d/custom-post.el`.
+For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
+ or`~/.emacs.d/custom-post.el`.
+
 
 ## Screenshots
 

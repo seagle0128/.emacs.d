@@ -178,14 +178,17 @@ If Non-nil, use dashboard, otherwise will restore previous session."
 (if (file-exists-p custom-file)
     (load custom-file))
 
-;; Load `custom-post.el'
+;; Load `custom-post.org' or `custom-post.el'
 ;; Put personal configurations to override defaults here.
-(add-hook 'after-init-hook
-          (lambda ()
-            (let ((file
-                   (expand-file-name "custom-post.el" user-emacs-directory)))
-              (if (file-exists-p file)
-                  (load file)))))
+(defun load-custom-post-file ()
+  "Load custom-post file."
+  (let ((org-file (expand-file-name "custom-post.org" user-emacs-directory))
+        (file (expand-file-name "custom-post.el" user-emacs-directory)))
+    (cond ((file-exists-p org-file)
+           (org-babel-load-file org-file))
+          ((file-exists-p file)
+           (load file)))))
+(add-hook 'after-init-hook #'load-custom-post-file)
 
 (provide 'init-custom)
 
