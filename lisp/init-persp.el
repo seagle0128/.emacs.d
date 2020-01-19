@@ -93,7 +93,9 @@
     (defun my-persp-after-load-state (&rest _)
       (setq persp-state-loaded t))
     (advice-add #'persp-load-state-from-file :after #'my-persp-after-load-state)
-    (add-hook 'find-file-hook #'my-persp-after-load-state)
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (add-hook 'find-file-hook #'my-persp-after-load-state)))
 
     (defun my-persp-asave-on-exit (fn &optional interactive-query)
       (if persp-state-loaded
