@@ -41,10 +41,12 @@
 ;; Rectangle
 (use-package rect
   :ensure nil
-  :bind (("<C-return>" . (lambda ()
-                           (interactive)
-                           (unless (minibufferp)
-                             (rect-hydra/body)))))
+  :bind (:map text-mode-map
+         ("<C-return>" . rect-hydra/body)
+         :map prog-mode-map
+         ("<C-return>" . rect-hydra/body)
+         :map org-mode-map
+         ("<s-return>" . rect-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
