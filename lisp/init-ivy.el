@@ -503,7 +503,7 @@ This is for use in `ivy-re-builders-alist'."
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :hook ((ivy-mode . ivy-rich-mode)
+  :hook ((counsel-projectile-mode . ivy-rich-mode)
          (ivy-rich-mode . (lambda ()
                             (setq ivy-virtual-abbreviate
                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
