@@ -209,7 +209,7 @@ Same as `replace-string C-q C-m RET RET'."
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage archives
-(defun set-package-archives (archives)
+(defun set-package-archives (archives &optional refresh)
   "Set specific package ARCHIVES repository."
   (interactive
    (list
@@ -217,7 +217,9 @@ Same as `replace-string C-q C-m RET RET'."
              "Choose package archives: "
              (mapcar #'car centaur-package-archives-alist)))))
   (customize-set-variable 'centaur-package-archives archives)
+  (and refresh (package-refresh-contents))
   (message "Set package archives to `%s'" archives))
+(defalias 'centaur-set-package-archives #'set-package-archives)
 
 ;; Refer to https://emacs-china.org/t/elpa/11192
 (defun centaur-test-package-archives ()
@@ -383,11 +385,11 @@ If SYNC is non-nil, the updating process is synchronous."
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)))
 
-(defun centuar-dark-theme-p ()
+(defun centaur-dark-theme-p ()
   "Check if the current theme is a dark theme."
   (eq (frame-parameter nil 'background-mode) 'dark))
 
-(defun centuar-current-theme ()
+(defun centaur-current-theme ()
   "The current enabled theme."
   (car custom-enabled-themes))
 

@@ -153,7 +153,6 @@ set manually via `M-x set-package-archives` anytime.
 For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
  or`~/.emacs.d/custom-post.el`.
 
-
 ## Screenshots
 
 ![Dashboard](https://user-images.githubusercontent.com/140797/56488858-4e5c4f80-6512-11e9-9637-b9395c46400f.png
