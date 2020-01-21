@@ -35,6 +35,7 @@
 
 ;; Suppress warnings
 (defvar centaur-package-archives-alist)
+(defvar centaur-theme-alist)
 (defvar centaur-proxy)
 (defvar socks-noproxy)
 (defvar socks-server)
@@ -359,31 +360,24 @@ If SYNC is non-nil, the updating process is synchronous."
   (run-hooks 'after-load-theme-hook))
 (advice-add #'load-theme :after #'run-after-load-theme-hook)
 
-(defun centaur--standardize-theme (theme)
-  "Standardize THEME."
-  (pcase theme
-    ('default 'doom-one)
-    ('classic 'doom-molokai)
-    ('colorful 'doom-snazzy)
-    ('dark 'doom-dark+)
-    ('light 'doom-one-light)
-    ('day 'doom-acario-light)
-    ('night 'doom-city-lights)
-    (_ (or theme 'doom-one))))
+(defun centaur--real-theme (theme)
+  "Return real THEME name."
+  (alist-get theme centaur-theme-alist 'doom-one))
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (string-prefix-p "doom" (symbol-name (centaur--standardize-theme theme))))
+  (string-prefix-p "doom" (symbol-name (centaur--real-theme theme))))
 
 (defun centaur-load-theme (theme)
   "Set color THEME."
   (interactive
    (list
     (intern (completing-read "Load theme: "
-                             '(default classic dark light daylight)))))
-  (let ((theme (centaur--standardize-theme theme)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme t)))
+                             (mapcar #'car centaur-theme-alist)))))
+  (setq centaur-theme theme)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme (centaur--real-theme theme) t))
+(global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
   "Check if the current theme is a dark theme."
