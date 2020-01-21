@@ -365,9 +365,9 @@ If SYNC is non-nil, the updating process is synchronous."
     ('default 'doom-one)
     ('classic 'doom-molokai)
     ('colorful 'doom-snazzy)
-    ('dark 'doom-palenight)
+    ('dark 'doom-dark+)
     ('light 'doom-one-light)
-    ('day 'doom-opera-light)
+    ('day 'doom-acario-light)
     ('night 'doom-city-lights)
     (_ (or theme 'doom-one))))
 
