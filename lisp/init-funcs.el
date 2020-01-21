@@ -383,10 +383,6 @@ If SYNC is non-nil, the updating process is synchronous."
   "Check if the current theme is a dark theme."
   (eq (frame-parameter nil 'background-mode) 'dark))
 
-(defun centaur-current-theme ()
-  "The current enabled theme."
-  (car custom-enabled-themes))
-
 
 
 ;; Network Proxy

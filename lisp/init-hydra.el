@@ -95,28 +95,32 @@
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
        "Theme"
        (("t d" (centaur-load-theme 'default) "default"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'default)))
+         :toggle (eq centaur-theme 'default))
         ("t c" (centaur-load-theme 'classic) "classic"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'classic)))
+         :toggle (eq centaur-theme 'classic))
         ("t r" (centaur-load-theme 'colorful) "colorful"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'colorful)))
+         :toggle (eq centaur-theme 'colorful))
         ("t k" (centaur-load-theme 'dark) "dark"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'dark)))
+         :toggle (eq centaur-theme 'dark))
         ("t l" (centaur-load-theme 'light) "light"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'light)))
+         :toggle (eq centaur-theme 'light))
         ("t y" (centaur-load-theme 'day) "day"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'day)))
+         :toggle (eq centaur-theme 'day))
         ("t n" (centaur-load-theme 'night) "night"
-         :toggle (eq (centaur-current-theme) (centaur--real-theme 'night)))
+         :toggle (eq centaur-theme 'night))
         ("t o" (ivy-read "Load custom theme: "
                          (mapcar #'symbol-name
                                  (custom-available-themes))
                          :predicate (lambda (candidate)
                                       (string-prefix-p "doom-" candidate))
-                         :action #'centaur-load-theme
-                         :caller 'centaur-load-theme)
-         "others" :toggle (not (memq (centaur-current-theme)
-                                     (mapcar #'cdr centaur-theme-alist)))))
+                         :action (lambda (theme)
+                                   (setq centaur-theme
+                                         (let ((x (intern theme)))
+                                           (or (car (rassoc x centaur-theme-alist))
+                                               x)))
+                                   (counsel-load-theme-action theme))
+                         :caller 'counsel-load-theme)
+         "others" :toggle (not (assoc centaur-theme centaur-theme-alist))))
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa))
