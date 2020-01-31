@@ -81,8 +81,7 @@
            ("h" . dashboard-hydra/body)
            ("?" . dashboard-hydra/body))
     :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
-    :init (dashboard-setup-startup-hook)
-    :config
+    :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
           dashboard-center-content t
@@ -135,6 +134,8 @@
               (lambda (&rest _) (dashboard-hydra/body))
               font-lock-string-face))))
 
+    (dashboard-setup-startup-hook)
+    :config
     (defun my-banner-path (&rest _)
       "Return the full path to banner."
       (expand-file-name "banner.txt" user-emacs-directory))

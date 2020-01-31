@@ -194,13 +194,16 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
     conflict with `all-the-icons`. The workaround is
     [here](https://github.com/seagle0128/doom-modeline/issues/278#issuecomment-569510336).
 
+    For better experience, I don't recommend to use GUI with `emacsclient` in
+    `daemon` mode. See [#154](https://github.com/seagle0128/.emacs.d/issues/154).
+
 1. The packages cannot be installed, what should I do?
 
    Generally it's due to connection issue. Please refer to
    [#98](https://github.com/seagle0128/.emacs.d/issues/98).
    - `M-x package-refresh-contents` and try again.
    - `(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")`.
-   - Use other mirror of elpa.
+   - Use other mirror of ELPA.
    - Change another network to retry.
 
 1. How to search Chinese via pinyin?
