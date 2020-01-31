@@ -64,7 +64,7 @@
   :type 'boolean)
 
 (defcustom centaur-dashboard-footer-message (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
-  "Set the footer message that you want to show on the dashboard by setting a function."
+  "Set the footer message that you want to show on the dashboard."
   :group 'centaur
   :type 'string)
 
