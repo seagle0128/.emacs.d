@@ -101,6 +101,7 @@
 ;; Start server
 (use-package server
   :ensure nil
+  :if centaur-server
   :hook (after-init . server-mode))
 
 ;; History

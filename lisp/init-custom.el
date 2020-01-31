@@ -58,6 +58,11 @@
   :group 'centaur
   :type 'string)
 
+(defcustom centaur-server t
+  "Enable `server-mode' or not."
+  :group 'centaur
+  :type 'boolean)
+
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 (defcustom centaur-package-archives-alist
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
