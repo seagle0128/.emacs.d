@@ -63,6 +63,11 @@
   :group 'centaur
   :type 'boolean)
 
+(defcustom centaur-dashboard-footer-message (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
+  "Set the footer message that you want to show on the dashboard by setting a function."
+  :group 'centaur
+  :type 'string)
+
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 (defcustom centaur-package-archives-alist
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))

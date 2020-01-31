@@ -16,6 +16,7 @@
 ;; (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
 ;; (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications
 ;; (setq centaur-benchmark-init t)                ; Enable initialization benchmark or not: t or nil
+;; (setq centaur-dashboard-footer-message "Foo")  ; Set the message shown in the footer section on dashboard
 
 ;; For Emacs devel
 ;; (setq package-user-dir (locate-user-emacs-file (format "elpa-%s" emacs-major-version)))
