@@ -39,27 +39,28 @@
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   (with-no-warnings
+    ;; FIXME: delete when `all-the-icons-ibuffer' is available
     ;; Display buffer icons on GUI
-    ;; (when (icons-displayable-p)
-    ;;   ;; For alignment, the size of the name field should be the width of an icon
-    ;;   (define-ibuffer-column icon (:name "  ")
-    ;;     (let ((icon (if (and (buffer-file-name)
-    ;;                          (all-the-icons-auto-mode-match?))
-    ;;                     (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name)) :v-adjust -0.05)
-    ;;                   (all-the-icons-icon-for-mode major-mode :v-adjust -0.05))))
-    ;;       (if (symbolp icon)
-    ;;           (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
-    ;;         icon)))
+    (when (icons-displayable-p)
+      ;; For alignment, the size of the name field should be the width of an icon
+      (define-ibuffer-column icon (:name "  ")
+        (let ((icon (if (and (buffer-file-name)
+                             (all-the-icons-auto-mode-match?))
+                        (all-the-icons-icon-for-file (file-name-nondirectory (buffer-file-name)) :v-adjust -0.05)
+                      (all-the-icons-icon-for-mode major-mode :v-adjust -0.05))))
+          (if (symbolp icon)
+              (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
+            icon)))
 
-    ;;   (setq ibuffer-formats `((mark modified read-only ,(if emacs/>=26p 'locked "")
-    ;;                                 ;; Here you may adjust by replacing :right with :center or :left
-    ;;                                 ;; According to taste, if you want the icon further from the name
-    ;;                                 " " (icon 2 2 :left :elide)
-    ;;                                 ,(propertize " " 'display `(space :align-to 8))
-    ;;                                 (name 18 18 :left :elide)
-    ;;                                 " " (size 9 -1 :right)
-    ;;                                 " " (mode 16 16 :left :elide) " " filename-and-process)
-    ;;                           (mark " " (name 16 -1) " " filename))))
+      (setq ibuffer-formats `((mark modified read-only ,(if emacs/>=26p 'locked "")
+                                    ;; Here you may adjust by replacing :right with :center or :left
+                                    ;; According to taste, if you want the icon further from the name
+                                    " " (icon 2 2 :left :elide)
+                                    ,(propertize " " 'display `(space :align-to 8))
+                                    (name 18 18 :left :elide)
+                                    " " (size 9 -1 :right)
+                                    " " (mode 16 16 :left :elide) " " filename-and-process)
+                              (mark " " (name 16 -1) " " filename))))
 
     (with-eval-after-load 'counsel
       (defun my-ibuffer-find-file ()
