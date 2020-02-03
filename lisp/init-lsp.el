@@ -184,8 +184,7 @@ Return a list of strings as the completion candidates."
             ("M-<f5>" . dap-hydra))
      :hook ((after-init . dap-mode)
             (dap-mode . dap-ui-mode)
-            (dap-mode . dap-tooltip-mode)
-            ;; (dap-session-created . (lambda (_args) (dap-hydra)))
+            (dap-session-created . (lambda (_args) (dap-hydra)))
             (dap-stopped . (lambda (_args) (dap-hydra)))
 
             (python-mode . (lambda () (require 'dap-python)))
