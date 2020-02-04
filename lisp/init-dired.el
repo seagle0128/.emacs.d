@@ -88,24 +88,28 @@
         "Display the icons of files in a dired buffer."
         (when dired-subdir-alist
           (let ((inhibit-read-only t))
-            (save-excursion
-              ;; TRICK: Use TAB to align icons
-              (setq-local tab-width 1)
-              (goto-char (point-min))
-              (while (not (eobp))
-                (when (dired-move-to-filename nil)
-                  (insert " ")
-                  (let ((file (dired-get-filename 'verbatim t)))
-                    (unless (member file '("." ".."))
-                      (let ((filename (dired-get-filename nil t)))
-                        (if (file-directory-p filename)
-                            (insert (all-the-icons-icon-for-dir filename nil ""))
-                          (insert (all-the-icons-icon-for-file file :v-adjust -0.05))))
-                      ;; Align and keep one space for refeshing after some operations
-                      (insert "\t "))))
-                (forward-line 1))))))
-      (advice-add #'all-the-icons-dired--display
-                  :override #'my-all-the-icons-dired--display)))
+            ;; NOTE: don't display icons it too many items
+            (unless (> (count-lines (point-min) (point-max)) 1000)
+              (save-excursion
+                ;; TRICK: Use TAB to align icons
+                (setq-local tab-width 1)
+
+                ;; Insert icons before the filenames
+                (goto-char (point-min))
+                (while (not (eobp))
+                  (when (dired-move-to-filename nil)
+                    (insert " ")
+                    (let ((file (dired-get-filename 'verbatim t)))
+                      (unless (member file '("." ".."))
+                        (let ((filename (dired-get-filename nil t)))
+                          (if (file-directory-p filename)
+                              (insert (all-the-icons-icon-for-dir filename nil ""))
+                            (insert (all-the-icons-icon-for-file file :v-adjust -0.05))))
+                        ;; Align and keep one space for refeshing after some operations
+                        (insert "\t "))))
+                  (forward-line 1))))))
+        (advice-add #'all-the-icons-dired--display
+                    :override #'my-all-the-icons-dired--display))))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
