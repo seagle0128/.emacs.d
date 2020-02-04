@@ -20,10 +20,12 @@
         - [Update](#update)
         - [Docker](#docker)
     - [Customization](#customization)
-        - [Customize-group](#customize-group)
+        - [Customize Group](#customize-group)
         - [Manual](#manual)
+    - [Hydra](#hydra)
     - [Screenshots](#screenshots)
     - [FAQ](#faq)
+    - [Donate](#donate)
 
 <!-- markdown-toc end -->
 
@@ -153,6 +155,29 @@ set manually via `M-x set-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
  or`~/.emacs.d/custom-post.el`.
+
+## Hydra
+
+| Name                     | Scope                 | Keybinding        | Description                          |
+|--------------------------|-----------------------|-------------------|--------------------------------------|
+| `toggles-hydra`          | global                | `<f6>`            | Global option toggles                |
+| `window-hydra`           | global                | `C-c w`/`C-x o w` | Window management                    |
+| `doom-modeline-hydra`    | doom-modeline-mode    | `C-<f6>`          | Mode-line options and actions        |
+| `hydra-ivy`              | minibuffer, ivy-mode  | `C-o`             | Additional key bindings for Ivy      |
+| `ivy-hydra-read-action`  | minibuffer, ivy-mode  | `M-o`             | Actions for`ivy-dispatching-done`    |
+| `hydra-dired-qick-sort`  | dired                 | `S`               | Options for `dired-quick-sort`       |
+| `org-hydra`              | org-mode              | `<`               | Org template                         |
+| `dashboard-hydra`        | dashboard-mode        | `h`/`?`           | Actions for the dashboard            |
+| `dumb-jump-hydra`        | global                | `C-M-j`           | Jump to definition                   |
+| `youdao-dictionay-hydra` | youdao-dictionay-mode | `h`/`?`           | Actions for `youdao-dictionary`      |
+| `ztreediff-hydra`        | zreediff-mode         | `C-<f5>`          | Actions for text mode directory tree |
+| `git-messenger-hydra`    | global                | `C-x v p`         | Actions for `git-messenger`          |
+| `smerge-mode-hydra`      | smerge-mode           | `C-c m`           | Actions for `smerge-mode`            |
+| `rect-hydra`             | text-mode, prog-mode  | `C-<return>`      | Actions for Rectangle                |
+| `rect-hydra`             | org-mode              | `S-<return>`      | Actions for Rectangle                |
+| `lsp-ui-hydra`           | lsp-ui-mode           | `M-<f6>`          | Actions for `lsp-ui`                 |
+| `dap-hydra`              | dap-mode              | `M-<f5>`          | Actions for `dap-debug`              |
+| `elfeed-hydra`           | elfeed                | `?`               | Actions for RSS reader `elfeed`      |
 
 ## Screenshots
 
