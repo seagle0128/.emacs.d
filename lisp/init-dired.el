@@ -81,6 +81,7 @@
   ;; Shows icons
   (use-package all-the-icons-dired
     :diminish
+    :if (icons-displayable-p)
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
     (with-no-warnings
