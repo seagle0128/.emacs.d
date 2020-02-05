@@ -108,9 +108,9 @@
                             (insert (all-the-icons-icon-for-file file :v-adjust -0.05))))
                         ;; Align and keep one space for refeshing after some operations
                         (insert "\t "))))
-                  (forward-line 1))))))
-        (advice-add #'all-the-icons-dired--display
-                    :override #'my-all-the-icons-dired--display))))
+                  (forward-line 1)))))))
+      (advice-add #'all-the-icons-dired--display
+                  :override #'my-all-the-icons-dired--display)))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
