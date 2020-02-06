@@ -152,6 +152,18 @@ prepended to the element after the #+HEADER: tag."
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
+  ;; Use embedded webkit browser if possible
+  (when (featurep 'xwidget-internal)
+    (push '("\\.x?html?\\'|\\.pdf\\'"
+            .
+            (lambda (file _link)
+              (xwidget-webkit-browse-url (concat "file://" file))
+              (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
+                (when (buffer-live-p buf)
+                  (and (eq buf (current-buffer)) (quit-window))
+                  (pop-to-buffer buf)))))
+          org-file-apps))
+
   ;; Add gfm/md backends
   (use-package ox-gfm)
   (add-to-list 'org-export-backends 'md)
