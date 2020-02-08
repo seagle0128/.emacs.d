@@ -178,6 +178,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 | `lsp-ui-hydra`           | lsp-ui-mode           | `M-<f6>`          | Actions for `lsp-ui`                 |
 | `dap-hydra`              | dap-mode              | `M-<f5>`          | Actions for `dap-debug`              |
 | `elfeed-hydra`           | elfeed                | `?`               | Actions for RSS reader `elfeed`      |
+| `xwidget-hydra`          | xwidget-webkit-mode   | `?`               | Actions for embedded webkit browser  |
 
 ## Screenshots
 
