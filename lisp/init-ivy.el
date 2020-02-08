@@ -52,7 +52,7 @@
          ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
 
-         ("C-x C-r" . counsel-buffer-or-recentf)
+         ("C-x C-r" . counsel-recentf)
          ("C-x j"   . counsel-mark-ring)
          ("C-h F"   . counsel-faces)
 
