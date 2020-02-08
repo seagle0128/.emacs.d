@@ -154,7 +154,7 @@ prepended to the element after the #+HEADER: tag."
 
   ;; Use embedded webkit browser if possible
   (when (featurep 'xwidget-internal)
-    (push '("\\.x?html?\\'|\\.pdf\\'"
+    (push '("\\.\\(x?html?\\|pdf\\)\\'"
             .
             (lambda (file _link)
               (xwidget-webkit-browse-url (concat "file://" file))
