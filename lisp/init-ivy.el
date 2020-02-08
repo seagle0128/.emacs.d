@@ -51,8 +51,8 @@
          ([remap dired] . counsel-dired)
          ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
+         ([remap recentf-open-files] . counsel-recentf)
 
-         ("C-x C-r" . counsel-recentf)
          ("C-x j"   . counsel-mark-ring)
          ("C-h F"   . counsel-faces)
 
