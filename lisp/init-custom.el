@@ -63,6 +63,11 @@
   :group 'centaur
   :type 'boolean)
 
+(defcustom centaur-icon (display-graphic-p)
+  "Display icons or not."
+  :group 'centaur
+  :type 'boolean)
+
 ;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 (defcustom centaur-package-archives-alist
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))

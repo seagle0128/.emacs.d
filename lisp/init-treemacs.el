@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Require >=25.2
 (when emacs/>=25.2p
@@ -58,8 +59,9 @@
           treemacs-is-never-other-window   t
           treemacs-silent-filewatch        t
           treemacs-silent-refresh          t
-          treemacs-width                   30)
-
+          treemacs-width                   30
+          treemacs-no-png-images           (not centaur-icon))
+    :config
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (pcase (cons (not (null (executable-find "git")))

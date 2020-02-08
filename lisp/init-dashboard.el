@@ -91,8 +91,8 @@
                             (projects . 5))
 
           dashboard-set-init-info t
-          dashboard-set-file-icons t
-          dashboard-set-heading-icons t
+          dashboard-set-file-icons centaur-icon
+          dashboard-set-heading-icons centaur-icon
           dashboard-heading-icons '((recents   . "file-text")
                                     (bookmarks . "bookmark")
                                     (agenda    . "calendar")

@@ -82,7 +82,7 @@
                           (ibuffer-do-sort-by-alphabetic)))))
     :config
     (setq ibuffer-projectile-prefix
-          (if (display-graphic-p)
+          (if (icons-displayable-p)
               (concat
                (all-the-icons-octicon "file-directory"
                                       :face ibuffer-filter-group-name-face

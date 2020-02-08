@@ -194,7 +194,8 @@ Same as `replace-string C-q C-m RET RET'."
 
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
-  (and (display-graphic-p)
+  (and centaur-icon
+       (display-graphic-p)
        (require 'all-the-icons nil t)))
 
 (define-minor-mode centaur-read-mode

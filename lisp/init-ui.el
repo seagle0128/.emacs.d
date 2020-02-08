@@ -71,6 +71,7 @@
       (use-package doom-themes
         :defines doom-themes-treemacs-theme
         :functions doom-themes-hide-modeline
+        :custom (doom-dark+-blue-modeline t)
         :init (centaur-load-theme centaur-theme)
         :config
         ;; Enable flashing mode-line on errors
@@ -89,7 +90,6 @@
                (minibuffer-setup . solaire-mode-in-minibuffer)
                (after-load-theme . solaire-mode-swap-bg))
         :config
-        (setq solaire-mode-remap-fringe nil)
         (solaire-global-mode 1)
         (solaire-mode-swap-bg)
         (advice-add #'persp-load-state-from-file
@@ -101,6 +101,7 @@
 ;; Mode-line
 (use-package doom-modeline
   :custom
+  (doom-modeline-icon centaur-icon)
   (doom-modeline-minor-modes t)
   (doom-modeline-unicode-fallback t)
   (doom-modeline-mu4e nil)

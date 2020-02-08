@@ -78,7 +78,8 @@
     (use-package company-box
       :diminish
       :hook (company-mode . company-box-mode)
-      :init (setq company-box-backends-colors nil
+      :init (setq company-box-enable-icon centaur-icon
+                  company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
                   company-box-doc-delay 0.5)
@@ -124,8 +125,7 @@
                     (t . nil)))))
         (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp))
 
-      (when (and (display-graphic-p)
-                 (require 'all-the-icons nil t))
+      (when (icons-displayable-p)
         (declare-function all-the-icons-faicon 'all-the-icons)
         (declare-function all-the-icons-material 'all-the-icons)
         (declare-function all-the-icons-octicon 'all-the-icons)
