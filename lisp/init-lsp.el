@@ -74,25 +74,39 @@
      ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket")
        :color amaranth :quit-key "q")
       ("Doc"
-       (("d e" lsp-ui-doc-enable "enable" :toggle t)
-        ("d s" lsp-ui-doc-include-signature "signature" :toggle t)
-        ("d t" (setq lsp-ui-doc-position 'top) "top" :toggle (eq lsp-ui-doc-position 'top))
-        ("d b" (setq lsp-ui-doc-position 'bottom) "bottom" :toggle (eq lsp-ui-doc-position 'bottom))
-        ("d p" (setq lsp-ui-doc-position 'at-point) "at point" :toggle (eq lsp-ui-doc-position 'at-point))
-        ("d f" (setq lsp-ui-doc-alignment 'frame) "align frame" :toggle (eq lsp-ui-doc-alignment 'frame))
-        ("d w" (setq lsp-ui-doc-alignment 'window) "align window" :toggle (eq lsp-ui-doc-alignment 'window)))
+       (("d e" (lsp-ui-doc-enable (not lsp-ui-doc-mode))
+         "enable" :toggle lsp-ui-doc-mode)
+        ("d s" (setq lsp-ui-doc-include-signature (not lsp-ui-doc-include-signature))
+         "signature" :toggle lsp-ui-doc-include-signature)
+        ("d t" (setq lsp-ui-doc-position 'top)
+         "top" :toggle (eq lsp-ui-doc-position 'top))
+        ("d b" (setq lsp-ui-doc-position 'bottom)
+         "bottom" :toggle (eq lsp-ui-doc-position 'bottom))
+        ("d p" (setq lsp-ui-doc-position 'at-point)
+         "at point" :toggle (eq lsp-ui-doc-position 'at-point))
+        ("d f" (setq lsp-ui-doc-alignment 'frame)
+         "align frame" :toggle (eq lsp-ui-doc-alignment 'frame))
+        ("d w" (setq lsp-ui-doc-alignment 'window)
+         "align window" :toggle (eq lsp-ui-doc-alignment 'window)))
        "Sideline"
-       (("s e" lsp-ui-sideline-enable "enable" :toggle t)
-        ("s h" lsp-ui-sideline-show-hover "hover" :toggle t)
-        ("s d" lsp-ui-sideline-show-diagnostics "diagnostics" :toggle t)
-        ("s s" lsp-ui-sideline-show-symbol "symbol" :toggle t)
-        ("s c" lsp-ui-sideline-show-code-actions "code actions" :toggle t)
-        ("s i" lsp-ui-sideline-ignore-duplicate "ignore duplicate" :toggle t))))
+       (("s e" (lsp-ui-sideline-enable (not lsp-ui-sideline-mode))
+         "enable" :toggle lsp-ui-sideline-mode)
+        ("s h" (setq lsp-ui-sideline-show-hover (not lsp-ui-sideline-show-hover))
+         "hover" :toggle lsp-ui-sideline-show-hover)
+        ("s d" (setq lsp-ui-sideline-show-diagnostics (not lsp-ui-sideline-show-diagnostics))
+         "diagnostics" :toggle lsp-ui-sideline-show-diagnostics)
+        ("s s" (setq lsp-ui-sideline-show-symbol (not lsp-ui-sideline-show-symbol))
+         "symbol" :toggle lsp-ui-sideline-show-symbol)
+        ("s c" (setq lsp-ui-sideline-show-code-actions (not lsp-ui-sideline-show-code-actions))
+         "code actions" :toggle lsp-ui-sideline-show-code-actions)
+        ("s i" (setq lsp-ui-sideline-ignore-duplicate (not lsp-ui-sideline-ignore-duplicate))
+         "ignore duplicate" :toggle lsp-ui-sideline-ignore-duplicate))))
      :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
             ("M-<f6>" . lsp-ui-hydra/body)
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
             ([remap xref-find-references] . lsp-ui-peek-find-references))
+     :hook (lsp-mode . lsp-ui-mode)
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
                  lsp-ui-doc-delay 0.2
@@ -101,16 +115,16 @@
                  lsp-ui-doc-border (face-foreground 'default)
                  lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
 
+                 lsp-ui-sideline-enable t
+                 lsp-ui-sideline-show-hover nil
+                 lsp-ui-sideline-show-diagnostics nil
+                 lsp-ui-sideline-ignore-duplicate t
+
                  lsp-ui-imenu-enable t
                  lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                        ,(face-foreground 'font-lock-string-face)
                                        ,(face-foreground 'font-lock-constant-face)
-                                       ,(face-foreground 'font-lock-variable-name-face))
-
-                 lsp-ui-sideline-enable t
-                 lsp-ui-sideline-show-hover nil
-                 lsp-ui-sideline-show-diagnostics nil
-                 lsp-ui-sideline-ignore-duplicate t)
+                                       ,(face-foreground 'font-lock-variable-name-face)))
      :config
      (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
 
