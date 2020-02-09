@@ -216,14 +216,10 @@
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
-     ("z h" (counsel-read-setq-expression 'doom-modeline-height)
-      "set height" :exit t)
-     ("z w" (counsel-read-setq-expression 'doom-modeline-bar-width)
-      "set bar width" :exit t)
-     ("z g" (counsel-read-setq-expression 'doom-modeline-github-interval)
-      "set github interval" :exit t)
-     ("z n" (counsel-read-setq-expression 'doom-modeline-gnus-timer)
-      "set gnus interval" :exit t)))))
+     ("z h" (counsel-read-setq-expression 'doom-modeline-height) "set height")
+     ("z w" (counsel-read-setq-expression 'doom-modeline-bar-width) "set bar width")
+     ("z g" (counsel-read-setq-expression 'doom-modeline-github-interval) "set github interval")
+     ("z n" (counsel-read-setq-expression 'doom-modeline-gnus-timer) "set gnus interval")))))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
