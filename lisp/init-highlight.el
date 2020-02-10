@@ -112,7 +112,7 @@ FACE defaults to inheriting from default and highlight."
           '((:inherit (all-the-icons-blue bold) :inverse-video t)
             (:inherit (all-the-icons-pink bold) :inverse-video t)
             (:inherit (all-the-icons-yellow bold) :inverse-video t)
-            (:inherit (all-the-icons-maroon bold) :inverse-video t)
+            (:inherit (all-the-icons-purple bold) :inverse-video t)
             (:inherit (all-the-icons-red bold) :inverse-video t)
             (:inherit (all-the-icons-orange bold) :inverse-video t)
             (:inherit (all-the-icons-green bold) :inverse-video t)
