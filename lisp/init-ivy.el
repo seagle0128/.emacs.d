@@ -121,6 +121,10 @@
         ivy-on-del-error-function nil
         ivy-initial-inputs-alist nil)
 
+  ;; Better performance on Windows
+  (when sys/win32p
+    (setq ivy-dynamic-exhibit-delay-ms 200))
+
   (setq swiper-action-recenter t)
 
   (setq counsel-find-file-at-point t
