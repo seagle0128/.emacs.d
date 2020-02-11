@@ -68,6 +68,17 @@
 ;; Theme
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
+      ;; Make certain buffers grossly incandescent
+      (use-package solaire-mode
+        :functions persp-load-state-from-file
+        :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+               (minibuffer-setup . solaire-mode-in-minibuffer)
+               (after-load-theme . solaire-mode-swap-bg))
+        :init
+        (solaire-global-mode 1)
+        (advice-add #'persp-load-state-from-file
+                    :after #'solaire-mode-restore-persp-mode-buffers))
+
       (use-package doom-themes
         :defines doom-themes-treemacs-theme
         :functions doom-themes-hide-modeline
@@ -81,19 +92,7 @@
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)
         (with-eval-after-load 'treemacs
-          (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
-
-      ;; Make certain buffers grossly incandescent
-      (use-package solaire-mode
-        :functions persp-load-state-from-file
-        :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-               (minibuffer-setup . solaire-mode-in-minibuffer)
-               (after-load-theme . solaire-mode-swap-bg))
-        :config
-        (solaire-global-mode 1)
-        (solaire-mode-swap-bg)
-        (advice-add #'persp-load-state-from-file
-                    :after #'solaire-mode-restore-persp-mode-buffers)))
+          (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline))))
   (progn
     (warn "The current theme may not be compatible with Centaur!")
     (centaur-load-theme centaur-theme)))
@@ -159,7 +158,16 @@
      ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
       "version" :toggle doom-modeline-env-version))
     "Style"
-    (("t u" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+    (("a" (setq doom-modeline-buffer-file-name-style 'auto)
+      "auto"
+      :toggle (eq doom-modeline-buffer-file-name-style 'auto))
+     ("b" (setq doom-modeline-buffer-file-name-style 'buffer-name)
+      "buffer name"
+      :toggle (eq doom-modeline-buffer-file-name-style 'buffer-name))
+     ("f" (setq doom-modeline-buffer-file-name-style 'file-name)
+      "file name"
+      :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
+     ("t u" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
       "truncate upto project"
       :toggle (eq doom-modeline-buffer-file-name-style 'truncate-upto-project))
      ("t f" (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
@@ -182,13 +190,7 @@
       :toggle (eq doom-modeline-buffer-file-name-style 'relative-from-project))
      ("r t" (setq doom-modeline-buffer-file-name-style 'relative-to-project)
       "relative to project"
-      :toggle (eq doom-modeline-buffer-file-name-style 'relative-to-project))
-     ("f" (setq doom-modeline-buffer-file-name-style 'file-name)
-      "file name"
-      :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
-     ("b" (setq doom-modeline-buffer-file-name-style 'buffer-name)
-      "buffer name"
-      :toggle (eq doom-modeline-buffer-file-name-style 'buffer-name)))
+      :toggle (eq doom-modeline-buffer-file-name-style 'relative-to-project)))
     "Project Detection"
     (("p f" (setq doom-modeline-project-detection 'ffip)
       "ffip"
