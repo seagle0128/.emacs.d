@@ -255,6 +255,13 @@ Same as `replace-string C-q C-m RET RET'."
        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
     (message "%s" durations)))
 
+;; WORKAROUND
+(defun fix-fullscreen-cocoa ()
+  "Address blank screen issue with child-frame in fullscreen."
+  (and sys/mac-cocoa-p
+       emacs/>=26p
+       (setq ns-use-native-fullscreen nil)))
+
 
 
 ;; Update

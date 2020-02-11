@@ -76,6 +76,7 @@
   (defun persp-load-frame ()
     "Load frame with the previous frame's geometry."
     (interactive)
+    (fix-fullscreen-cocoa)
     (when (file-readable-p persp-frame-file)
       (load persp-frame-file)))
 
