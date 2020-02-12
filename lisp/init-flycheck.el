@@ -38,8 +38,8 @@
   :hook (after-init . global-flycheck-mode)
   :config
   (setq flycheck-global-modes
-        '(not org-mode text-mode outline-mode fundamental-mode
-              shell-mode eshell-mode term-mode vterm-mode)
+        '(not text-mode outline-mode fundamental-mode org-mode
+              diff-mode shell-mode eshell-mode term-mode vterm-mode)
         flycheck-emacs-lisp-load-path 'inherit
         ;; Only check while saving and opening files
         flycheck-check-syntax-automatically '(save mode-enabled)
