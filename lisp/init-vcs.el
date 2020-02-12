@@ -67,7 +67,10 @@
   (git-timemachine-minibuffer-author-face ((t (:inherit success))))
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
-         ("t" . git-timemachine)))
+         ("t" . git-timemachine))
+  :hook (before-revert . (lambda ()
+                           (when git-timemachine-mode
+                             (user-error "Cannot revert the timemachine buffer")))))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
