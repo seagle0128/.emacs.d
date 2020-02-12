@@ -88,7 +88,7 @@
          ("C-c C-z v" . browse-url-of-file))
   :init
   (with-eval-after-load 'dired
-     (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)) )
+    (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)))
 
 (when (featurep 'xwidget-internal)
   (use-package xwidget
@@ -287,10 +287,16 @@
          (flyspell-mode . (lambda ()
                             (dolist (key '("C-;" "C-," "C-."))
                               (unbind-key key flyspell-mode-map)))))
-  :init
-  (setq flyspell-issue-message-flag nil
-        ispell-program-name "aspell"
-        ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
+  :init (setq flyspell-issue-message-flag nil
+              ispell-program-name "aspell"
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
+  :config
+  ;; Correcting words with flyspell via Ivy
+  (use-package flyspell-correct-ivy
+    :after ivy
+    :bind (:map flyspell-mode-map
+           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
+    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
 
 ;; Hungry deletion
 (use-package hungry-delete
