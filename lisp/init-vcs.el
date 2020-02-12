@@ -69,7 +69,7 @@
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
   :hook (before-revert . (lambda ()
-                           (when git-timemachine-mode
+                           (when (bound-and-true-p git-timemachine-mode)
                              (user-error "Cannot revert the timemachine buffer")))))
 
 ;; Pop up last commit information of current line
