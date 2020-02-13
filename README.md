@@ -94,7 +94,15 @@ or download the [zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
 extract to `~/.emacs.d`.
 
-Then start Emacs. Wait for a while to install packages at the first startup. Enjoy! :smile:
+Then start Emacs. Wait for a while to install packages at the first startup.
+Enjoy! :smile:
+
+**NOTE**: Start Emacs with the minimal configuration for fast startup and
+troubleshooting.
+
+``` shell
+emacs -Q --l ~/.emacs.d/init-mini.el
+```
 
 ### Update
 
