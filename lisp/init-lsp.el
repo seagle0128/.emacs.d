@@ -200,6 +200,7 @@ Return a list of strings as the completion candidates."
             (dap-mode . dap-ui-mode)
             (dap-session-created . (lambda (_args) (dap-hydra)))
             (dap-stopped . (lambda (_args) (dap-hydra)))
+            (dap-terminated . (lambda (_args) (dap-hydra/nil)))
 
             (python-mode . (lambda () (require 'dap-python)))
             (ruby-mode . (lambda () (require 'dap-ruby)))
