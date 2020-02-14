@@ -432,13 +432,6 @@ This is for use in `ivy-re-builders-alist'."
       (setq xref-show-definitions-function #'ivy-xref-show-defs))
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after flyspell
-    :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy))
-
   ;; Quick launch apps
   (cond
    (sys/linux-x-p
