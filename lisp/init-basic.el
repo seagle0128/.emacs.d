@@ -75,6 +75,7 @@
 ;; Explicitly set the prefered coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 
 (set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -85,9 +86,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (modify-coding-system-alist 'process "*" 'utf-8)
-
-(setq locale-coding-system 'utf-8
-      default-process-coding-system '(utf-8 . utf-8))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
