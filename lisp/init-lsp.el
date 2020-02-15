@@ -47,7 +47,9 @@
                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
                             (lsp-deferred))))
      :bind (:map lsp-mode-map
-            ("C-c C-d" . lsp-describe-thing-at-point))
+            ("C-c C-d" . lsp-describe-thing-at-point)
+            ([remap xref-find-definitions] . lsp-find-definition)
+            ([remap xref-find-references] . lsp-find-references))
      :init (setq lsp-auto-guess-root t        ; Detect project root
                  lsp-keep-workspace-alive nil ; Auto-kill LSP server
                  lsp-prefer-flymake nil       ; Use lsp-ui and flycheck
@@ -103,9 +105,7 @@
          "ignore duplicate" :toggle lsp-ui-sideline-ignore-duplicate))))
      :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
-            ("M-<f6>" . lsp-ui-hydra/body)
-            ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-            ([remap xref-find-references] . lsp-ui-peek-find-references))
+            ("M-<f6>" . lsp-ui-hydra/body))
      :hook (lsp-mode . lsp-ui-mode)
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
