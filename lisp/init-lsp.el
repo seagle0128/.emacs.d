@@ -43,30 +43,31 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish
-     :hook (prog-mode . (lambda ()
-                          (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
-                            (lsp-deferred))))
+     :hook ((prog-mode . (lambda ()
+                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                             (lsp-deferred))))
+            (lsp-mode . (lambda ()
+                          ;; Integrate `which-key'
+                          (lsp-enable-which-key-integration)
+
+                          ;; Format and organize imports
+                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                          (add-hook 'before-save-hook #'lsp-organize-imports t t))))
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point)
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
-     :init (setq lsp-auto-guess-root t        ; Detect project root
-                 lsp-keep-workspace-alive nil ; Auto-kill LSP server
-                 lsp-prefer-flymake nil       ; Use lsp-ui and flycheck
-                 flymake-fringe-indicator-position 'right-fringe)
-     :config
-     ;; Configure LSP clients
-     (use-package lsp-clients
-       :ensure nil
-       :functions (lsp-format-buffer lsp-organize-imports)
-       :hook (go-mode . (lambda ()
-                          "Format and add/delete imports."
-                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))
-       :init
-       (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-       (unless (executable-find "rls")
-         (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))))
+     :init
+     ;; @see https://github.com/emacs-lsp/lsp-mode#performance
+     (setq read-process-output-max (* 1024 1024)) ;; 1MB
+
+     (setq lsp-auto-guess-root t        ; Detect project root
+           lsp-keep-workspace-alive nil) ; Auto-kill LSP server
+
+     ;; For `lsp-clients'
+     (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
+     (unless (executable-find "rls")
+       (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls"))))
 
    (use-package lsp-ui
      :custom-face
