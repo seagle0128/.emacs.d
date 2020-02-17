@@ -218,17 +218,20 @@
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
       (interactive)
-      (funcall (local-key-binding "r")))
+      (let (func (local-key-binding "r"))
+        (and func (funcall func))))
 
     (defun dashboard-goto-projects ()
       "Go to projects."
       (interactive)
-      (funcall (local-key-binding "p")))
+      (let ((func (local-key-binding "p")))
+        (and func (funcall func))))
 
     (defun dashboard-goto-bookmarks ()
       "Go to bookmarks."
       (interactive)
-      (funcall (local-key-binding "m")))))
+      (let ((func (local-key-binding "m")))
+        (and func (funcall func))))))
 
 (provide 'init-dashboard)
 
