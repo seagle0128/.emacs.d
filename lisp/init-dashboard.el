@@ -96,7 +96,7 @@
           dashboard-heading-icons '((recents   . "file-text")
                                     (bookmarks . "bookmark")
                                     (agenda    . "calendar")
-                                    (projects  . "file-directory")
+                                    (projects  . "briefcase")
                                     (registers . "database"))
 
           dashboard-set-footer t
