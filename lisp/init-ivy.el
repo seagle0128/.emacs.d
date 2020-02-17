@@ -501,19 +501,23 @@ This is for use in `ivy-re-builders-alist'."
                    #'ivy--regex-pinyin))))
        ivy-re-builders-alist))))
 
+;; Better experience with icons
+;; Enable it before`ivy-rich-mode' for better performance
+(use-package all-the-icons-ivy-rich
+  :if (icons-displayable-p)
+  :init (all-the-icons-ivy-rich-mode 1))
+
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :hook ((counsel-projectile-mode . ivy-rich-mode) ; Must load after `counsel-projectile'
+  :hook (;; Must load after `counsel-projectile'
+         (counsel-projectile-mode . ivy-rich-mode)
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."
                             (setq ivy-virtual-abbreviate
                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :init (setq ivy-rich-parse-remote-buffer nil) ; For better performance
-  :config
-  ;; Better experience with icons
-  (use-package all-the-icons-ivy-rich
-    :if (icons-displayable-p)
-    :init (all-the-icons-ivy-rich-mode 1)))
+  :init
+  ;; For better performance
+  (setq ivy-rich-parse-remote-buffer nil))
 
 (provide 'init-ivy)
 
