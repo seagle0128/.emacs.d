@@ -232,11 +232,11 @@
   ;; @see https://github.com/wasamasa/nov.el/issues/63
   (defun my-nov-content-unique-identifier (content)
     "Return the the unique identifier for CONTENT."
-    (when-let* ((name (nov-content-unique-identifier-name content))
-                (selector (format "package>metadata>identifier[id='%s']"
-                                  (regexp-quote name)))
-                (id (car (esxml-node-children (esxml-query selector content)))))
-      (intern id)))
+    (let* ((name (nov-content-unique-identifier-name content))
+           (selector (format "package>metadata>identifier[id='%s']"
+                             (regexp-quote name)))
+           (id (car (esxml-node-children (esxml-query selector content)))))
+      (and id (intern id))))
   (advice-add #'nov-content-unique-identifier :override #'my-nov-content-unique-identifier)
 
   ;; Fix encoding issue on Windows
