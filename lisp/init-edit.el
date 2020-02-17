@@ -334,10 +334,9 @@
         undo-tree-enable-undo-in-region nil
         undo-tree-auto-save-history nil)
 
-  ;; WORKAROUND:  keep the diff window
-  (with-no-warnings
-    (make-variable-buffer-local 'undo-tree-visualizer-diff)
-    (setq-default undo-tree-visualizer-diff t)))
+  ;; HACK: keep the diff window
+  (make-variable-buffer-local 'undo-tree-visualizer-diff)
+  (setq-default undo-tree-visualizer-diff t))
 
 ;; Goto last change
 (use-package goto-chg

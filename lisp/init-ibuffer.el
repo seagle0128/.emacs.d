@@ -43,35 +43,34 @@
     :if (icons-displayable-p)
     :init (all-the-icons-ibuffer-mode 1))
 
-  (with-no-warnings
-    (with-eval-after-load 'counsel
-      (defun my-ibuffer-find-file ()
-        (interactive)
-        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                   (if (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         default-directory)
-                                     default-directory))))
-          (counsel-find-file default-directory)))
-      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
+  (with-eval-after-load 'counsel
+    (defun my-ibuffer-find-file ()
+      (interactive)
+      (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+                                 (if (buffer-live-p buf)
+                                     (with-current-buffer buf
+                                       default-directory)
+                                   default-directory))))
+        (counsel-find-file default-directory)))
+    (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
 
-  ;; Group ibuffer's list by project root
-  (use-package ibuffer-projectile
-    :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
-    :hook ((ibuffer . (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic)))))
-    :config
-    (setq ibuffer-projectile-prefix
-          (if (icons-displayable-p)
-              (concat
-               (all-the-icons-octicon "file-directory"
-                                      :face ibuffer-filter-group-name-face
-                                      :v-adjust -0.05
-                                      :height 1.25)
-               " ")
-            "Project: "))))
+;; Group ibuffer's list by project root
+(use-package ibuffer-projectile
+  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
+  :hook ((ibuffer . (lambda ()
+                      (ibuffer-projectile-set-filter-groups)
+                      (unless (eq ibuffer-sorting-mode 'alphabetic)
+                        (ibuffer-do-sort-by-alphabetic)))))
+  :config
+  (setq ibuffer-projectile-prefix
+        (if (icons-displayable-p)
+            (concat
+             (all-the-icons-octicon "file-directory"
+                                    :face ibuffer-filter-group-name-face
+                                    :v-adjust -0.05
+                                    :height 1.25)
+             " ")
+          "Project: ")))
 
 (provide 'init-ibuffer)
 

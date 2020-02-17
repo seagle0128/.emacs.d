@@ -37,7 +37,6 @@
 (use-package persp-mode
   :diminish
   :defines (recentf-exclude ivy-ignore-buffers)
-  :functions persp--frame-parameter
   :commands (get-current-persp persp-contain-buffer-p)
   :hook ((after-init . persp-mode)
          (persp-mode . persp-load-frame)
@@ -81,22 +80,21 @@
       (load persp-frame-file)))
 
   ;; Don't save if the sate is not loaded
-  (with-no-warnings
-    (defvar persp-state-loaded nil
-      "Whether the state is loaded.")
+  (defvar persp-state-loaded nil
+    "Whether the state is loaded.")
 
-    (defun my-persp-after-load-state (&rest _)
-      (setq persp-state-loaded t))
-    (advice-add #'persp-load-state-from-file :after #'my-persp-after-load-state)
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                (add-hook 'find-file-hook #'my-persp-after-load-state)))
+  (defun my-persp-after-load-state (&rest _)
+    (setq persp-state-loaded t))
+  (advice-add #'persp-load-state-from-file :after #'my-persp-after-load-state)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (add-hook 'find-file-hook #'my-persp-after-load-state)))
 
-    (defun my-persp-asave-on-exit (fn &optional interactive-query)
-      (if persp-state-loaded
-          (funcall fn interactive-query)
-        t))
-    (advice-add #'persp-asave-on-exit :around #'my-persp-asave-on-exit))
+  (defun my-persp-asave-on-exit (fn &optional interactive-query)
+    (if persp-state-loaded
+        (funcall fn interactive-query)
+      t))
+  (advice-add #'persp-asave-on-exit :around #'my-persp-asave-on-exit)
 
   ;; Don't save dead or temporary buffers
   (add-to-list 'persp-filter-save-buffers-functions
@@ -156,19 +154,18 @@
   :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
   :config
   ;; HACK: Allow saving to files
-  (with-no-warnings
-    (defun my-persp-mode-projectile-bridge-add-new-persp (name)
-      (let ((persp (persp-get-by-name name *persp-hash* :nil)))
-        (if (eq :nil persp)
-            (prog1
-                (setq persp (persp-add-new name))
-              (when persp
-                (set-persp-parameter 'persp-mode-projectile-bridge t persp)
-                (persp-add-buffer (projectile-project-buffers)
-                                  persp nil nil)))
-          persp)))
-    (advice-add #'persp-mode-projectile-bridge-add-new-persp
-                :override #'my-persp-mode-projectile-bridge-add-new-persp)))
+  (defun my-persp-mode-projectile-bridge-add-new-persp (name)
+    (let ((persp (persp-get-by-name name *persp-hash* :nil)))
+      (if (eq :nil persp)
+          (prog1
+              (setq persp (persp-add-new name))
+            (when persp
+              (set-persp-parameter 'persp-mode-projectile-bridge t persp)
+              (persp-add-buffer (projectile-project-buffers)
+                                persp nil nil)))
+        persp)))
+  (advice-add #'persp-mode-projectile-bridge-add-new-persp
+              :override #'my-persp-mode-projectile-bridge-add-new-persp))
 
 (provide 'init-persp)
 

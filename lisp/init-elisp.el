@@ -271,16 +271,15 @@ Lisp function does not specify a special indentation."
   (define-advice helpful-callable (:after (function) advice-remove-button)
     (add-button-to-remove-advice (helpful--buffer function t) function))
   :config
-  (with-no-warnings
-    (defun my-helpful--navigate (button)
-      "Navigate to the path this BUTTON represents."
-      (find-file-other-window (substring-no-properties (button-get button 'path)))
-      ;; We use `get-text-property' to work around an Emacs 25 bug:
-      ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=f7c4bad17d83297ee9a1b57552b1944020f23aea
-      (-when-let (pos (get-text-property button 'position
-                                         (marker-buffer button)))
-        (helpful--goto-char-widen pos)))
-    (advice-add #'helpful--navigate :override #'my-helpful--navigate)))
+  (defun my-helpful--navigate (button)
+    "Navigate to the path this BUTTON represents."
+    (find-file-other-window (substring-no-properties (button-get button 'path)))
+    ;; We use `get-text-property' to work around an Emacs 25 bug:
+    ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=f7c4bad17d83297ee9a1b57552b1944020f23aea
+    (-when-let (pos (get-text-property button 'position
+                                       (marker-buffer button)))
+      (helpful--goto-char-widen pos)))
+  (advice-add #'helpful--navigate :override #'my-helpful--navigate))
 
 ;; For ERT
 (use-package overseer
