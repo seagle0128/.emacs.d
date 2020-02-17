@@ -427,13 +427,14 @@ If SYNC is non-nil, the updating process is synchronous."
       (proxy-http-disable)
     (proxy-http-enable)))
 
-(defun proxy-socks-show ()
-  "Show SOCKS proxy."
-  (interactive)
-  (if socks-noproxy
-      (message "Current SOCKS%d proxy is %s:%d"
-               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
-    (message "No SOCKS proxy")))
+(when emacs/>=25.2p
+  (defun proxy-socks-show ()
+    "Show SOCKS proxy."
+    (interactive)
+    (if socks-noproxy
+        (message "Current SOCKS%d proxy is %s:%d"
+                 (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+      (message "No SOCKS proxy"))))
 
 (defun proxy-socks-enable ()
   "Enable SOCKS proxy."

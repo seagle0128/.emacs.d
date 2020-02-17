@@ -34,13 +34,6 @@
   (require 'init-const)
   (require 'init-custom))
 
-;; Compatibility
-(unless (fboundp 'caadr)
-  (defun caadr (x)
-    "Return the `car' of the `car' of the `cdr' of X."
-    (declare (compiler-macro internal--compiler-macro-cXXr))
-    (car (car (cdr x)))))
-
 ;; Personal information
 (setq user-full-name centaur-full-name
       user-mail-address centaur-mail-address)
