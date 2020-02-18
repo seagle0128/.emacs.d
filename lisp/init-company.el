@@ -40,8 +40,8 @@
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
          :map company-active-map
-         ;; ("C-p" . company-select-previous)
-         ;; ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
          ("<tab>" . company-complete-common-or-cycle)
          ("<backtab>" . my-company-yasnippet)
          :map company-search-map
