@@ -51,8 +51,9 @@
                           (lsp-enable-which-key-integration)
 
                           ;; Format and organize imports
-                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                          (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+                          (unless (derived-mode-p 'c-mode 'c++-mode)
+                            (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                            (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point)
             ([remap xref-find-definitions] . lsp-find-definition)
@@ -62,7 +63,10 @@
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
      (setq lsp-auto-guess-root t        ; Detect project root
-           lsp-keep-workspace-alive nil) ; Auto-kill LSP server
+           lsp-keep-workspace-alive nil ; Auto-kill LSP server
+           lsp-enable-indentation nil
+           lsp-enable-on-type-formatting nil
+           lsp-keymap-prefix "C-c l")
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
