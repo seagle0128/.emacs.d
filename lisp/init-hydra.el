@@ -81,7 +81,7 @@
       ("h i" highlight-indent-guides-mode "indent" :toggle t)
       ("h t" global-hl-todo-mode "todo" :toggle t))
      "Coding"
-     (("f" global-flycheck-mode "flycheck" :toggle t)
+     (("f" flycheck-mode "flycheck" :toggle t)
       ("F" flymake-mode "flymake" :toggle t)
       ("o" origami-mode "folding" :toggle t)
       ("O" hs-minor-mode "hideshow" :toggle t)
