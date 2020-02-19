@@ -375,7 +375,7 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur--real-theme (theme)
   "Return real THEME name."
-  (alist-get theme centaur-theme-alist 'doom-one))
+  (or (alist-get theme centaur-theme-alist) theme))
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
