@@ -87,7 +87,7 @@
         :custom
         (doom-dark+-blue-modeline t)
         (doom-themes-treemacs-theme "doom-colors")
-        :init (centaur-load-theme centaur-theme)
+        :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)

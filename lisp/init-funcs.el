@@ -198,11 +198,14 @@ Same as `replace-string C-q C-m RET RET'."
        (display-graphic-p)
        (require 'all-the-icons nil t)))
 
-(defun centaur-set-variable (variable value)
-  "Set the VARIABLE to VALUE, and return VALUE."
+(defun centaur-set-variable (variable value &optional no-save)
+  "Set the VARIABLE to VALUE, and return VALUE.
+
+Save to `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
 
-  (when (file-writable-p custom-file)
+  (when (and (not no-save)
+             (file-writable-p custom-file))
     (with-temp-buffer
       (insert-file-contents custom-file)
       (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
@@ -212,7 +215,8 @@ Same as `replace-string C-q C-m RET RET'."
                           (format "(setq %s '%s)"
                                   (symbol-name variable)
                                   (symbol-name value)))
-          (write-region nil nil custom-file))))))
+          (write-region nil nil custom-file)
+          (message "Save %s (%s)" variable value))))))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
@@ -232,17 +236,18 @@ Same as `replace-string C-q C-m RET RET'."
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage repository (ELPA)
-(defun set-package-archives (archives &optional refresh async)
+(defun set-package-archives (archives &optional refresh async no-save)
   "Set the package archives (ELPA).
 
 REFRESH is non-nil, will refresh archive contents.
-ASYNC specifies whether to perform the downloads in the background."
+ASYNC specifies whether to perform the downloads in the background.
+Save to `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern (completing-read "Select package archives: "
                              (mapcar #'car centaur-package-archives-alist)))))
-  ;; Save option
-  (centaur-set-variable 'centaur-package-archives archives)
+  ;; Set option
+  (centaur-set-variable 'centaur-package-archives archives no-save)
 
   ;; Refresh if need
   (and refresh (package-refresh-contents async))
@@ -420,8 +425,8 @@ If SYNC is non-nil, the updating process is synchronous."
   "Check if the THEME is compatible. THEME is a symbol."
   (string-prefix-p "doom" (symbol-name (centaur--real-theme theme))))
 
-(defun centaur-load-theme (theme)
-  "Set color THEME."
+(defun centaur-load-theme (theme &optional no-save)
+  "Set color THEME. Save to `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern (completing-read "Load theme: "
@@ -430,8 +435,8 @@ If SYNC is non-nil, the updating process is synchronous."
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme (centaur--real-theme theme) t)
 
-  ;; Save option
-  (centaur-set-variable 'centaur-theme theme))
+  ;; Set option
+  (centaur-set-variable 'centaur-theme theme no-save))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
