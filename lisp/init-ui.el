@@ -98,7 +98,7 @@
           (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline))))
   (progn
     (warn "The current theme may not be compatible with Centaur!")
-    (load-theme centaur-theme t)))
+    (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
 (use-package doom-modeline

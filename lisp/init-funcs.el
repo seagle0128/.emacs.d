@@ -198,6 +198,22 @@ Same as `replace-string C-q C-m RET RET'."
        (display-graphic-p)
        (require 'all-the-icons nil t)))
 
+(defun centaur-set-variable (variable value)
+  "Set the VARIABLE to VALUE, and return VALUE."
+  (customize-set-variable variable value)
+
+  (when (file-writable-p custom-file)
+    (with-temp-buffer
+      (insert-file-contents custom-file)
+      (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
+                            (symbol-name variable))))
+        (when (string-match-p regexp (buffer-string))
+          (replace-regexp regexp
+                          (format "(setq %s '%s)"
+                                  (symbol-name variable)
+                                  (symbol-name value)))
+          (write-region nil nil custom-file))))))
+
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
   :init-value nil
@@ -225,18 +241,8 @@ ASYNC specifies whether to perform the downloads in the background."
    (list
     (intern (completing-read "Select package archives: "
                              (mapcar #'car centaur-package-archives-alist)))))
-  ;; Set the option
-  (customize-set-variable 'centaur-package-archives archives)
-
-  ;; Modify `custom-file'
-  (when (file-writable-p custom-file)
-    (with-temp-buffer
-      (insert-file-contents custom-file)
-      (let ((regexp "^[\t ]*[;]*[\t ]*(setq centaur-package-archives .*)"))
-        (when (string-match-p regexp (buffer-string))
-          (replace-regexp regexp
-                          (format "(setq centaur-package-archives '%s)" archives))
-          (write-region nil nil custom-file)))))
+  ;; Save option
+  (centaur-set-variable 'centaur-package-archives archives)
 
   ;; Refresh if need
   (and refresh (package-refresh-contents async))
@@ -420,9 +426,12 @@ If SYNC is non-nil, the updating process is synchronous."
    (list
     (intern (completing-read "Load theme: "
                              (mapcar #'car centaur-theme-alist)))))
-  (setq centaur-theme theme)
+  ;; Disable others and enable new one
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme (centaur--real-theme theme) t))
+  (load-theme (centaur--real-theme theme) t)
+
+  ;; Save option
+  (centaur-set-variable 'centaur-theme theme))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
