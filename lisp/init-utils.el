@@ -163,7 +163,7 @@
     (when sys/macp
       (setenv "PKG_CONFIG_PATH"
               "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
-    (pdf-tools-install t nil t t)
+    (pdf-tools-install t nil t nil)
 
     ;; Set dark theme
     (defun my-pdf-view-set-midnight-colors ()
@@ -204,10 +204,10 @@
              (hotspots (pdf-view-apply-hotspot-functions
                         window page size)))
         (pdf-view-create-image data
-                               :width width
-                               :scale (if (pdf-view-use-scaling-p) 0.5 1)
-                               :map hotspots
-                               :pointer 'arrow)))
+          :width width
+          :scale (if (pdf-view-use-scaling-p) 0.5 1)
+          :map hotspots
+          :pointer 'arrow)))
 
     ;; Recover last viewed position
     (when emacs/>=26p
