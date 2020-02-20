@@ -96,19 +96,19 @@
       ("D" diff-hl-dired-mode "dired gutter" :toggle t))
      "Theme"
      (("t d" (centaur-load-theme 'default) "default"
-       :toggle (eq centaur-theme 'default))
+       :toggle (eq centaur-theme 'default) :exit t)
       ("t c" (centaur-load-theme 'classic) "classic"
-       :toggle (eq centaur-theme 'classic))
+       :toggle (eq centaur-theme 'classic) :exit t)
       ("t r" (centaur-load-theme 'colorful) "colorful"
-       :toggle (eq centaur-theme 'colorful))
+       :toggle (eq centaur-theme 'colorful) :exit t)
       ("t k" (centaur-load-theme 'dark) "dark"
-       :toggle (eq centaur-theme 'dark))
+       :toggle (eq centaur-theme 'dark) :exit t)
       ("t l" (centaur-load-theme 'light) "light"
-       :toggle (eq centaur-theme 'light))
+       :toggle (eq centaur-theme 'light) :exit t)
       ("t y" (centaur-load-theme 'day) "day"
-       :toggle (eq centaur-theme 'day))
+       :toggle (eq centaur-theme 'day) :exit t)
       ("t n" (centaur-load-theme 'night) "night"
-       :toggle (eq centaur-theme 'night))
+       :toggle (eq centaur-theme 'night) :exit t)
       ("t o" (ivy-read "Load custom theme: "
                        (mapcar #'symbol-name
                                (custom-available-themes))
@@ -121,22 +121,22 @@
                                              x)))
                                  (counsel-load-theme-action theme))
                        :caller 'counsel-load-theme)
-       "others" :toggle (not (assoc centaur-theme centaur-theme-alist))))
+       "others" :toggle (not (assoc centaur-theme centaur-theme-alist)) :exit t))
      "Package Archive"
      (("p m" (centaur-set-package-archives 'melpa t)
-       "melpa" :toggle (eq centaur-package-archives 'melpa))
+       "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
       ("p i" (centaur-set-package-archives 'melpa-mirror t)
-       "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror))
+       "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror) :exit t)
       ("p c" (centaur-set-package-archives 'emacs-china t)
-       "emacs china" :toggle (eq centaur-package-archives 'emacs-china))
+       "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
       ("p n" (centaur-set-package-archives 'netease t)
-       "netease" :toggle (eq centaur-package-archives 'netease))
+       "netease" :toggle (eq centaur-package-archives 'netease) :exit t)
       ("p s" (centaur-set-package-archives 'ustc t)
-       "ustc" :toggle (eq centaur-package-archives 'ustc))
+       "ustc" :toggle (eq centaur-package-archives 'ustc) :exit t)
       ("p t" (centaur-set-package-archives 'tencent t)
-       "tencent" :toggle (eq centaur-package-archives 'tencent))
+       "tencent" :toggle (eq centaur-package-archives 'tencent) :exit t)
       ("p u" (centaur-set-package-archives 'tuna t)
-       "tuna" :toggle (eq centaur-package-archives 'tuna))))))
+       "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)))))
 
 (provide 'init-hydra)
 
