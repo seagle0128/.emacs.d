@@ -136,7 +136,8 @@
       ("p t" (centaur-set-package-archives 'tencent t)
        "tencent" :toggle (eq centaur-package-archives 'tencent) :exit t)
       ("p u" (centaur-set-package-archives 'tuna t)
-       "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)))))
+       "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)
+      ("p T" (centaur-test-package-archives) "speed test" :exit t)))))
 
 (provide 'init-hydra)
 
