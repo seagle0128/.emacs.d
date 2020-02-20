@@ -69,6 +69,7 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       ;; Make certain buffers grossly incandescent
+      ;; Must before loading the theme
       (use-package solaire-mode
         :functions persp-load-state-from-file
         :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
@@ -80,22 +81,24 @@
                     :after #'solaire-mode-restore-persp-mode-buffers))
 
       (use-package doom-themes
-        :defines doom-themes-treemacs-theme
         :functions doom-themes-hide-modeline
-        :custom (doom-dark+-blue-modeline t)
+        :custom-face
+        (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
+        :custom
+        (doom-dark+-blue-modeline t)
+        (doom-themes-treemacs-theme "doom-colors")
         :init (centaur-load-theme centaur-theme)
         :config
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
 
         ;; Enable customized theme (`all-the-icons' must be installed!)
-        (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)
         (with-eval-after-load 'treemacs
           (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline))))
   (progn
     (warn "The current theme may not be compatible with Centaur!")
-    (centaur-load-theme centaur-theme)))
+    (load-theme centaur-theme t)))
 
 ;; Mode-line
 (use-package doom-modeline
@@ -106,7 +109,7 @@
   (doom-modeline-mu4e nil)
   :hook (after-init . doom-modeline-mode)
   :init
-  ;; prevent flash of unstyled modeline at startup
+  ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
     (setq doom-modeline--old-format mode-line-format)
     (setq-default mode-line-format nil))
