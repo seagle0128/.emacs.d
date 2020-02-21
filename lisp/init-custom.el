@@ -68,7 +68,8 @@
   :group 'centaur
   :type 'boolean)
 
-;; ELPA: refer to https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
+;; Emacs Lisp Package Archive (ELPA)
+;; @see https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
 (defcustom centaur-package-archives-alist
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                       (not (gnutls-available-p))))
@@ -189,17 +190,31 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :type 'boolean)
 
 ;; Load `custom-file'
-;; If it doesn't exist, copy from the template, then load it.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
+;; At the first startup copy `custom-file' from the example,
+;; and select the package archives
 (let ((custom-example-file
        (expand-file-name "custom-example.el" user-emacs-directory)))
-  (if (and (file-exists-p custom-example-file)
-           (not (file-exists-p custom-file)))
-      (copy-file custom-example-file custom-file)))
+  (when (and (file-exists-p custom-example-file)
+             (not (file-exists-p custom-file)))
+    (copy-file custom-example-file custom-file)
 
-(if (file-exists-p custom-file)
-    (load custom-file))
+    (if (and (executable-find "curl")
+             (y-or-n-p "Do you want to select the fastest mirror automatically?"))
+        (progn
+          (message "Testing...Please wait a moment")
+          (set-package-archives (centaur-test-package-archives 'no-chart)))
+      (set-package-archives
+       (intern
+        ;; Use `ido-completing-read' for better experience since `ivy-mode'
+        ;; is not available at this moment.
+        (ido-completing-read
+         "Select package archives: "
+         (mapcar #'symbol-name
+                 (mapcar #'car centaur-package-archives-alist))))))))
+
+(and (file-readable-p custom-file) (load custom-file))
 
 ;; Load `custom-post.org' or `custom-post.el'
 ;; Put personal configurations to override defaults here.

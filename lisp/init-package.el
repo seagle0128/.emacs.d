@@ -45,7 +45,7 @@
 (advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
 
 ;; Set ELPA packages
-(set-package-archives centaur-package-archives)
+(set-package-archives centaur-package-archives nil nil t)
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27

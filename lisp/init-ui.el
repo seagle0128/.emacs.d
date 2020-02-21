@@ -87,7 +87,7 @@
         :custom
         (doom-dark+-blue-modeline t)
         (doom-themes-treemacs-theme "doom-colors")
-        :init (centaur-load-theme centaur-theme)
+        :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
@@ -98,7 +98,7 @@
           (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline))))
   (progn
     (warn "The current theme may not be compatible with Centaur!")
-    (load-theme centaur-theme t)))
+    (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
 (use-package doom-modeline

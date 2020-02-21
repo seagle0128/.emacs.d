@@ -79,7 +79,7 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (unless (minibuffer-window-active-p (selected-window))
     (revert-buffer t t)
-    (message "Reverted this buffer.")))
+    (message "Reverted this buffer")))
 (global-set-key (kbd "s-r") #'revert-this-buffer)
 
 (defun delete-this-file ()
@@ -198,6 +198,26 @@ Same as `replace-string C-q C-m RET RET'."
        (display-graphic-p)
        (require 'all-the-icons nil t)))
 
+(defun centaur-set-variable (variable value &optional no-save)
+  "Set the VARIABLE to VALUE, and return VALUE.
+
+Save to `custom-file' if NO-SAVE is nil."
+  (customize-set-variable variable value)
+
+  (when (and (not no-save)
+             (file-writable-p custom-file))
+    (with-temp-buffer
+      (insert-file-contents custom-file)
+      (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
+                            (symbol-name variable))))
+        (when (string-match-p regexp (buffer-string))
+          (replace-regexp regexp
+                          (format "(setq %s '%s)"
+                                  (symbol-name variable)
+                                  (symbol-name value)))
+          (write-region nil nil custom-file)
+          (message "Save %s (%s)" variable value))))))
+
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
   :init-value nil
@@ -215,23 +235,36 @@ Same as `replace-string C-q C-m RET RET'."
         (mixed-pitch-mode -1)))))
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
-;; Pakcage archives
-(defun set-package-archives (archives &optional refresh)
-  "Set specific package ARCHIVES repository."
+;; Pakcage repository (ELPA)
+(defun set-package-archives (archives &optional refresh async no-save)
+  "Set the package archives (ELPA).
+
+REFRESH is non-nil, will refresh archive contents.
+ASYNC specifies whether to perform the downloads in the background.
+Save to `custom-file' if NO-SAVE is nil."
   (interactive
    (list
-    (intern (completing-read
-             "Choose package archives: "
-             (mapcar #'car centaur-package-archives-alist)))))
-  (customize-set-variable 'centaur-package-archives archives)
-  (and refresh (package-refresh-contents))
+    (intern (completing-read "Select package archives: "
+                             (mapcar #'car centaur-package-archives-alist)))))
+  ;; Set option
+  (centaur-set-variable 'centaur-package-archives archives no-save)
+
+  ;; Refresh if need
+  (and refresh (package-refresh-contents async))
+
   (message "Set package archives to `%s'" archives))
 (defalias 'centaur-set-package-archives #'set-package-archives)
 
 ;; Refer to https://emacs-china.org/t/elpa/11192
-(defun centaur-test-package-archives ()
-  "Test speed of all package archives and display on the chart."
+(defun centaur-test-package-archives (&optional no-chart)
+  "Test connection speed of all package archives and display on chart.
+
+Not displaying the chart if NO-CHART is non-nil.
+Return the fastest package archive."
   (interactive)
+  (unless (executable-find "curl")
+    (user-error "curl is not found"))
+
   (let* ((urls (mapcar
                 (lambda (url)
                   (concat url "archive-contents"))
@@ -245,15 +278,26 @@ Same as `replace-string C-q C-m RET RET'."
                          (message "Fetching %s" url)
                          (call-process "curl" nil nil nil "--max-time" "10" url)
                          (float-time (time-subtract (current-time) start))))
-                     urls)))
-    (message "%s" urls)
-    (when (require 'chart nil t)
+                     urls))
+         (fastest (car (nth (cl-position (apply #'min durations) durations)
+                            centaur-package-archives-alist))))
+
+    ;; Display on chart
+    (when (and (not no-chart)
+               (require 'chart nil t)
+               (require 'url nil t))
       (chart-bar-quickie
        'horizontal
        "Speed test for the ELPA mirrors"
-       (mapcar (lambda (url) (url-host (url-generic-parse-url url))) urls) "Elpa"
+       (mapcar (lambda (url) (url-host (url-generic-parse-url url))) urls) "ELPA"
        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
-    (message "%s" durations)))
+
+    (message "%s" urls)
+    (message "%s" durations)
+    (message "%s is the fastest package archive" fastest)
+
+    ;; Return the fastest
+    fastest))
 
 ;; WORKAROUND: fix blank screen issue on macOS.
 (defun fix-fullscreen-cocoa ()
@@ -275,7 +319,7 @@ Same as `replace-string C-q C-m RET RET'."
           (cd dir)
           (shell-command "git pull")
           (message "Updating configurations...done"))
-      (message "\"%s\" doesn't exist." dir))))
+      (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-config #'update-config)
 
 (defun update-packages (&optional sync)
@@ -347,7 +391,7 @@ If SYNC is non-nil, the updating process is synchronous."
           (cd dir)
           (shell-command "git pull")
           (message "Updating dotfiles...done"))
-      (message "\"%s\" doesn't exist." dir))))
+      (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
 (defun update-org ()
@@ -360,7 +404,7 @@ If SYNC is non-nil, the updating process is synchronous."
           (cd dir)
           (shell-command "git pull")
           (message "Updating org files...done"))
-      (message "\"%s\" doesn't exist." dir))))
+      (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
 
 
@@ -381,15 +425,18 @@ If SYNC is non-nil, the updating process is synchronous."
   "Check if the THEME is compatible. THEME is a symbol."
   (string-prefix-p "doom" (symbol-name (centaur--real-theme theme))))
 
-(defun centaur-load-theme (theme)
-  "Set color THEME."
+(defun centaur-load-theme (theme &optional no-save)
+  "Set color THEME. Save to `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern (completing-read "Load theme: "
                              (mapcar #'car centaur-theme-alist)))))
-  (setq centaur-theme theme)
+  ;; Disable others and enable new one
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme (centaur--real-theme theme) t))
+  (load-theme (centaur--real-theme theme) t)
+
+  ;; Set option
+  (centaur-set-variable 'centaur-theme theme no-save))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
