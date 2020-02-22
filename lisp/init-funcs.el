@@ -202,21 +202,22 @@ Same as `replace-string C-q C-m RET RET'."
   "Set the VARIABLE to VALUE, and return VALUE.
 
 Save to `custom-file' if NO-SAVE is nil."
-  (customize-set-variable variable value)
+  (unless (eq (symbol-value variable) value)
+    (customize-set-variable variable value)
 
-  (when (and (not no-save)
-             (file-writable-p custom-file))
-    (with-temp-buffer
-      (insert-file-contents custom-file)
-      (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
-                            (symbol-name variable))))
-        (when (string-match-p regexp (buffer-string))
-          (replace-regexp regexp
-                          (format "(setq %s '%s)"
-                                  (symbol-name variable)
-                                  (symbol-name value)))
-          (write-region nil nil custom-file)
-          (message "Save %s (%s)" variable value))))))
+    (when (and (not no-save)
+               (file-writable-p custom-file))
+      (with-temp-buffer
+        (insert-file-contents custom-file)
+        (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
+                              (symbol-name variable))))
+          (when (string-match-p regexp (buffer-string))
+            (replace-regexp regexp
+                            (format "(setq %s '%s)"
+                                    (symbol-name variable)
+                                    (symbol-name value)))
+            (write-region nil nil custom-file)
+            (message "Save %s (%s)" variable value)))))))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
