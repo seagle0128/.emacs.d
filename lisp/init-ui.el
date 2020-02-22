@@ -111,7 +111,7 @@
   :init
   ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
-    (setq doom-modeline--old-format mode-line-format)
+    (setq doom-modeline--default-format mode-line-format)
     (setq-default mode-line-format nil))
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
