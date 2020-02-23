@@ -200,10 +200,9 @@ If Non-nil, use dashboard, otherwise will restore previous session."
              (not (file-exists-p custom-file)))
     (copy-file custom-example-file custom-file)
 
-    (if (and (executable-find "curl")
-             (y-or-n-p "Do you want to select the fastest mirror automatically?"))
+    (if (executable-find "curl")
         (progn
-          (message "Testing...Please wait a moment")
+          (message "Testing mirror connection...Please wait a moment")
           (set-package-archives (centaur-test-package-archives 'no-chart)))
       (set-package-archives
        (intern
