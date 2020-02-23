@@ -107,7 +107,7 @@
                                                              :v-adjust -0.05
                                                              :face 'error))
                                       ((char-displayable-p ?🧡) "🧡 ")
-                                      (t (propertize ">" 'face 'font-lock-doc-face)))
+                                      (t (propertize ">" 'face 'dashboard-footer)))
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
@@ -160,6 +160,17 @@
             (dashboard-center-line title)
             (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
+
+    ;; FIXME: Insert copyright
+    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
+    (defun my-dashboard-insert-copyright ()
+      "Insert copyright in the footer."
+      (when dashboard-footer
+        (insert "\n  ")
+        (dashboard-center-line dashboard-footer)
+        (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
+        (insert "\n")))
+    (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
     (defvar dashboard-recover-layout-p nil
       "Wether recovers the layout.")
