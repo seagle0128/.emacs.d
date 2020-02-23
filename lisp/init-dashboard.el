@@ -107,7 +107,7 @@
                                                              :v-adjust -0.05
                                                              :face 'error))
                                       ((char-displayable-p ?🧡) "🧡 ")
-                                      (t (propertize ">" 'face 'font-lock-doc-face)))
+                                      (t (propertize ">" 'face 'dashboard-footer)))
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
@@ -161,41 +161,19 @@
             (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
 
+    ;; FIXME: Insert copyright
+    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
+    (defun my-dashboard-insert-copyright ()
+      "Insert copyright in the footer."
+      (when dashboard-footer
+        (insert "\n  ")
+        (dashboard-center-line dashboard-footer)
+        (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
+        (insert "\n")))
+    (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
+
     (defvar dashboard-recover-layout-p nil
       "Wether recovers the layout.")
-
-    (defun open-dashboard ()
-      "Open the *dashboard* buffer and jump to the first widget."
-      (interactive)
-      ;; Check if need to recover layout
-      (if (> (length (window-list-1))
-             ;; exclude `treemacs' window
-             (if (and (fboundp 'treemacs-current-visibility)
-                      (eq (treemacs-current-visibility) 'visible))
-                 2
-               1))
-          (setq dashboard-recover-layout-p t))
-
-      (delete-other-windows)
-
-      ;; Refresh dashboard buffer
-      (if (get-buffer dashboard-buffer-name)
-          (kill-buffer dashboard-buffer-name))
-      (dashboard-insert-startupify-lists)
-      (switch-to-buffer dashboard-buffer-name)
-
-      ;; Jump to the first section
-      (goto-char (point-min))
-      (dashboard-goto-recent-files))
-
-    (defun quit-dashboard ()
-      "Quit dashboard window."
-      (interactive)
-      (quit-window t)
-      (when (and dashboard-recover-layout-p
-                 (bound-and-true-p winner-mode))
-        (winner-undo)
-        (setq dashboard-recover-layout-p nil)))
 
     (defun restore-previous-session ()
       "Restore the previous session."
@@ -218,7 +196,7 @@
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
       (interactive)
-      (let (func (local-key-binding "r"))
+      (let ((func (local-key-binding "r")))
         (and func (funcall func))))
 
     (defun dashboard-goto-projects ()
@@ -231,7 +209,39 @@
       "Go to bookmarks."
       (interactive)
       (let ((func (local-key-binding "m")))
-        (and func (funcall func))))))
+        (and func (funcall func))))
+
+    (defun open-dashboard ()
+      "Open the *dashboard* buffer and jump to the first widget."
+      (interactive)
+      ;; Check if need to recover layout
+      (if (> (length (window-list-1))
+             ;; exclude `treemacs' window
+             (if (and (fboundp 'treemacs-current-visibility)
+                      (eq (treemacs-current-visibility) 'visible))
+                 2
+               1))
+          (setq dashboard-recover-layout-p t))
+
+      (delete-other-windows)
+
+      ;; Refresh dashboard buffer
+      (when (get-buffer dashboard-buffer-name)
+        (kill-buffer dashboard-buffer-name))
+      (dashboard-insert-startupify-lists)
+      (switch-to-buffer dashboard-buffer-name)
+
+      ;; Jump to the first section
+      (dashboard-goto-recent-files))
+
+    (defun quit-dashboard ()
+      "Quit dashboard window."
+      (interactive)
+      (quit-window t)
+      (when (and dashboard-recover-layout-p
+                 (bound-and-true-p winner-mode))
+        (winner-undo)
+        (setq dashboard-recover-layout-p nil)))))
 
 (provide 'init-dashboard)
 

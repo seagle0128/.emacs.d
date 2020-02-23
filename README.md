@@ -277,6 +277,11 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
     files like .profile, .bash_profile or .zshenv, then `Centaur Emacs` is able
     to recognize and import the environment variables.
 
+1. How to use [zoom-window](https://github.com/syohex/emacs-zoom-window) in
+   `Centuar Emacs`?
+
+   See [#169](https://github.com/seagle0128/.emacs.d/issues/169#issuecomment-590035527).
+
 ## Donate
 
 If you think the it's helpful for you, please consider paying a cup of coffee
