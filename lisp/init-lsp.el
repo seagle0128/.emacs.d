@@ -75,7 +75,6 @@
 
    (use-package lsp-ui
      :custom-face
-     (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
      (lsp-ui-sideline-code-action ((t (:inherit warning))))
      :pretty-hydra
      ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket")
