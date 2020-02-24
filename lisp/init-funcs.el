@@ -265,8 +265,6 @@ Save to `custom-file' if NO-SAVE is nil."
 Not displaying the chart if NO-CHART is non-nil.
 Return the fastest package archive."
   (interactive)
-  (unless (executable-find "curl")
-    (user-error "curl is not found"))
 
   (let* ((urls (mapcar
                 (lambda (url)
@@ -278,8 +276,12 @@ Return the fastest package archive."
          (durations (mapcar
                      (lambda (url)
                        (let ((start (current-time)))
-                         (message "Fetching %s" url)
-                         (call-process "curl" nil nil nil "--max-time" "10" url)
+                         (message "Fetching %s..." url)
+                         (cond ((executable-find "curl")
+                                (call-process "curl" nil nil nil "--max-time" "10" url))
+                               ((executable-find "wget")
+                                (call-process "wget" nil nil nil "--timeout=10" url))
+                               (t (user-error "curl or wget is not found")))
                          (float-time (time-subtract (current-time) start))))
                      urls))
          (fastest (car (nth (cl-position (apply #'min durations) durations)
