@@ -149,7 +149,9 @@
       "irc" :toggle doom-modeline-irc)
      ("F" (setq doom-modeline-irc-buffers (not doom-modeline-irc-buffers))
       "irc buffers" :toggle doom-modeline-irc-buffers)
-     ("S" (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
+     ("S" (progn
+            (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
+            (and (bound-and-true-p flycheck-mode) (flycheck-buffer)))
       "simple checker" :toggle doom-modeline-checker-simple-format)
      ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
       "version" :toggle doom-modeline-env-version))
