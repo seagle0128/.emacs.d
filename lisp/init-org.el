@@ -102,28 +102,9 @@ prepended to the element after the #+HEADER: tag."
                     (self-insert-command 1)))))
   :hook ((org-mode . (lambda ()
                        "Beautify org symbols."
-                       (dolist (symbol '(("[ ]" . ?☐)
-                                         ("[X]" . ?☑)
-                                         ("[-]" . ?⛝)
-
-                                         ("#+ARCHIVE:" . ?📦)
-                                         ("#+AUTHOR:" . ?👤)
-                                         ("#+CREATOR:" . ?💁)
-                                         ("#+DATE:" . ?📆)
-                                         ("#+DESCRIPTION:" . ?⸙)
-                                         ("#+EMAIL:" . ?🖂)
-                                         ("#+OPTIONS:" . ?⛭)
-                                         ("#+SETUPFILE:" . ?⛮)
-                                         ("#+TAGS:" . ?🏷)
-                                         ("#+TITLE:" . ?🕮)
-
-                                         ("#+BEGIN_SRC" . ?✎)
-                                         ("#+END_SRC" . ?□)
-                                         ("#+BEGIN_QUOTE" . ?»)
-                                         ("#+END_QUOTE" . ?«)
-                                         ("#+HEADERS" . ?☰)
-                                         ("#+RESULTS:" . ?💻)))
-                         (add-to-list 'prettify-symbols-alist symbol))
+                       (setq prettify-symbols-alist
+                             (append centaur-prettify-org-symbols-alist
+                                     prettify-symbols-alist))
                        (prettify-symbols-mode 1)))
          (org-indent-mode . (lambda()
                               (diminish 'org-indent-mode)
