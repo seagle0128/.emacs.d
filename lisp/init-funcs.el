@@ -30,13 +30,12 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
+(require 'cl-lib)
+
+(require 'init-const)
+(require 'init-custom)
 
 ;; Suppress warnings
-(defvar centaur-package-archives-alist)
-(defvar centaur-theme-alist)
-(defvar centaur-proxy)
 (defvar socks-noproxy)
 (defvar socks-server)
 
@@ -148,15 +147,13 @@ Same as `replace-string C-q C-m RET RET'."
 
 ;; Open custom file
 (defun open-custom-file()
-  "Open custom.el if exists, otherwise create it."
+  "Open or create `custom-file'."
   (interactive)
-  (let ((custom-example
-         (expand-file-name "custom-example.el" user-emacs-directory)))
-    (unless (file-exists-p custom-file)
-      (if (file-exists-p custom-example)
-          (copy-file custom-example custom-file)
-        (error "Unable to find \"%s\"" custom-example)))
-    (find-file custom-file)))
+  (unless (file-exists-p custom-file)
+    (if (file-exists-p centaur-custom-example-file)
+        (copy-file centaur-custom-example-file custom-file)
+      (error "Unable to find \"%s\"" centaur-custom-example-file)))
+  (find-file custom-file))
 
 ;; Misc
 (defun create-scratch-buffer ()
@@ -479,10 +476,10 @@ If SYNC is non-nil, the updating process is synchronous."
       (proxy-http-disable)
     (proxy-http-enable)))
 
-(when emacs/>=25.2p
-  (defun proxy-socks-show ()
-    "Show SOCKS proxy."
-    (interactive)
+(defun proxy-socks-show ()
+  "Show SOCKS proxy."
+  (interactive)
+  (when (fboundp 'cadddr)                ; defined 25.2+
     (if socks-noproxy
         (message "Current SOCKS%d proxy is %s:%d"
                  (cadddr socks-server) (cadr socks-server) (caddr socks-server))

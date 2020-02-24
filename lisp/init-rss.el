@@ -30,7 +30,9 @@
 
 ;;; Code:
 
-(unless (version< (org-version) "9.0")
+(require 'init-const)
+
+(when emacs/>=25.2p
   (use-package elfeed
     :pretty-hydra
     ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square")

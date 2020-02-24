@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
+(require 'init-custom)
+(require 'init-funcs)
 
 (use-package pretty-hydra
   :bind ("<f6>" . toggles-hydra/body)
@@ -52,92 +52,92 @@
        (propertize title 'face face))))
 
   ;; Global toggles
-  (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
-                                      :color amaranth :quit-key "q")
-    ("Basic"
-     (("n" (if (fboundp 'display-line-numbers-mode)
-               (display-line-numbers-mode (if display-line-numbers-mode -1 1))
-             (global-linum-mode (if global-linum-mode -1 1)))
-       "line number" :toggle (if (fboundp 'display-line-numbers-mode)
-                                 display-line-numbers-mode
-                               global-linum-mode))
-      ("a" global-aggressive-indent-mode "aggressive indent" :toggle t)
-      ("d" global-hungry-delete-mode "hungry delete" :toggle t)
-      ("e" electric-pair-mode "electric pair" :toggle t)
-      ("c" flyspell-mode "spell check" :toggle t)
-      ("s" prettify-symbols-mode "pretty symbol" :toggle t)
-      ("l" global-page-break-lines-mode "page break lines" :toggle t)
-      ("b" display-battery-mode "battery" :toggle t)
-      ("T" display-time-mode "time" :toggle t)
-      ("m" doom-modeline-mode "modern mode-line" :toggle t))
-     "Highlight"
-     (("h l" global-hl-line-mode "line" :toggle t)
-      ("h p" show-paren-mode "paren" :toggle t)
-      ("h s" symbol-overlay-mode "symbol" :toggle t)
-      ("h r" rainbow-mode "rainbow" :toggle t)
-      ("h w" (setq-default show-trailing-whitespace (not show-trailing-whitespace))
-       "whitespace" :toggle show-trailing-whitespace)
-      ("h d" rainbow-delimiters-mode "delimiter" :toggle t)
-      ("h i" highlight-indent-guides-mode "indent" :toggle t)
-      ("h t" global-hl-todo-mode "todo" :toggle t))
-     "Coding"
-     (("f" flycheck-mode "flycheck" :toggle t)
-      ("F" flymake-mode "flymake" :toggle t)
-      ("o" origami-mode "folding" :toggle t)
-      ("O" hs-minor-mode "hideshow" :toggle t)
-      ("u" subword-mode "subword" :toggle t)
-      ("W" which-function-mode "which function" :toggle t)
-      ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-      ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
-     "Version Control"
-     (("v" global-diff-hl-mode "gutter" :toggle t)
-      ("V" diff-hl-flydiff-mode "live gutter" :toggle t)
-      ("M" diff-hl-margin-mode "margin gutter" :toggle t)
-      ("D" diff-hl-dired-mode "dired gutter" :toggle t))
-     "Theme"
-     (("t d" (centaur-load-theme 'default) "default"
-       :toggle (eq centaur-theme 'default) :exit t)
-      ("t c" (centaur-load-theme 'classic) "classic"
-       :toggle (eq centaur-theme 'classic) :exit t)
-      ("t r" (centaur-load-theme 'colorful) "colorful"
-       :toggle (eq centaur-theme 'colorful) :exit t)
-      ("t k" (centaur-load-theme 'dark) "dark"
-       :toggle (eq centaur-theme 'dark) :exit t)
-      ("t l" (centaur-load-theme 'light) "light"
-       :toggle (eq centaur-theme 'light) :exit t)
-      ("t y" (centaur-load-theme 'day) "day"
-       :toggle (eq centaur-theme 'day) :exit t)
-      ("t n" (centaur-load-theme 'night) "night"
-       :toggle (eq centaur-theme 'night) :exit t)
-      ("t o" (ivy-read "Load custom theme: "
-                       (mapcar #'symbol-name
-                               (custom-available-themes))
-                       :predicate (lambda (candidate)
-                                    (string-prefix-p "doom-" candidate))
-                       :action (lambda (theme)
-                                 (setq centaur-theme
-                                       (let ((x (intern theme)))
-                                         (or (car (rassoc x centaur-theme-alist))
-                                             x)))
-                                 (counsel-load-theme-action theme))
-                       :caller 'counsel-load-theme)
-       "others" :toggle (not (assoc centaur-theme centaur-theme-alist)) :exit t))
-     "Package Archive"
-     (("p m" (centaur-set-package-archives 'melpa t)
-       "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
-      ("p i" (centaur-set-package-archives 'melpa-mirror t)
-       "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror) :exit t)
-      ("p c" (centaur-set-package-archives 'emacs-china t)
-       "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
-      ("p n" (centaur-set-package-archives 'netease t)
-       "netease" :toggle (eq centaur-package-archives 'netease) :exit t)
-      ("p s" (centaur-set-package-archives 'ustc t)
-       "ustc" :toggle (eq centaur-package-archives 'ustc) :exit t)
-      ("p t" (centaur-set-package-archives 'tencent t)
-       "tencent" :toggle (eq centaur-package-archives 'tencent) :exit t)
-      ("p u" (centaur-set-package-archives 'tuna t)
-       "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)
-      ("p T" (centaur-test-package-archives) "speed test" :exit t)))))
+  (with-no-warnings
+    (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on")
+                                        :color amaranth :quit-key "q")
+      ("Basic"
+       (("n" (if (fboundp 'display-line-numbers-mode)
+                 (display-line-numbers-mode (if display-line-numbers-mode -1 1))
+               (global-linum-mode (if global-linum-mode -1 1)))
+         "line number"
+         :toggle (or (bound-and-true-p display-line-numbers-mode) global-linum-mode))
+        ("a" global-aggressive-indent-mode "aggressive indent" :toggle t)
+        ("d" global-hungry-delete-mode "hungry delete" :toggle t)
+        ("e" electric-pair-mode "electric pair" :toggle t)
+        ("c" flyspell-mode "spell check" :toggle t)
+        ("s" prettify-symbols-mode "pretty symbol" :toggle t)
+        ("l" global-page-break-lines-mode "page break lines" :toggle t)
+        ("b" display-battery-mode "battery" :toggle t)
+        ("T" display-time-mode "time" :toggle t)
+        ("m" doom-modeline-mode "modern mode-line" :toggle t))
+       "Highlight"
+       (("h l" global-hl-line-mode "line" :toggle t)
+        ("h p" show-paren-mode "paren" :toggle t)
+        ("h s" symbol-overlay-mode "symbol" :toggle t)
+        ("h r" rainbow-mode "rainbow" :toggle t)
+        ("h w" (setq-default show-trailing-whitespace (not show-trailing-whitespace))
+         "whitespace" :toggle show-trailing-whitespace)
+        ("h d" rainbow-delimiters-mode "delimiter" :toggle t)
+        ("h i" highlight-indent-guides-mode "indent" :toggle t)
+        ("h t" global-hl-todo-mode "todo" :toggle t))
+       "Coding"
+       (("f" flycheck-mode "flycheck" :toggle t)
+        ("F" flymake-mode "flymake" :toggle t)
+        ("o" origami-mode "folding" :toggle t)
+        ("O" hs-minor-mode "hideshow" :toggle t)
+        ("u" subword-mode "subword" :toggle t)
+        ("W" which-function-mode "which function" :toggle t)
+        ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
+        ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
+       "Version Control"
+       (("v" global-diff-hl-mode "gutter" :toggle t)
+        ("V" diff-hl-flydiff-mode "live gutter" :toggle t)
+        ("M" diff-hl-margin-mode "margin gutter" :toggle t)
+        ("D" diff-hl-dired-mode "dired gutter" :toggle t))
+       "Theme"
+       (("t d" (centaur-load-theme 'default) "default"
+         :toggle (eq centaur-theme 'default) :exit t)
+        ("t c" (centaur-load-theme 'classic) "classic"
+         :toggle (eq centaur-theme 'classic) :exit t)
+        ("t r" (centaur-load-theme 'colorful) "colorful"
+         :toggle (eq centaur-theme 'colorful) :exit t)
+        ("t k" (centaur-load-theme 'dark) "dark"
+         :toggle (eq centaur-theme 'dark) :exit t)
+        ("t l" (centaur-load-theme 'light) "light"
+         :toggle (eq centaur-theme 'light) :exit t)
+        ("t y" (centaur-load-theme 'day) "day"
+         :toggle (eq centaur-theme 'day) :exit t)
+        ("t n" (centaur-load-theme 'night) "night"
+         :toggle (eq centaur-theme 'night) :exit t)
+        ("t o" (ivy-read "Load custom theme: "
+                         (mapcar #'symbol-name
+                                 (custom-available-themes))
+                         :predicate (lambda (candidate)
+                                      (string-prefix-p "doom-" candidate))
+                         :action (lambda (theme)
+                                   (setq centaur-theme
+                                         (let ((x (intern theme)))
+                                           (or (car (rassoc x centaur-theme-alist))
+                                               x)))
+                                   (counsel-load-theme-action theme))
+                         :caller 'counsel-load-theme)
+         "others" :toggle (not (assoc centaur-theme centaur-theme-alist)) :exit t))
+       "Package Archive"
+       (("p m" (centaur-set-package-archives 'melpa t)
+         "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
+        ("p i" (centaur-set-package-archives 'melpa-mirror t)
+         "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror) :exit t)
+        ("p c" (centaur-set-package-archives 'emacs-china t)
+         "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
+        ("p n" (centaur-set-package-archives 'netease t)
+         "netease" :toggle (eq centaur-package-archives 'netease) :exit t)
+        ("p s" (centaur-set-package-archives 'ustc t)
+         "ustc" :toggle (eq centaur-package-archives 'ustc) :exit t)
+        ("p t" (centaur-set-package-archives 'tencent t)
+         "tencent" :toggle (eq centaur-package-archives 'tencent) :exit t)
+        ("p u" (centaur-set-package-archives 'tuna t)
+         "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)
+        ("p T" (centaur-test-package-archives) "speed test" :exit t))))))
 
 (provide 'init-hydra)
 

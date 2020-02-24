@@ -230,9 +230,9 @@
           ("*ert*" :size 15 :align 'below :autoclose t)
           (overseer-buffer-mode :size 15 :align 'below :autoclose t)
 
-          (" *Flycheck checkers*" :select t :size 0.4 :align 'below :autoclose t)
+          (" *Flycheck checkers*" :select t :size 0.3 :align 'below :autoclose t)
           ((flycheck-error-list-mode flymake-diagnostics-buffer-mode)
-           :select t :size 0.3 :align 'below :autoclose t)
+           :select t :size 0.25 :align 'below :autoclose t)
 
           (("*lsp-help*" "*lsp session*") :size 0.3 :align 'below :autoclose t)
           ("*DAP Templates*" :select t :size 0.4 :align 'below :autoclose t)

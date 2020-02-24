@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
+(require 'init-const)
 
 ;; Delete selection if you insert
 (use-package delsel
@@ -44,9 +43,9 @@
   :bind (:map text-mode-map
          ("<C-return>" . rect-hydra/body)
          :map prog-mode-map
-         ("<C-return>" . rect-hydra/body)
-         :map org-mode-map
-         ("<s-return>" . rect-hydra/body))
+         ("<C-return>" . rect-hydra/body))
+  :init (with-eval-after-load 'org
+          (bind-key "<s-return>" #'rect-hydra/body org-mode-map))
   :pretty-hydra
   ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
@@ -80,6 +79,7 @@
 ;; Pass a URL to a WWW browser
 (use-package browse-url
   :ensure nil
+  :defines dired-mode-map
   :bind (("C-c C-z ." . browse-url-at-point)
          ("C-c C-z b" . browse-url-of-buffer)
          ("C-c C-z r" . browse-url-of-region)
@@ -90,32 +90,32 @@
   (with-eval-after-load 'dired
     (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)))
 
-(when (featurep 'xwidget-internal)
-  (use-package xwidget
-    :ensure nil
-    :bind (("C-c C-z w" . xwidget-webkit-browse-url)
-           :map xwidget-webkit-mode-map
-           ("?" . xwidget-hydra/body))
-    :pretty-hydra
-    ((:title (pretty-hydra-title "Webkit" 'faicon "chrome")
-      :color amaranth :quit-key "q")
-     ("Navigate"
-      (("b" xwidget-webkit-back "back")
-       ("f" xwidget-webkit-forward "forward")
-       ("r" xwidget-webkit-reload "refresh")
-       ("SPC" xwidget-webkit-scroll-up "scroll up")
-       ("DEL" xwidget-webkit-scroll-down "scroll down")
-       ("S-SPC" xwidget-webkit-scroll-down "scroll down"))
-      "Zoom"
-      (("+" xwidget-webkit-zoom-in "zoom in")
-       ("=" xwidget-webkit-zoom-in "zoom in")
-       ("-" xwidget-webkit-zoom-out "zoom out"))
-      "Misc"
-      (("g" xwidget-webkit-browse-url "browse url" :exit t)
-       ("u" xwidget-webkit-current-url "show url" :exit t)
-       ("w" xwidget-webkit-current-url-message-kill "copy url" :exit t)
-       ("h" describe-mode "help" :exit t)
-       ("Q" quit-window "quit" :exit t))))))
+(and (featurep 'xwidget-internal)
+     (use-package xwidget
+       :ensure nil
+       :bind (("C-c C-z w" . xwidget-webkit-browse-url)
+              :map xwidget-webkit-mode-map
+              ("?" . xwidget-hydra/body))
+       :pretty-hydra
+       ((:title (pretty-hydra-title "Webkit" 'faicon "chrome")
+         :color amaranth :quit-key "q")
+        ("Navigate"
+         (("b" xwidget-webkit-back "back")
+          ("f" xwidget-webkit-forward "forward")
+          ("r" xwidget-webkit-reload "refresh")
+          ("SPC" xwidget-webkit-scroll-up "scroll up")
+          ("DEL" xwidget-webkit-scroll-down "scroll down")
+          ("S-SPC" xwidget-webkit-scroll-down "scroll down"))
+         "Zoom"
+         (("+" xwidget-webkit-zoom-in "zoom in")
+          ("=" xwidget-webkit-zoom-in "zoom in")
+          ("-" xwidget-webkit-zoom-out "zoom out"))
+         "Misc"
+         (("g" xwidget-webkit-browse-url "browse url" :exit t)
+          ("u" xwidget-webkit-current-url "show url" :exit t)
+          ("w" xwidget-webkit-current-url-message-kill "copy url" :exit t)
+          ("h" describe-mode "help" :exit t)
+          ("Q" quit-window "quit" :exit t))))))
 
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
