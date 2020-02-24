@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
-
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil

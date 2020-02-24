@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
+(require 'init-custom)
 
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”

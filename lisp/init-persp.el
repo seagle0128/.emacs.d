@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
+(require 'init-custom)
 (require 'init-funcs)
 
 ;; Windows/buffers sets shared among frames + save/load.

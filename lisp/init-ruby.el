@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
-
 (use-package ruby-mode
   :ensure nil
   :config

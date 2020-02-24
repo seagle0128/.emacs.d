@@ -30,9 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+(require 'init-const)
+(require 'init-funcs)
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -220,7 +219,6 @@
 ;; Epub reader
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
-  :functions centaur-read-mode
   :hook (nov-mode . my-nov-setup)
   :init
   (defun my-nov-setup ()

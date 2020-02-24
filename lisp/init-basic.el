@@ -30,9 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+(require 'init-const)
+(require 'init-custom)
 (require 'init-funcs)
 
 ;; Personal information

@@ -30,14 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
-
 ;; Python Mode
-;; Install:
-;;   pip install pyflakes
-;;   pip install autopep8
+;; Install: pip install pyflakes autopep8
 (use-package python
   :ensure nil
   :hook (inferior-python-mode . (lambda ()
