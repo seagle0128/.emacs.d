@@ -208,15 +208,18 @@ Save to `custom-file' if NO-SAVE is nil."
              (file-writable-p custom-file))
     (with-temp-buffer
       (insert-file-contents custom-file)
-      (let ((regexp (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
-                            (symbol-name variable))))
-        (when (string-match-p regexp (buffer-string))
-          (replace-regexp regexp
-                          (format "(setq %s '%s)"
-                                  (symbol-name variable)
-                                  (symbol-name value)))
-          (write-region nil nil custom-file)
-          (message "Save %s (%s)" variable value))))))
+      (goto-char (point-min))
+
+      (while (re-search-forward (format "^[\t ]*[;]*[\t ]*(setq %s .*)"
+                                        (symbol-name variable))
+                                nil t)
+        (replace-match (format "(setq %s '%s)"
+                               (symbol-name variable)
+                               (symbol-name value))
+                       nil nil))
+
+      (write-region nil nil custom-file)
+      (message "Save %s (%s)" variable value))))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
