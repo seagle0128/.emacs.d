@@ -87,8 +87,7 @@
         (doom-themes-visual-bell-config)
 
         ;; Enable customized theme
-        ;; FIXME: https://github.com/hlissner/emacs-doom-themes/issues/410
-        (and emacs/>=26p (doom-themes-treemacs-config))))
+        (doom-themes-treemacs-config)))
   (progn
     (warn "The current theme may not be compatible with Centaur!")
     (centaur-load-theme centaur-theme t)))
