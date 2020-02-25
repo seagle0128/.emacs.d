@@ -14,7 +14,7 @@
 ;; (setq centaur-theme 'light)                    ; Color theme: default, classic, colorful, dark, light, day or night
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
-;; (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
+;; (setq centaur-chinese-calendar t)              ; Use Chinese calendar or not: t or nil
 ;; (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications
 ;; (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
 ;; (setq centaur-benchmark-init t)                ; Enable initialization benchmark or not: t or nil
@@ -54,6 +54,12 @@
 ;;       smtpmail-default-smtp-server "smtp.gmail.com"
 ;;       smtpmail-smtp-server "smtp.gmail.com"
 ;;       smtpmail-smtp-service 587)
+
+;; Calendar
+;; Set location , then press `S' can show the time of sunrise and sunset
+;; (setq calendar-location-name "Chengdu"
+;;       calendar-latitude 30.67
+;;       calendar-longitude 104.07)
 
 ;; Misc.
 ;; (setq confirm-kill-emacs 'y-or-n-p)
