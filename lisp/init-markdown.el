@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
-
 (use-package markdown-mode
   :hook ((markdown-mode . auto-fill-mode))
   :mode (("README\\.md\\'" . gfm-mode))

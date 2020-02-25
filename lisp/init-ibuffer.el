@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
+(require 'init-const)
+(require 'init-funcs)
 
 (use-package ibuffer
   :ensure nil
@@ -44,15 +44,16 @@
     :init (all-the-icons-ibuffer-mode 1))
 
   (with-eval-after-load 'counsel
-    (defun my-ibuffer-find-file ()
-      (interactive)
-      (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                 (if (buffer-live-p buf)
-                                     (with-current-buffer buf
-                                       default-directory)
-                                   default-directory))))
-        (counsel-find-file default-directory)))
-    (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
+    (with-no-warnings
+      (defun my-ibuffer-find-file ()
+        (interactive)
+        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+                                   (if (buffer-live-p buf)
+                                       (with-current-buffer buf
+                                         default-directory)
+                                     default-directory))))
+          (counsel-find-file default-directory)))
+      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
 
 ;; Group ibuffer's list by project root
 (use-package ibuffer-projectile

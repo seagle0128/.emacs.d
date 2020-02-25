@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
+(require 'init-const)
 
 (use-package shell
   :ensure nil
@@ -40,31 +39,32 @@
   :init
   (setq system-uses-terminfo nil)
 
-  (defun my-shell-simple-send (proc command)
-    "Various PROC COMMANDs pre-processing before sending to shell."
-    (cond
-     ;; Checking for clear command and execute it.
-     ((string-match "^[ \t]*clear[ \t]*$" command)
-      (comint-send-string proc "\n")
-      (erase-buffer))
-     ;; Checking for man command and execute it.
-     ((string-match "^[ \t]*man[ \t]*" command)
-      (comint-send-string proc "\n")
-      (setq command (replace-regexp-in-string "^[ \t]*man[ \t]*" "" command))
-      (setq command (replace-regexp-in-string "[ \t]+$" "" command))
-      ;;(message (format "command %s command" command))
-      (funcall 'man command))
-     ;; Send other commands to the default handler.
-     (t (comint-simple-send proc command))))
+  (with-no-warnings
+    (defun my-shell-simple-send (proc command)
+      "Various PROC COMMANDs pre-processing before sending to shell."
+      (cond
+       ;; Checking for clear command and execute it.
+       ((string-match "^[ \t]*clear[ \t]*$" command)
+        (comint-send-string proc "\n")
+        (erase-buffer))
+       ;; Checking for man command and execute it.
+       ((string-match "^[ \t]*man[ \t]*" command)
+        (comint-send-string proc "\n")
+        (setq command (replace-regexp-in-string "^[ \t]*man[ \t]*" "" command))
+        (setq command (replace-regexp-in-string "[ \t]+$" "" command))
+        ;;(message (format "command %s command" command))
+        (funcall 'man command))
+       ;; Send other commands to the default handler.
+       (t (comint-simple-send proc command))))
 
-  (defun my-shell-mode-hook ()
-    "Shell mode customizations."
-    (local-set-key '[up] 'comint-previous-input)
-    (local-set-key '[down] 'comint-next-input)
-    (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
+    (defun my-shell-mode-hook ()
+      "Shell mode customization."
+      (local-set-key '[up] 'comint-previous-input)
+      (local-set-key '[down] 'comint-next-input)
+      (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
 
-    (ansi-color-for-comint-mode-on)
-    (setq comint-input-sender 'my-shell-simple-send)))
+      (ansi-color-for-comint-mode-on)
+      (setq comint-input-sender 'my-shell-simple-send))))
 
 ;; ANSI & XTERM 256 color support
 (use-package xterm-color

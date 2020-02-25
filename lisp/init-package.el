@@ -30,11 +30,44 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-custom))
+(require 'init-const)
+(require 'init-custom)
+(require 'init-funcs)
 
-;; Suppress warnings
-(declare-function set-package-archives 'init-funcs)
+;; Load `custom-file'
+(when (and (file-exists-p centaur-custom-example-file)
+           (not (file-exists-p custom-file)))
+  ;; At the first startup copy `custom-file' from the example
+  (copy-file centaur-custom-example-file custom-file)
+
+  ;; Select the package archives
+  (if (or (executable-find "curl") (executable-find "wget"))
+      (progn
+        ;; Get and select the fastest package archives automatically
+        (message "Testing connection... Please wait a moment.")
+        (set-package-archives
+         (centaur-test-package-archives 'no-chart)))
+    ;; Select package archives manually
+    ;; Use `ido-completing-read' for better experience since
+    ;; `ivy-mode' is not available at this moment.
+    (set-package-archives
+     (intern
+      (ido-completing-read
+       "Select package archives: "
+       (mapcar #'symbol-name
+               (mapcar #'car centaur-package-archives-alist)))))))
+
+(and (file-readable-p custom-file) (load custom-file))
+
+;; Load custom-post file
+(defun load-custom-post-file ()
+"Load custom-post file."
+(cond ((file-exists-p centaur-custom-post-org-file)
+       (and (fboundp 'org-babel-load-file)
+            (org-babel-load-file centaur-custom-post-org-file)))
+      ((file-exists-p centaur-custom-post-file)
+       (load centaur-custom-post-file))))
+(add-hook 'after-init-hook #'load-custom-post-file)
 
 ;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751

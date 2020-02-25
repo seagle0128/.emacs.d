@@ -30,11 +30,9 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+(require 'init-const)
+(require 'init-custom)
 
-;; Require >=25.2
 (when emacs/>=25.2p
   ;; A tree layout file explorer
   (use-package treemacs
@@ -54,7 +52,7 @@
            ([mouse-1]   . treemacs-single-click-expand-action))
     :config
     (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
-          treemacs-sorting                 'alphabetic-case-insensitive-desc
+          treemacs-sorting                 'alphabetic-asc
           treemacs-follow-after-init       t
           treemacs-is-never-other-window   t
           treemacs-silent-filewatch        t
@@ -84,7 +82,12 @@
               git-commit-post-finish
               magit-post-stage
               magit-post-unstage)
-             . treemacs-magit--schedule-update))))
+             . treemacs-magit--schedule-update))
+
+    (use-package treemacs-persp
+      :after persp-mode
+      :commands treemacs-set-scope-type
+      :init (treemacs-set-scope-type 'Frames))))
 
 (provide 'init-treemacs)
 

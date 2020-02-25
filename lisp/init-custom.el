@@ -25,16 +25,13 @@
 
 ;;; Commentary:
 ;;
-;; Customizations.
+;; Customization.
 ;;
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
-
 (defgroup centaur nil
-  "Centaur Emacs customizations."
+  "Centaur Emacs customization."
   :group 'convenience
   :link '(url-link :tag "Homepage" "https://github.com/seagle0128/.emacs.d"))
 
@@ -184,6 +181,32 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
+(defcustom centaur-prettify-org-symbols-alist
+  '(("[ ]" . ?☐)
+    ("[X]" . ?☑)
+    ("[-]" . ?⛝)
+
+    ("#+ARCHIVE:" . ?📦)
+    ("#+AUTHOR:" . ?👤)
+    ("#+CREATOR:" . ?💁)
+    ("#+DATE:" . ?📆)
+    ("#+DESCRIPTION:" . ?⸙)
+    ("#+EMAIL:" . ?🖂)
+    ("#+OPTIONS:" . ?⛭)
+    ("#+SETUPFILE:" . ?⛮)
+    ("#+TAGS:" . ?🏷)
+    ("#+TITLE:" . ?🕮)
+
+    ("#+BEGIN_SRC" . ?✎)
+    ("#+END_SRC" . ?□)
+    ("#+BEGIN_QUOTE" . ?»)
+    ("#+END_QUOTE" . ?«)
+    ("#+HEADERS" . ?☰)
+    ("#+RESULTS:" . ?💻))
+  "Alist of symbol prettifications for `org-mode'."
+  :group 'centaur
+  :type '(alist :key-type string :value-type (choice character sexp)))
+
 (defcustom centaur-benchmark-init nil
   "Enable the initialization benchmark or not."
   :group 'centaur
@@ -191,42 +214,6 @@ If Non-nil, use dashboard, otherwise will restore previous session."
 
 ;; Load `custom-file'
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-;; At the first startup copy `custom-file' from the example,
-;; and select the package archives
-(let ((custom-example-file
-       (expand-file-name "custom-example.el" user-emacs-directory)))
-  (when (and (file-exists-p custom-example-file)
-             (not (file-exists-p custom-file)))
-    (copy-file custom-example-file custom-file)
-
-    (if (and (executable-find "curl")
-             (y-or-n-p "Do you want to select the fastest mirror automatically?"))
-        (progn
-          (message "Testing...Please wait a moment")
-          (set-package-archives (centaur-test-package-archives 'no-chart)))
-      (set-package-archives
-       (intern
-        ;; Use `ido-completing-read' for better experience since `ivy-mode'
-        ;; is not available at this moment.
-        (ido-completing-read
-         "Select package archives: "
-         (mapcar #'symbol-name
-                 (mapcar #'car centaur-package-archives-alist))))))))
-
-(and (file-readable-p custom-file) (load custom-file))
-
-;; Load `custom-post.org' or `custom-post.el'
-;; Put personal configurations to override defaults here.
-(defun load-custom-post-file ()
-  "Load custom-post file."
-  (let ((org-file (expand-file-name "custom-post.org" user-emacs-directory))
-        (file (expand-file-name "custom-post.el" user-emacs-directory)))
-    (cond ((file-exists-p org-file)
-           (org-babel-load-file org-file))
-          ((file-exists-p file)
-           (load file)))))
-(add-hook 'after-init-hook #'load-custom-post-file)
 
 (provide 'init-custom)
 
