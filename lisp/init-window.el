@@ -201,7 +201,7 @@
         shackle-default-rule nil
         shackle-rules
         '((("*Help*" "*Apropos*") :select t :size 0.3 :align 'below :autoclose t)
-          (("*compilation*" "*Compile-Log*") :select t :size 0.3 :align 'below :autoclose t)
+          (compilation-mode :select t :size 0.3 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 15 :align 'below :autoclose t)
           ("*Backtrace*" :select t :size 15 :align 'below)
