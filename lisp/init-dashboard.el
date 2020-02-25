@@ -99,7 +99,7 @@
                                     (registers . "database"))
 
           dashboard-set-footer t
-          dashboard-footer (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
+          dashboard-footer-messages (list (format "Powered by Vincent Zhang, %s" (format-time-string "%Y")))
           dashboard-footer-icon (cond ((icons-displayable-p)
                                        (all-the-icons-faicon "heart"
                                                              :height 1.1
@@ -159,17 +159,6 @@
             (dashboard-center-line title)
             (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
-
-    ;; FIXME: Insert copyright
-    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
-    (defun my-dashboard-insert-copyright ()
-      "Insert copyright in the footer."
-      (when dashboard-footer
-        (insert "\n  ")
-        (dashboard-center-line dashboard-footer)
-        (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
-        (insert "\n")))
-    (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
     (defvar dashboard-recover-layout-p nil
       "Wether recovers the layout.")
