@@ -95,7 +95,11 @@
         ("M" diff-hl-margin-mode "margin gutter" :toggle t)
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
        "Theme"
-       (("t d" (centaur-load-theme 'default) "default"
+       (("t a" (progn
+                 (centaur-set-variable 'centaur-theme 'auto)
+                 (circadian-setup))
+         "auto" :toggle (eq centaur-theme 'auto) :exit t)
+        ("t d" (centaur-load-theme 'default) "default"
          :toggle (eq centaur-theme 'default) :exit t)
         ("t c" (centaur-load-theme 'classic) "classic"
          :toggle (eq centaur-theme 'classic) :exit t)

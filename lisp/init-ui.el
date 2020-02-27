@@ -81,7 +81,14 @@
         :custom
         (doom-dark+-blue-modeline t)
         (doom-themes-treemacs-theme "doom-colors")
-        :init (centaur-load-theme centaur-theme t)
+        :init
+        (if (eq centaur-theme 'auto)
+            ;; Theme-switching based on daytime
+            (use-package circadian
+              :init
+              (setq circadian-themes centaur-auto-themes)
+              (circadian-setup))
+          (centaur-load-theme centaur-theme t))
         :config
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
@@ -89,7 +96,7 @@
         ;; Enable customized theme
         (doom-themes-treemacs-config)))
   (progn
-    (warn "The current theme may not be compatible with Centaur!")
+    (warn "The current theme may not be compatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
