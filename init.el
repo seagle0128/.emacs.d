@@ -142,8 +142,9 @@ decrease this. If you experience stuttering, increase this.")
 
 (require 'init-markdown)
 (require 'init-org)
+(require 'init-reader)
 
-(require 'init-rss)
+(require 'init-docker)
 (require 'init-utils)
 
 ;; Programming
