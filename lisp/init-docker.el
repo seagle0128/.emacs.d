@@ -1,6 +1,6 @@
-;; init-yasnippet.el --- Initialize yasnippet configurations.	-*- lexical-binding: t -*-
+;; init-docker.el --- Initialize docker configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2020 Vincent Zhang
+;; Copyright (C) 2019-2020 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -25,19 +25,22 @@
 
 ;;; Commentary:
 ;;
-;; Yasnippet configurations.
+;; Docker configurations.
 ;;
 
 ;;; Code:
 
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode))
+;; Docker
+(use-package docker
+  :defines docker-image-run-arguments
+  :bind ("C-c d" . docker)
+  :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
+              docker-container-shell-file-name "/bin/bash"))
 
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package docker-tramp)
+(use-package dockerfile-mode)
 
-(provide 'init-yasnippet)
+(provide 'init-docker)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-yasnippet.el ends here
+;;; init-docker.el ends here
