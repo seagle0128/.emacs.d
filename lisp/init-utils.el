@@ -31,7 +31,6 @@
 ;;; Code:
 
 (require 'init-const)
-(require 'init-funcs)
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -114,7 +113,14 @@
   (setq alert-default-style 'mode-line)
 
   (with-eval-after-load 'all-the-icons
-    (setq alert-severity-colors
+    (setq alert-severity-faces
+          '((urgent   . all-the-icons-red)
+            (high     . all-the-icons-orange)
+            (moderate . all-the-icons-yellow)
+            (normal   . all-the-icons-green)
+            (low      . all-the-icons-blue)
+            (trivial  . all-the-icons-purple))
+          alert-severity-colors
           `((urgent   . ,(face-foreground 'all-the-icons-red))
             (high     . ,(face-foreground 'all-the-icons-orange))
             (moderate . ,(face-foreground 'all-the-icons-yellow))
@@ -125,7 +131,8 @@
   (when sys/macp
     (setq pomidor-play-sound-file
           (lambda (file)
-            (start-process "pomidor-play-sound" nil "afplay" file)))))
+            (when (executable-find "afplay")
+              (start-process "pomidor-play-sound" nil "afplay" file))))))
 
 ;; Nice writing
 (use-package olivetti
