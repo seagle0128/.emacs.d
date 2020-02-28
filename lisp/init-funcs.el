@@ -434,13 +434,16 @@ If SYNC is non-nil, the updating process is synchronous."
    (list (intern (completing-read
                   "Load theme: "
                   `(auto ,@(mapcar #'car centaur-theme-alist))))))
-  (unless (eq centaur-theme 'auto)
-    ;; Disable others and enable new one
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme (centaur--theme-name theme) t)
+  ;; Set option
+  (centaur-set-variable 'centaur-theme theme no-save)
 
-    ;; Set option
-    (centaur-set-variable 'centaur-theme theme no-save)))
+  (if (eq centaur-theme 'auto)
+      ;; Time-switching themes
+      (and (fboundp 'circadian-setup) (circadian-setup))
+    (progn
+      ;; Disable others and enable new one
+      (mapc #'disable-theme custom-enabled-themes)
+      (load-theme (centaur--theme-name theme) t))))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
