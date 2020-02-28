@@ -64,7 +64,7 @@
      ;; @see https://github.com/emacs-lsp/lsp-mode#performance
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
-     (setq lsp-auto-guess-root t        ; Detect project root
+     (setq lsp-auto-guess-root nil      ; Detect project root
            lsp-keep-workspace-alive nil ; Auto-kill LSP server
            lsp-enable-indentation nil
            lsp-enable-on-type-formatting nil
@@ -440,20 +440,17 @@ Return a list of strings as the completion candidates."
            (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
       `(progn
          (defun ,intern-pre (info)
-           (let ((filename (or (->> info caddr (alist-get :file))
-                               buffer-file-name)))
-             (unless filename
-               (user-error "LSP:: specify `:file' property to enable."))
+           (let ((file-name (->> info caddr (alist-get :file))))
+             (unless file-name
+               (user-error "LSP:: specify `:file' property to enable"))
 
-             (setq buffer-file-name filename)
+             (setq buffer-file-name file-name)
              (pcase centaur-lsp
                ('eglot
                 (and (fboundp 'eglot) (eglot)))
                ('lsp-mode
-                (and (fboundp 'lsp-deferred)
-                     ;; `lsp-auto-guess-root' MUST be non-nil.
-                     (setq lsp-buffer-uri (lsp--path-to-uri filename))
-                     (lsp-deferred))))))
+                (and (fboundp 'lsp-deferred) (lsp-deferred)))
+               (_ (user-error "LSP:: invalid `centaur-lsp' type")))))
          (put ',intern-pre 'function-documentation
               (format "Enable `%s' in the buffer of org source block (%s)."
                       centaur-lsp (upcase ,lang)))
