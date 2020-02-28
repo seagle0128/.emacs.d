@@ -36,6 +36,7 @@
 (require 'init-custom)
 
 ;; Suppress warnings
+(defvar circadian-themes)
 (defvar socks-noproxy)
 (defvar socks-server)
 
@@ -437,9 +438,11 @@ If SYNC is non-nil, the updating process is synchronous."
   ;; Set option
   (centaur-set-variable 'centaur-theme theme no-save)
 
-  (if (eq centaur-theme 'auto)
-      ;; Time-switching themes
-      (and (fboundp 'circadian-setup) (circadian-setup))
+  (if (and (eq centaur-theme 'auto) (fboundp 'circadian-setup))
+      (progn
+        ;; Time-switching themes
+        (setq circadian-themes centaur-auto-themes)
+        (circadian-setup))
     (progn
       ;; Disable others and enable new one
       (mapc #'disable-theme custom-enabled-themes)
