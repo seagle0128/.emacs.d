@@ -77,12 +77,14 @@
       (setq pdf-view-use-scaling t
             pdf-view-use-imagemagick nil)
 
-      (defun pdf-view-use-scaling-p ()
+      (defun my-pdf-view-use-scaling-p ()
         "Return t if scaling should be used."
         (and (or (and (eq system-type 'darwin) (>= emacs-major-version 27))
                  (memq (pdf-view-image-type) '(imagemagick image-io)))
              pdf-view-use-scaling))
-      (defun pdf-view-create-page (page &optional window)
+      (advice-add #'pdf-view-use-scaling-p :override #'my-pdf-view-use-scaling-p)
+
+      (defun my-pdf-view-create-page (page &optional window)
         "Create an image of PAGE for display on WINDOW."
         (let* ((size (pdf-view-desired-image-size page window))
                (width (if (not (pdf-view-use-scaling-p))
@@ -96,7 +98,8 @@
             :width width
             :scale (if (pdf-view-use-scaling-p) 0.5 1)
             :map hotspots
-            :pointer 'arrow))))
+            :pointer 'arrow)))
+      (advice-add #'pdf-view-create-page :override #'my-pdf-view-create-page))
 
     ;; Recover last viewed position
     (when emacs/>=26p
