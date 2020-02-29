@@ -102,9 +102,7 @@ prepended to the element after the #+HEADER: tag."
                     (self-insert-command 1)))))
   :hook ((org-mode . (lambda ()
                        "Beautify org symbols."
-                       (setq prettify-symbols-alist
-                             (append centaur-prettify-org-symbols-alist
-                                     prettify-symbols-alist))
+                       (setq prettify-symbols-alist centaur-prettify-org-symbols-alist)
                        (prettify-symbols-mode 1)))
          (org-indent-mode . (lambda()
                               (diminish 'org-indent-mode)
