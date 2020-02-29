@@ -95,7 +95,9 @@
         ("M" diff-hl-margin-mode "margin gutter" :toggle t)
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
        "Theme"
-       (("t d" (centaur-load-theme 'default) "default"
+       (("t a" (centaur-load-theme 'auto) "auto"
+         :toggle (eq centaur-theme 'auto) :exit t)
+        ("t d" (centaur-load-theme 'default) "default"
          :toggle (eq centaur-theme 'default) :exit t)
         ("t c" (centaur-load-theme 'classic) "classic"
          :toggle (eq centaur-theme 'classic) :exit t)
@@ -121,7 +123,10 @@
                                                x)))
                                    (counsel-load-theme-action theme))
                          :caller 'counsel-load-theme)
-         "others" :toggle (not (assoc centaur-theme centaur-theme-alist)) :exit t))
+         "others"
+         :toggle (and (not (eq centaur-theme 'auto))
+                      (not (assoc centaur-theme centaur-theme-alist)))
+         :exit t))
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)

@@ -36,6 +36,7 @@
 (require 'init-custom)
 
 ;; Suppress warnings
+(defvar circadian-themes)
 (defvar socks-noproxy)
 (defvar socks-server)
 
@@ -419,26 +420,35 @@ If SYNC is non-nil, the updating process is synchronous."
   (run-hooks 'after-load-theme-hook))
 (advice-add #'load-theme :after #'run-after-load-theme-hook)
 
-(defun centaur--real-theme (theme)
-  "Return real THEME name."
+(defun centaur--theme-name (theme)
+  "Return internal THEME name."
   (or (alist-get theme centaur-theme-alist) theme))
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (string-prefix-p "doom" (symbol-name (centaur--real-theme theme))))
+  (or (eq theme 'auto)
+      (string-prefix-p "doom" (symbol-name (centaur--theme-name theme)))))
 
 (defun centaur-load-theme (theme &optional no-save)
   "Set color THEME. Save to `custom-file' if NO-SAVE is nil."
   (interactive
-   (list
-    (intern (completing-read "Load theme: "
-                             (mapcar #'car centaur-theme-alist)))))
-  ;; Disable others and enable new one
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme (centaur--real-theme theme) t)
-
+   (list (intern (completing-read
+                  "Load theme: "
+                  `(auto ,@(mapcar #'car centaur-theme-alist))))))
   ;; Set option
-  (centaur-set-variable 'centaur-theme theme no-save))
+  (centaur-set-variable 'centaur-theme theme no-save)
+
+  (if (eq centaur-theme 'auto)
+      (if (fboundp 'circadian-setup)
+          (progn
+            ;; Time-switching themes
+            (setq circadian-themes centaur-auto-themes)
+            (circadian-setup))
+        (user-error "Restart to enable `auto' theme"))
+    (progn
+      ;; Disable others and enable new one
+      (mapc #'disable-theme custom-enabled-themes)
+      (load-theme (centaur--theme-name theme) t))))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
