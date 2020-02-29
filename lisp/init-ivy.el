@@ -377,7 +377,7 @@
   (use-package prescient
     :commands prescient-persist-mode
     :init
-    ;; (setq prescient-filter-method '(literal regexp initialism fuzzy))
+    (setq prescient-filter-method '(literal regexp initialism fuzzy))
     (prescient-persist-mode 1))
 
   (use-package ivy-prescient
