@@ -444,7 +444,7 @@ If SYNC is non-nil, the updating process is synchronous."
             ;; Time-switching themes
             (setq circadian-themes centaur-auto-themes)
             (circadian-setup))
-        (user-error "`circadian' is not installed"))
+        (user-error "Restart to enable `auto' theme"))
     (progn
       ;; Disable others and enable new one
       (mapc #'disable-theme custom-enabled-themes)

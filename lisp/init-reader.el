@@ -117,8 +117,6 @@
 
       (defun my-pdf-isearch-hl-matches (current matches &optional occur-hack-p)
         "Highlighting edges CURRENT and MATCHES."
-        (cl-check-type current pdf-isearch-match)
-        (cl-check-type matches (list-of pdf-isearch-match))
         (cl-destructuring-bind (fg1 bg1 fg2 bg2)
           (pdf-isearch-current-colors)
           (let* ((width (car (pdf-view-image-size)))
@@ -163,9 +161,9 @@
               (when highlight-p
                 (pdf-view-display-image
                  (pdf-view-create-image
-                     (pdf-cache-renderpage-highlight
-                      page (car size)
-                      `("white" "steel blue" 0.35 ,@edges))
+                   (pdf-cache-renderpage-highlight
+                    page (car size)
+                    `("white" "steel blue" 0.35 ,@edges))
                    :map (pdf-view-apply-hotspot-functions
                          window page size)
                    :width (car size))))
