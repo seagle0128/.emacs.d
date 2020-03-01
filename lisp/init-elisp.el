@@ -266,10 +266,12 @@ Lisp function does not specify a special indentation."
          (helpful-variable (button-get button 'apropos-symbol))))))
 
   ;; Add remove buttons for advices
-  (define-advice helpful-callable (:after (function) advice-remove-button)
-    (add-button-to-remove-advice (helpful--buffer function t) function))
+  (define-advice helpful-update (:after () advice-remove-button)
+    (when helpful--callable-p
+      (add-button-to-remove-advice (helpful--buffer helpful--sym t) helpful--sym)))
   :config
   (with-no-warnings
+    ;; Open the buffer in other window
     (defun my-helpful--navigate (button)
       "Navigate to the path this BUTTON represents."
       (find-file-other-window (substring-no-properties (button-get button 'path)))
