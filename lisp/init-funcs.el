@@ -301,6 +301,7 @@ Return the fastest package archive."
   "Address blank screen issue with child-frame in fullscreen."
   (and sys/mac-cocoa-p
        emacs/>=26p
+       (boundp ns-use-native-fullscreen)
        (setq ns-use-native-fullscreen nil)))
 
 

@@ -85,9 +85,8 @@
         (if (eq centaur-theme 'auto)
             ;; Theme-switching based on daytime
             (use-package circadian
-              :init
-              (setq circadian-themes centaur-auto-themes)
-              (circadian-setup))
+              :custom (circadian-themes centaur-auto-themes)
+              :init (circadian-setup))
           (centaur-load-theme centaur-theme t))
         :config
         ;; Enable flashing mode-line on errors
