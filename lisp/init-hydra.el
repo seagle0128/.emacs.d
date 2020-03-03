@@ -97,6 +97,8 @@
        "Theme"
        (("t a" (centaur-load-theme 'auto) "auto"
          :toggle (eq centaur-theme 'auto) :exit t)
+        ("t m" (centaur-load-theme 'random) "random"
+         :toggle (eq centaur-theme 'random) :exit t)
         ("t d" (centaur-load-theme 'default) "default"
          :toggle (eq centaur-theme 'default) :exit t)
         ("t c" (centaur-load-theme 'classic) "classic"

@@ -144,6 +144,7 @@ For example:
   "The color theme."
   :group 'centaur
   :type `(choice (const :tag "Auto" 'auto)
+                 (const :tag "Random" 'random)
                  ,@(mapcar
                     (lambda (item)
                       (let ((name (car item)))

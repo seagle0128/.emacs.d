@@ -211,7 +211,7 @@ Save to `custom-file' if NO-SAVE is nil."
               nil t)
         (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
-      (message "Save %s (%s)" variable value))))
+      (message "Saved %s (%s) to %s" variable value custom-file))))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
@@ -421,34 +421,47 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (or (eq theme 'auto)
+  (or (memq theme '(auto random))
       (string-prefix-p "doom" (symbol-name (centaur--theme-name theme)))))
-
-(defun centaur-load-theme (theme &optional no-save)
-  "Set color THEME. Save to `custom-file' if NO-SAVE is nil."
-  (interactive
-   (list (intern (completing-read
-                  "Load theme: "
-                  `(auto ,@(mapcar #'car centaur-theme-alist))))))
-  ;; Set option
-  (centaur-set-variable 'centaur-theme theme no-save)
-
-  (if (eq centaur-theme 'auto)
-      (if (fboundp 'circadian-setup)
-          (progn
-            ;; Time-switching themes
-            (setq circadian-themes centaur-auto-themes)
-            (circadian-setup))
-        (user-error "Restart to enable `auto' theme"))
-    (progn
-      ;; Disable others and enable new one
-      (mapc #'disable-theme custom-enabled-themes)
-      (load-theme (centaur--theme-name theme) t))))
-(global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 (defun centaur-dark-theme-p ()
   "Check if the current theme is a dark theme."
   (eq (frame-parameter nil 'background-mode) 'dark))
+
+(defun centaur--load-theme (theme)
+  "Disable others and enable new one."
+  (message "Loading theme `%s'" theme)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme theme t))
+
+(defun centaur-load-random-theme ()
+  "Load the random theme."
+  (interactive)
+  (let* ((themes (mapcar #'cdr centaur-theme-alist))
+         (theme (nth (random (length themes)) themes)))
+    (if theme
+        (centaur--load-theme theme)
+      (user-error "Failed to load `random' theme"))))
+
+(defun centaur-load-theme (theme &optional no-save)
+  "Load color THEME. Save to `custom-file' if NO-SAVE is nil."
+  (interactive
+   (list (intern (completing-read
+                  "Load theme: "
+                  `(auto random ,@(mapcar #'car centaur-theme-alist))))))
+  ;; Set option
+  (centaur-set-variable 'centaur-theme theme no-save)
+
+  (pcase centaur-theme
+    ('auto
+     ;; Time-switching themes
+     (use-package circadian
+       :functions circadian-setup
+       :custom (circadian-themes centaur-auto-themes)
+       :init (circadian-setup)))
+    ('random (centaur-load-random-theme))
+    (_ (centaur--load-theme (centaur--theme-name theme)))))
+(global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 
 
@@ -457,15 +470,16 @@ If SYNC is non-nil, the updating process is synchronous."
   "Show HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
-      (message "Current HTTP proxy is \"%s\"" centaur-proxy)
+      (message "Current HTTP proxy is `%s'" centaur-proxy)
     (message "No HTTP proxy")))
 
 (defun proxy-http-enable ()
   "Enable HTTP/HTTPS proxy."
   (interactive)
-  (setq url-proxy-services `(("http" . ,centaur-proxy)
-                             ("https" . ,centaur-proxy)
-                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
+  (setq url-proxy-services
+        `(("http" . ,centaur-proxy)
+          ("https" . ,centaur-proxy)
+          ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
   (proxy-http-show))
 
 (defun proxy-http-disable ()
