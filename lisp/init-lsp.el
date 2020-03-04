@@ -54,13 +54,19 @@
 
                           ;; Format and organize imports
                           (unless (derived-mode-p 'c-mode 'c++-mode)
-                            (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                            (unless lsp-no-autoformat-on-save
+                              (add-hook 'before-save-hook #'lsp-format-buffer t t))
                             (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
      :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point)
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
      :init
+     (defcustom lsp-no-autoformat-on-save nil
+       "No `lsp-format-buffer' automatically on save."
+       :group 'lsp
+       :type 'boolean)
+
      ;; @see https://github.com/emacs-lsp/lsp-mode#performance
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
