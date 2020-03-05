@@ -168,6 +168,14 @@ If Non-nil, use dashboard, otherwise will restore previous session."
           (const :tag "Eglot" 'eglot)
           nil))
 
+(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
+  "The modes that don't auto format and organize imports while saving the buffers.
+
+`prog-mode' means ignoring all derived modes.
+"
+  :group 'centaur
+  :type 'list)
+
 (defcustom centaur-chinese-calendar nil
   "Use Chinese calendar or not."
   :group 'centaur

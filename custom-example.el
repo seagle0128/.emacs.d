@@ -14,6 +14,7 @@
 ;; (setq centaur-theme 'light)                    ; Color theme: auto, random, default, classic, colorful, dark, light, day or night
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
+;; (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
 ;; (setq centaur-chinese-calendar t)              ; Use Chinese calendar or not: t or nil
 ;; (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications
 ;; (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'

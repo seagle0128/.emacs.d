@@ -53,7 +53,7 @@
                           (lsp-enable-which-key-integration)
 
                           ;; Format and organize imports
-                          (unless (derived-mode-p 'c-mode 'c++-mode)
+                          (unless (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes)
                             (add-hook 'before-save-hook #'lsp-format-buffer t t)
                             (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
      :bind (:map lsp-mode-map
@@ -419,8 +419,7 @@ Return a list of strings as the completion candidates."
      :config
      (with-eval-after-load 'projectile
        (setq projectile-project-root-files-top-down-recurring
-             (append '("compile_commands.json"
-                       ".ccls")
+             (append '("compile_commands.json" ".ccls")
                      projectile-project-root-files-top-down-recurring))))
 
    ;; Julia support
