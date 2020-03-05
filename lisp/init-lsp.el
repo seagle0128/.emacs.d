@@ -197,27 +197,28 @@ Return a list of strings as the completion candidates."
             ("C-s-." . lsp-ivy-global-workspace-symbol)))
 
    ;; Debug
-   (use-package dap-mode
-     :functions dap-hydra/nil
-     :diminish
-     :bind (:map lsp-mode-map
-            ("<f5>" . dap-debug)
-            ("M-<f5>" . dap-hydra))
-     :hook ((after-init . dap-mode)
-            (dap-mode . dap-ui-mode)
-            (dap-session-created . (lambda (_args) (dap-hydra)))
-            (dap-stopped . (lambda (_args) (dap-hydra)))
-            (dap-terminated . (lambda (_args) (dap-hydra/nil)))
+   (when emacs/>=25.2p
+     (use-package dap-mode
+       :functions dap-hydra/nil
+       :diminish
+       :bind (:map lsp-mode-map
+              ("<f5>" . dap-debug)
+              ("M-<f5>" . dap-hydra))
+       :hook ((after-init . dap-mode)
+              (dap-mode . dap-ui-mode)
+              (dap-session-created . (lambda (_args) (dap-hydra)))
+              (dap-stopped . (lambda (_args) (dap-hydra)))
+              (dap-terminated . (lambda (_args) (dap-hydra/nil)))
 
-            (python-mode . (lambda () (require 'dap-python)))
-            (ruby-mode . (lambda () (require 'dap-ruby)))
-            (go-mode . (lambda () (require 'dap-go)))
-            (java-mode . (lambda () (require 'dap-java)))
-            ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
-            (php-mode . (lambda () (require 'dap-php)))
-            (elixir-mode . (lambda () (require 'dap-elixir)))
-            ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-            (powershell-mode . (lambda () (require 'dap-pwsh)))))
+              (python-mode . (lambda () (require 'dap-python)))
+              (ruby-mode . (lambda () (require 'dap-ruby)))
+              (go-mode . (lambda () (require 'dap-go)))
+              (java-mode . (lambda () (require 'dap-java)))
+              ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+              (php-mode . (lambda () (require 'dap-php)))
+              (elixir-mode . (lambda () (require 'dap-elixir)))
+              ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
+              (powershell-mode . (lambda () (require 'dap-pwsh))))))
 
    ;; `lsp-mode' and `treemacs' integration
    (when emacs/>=25.2p
