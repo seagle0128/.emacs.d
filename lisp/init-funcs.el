@@ -153,8 +153,9 @@ Same as `replace-string C-q C-m RET RET'."
   (unless (file-exists-p custom-file)
     (if (file-exists-p centaur-custom-example-file)
         (copy-file centaur-custom-example-file custom-file)
-      (error "Unable to find \"%s\"" centaur-custom-example-file)))
-  (find-file custom-file))
+      (user-error "The file `%s' doesn't exist" centaur-custom-example-file)))
+  (find-file custom-file)
+  (find-file-other-window centaur-custom-post-file))
 
 ;; Misc
 (defun create-scratch-buffer ()
