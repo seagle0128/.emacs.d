@@ -190,7 +190,7 @@
     (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5))
   :config
   (with-no-warnings
-    ;; FIXME: errors while opening `nov' files with Unicode characters
+    ;; HACK: errors while opening `nov' files with Unicode characters
     ;; @see https://github.com/wasamasa/nov.el/issues/63
     (defun my-nov-content-unique-identifier (content)
       "Return the the unique identifier for CONTENT."
