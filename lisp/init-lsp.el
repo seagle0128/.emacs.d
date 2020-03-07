@@ -142,14 +142,7 @@
                (lambda ()
                  (setq lsp-ui-doc-border (face-foreground 'default))
                  (set-face-background 'lsp-ui-doc-background
-                                      (face-background 'tooltip))))
-
-     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-     ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243
-     (defun my-lsp-ui-imenu-hide-mode-line ()
-       "Hide the mode-line in lsp-ui-imenu."
-       (setq mode-line-format nil))
-     (advice-add #'lsp-ui-imenu :after #'my-lsp-ui-imenu-hide-mode-line))
+                                      (face-background 'tooltip)))))
 
    ;; Completion
    (use-package company-lsp
