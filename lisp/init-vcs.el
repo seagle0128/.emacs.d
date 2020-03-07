@@ -51,7 +51,7 @@
   ;; Access Git forges from Magit
   (when (executable-find "cc")
     (use-package forge
-      :hook (after-init . forge-startup-asserts)
+      :demand
       :init (setq forge-topic-list-columns
                   '(("#" 5 t (:right-align t) number nil)
                     ("Title" 60 t nil title  nil)
