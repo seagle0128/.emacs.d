@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package markdown-mode
+  :commands markdown--command-map-prompt
   :hook ((markdown-mode . auto-fill-mode))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
@@ -66,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 ")
+
+  ;; Use `which-key'
+  (advice-add #'markdown--command-map-prompt :override #'ignore)
   :config
   ;; Preview via `grip'
   ;; Install: pip install grip
