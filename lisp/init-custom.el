@@ -122,15 +122,30 @@
     (light    . doom-one-light)
     (day      . doom-acario-light)
     (night    . doom-city-lights))
-  "The color theme list."
+  "List of themes mapped to internal themes."
   :group 'centaur
-  :type '(alist :key-type (symbol :tag "Theme name")
-                :value-type (symbol :tag "Internal theme name")))
+  :type '(alist :key-type (symbol :tag "Theme")
+                :value-type (symbol :tag "Internal theme")))
+
+(defcustom centaur-auto-themes '(("8:00"  . doom-one-light)
+				                 ("19:00" . doom-one))
+  "List of themes mapped to the time they should be loaded.
+
+The keywords `:sunrise' and `:sunset' can be used for the time
+if `calendar-latitude' and `calendar-longitude' are set.
+For example:
+  '((:sunrise . doom-one-light)
+    (:sunset  . doom-one))"
+  :group 'centaur
+  :type `(alist :key-type (string :tag "Time")
+                :value-type (symbol :tag "Theme")))
 
 (defcustom centaur-theme 'default
-  "Set color theme."
+  "The color theme."
   :group 'centaur
-  :type `(choice ,@(mapcar
+  :type `(choice (const :tag "Auto" 'auto)
+                 (const :tag "Random" 'random)
+                 ,@(mapcar
                     (lambda (item)
                       (let ((name (car item)))
                         (list 'const
@@ -152,6 +167,14 @@ If Non-nil, use dashboard, otherwise will restore previous session."
           (const :tag "LSP Mode" 'lsp-mode)
           (const :tag "Eglot" 'eglot)
           nil))
+
+(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
+  "The modes that don't auto format and organize imports while saving the buffers.
+
+`prog-mode' means ignoring all derived modes.
+"
+  :group 'centaur
+  :type 'list)
 
 (defcustom centaur-chinese-calendar nil
   "Use Chinese calendar or not."

@@ -33,9 +33,8 @@
 ;; Dart
 (use-package dart-mode
   :defines (projectile-project-root-files-bottom-up)
-  :init (setq dart-format-on-save t)
   :config
-  (with-eval-after-load "projectile"
+  (with-eval-after-load 'projectile
     (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
     (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
 

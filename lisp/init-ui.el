@@ -89,7 +89,7 @@
         ;; Enable customized theme
         (doom-themes-treemacs-config)))
   (progn
-    (warn "The current theme may not be compatible with Centaur!")
+    (warn "The current theme may not be compatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
@@ -221,7 +221,9 @@
      ("z n" (counsel-read-setq-expression 'doom-modeline-gnus-timer) "set gnus interval")))))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           flycheck-error-list-mode) . hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
 (when emacs/>=25.2p
