@@ -39,6 +39,8 @@
   :commands company-abort
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
+         :map company-mode-map
+         ("<backtab>" . company-yasnippet)
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
