@@ -77,7 +77,8 @@ mermaid.initialize({
   startOnLoad: true
 });
 </script>
-")
+"
+        markdown-gfm-additional-languages "Mermaid")
 
   ;; `multimarkdown' is necessary for `highlight.js' and `mermaid.js'
   (when (executable-find "multimarkdown")
@@ -87,15 +88,19 @@ mermaid.initialize({
   (advice-add #'markdown--command-map-prompt :override #'ignore)
   :config
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
-  (setq markdown-gfm-additional-languages "Mermaid")
 
   ;; Preview with internal webkit
-  (when (featurep 'xwidget-internal)
-    (defun markdown-export-and-preview-webkit ()
-      "Export to XHTML using `markdown-export' and browse the resulting file."
-      (interactive)
-      (xwidget-webkit-browse-url (concat "file://" (markdown-export))))
-    (bind-key "V" #'markdown-export-and-preview-webkit markdown-mode-command-map))
+  (with-no-warnings
+    (when (featurep 'xwidget-internal)
+      (defun markdown-export-and-preview-webkit ()
+        "Export to XHTML using `markdown-export' and browse the resulting file."
+        (interactive)
+        (xwidget-webkit-browse-url (concat "file://" (markdown-export)))
+        (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
+          (when (buffer-live-p buf)
+            (and (eq buf (current-buffer)) (quit-window))
+            (pop-to-buffer buf))))
+      (bind-key "V" #'markdown-export-and-preview-webkit markdown-mode-command-map)))
 
   ;; Preview via `grip'
   ;; Install: pip install grip
