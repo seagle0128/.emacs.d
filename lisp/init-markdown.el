@@ -56,21 +56,47 @@ body {
   padding: 0 10px;
 }
 </style>
+
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css'>
 <script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.add('markdown-body');
-  document.querySelectorAll('pre[lang] > code').forEach((code) => {
-    code.classList.add(code.parentElement.lang);
-    hljs.highlightBlock(code);
+  document.querySelectorAll('pre code').forEach((code) => {
+    if (code.className != 'mermaid') {
+      hljs.highlightBlock(code);
+    }
   });
+});
+</script>
+
+<script src='https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js'></script>
+<script>
+mermaid.initialize({
+  theme: 'default',  // default, forest, dark, neutral
+  startOnLoad: true
 });
 </script>
 ")
 
+  ;; `multimarkdown' is necessary for `highlight.js' and `mermaid.js'
+  (when (executable-find "multimarkdown")
+    (setq markdown-command "multimarkdown"))
+
   ;; Use `which-key'
   (advice-add #'markdown--command-map-prompt :override #'ignore)
   :config
+  (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
+  (setq markdown-gfm-additional-languages "Mermaid")
+
+  ;; Preview with internal webkit
+  (when (featurep 'xwidget-internal)
+    (defun markdown-export-and-preview-webkit ()
+      "Export to XHTML using `markdown-export' and browse the resulting file."
+      (interactive)
+      (xwidget-webkit-browse-url (concat "file://" (markdown-export))))
+    (bind-key "V" #'markdown-export-and-preview-webkit markdown-mode-command-map))
+
   ;; Preview via `grip'
   ;; Install: pip install grip
   (use-package grip-mode
