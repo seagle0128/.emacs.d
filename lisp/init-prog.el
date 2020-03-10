@@ -81,6 +81,7 @@
 (use-package csv-mode)
 (use-package julia-mode)
 (use-package lua-mode)
+(use-package mermaid-mode)
 (use-package plantuml-mode)
 (use-package powershell)
 (use-package rmsbolt)                   ; A compiler output viewer
