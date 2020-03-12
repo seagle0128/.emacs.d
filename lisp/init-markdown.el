@@ -32,7 +32,6 @@
 
 (use-package markdown-mode
   :commands markdown--command-map-prompt
-  :hook ((markdown-mode . auto-fill-mode))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
   (setq markdown-enable-wiki-links t
@@ -84,7 +83,7 @@ mermaid.initialize({
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
 
-  ;; Use `which-key'
+  ;; Use `which-key' instead
   (advice-add #'markdown--command-map-prompt :override #'ignore)
   :config
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
