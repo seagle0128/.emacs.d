@@ -100,9 +100,9 @@
                   (when file
                     (let ((icon (if (file-directory-p file)
                                     (all-the-icons-icon-for-dir file nil "")
-                                  (all-the-icons-icon-for-file file :v-adjust all-the-icons-dired-v-adjust))))
+                                  (all-the-icons-icon-for-file file :v-adjust 0.0))))
                       (if (member file '("." ".."))
-                          (all-the-icons-dired--add-overlay (point) " \t")
+                          (all-the-icons-dired--add-overlay (point) "  \t")
                         (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
                 (dired-next-line 1)))
           (message "Not display icons because of too many items.")))
