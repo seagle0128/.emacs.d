@@ -116,7 +116,7 @@
 
 (defcustom centaur-theme-alist
   '((default  . doom-one)
-    (classic  . doom-molokai)
+    (classic  . doom-monokai-classic)
     (colorful . doom-snazzy)
     (dark     . doom-dark+)
     (light    . doom-one-light)
