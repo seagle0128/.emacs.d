@@ -100,19 +100,19 @@
         ("t m" (centaur-load-theme 'random) "random"
          :toggle (eq centaur-theme 'random) :exit t)
         ("t d" (centaur-load-theme 'default) "default"
-         :toggle (eq centaur-theme 'default) :exit t)
+         :toggle (centaur-theme-enable-p 'default) :exit t)
         ("t c" (centaur-load-theme 'classic) "classic"
-         :toggle (eq centaur-theme 'classic) :exit t)
+         :toggle (centaur-theme-enable-p 'classic) :exit t)
         ("t r" (centaur-load-theme 'colorful) "colorful"
-         :toggle (eq centaur-theme 'colorful) :exit t)
+         :toggle (centaur-theme-enable-p 'colorful) :exit t)
         ("t k" (centaur-load-theme 'dark) "dark"
-         :toggle (eq centaur-theme 'dark) :exit t)
+         :toggle (centaur-theme-enable-p 'dark) :exit t)
         ("t l" (centaur-load-theme 'light) "light"
-         :toggle (eq centaur-theme 'light) :exit t)
+         :toggle (centaur-theme-enable-p 'light) :exit t)
         ("t y" (centaur-load-theme 'day) "day"
-         :toggle (eq centaur-theme 'day) :exit t)
+         :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
-         :toggle (eq centaur-theme 'night) :exit t)
+         :toggle (centaur-theme-enable-p 'night) :exit t)
         ("t o" (ivy-read "Load custom theme: "
                          (mapcar #'symbol-name
                                  (custom-available-themes))
@@ -126,8 +126,7 @@
                                    (counsel-load-theme-action theme))
                          :caller 'counsel-load-theme)
          "others"
-         :toggle (not (or (eq centaur-theme 'auto)
-                          (assoc centaur-theme centaur-theme-alist)))
+         :toggle (not (rassoc (car custom-enabled-themes) centaur-theme-alist))
          :exit t))
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
