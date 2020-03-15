@@ -93,7 +93,14 @@
           (when-let ((prefix (funcall fun 'prefix)))
             (unless (memq (char-before (- (point) (length prefix))) '(?. ?> ?\())
               prefix))
-        (funcall fun command arg)))
+        (progn
+          (when (and arg (not (get-text-property 0 'yas-annotation-patch arg)))
+            (let* ((name (get-text-property 0 'yas-annotation arg))
+                   (snip (format "%s (Snippet)" name))
+                   (len (length arg)))
+              (put-text-property 0 len 'yas-annotation snip arg)
+              (put-text-property 0 len 'yas-annotation-patch t arg)))
+          (funcall fun command arg))))
     (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline))
 
   ;; Better sorting and filtering
