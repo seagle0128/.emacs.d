@@ -94,7 +94,8 @@
             (unless (memq (char-before (- (point) (length prefix))) '(?. ?> ?\())
               prefix))
         (progn
-          (when (and arg (not (get-text-property 0 'yas-annotation-patch arg)))
+          (when (and (bound-and-true-p lsp-mode)
+                     arg (not (get-text-property 0 'yas-annotation-patch arg)))
             (let* ((name (get-text-property 0 'yas-annotation arg))
                    (snip (format "%s (Snippet)" name))
                    (len (length arg)))
