@@ -84,6 +84,11 @@
     :if (icons-displayable-p)
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
+    ;; FIXME: Refresh after creating or renaming the files/directories.
+    ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/34.
+    (advice-add 'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
+    (advice-add 'dired-create-directory :around #'all-the-icons-dired--refresh-advice)
+
     (with-no-warnings
       (defun my-all-the-icons-dired--refresh ()
         "Display the icons of files in a dired buffer."

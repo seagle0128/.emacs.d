@@ -112,11 +112,12 @@
         (with-current-buffer (company-doc-buffer)
           (let ((inhibit-message t)
                 (buffer-file-name file-name))
-            (ignore-errors
-              (yas-minor-mode 1)
-              (yas-expand-snippet (yas--template-content template))
-              (funcall mode)
-              (font-lock-ensure)))
+            (yas-minor-mode 1)
+            (condition-case-unless-debug err
+                (yas-expand-snippet (yas--template-content template))
+              (err (message "%s" (error-message-string err))))
+            (funcall mode)
+            (ignore-errors (font-lock-ensure)))
           (current-buffer))))
     (advice-add #'company-yasnippet--doc :override #'my-company-yasnippet--doc))
 
