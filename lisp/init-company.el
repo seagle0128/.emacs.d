@@ -36,7 +36,7 @@
 (use-package company
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
-  :commands company-abort
+  :commands company-cancel
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
          :map company-mode-map
@@ -51,12 +51,6 @@
          ("C-n" . company-select-next))
   :hook (after-init . global-company-mode)
   :init
-  (defun my-company-yasnippet ()
-    "Hide the current completeions and show snippets."
-    (interactive)
-    (company-abort)
-    (call-interactively 'company-yasnippet))
-  :config
   (setq company-tooltip-align-annotations t
         company-tooltip-limit 12
         company-idle-delay 0
@@ -70,6 +64,12 @@
         company-frontends '(company-pseudo-tooltip-frontend
                             company-echo-metadata-frontend))
 
+  (defun my-company-yasnippet ()
+    "Hide the current completeions and show snippets."
+    (interactive)
+    (company-cancel)
+    (call-interactively 'company-yasnippet))
+  :config
   ;; `yasnippet' integration
   (with-no-warnings
     (with-eval-after-load 'yasnippet
@@ -103,23 +103,24 @@
                 (put-text-property 0 len 'yas-annotation snip arg)
                 (put-text-property 0 len 'yas-annotation-patch t arg)))
             (funcall fun command arg))))
-      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline))
+      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)
 
-    (defun my-company-yasnippet--doc (arg)
-      (let ((template (get-text-property 0 'yas-template arg))
-            (mode major-mode)
-            (file-name (buffer-file-name)))
-        (with-current-buffer (company-doc-buffer)
-          (let ((inhibit-message t)
-                (buffer-file-name file-name))
-            (yas-minor-mode 1)
-            (condition-case-unless-debug err
-                (yas-expand-snippet (yas--template-content template))
-              (err (message "%s" (error-message-string err))))
-            (funcall mode)
-            (ignore-errors (font-lock-ensure)))
-          (current-buffer))))
-    (advice-add #'company-yasnippet--doc :override #'my-company-yasnippet--doc))
+      ;; FIXME: Remove once the upstream fixes
+      (defun my-company-yasnippet--doc (arg)
+        (let ((template (get-text-property 0 'yas-template arg))
+              (mode major-mode)
+              (file-name (buffer-file-name)))
+          (with-current-buffer (company-doc-buffer)
+            (let ((inhibit-message t)
+                  (buffer-file-name file-name))
+              (yas-minor-mode 1)
+              (condition-case-unless-debug err
+                  (yas-expand-snippet (yas--template-content template))
+                (err (message "%s" (error-message-string err))))
+              (derived-mode-p (funcall mode))
+              (ignore-errors (font-lock-ensure)))
+            (current-buffer))))
+      (advice-add #'company-yasnippet--doc :override #'my-company-yasnippet--doc)))
 
   ;; Better sorting and filtering
   (use-package company-prescient
