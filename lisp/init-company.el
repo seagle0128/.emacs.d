@@ -61,7 +61,7 @@
         company-tooltip-limit 12
         company-idle-delay 0
         company-echo-delay (if (display-graphic-p) nil 0)
-        company-minimum-prefix-length 2
+        company-minimum-prefix-length 1
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil
@@ -72,37 +72,53 @@
 
   ;; `yasnippet' integration
   (with-no-warnings
-    (defun company-backend-with-yas (backend)
-      "Add `yasnippet' to company backend."
-      (if (and (listp backend) (member 'company-yasnippet backend))
-          backend
-        (append (if (consp backend) backend (list backend))
-                '(:with company-yasnippet))))
+    (with-eval-after-load 'yasnippet
+      (defun company-backend-with-yas (backend)
+        "Add `yasnippet' to company backend."
+        (if (and (listp backend) (member 'company-yasnippet backend))
+            backend
+          (append (if (consp backend) backend (list backend))
+                  '(:with company-yasnippet))))
 
-    (defun my-company-enbale-yas (&rest _)
-      "Enable `yasnippet' in `company'."
-      (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
-    ;; Enable in current backends
-    (my-company-enbale-yas)
-    ;; Support `company-lsp'
-    (advice-add #'lsp--auto-configure :after #'my-company-enbale-yas)
+      (defun my-company-enbale-yas (&rest _)
+        "Enable `yasnippet' in `company'."
+        (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+      ;; Enable in current backends
+      (my-company-enbale-yas)
+      ;; Support `company-lsp'
+      (advice-add #'lsp--auto-configure :after #'my-company-enbale-yas)
 
-    (defun my-company-yasnippet-disable-inline (fun command &optional arg &rest _ignore)
-      "Enable yasnippet but disable it inline."
-      (if (eq command 'prefix)
-          (when-let ((prefix (funcall fun 'prefix)))
-            (unless (memq (char-before (- (point) (length prefix))) '(?. ?> ?\())
-              prefix))
-        (progn
-          (when (and (bound-and-true-p lsp-mode)
-                     arg (not (get-text-property 0 'yas-annotation-patch arg)))
-            (let* ((name (get-text-property 0 'yas-annotation arg))
-                   (snip (format "%s (Snippet)" name))
-                   (len (length arg)))
-              (put-text-property 0 len 'yas-annotation snip arg)
-              (put-text-property 0 len 'yas-annotation-patch t arg)))
-          (funcall fun command arg))))
-    (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline))
+      (defun my-company-yasnippet-disable-inline (fun command &optional arg &rest _ignore)
+        "Enable yasnippet but disable it inline."
+        (if (eq command 'prefix)
+            (when-let ((prefix (funcall fun 'prefix)))
+              (unless (memq (char-before (- (point) (length prefix))) '(?. ?> ?\())
+                prefix))
+          (progn
+            (when (and (bound-and-true-p lsp-mode)
+                       arg (not (get-text-property 0 'yas-annotation-patch arg)))
+              (let* ((name (get-text-property 0 'yas-annotation arg))
+                     (snip (format "%s (Snippet)" name))
+                     (len (length arg)))
+                (put-text-property 0 len 'yas-annotation snip arg)
+                (put-text-property 0 len 'yas-annotation-patch t arg)))
+            (funcall fun command arg))))
+      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline))
+
+    (defun my-company-yasnippet--doc (arg)
+      (let ((template (get-text-property 0 'yas-template arg))
+            (mode major-mode)
+            (file-name (buffer-file-name)))
+        (with-current-buffer (company-doc-buffer)
+          (let ((inhibit-message t)
+                (buffer-file-name file-name))
+            (ignore-errors
+              (yas-minor-mode 1)
+              (yas-expand-snippet (yas--template-content template))
+              (funcall mode)
+              (font-lock-ensure)))
+          (current-buffer))))
+    (advice-add #'company-yasnippet--doc :override #'my-company-yasnippet--doc))
 
   ;; Better sorting and filtering
   (use-package company-prescient
