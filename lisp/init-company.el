@@ -103,24 +103,7 @@
                 (put-text-property 0 len 'yas-annotation snip arg)
                 (put-text-property 0 len 'yas-annotation-patch t arg)))
             (funcall fun command arg))))
-      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)
-
-      ;; FIXME: Remove once the upstream fixes
-      (defun my-company-yasnippet--doc (arg)
-        (let ((template (get-text-property 0 'yas-template arg))
-              (mode major-mode)
-              (file-name (buffer-file-name)))
-          (with-current-buffer (company-doc-buffer)
-            (let ((inhibit-message t)
-                  (buffer-file-name file-name))
-              (yas-minor-mode 1)
-              (condition-case-unless-debug err
-                  (yas-expand-snippet (yas--template-content template))
-                (err (message "%s" (error-message-string err))))
-              (derived-mode-p (funcall mode))
-              (ignore-errors (font-lock-ensure)))
-            (current-buffer))))
-      (advice-add #'company-yasnippet--doc :override #'my-company-yasnippet--doc)))
+      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)))
 
   ;; Better sorting and filtering
   (use-package company-prescient
