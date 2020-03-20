@@ -273,6 +273,10 @@
 
   (add-to-list 'all-the-icons-icon-alist
                '("\\.go$" all-the-icons-fileicon "go" :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\go.mod$" all-the-icons-fileicon "go" :face all-the-icons-dblue))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\go.sum$" all-the-icons-fileicon "go" :face all-the-icons-dpurple))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(go-mode all-the-icons-fileicon "go" :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
