@@ -92,7 +92,8 @@
         "Enable yasnippet but disable it inline."
         (if (eq command 'prefix)
             (when-let ((prefix (funcall fun 'prefix)))
-              (unless (memq (char-before (- (point) (length prefix))) '(?. ?> ?\())
+              (unless (memq (char-before (- (point) (length prefix)))
+                            '(?. ?> ?\( ?\) ?\[ ?{ ?} ?\" ?' ?`))
                 prefix))
           (progn
             (when (and (bound-and-true-p lsp-mode)
