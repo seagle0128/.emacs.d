@@ -227,13 +227,14 @@
 
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
-(use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
 (use-package focus)                     ; Focus on the current region
 (use-package list-environment)
 (use-package memory-usage)
-(use-package tldr)
+(unless sys/win32p
+  (use-package daemons)                 ; system services/daemons
+  (use-package tldr))
 
 (provide 'init-utils)
 
