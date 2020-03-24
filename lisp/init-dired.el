@@ -104,19 +104,17 @@
               (while (not (eobp))
                 (when-let ((file (dired-get-filename 'verbatim t)))
                   (let ((icon (if (file-directory-p file)
-                                  (let ((dir-icon (all-the-icons-icon-for-dir file nil "")))
-                                    (propertize dir-icon
-                                                'face `(:inherit ,(get-text-property 0 'face dir-icon)
-                                                        :foreground ,(face-foreground 'default)
-                                                        :height 0.9)))
+                                  (all-the-icons-icon-for-dir file
+                                                              :face 'all-the-icons-dired-dir-face
+                                                              :height 0.9
+                                                              :v-adjust 0.0)
                                 (all-the-icons-icon-for-file file :height 0.9 :v-adjust 0.0))))
                     (if (member file '("." ".."))
                         (all-the-icons-dired--add-overlay (point) "  \t")
                       (all-the-icons-dired--add-overlay (point) (format "%s\t" icon)))))
                 (dired-next-line 1)))
           (message "Not display icons because of too many items.")))
-      (advice-add #'all-the-icons-dired--refresh
-                  :override #'my-all-the-icons-dired--refresh)))
+      (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
