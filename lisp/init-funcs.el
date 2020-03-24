@@ -429,6 +429,11 @@ If SYNC is non-nil, the updating process is synchronous."
   "Check if the current theme is a dark theme."
   (eq (frame-parameter nil 'background-mode) 'dark))
 
+(defun centaur-theme-enable-p (theme)
+  "The THEME is enabled or not."
+  (and (not (memq centaur-theme '(auto random)))
+       (eq (car custom-enabled-themes) (centaur--theme-name theme))))
+
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
   (message "Loading theme `%s'" theme)

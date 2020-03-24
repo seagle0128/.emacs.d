@@ -68,6 +68,7 @@
            lsp-keep-workspace-alive nil ; Auto-kill LSP server
            lsp-enable-indentation nil
            lsp-enable-on-type-formatting nil
+           lsp-prefer-capf t
            lsp-keymap-prefix "C-c l")
 
      ;; For `lsp-clients'
@@ -143,44 +144,6 @@
                  (setq lsp-ui-doc-border (face-foreground 'default))
                  (set-face-background 'lsp-ui-doc-background
                                       (face-background 'tooltip)))))
-
-   ;; Completion
-   (use-package company-lsp
-     :init (setq company-lsp-cache-candidates 'auto)
-     :config
-     (with-no-warnings
-       ;; WORKAROUND: Fix tons of unrelated completion candidates shown
-       ;; when a candidate is fulfilled
-       ;; @see https://github.com/emacs-lsp/lsp-python-ms/issues/79
-       (add-to-list 'company-lsp-filter-candidates '(mspyls))
-
-       (defun my-company-lsp--on-completion (response prefix)
-         "Handle completion RESPONSE.
-
-PREFIX is a string of the prefix when the completion is requested.
-
-Return a list of strings as the completion candidates."
-         (let* ((incomplete (and (hash-table-p response) (gethash "isIncomplete" response)))
-                (items (cond ((hash-table-p response) (gethash "items" response))
-                             ((sequencep response) response)))
-                (candidates (mapcar (lambda (item)
-                                      (company-lsp--make-candidate item prefix))
-                                    (lsp--sort-completions items)))
-                (server-id (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace)))
-                (should-filter (or (eq company-lsp-cache-candidates 'auto)
-                                   (and (null company-lsp-cache-candidates)
-                                        (company-lsp--get-config company-lsp-filter-candidates server-id)))))
-           (when (null company-lsp--completion-cache)
-             (add-hook 'company-completion-cancelled-hook #'company-lsp--cleanup-cache nil t)
-             (add-hook 'company-completion-finished-hook #'company-lsp--cleanup-cache nil t))
-           (when (eq company-lsp-cache-candidates 'auto)
-             ;; Only cache candidates on auto mode. If it's t company caches the
-             ;; candidates for us.
-             (company-lsp--cache-put prefix (company-lsp--cache-item-new candidates incomplete)))
-           (if should-filter
-               (company-lsp--filter-candidates candidates prefix)
-             candidates)))
-       (advice-add #'company-lsp--on-completion :override #'my-company-lsp--on-completion)))
 
    ;; Ivy integration
    (use-package lsp-ivy
