@@ -107,11 +107,13 @@
                                   (all-the-icons-icon-for-dir file
                                                               :face 'all-the-icons-dired-dir-face
                                                               :height 0.9
-                                                              :v-adjust 0.0)
-                                (all-the-icons-icon-for-file file :height 0.9 :v-adjust 0.0))))
+                                                              :v-adjust all-the-icons-dired-v-adjust)
+                                (all-the-icons-icon-for-file file
+                                                             :height 0.9
+                                                             :v-adjust all-the-icons-dired-v-adjust))))
                     (if (member file '("." ".."))
                         (all-the-icons-dired--add-overlay (point) "  \t")
-                      (all-the-icons-dired--add-overlay (point) (format "%s\t" icon)))))
+                      (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))
                 (dired-next-line 1)))
           (message "Not display icons because of too many items.")))
       (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
