@@ -119,10 +119,10 @@
                          :predicate (lambda (candidate)
                                       (string-prefix-p "doom-" candidate))
                          :action (lambda (theme)
-                                   (setq centaur-theme
-                                         (let ((x (intern theme)))
-                                           (or (car (rassoc x centaur-theme-alist))
-                                               x)))
+                                   (centaur-set-variable
+                                    'centaur-theme
+                                    (let ((x (intern theme)))
+                                      (or (car (rassoc x centaur-theme-alist)) x)))
                                    (counsel-load-theme-action theme))
                          :caller 'counsel-load-theme)
          "others"
