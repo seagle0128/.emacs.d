@@ -257,7 +257,9 @@ prepended to the element after the #+HEADER: tag."
 
 ;; org-roam
 (when emacs/>=26p
+  ;; FIXME: https://github.com/jethrokuan/org-roam/issues/367
   (use-package org-roam
+    :disabled
     :hook
     (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
