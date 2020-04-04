@@ -97,26 +97,21 @@
         ;; NOTE: don't display icons it too many items
         (if (<= (count-lines (point-min) (point-max)) 1000)
             (save-excursion
-              ;; TRICK: Use TAB to align icons
-              (setq-local tab-width 1)
-
               (goto-char (point-min))
               (while (not (eobp))
-                (when-let ((file (dired-get-filename 'verbatim t)))
-                  (let ((icon (if (file-directory-p file)
-                                  (all-the-icons-icon-for-dir
-                                   file
-                                   :face 'all-the-icons-dired-dir-face
-                                   :height 0.9
-                                   :v-adjust all-the-icons-dired-v-adjust)
-                                (all-the-icons-icon-for-file
-                                 file
-                                 :height 0.9
-                                 :v-adjust all-the-icons-dired-v-adjust))))
-                    (if (member file '("." ".."))
-                        (all-the-icons-dired--add-overlay (point) "  \t")
-                      (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))
-                (dired-next-line 1)))
+                (when (dired-move-to-filename nil)
+                  (let ((file (dired-get-filename 'relative 'noerror)))
+                    (when file
+                      (let ((icon (if (file-directory-p file)
+                                      (all-the-icons-icon-for-dir file
+                                                                  :face 'all-the-icons-dired-dir-face
+                                                                  :height 0.9
+                                                                  :v-adjust all-the-icons-dired-v-adjust)
+                                    (all-the-icons-icon-for-file file :height 0.9 :v-adjust all-the-icons-dired-v-adjust))))
+                        (if (member file '("." ".."))
+                            (all-the-icons-dired--add-overlay (point) "  \t")
+                          (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))))
+                (forward-line 1)))
           (message "Not display icons because of too many items.")))
       (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
