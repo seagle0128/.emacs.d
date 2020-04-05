@@ -79,7 +79,6 @@
         :custom-face
         (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
         :custom
-        (doom-dark+-blue-modeline t)
         (doom-themes-treemacs-theme "doom-colors")
         :init (centaur-load-theme centaur-theme t)
         :config
