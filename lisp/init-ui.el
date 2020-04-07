@@ -79,7 +79,6 @@
         :custom-face
         (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
         :custom
-        (doom-dark+-blue-modeline t)
         (doom-themes-treemacs-theme "doom-colors")
         :init (centaur-load-theme centaur-theme t)
         :config
@@ -365,10 +364,6 @@
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
-
-;; Readably display text without adding line breaks
-(use-package virtual-auto-fill
-  :hook ((markdown-mode org-mode) . virtual-auto-fill-mode))
 
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch

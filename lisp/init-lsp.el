@@ -403,7 +403,7 @@
              (setq buffer-file-name file-name)
              (pcase centaur-lsp
                ('eglot
-                (and (fboundp 'eglot) (eglot)))
+                (and (fboundp 'eglot-ensure) (eglot-ensure)))
                ('lsp-mode
                 (and (fboundp 'lsp-deferred) (lsp-deferred)))
                (_ (user-error "LSP:: invalid `centaur-lsp' type")))))
