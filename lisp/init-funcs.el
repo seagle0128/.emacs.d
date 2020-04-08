@@ -321,50 +321,64 @@ Return the fastest package archive."
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-config #'update-config)
 
+(defvar centaur--updating-packages nil)
 (defun update-packages (&optional sync)
   "Refresh package contents and update all packages.
 
 If SYNC is non-nil, the updating process is synchronous."
   (interactive)
+  (when centaur--updating-packages
+    (user-error "Still updating packages..."))
+
   (message "Updating packages...")
   (if (and (not sync)
            (require 'async nil t))
-      (async-start
-       `(lambda ()
-          ,(async-inject-variables "\\`\\(load-path\\)\\'")
-          (require 'init-funcs)
-          (require 'init-package)
-          (upgrade-packages)
-          (with-current-buffer auto-package-update-buffer-name
-            (buffer-string)))
-       (lambda (result)
-         (message "%s" result)
-         (message "Updating packages...done")))
+      (progn
+        (setq centaur--updating-packages t)
+        (async-start
+         `(lambda ()
+            ,(async-inject-variables "\\`\\(load-path\\)\\'")
+            (require 'init-funcs)
+            (require 'init-package)
+            (upgrade-packages)
+            (with-current-buffer auto-package-update-buffer-name
+              (buffer-string)))
+         (lambda (result)
+           (setq centaur--updating-packages nil)
+           (message "%s" result)
+           (message "Updating packages...done"))))
     (progn
       (upgrade-packages)
       (message "Updating packages...done"))))
 (defalias 'centaur-update-packages #'update-packages)
 
+(defvar centaur--updating nil)
 (defun update-config-and-packages(&optional sync)
   "Update confgiurations and packages.
 
 If SYNC is non-nil, the updating process is synchronous."
   (interactive)
+  (when centaur--updating
+    (user-error "Centaur Emacs is still updating..."))
+
   (message "This will update Centaur Emacs to the latest")
   (if (and (not sync)
            (require 'async nil t))
-      (async-start
-       `(lambda ()
-          ,(async-inject-variables "\\`\\(load-path\\)\\'")
-          (require 'init-funcs)
-          (require 'init-package)
-          (update-config)
-          (update-packages t)
-          (with-current-buffer auto-package-update-buffer-name
-            (buffer-string)))
-       (lambda (result)
-         (message "%s" result)
-         (message "Done. Restart to complete process")))
+      (progn
+        (setq centaur--updating t)
+        (async-start
+         `(lambda ()
+            ,(async-inject-variables "\\`\\(load-path\\)\\'")
+            (require 'init-funcs)
+            (require 'init-package)
+            (update-config)
+            (update-packages t)
+            (with-current-buffer auto-package-update-buffer-name
+              (buffer-string)))
+         (lambda (result)
+           (setq centaur--updating nil)
+           (message "%s" result)
+           (message "Done. Restart to complete process"))))
     (progn
       (update-config)
       (update-packages t)
