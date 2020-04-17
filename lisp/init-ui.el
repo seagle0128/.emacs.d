@@ -344,7 +344,8 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      :hook (prog-mode . display-line-numbers-mode))
+      :hook ((prog-mode . display-line-numbers-mode)
+             (protobuf-mode . display-line-numbers-mode)))
   (use-package linum-off
     :demand
     :defines linum-format
