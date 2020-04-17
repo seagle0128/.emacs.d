@@ -359,6 +359,14 @@
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
 
+;; Centered cursor
+(use-package centered-cursor-mode
+  :commands (centered-cursor-mode
+             global-centered-cursor-mode)
+  :bind (("C-c -" . centered-cursor-mode))
+  :config
+  (setq ccm-recenter-at-end-of-file t))
+
 ;; Suppress GUI features
 (setq use-file-dialog nil
       use-dialog-box nil
