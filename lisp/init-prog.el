@@ -89,6 +89,11 @@
 (use-package swift-mode)
 (use-package vimrc-mode)
 
+(use-package protobuf-mode
+  :hook (protobuf-mode . (lambda ()
+                           (setq imenu-generic-expression
+                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+
 (use-package nxml-mode
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
