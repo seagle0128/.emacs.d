@@ -181,6 +181,9 @@
      ("t a" (setq doom-modeline-buffer-file-name-style 'truncate-all)
       "truncate all"
       :toggle (eq doom-modeline-buffer-file-name-style 'truncate-all))
+     ("t n" (setq doom-modeline-buffer-file-name-style 'truncate-nil)
+      "truncate none"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-nil))
      ("r f" (setq doom-modeline-buffer-file-name-style 'relative-from-project)
       "relative from project"
       :toggle (eq doom-modeline-buffer-file-name-style 'relative-from-project))
