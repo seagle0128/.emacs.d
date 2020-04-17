@@ -48,12 +48,6 @@
     :diminish
     :hook (projectile-mode . projectile-rails-global-mode))
 
-  ;; Rubocop
-  ;; Install: gem install rubocop
-  (use-package rubocop
-    :diminish
-    :hook (ruby-mode . rubocop-mode))
-
   ;; RSpec
   (use-package rspec-mode
     :diminish
