@@ -69,8 +69,7 @@
 ;; Rails
 (use-package projectile-rails
   :diminish
-  :hook (projectile-mode . projectile-rails-global-mode)
-  :init (setq projectile-rails-expand-snippet nil))
+  :hook (projectile-mode . projectile-rails-global-mode))
 
 (provide 'init-ruby)
 
