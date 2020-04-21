@@ -85,7 +85,7 @@
         (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
       ;; Enable in current backends
       (my-company-enbale-yas)
-      ;; Support `company-lsp'
+      ;; Enable in `lsp-mode'
       (advice-add #'lsp--auto-configure :after #'my-company-enbale-yas)
 
       (defun my-company-yasnippet-disable-inline (fun command &optional arg &rest _ignore)
