@@ -32,6 +32,7 @@
 
 (require 'init-const)
 (require 'init-custom)
+(require 'init-funcs)
 
 (pcase centaur-lsp
   ('eglot
@@ -46,7 +47,8 @@
      :commands (lsp-enable-which-key-integration lsp-format-buffer lsp-organize-imports)
      :diminish
      :hook ((prog-mode . (lambda ()
-                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                           (unless (or (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                                       (centaur-timemachine-buffer-p))
                              (lsp-deferred))))
             (lsp-mode . (lambda ()
                           ;; Integrate `which-key'
