@@ -144,12 +144,16 @@
       "Transform CANDS into a string for minibuffer."
       (ivy--format-function-generic
        (lambda (str)
-         (concat (if (bound-and-true-p all-the-icons-ivy-rich-mode)
+         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
+                          (>= (length str) 1)
+                          (string= " " (substring str 0 1)))
                      ">"
                    "> ")
                  (ivy--add-face str 'ivy-current-match)))
        (lambda (str)
-         (concat (if (bound-and-true-p all-the-icons-ivy-rich-mode)
+         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
+                          (>= (length str) 1)
+                          (string= " " (substring str 0 1)))
                      " "
                    "  ")
                  str))
