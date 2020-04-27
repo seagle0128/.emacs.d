@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-funcs)
 
 (use-package flycheck
   :diminish
@@ -38,7 +39,7 @@
   ;; @see https://github.com/flycheck/flycheck/issues/1677
   ;; :hook (after-init . global-flycheck-mode)
   :hook ((prog-mode markdown-mode) . (lambda ()
-                                       (unless (string-prefix-p "timemachine:" (buffer-name))
+                                       (unless (centaur-timemachine-buffer-p)
                                          (flycheck-mode 1))))
   :config
   (setq flycheck-global-modes

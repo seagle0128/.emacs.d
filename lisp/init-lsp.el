@@ -32,6 +32,7 @@
 
 (require 'init-const)
 (require 'init-custom)
+(require 'init-funcs)
 
 (pcase centaur-lsp
   ('eglot
@@ -46,7 +47,8 @@
      :commands (lsp-enable-which-key-integration lsp-format-buffer lsp-organize-imports)
      :diminish
      :hook ((prog-mode . (lambda ()
-                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                           (unless (or (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                                       (centaur-timemachine-buffer-p))
                              (lsp-deferred))))
             (lsp-mode . (lambda ()
                           ;; Integrate `which-key'
@@ -64,12 +66,18 @@
      ;; @see https://github.com/emacs-lsp/lsp-mode#performance
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
-     (setq lsp-auto-guess-root nil      ; Detect project root
-           lsp-keep-workspace-alive nil ; Auto-kill LSP server
+     (setq lsp-keymap-prefix "C-c l"
+           lsp-auto-guess-root t
+           lsp-flycheck-live-reporting nil
+           lsp-keep-workspace-alive nil
+           lsp-prefer-capf t
+           lsp-signature-auto-activate nil
+
+           lsp-enable-file-watchers nil
+           lsp-enable-folding nil
            lsp-enable-indentation nil
            lsp-enable-on-type-formatting nil
-           lsp-prefer-capf t
-           lsp-keymap-prefix "C-c l")
+           lsp-enable-symbol-highlighting nil)
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))

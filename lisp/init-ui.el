@@ -181,6 +181,9 @@
      ("t a" (setq doom-modeline-buffer-file-name-style 'truncate-all)
       "truncate all"
       :toggle (eq doom-modeline-buffer-file-name-style 'truncate-all))
+     ("t n" (setq doom-modeline-buffer-file-name-style 'truncate-nil)
+      "truncate none"
+      :toggle (eq doom-modeline-buffer-file-name-style 'truncate-nil))
      ("r f" (setq doom-modeline-buffer-file-name-style 'relative-from-project)
       "relative from project"
       :toggle (eq doom-modeline-buffer-file-name-style 'relative-from-project))
@@ -252,6 +255,8 @@
         (memoize f)))
     (message "Reset all-the-icons"))
 
+  (add-to-list 'all-the-icons-icon-alist
+               '("^Rakefile$" all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.go$" all-the-icons-fileicon "go" :face all-the-icons-blue))
   (add-to-list 'all-the-icons-icon-alist
