@@ -258,6 +258,7 @@ prepended to the element after the #+HEADER: tag."
 ;; org-roam
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
+    :diminish
     :hook (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
            (("C-c n l" . org-roam)
