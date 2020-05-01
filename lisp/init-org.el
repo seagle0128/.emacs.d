@@ -256,7 +256,7 @@ prepended to the element after the #+HEADER: tag."
            ("P" . org-pomodoro))))
 
 ;; org-roam
-(when emacs/>=26p
+(when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :hook (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
