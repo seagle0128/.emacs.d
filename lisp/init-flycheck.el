@@ -35,10 +35,8 @@
 
 (use-package flycheck
   :diminish
-  ;; :hook (after-init . global-flycheck-mode)
-  :hook ((prog-mode markdown-mode) . (lambda ()
-                                       (unless (centaur-timemachine-buffer-p)
-                                         (flycheck-mode 1))))
+  :commands flycheck-redefine-standard-error-levels
+  :hook (after-init . global-flycheck-mode)
   :init (setq flycheck-global-modes
               '(not text-mode outline-mode fundamental-mode org-mode
                     diff-mode shell-mode eshell-mode term-mode vterm-mode)
