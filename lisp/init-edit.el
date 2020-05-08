@@ -42,6 +42,8 @@
   :ensure nil
   :bind (:map text-mode-map
          ("<C-return>" . rect-hydra/body)
+         :map conf-mode-map
+         ("<C-return>" . rect-hydra/body)
          :map prog-mode-map
          ("<C-return>" . rect-hydra/body))
   :init (with-eval-after-load 'org
