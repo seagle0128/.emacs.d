@@ -46,11 +46,6 @@
            ("C-s" . isearch-forward))
     :init (setq pdf-annot-activate-created-annotations t)
     :config
-    ;; WORKAROUND: Fix compilation errors on macOS.
-    ;; @see https://github.com/politza/pdf-tools/issues/480
-    (when sys/macp
-      (setenv "PKG_CONFIG_PATH"
-              "/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig"))
     (pdf-tools-install t nil t nil)
 
     ;; Set dark theme

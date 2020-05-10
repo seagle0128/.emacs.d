@@ -197,10 +197,6 @@ Same as `replace-string C-q C-m RET RET'."
        (display-graphic-p)
        (require 'all-the-icons nil t)))
 
-(defun centaur-timemachine-buffer-p ()
-  "Check whether the buffer is a `git-timemachine' buffer."
-  (string-prefix-p "timemachine:" (buffer-name)))
-
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 
