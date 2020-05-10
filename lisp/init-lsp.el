@@ -47,8 +47,7 @@
      :commands (lsp-enable-which-key-integration lsp-format-buffer lsp-organize-imports)
      :diminish
      :hook ((prog-mode . (lambda ()
-                           (unless (or (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
-                                       (centaur-timemachine-buffer-p))
+                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
                              (lsp-deferred))))
             (lsp-mode . (lambda ()
                           ;; Integrate `which-key'
@@ -82,7 +81,14 @@
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      (unless (executable-find "rls")
-       (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls"))))
+       (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))
+     :config
+     (with-no-warnings
+       (defun my-lsp--init-if-visible (func &rest args)
+         "Not enabling lsp in `git-timemachine-mode'."
+         (unless (bound-and-true-p git-timemachine-mode)
+           (apply func args)))
+       (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)))
 
    (use-package lsp-ui
      :custom-face
@@ -385,6 +391,12 @@
        (setq projectile-project-root-files-top-down-recurring
              (append '("compile_commands.json" ".ccls")
                      projectile-project-root-files-top-down-recurring))))
+
+   ;; Swift/C/C++/Objective-C
+   (when sys/macp
+     (use-package lsp-sourcekit
+       :init (setq lsp-sourcekit-executable
+                   "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")))
 
    ;; Julia support
    (use-package lsp-julia
