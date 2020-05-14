@@ -123,7 +123,19 @@
         ("s c" (setq lsp-ui-sideline-show-code-actions (not lsp-ui-sideline-show-code-actions))
          "code actions" :toggle lsp-ui-sideline-show-code-actions)
         ("s i" (setq lsp-ui-sideline-ignore-duplicate (not lsp-ui-sideline-ignore-duplicate))
-         "ignore duplicate" :toggle lsp-ui-sideline-ignore-duplicate))))
+         "ignore duplicate" :toggle lsp-ui-sideline-ignore-duplicate))
+       "Action"
+       (("h" backward-char "←")
+        ("j" next-line "↓")
+        ("k" previous-line "↑")
+        ("l" forward-char "→")
+        ("C-a" mwim-beginning-of-code-or-line nil)
+        ("C-e" mwim-end-of-code-or-line nil)
+        ("C-b" backward-char nil)
+        ("C-n" next-line nil)
+        ("C-p" previous-line nil)
+        ("C-f" forward-char nil)
+        ("c" lsp-ui-sideline-apply-code-actions "apply code actions"))))
      :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
             ("M-<f6>" . lsp-ui-hydra/body))
@@ -139,6 +151,7 @@
                  lsp-ui-sideline-enable t
                  lsp-ui-sideline-show-hover nil
                  lsp-ui-sideline-show-diagnostics nil
+                 lsp-ui-sideline-show-code-actions t
                  lsp-ui-sideline-ignore-duplicate t
 
                  lsp-ui-imenu-enable t
