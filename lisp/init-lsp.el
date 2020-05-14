@@ -135,6 +135,8 @@
         ("C-n" next-line nil)
         ("C-p" previous-line nil)
         ("C-f" forward-char nil)
+        ("M-b" backward-word nil)
+        ("M-f" forward-word nil)
         ("c" lsp-ui-sideline-apply-code-actions "apply code actions"))))
      :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
