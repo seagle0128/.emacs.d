@@ -511,7 +511,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun proxy-http-toggle ()
   "Toggle HTTP/HTTPS proxy."
   (interactive)
-  (if url-proxy-services
+  (if (bound-and-true-p url-proxy-services)
       (proxy-http-disable)
     (proxy-http-enable)))
 
@@ -519,7 +519,7 @@ If SYNC is non-nil, the updating process is synchronous."
   "Show SOCKS proxy."
   (interactive)
   (when (fboundp 'cadddr)                ; defined 25.2+
-    (if socks-noproxy
+    (if (bound-and-true-p socks-noproxy)
         (message "Current SOCKS%d proxy is %s:%d"
                  (cadddr socks-server) (cadr socks-server) (caddr socks-server))
       (message "No SOCKS proxy"))))
