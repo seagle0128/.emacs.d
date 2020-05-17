@@ -46,7 +46,8 @@
            ("C-s" . isearch-forward))
     :init (setq pdf-annot-activate-created-annotations t)
     :config
-    (pdf-tools-install t nil t nil)
+    ;; Build pdfinfo if needed
+    (advice-add #'pdf-view-decrypt-document :before #'pdf-tools-install)
 
     ;; Set dark theme
     (defun my-pdf-view-set-midnight-colors ()
@@ -156,9 +157,9 @@
               (when highlight-p
                 (pdf-view-display-image
                  (pdf-view-create-image
-                   (pdf-cache-renderpage-highlight
-                    page (car size)
-                    `("white" "steel blue" 0.35 ,@edges))
+                     (pdf-cache-renderpage-highlight
+                      page (car size)
+                      `("white" "steel blue" 0.35 ,@edges))
                    :map (pdf-view-apply-hotspot-functions
                          window page size)
                    :width (car size))))
