@@ -94,8 +94,9 @@
       (defun my-all-the-icons-dired--refresh ()
         "Display the icons of files in a dired buffer."
         (all-the-icons-dired--remove-all-overlays)
-        ;; NOTE: don't display icons it too many items
-        (if (<= (count-lines (point-min) (point-max)) 1000)
+        ;; NOTE: don't display icons in remote folders or the folder has too many items
+        (if (and (not (file-remote-p default-directory))
+                 (<= (count-lines (point-min) (point-max)) 1000))
             (save-excursion
               (goto-char (point-min))
               (while (not (eobp))
@@ -112,7 +113,7 @@
                             (all-the-icons-dired--add-overlay (point) "  \t")
                           (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))))
                 (forward-line 1)))
-          (message "Not display icons because of too many items.")))
+          (message "Remote folder or too many items.")))
       (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
   ;; Extra Dired functionality
