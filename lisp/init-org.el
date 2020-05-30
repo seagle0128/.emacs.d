@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-custom)
 
 (use-package org
   :ensure nil
@@ -112,7 +113,7 @@ prepended to the element after the #+HEADER: tag."
                               (setq show-paren-mode nil))))
   :config
   ;; To speed up startup, don't put to init section
-  (setq org-agenda-files '("~/org")
+  (setq org-agenda-files centaur-org-directory
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
@@ -259,6 +260,7 @@ prepended to the element after the #+HEADER: tag."
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
+    :custom (org-roam-directory centaur-org-directory)
     :hook (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
            (("C-c n l" . org-roam)
