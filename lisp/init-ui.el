@@ -86,7 +86,10 @@
         (doom-themes-visual-bell-config)
 
         ;; Enable customized theme
-        (doom-themes-treemacs-config)))
+        ;; WORKAROUND: https://github.com/Alexander-Miller/treemacs/issues/682
+        (with-eval-after-load 'treemacs
+          (when (require 'treemacs-macros nil t)
+            (doom-themes-treemacs-config)))))
   (progn
     (warn "The current theme may not be compatible!")
     (centaur-load-theme centaur-theme t)))
