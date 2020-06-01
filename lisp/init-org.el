@@ -113,7 +113,7 @@ prepended to the element after the #+HEADER: tag."
                               (setq show-paren-mode nil))))
   :config
   ;; To speed up startup, don't put to init section
-  (setq org-agenda-files centaur-org-directory
+  (setq org-agenda-files `(,centaur-org-directory)
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
