@@ -54,30 +54,32 @@
   (defun persp-save-frame ()
     "Save the current frame parameters to file."
     (interactive)
-    (condition-case error
-        (with-temp-buffer
-          (erase-buffer)
-          (insert
-           ";;; -*- mode: emacs-lisp; coding: utf-8-unix -*-\n"
-           ";;; This is the previous frame parameters.\n"
-           ";;; Last generated " (current-time-string) ".\n"
-           "(setq initial-frame-alist\n"
-           (format "      '((top . %d)\n" (frame-parameter nil 'top))
-           (format "        (left . %d)\n" (frame-parameter nil 'left))
-           (format "        (width . %d)\n" (frame-parameter nil 'width))
-           (format "        (height . %d)\n" (frame-parameter nil 'height))
-           (format "        (fullscreen . %s)))\n" (frame-parameter nil 'fullscreen)))
-          (when (file-writable-p persp-frame-file)
-            (write-file persp-frame-file)))
-      (error
-       (warn "persp frame: %s" (error-message-string error)))))
+    (when persp-mode
+      (condition-case error
+          (with-temp-buffer
+            (erase-buffer)
+            (insert
+             ";;; -*- mode: emacs-lisp; coding: utf-8-unix -*-\n"
+             ";;; This is the previous frame parameters.\n"
+             ";;; Last generated " (current-time-string) ".\n"
+             "(setq initial-frame-alist\n"
+             (format "      '((top . %d)\n" (frame-parameter nil 'top))
+             (format "        (left . %d)\n" (frame-parameter nil 'left))
+             (format "        (width . %d)\n" (frame-parameter nil 'width))
+             (format "        (height . %d)\n" (frame-parameter nil 'height))
+             (format "        (fullscreen . %s)))\n" (frame-parameter nil 'fullscreen)))
+            (when (file-writable-p persp-frame-file)
+              (write-file persp-frame-file)))
+        (error
+         (warn "persp frame: %s" (error-message-string error))))))
 
   (defun persp-load-frame ()
     "Load frame with the previous frame's geometry."
     (interactive)
-    (fix-fullscreen-cocoa)
-    (when (file-readable-p persp-frame-file)
-      (load persp-frame-file)))
+    (when persp-mode
+      (fix-fullscreen-cocoa)
+      (when (file-readable-p persp-frame-file)
+        (load persp-frame-file))))
 
   (with-no-warnings
     ;; Don't save if the sate is not loaded

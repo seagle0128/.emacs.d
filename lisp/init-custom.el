@@ -50,6 +50,11 @@
   :group 'centaur
   :type 'string)
 
+(defcustom centaur-org-directory (expand-file-name "~/org/")
+  "Set org directory."
+  :group 'centaur
+  :type 'string)
+
 (defcustom centaur-proxy "127.0.0.1:1087"
   "Set network proxy."
   :group 'centaur

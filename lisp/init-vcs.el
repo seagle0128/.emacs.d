@@ -39,6 +39,7 @@
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch)
          ("C-c M-g" . magit-file-popup))
+  :init (setq magit-diff-refine-hunk t)
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))

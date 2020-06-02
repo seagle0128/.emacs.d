@@ -67,7 +67,6 @@
 
      (setq lsp-keymap-prefix "C-c l"
            lsp-auto-guess-root t
-           lsp-flycheck-live-reporting nil
            lsp-keep-workspace-alive nil
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
@@ -140,7 +139,8 @@
         ("c" lsp-ui-sideline-apply-code-actions "apply code actions"))))
      :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
-            ("M-<f6>" . lsp-ui-hydra/body))
+            ("M-<f6>" . lsp-ui-hydra/body)
+            ("M-RET" . lsp-ui-sideline-apply-code-actions))
      :hook (lsp-mode . lsp-ui-mode)
      :init (setq lsp-ui-doc-enable t
                  lsp-ui-doc-use-webkit nil
