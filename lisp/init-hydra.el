@@ -126,7 +126,8 @@
                                    (counsel-load-theme-action theme))
                          :caller 'counsel-load-theme)
          "others"
-         :toggle (not (rassoc (car custom-enabled-themes) centaur-theme-alist))
+         :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
+                          (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))
          :exit t))
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)

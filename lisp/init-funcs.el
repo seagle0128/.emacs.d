@@ -446,7 +446,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun centaur-theme-enable-p (theme)
   "The THEME is enabled or not."
   (and (not (memq centaur-theme '(auto random)))
-       (eq (car custom-enabled-themes) (centaur--theme-name theme))))
+       (memq (centaur--theme-name theme) custom-enabled-themes)))
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
