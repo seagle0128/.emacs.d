@@ -24,7 +24,11 @@ before_install:
 
 install:
   - mv -f ../.emacs.d ~/.emacs.d
-  - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
+
+  - export PATH="/home/travis/.evm/bin:$PATH"
+  - export PATH="/home/travis/.cask/bin:$PATH"
+  - git clone https://github.com/rejeep/evm.git /home/travis/.evm
+  - evm config path /tmp
   - evm install $EVM_EMACS --use --skip
 
   - echo "Importing new elpa key..."
