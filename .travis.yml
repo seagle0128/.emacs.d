@@ -32,10 +32,12 @@ install:
   - evm install $EVM_EMACS --use --skip
   - curl -fsSkL https://raw.github.com/cask/cask/master/go | python
 
-  - echo "Importing new elpa key..."
-  - mkdir -p ~/.emacs.d/elpa/gnupg
-  - chmod 700 ~/.emacs.d/elpa/gnupg 
-  - gpg --keyserver hkp://keys.gnupg.net --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
+  - echo "Importing elpa key..."
+  - EMACS_GNUPGHOME=$HOME/.emacs.d/elpa/gnupg
+  - mkdir -p "$EMACS_GNUPGHOME"
+  - chmod 700 "$EMACS_GNUPGHOME"
+  - wget 'https://git.savannah.gnu.org/cgit/emacs.git/plain/etc/package-keyring.gpg'
+  - gpg --homedir "$EMACS_GNUPGHOME" --import package-keyring.gpg
 
 script:
   - echo "Attempting startup..."
