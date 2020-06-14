@@ -36,7 +36,54 @@
 (use-package which-key
   :diminish
   :bind ("C-h M-m" . which-key-show-major-mode)
-  :hook (after-init . which-key-mode))
+  :hook (after-init . which-key-mode)
+  :init (setq which-key-max-description-length 30
+              which-key-show-remaining-keys t)
+  :config
+  (which-key-add-key-based-replacements "C-c !" "flycheck")
+  (which-key-add-key-based-replacements "C-c &" "yasnippet")
+  (which-key-add-key-based-replacements "C-c c" "counsel")
+  (which-key-add-key-based-replacements "C-c n" "org-roam")
+  (which-key-add-key-based-replacements "C-c t" "hl-todo")
+  (which-key-add-key-based-replacements "C-c v" "ivy-view")
+  (which-key-add-key-based-replacements "C-c C-z" "browse")
+
+  (which-key-add-key-based-replacements "C-x RET" "coding-system")
+  (which-key-add-key-based-replacements "C-x 8" "unicode")
+  (which-key-add-key-based-replacements "C-x @" "modifior")
+  (which-key-add-key-based-replacements "C-x X" "edebug")
+  (which-key-add-key-based-replacements "C-x a" "abbrev")
+  (which-key-add-key-based-replacements "C-x n" "narrow")
+  (which-key-add-key-based-replacements "C-x t" "tab")
+  (which-key-add-key-based-replacements "C-x C-a" "edebug")
+
+
+  (which-key-add-major-mode-key-based-replacements 'emacs-lisp-mode
+    "C-c ," "overseer")
+  (which-key-add-major-mode-key-based-replacements 'python-mode
+    "C-c C-t" "python-skeleton")
+
+  (which-key-add-major-mode-key-based-replacements 'markdown-mode
+    "C-c C-a" "markdown-link")
+  (which-key-add-major-mode-key-based-replacements 'markdown-mode
+    "C-c C-c" "markdown-command")
+  (which-key-add-major-mode-key-based-replacements 'markdown-mode
+    "C-c C-s" "markdown-style")
+  (which-key-add-major-mode-key-based-replacements 'markdown-mode
+    "C-c C-t" "markdown-header")
+  (which-key-add-major-mode-key-based-replacements 'markdown-mode
+    "C-c C-x" "markdown-toggle")
+
+  (which-key-add-major-mode-key-based-replacements 'gfm-mode
+    "C-c C-a" "markdown-link")
+  (which-key-add-major-mode-key-based-replacements 'gfm-mode
+    "C-c C-c" "markdown-command")
+  (which-key-add-major-mode-key-based-replacements 'gfm-mode
+    "C-c C-s" "markdown-style")
+  (which-key-add-major-mode-key-based-replacements 'gfm-mode
+    "C-c C-t" "markdown-header")
+  (which-key-add-major-mode-key-based-replacements 'gfm-mode
+    "C-c C-x" "markdown-toggle"))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
