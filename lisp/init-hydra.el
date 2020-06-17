@@ -132,8 +132,6 @@
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
-        ("p i" (centaur-set-package-archives 'melpa-mirror t)
-         "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror) :exit t)
         ("p c" (centaur-set-package-archives 'emacs-china t)
          "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
         ("p n" (centaur-set-package-archives 'netease t)
