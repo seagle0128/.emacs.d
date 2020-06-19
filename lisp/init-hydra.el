@@ -126,13 +126,12 @@
                                    (counsel-load-theme-action theme))
                          :caller 'counsel-load-theme)
          "others"
-         :toggle (not (rassoc (car custom-enabled-themes) centaur-theme-alist))
+         :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
+                          (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))
          :exit t))
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
-        ("p i" (centaur-set-package-archives 'melpa-mirror t)
-         "melpa mirror" :toggle (eq centaur-package-archives 'melpa-mirror) :exit t)
         ("p c" (centaur-set-package-archives 'emacs-china t)
          "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
         ("p n" (centaur-set-package-archives 'netease t)

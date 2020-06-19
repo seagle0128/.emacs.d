@@ -220,15 +220,11 @@ Save to `custom-file' if NO-SAVE is nil."
   :group centaur
   (if centaur-read-mode
       (progn
-        (when (fboundp 'olivetti-mode)
-          (olivetti-mode 1))
-        (when (fboundp 'mixed-pitch-mode)
-          (mixed-pitch-mode 1)))
+        (and (fboundp 'olivetti-mode) (olivetti-mode 1))
+        (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode 1)))
     (progn
-      (when (fboundp 'olivetti-mode)
-        (olivetti-mode -1))
-      (when (fboundp 'mixed-pitch-mode)
-        (mixed-pitch-mode -1)))))
+      (and (fboundp 'olivetti-mode) (olivetti-mode -1))
+      (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1)))))
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage repository (ELPA)
@@ -446,7 +442,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun centaur-theme-enable-p (theme)
   "The THEME is enabled or not."
   (and (not (memq centaur-theme '(auto random)))
-       (eq (car custom-enabled-themes) (centaur--theme-name theme))))
+       (memq (centaur--theme-name theme) custom-enabled-themes)))
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."

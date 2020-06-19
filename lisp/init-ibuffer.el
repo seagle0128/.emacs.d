@@ -41,9 +41,7 @@
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
     :if (icons-displayable-p)
-    :init
-    (setq all-the-icons-ibuffer-icon-size 0.85)
-    (all-the-icons-ibuffer-mode 1))
+    :init (all-the-icons-ibuffer-mode 1))
 
   (with-eval-after-load 'counsel
     (with-no-warnings
