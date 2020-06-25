@@ -123,6 +123,43 @@
                   company-box-doc-delay 0.2)
       :config
       (with-no-warnings
+        ;; FIXME: Display common text correctly
+        (defun my-company-box--update-line (selection common)
+          (company-box--update-image)
+          (goto-char 1)
+          (forward-line selection)
+          (let* ((beg (line-beginning-position))
+                 (txt-beg (+ company-box--icon-offset beg)))
+            (move-overlay (company-box--get-ov) beg (line-beginning-position 2))
+            (move-overlay (company-box--get-ov-common) txt-beg
+                          (+ (length common) txt-beg)))
+          (let ((color (or (get-text-property (point) 'company-box--color)
+                           'company-box-selection)))
+            (overlay-put (company-box--get-ov) 'face color)
+            (overlay-put (company-box--get-ov-common) 'face 'company-tooltip-common-selection)
+            (company-box--update-image color))
+          (run-hook-with-args 'company-box-selection-hook selection
+                              (or (frame-parent) (selected-frame))))
+        (advice-add #'company-box--update-line :override #'my-company-box--update-line)
+
+        (defun my-company-box--render-buffer (string)
+          (let ((selection company-selection)
+                (common (or company-common company-prefix)))
+            (with-current-buffer (company-box--get-buffer)
+              (erase-buffer)
+              (insert string "\n")
+              (setq mode-line-format nil
+                    display-line-numbers nil
+                    truncate-lines t
+                    cursor-in-non-selected-windows nil)
+              (setq-local scroll-step 1)
+              (setq-local scroll-conservatively 10000)
+              (setq-local scroll-margin  0)
+              (setq-local scroll-preserve-screen-position t)
+              (add-hook 'window-configuration-change-hook 'company-box--prevent-changes t t)
+              (company-box--update-line selection common))))
+        (advice-add #'company-box--render-buffer :override #'my-company-box--render-buffer)
+
         ;; Prettify icons
         (defun my-company-box-icons--elisp (candidate)
           (when (derived-mode-p 'emacs-lisp-mode)
