@@ -43,8 +43,11 @@
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
-     :defines (lsp-clients-python-library-directories lsp-rust-rls-server-command)
-     :commands (lsp-enable-which-key-integration lsp-format-buffer lsp-organize-imports)
+     :defines (lsp-clients-python-library-directories
+               lsp-rust-server)
+     :commands (lsp-enable-which-key-integration
+                lsp-format-buffer
+                lsp-organize-imports)
      :diminish
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
@@ -78,8 +81,8 @@
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-     (unless (executable-find "rls")
-       (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))
+     (when (executable-find "rust-analyzer")
+       (setq lsp-rust-server 'rust-analyzer))
      :config
      (with-no-warnings
        (defun my-lsp--init-if-visible (func &rest args)
