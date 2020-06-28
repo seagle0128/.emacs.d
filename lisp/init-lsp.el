@@ -75,10 +75,14 @@
            lsp-modeline-code-actions-enable nil
 
            lsp-enable-file-watchers nil
+           lsp-enable-file-watchers nil
            lsp-enable-folding nil
+           lsp-enable-semantic-highlighting nil
+           lsp-enable-symbol-highlighting nil
+           lsp-enable-text-document-color nil
+
            lsp-enable-indentation nil
-           lsp-enable-on-type-formatting nil
-           lsp-enable-symbol-highlighting nil)
+           lsp-enable-on-type-formatting nil)
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
