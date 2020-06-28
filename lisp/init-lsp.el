@@ -72,6 +72,7 @@
            lsp-keep-workspace-alive nil
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
+           lsp-modeline-code-actions-enable nil
 
            lsp-enable-file-watchers nil
            lsp-enable-folding nil
