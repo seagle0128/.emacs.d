@@ -43,8 +43,11 @@
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
-     :defines (lsp-clients-python-library-directories lsp-rust-rls-server-command)
-     :commands (lsp-enable-which-key-integration lsp-format-buffer lsp-organize-imports)
+     :defines (lsp-clients-python-library-directories
+               lsp-rust-server)
+     :commands (lsp-enable-which-key-integration
+                lsp-format-buffer
+                lsp-organize-imports)
      :diminish
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
@@ -66,21 +69,25 @@
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
      (setq lsp-keymap-prefix "C-c l"
-           lsp-auto-guess-root t
            lsp-keep-workspace-alive nil
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
+           lsp-modeline-code-actions-enable nil
 
            lsp-enable-file-watchers nil
+           lsp-enable-file-watchers nil
            lsp-enable-folding nil
+           lsp-enable-semantic-highlighting nil
+           lsp-enable-symbol-highlighting nil
+           lsp-enable-text-document-color nil
+
            lsp-enable-indentation nil
-           lsp-enable-on-type-formatting nil
-           lsp-enable-symbol-highlighting nil)
+           lsp-enable-on-type-formatting nil)
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-     (unless (executable-find "rls")
-       (setq lsp-rust-rls-server-command '("rustup" "run" "stable" "rls")))
+     (when (executable-find "rust-analyzer")
+       (setq lsp-rust-server 'rust-analyzer))
      :config
      (with-no-warnings
        (defun my-lsp--init-if-visible (func &rest args)
