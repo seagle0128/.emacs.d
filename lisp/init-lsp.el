@@ -192,6 +192,7 @@
    (when emacs/>=25.2p
      ;; Debug
      (use-package dap-mode
+       :defines dap-python-executable
        :functions dap-hydra/nil
        :diminish
        :bind (:map lsp-mode-map
@@ -211,7 +212,9 @@
               (php-mode . (lambda () (require 'dap-php)))
               (elixir-mode . (lambda () (require 'dap-elixir)))
               ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-              (powershell-mode . (lambda () (require 'dap-pwsh)))))
+              (powershell-mode . (lambda () (require 'dap-pwsh))))
+       :init (when (executable-find "python3")
+               (setq dap-python-executable "python3")))
 
      ;; `lsp-mode' and `treemacs' integration
      (use-package lsp-treemacs
