@@ -137,7 +137,7 @@
 ;; Youdao Dictionary
 (use-package youdao-dictionary
   :commands youdao-dictionary-play-voice-of-current-word
-  :bind (("C-c y" . my-youdao-search-at-point)
+  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
          ("C-c Y" . youdao-dictionary-search-at-point)
          :map youdao-dictionary-mode-map
          ("h" . youdao-dictionary-hydra/body)
@@ -146,7 +146,7 @@
   (setq url-automatic-caching t
         youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
-  (defun my-youdao-search-at-point ()
+  (defun my-youdao-dictionary-search-at-point ()
     "Search word at point and display result with `posframe', `pos-tip', or buffer."
     (interactive)
     (if (display-graphic-p)
