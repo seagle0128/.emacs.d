@@ -123,6 +123,11 @@
      ("R" . counsel-rg)
      ("F" . counsel-fzf))))
 
+;; Dictionary
+(when sys/macp
+  (use-package osx-dictionary
+    :bind (("C-c D" . osx-dictionary-search-pointer))))
+
 ;; Youdao Dictionary
 (use-package youdao-dictionary
   :commands youdao-dictionary-play-voice-of-current-word

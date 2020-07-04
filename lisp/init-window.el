@@ -216,6 +216,7 @@
           (" *undo-tree*" :select t)
           ("*quickrun*" :select t :size 15 :align 'below)
           ("*tldr*" :size 0.4 :align 'below :autoclose t)
+          ("*osx-dictionary*" :size 20 :align 'below :autoclose t)
           ("*Youdao Dictionary*" :size 15 :align 'below :autoclose t)
           ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
