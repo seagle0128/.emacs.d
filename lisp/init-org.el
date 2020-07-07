@@ -267,7 +267,8 @@ prepended to the element after the #+HEADER: tag."
             ("C-c n f" . org-roam-find-file)
             ("C-c n g" . org-roam-graph))
            :map org-mode-map
-           (("C-c n i" . org-roam-insert))))
+           (("C-c n i" . org-roam-insert))
+           (("C-c n I" . org-roam-insert-immediate))))
 
   (use-package org-roam-server
     :functions xwidget-webkit-current-session
