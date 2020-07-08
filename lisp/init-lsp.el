@@ -155,7 +155,6 @@
                  lsp-ui-doc-include-signature t
                  lsp-ui-doc-position 'at-point
                  lsp-ui-doc-border (face-foreground 'default)
-                 lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
 
                  lsp-ui-sideline-enable t
                  lsp-ui-sideline-show-hover nil
