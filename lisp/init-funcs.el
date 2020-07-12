@@ -220,9 +220,11 @@ Save to `custom-file' if NO-SAVE is nil."
   :group centaur
   (if centaur-read-mode
       (progn
+        (text-scale-set +2)
         (and (fboundp 'olivetti-mode) (olivetti-mode 1))
         (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode 1)))
     (progn
+      (text-scale-set 0)
       (and (fboundp 'olivetti-mode) (olivetti-mode -1))
       (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1)))))
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)

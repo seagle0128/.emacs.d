@@ -196,7 +196,6 @@
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :hook (olivetti-mode . (lambda () (text-scale-set (if olivetti-mode +2 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
