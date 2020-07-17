@@ -79,7 +79,13 @@
     (when persp-mode
       (fix-fullscreen-cocoa)
       (when (file-readable-p persp-frame-file)
-        (load persp-frame-file))))
+        (load persp-frame-file)
+
+        ;; Handle multiple monitors gracefully
+        (when (>= (frame-parameter nil 'left) (display-pixel-width))
+          (set-frame-parameter nil 'left 0))
+        (when (>= (frame-parameter nil 'top) (display-pixel-height))
+          (set-frame-parameter nil 'top 0)))))
 
   (with-no-warnings
     ;; Don't save if the sate is not loaded
