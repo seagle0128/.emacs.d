@@ -187,9 +187,8 @@
             ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
             ("C-s-." . lsp-ivy-global-workspace-symbol)))
 
-   ;; `treemacs' requires 25.2+, so `dap-mode' and `lsp-treemacs' also requires 25.2+
-   (when emacs/>=25.2p
-     ;; Debug
+   ;; Debug
+   (when emacs/>=26p
      (use-package dap-mode
        :defines dap-python-executable
        :functions dap-hydra/nil
@@ -215,9 +214,10 @@
        :init
        (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls))
        (when (executable-find "python3")
-         (setq dap-python-executable "python3")))
+         (setq dap-python-executable "python3"))))
 
-     ;; `lsp-mode' and `treemacs' integration
+   ;; `lsp-mode' and `treemacs' integration
+   (when emacs/>=25.2p
      (use-package lsp-treemacs
        :after lsp-mode
        :bind (:map lsp-mode-map
