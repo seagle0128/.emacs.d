@@ -176,7 +176,7 @@ If Non-nil, use dashboard, otherwise will restore previous session."
 `prog-mode' means ignoring all derived modes.
 "
   :group 'centaur
-  :type 'list)
+  :type '(repeat (symbol :tag "Major-Mode")))
 
 (defcustom centaur-chinese-calendar nil
   "Use Chinese calendar or not."

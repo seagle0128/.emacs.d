@@ -221,10 +221,12 @@ Save to `custom-file' if NO-SAVE is nil."
   (if centaur-read-mode
       (progn
         (and (fboundp 'olivetti-mode) (olivetti-mode 1))
-        (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode 1)))
+        (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode 1))
+        (text-scale-set +2))
     (progn
       (and (fboundp 'olivetti-mode) (olivetti-mode -1))
-      (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1)))))
+      (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1))
+      (text-scale-set 0))))
 (global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage repository (ELPA)

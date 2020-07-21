@@ -88,6 +88,12 @@
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
   :diminish
+  :bind (:map persistent-scratch-mode-map
+         ([remap kill-buffer] . (lambda (&rest _)
+                                  (interactive)
+                                  (user-error "Scrach buffer cannot be killed")))
+         ([remap revert-buffer] . persistent-scratch-restore)
+         ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode)))
 
@@ -123,10 +129,15 @@
      ("R" . counsel-rg)
      ("F" . counsel-fzf))))
 
+;; Dictionary
+(when sys/macp
+  (use-package osx-dictionary
+    :bind (("C-c D" . osx-dictionary-search-pointer))))
+
 ;; Youdao Dictionary
 (use-package youdao-dictionary
   :commands youdao-dictionary-play-voice-of-current-word
-  :bind (("C-c y" . my-youdao-search-at-point)
+  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
          ("C-c Y" . youdao-dictionary-search-at-point)
          :map youdao-dictionary-mode-map
          ("h" . youdao-dictionary-hydra/body)
@@ -135,7 +146,7 @@
   (setq url-automatic-caching t
         youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
-  (defun my-youdao-search-at-point ()
+  (defun my-youdao-dictionary-search-at-point ()
     "Search word at point and display result with `posframe', `pos-tip', or buffer."
     (interactive)
     (if (display-graphic-p)
@@ -185,7 +196,6 @@
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :hook (olivetti-mode . (lambda () (text-scale-set (if olivetti-mode +2 0))))
   :init (setq olivetti-body-width 0.618))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
