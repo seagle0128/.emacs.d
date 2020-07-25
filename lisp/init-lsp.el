@@ -73,6 +73,7 @@
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
            lsp-modeline-code-actions-enable nil
+           lsp-modeline-diagnostics-enable nil
 
            lsp-enable-file-watchers nil
            lsp-enable-file-watchers nil
@@ -224,6 +225,7 @@
               ("C-<f8>" . lsp-treemacs-errors-list)
               ("M-<f8>" . lsp-treemacs-symbols)
               ("s-<f8>" . lsp-treemacs-java-deps-list))
+       :init (lsp-treemacs-sync-mode 1)
        :config
        (with-eval-after-load 'ace-window
          (when (boundp 'aw-ignored-buffers)
