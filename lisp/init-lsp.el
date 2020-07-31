@@ -65,12 +65,11 @@
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
      :init
-     ;; @see https://github.com/emacs-lsp/lsp-mode#performance
+     ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
      (setq lsp-keymap-prefix "C-c l"
            lsp-keep-workspace-alive nil
-           lsp-prefer-capf t
            lsp-signature-auto-activate nil
            lsp-modeline-code-actions-enable nil
            lsp-modeline-diagnostics-enable nil
