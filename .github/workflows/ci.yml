@@ -29,9 +29,6 @@ jobs:
       with:
         version: ${{ matrix.emacs-version }}
 
-    - name: echo
-      run: 'emacs --version; pwd'
-
     - name: test
       run: 'mv -f ../.emacs.d ~/.emacs.d;
             emacs -nw --batch --eval \
