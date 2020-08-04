@@ -39,7 +39,7 @@ jobs:
         version: 0.8.4
 
     - name: test
-      run: 'emacs -nw --batch --eval
+      run: 'emacs -nw --batch --eval \
             "(let ((debug-on-error (>= emacs-major-version 26))
                    (package-check-signature nil)
                    (url-show-status nil)
