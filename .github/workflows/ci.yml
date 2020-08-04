@@ -25,18 +25,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: actions/setup-python@v1.1.1
-      with:
-        python-version: '3.6'
-        architecture: 'x64'
-
     - uses: purcell/setup-emacs@master
       with:
         version: ${{ matrix.emacs-version }}
 
-    - uses: conao3/setup-cask@master
-      with:
-        version: 0.8.4
+    - name: echo
+      run: 'emacs --version; pwd'
 
     - name: test
       run: 'mv -f ../.emacs.d ~/.emacs.d;
