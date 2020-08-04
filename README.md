@@ -280,7 +280,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
     to recognize and import the environment variables.
 
 1. How to use [zoom-window](https://github.com/syohex/emacs-zoom-window) in
-   `Centuar Emacs`?
+   `Centaur Emacs`?
 
    See [#169](https://github.com/seagle0128/.emacs.d/issues/169#issuecomment-590035527).
 
