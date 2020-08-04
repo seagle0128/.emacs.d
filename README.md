@@ -1,6 +1,6 @@
 # Centaur Emacs
 
-[![Build Status](https://travis-ci.org/seagle0128/.emacs.d.svg?branch=master)](https://travis-ci.org/seagle0128/.emacs.d)
+[![Build Status](https://github.com/seagle0128/.emacs.d/workflows/CI/badge.svg?branch=master)](https://github.com/seagle0128/.emacs.d/actions)
 [![Release Tag](https://img.shields.io/github/tag/seagle0128/.emacs.d.svg?label=release)](https://github.com/seagle0128/.emacs.d/releases/latest)
 [![License](http://img.shields.io/:license-gpl3-blue.svg)](LICENSE)
 
