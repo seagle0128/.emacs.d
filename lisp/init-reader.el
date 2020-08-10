@@ -46,8 +46,19 @@
            ("C-s" . isearch-forward))
     :init (setq pdf-annot-activate-created-annotations t)
     :config
-    ;; Build pdfinfo if needed
-    (advice-add #'pdf-view-decrypt-document :before #'pdf-tools-install)
+    ;; Build pdfinfo if needed, locking until it's complete
+    (with-no-warnings
+      (defun my-pdf-tools-install ()
+        (unless (file-executable-p pdf-info-epdfinfo-program)
+          (let ((wconf (current-window-configuration)))
+            (pdf-tools-install t)
+            (message "Building epdfinfo. Please wait for a moment...")
+            (while compilation-in-progress
+              ;; Block until `pdf-tools-install' is done
+              (sleep-for 1))
+            (when (file-executable-p pdf-info-epdfinfo-program)
+              (set-window-configuration wconf)))))
+      (advice-add #'pdf-view-decrypt-document :before #'my-pdf-tools-install))
 
     ;; Set dark theme
     (defun my-pdf-view-set-midnight-colors ()

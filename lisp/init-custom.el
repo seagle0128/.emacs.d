@@ -162,6 +162,12 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type 'boolean)
 
+(defcustom centaur-restore-frame-geometry t
+  "Restore the frame's geometry at startup.
+If Non-nil, save and restore the frame's geometry."
+  :group 'centaur
+  :type 'boolean)
+
 (defcustom centaur-lsp 'lsp-mode
   "Set language server."
   :group 'centaur

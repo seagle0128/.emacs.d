@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        emacs-version:
+          - 25.1
+          - 25.2
+          - 25.3
+          - 26.1
+          - 26.2
+          - 26.3
+          - snapshot
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: purcell/setup-emacs@master
+      with:
+        version: ${{ matrix.emacs-version }}
+
+    - name: test
+      run: 'mv -f ../.emacs.d ~/.emacs.d;
+            emacs -nw --batch --eval \
+            "(let ((debug-on-error (>= emacs-major-version 26))
+                   (package-check-signature nil)
+                   (url-show-status nil)
+                   (early-init-file (locate-user-emacs-file \"early-init.el\"))
+                   (user-init-file (locate-user-emacs-file \"init.el\")))
+            (when (>= emacs-major-version 27)
+              (load early-init-file))
+            (load user-init-file)
+            (run-hooks (quote after-init-hook))
+            (run-hooks (quote emacs-startup-hook))
+            (run-hooks (quote window-setup-hook)))"'
+   

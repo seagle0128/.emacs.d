@@ -54,7 +54,7 @@
   (defun persp-save-frame ()
     "Save the current frame parameters to file."
     (interactive)
-    (when persp-mode
+    (when (and centaur-restore-frame-geometry persp-mode)
       (condition-case error
           (with-temp-buffer
             (erase-buffer)
@@ -76,7 +76,7 @@
   (defun persp-load-frame ()
     "Load frame with the previous frame's geometry."
     (interactive)
-    (when persp-mode
+    (when (and centaur-restore-frame-geometry persp-mode)
       (fix-fullscreen-cocoa)
       (when (file-readable-p persp-frame-file)
         (load persp-frame-file)
