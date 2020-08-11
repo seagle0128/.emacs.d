@@ -382,9 +382,7 @@
   ;; Better sorting and filtering
   (use-package prescient
     :commands prescient-persist-mode
-    :init
-    (setq prescient-filter-method '(literal regexp initialism fuzzy))
-    (prescient-persist-mode 1))
+    :init (prescient-persist-mode 1))
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
