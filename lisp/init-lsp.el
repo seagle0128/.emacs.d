@@ -149,27 +149,14 @@
             ("M-<f6>" . lsp-ui-hydra/body)
             ("M-RET" . lsp-ui-sideline-apply-code-actions))
      :hook (lsp-mode . lsp-ui-mode)
-     :init (setq lsp-ui-doc-enable t
-                 lsp-ui-doc-use-webkit nil
-                 lsp-ui-doc-delay 0.2
-                 lsp-ui-doc-include-signature t
-                 lsp-ui-doc-position 'at-point
-                 lsp-ui-doc-border (face-foreground 'default)
-
-                 lsp-ui-sideline-enable t
-                 lsp-ui-sideline-show-hover nil
-                 lsp-ui-sideline-show-diagnostics nil
-                 lsp-ui-sideline-show-code-actions t
+     :init (setq lsp-ui-sideline-show-diagnostics nil
                  lsp-ui-sideline-ignore-duplicate t
-
-                 lsp-ui-imenu-enable t
+                 lsp-ui-doc-border (face-foreground 'default)
                  lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                        ,(face-foreground 'font-lock-string-face)
                                        ,(face-foreground 'font-lock-constant-face)
                                        ,(face-foreground 'font-lock-variable-name-face)))
      :config
-     (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
-
      ;; `C-g'to close doc
      (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
 
