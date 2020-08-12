@@ -104,12 +104,12 @@
       (fido-mode 1)
 
       (defun fido-recentf-open ()
-      "Use `completing-read' to find a recent file."
-      (interactive)
-      (if (find-file (completing-read "Find recent file: " recentf-list))
-          (message "Opening file...")
-        (message "Aborting")))
-    (global-set-key (kbd "C-x C-r") 'fido-recentf-open))
+        "Use `completing-read' to find a recent file."
+        (interactive)
+        (if (find-file (completing-read "Find recent file: " recentf-list))
+            (message "Opening file...")
+          (message "Aborting")))
+      (global-set-key (kbd "C-x C-r") 'fido-recentf-open))
   (progn
     (ido-mode 1)
     (ido-everywhere 1)
@@ -126,6 +126,26 @@
           (message "Opening file...")
         (message "Aborting")))
     (global-set-key (kbd "C-x C-r") 'ido-recentf-open)))
+
+;; Key Modifiers
+(cond
+ ((eq system-type 'windows-nt)
+  ;; make PC keyboard's Win key or other to type Super or Hyper
+  ;; (setq w32-pass-lwindow-to-system nil)
+  (setq w32-lwindow-modifier 'super     ; Left Windows key
+        w32-apps-modifier 'hyper)       ; Menu/App key
+  (w32-register-hot-key [s-t]))
+ ((and (eq system-type 'darwin) (eq window-system 'mac))
+  ;; Compatible with Emacs Mac port
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super)
+  (global-set-key [(super a)] #'mark-whole-buffer)
+  (global-set-key [(super v)] #'yank)
+  (global-set-key [(super c)] #'kill-ring-save)
+  (global-set-key [(super s)] #'save-buffer)
+  (global-set-key [(super l)] #'goto-line)
+  (global-set-key [(super w)] #'delete-frame)
+  (global-set-key [(super z)] #'undo)))
 
 ;; Keybindings
 (global-set-key (kbd "C-.") #'imenu)
