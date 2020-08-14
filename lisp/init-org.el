@@ -271,7 +271,7 @@ prepended to the element after the #+HEADER: tag."
            (("C-c n I" . org-roam-insert-immediate))))
 
   (use-package org-roam-server
-    :functions xwidget-webkit-current-session
+    :functions xwidget-buffer xwidget-webkit-current-session
     :hook (org-roam-server-mode . org-roam-server-browse)
     :init
     (defun org-roam-server-browse ()

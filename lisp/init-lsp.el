@@ -151,7 +151,7 @@
      :hook (lsp-mode . lsp-ui-mode)
      :init (setq lsp-ui-sideline-show-diagnostics nil
                  lsp-ui-sideline-ignore-duplicate t
-                 lsp-ui-doc-border (face-foreground 'default)
+                 lsp-ui-doc-border (face-foreground 'font-lock-comment-face)
                  lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                        ,(face-foreground 'font-lock-string-face)
                                        ,(face-foreground 'font-lock-constant-face)
@@ -163,7 +163,7 @@
      ;; Reset `lsp-ui-doc-background' after loading theme
      (add-hook 'after-load-theme-hook
                (lambda ()
-                 (setq lsp-ui-doc-border (face-foreground 'default))
+                 (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face))
                  (set-face-background 'lsp-ui-doc-background
                                       (face-background 'tooltip)))))
 

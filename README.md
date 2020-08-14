@@ -157,7 +157,7 @@ For Example:
 (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)) ; Ignore format on save for some languages
 (setq centaur-chinese-calendar t)              ; Use Chinese calendar or not: t or nil
-(setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications, if font supports ligatures use `nil'
+(setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
 (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
 (setq centaur-benchmark-init t)                ; Enable initialization benchmark or not: t or nil
 ```

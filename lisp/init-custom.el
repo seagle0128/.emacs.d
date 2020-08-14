@@ -178,7 +178,6 @@ If Non-nil, save and restore the frame's geometry."
 
 (defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
-
 `prog-mode' means ignoring all derived modes.
 "
   :group 'centaur
@@ -208,7 +207,8 @@ If Non-nil, save and restore the frame's geometry."
     ("&&" . ?∧)
     ("||" . ?∨)
     ("not" . ?¬))
-  "Alist of symbol prettifications."
+  "Alist of symbol prettifications.
+Nil to use font supports ligatures."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
@@ -222,11 +222,11 @@ If Non-nil, save and restore the frame's geometry."
     ("#+CREATOR:" . ?💁)
     ("#+DATE:" . ?📆)
     ("#+DESCRIPTION:" . ?⸙)
-    ("#+EMAIL:" . ?🖂)
+    ("#+EMAIL:" . ?📧)
     ("#+OPTIONS:" . ?⛭)
     ("#+SETUPFILE:" . ?⛮)
     ("#+TAGS:" . ?🏷)
-    ("#+TITLE:" . ?🕮)
+    ("#+TITLE:" . ?📓)
 
     ("#+BEGIN_SRC" . ?✎)
     ("#+END_SRC" . ?□)

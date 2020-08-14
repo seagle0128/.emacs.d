@@ -110,7 +110,7 @@ mermaid.initialize({
            ("g" . grip-mode))
     :init
     (setq grip-update-after-change nil)
-    (let ((credential (auth-source-user-and-password "api.github.com")))
+    (when-let ((credential (auth-source-user-and-password "api.github.com")))
       (setq grip-github-user (car credential)
             grip-github-password (cadr credential))))
 
