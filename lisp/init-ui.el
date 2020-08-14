@@ -388,11 +388,9 @@
 (use-package composite
   :ensure nil
   :unless centaur-prettify-symbols-alist
-  :init
-  (defvar composition-ligature-table (make-char-table nil))
-  :hook
-  (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-    . (lambda () (setq-local composition-function-table composition-ligature-table))))
+  :init (defvar composition-ligature-table (make-char-table nil))
+  :hook (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
+          . (lambda () (setq-local composition-function-table composition-ligature-table))))
   :config
   ;; support ligatures, some toned down to prevent hang
   (unless emacs/>=27p
