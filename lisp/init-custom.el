@@ -222,11 +222,11 @@ Nil to use font supports ligatures."
     ("#+CREATOR:" . ?💁)
     ("#+DATE:" . ?📆)
     ("#+DESCRIPTION:" . ?⸙)
-    ("#+EMAIL:" . ?🖂)
+    ("#+EMAIL:" . ?📧)
     ("#+OPTIONS:" . ?⛭)
     ("#+SETUPFILE:" . ?⛮)
     ("#+TAGS:" . ?🏷)
-    ("#+TITLE:" . ?🕮)
+    ("#+TITLE:" . ?📓)
 
     ("#+BEGIN_SRC" . ?✎)
     ("#+END_SRC" . ?□)
