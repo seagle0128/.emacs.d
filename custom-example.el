@@ -39,7 +39,7 @@
                                                     (t 100))))
 
   ;; Specify font for all unicode characters
-  (cl-loop for font in '("Symbola" "Apple Symbols" "Symbol" "icons-in-terminal")
+  (cl-loop for font in '("Apple Color Emoji" "Symbola" "Symbol")
            when (font-installed-p font)
            return (set-fontset-font t 'unicode font nil 'prepend))
 
