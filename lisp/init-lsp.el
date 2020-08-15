@@ -389,12 +389,11 @@
 
            (setq lsp-treemacs-theme "centaur-colors")))))
 
-   ;; Microsoft python-language-server support
-   (use-package lsp-python-ms
-     :hook (python-mode . (lambda () (require 'lsp-python-ms)))
-     :init
-     (when (executable-find "python3")
-       (setq lsp-python-ms-python-executable-cmd "python3")))
+   ;; Python: pyright
+   (use-package lsp-pyright
+     :hook (python-mode . (lambda () (require 'lsp-pyright)))
+     :init (when (executable-find "python3")
+             (setq lsp-pyright-python-executable-cmd "python3")))
 
    ;; C/C++/Objective-C support
    (use-package ccls
