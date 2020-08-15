@@ -141,8 +141,8 @@
                                 :string popuped-message
                                 :left-fringe 8
                                 :right-fringe 8
-                                :internal-border-color (face-foreground 'default)
-                                :internal-border-width 1)
+                                :internal-border-width 1
+                                :internal-border-color (face-foreground 'font-lock-comment-face))
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))
