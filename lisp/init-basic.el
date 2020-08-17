@@ -152,6 +152,12 @@
   :init (setq display-time-24hr-format t
               display-time-day-and-date t))
 
+(when emacs/>=27p
+  (use-package so-long
+    :ensure nil
+    :hook (after-init . global-so-long-mode)
+    :config (setq so-long-threshold 400)))
+
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
 (when (display-graphic-p)
