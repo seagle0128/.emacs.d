@@ -103,7 +103,9 @@
      ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket")
        :color amaranth :quit-key "q")
       ("Doc"
-       (("d e" (lsp-ui-doc-enable (not lsp-ui-doc-mode))
+       (("d e" (progn
+                 (lsp-ui-doc-enable (not lsp-ui-doc-mode))
+                 (setq lsp-ui-doc-enable (not lsp-ui-doc-enable)))
          "enable" :toggle lsp-ui-doc-mode)
         ("d s" (setq lsp-ui-doc-include-signature (not lsp-ui-doc-include-signature))
          "signature" :toggle lsp-ui-doc-include-signature)
@@ -118,7 +120,9 @@
         ("d w" (setq lsp-ui-doc-alignment 'window)
          "align window" :toggle (eq lsp-ui-doc-alignment 'window)))
        "Sideline"
-       (("s e" (lsp-ui-sideline-enable (not lsp-ui-sideline-mode))
+       (("s e" (progn
+                 (lsp-ui-sideline-enable (not lsp-ui-sideline-mode))
+                 (setq lsp-ui-sideline-enable (not lsp-ui-sideline-enable)))
          "enable" :toggle lsp-ui-sideline-mode)
         ("s h" (setq lsp-ui-sideline-show-hover (not lsp-ui-sideline-show-hover))
          "hover" :toggle lsp-ui-sideline-show-hover)
