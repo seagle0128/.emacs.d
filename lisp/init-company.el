@@ -124,15 +124,16 @@
       :config
       (with-no-warnings
         ;; HACK: Display common text correctly
-        (defun my-company-box--update-line (selection common)
+        (defun my-company-box--update-line (selection common &optional first-render)
           (company-box--update-image)
           (goto-char 1)
           (forward-line selection)
-          (let* ((beg (line-beginning-position))
-                 (txt-beg (+ company-box--icon-offset beg)))
+          (let ((beg (line-beginning-position)))
             (move-overlay (company-box--get-ov) beg (line-beginning-position 2))
-            (move-overlay (company-box--get-ov-common) txt-beg
-                          (+ (length common) txt-beg)))
+            (move-overlay (company-box--get-ov-common)
+                          (+ company-box--icon-offset beg)
+                          (+ (length common) (+ company-box--icon-offset beg)))
+            (company-box--maybe-move-number beg first-render))
           (let ((color (or (get-text-property (point) 'company-box--color)
                            'company-box-selection)))
             (overlay-put (company-box--get-ov) 'face color)
@@ -144,11 +145,12 @@
 
         (defun my-company-box--render-buffer (string)
           (let ((selection company-selection)
-                (common (or company-common company-prefix)))
+                (common (or company-prefix company-common)))
             (with-current-buffer (company-box--get-buffer)
               (erase-buffer)
               (insert string "\n")
               (setq mode-line-format nil
+                    header-line-format nil
                     display-line-numbers nil
                     truncate-lines t
                     cursor-in-non-selected-windows nil)
@@ -157,7 +159,7 @@
               (setq-local scroll-margin  0)
               (setq-local scroll-preserve-screen-position t)
               (add-hook 'window-configuration-change-hook 'company-box--prevent-changes t t)
-              (company-box--update-line selection common))))
+              (company-box--update-line selection common t))))
         (advice-add #'company-box--render-buffer :override #'my-company-box--render-buffer)
 
         ;; FIXME: Delay at the first candidate
