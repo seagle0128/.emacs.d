@@ -120,10 +120,10 @@
                   company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
-                  company-box-doc-delay 0.2)
+                  company-box-doc-delay 0.5)
       :config
       (with-no-warnings
-        ;; FIXME: Display common text correctly
+        ;; HACK: Display common text correctly
         (defun my-company-box--update-line (selection common)
           (company-box--update-image)
           (goto-char 1)
@@ -159,6 +159,21 @@
               (add-hook 'window-configuration-change-hook 'company-box--prevent-changes t t)
               (company-box--update-line selection common))))
         (advice-add #'company-box--render-buffer :override #'my-company-box--render-buffer)
+
+        ;; FIXME: Delay at the first candidate
+        (defun my-company-box-doc (selection frame)
+          (when company-box-doc-enable
+            (-some-> (frame-parameter frame 'company-box-doc-frame)
+              (make-frame-invisible))
+            (when (timerp company-box-doc--timer)
+              (cancel-timer company-box-doc--timer))
+            (setq company-box-doc--timer
+                  (run-with-timer
+                   company-box-doc-delay nil
+                   (lambda nil
+                     (company-box-doc--show selection frame)
+                     (company-ensure-emulation-alist))))))
+        (advice-add #'company-box-doc :override #'my-company-box-doc)
 
         ;; Prettify icons
         (defun my-company-box-icons--elisp (candidate)
