@@ -123,7 +123,9 @@
                   company-box-doc-delay 0.5)
       :config
       (with-no-warnings
-        ;; HACK: Display common text correctly
+        ;;
+        ;; HACK: Display candidates with highlights as VSCode
+        ;;
         (defun my-company-box--update-line (selection common &optional first-render)
           (company-box--update-image)
           (goto-char 1)
@@ -145,7 +147,7 @@
 
         (defun my-company-box--render-buffer (string)
           (let ((selection company-selection)
-                (common (or company-prefix company-common)))
+                (common company-prefix))
             (with-current-buffer (company-box--get-buffer)
               (erase-buffer)
               (insert string "\n")
@@ -161,6 +163,19 @@
               (add-hook 'window-configuration-change-hook 'company-box--prevent-changes t t)
               (company-box--update-line selection common t))))
         (advice-add #'company-box--render-buffer :override #'my-company-box--render-buffer)
+
+        (defun my-company-box--change-line nil
+          (let ((selection company-selection)
+                (common company-prefix))
+            (with-selected-window (get-buffer-window (company-box--get-buffer) t)
+              (company-box--update-line selection common))
+            (company-box--update-scrollbar (company-box--get-frame))))
+        (advice-add #'company-box--change-line :override #'my-company-box--change-line)
+
+        (defun my-company-box--candidate-string (candidate)
+          (concat (and company-prefix (propertize company-prefix 'face 'company-tooltip-common))
+                  (substring (propertize candidate 'face 'company-box-candidate) (length company-prefix) nil)))
+        (advice-add #'company-box--candidate-string :override #'my-company-box--candidate-string)
 
         ;; FIXME: Delay at the first candidate
         (defun my-company-box-doc (selection frame)
