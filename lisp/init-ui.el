@@ -373,6 +373,9 @@
 (use-package default-text-scale
   :hook (after-init . default-text-scale-mode)
   :bind (:map default-text-scale-mode-map
+         ("s-=" . default-text-scale-increase)
+         ("s--" . default-text-scale-decrease)
+         ("s-0" . default-text-scale-reset)
          ("C-s-=" . default-text-scale-increase)
          ("C-s--" . default-text-scale-decrease)
          ("C-s-0" . default-text-scale-reset)))
@@ -401,7 +404,7 @@
           . (lambda () (setq-local composition-function-table composition-ligature-table))))
   :config
   ;; support ligatures, some toned down to prevent hang
-  (when (version<= "27.0" emacs-version)
+  (when emacs/>=27p
     (let ((alist
            '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
              (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")

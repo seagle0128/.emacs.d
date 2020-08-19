@@ -120,19 +120,22 @@
                   company-box-backends-colors nil
                   company-box-show-single-candidate t
                   company-box-max-candidates 50
-                  company-box-doc-delay 0.2)
+                  company-box-doc-delay 0.5)
       :config
       (with-no-warnings
-        ;; FIXME: Display common text correctly
-        (defun my-company-box--update-line (selection common)
+        ;;
+        ;; HACK: Display candidates with highlights as VSCode
+        ;;
+        (defun my-company-box--update-line (selection common &optional first-render)
           (company-box--update-image)
           (goto-char 1)
           (forward-line selection)
-          (let* ((beg (line-beginning-position))
-                 (txt-beg (+ company-box--icon-offset beg)))
+          (let ((beg (line-beginning-position)))
             (move-overlay (company-box--get-ov) beg (line-beginning-position 2))
-            (move-overlay (company-box--get-ov-common) txt-beg
-                          (+ (length common) txt-beg)))
+            (move-overlay (company-box--get-ov-common)
+                          (+ company-box--icon-offset beg)
+                          (+ (length common) (+ company-box--icon-offset beg)))
+            (company-box--maybe-move-number beg first-render))
           (let ((color (or (get-text-property (point) 'company-box--color)
                            'company-box-selection)))
             (overlay-put (company-box--get-ov) 'face color)
@@ -144,11 +147,12 @@
 
         (defun my-company-box--render-buffer (string)
           (let ((selection company-selection)
-                (common (or company-common company-prefix)))
+                (common company-prefix))
             (with-current-buffer (company-box--get-buffer)
               (erase-buffer)
               (insert string "\n")
               (setq mode-line-format nil
+                    header-line-format nil
                     display-line-numbers nil
                     truncate-lines t
                     cursor-in-non-selected-windows nil)
@@ -157,8 +161,36 @@
               (setq-local scroll-margin  0)
               (setq-local scroll-preserve-screen-position t)
               (add-hook 'window-configuration-change-hook 'company-box--prevent-changes t t)
-              (company-box--update-line selection common))))
+              (company-box--update-line selection common t))))
         (advice-add #'company-box--render-buffer :override #'my-company-box--render-buffer)
+
+        (defun my-company-box--change-line nil
+          (let ((selection company-selection)
+                (common company-prefix))
+            (with-selected-window (get-buffer-window (company-box--get-buffer) t)
+              (company-box--update-line selection common))
+            (company-box--update-scrollbar (company-box--get-frame))))
+        (advice-add #'company-box--change-line :override #'my-company-box--change-line)
+
+        (defun my-company-box--candidate-string (candidate)
+          (concat (and company-prefix (propertize company-prefix 'face 'company-tooltip-common))
+                  (substring (propertize candidate 'face 'company-box-candidate) (length company-prefix) nil)))
+        (advice-add #'company-box--candidate-string :override #'my-company-box--candidate-string)
+
+        ;; FIXME: Delay at the first candidate
+        (defun my-company-box-doc (selection frame)
+          (when company-box-doc-enable
+            (-some-> (frame-parameter frame 'company-box-doc-frame)
+              (make-frame-invisible))
+            (when (timerp company-box-doc--timer)
+              (cancel-timer company-box-doc--timer))
+            (setq company-box-doc--timer
+                  (run-with-timer
+                   company-box-doc-delay nil
+                   (lambda nil
+                     (company-box-doc--show selection frame)
+                     (company-ensure-emulation-alist))))))
+        (advice-add #'company-box-doc :override #'my-company-box-doc)
 
         ;; Prettify icons
         (defun my-company-box-icons--elisp (candidate)
