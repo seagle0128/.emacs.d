@@ -111,7 +111,9 @@
            (executable-find "cmake")
            (executable-find "libtool")
            (executable-find "make"))
-  (use-package vterm))
+  (use-package vterm
+    :bind (:map vterm-mode-map
+           ([f9] . shell-pop))))
 
 ;; Shell Pop
 (use-package shell-pop
