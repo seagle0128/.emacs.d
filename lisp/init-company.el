@@ -119,41 +119,11 @@
       :init (setq company-box-enable-icon centaur-icon
                   company-box-backends-colors nil
                   company-box-show-single-candidate t
+                  company-box-highlight-prefix t
                   company-box-max-candidates 50
                   company-box-doc-delay 0.5)
       :config
       (with-no-warnings
-        ;;
-        ;; HACK: Display candidates with highlights as VSCode
-        ;;
-        (defun my-company-box--change-line nil
-          (let ((selection company-selection)
-                (common company-prefix))
-            (with-selected-window (get-buffer-window (company-box--get-buffer) t)
-              (company-box--update-line selection common))
-            (company-box--update-scrollbar (company-box--get-frame))))
-        (advice-add #'company-box--change-line :override #'my-company-box--change-line)
-
-        (defun my-company-box--candidate-string (candidate)
-          (concat (and company-prefix (propertize company-prefix 'face 'company-tooltip-common))
-                  (substring (propertize candidate 'face 'company-box-candidate) (length company-prefix) nil)))
-        (advice-add #'company-box--candidate-string :override #'my-company-box--candidate-string)
-
-        ;; FIXME: Delay at the first candidate
-        (defun my-company-box-doc (selection frame)
-          (when company-box-doc-enable
-            (-some-> (frame-parameter frame 'company-box-doc-frame)
-              (make-frame-invisible))
-            (when (timerp company-box-doc--timer)
-              (cancel-timer company-box-doc--timer))
-            (setq company-box-doc--timer
-                  (run-with-timer
-                   company-box-doc-delay nil
-                   (lambda nil
-                     (company-box-doc--show selection frame)
-                     (company-ensure-emulation-alist))))))
-        (advice-add #'company-box-doc :override #'my-company-box-doc)
-
         ;; Prettify icons
         (defun my-company-box-icons--elisp (candidate)
           (when (derived-mode-p 'emacs-lisp-mode)
