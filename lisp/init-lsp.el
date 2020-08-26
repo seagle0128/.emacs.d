@@ -94,7 +94,13 @@
          "Not enabling lsp in `git-timemachine-mode'."
          (unless (bound-and-true-p git-timemachine-mode)
            (apply func args)))
-       (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)))
+       (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible))
+
+     (defun lsp-update-server ()
+       "Update LSP server."
+       (interactive)
+       ;; Equals to `C-u M-x lsp-install-server'
+       (lsp-install-server t)))
 
    (use-package lsp-ui
      :custom-face
