@@ -39,9 +39,9 @@
                                                     (t 100))))
 
   ;; Specify font for all unicode characters
-  (cl-loop for font in '("Symbol" "Symbola" "Apple Color Emoji")
+  (cl-loop for font in '("Apple Color Emoji" "Symbola" "Symbol")
            when (font-installed-p font)
-           do (set-fontset-font t 'unicode font nil 'prepend))
+           return(set-fontset-font t 'unicode font nil 'prepend))
 
   ;; Specify font for Chinese characters
   (cl-loop for font in '("WenQuanYi Micro Hei" "Microsoft Yahei")
