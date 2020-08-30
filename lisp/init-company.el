@@ -118,10 +118,7 @@
       :hook (company-mode . company-box-mode)
       :init (setq company-box-enable-icon centaur-icon
                   company-box-backends-colors nil
-                  company-box-show-single-candidate t
-                  company-box-highlight-prefix t
-                  company-box-max-candidates 50
-                  company-box-doc-delay 0.5)
+                  company-box-highlight-prefix t)
       :config
       (with-no-warnings
         ;; Prettify icons
