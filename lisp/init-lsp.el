@@ -75,7 +75,6 @@
            lsp-modeline-diagnostics-enable nil
 
            lsp-enable-file-watchers nil
-           lsp-enable-file-watchers nil
            lsp-enable-folding nil
            lsp-enable-semantic-highlighting nil
            lsp-enable-symbol-highlighting nil
