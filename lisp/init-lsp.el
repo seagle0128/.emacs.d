@@ -47,7 +47,8 @@
                lsp-rust-server)
      :commands (lsp-enable-which-key-integration
                 lsp-format-buffer
-                lsp-organize-imports)
+                lsp-organize-imports
+                lsp-install-server)
      :diminish
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
@@ -174,8 +175,7 @@
      (add-hook 'after-load-theme-hook
                (lambda ()
                  (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face))
-                 (set-face-background 'lsp-ui-doc-background
-                                      (face-background 'tooltip)))))
+                 (set-face-background 'lsp-ui-doc-background (face-background 'tooltip)))))
 
    ;; Ivy integration
    (use-package lsp-ivy
