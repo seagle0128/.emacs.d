@@ -61,8 +61,9 @@
         company-dabbrev-downcase nil
         company-global-modes '(not erc-mode message-mode help-mode
                                    gud-mode eshell-mode shell-mode)
-        company-frontends '(company-pseudo-tooltip-frontend
-                            company-echo-metadata-frontend))
+        company-backends '((company-capf :with company-yasnippet)
+                           (company-dabbrev-code company-keywords company-files)
+                           company-dabbrev))
 
   (defun my-company-yasnippet ()
     "Hide the current completeions and show snippets."
@@ -83,10 +84,12 @@
       (defun my-company-enbale-yas (&rest _)
         "Enable `yasnippet' in `company'."
         (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
-      ;; Enable in current backends
-      (my-company-enbale-yas)
-      ;; Enable in `lsp-mode'
-      (advice-add #'lsp--auto-configure :after #'my-company-enbale-yas)
+
+      (defun my-lsp-fix-company-capf ()
+        "Remove redundant `comapny-capf'."
+        (setq company-backends
+              (remove 'company-backends (remq 'company-capf company-backends))))
+      (advice-add #'lsp-completion--enable :after #'my-lsp-fix-company-capf)
 
       (defun my-company-yasnippet-disable-inline (fun command &optional arg &rest _ignore)
         "Enable yasnippet but disable it inline."
