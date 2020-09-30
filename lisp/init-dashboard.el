@@ -190,7 +190,7 @@
         (condition-case-unless-debug err
             (persp-load-state-from-file fname)
           (error "Error: Unable to restore session -- %s" err))
-        (message "Done")))
+        (message "Restoring session...done")))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
