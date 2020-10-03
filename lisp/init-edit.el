@@ -47,7 +47,7 @@
   :init (with-eval-after-load 'org
           (bind-key "<s-return>" #'rect-hydra/body org-mode-map))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
+  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.2 :v-adjust -0.225)
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
    ("Move"
     (("h" backward-char "←")
@@ -97,7 +97,7 @@
          :map xwidget-webkit-mode-map
          ("?" . xwidget-hydra/body))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Webkit" 'faicon "chrome")
+  ((:title (pretty-hydra-title "Webkit" 'faicon "chrome" :face 'all-the-icons-blue)
     :color amaranth :quit-key "q")
    ("Navigate"
     (("b" xwidget-webkit-back "back")
@@ -373,7 +373,7 @@
 ;; Flexible text folding
 (use-package origami
   :pretty-hydra
-  ((:title (pretty-hydra-title "Origami" 'octicon "fold")
+  ((:title (pretty-hydra-title "Origami" 'octicon "fold" :height 1.1 :v-adjust -0.05)
     :color amaranth :quit-key "q")
    ("Node"
     ((":" origami-recursively-toggle-node "toggle recursively")

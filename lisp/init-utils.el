@@ -263,7 +263,7 @@
   (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
   (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :height 1.2 :v-adjust 0)
+  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
     :color pink :quit-key "q")
    ("Diff"
     (("C" ztree-diff-copy "copy" :exit t)

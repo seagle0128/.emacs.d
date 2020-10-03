@@ -106,7 +106,7 @@
      :custom-face
      (lsp-ui-sideline-code-action ((t (:inherit warning))))
      :pretty-hydra
-     ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket")
+     ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket" :face 'all-the-icons-green)
        :color amaranth :quit-key "q")
       ("Doc"
        (("d e" (progn
