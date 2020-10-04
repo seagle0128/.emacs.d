@@ -191,9 +191,6 @@ prepended to the element after the #+HEADER: tag."
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-list))
 
-  (use-package ob-rust
-    :init (cl-pushnew '(rust . t) load-language-list))
-
   (use-package ob-ipython
     :if (executable-find "jupyter")     ; DO NOT remove
     :init (cl-pushnew '(ipython . t) load-language-list))
