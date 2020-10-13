@@ -74,6 +74,7 @@
            lsp-signature-auto-activate nil
            lsp-modeline-code-actions-enable nil
            lsp-modeline-diagnostics-enable nil
+           lsp-modeline-workspace-status-enable nil
 
            lsp-enable-file-watchers nil
            lsp-enable-folding nil
