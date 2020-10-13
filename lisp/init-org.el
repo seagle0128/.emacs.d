@@ -35,6 +35,7 @@
 
 (use-package org
   :ensure nil
+  :commands (org-dynamic-block-define)
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :preface
   (defun hot-expand (str &optional mod)
@@ -255,7 +256,7 @@ prepended to the element after the #+HEADER: tag."
     :bind (:map org-agenda-mode-map
            ("P" . org-pomodoro))))
 
-;; org-roam
+;; Roam
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
@@ -267,7 +268,10 @@ prepended to the element after the #+HEADER: tag."
             ("C-c n g" . org-roam-graph))
            :map org-mode-map
            (("C-c n i" . org-roam-insert))
-           (("C-c n I" . org-roam-insert-immediate))))
+           (("C-c n I" . org-roam-insert-immediate)))
+    :config
+    (unless (file-exists-p org-roam-directory)
+      (make-directory org-roam-directory)))
 
   (use-package org-roam-server
     :functions xwidget-buffer xwidget-webkit-current-session
