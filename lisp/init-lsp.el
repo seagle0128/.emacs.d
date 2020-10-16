@@ -122,6 +122,8 @@
          "bottom" :toggle (eq lsp-ui-doc-position 'bottom))
         ("d p" (setq lsp-ui-doc-position 'at-point)
          "at point" :toggle (eq lsp-ui-doc-position 'at-point))
+        ("d h" (setq lsp-ui-doc-header (not lsp-ui-doc-header))
+         "header" :toggle lsp-ui-doc-header)
         ("d f" (setq lsp-ui-doc-alignment 'frame)
          "align frame" :toggle (eq lsp-ui-doc-alignment 'frame))
         ("d w" (setq lsp-ui-doc-alignment 'window)
