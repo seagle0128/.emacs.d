@@ -125,7 +125,8 @@
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
-  :diminish)
+  :diminish
+  :commands (go-playground-mode))
 
 (provide 'init-go)
 
