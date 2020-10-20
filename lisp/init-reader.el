@@ -168,9 +168,9 @@
               (when highlight-p
                 (pdf-view-display-image
                  (pdf-view-create-image
-                     (pdf-cache-renderpage-highlight
-                      page (car size)
-                      `("white" "steel blue" 0.35 ,@edges))
+                   (pdf-cache-renderpage-highlight
+                    page (car size)
+                    `("white" "steel blue" 0.35 ,@edges))
                    :map (pdf-view-apply-hotspot-functions
                          window page size)
                    :width (car size))))
@@ -179,11 +179,11 @@
       (advice-add #'pdf-annot-show-annotation :override #'my-pdf-annot-show-annotation))
 
     ;; Recover last viewed position
-    (when emacs/>=26p
-      (use-package pdf-view-restore
-        :hook (pdf-view-mode . pdf-view-restore-mode)
-        :init (setq pdf-view-restore-filename
-                    (locate-user-emacs-file ".pdf-view-restore"))))))
+    (use-package saveplace-pdf-view
+      :commands (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
+      :init
+      (advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
+      (advice-add 'save-place-to-alist :around #'saveplace-pdf-view-to-alist-advice))))
 
 ;; Epub reader
 (use-package nov
