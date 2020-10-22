@@ -176,7 +176,7 @@ If Non-nil, save and restore the frame's geometry."
           (const :tag "Eglot" 'eglot)
           nil))
 
-(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
+(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
 `prog-mode' means ignoring all derived modes.
 "
