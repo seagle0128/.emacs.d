@@ -256,7 +256,47 @@
                                ("https://oremacs.com/atom.xml" oremacs)
                                ("https://pinecast.com/feed/emacscast" emacscast)
                                ("https://www.reddit.com/r/emacs.rss" reddit)))
-    :config (push elfeed-db-directory recentf-exclude)))
+    :config
+    ;; Ignore db directory in recentf
+    (push elfeed-db-directory recentf-exclude)
+
+    ;; Use xwidget if possible
+    (with-no-warnings
+      (defun my-elfeed-show-visit (&optional use-generic-p)
+        "Visit the current entry in your browser using `browse-url'.
+If there is a prefix argument, visit the current entry in the
+browser defined by `browse-url-generic-program'."
+        (interactive "P")
+        (let ((link (elfeed-entry-link elfeed-show-entry)))
+          (when link
+            (message "Sent to browser: %s" link)
+            (cond
+             ((featurep 'xwidget-internal)
+              (centaur-webkit-browse-url link))
+             (use-generic-p
+              (browse-url-generic link))
+             (t (browse-url link))))))
+      (advice-add #'elfeed-show-visit :override #'my-elfeed-show-visit)
+
+      (defun my-elfeed-search-browse-url (&optional use-generic-p)
+        "Visit the current entry in your browser using `browse-url'.
+If there is a prefix argument, visit the current entry in the
+browser defined by `browse-url-generic-program'."
+        (interactive "P")
+        (let ((entries (elfeed-search-selected)))
+          (cl-loop for entry in entries
+                   do (elfeed-untag entry 'unread)
+                   when (elfeed-entry-link entry)
+                   do (cond
+                       ((featurep 'xwidget-internal)
+                        (centaur-webkit-browse-url it t))
+                       (use-generic-p
+                        (browse-url-generic it))
+                       (t (browse-url it))))
+          (mapc #'elfeed-search-update-entry entries)
+          (unless (or elfeed-search-remain-on-entry (use-region-p))
+            (forward-line))))
+      (advice-add #'elfeed-search-browse-url :override #'my-elfeed-search-browse-url))))
 
 ;; Another Atom/RSS reader
 (use-package newsticker

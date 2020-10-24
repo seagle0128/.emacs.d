@@ -282,12 +282,7 @@ prepended to the element after the #+HEADER: tag."
       (when org-roam-server-mode
         (let ((url (format "http://%s:%d" org-roam-server-host org-roam-server-port)))
           (if (featurep 'xwidget-internal)
-              (progn
-                (xwidget-webkit-browse-url url)
-                (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
-                  (when (buffer-live-p buf)
-                    (and (eq buf (current-buffer)) (quit-window))
-                    (pop-to-buffer buf))))
+              (centaur-webkit-browse-url url t)
             (browse-url url)))))))
 
 (provide 'init-org)
