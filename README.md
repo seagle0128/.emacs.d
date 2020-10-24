@@ -194,10 +194,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/56488858-4e5c4f80-6512-11e9-9637-b9395c46400f.png
+![Dashboard](https://user-images.githubusercontent.com/140797/97093362-c793b000-167d-11eb-924a-1892c6e95b8a.png
 "Dashboard (default theme)")
 
-![color_icons](https://user-images.githubusercontent.com/140797/56474931-8bddc000-64b3-11e9-93d8-0204c3752790.png
+![color_icons](https://user-images.githubusercontent.com/140797/97093358-b9de2a80-167d-11eb-9e5a-8591b1248c37.png
 "Main (color icons)")
 
 ![markdown_magit](https://user-images.githubusercontent.com/140797/56489193-7f894f80-6513-11e9-9c95-ea1ef41efb1f.png
