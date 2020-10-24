@@ -49,6 +49,15 @@
     (transient-append-suffix 'magit-fetch
       "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
 
+  ;; Exterminate Magit buffers
+  (defun my-magit-kill-buffers (&rest _)
+    "Restore window configuration and kill all Magit buffers."
+    (interactive)
+    (let ((buffers (magit-mode-get-buffers)))
+      (magit-restore-window-configuration)
+      (mapc #'kill-buffer buffers)))
+  (setq magit-bury-buffer-function #'my-magit-kill-buffers)
+
   ;; Access Git forges from Magit
   (when (executable-find "cc")
     (use-package forge
