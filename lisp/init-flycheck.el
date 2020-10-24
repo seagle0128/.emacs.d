@@ -57,8 +57,12 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package flycheck-posframe
+            :custom-face
+            (flycheck-posframe-face ((t (:foreground ,(face-foreground 'success)))))
+            (flycheck-posframe-info-face ((t (:foreground ,(face-foreground 'success)))))
             :hook (flycheck-mode . flycheck-posframe-mode)
-            :init (setq flycheck-posframe-inhibit-functions
+            :init (setq flycheck-posframe-border-width 4
+                        flycheck-posframe-inhibit-functions
                         '((lambda (&rest _) (bound-and-true-p company-backend)))))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
