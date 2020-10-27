@@ -1,4 +1,4 @@
-;;; custom.el --- user customization file    -*- no-byte-compile: t -*-
+;;; custom.el --- user customization file    -*- lexical-binding: t no-byte-compile: t -*-
 ;;; Commentary:
 ;;;       Add or change the configurations in custom.el, then restart Emacs.
 ;;;       Put your own configurations in custom-post.el to override default configurations.
