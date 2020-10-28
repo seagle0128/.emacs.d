@@ -404,18 +404,17 @@
 
    ;; Python: pyright
    (use-package lsp-pyright
-     :hook (python-mode . (lambda ()
-                            (require 'lsp-pyright)
-                            (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t)))
-     :init
-     (when (executable-find "python3")
-       (setq lsp-pyright-python-executable-cmd "python3"))
-
+     :preface
      ;; Use yapf to format
      (defun lsp-pyright-format-buffer ()
        (interactive)
        (when (and (executable-find "yapf") buffer-file-name)
-         (call-process "yapf" nil nil nil "-i" buffer-file-name))))
+         (call-process "yapf" nil nil nil "-i" buffer-file-name)))
+     :hook (python-mode . (lambda ()
+                            (require 'lsp-pyright)
+                            (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t)))
+     :init (when (executable-find "python3")
+             (setq lsp-pyright-python-executable-cmd "python3")))
 
    ;; C/C++/Objective-C support
    (use-package ccls
