@@ -35,7 +35,9 @@
   :group 'convenience
   :link '(url-link :tag "Homepage" "https://github.com/seagle0128/.emacs.d"))
 
-(defcustom centaur-logo (expand-file-name "logo.png" user-emacs-directory)
+(defcustom centaur-logo (expand-file-name
+                         (if (display-graphic-p) "logo.png" "banner.txt")
+                         user-emacs-directory)
   "Set Centaur logo. nil means official logo."
   :group 'centaur
   :type 'string)

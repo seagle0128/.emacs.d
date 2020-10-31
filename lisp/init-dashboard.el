@@ -135,11 +135,6 @@
 
     (dashboard-setup-startup-hook)
     :config
-    (defun my-banner-path (&rest _)
-      "Return the full path to banner."
-      (expand-file-name "banner.txt" user-emacs-directory))
-    (advice-add #'dashboard-get-banner-path :override #'my-banner-path)
-
     ;; WORKAROUND: fix differnct background color of the banner image.
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/203
     (defun my-dashboard-insert-image-banner (banner)
