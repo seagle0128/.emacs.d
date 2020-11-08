@@ -196,9 +196,7 @@
        :bind (:map lsp-mode-map
               ("<f5>" . dap-debug)
               ("M-<f5>" . dap-hydra))
-       :hook ((after-init . dap-mode)
-              (dap-mode . dap-ui-mode)
-              (dap-session-created . (lambda (_args) (dap-hydra)))
+       :hook ((after-init . dap-auto-configure-mode)
               (dap-stopped . (lambda (_args) (dap-hydra)))
               (dap-terminated . (lambda (_args) (dap-hydra/nil)))
 
@@ -212,7 +210,6 @@
               ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
               (powershell-mode . (lambda () (require 'dap-pwsh))))
        :init
-       (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls))
        (when (executable-find "python3")
          (setq dap-python-executable "python3"))))
 
