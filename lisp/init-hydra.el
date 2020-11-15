@@ -101,13 +101,15 @@
          :toggle (eq centaur-theme 'random) :exit t)
         ("t d" (centaur-load-theme 'default) "default"
          :toggle (centaur-theme-enable-p 'default) :exit t)
-        ("t c" (centaur-load-theme 'classic) "classic"
+        ("t i" (centaur-load-theme 'classic) "classic"
          :toggle (centaur-theme-enable-p 'classic) :exit t)
-        ("t r" (centaur-load-theme 'colorful) "colorful"
-         :toggle (centaur-theme-enable-p 'colorful) :exit t)
         ("t k" (centaur-load-theme 'dark) "dark"
          :toggle (centaur-theme-enable-p 'dark) :exit t)
         ("t l" (centaur-load-theme 'light) "light"
+         :toggle (centaur-theme-enable-p 'light) :exit t)
+        ("t w" (centaur-load-theme 'warm) "warm"
+         :toggle (centaur-theme-enable-p 'light) :exit t)
+        ("t c" (centaur-load-theme 'cold) "cold"
          :toggle (centaur-theme-enable-p 'light) :exit t)
         ("t y" (centaur-load-theme 'day) "day"
          :toggle (centaur-theme-enable-p 'day) :exit t)
