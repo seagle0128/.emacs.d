@@ -74,7 +74,7 @@
                   '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
                     ("Title" 60 t nil title  nil)
                     ("State" 6 t nil state nil)
-                    ("Updated" 10 t nill updated nil)))))
+                    ("Updated" 10 t nll updated nil)))))
 
   ;; Show TODOs in magit
   (when emacs/>=25.2p
