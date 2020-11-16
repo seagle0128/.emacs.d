@@ -71,7 +71,7 @@
     (use-package forge
       :demand
       :init (setq forge-topic-list-columns
-                  '(("#" 5 t (:right-align t) number nil)
+                  '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
                     ("Title" 60 t nil title  nil)
                     ("State" 6 t nil state nil)
                     ("Updated" 10 t nill updated nil)))))
