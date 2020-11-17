@@ -68,7 +68,7 @@
         ("s" prettify-symbols-mode "pretty symbol" :toggle t)
         ("l" global-page-break-lines-mode "page break lines" :toggle t)
         ("b" display-battery-mode "battery" :toggle t)
-        ("T" display-time-mode "time" :toggle t)
+        ("i" display-time-mode "time" :toggle t)
         ("m" doom-modeline-mode "modern mode-line" :toggle t))
        "Highlight"
        (("h l" global-hl-line-mode "line" :toggle t)
