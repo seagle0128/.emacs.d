@@ -66,7 +66,7 @@
                 buffers))))
     (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
-  ;; Access Git 
+  ;; Access Git forges from Magit
   (when (executable-find "cc")
     (use-package forge
       :demand
