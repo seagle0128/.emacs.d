@@ -108,9 +108,9 @@
         ("t l" (centaur-load-theme 'light) "light"
          :toggle (centaur-theme-enable-p 'light) :exit t)
         ("t w" (centaur-load-theme 'warm) "warm"
-         :toggle (centaur-theme-enable-p 'light) :exit t)
+         :toggle (centaur-theme-enable-p 'warm) :exit t)
         ("t c" (centaur-load-theme 'cold) "cold"
-         :toggle (centaur-theme-enable-p 'light) :exit t)
+         :toggle (centaur-theme-enable-p 'cold) :exit t)
         ("t y" (centaur-load-theme 'day) "day"
          :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
