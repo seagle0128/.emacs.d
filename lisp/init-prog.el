@@ -73,7 +73,7 @@
 ;; Run commands quickly
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
-         ("C-c x" . quickrun)))
+         ("C-c X" . quickrun)))
 
 (use-package cask-mode)
 (use-package csharp-mode)
