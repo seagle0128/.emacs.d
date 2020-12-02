@@ -69,6 +69,8 @@
               indent-tabs-mode nil)
 
 ;; UI
+(load-theme 'wombat t)
+
 (unless (eq window-system 'ns)
   (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode)
