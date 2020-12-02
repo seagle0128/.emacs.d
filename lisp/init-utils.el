@@ -162,7 +162,37 @@
       ("q" quit-window "quit")
       ("C-g" nil nil)
       ("h" nil nil)
-      ("?" nil nil))))
+      ("?" nil nil)))
+
+  (with-no-warnings
+    (defun my-youdao-dictionary--posframe-tip (string)
+      "Show STRING using posframe-show."
+      (unless (and (require 'posframe nil t) (posframe-workable-p))
+        (error "Posframe not workable"))
+
+      (let ((word (youdao-dictionary--region-or-word)))
+        (if word
+            (progn
+              (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
+                (let ((inhibit-read-only t))
+                  (erase-buffer)
+                  (youdao-dictionary-mode)
+                  (insert string)
+                  (goto-char (point-min))
+                  (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
+              (posframe-show youdao-dictionary-buffer-name
+                             :left-fringe 8
+                             :right-fringe 8
+                             :internal-border-color (face-foreground 'font-lock-comment-face)
+                             :internal-border-width 1)
+              (unwind-protect
+                  (push (read-event) unread-command-events)
+                (progn
+                  (posframe-delete youdao-dictionary-buffer-name)
+                  (other-frame 0))))
+          (message "Nothing to look up"))))
+    (advice-add #'youdao-dictionary--posframe-tip
+                :override #'my-youdao-dictionary--posframe-tip)))
 
 ;; A Simple and cool pomodoro timer
 (use-package pomidor
