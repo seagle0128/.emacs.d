@@ -172,10 +172,11 @@ prepended to the element after the #+HEADER: tag."
     (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
 
   ;; Prettify UI
-  (use-package org-bullets
-    :if (char-displayable-p ?⚫)
-    :hook (org-mode . org-bullets-mode)
-    :init (setq org-bullets-bullet-list '("⚫" "⚫" "⚫" "⚫")))
+  (when emacs/>=26p
+    (use-package org-superstar
+      :if (char-displayable-p ?⚫)
+      :hook (org-mode . org-superstar-mode)
+      :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
 
   (use-package org-fancy-priorities
     :diminish
