@@ -278,7 +278,7 @@ prepended to the element after the #+HEADER: tag."
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
-    :custom (org-roam-directory centaur-org-directory)
+    :custom (org-roam-directory (file-truename centaur-org-directory))
     :hook (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
            (("C-c n l" . org-roam)
