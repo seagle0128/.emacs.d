@@ -36,10 +36,6 @@
     :hook ((elixir-mode . alchemist-mode)
            (elixir-mode . alchemist-phoenix-mode)))
 
-  (use-package flycheck-mix
-    :after flycheck
-    :init (flycheck-mix-setup))
-
   (use-package flycheck-credo
     :after flycheck
     :init (flycheck-credo-setup)))
