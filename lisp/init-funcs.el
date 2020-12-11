@@ -135,6 +135,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
                  (require 'browse-url)
                  (browse-url-interactive-arg "xwidget-webkit URL: ")))
   (when (and (featurep 'xwidget-internal)
+             (fboundp 'xwidget-buffer)
              (fboundp 'xwidget-webkit-current-session))
     (xwidget-webkit-browse-url url new-session)
     (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
