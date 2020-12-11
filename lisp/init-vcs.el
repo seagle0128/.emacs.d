@@ -33,12 +33,8 @@
 (require 'init-const)
 
 ;; Git
+;; See `magit-maybe-define-global-key-bindings'
 (use-package magit
-  :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
-         ("\\MERGE_MSG\\'" . text-mode))
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)
-         ("C-c M-g" . magit-file-popup))
   :init (setq magit-diff-refine-hunk t)
   :config
   (when sys/win32p
