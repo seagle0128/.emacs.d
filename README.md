@@ -38,7 +38,7 @@ Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 25.1 and above**. In general you're advised to always run with the
-latest stable release - currently **26.3**.
+latest stable release - currently **27.1**.
 
 ## Features
 
@@ -148,18 +148,18 @@ For Example:
 (setq centaur-full-name "user name")           ; User full name
 (setq centaur-mail-address "user@email.com")   ; Email address
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
-(setq centaur-server nil)                      ; Enable `server-mode' or not: t or nil
-(setq centaur-icon nil)                        ; Display icons or not: t or nil
+(setq centaur-server t)                        ; Enable `server-mode' or not: t or nil
+(setq centaur-icon t)                          ; Display icons or not: t or nil
 (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, netease or tuna
-(setq centaur-theme 'light)                    ; Color theme: auto, random, default, classic, colorful, dark, light, day or night
-(setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
+(setq centaur-theme 'auto)                     ; Color theme: auto, random, default, classic, colorful, dark, light, day or night
+(setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
 (setq centaur-restore-frame-geometry nil)      ; Restore the frame's geometry at startup: t or nil
-(setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
-(setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)) ; Ignore format on save for some languages
-(setq centaur-chinese-calendar t)              ; Use Chinese calendar or not: t or nil
+(setq centaur-lsp 'lsp-mode)                   ; Set LSP client: lsp-mode, eglot or nil
+(setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode)) ; Ignore format on save for some languages
+(setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
 (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
 (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
-(setq centaur-benchmark-init t)                ; Enable initialization benchmark or not: t or nil
+(setq centaur-benchmark-init nil)              ; Enable initialization benchmark or not: t or nil
 ```
 
 The default package archives is `melpa`. You can change it in `custom.el`, or
@@ -194,10 +194,10 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/56488858-4e5c4f80-6512-11e9-9637-b9395c46400f.png
+![Dashboard](https://user-images.githubusercontent.com/140797/97093362-c793b000-167d-11eb-924a-1892c6e95b8a.png
 "Dashboard (default theme)")
 
-![color_icons](https://user-images.githubusercontent.com/140797/56474931-8bddc000-64b3-11e9-93d8-0204c3752790.png
+![color_icons](https://user-images.githubusercontent.com/140797/97093358-b9de2a80-167d-11eb-9e5a-8591b1248c37.png
 "Main (color icons)")
 
 ![markdown_magit](https://user-images.githubusercontent.com/140797/56489193-7f894f80-6513-11e9-9c95-ea1ef41efb1f.png

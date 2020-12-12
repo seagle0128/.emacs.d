@@ -94,12 +94,7 @@ mermaid.initialize({
     (defun my-markdown-export-and-preview (fn)
       "Preview with `xwidget' if applicable, otherwise with the default browser."
       (if (featurep 'xwidget-internal)
-          (progn
-            (xwidget-webkit-browse-url (concat "file://" (markdown-export)))
-            (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
-              (when (buffer-live-p buf)
-                (and (eq buf (current-buffer)) (quit-window))
-                (pop-to-buffer buf))))
+          (centaur-webkit-browse-url (concat "file://" (markdown-export)) t)
         (funcall fn)))
     (advice-add #'markdown-export-and-preview :around #'my-markdown-export-and-preview))
 

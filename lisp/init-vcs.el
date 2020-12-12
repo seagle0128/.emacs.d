@@ -33,12 +33,8 @@
 (require 'init-const)
 
 ;; Git
+;; See `magit-maybe-define-global-key-bindings'
 (use-package magit
-  :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
-         ("\\MERGE_MSG\\'" . text-mode))
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)
-         ("C-c M-g" . magit-file-popup))
   :init (setq magit-diff-refine-hunk t)
   :config
   (when sys/win32p
@@ -49,15 +45,32 @@
     (transient-append-suffix 'magit-fetch
       "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
 
+  ;; Exterminate Magit buffers
+  (with-no-warnings
+    (defun my-magit-kill-buffers (&rest _)
+      "Restore window configuration and kill all Magit buffers."
+      (interactive)
+      (magit-restore-window-configuration)
+      (let ((buffers (magit-mode-get-buffers)))
+        (when (eq major-mode 'magit-status-mode)
+          (mapc (lambda (buf)
+                  (with-current-buffer buf
+                    (if (and magit-this-process
+                             (eq (process-status magit-this-process) 'run))
+                        (bury-buffer buf)
+                      (kill-buffer buf))))
+                buffers))))
+    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
+
   ;; Access Git forges from Magit
   (when (executable-find "cc")
     (use-package forge
       :demand
       :init (setq forge-topic-list-columns
-                  '(("#" 5 t (:right-align t) number nil)
+                  '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
                     ("Title" 60 t nil title  nil)
                     ("State" 6 t nil state nil)
-                    ("Updated" 10 t nill updated nil)))))
+                    ("Updated" 10 t nil updated nil)))))
 
   ;; Show TODOs in magit
   (when emacs/>=25.2p

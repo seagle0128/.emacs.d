@@ -416,7 +416,8 @@ This is for use in `ivy-re-builders-alist'."
             lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
             counsel-grep counsel-git-grep counsel-rg counsel-ag
             counsel-ack counsel-fzf counsel-pt counsel-imenu
-            counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
+            counsel-org-capture counsel-load-theme counsel-yank-pop
+            counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
 

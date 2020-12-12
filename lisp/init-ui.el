@@ -41,7 +41,7 @@
 (setq frame-title-format '("Centaur Emacs - %b")
       icon-title-format frame-title-format)
 
-(when sys/mac-x-p
+(when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-hook 'after-load-theme-hook
@@ -105,7 +105,7 @@
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs")
+  ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs" :face 'all-the-icons-purple :v-adjust -0.1)
     :color amaranth :quit-key "q")
    ("Icon"
     (("i" (setq doom-modeline-icon (not doom-modeline-icon))
@@ -267,9 +267,9 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(xwidget-webkit-mode all-the-icons-faicon "chrome" :v-adjust -0.1 :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-playlist-mode all-the-icons-material "playlist_play" :height 1.2 :v-adjust -0.2 :face 'all-the-icons-green))
+               '(bongo-playlist-mode all-the-icons-material "queue_music" :height 1.2 :face 'all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-library-mode all-the-icons-material "library_music" :height 1.1 :v-adjust -0.2 :face 'all-the-icons-dgreen))
+               '(bongo-library-mode all-the-icons-material "library_music" :height 1.1 :face 'all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gnus-group-mode all-the-icons-fileicon "gnu" :face 'all-the-icons-silver))
   (add-to-list 'all-the-icons-mode-icon-alist

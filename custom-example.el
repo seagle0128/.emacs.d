@@ -1,4 +1,4 @@
-;;; custom.el --- user customization file    -*- no-byte-compile: t -*-
+;;; custom.el --- user customization file    -*- lexical-binding: t no-byte-compile: t -*-
 ;;; Commentary:
 ;;;       Add or change the configurations in custom.el, then restart Emacs.
 ;;;       Put your own configurations in custom-post.el to override default configurations.
@@ -41,7 +41,7 @@
   ;; Specify font for all unicode characters
   (cl-loop for font in '("Apple Color Emoji" "Symbola" "Symbol")
            when (font-installed-p font)
-           return (set-fontset-font t 'unicode font nil 'prepend))
+           return(set-fontset-font t 'unicode font nil 'prepend))
 
   ;; Specify font for Chinese characters
   (cl-loop for font in '("WenQuanYi Micro Hei" "Microsoft Yahei")

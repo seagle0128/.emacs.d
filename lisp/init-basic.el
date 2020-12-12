@@ -47,7 +47,7 @@
     (setq w32-lwindow-modifier 'super     ; Left Windows key
           w32-apps-modifier 'hyper)       ; Menu/App key
     (w32-register-hot-key [s-t]))
-   ((and sys/macp (eq window-system 'mac))
+   (sys/mac-port-p
     ;; Compatible with Emacs Mac port
     (setq mac-option-modifier 'meta
           mac-command-modifier 'super)

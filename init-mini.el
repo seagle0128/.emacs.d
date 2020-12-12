@@ -1,4 +1,4 @@
-;;; init-mini.el --- Centaur Emacs minimal configurations.	-*- lexical-binding: t no-byte-compile: t; -*-
+;;; init-mini.el --- Centaur Emacs minimal configurations.	-*- lexical-binding: t no-byte-compile: t -*-
 
 ;; Copyright (C) 2018-2020 Vincent Zhang
 
@@ -27,7 +27,7 @@
 
 ;;; Commentary:
 ;;
-;; Centaur Emacs minimal configurations for debugging purpose.
+;; Minimal configurations for debugging purpose.
 ;;
 
 ;;; Code:
@@ -48,6 +48,7 @@
 
 ;; Miscs
 ;; (setq initial-scratch-message nil)
+(setq inhibit-splash-screen t)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
 (setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
 (setq adaptive-fill-first-line-regexp "^* *$")
@@ -69,6 +70,8 @@
               indent-tabs-mode nil)
 
 ;; UI
+(load-theme 'wombat t)
+
 (unless (eq window-system 'ns)
   (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode)
@@ -80,9 +83,9 @@
 
 ;; (global-hl-line-mode 1)
 
-(if (fboundp 'display-line-numbers-mode)
-    (global-display-line-numbers-mode 1)
-  (global-linum-mode 1))
+;; (if (fboundp 'display-line-numbers-mode)
+;;     (global-display-line-numbers-mode 1)
+;;   (global-linum-mode 1))
 
 ;; Basic modes
 (recentf-mode 1)
@@ -135,7 +138,7 @@
   (setq w32-lwindow-modifier 'super     ; Left Windows key
         w32-apps-modifier 'hyper)       ; Menu/App key
   (w32-register-hot-key [s-t]))
- ((and (eq system-type 'darwin) (eq window-system 'mac))
+ ((eq window-system 'mac)
   ;; Compatible with Emacs Mac port
   (setq mac-option-modifier 'meta
         mac-command-modifier 'super)

@@ -46,11 +46,6 @@
 (unless (fboundp 'less-css-mode)
   (use-package less-css-mode))
 
-;; CSS eldoc
-(use-package css-eldoc
-  :commands turn-on-css-eldoc
-  :hook ((css-mode scss-mode less-css-mode) . turn-on-css-eldoc))
-
 ;; JSON mode
 (use-package json-mode)
 

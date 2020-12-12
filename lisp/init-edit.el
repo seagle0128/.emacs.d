@@ -47,7 +47,7 @@
   :init (with-eval-after-load 'org
           (bind-key "<s-return>" #'rect-hydra/body org-mode-map))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.1 :v-adjust -0.225)
+  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.2 :v-adjust -0.225)
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
    ("Move"
     (("h" backward-char "←")
@@ -97,7 +97,7 @@
          :map xwidget-webkit-mode-map
          ("?" . xwidget-hydra/body))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Webkit" 'faicon "chrome")
+  ((:title (pretty-hydra-title "Webkit" 'faicon "chrome" :face 'all-the-icons-blue)
     :color amaranth :quit-key "q")
    ("Navigate"
     (("b" xwidget-webkit-back "back")
@@ -176,24 +176,6 @@
                         (if (> (buffer-size) (* 3000 80))
                             (aggressive-indent-mode -1)))))
   :config
-  (with-no-warnings
-    ;; FIXME: Fix running timmer error
-    ;; @see https://github.com/Malabarba/aggressive-indent-mode/issues/138
-    (defun my-aggressive-indent--indent-if-changed (buffer)
-      "Indent any region that changed in BUFFER in the last command loop."
-      (if (not (buffer-live-p buffer))
-          (when (timerp aggressive-indent--idle-timer)
-            (cancel-timer aggressive-indent--idle-timer))
-        (with-current-buffer buffer
-          (when (and aggressive-indent-mode aggressive-indent--changed-list)
-            (save-excursion
-              (save-selected-window
-                (aggressive-indent--while-no-input
-                  (aggressive-indent--proccess-changed-list-and-indent))))
-            (when (timerp aggressive-indent--idle-timer)
-              (cancel-timer aggressive-indent--idle-timer))))))
-    (advice-add #'aggressive-indent--indent-if-changed :override #'my-aggressive-indent--indent-if-changed))
-
   ;; Disable in some modes
   (dolist (mode '(asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
     (push mode aggressive-indent-excluded-modes))
@@ -202,12 +184,11 @@
   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
 
   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-  (add-to-list
-   'aggressive-indent-dont-indent-if
-   '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
-                         'java-mode 'go-mode 'swift-mode)
-         (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-                             (thing-at-point 'line))))))
+  (add-to-list 'aggressive-indent-dont-indent-if
+               '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
+                                     'java-mode 'go-mode 'swift-mode)
+                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                                         (thing-at-point 'line))))))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
@@ -392,7 +373,7 @@
 ;; Flexible text folding
 (use-package origami
   :pretty-hydra
-  ((:title (pretty-hydra-title "Origami" 'octicon "fold")
+  ((:title (pretty-hydra-title "Origami" 'octicon "fold" :height 1.1 :v-adjust -0.05)
     :color amaranth :quit-key "q")
    ("Node"
     ((":" origami-recursively-toggle-node "toggle recursively")

@@ -53,7 +53,44 @@
 
 ;; Quickly switch windows
 (use-package ace-window
-  :preface
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Window Management" 'faicon "th" :height 1.1 :v-adjust -0.1)
+    :foreign-keys warn :quit-key "q")
+   ("Actions"
+    (("TAB" other-window "switch")
+     ("x" ace-delete-window "delete" :exit t)
+     ("m" ace-delete-other-windows "maximize" :exit t)
+     ("s" ace-swap-window "swap" :exit t)
+     ("a" ace-select-window "select" :exit t)
+     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
+    "Resize"
+    (("h" shrink-window-horizontally "←")
+     ("j" enlarge-window "↓")
+     ("k" shrink-window "↑")
+     ("l" enlarge-window-horizontally "→")
+     ("n" balance-windows "balance"))
+    "Split"
+    (("r" split-window-right "horizontally")
+     ("R" split-window-horizontally-instead "horizontally instead")
+     ("v" split-window-below "vertically")
+     ("V" split-window-vertically-instead "vertically instead")
+     ("t" toggle-window-split "toggle"))
+    "Zoom"
+    (("+" text-scale-increase "in")
+     ("=" text-scale-increase "in")
+     ("-" text-scale-decrease "out")
+     ("0" (text-scale-increase 0) "reset"))
+    "Appearance"
+    (("F" set-frame-font "font")
+     ("T" centaur-load-theme "theme"))))
+  :custom-face
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 3.0))))
+  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
+  (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
+  :bind (([remap other-window] . ace-window)
+         ("C-c w" . ace-window-hydra/body))
+  :hook (emacs-startup . ace-window-display-mode)
+  :config
   (defun toggle-window-split ()
     (interactive)
     (if (= (count-windows) 2)
@@ -77,44 +114,9 @@
             (set-window-buffer (selected-window) this-win-buffer)
             (set-window-buffer (next-window) next-win-buffer)
             (select-window first-win)
-            (if this-win-2nd (other-window 1))))))
-  :pretty-hydra
-  ((:title (pretty-hydra-title "Window Management" 'faicon "windows")
-    :foreign-keys warn :quit-key "q")
-   ("Actions"
-    (("TAB" other-window "switch")
-     ("x" ace-delete-window "delete" :exit t)
-     ("m" ace-delete-other-windows "maximize" :exit t)
-     ("s" ace-swap-window "swap" :exit t)
-     ("a" ace-select-window "select" :exit t)
-     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
-    "Resize"
-    (("h" shrink-window-horizontally "←")
-     ("j" enlarge-window "↓")
-     ("k" shrink-window "↑")
-     ("l" enlarge-window-horizontally "→")
-     ("n" balance-windows "balance"))
-    "Split"
-    (("b" split-window-right "horizontally")
-     ("B" split-window-horizontally-instead "horizontally instead")
-     ("v" split-window-below "vertically")
-     ("V" split-window-vertically-instead "vertically instead")
-     ("t" toggle-window-split "toggle"))
-    "Zoom"
-    (("+" text-scale-increase "in")
-     ("=" text-scale-increase "in")
-     ("-" text-scale-decrease "out")
-     ("0" (text-scale-increase 0) "reset"))
-    "Appearance"
-    (("F" set-frame-font "font")
-     ("T" centaur-load-theme "theme"))))
-  :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 3.0))))
-  (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
-  :bind (([remap other-window] . ace-window)
-         ("C-c w" . ace-window-hydra/body))
-  :hook (emacs-startup . ace-window-display-mode)
-  :config
+            (if this-win-2nd (other-window 1))))
+      (user-error "`toggle-window-split' only supports two windows")))
+
   ;; Bind hydra to dispatch list
   (add-to-list 'aw-dispatch-alist '(?w ace-window-hydra/body) t)
 
@@ -137,16 +139,16 @@
                 (aw--select-window (1+ n))))))
 
 ;; Enforce rules for popups
-(defvar shackle--popup-window-list nil) ; all popup windows
-(defvar-local shackle--current-popup-window nil) ; current popup window
-(put 'shackle--current-popup-window 'permanent-local t)
-
 (use-package shackle
   :functions org-switch-to-buffer-other-window
   :commands shackle-display-buffer
   :hook (after-init . shackle-mode)
   :config
-  (eval-and-compile
+  (with-no-warnings
+    (defvar shackle--popup-window-list nil) ; all popup windows
+    (defvar-local shackle--current-popup-window nil) ; current popup window
+    (put 'shackle--current-popup-window 'permanent-local t)
+
     (defun shackle-last-popup-buffer ()
       "View last popup buffer."
       (interactive)
@@ -192,7 +194,7 @@
     (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
     (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
 
-  ;; HACK: compatibility issuw with `org-switch-to-buffer-other-window'
+  ;; HACK: compatibility issue with `org-switch-to-buffer-other-window'
   (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
 
   ;; rules
@@ -222,12 +224,14 @@
           ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
-          ((" *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.4 :align 'below :autoclose t)
-          (" *Install vterm" :size 0.35 :same t :align 'below)
+          (" *Install vterm* " :size 0.35 :same t :align 'below)
           (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
           (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
           ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
+
+          (("*Org Agenda*" " *Agenda Commands*" " *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.1 :align 'below :autoclose t)
+          (("\\*Capture\\*" "^CAPTURE-.*\\.org*") :regexp t :select t :size 0.3 :align 'below :autoclose t)
 
           ("*ert*" :size 15 :align 'below :autoclose t)
           (overseer-buffer-mode :size 15 :align 'below :autoclose t)
@@ -240,6 +244,7 @@
           ("*DAP Templates*" :select t :size 0.4 :align 'below :autoclose t)
           (dap-server-log-mode :size 15 :align 'below :autoclose t)
           ("*rustfmt*" :select t :size 0.3 :align 'below :autoclose t)
+          ((rustic-compilation-mode rustic-cargo-clippy-mode rustic-cargo-outdated-mode rustic-cargo-test-mode) :select t :size 0.3 :align 'below :autoclose t)
 
           (profiler-report-mode :select t :size 0.5 :align 'below)
           ("*ELP Profiling Restuls*" :select t :size 0.5 :align 'below)

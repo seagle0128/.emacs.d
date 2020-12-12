@@ -35,7 +35,9 @@
   :group 'convenience
   :link '(url-link :tag "Homepage" "https://github.com/seagle0128/.emacs.d"))
 
-(defcustom centaur-logo (expand-file-name "logo.png" user-emacs-directory)
+(defcustom centaur-logo (expand-file-name
+                         (if (display-graphic-p) "logo.png" "banner.txt")
+                         user-emacs-directory)
   "Set Centaur logo. nil means official logo."
   :group 'centaur
   :type 'string)
@@ -119,11 +121,12 @@
 (defcustom centaur-theme-alist
   '((default  . doom-one)
     (classic  . doom-monokai-classic)
-    (colorful . doom-snazzy)
     (dark     . doom-dark+)
     (light    . doom-one-light)
-    (day      . doom-acario-light)
-    (night    . doom-city-lights))
+    (warm     . doom-solarized-light)
+    (cold     . doom-city-lights)
+    (day      . doom-tomorrow-day)
+    (night    . doom-tomorrow-night))
   "List of themes mapped to internal themes."
   :group 'centaur
   :type '(alist :key-type (symbol :tag "Theme")
@@ -176,7 +179,7 @@ If Non-nil, save and restore the frame's geometry."
           (const :tag "Eglot" 'eglot)
           nil))
 
-(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode)
+(defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
 `prog-mode' means ignoring all derived modes.
 "

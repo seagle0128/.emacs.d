@@ -1,5 +1,6 @@
 *.bak
 *.data
+*.db
 *.elc
 *.log
 *.sqlite
@@ -49,6 +50,7 @@ anaconda-mode/
 auto-save-list/
 cnfonts/
 eclipse.jdt.ls/
+eln-cache/
 elpa-devel/
 elpa/
 emojis/

@@ -44,7 +44,7 @@
                 widget-forward)
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :pretty-hydra
-    ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.1 :v-adjust -0.225)
+    ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.2 :v-adjust -0.2)
       :color pink :quit-key "q")
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
@@ -135,11 +135,6 @@
 
     (dashboard-setup-startup-hook)
     :config
-    (defun my-banner-path (&rest _)
-      "Return the full path to banner."
-      (expand-file-name "banner.txt" user-emacs-directory))
-    (advice-add #'dashboard-get-banner-path :override #'my-banner-path)
-
     ;; WORKAROUND: fix differnct background color of the banner image.
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/203
     (defun my-dashboard-insert-image-banner (banner)
@@ -190,7 +185,7 @@
         (condition-case-unless-debug err
             (persp-load-state-from-file fname)
           (error "Error: Unable to restore session -- %s" err))
-        (message "Done")))
+        (message "Restoring session...done")))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
