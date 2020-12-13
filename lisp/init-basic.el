@@ -111,7 +111,9 @@
                 "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
                 "^/tmp/" "^/var/folders/.+$" ; "^/ssh:"
                 (lambda (file) (file-in-directory-p file package-user-dir))))
-  :config (push (expand-file-name recentf-save-file) recentf-exclude))
+  :config
+  (push (expand-file-name recentf-save-file) recentf-exclude)
+  (add-to-list 'recentf-filename-handlers 'abbreviate-file-name))
 
 (use-package savehist
   :ensure nil
