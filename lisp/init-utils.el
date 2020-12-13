@@ -262,6 +262,14 @@
         (bongo-switch-buffers))
       (bind-key "b" #'bongo-add-dired-files dired-mode-map))))
 
+;; Process
+(use-package proced
+  :ensure nil
+  :init
+  (setq-default proced-format 'verbose)
+  (setq proced-auto-update-flag t
+        proced-auto-update-interval 3))
+
 ;; IRC
 (use-package erc
   :ensure nil
