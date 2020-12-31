@@ -126,9 +126,11 @@ prepended to the element after the #+HEADER: tag."
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Note" entry (file ,(concat org-directory "/note.org"))
            "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("j" "Journal" entry (file+datetree ,(concat org-directory "/journal.org"))
+          ("j" "Journal" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+                                ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry (file+datetree ,(concat org-directory "/book.org"))
+	      ("b" "Book" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+                             ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
         org-agenda-files `(,centaur-org-directory)
