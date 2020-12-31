@@ -467,9 +467,9 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
-  (message "Loading theme `%s'" theme)
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t))
+  (load-theme theme t)
+  (message "Loaded theme `%s'" theme))
 
 (defun centaur-load-random-theme ()
   "Load the random theme."
