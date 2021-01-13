@@ -109,7 +109,7 @@
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
                 "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
                 "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
-                "^/tmp/" "^/var/folders/.+$" ; "^/ssh:"
+                "^/tmp/" "^/var/folders/.+$" "^/ssh:" "/persp-confs/"
                 (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
