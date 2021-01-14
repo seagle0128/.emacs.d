@@ -113,8 +113,6 @@
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-     (when (executable-find "rust-analyzer")
-       (setq lsp-rust-server 'rust-analyzer))
      :config
      (with-no-warnings
        (defun my-lsp--init-if-visible (func &rest args)
