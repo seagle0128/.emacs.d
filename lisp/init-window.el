@@ -175,7 +175,7 @@
       ;; `C-g' can deactivate region
       (when (and (called-interactively-p 'interactive)
                  (not (region-active-p)))
-        (let (window buffer)
+        (let (window buffer process)
           (if (one-window-p)
               (progn
                 (setq window (selected-window))
@@ -185,8 +185,12 @@
                   (winner-undo)))
             (setq window (caar shackle--popup-window-list))
             (setq buffer (cdar shackle--popup-window-list))
+            (setq process (get-buffer-process buffer))
             (when (and (window-live-p window)
                        (equal (window-buffer window) buffer))
+              (if process
+                (when (process-live-p process)
+                  (kill-process process)))
               (delete-window window)
 
               (pop shackle--popup-window-list))))))
