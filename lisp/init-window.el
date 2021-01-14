@@ -183,17 +183,17 @@
                                                  (window-buffer window))
                              window)
                   (winner-undo)))
-            (setq window (caar shackle--popup-window-list))
-            (setq buffer (cdar shackle--popup-window-list))
-            (setq process (get-buffer-process buffer))
-            (when (and (window-live-p window)
-                       (equal (window-buffer window) buffer))
-              (if process
+            (progn
+              (setq window (caar shackle--popup-window-list))
+              (setq buffer (cdar shackle--popup-window-list))
+              (when (and (window-live-p window)
+                         (equal (window-buffer window) buffer))
+                (setq process (get-buffer-process buffer))
                 (when (process-live-p process)
-                  (kill-process process)))
-              (delete-window window)
+                  (kill-process process))
+                (delete-window window)
 
-              (pop shackle--popup-window-list))))))
+                (pop shackle--popup-window-list)))))))
 
     (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
     (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
