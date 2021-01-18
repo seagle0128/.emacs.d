@@ -228,8 +228,8 @@
        ("+" elfeed-search-tag-all "tag all")
        ("-" elfeed-search-untag-all "untag all"))
       "Filter"
-      (("s" elfeed-search-live-filter "live filter")
-       ("S" elfeed-search-set-filter "set filter")
+      (("l" elfeed-search-live-filter "live filter")
+       ("s" elfeed-search-set-filter "set filter")
        ("*" (elfeed-search-set-filter "@6-months-ago +star") "starred")
        ("a" (elfeed-search-set-filter "@6-months-ago") "all")
        ("t" (elfeed-search-set-filter "@1-day-ago") "today"))
