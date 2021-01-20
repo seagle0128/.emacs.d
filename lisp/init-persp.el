@@ -121,6 +121,7 @@
                    (or (string-prefix-p ".newsrc" bname)
                        (string-prefix-p "magit" bname)
                        (string-prefix-p "Pfuture-Callback" bname)
+                       (string-prefix-p "treemacs-persist" bname)
                        (string-match-p "\\.elc\\|\\.tar\\|\\.gz\\|\\.zip\\'" bname)
                        (string-match-p "\\.bin\\|\\.so\\|\\.dll\\|\\.exe\\'" bname)
                        (eq (buffer-local-value 'major-mode b) 'erc-mode)
