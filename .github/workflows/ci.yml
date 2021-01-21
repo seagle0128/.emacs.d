@@ -19,39 +19,42 @@ jobs:
           - snapshot
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: purcell/setup-emacs@master
-      with:
-        version: ${{ matrix.emacs-version }}
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs-version }}
 
-    - name: test
-      run: 'mv -f ../.emacs.d ~/.emacs.d;
-            emacs -nw --batch --eval \
-            "(let ((debug-on-error (>= emacs-major-version 26))
-                   (package-check-signature nil)
-                   (url-show-status nil)
-                   (early-init-file (locate-user-emacs-file \"early-init.el\"))
-                   (user-init-file (locate-user-emacs-file \"init.el\")))
-            (when (>= emacs-major-version 27)
-              (load early-init-file))
-            (load user-init-file)
-            (run-hooks (quote after-init-hook))
-            (run-hooks (quote emacs-startup-hook))
-            (run-hooks (quote window-setup-hook)))"'
+      - name: test
+        run: 'mv -f ../.emacs.d ~/.emacs.d;
+              emacs -nw --batch --eval \
+              "(let ((debug-on-error (>= emacs-major-version 26))
+                    (package-check-signature nil)
+                    (url-show-status nil)
+                    (early-init-file (locate-user-emacs-file \"early-init.el\"))
+                    (user-init-file (locate-user-emacs-file \"init.el\")))
+              (when (>= emacs-major-version 27)
+                (load early-init-file))
+              (load user-init-file)
+              (run-hooks (quote after-init-hook))
+              (run-hooks (quote emacs-startup-hook))
+              (run-hooks (quote window-setup-hook)))"'
    
-    windows-test:
-      runs-on: windows-latest
-      strategy:
-        matrix:
-          emacs-version:
-            - 26.1
-            - 26.2
-            - 26.3
-            - 27.1
-            - snapshot
+  windows-test:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        emacs-version:
+          - 25.1
+          - 25.2
+          - 25.3
+          - 26.1
+          - 26.2
+          - 26.3
+          - 27.1
+          - snapshot
 
-        steps:
+      steps:
         - uses: actions/checkout@v2
 
         - uses: jcs090218/setup-emacs-windows@master
@@ -62,10 +65,10 @@ jobs:
           run: 'mv -f ../.emacs.d ~/.emacs.d;
                emacs -nw --batch --eval \
                "(let ((debug-on-error (>= emacs-major-version 26))
-                   (package-check-signature nil)
-                   (url-show-status nil)
-                   (early-init-file (locate-user-emacs-file \"early-init.el\"))
-                   (user-init-file (locate-user-emacs-file \"init.el\")))
+                     (package-check-signature nil)
+                     (url-show-status nil)
+                     (early-init-file (locate-user-emacs-file \"early-init.el\"))
+                     (user-init-file (locate-user-emacs-file \"init.el\")))
                (when (>= emacs-major-version 27)
                  (load early-init-file))
                (load user-init-file)
