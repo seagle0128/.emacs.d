@@ -39,37 +39,3 @@ jobs:
                (run-hooks (quote after-init-hook))
                (run-hooks (quote emacs-startup-hook))
                (run-hooks (quote window-setup-hook)))"'
-
-  windows-test:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        emacs-version:
-          - 26.1
-          - 26.2
-          - 26.3
-          - 27.1
-          - snapshot
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: jcs090218/setup-emacs-windows@master
-        with:
-          version: ${{ matrix.emacs-version }}
-
-      - name: test
-        run: 'Copy-Item -Path "../.emacs.d" -Destination "%HOME%/.emacs.d" -Recurse
-
-              c:\emacs\bin\emacs.exe --batch --eval
-              "(let ((debug-on-error (>= emacs-major-version 26))
-                     (package-check-signature nil)
-                     (url-show-status nil)
-                     (early-init-file (locate-user-emacs-file \"early-init.el\"))
-                     (user-init-file (locate-user-emacs-file \"init.el\")))
-               (when (>= emacs-major-version 27)
-                 (load early-init-file))
-               (load user-init-file)
-               (run-hooks (quote after-init-hook))
-               (run-hooks (quote emacs-startup-hook))
-               (run-hooks (quote window-setup-hook)))"'
