@@ -59,8 +59,9 @@ jobs:
           version: ${{ matrix.emacs-version }}
 
       - name: test
-        run: 'Copy-Item -Path "../.emacs.d" -Destination "%HOME%/.emacs.d" -Recurse;
-              c:\emacs\bin\emacs -nw --batch --eval \
+        run: 'Copy-Item -Path "../.emacs.d" -Destination "%HOME%/.emacs.d" -Recurse
+
+              c:\emacs\bin\emacs.exe --batch --eval
               "(let ((debug-on-error (>= emacs-major-version 26))
                      (package-check-signature nil)
                      (url-show-status nil)
