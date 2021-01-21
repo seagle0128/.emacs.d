@@ -217,6 +217,7 @@
 ;; Atom/RSS reader
 (when emacs/>=25.2p
   (use-package elfeed
+    :after org
     :pretty-hydra
     ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square" :face 'all-the-icons-orange :height 1.1 :v-adjust -0.05)
       :color amaranth :quit-key "q")
