@@ -29,16 +29,16 @@ jobs:
         run: 'mv -f ../.emacs.d ~/.emacs.d;
               emacs -nw --batch --eval \
               "(let ((debug-on-error (>= emacs-major-version 26))
-                    (package-check-signature nil)
-                    (url-show-status nil)
-                    (early-init-file (locate-user-emacs-file \"early-init.el\"))
-                    (user-init-file (locate-user-emacs-file \"init.el\")))
-              (when (>= emacs-major-version 27)
-                (load early-init-file))
-              (load user-init-file)
-              (run-hooks (quote after-init-hook))
-              (run-hooks (quote emacs-startup-hook))
-              (run-hooks (quote window-setup-hook)))"'
+                     (package-check-signature nil)
+                     (url-show-status nil)
+                     (early-init-file (locate-user-emacs-file \"early-init.el\"))
+                     (user-init-file (locate-user-emacs-file \"init.el\")))
+               (when (>= emacs-major-version 27)
+                 (load early-init-file))
+               (load user-init-file)
+               (run-hooks (quote after-init-hook))
+               (run-hooks (quote emacs-startup-hook))
+               (run-hooks (quote window-setup-hook)))"'
    
   windows-test:
     runs-on: windows-latest
@@ -54,17 +54,17 @@ jobs:
           - 27.1
           - snapshot
 
-      steps:
-        - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-        - uses: jcs090218/setup-emacs-windows@master
-          with:
-            version: ${{ matrix.emacs-version }}
+      - uses: jcs090218/setup-emacs-windows@master
+        with:
+          version: ${{ matrix.emacs-version }}
 
-        - name: test
-          run: 'mv -f ../.emacs.d ~/.emacs.d;
-               emacs -nw --batch --eval \
-               "(let ((debug-on-error (>= emacs-major-version 26))
+      - name: test
+        run: 'mv -f ../.emacs.d ~/.emacs.d;
+              emacs -nw --batch --eval \
+              "(let ((debug-on-error (>= emacs-major-version 26))
                      (package-check-signature nil)
                      (url-show-status nil)
                      (early-init-file (locate-user-emacs-file \"early-init.el\"))
