@@ -216,7 +216,7 @@
 
 ;; Atom/RSS reader
 (when (and emacs/>=25.2p
-           (functionp org-version)
+           (functionp #'org-version)
            (not (string-empty-p (org-version))))
   (use-package elfeed
     :pretty-hydra
