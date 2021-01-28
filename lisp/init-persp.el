@@ -84,9 +84,9 @@
               (load persp-frame-file)
 
               ;; Handle multiple monitors gracefully
-              (when (>= (eval (frame-parameter nil 'left)) (display-pixel-width))
-                (set-frame-parameter nil 'left 0))
-              (when (>= (eval (frame-parameter nil 'top)) (display-pixel-height))
+              (when (or (>= (eval (frame-parameter nil 'left)) (display-pixel-width))
+                        (>= (eval (frame-parameter nil 'top)) (display-pixel-height)))
+                (set-frame-parameter nil 'left 0)
                 (set-frame-parameter nil 'top 0)))
           (error
            (warn "persp frame: %s" (error-message-string error)))))))
