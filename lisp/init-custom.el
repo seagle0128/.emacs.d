@@ -123,10 +123,11 @@
     (classic  . doom-monokai-classic)
     (dark     . doom-dark+)
     (light    . doom-one-light)
-    (warm     . doom-flatwhite)
+    (warm     . doom-solarized-light)
     (cold     . doom-city-lights)
     (day      . doom-tomorrow-day)
-    (night    . doom-tomorrow-night))
+    (night    . doom-tomorrow-night)
+    (peace    . doom-zenburn))
   "List of themes mapped to internal themes."
   :group 'centaur
   :type '(alist :key-type (symbol :tag "Theme")
