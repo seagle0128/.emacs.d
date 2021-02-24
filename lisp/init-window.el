@@ -231,7 +231,6 @@
           (" *Install vterm* " :size 0.35 :same t :align 'below)
           (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
-          (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
           ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
 
           (("*Org Agenda*" " *Agenda Commands*" " *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.1 :align 'below :autoclose t)
@@ -255,6 +254,9 @@
 
           ((inferior-python-mode inf-ruby-mode swift-repl-mode) :size 0.4 :align 'below)
           ("*prolog*" :size 0.4 :align 'below)
+
+          (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
+          (godoc-mode :select t :size 0.4 :align 'below :autoclose t)
 
           ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :size 0.4 :align 'below)
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
