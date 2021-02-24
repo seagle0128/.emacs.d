@@ -249,12 +249,11 @@
            "Convert the match returned by `lsp-mode` into a candidate string."
            (let* ((sanitized-kind (if (< kind (length lsp-ivy-symbol-kind-icons)) kind 0))
                   (type (elt lsp-ivy-symbol-kind-icons sanitized-kind))
-                  (typestr (if lsp-ivy-show-symbol-kind
-                               (format "%s " type)
-                             ""))
+                  (typestr (if lsp-ivy-show-symbol-kind (format "%s " type) ""))
                   (pathstr (if lsp-ivy-show-symbol-filename
                                (propertize (format " · %s" (file-relative-name (lsp--uri-to-path uri) project-root))
-                                           'face font-lock-comment-face) "")))
+                                           'face font-lock-comment-face)
+                             "")))
              (concat typestr (lsp-render-symbol-information sym ".") pathstr)))
          (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
 
