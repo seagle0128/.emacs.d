@@ -111,7 +111,7 @@
                 (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
-  (add-to-list 'recentf-filename-handlers 'abbreviate-file-name))
+  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (use-package savehist
   :ensure nil
