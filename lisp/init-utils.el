@@ -270,6 +270,36 @@
   (setq proced-auto-update-flag t
         proced-auto-update-interval 3))
 
+;; Search
+(use-package webjump
+  :ensure nil
+  :bind ("C-c /" . webjump)
+  :init (setq webjump-sites
+              '(;; Emacs
+                ("Emacs Home Page" .
+                 "www.gnu.org/software/emacs/emacs.html")
+                ("Xah Emacs Site" . "ergoemacs.org/index.html")
+                ("(or emacs irrelevant)" . "oremacs.com")
+                ("Mastering Emacs" .
+                 "https://www.masteringemacs.org/")
+
+                ;; Search engines.
+                ("DuckDuckGo" .
+                 [simple-query "duckduckgo.com"
+                               "duckduckgo.com/?q=" ""])
+                ("Google" .
+                 [simple-query "www.google.com"
+                               "www.google.com/search?q=" ""])
+                ("Bing" .
+                 [simple-query "www.bing.com"
+                               "www.bing.com/search?q=" ""])
+
+                ("Baidu" .
+                 [simple-query "www.baidu.com"
+                               "www.baidu.com/s?wd=" ""])
+                ("Wikipedia" .
+                 [simple-query "wikipedia.org" "wikipedia.org/wiki/" ""]))))
+
 ;; IRC
 (use-package erc
   :ensure nil
