@@ -449,11 +449,11 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur--theme-name (theme)
   "Return internal THEME name."
-  (or (alist-get theme centaur-theme-alist) theme))
+  (or (alist-get theme centaur-theme-alist) theme 'doom-one))
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (or (memq theme '(auto random))
+  (or (memq theme '(auto random system))
       (string-prefix-p "doom" (symbol-name (centaur--theme-name theme)))))
 
 (defun centaur-dark-theme-p ()
@@ -462,14 +462,25 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur-theme-enable-p (theme)
   "The THEME is enabled or not."
-  (and (not (memq centaur-theme '(auto random)))
+  (and theme
+       (not (memq centaur-theme '(auto random system)))
        (memq (centaur--theme-name theme) custom-enabled-themes)))
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
+  (when theme
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)
+    (message "Loaded theme `%s'" theme)))
+
+(defun centaur--load-system-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t)
-  (message "Loaded theme `%s'" theme))
+  (centaur--load-theme (centaur--theme-name
+                        (pcase appearance
+                          ('light (cdr (assoc 'light centaur-system-themes)))
+                          ('dark (cdr (assoc 'dark centaur-system-themes)))
+                          (_ centaur-theme)))))
 
 (defun centaur-load-random-theme ()
   "Load the random theme."
@@ -485,9 +496,15 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive
    (list (intern (completing-read
                   "Load theme: "
-                  `(auto random ,@(mapcar #'car centaur-theme-alist))))))
+                  `(auto
+                    random
+                    ,(if (boundp 'ns-system-appearance) 'system "")
+                    ,@(mapcar #'car centaur-theme-alist))))))
   ;; Set option
   (centaur-set-variable 'centaur-theme theme no-save)
+
+  ;; Disable system theme
+  (remove-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme)
 
   (pcase centaur-theme
     ('auto
@@ -496,6 +513,13 @@ If SYNC is non-nil, the updating process is synchronous."
        :functions circadian-setup
        :custom (circadian-themes centaur-auto-themes)
        :init (circadian-setup)))
+    ('system
+     ;; System-appearance themes
+     (if (boundp 'ns-system-appearance)
+         (progn
+           (centaur--load-system-theme ns-system-appearance)
+           (add-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme))
+       (warn "The system theme is unavailable on this platform!")))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
