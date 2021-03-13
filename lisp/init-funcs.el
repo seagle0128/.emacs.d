@@ -205,10 +205,10 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (let ((dir (locate-user-emacs-file "site-lisp")))
+  (let ((temp-dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory dir)
-      (byte-recompile-directory dir 0 t))))
+        (async-byte-recompile-directory temp-dir)
+      (byte-recompile-directory temp-dir 0 t))))
 
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
@@ -328,14 +328,14 @@ Return the fastest package archive."
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
-  (let ((dir (expand-file-name user-emacs-directory)))
-    (if (file-exists-p dir)
+  (let ((temp-dir (expand-file-name user-emacs-directory)))
+    (if (file-exists-p temp-dir)
         (progn
           (message "Updating configurations...")
-          (cd dir)
+          (cd temp-dir)
           (shell-command "git pull")
           (message "Updating configurations...done"))
-      (message "\"%s\" doesn't exist" dir))))
+      (message "\"%s\" doesn't exist" temp-dir))))
 (defalias 'centaur-update-config #'update-config)
 
 (defvar centaur--updating-packages nil)
@@ -438,6 +438,58 @@ If SYNC is non-nil, the updating process is synchronous."
 (defalias 'centaur-update-org #'update-org)
 
 
+;; Fonts
+(defun centaur-install-fonts ()
+  "Install necessary fonts."
+  (interactive)
+
+  ;; all-the-icons
+  (all-the-icons-install-fonts t)
+
+  ;; Symbola
+  ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
+  (let* ((url (concat centaur-homepage "/files/6135060/symbola.zip"))
+         (font-dest (cond
+                     ;; Default Linux install directories
+                     ((member system-type '(gnu gnu/linux gnu/kfreebsd))
+                      (concat (or (getenv "XDG_DATA_HOME")
+                                  (concat (getenv "HOME") "/.local/share"))
+                              "/fonts/"))
+                     ;; Default MacOS install directory
+                     ((eq system-type 'darwin)
+                      (concat (getenv "HOME") "/Library/Fonts/"))))
+         (known-dest? (stringp font-dest))
+         (font-dest (or font-dest (read-directory-name "Font installation directory: " "~/"))))
+
+    (unless (file-directory-p font-dest) (mkdir font-dest t))
+
+    (let* ((temp-file (make-temp-file "symbola-" nil ".zip"))
+           (temp-dir (concat (file-name-directory temp-file) "/symbola/"))
+           (unzip-script (cond ((executable-find "unzip")
+                                (format "mkdir -p %s && unzip -qq %s -d %s"
+                                        temp-dir temp-file temp-dir))
+                               ((executable-find "powershell")
+                                (format "powershell -noprofile -noninteractive \
+  -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'" temp-file temp-dir))
+                               (t (user-error "Unable to extract '%s' to '%s'! \
+  Please check unzip, powershell or extract manually." temp-file temp-dir)))))
+      (url-copy-file url temp-file t)
+      (when (file-exists-p temp-file)
+        (shell-command-to-string unzip-script)
+        (let* ((font-name "Symbola.otf")
+               (temp-font (expand-file-name font-name temp-dir)))
+          (if (file-exists-p temp-font)
+              (copy-file temp-font (expand-file-name font-name font-dest) t)
+            (messge "Failed to download `Symbola'!")))
+        (when known-dest?
+          (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
+          (shell-command-to-string (format "fc-cache -f -v")))
+        (message "Successfully %s `Symbola' fonts to `%s'!"
+                 (if known-dest? "installed" "downloaded")
+                 font-dest)))))
+
+
+
 
 ;; UI
 (defvar after-load-theme-hook nil
