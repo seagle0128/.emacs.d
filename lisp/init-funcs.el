@@ -480,7 +480,7 @@ If SYNC is non-nil, the updating process is synchronous."
                (temp-font (expand-file-name font-name temp-dir)))
           (if (file-exists-p temp-font)
               (copy-file temp-font (expand-file-name font-name font-dest) t)
-            (messge "Failed to download `Symbola'!")))
+            (message "Failed to download `Symbola'!")))
         (when known-dest?
           (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
           (shell-command-to-string (format "fc-cache -f -v")))
