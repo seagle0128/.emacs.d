@@ -27,9 +27,9 @@ jobs:
       - name: test
         run: 'mv -f ../.emacs.d $HOME/.emacs.d;
               emacs -nw --batch --eval \
-              "(require \'package)
-              (require \'url-vars)
-              (let ((debug-on-error (>= emacs-major-version 26))
+              "(require (quote package))
+               (require (quote url-vars))
+               (let ((debug-on-error (>= emacs-major-version 26))
                      (package-check-signature nil)
                      (url-show-status nil)
                      (early-init-file (locate-user-emacs-file \"early-init.el\"))
