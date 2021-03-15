@@ -234,8 +234,9 @@ Lisp function does not specify a special indentation."
   :config
   (add-hook 'after-load-theme-hook
             (lambda ()
-              (set-face-background 'macrostep-expansion-highlight-face
-                                   (face-background 'tooltip)))))
+              (custom-set-faces
+               `(macrostep-expansion-highlight-face
+                 ((t (:background ,(face-background 'tooltip) :extend t))))))))
 
 ;; A better *Help* buffer
 (use-package helpful
