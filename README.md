@@ -160,7 +160,6 @@ For Example:
 (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
 (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
 (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
-(setq centaur-benchmark-init nil)              ; Enable initialization benchmark or not: t or nil
 ```
 
 The default package archives is `melpa`. You can change it in `custom.el`, or

@@ -256,11 +256,6 @@ Nil to use font supports ligatures."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
-(defcustom centaur-benchmark-init nil
-  "Enable the initialization benchmark or not."
-  :group 'centaur
-  :type 'boolean)
-
 ;; Load `custom-file'
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
