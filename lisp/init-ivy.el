@@ -528,6 +528,52 @@ This is for use in `ivy-re-builders-alist'."
   ;; For better performance
   (setq ivy-rich-parse-remote-buffer nil))
 
+;; Display completion in child frame
+(when (and (display-graphic-p)
+           (eq centaur-completion-style 'childframe))
+  (use-package ivy-posframe
+    :defines persp-filter-save-buffers-functions
+    :custom-face
+    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    :hook (ivy-mode . ivy-posframe-mode)
+    :init
+    (setq ivy-posframe-border-width 3
+          ivy-posframe-parameters `((drag-internal-border . t)
+                                    (z-group . above)))
+
+    (with-eval-after-load 'solaire-mode
+      (add-to-list 'ivy-posframe-parameters
+                   `(background-color . ,(face-background 'solaire-default-face))))
+
+    (with-eval-after-load 'persp-mode
+      (add-to-list 'persp-filter-save-buffers-functions
+                   (lambda (b)
+                     "Ignore posframe buffers."
+                     (let ((bname (file-name-nondirectory (buffer-name b))))
+                       (string= ivy-posframe-buffer bname)))))
+    :config
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                (posframe-delete-all)
+                (custom-set-faces
+                 `(ivy-posframe-border
+                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                (with-eval-after-load 'solaire-mode
+                  (setf (alist-get 'background-color ivy-posframe-parameters)
+                        (face-background 'solaire-default-face)))))
+
+    (with-no-warnings
+      (defun ivy-display-at-frame-center-near-bottom-fn (str)
+        (ivy-posframe--display str #'ivy-poshandler-frame-center-near-bottom-fn))
+      (defun ivy-poshandler-frame-center-near-bottom-fn (info)
+        (let ((parent-frame (plist-get info :parent-frame))
+              (pos (posframe-poshandler-frame-center info)))
+          (cons (car pos)
+                (truncate (/ (frame-pixel-height parent-frame) 2)))))
+
+      (setf (alist-get t ivy-posframe-display-functions-alist)
+            #'ivy-display-at-frame-center-near-bottom-fn))))
+
 (provide 'init-ivy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

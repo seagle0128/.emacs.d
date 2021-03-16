@@ -11,7 +11,8 @@
 ;; (setq centaur-server nil)                      ; Enable `server-mode' or not: t or nil
 ;; (setq centaur-icon nil)                        ; Display icons or not: t or nil
 ;; (setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, netease, ustc, tencent or tuna
-;; (setq centaur-theme 'light)                    ; Color theme: auto, random, default, classic, colorful, dark, light, day or night
+;; (setq centaur-theme 'auto)                     ; Color theme: auto, random, system, default, pro, dark, light, warm, cold, day or night
+;; (setq centaur-completion-style 'childframe)    ; Completion display style: minibuffer or childframe
 ;; (setq centaur-dashboard nil)                   ; Use dashboard at startup or not: t or nil
 ;; (setq centaur-restore-frame-geometry nil)      ; Restore the frame's geometry at startup: t or nil
 ;; (setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil

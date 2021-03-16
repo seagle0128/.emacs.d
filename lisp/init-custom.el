@@ -167,8 +167,13 @@ For example:
                         (list 'const
                               :tag (capitalize (symbol-name name))
                               name)))
-                    centaur-theme-alist)
-                 symbol))
+                    centaur-theme-alist)))
+
+(defcustom centaur-completion-style 'minibuffer
+  "Completion display style."
+  :group 'centaur
+  :type '(choice (const :tag "Minibuffer (Default)" 'minibuffer)
+                 (const :tag "Child Frame" 'childframe)))
 
 (defcustom centaur-dashboard t
   "Use dashboard at startup or not.
@@ -185,10 +190,9 @@ If Non-nil, save and restore the frame's geometry."
 (defcustom centaur-lsp 'lsp-mode
   "Set language server."
   :group 'centaur
-  :type '(choice
-          (const :tag "LSP Mode" 'lsp-mode)
-          (const :tag "Eglot" 'eglot)
-          nil))
+  :type '(choice (const :tag "LSP Mode" 'lsp-mode)
+                 (const :tag "Eglot" 'eglot)
+                 (const :tag "Disable" nil)))
 
 (defcustom centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
