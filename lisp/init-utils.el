@@ -32,6 +32,7 @@
 
 (require 'init-const)
 (require 'init-custom)
+(require 'init-funcs)
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -89,6 +90,7 @@
   (when (and (eq centaur-completion-style 'childframe)
              (childframe-workable-p))
     (use-package which-key-posframe
+      :functions ivy-poshandler-frame-center-near-bottom-fn
       :init (setq which-key-posframe-border-width 3
                   which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn))))
 
