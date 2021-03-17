@@ -431,15 +431,16 @@ This is for use in `ivy-re-builders-alist'."
       (with-eval-after-load 'posframe
         (setq hydra-hint-display-type 'posframe)
 
-        (defun my-set-hydra-posframe-show-params ()
-          "Set hydra-posframe style."
-          (posframe-delete-all)
-          (setq hydra-posframe-show-params
-                `(:internal-border-width 3
-                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
-                  :poshandler ivy-poshandler-frame-center-near-bottom-fn)))
-        (my-set-hydra-posframe-show-params)
-        (add-hook 'after-load-theme-hook #'my-set-hydra-posframe-show-params))))
+        (with-no-warnings
+          (defun my-set-hydra-posframe-show-params ()
+            "Set hydra-posframe style."
+            (posframe-delete-all)
+            (setq hydra-posframe-show-params
+                  `(:internal-border-width 3
+                    :internal-border-color ,(face-foreground 'font-lock-comment-face)
+                    :poshandler ivy-poshandler-frame-center-near-bottom-fn)))
+          (my-set-hydra-posframe-show-params)
+          (add-hook 'after-load-theme-hook #'my-set-hydra-posframe-show-params)))))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
