@@ -499,6 +499,13 @@ If SYNC is non-nil, the updating process is synchronous."
   (run-hooks 'after-load-theme-hook))
 (advice-add #'load-theme :after #'run-after-load-theme-hook)
 
+(defun childframe-workable-p ()
+  "Test whether childframe is workable."
+  (and emacs/>=26p
+       (not (or noninteractive
+                emacs-basic-display
+                (not (display-graphic-p))))))
+
 (defun centaur--theme-name (theme)
   "Return internal THEME name."
   (or (alist-get theme centaur-theme-alist) theme 'doom-one))

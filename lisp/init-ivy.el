@@ -529,8 +529,8 @@ This is for use in `ivy-re-builders-alist'."
   (setq ivy-rich-parse-remote-buffer nil))
 
 ;; Display completion in child frame
-(when (and (display-graphic-p)
-           (eq centaur-completion-style 'childframe))
+(when (and (eq centaur-completion-style 'childframe)
+           (childframe-workable-p))
   (use-package ivy-posframe
     :defines persp-filter-save-buffers-functions
     :custom-face
