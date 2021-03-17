@@ -423,7 +423,23 @@ This is for use in `ivy-re-builders-alist'."
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
     :commands ivy-hydra-read-action
-    :init (setq ivy-read-action-function #'ivy-hydra-read-action))
+    :init
+    (setq ivy-read-action-function #'ivy-hydra-read-action)
+
+    (when (and (eq centaur-completion-style 'childframe)
+               (childframe-workable-p))
+      (with-eval-after-load 'posframe
+        (setq hydra-hint-display-type 'posframe)
+
+        (defun my-set-hydra-posframe-show-params ()
+          "Set hydra-posframe style."
+          (posframe-delete-all)
+          (setq hydra-posframe-show-params
+                `(:internal-border-width 3
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
+                  :poshandler ivy-poshandler-frame-center-near-bottom-fn)))
+        (my-set-hydra-posframe-show-params)
+        (add-hook 'after-load-theme-hook #'my-set-hydra-posframe-show-params))))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -518,8 +534,7 @@ This is for use in `ivy-re-builders-alist'."
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :hook (;; Must load after `counsel-projectile'
-         (counsel-projectile-mode . ivy-rich-mode)
+  :hook ((counsel-projectile-mode . ivy-rich-mode) ; MUST after `counsel-projectile'
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."
                             (setq ivy-virtual-abbreviate
