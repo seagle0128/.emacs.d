@@ -31,7 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
-(require 'init-custom)
+(require 'init-funcs)
 
 ;; Git
 ;; See `magit-maybe-define-global-key-bindings'
@@ -81,8 +81,7 @@
       (magit-todos-mode 1))))
 
 ;; Display transient in child frame
-(when (and (eq centaur-completion-style 'childframe)
-           (childframe-workable-p))
+(when (childframe-workable-p)
   (use-package transient-posframe
     :diminish
     :custom-face
@@ -90,9 +89,7 @@
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 21
-          transient-posframe-min-width 80
-          transient-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
+          transient-posframe-min-height 21)
 
     (with-eval-after-load 'solaire-mode
       (setq transient-posframe-parameters

@@ -502,6 +502,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
   (and emacs/>=26p
+       (eq centaur-completion-style 'childframe)
        (not (or noninteractive
                 emacs-basic-display
                 (not (display-graphic-p))))))

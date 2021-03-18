@@ -31,7 +31,6 @@
 ;;; Code:
 
 (require 'init-const)
-(require 'init-custom)
 (require 'init-funcs)
 
 ;; Display available keybindings in popup
@@ -87,8 +86,7 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle")
 
-  (when (and (eq centaur-completion-style 'childframe)
-             (childframe-workable-p))
+  (when (childframe-workable-p)
     (use-package which-key-posframe
       :diminish
       :functions ivy-poshandler-frame-center-near-bottom-fn
@@ -97,7 +95,22 @@
       :init
       (setq which-key-posframe-border-width 3
             which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
-      (which-key-posframe-mode 1))))
+
+      (with-eval-after-load 'solaire-mode
+        (setq which-key-posframe-parameters
+              `((background-color . ,(face-background 'solaire-default-face)))))
+
+      (which-key-posframe-mode 1)
+      :config
+      (add-hook 'after-load-theme-hook
+                (lambda ()
+                  (posframe-delete-all)
+                  (custom-set-faces
+                   `(which-key-posframe-border
+                     ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                  (with-eval-after-load 'solaire-mode
+                    (setf (alist-get 'background-color which-key-posframe-parameters)
+                          (face-background 'solaire-default-face))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch

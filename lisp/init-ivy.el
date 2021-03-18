@@ -30,7 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
 (require 'init-funcs)
 
 (use-package counsel
@@ -422,25 +421,39 @@ This is for use in `ivy-re-builders-alist'."
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
-    :commands ivy-hydra-read-action
     :init
-    (setq ivy-read-action-function #'ivy-hydra-read-action)
+    (setq ivy-read-action-function 'ivy-hydra-read-action)
 
-    (when (and (eq centaur-completion-style 'childframe)
-               (childframe-workable-p))
-      (with-eval-after-load 'posframe
-        (setq hydra-hint-display-type 'posframe)
+    (when (childframe-workable-p)
+      (setq hydra-hint-display-type 'posframe)
 
-        (with-no-warnings
-          (defun my-set-hydra-posframe-show-params ()
-            "Set hydra-posframe style."
-            (posframe-delete-all)
-            (setq hydra-posframe-show-params
-                  `(:internal-border-width 3
-                    :internal-border-color ,(face-foreground 'font-lock-comment-face)
-                    :poshandler ivy-poshandler-frame-center-near-bottom-fn)))
-          (my-set-hydra-posframe-show-params)
-          (add-hook 'after-load-theme-hook #'my-set-hydra-posframe-show-params)))))
+      (with-no-warnings
+        (defun ivy-hydra-poshandler-frame-center-below-fn (info)
+          (let ((parent-frame (plist-get info :parent-frame))
+                (height (plist-get info :posframe-height))
+                (pos (posframe-poshandler-frame-center info))
+                (num 0))
+            (dolist (frame (frame-list))
+              (when (and (frame-visible-p frame)
+                         (frame-parameter frame 'posframe-buffer))
+                (setq num (1+ num))))
+            (cons (car pos)
+                  (- (truncate (/ (frame-pixel-height parent-frame) 2))
+                     (if (>= num 1) height 0)))))
+
+        (defun ivy-hydra-set-posframe-show-params ()
+          "Set hydra-posframe style."
+          (posframe-delete-all)
+          (setq hydra-posframe-show-params
+                `(:internal-border-width 3
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
+                  :poshandler ivy-hydra-poshandler-frame-center-below-fn))
+          (with-eval-after-load 'solaire-mode
+            (plist-put hydra-posframe-show-params
+                       :background-color (face-background 'solaire-default-face))))
+
+        (ivy-hydra-set-posframe-show-params)
+        (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -545,21 +558,18 @@ This is for use in `ivy-re-builders-alist'."
   (setq ivy-rich-parse-remote-buffer nil))
 
 ;; Display completion in child frame
-(when (and (eq centaur-completion-style 'childframe)
-           (childframe-workable-p))
+(when (childframe-workable-p)
   (use-package ivy-posframe
     :defines persp-filter-save-buffers-functions
     :custom-face
     (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
     :hook (ivy-mode . ivy-posframe-mode)
     :init
-    (setq ivy-posframe-border-width 3
-          ivy-posframe-parameters `((drag-internal-border . t)
-                                    (z-group . above)))
+    (setq ivy-posframe-border-width 3)
 
     (with-eval-after-load 'solaire-mode
-      (add-to-list 'ivy-posframe-parameters
-                   `(background-color . ,(face-background 'solaire-default-face))))
+      (setq ivy-posframe-parameters
+            `((background-color . ,(face-background 'solaire-default-face)))))
 
     (with-eval-after-load 'persp-mode
       (add-to-list 'persp-filter-save-buffers-functions
@@ -581,6 +591,7 @@ This is for use in `ivy-re-builders-alist'."
     (with-no-warnings
       (defun ivy-display-at-frame-center-near-bottom-fn (str)
         (ivy-posframe--display str #'ivy-poshandler-frame-center-near-bottom-fn))
+
       (defun ivy-poshandler-frame-center-near-bottom-fn (info)
         (let ((parent-frame (plist-get info :parent-frame))
               (pos (posframe-poshandler-frame-center info)))
