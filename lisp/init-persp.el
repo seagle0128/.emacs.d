@@ -86,7 +86,7 @@
               ;; Force to recover the frame parameters
               (set-frame-parameter nil 'top (alist-get 'top initial-frame-alist))
               (set-frame-parameter nil 'left (alist-get 'left initial-frame-alist))
-              (set-frame-parameter nil 'width (alist-get 'width initial-frame-alist))
+              ;; (set-frame-parameter nil 'width (alist-get 'width initial-frame-alist))
               (set-frame-parameter nil 'height (alist-get 'height initial-frame-alist))
               (set-frame-parameter nil 'fullscreen (alist-get 'fullscreen initial-frame-alist))
 
