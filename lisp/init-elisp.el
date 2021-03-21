@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(require 'init-custom)
+(require 'init-funcs)
+
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
@@ -221,7 +224,25 @@ Lisp function does not specify a special indentation."
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish)
+  :diminish
+  :config
+  (when (childframe-workable-p)
+    (use-package eldoc-box
+      :diminish
+      :custom-face
+      (eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+      (eldoc-box-body ((t (:inherit 'tooltip))))
+      :hook ((emacs-lisp-mode lisp-mode lisp-interaction-mode)
+             .
+             eldoc-box-hover-at-point-mode)
+      :init
+      (when (eq centaur-lsp 'eglot)
+        (add-hook 'eglot--managed-mode-hook #'eldoc-box-hover-mode t))
+      :config
+      (add-hook 'after-load-theme-hook
+                (lambda ()
+                  (custom-set-faces
+                   `(eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))))))))
 
 ;; Interactive macro expander
 (use-package macrostep
