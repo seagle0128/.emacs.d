@@ -112,12 +112,12 @@
   :init
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
-  (setq ivy-use-selectable-prompt t
+  (setq ivy-height 12
+        ivy-use-selectable-prompt t
         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
-        ivy-height 10
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
-        ivy-on-del-error-function nil
+        ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
   ;; Better performance on Windows
