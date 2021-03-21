@@ -215,9 +215,7 @@
                 process-coding-system-alist))))
 
 ;; Atom/RSS reader
-(when (and emacs/>=25.2p
-           (functionp #'org-version)
-           (not (string-empty-p (org-version))))
+(when emacs/>=25.2p
   (use-package elfeed
     :pretty-hydra
     ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square" :face 'all-the-icons-orange :height 1.1 :v-adjust -0.05)
