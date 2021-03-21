@@ -84,11 +84,13 @@
               (load persp-frame-file)
 
               ;; Force to recover the frame parameters
-              (set-frame-parameter nil 'top (alist-get 'top initial-frame-alist))
-              (set-frame-parameter nil 'left (alist-get 'left initial-frame-alist))
-              ;; (set-frame-parameter nil 'width (alist-get 'width initial-frame-alist))
-              (set-frame-parameter nil 'height (alist-get 'height initial-frame-alist))
-              (set-frame-parameter nil 'fullscreen (alist-get 'fullscreen initial-frame-alist))
+              ;; Set after `doom-modeline' to avoid incorrect width calculation
+              (with-eval-after-load 'doom-modeline
+                (set-frame-parameter nil 'top (alist-get 'top initial-frame-alist))
+                (set-frame-parameter nil 'left (alist-get 'left initial-frame-alist))
+                (set-frame-parameter nil 'height (alist-get 'height initial-frame-alist))
+                (set-frame-parameter nil 'width (alist-get 'width initial-frame-alist))
+                (set-frame-parameter nil 'fullscreen (alist-get 'fullscreen initial-frame-alist)))
 
               ;; Handle multiple monitors gracefully
               (when (or (>= (eval (frame-parameter nil 'left)) (display-pixel-width))
