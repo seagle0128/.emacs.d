@@ -227,37 +227,45 @@ Lisp function does not specify a special indentation."
   :diminish
   :config
   ;; Display `eldoc' in child frame
-  (when (childframe-workable-p)
-    (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
-      "The posframe buffer name use by eldoc-posframe.")
+  (with-no-warnings
+    (when (childframe-workable-p)
+      (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
+        "The posframe buffer name use by eldoc-posframe.")
 
-    (defvar eldoc-posframe-hide-posframe-hooks
-      '(pre-command-hook post-command-hook focus-out-hook)
-      "The hooks which should trigger automatic removal of the posframe.")
+      (defvar eldoc-posframe-hide-posframe-hooks
+        '(pre-command-hook post-command-hook focus-out-hook)
+        "The hooks which should trigger automatic removal of the posframe.")
 
-    (defun eldoc-posframe-hide-posframe ()
-      "Hide messages currently being shown if any."
-      (posframe-hide eldoc-posframe-buffer)
-      (dolist (hook eldoc-posframe-hide-posframe-hooks)
-        (remove-hook hook #'eldoc-posframe-hide-posframe t)))
+      (defun eldoc-posframe-hide-posframe ()
+        "Hide messages currently being shown if any."
+        (posframe-hide eldoc-posframe-buffer)
+        (dolist (hook eldoc-posframe-hide-posframe-hooks)
+          (remove-hook hook #'eldoc-posframe-hide-posframe t)))
 
-    (defun eldoc-posframe-show-posframe (str &rest args)
-      "Display STR with ARGS."
-      (eldoc-posframe-hide-posframe)
-      (when str
-        (posframe-show
-         eldoc-posframe-buffer
-         :string (apply 'format str args)
-         :postion (point)
-         :internal-border-width 1
-         :internal-border-color (face-attribute 'font-lock-comment-face :foreground nil t)
-         :background-color (face-background 'tooltip nil t)
-         :left-fringe 4
-         :right-fringe 4))
-      (dolist (hook eldoc-posframe-hide-posframe-hooks)
-        (add-hook hook #'eldoc-posframe-hide-posframe nil t)))
+      (defun eldoc-posframe-poshandler (info)
+        (let* ((pos (posn-x-y (plist-get info :position-info)))
+               (x (car pos))
+               (y (cdr pos)))
+          (cons x (- y (- (plist-get info :posframe-height) 2)))))
 
-    (setq eldoc-message-function #'eldoc-posframe-show-posframe)))
+      (defun eldoc-posframe-show-posframe (str &rest args)
+        "Display STR with ARGS."
+        (eldoc-posframe-hide-posframe)
+        (when str
+          (posframe-show
+           eldoc-posframe-buffer
+           :string (apply 'format str args)
+           :postion (point)
+           :poshandler #'eldoc-posframe-poshandler
+           :internal-border-width 1
+           :internal-border-color (face-attribute 'font-lock-comment-face :foreground nil t)
+           :background-color (face-background 'tooltip nil t)
+           :left-fringe 4
+           :right-fringe 4))
+        (dolist (hook eldoc-posframe-hide-posframe-hooks)
+          (add-hook hook #'eldoc-posframe-hide-posframe nil t)))
+
+      (setq eldoc-message-function #'eldoc-posframe-show-posframe))))
 
 ;; Interactive macro expander
 (use-package macrostep
