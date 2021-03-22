@@ -226,23 +226,38 @@ Lisp function does not specify a special indentation."
   :ensure nil
   :diminish
   :config
+  ;; Display `eldoc' in child frame
   (when (childframe-workable-p)
-    (use-package eldoc-box
-      :diminish
-      :custom-face
-      (eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
-      (eldoc-box-body ((t (:inherit 'tooltip))))
-      :hook ((emacs-lisp-mode lisp-mode lisp-interaction-mode)
-             .
-             eldoc-box-hover-at-point-mode)
-      :init
-      (when (eq centaur-lsp 'eglot)
-        (add-hook 'eglot--managed-mode-hook #'eldoc-box-hover-mode t))
-      :config
-      (add-hook 'after-load-theme-hook
-                (lambda ()
-                  (custom-set-faces
-                   `(eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))))))))
+    (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
+      "The posframe buffer name use by eldoc-posframe.")
+
+    (defvar eldoc-posframe-hide-posframe-hooks
+      '(pre-command-hook post-command-hook focus-out-hook)
+      "The hooks which should trigger automatic removal of the posframe.")
+
+    (defun eldoc-posframe-hide-posframe ()
+      "Hide messages currently being shown if any."
+      (posframe-hide eldoc-posframe-buffer)
+      (dolist (hook eldoc-posframe-hide-posframe-hooks)
+        (remove-hook hook #'eldoc-posframe-hide-posframe t)))
+
+    (defun eldoc-posframe-show-posframe (str &rest args)
+      "Display STR with ARGS."
+      (eldoc-posframe-hide-posframe)
+      (when str
+        (posframe-show
+         eldoc-posframe-buffer
+         :string (apply 'format str args)
+         :postion (point)
+         :internal-border-width 1
+         :internal-border-color (face-attribute 'font-lock-comment-face :foreground nil t)
+         :background-color (face-background 'tooltip nil t)
+         :left-fringe 4
+         :right-fringe 4))
+      (dolist (hook eldoc-posframe-hide-posframe-hooks)
+        (add-hook hook #'eldoc-posframe-hide-posframe nil t)))
+
+    (setq eldoc-message-function #'eldoc-posframe-show-posframe)))
 
 ;; Interactive macro expander
 (use-package macrostep
