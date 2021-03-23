@@ -244,9 +244,12 @@ Lisp function does not specify a special indentation."
 
       (defun eldoc-posframe-poshandler (info)
         (let* ((pos (posn-x-y (plist-get info :position-info)))
+               (top (plist-get info :parent-window-top))
+               (left (plist-get info :parent-window-left))
+               (height (plist-get info :posframe-height))
                (x (car pos))
                (y (cdr pos)))
-          (cons x (- y (- (plist-get info :posframe-height) 2)))))
+          (cons (+ x left) (+ (- y height) top 2))))
 
       (defun eldoc-posframe-show-posframe (str &rest args)
         "Display STR with ARGS."
