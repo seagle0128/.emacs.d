@@ -447,6 +447,7 @@ This is for use in `ivy-re-builders-alist'."
           (setq hydra-posframe-show-params
                 `(:internal-border-width 3
                   :internal-border-color ,(face-foreground 'font-lock-comment-face)
+                  :lines-truncate t
                   :poshandler ivy-hydra-poshandler-frame-center-below-fn))
           (with-eval-after-load 'solaire-mode
             (plist-put hydra-posframe-show-params
