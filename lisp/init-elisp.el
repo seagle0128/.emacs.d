@@ -257,14 +257,14 @@ Lisp function does not specify a special indentation."
         (when str
           (posframe-show
            eldoc-posframe-buffer
-           :string (apply 'format str args)
+           :string (apply #'format str args)
            :postion (point)
            :poshandler #'eldoc-posframe-poshandler
+           :left-fringe 8
+           :right-fringe 8
            :internal-border-width 1
-           :internal-border-color (face-attribute 'font-lock-comment-face :foreground nil t)
-           :background-color (face-background 'tooltip nil t)
-           :left-fringe 4
-           :right-fringe 4))
+           :internal-border-color (face-attribute 'font-lock-comment-face :foreground)
+           :background-color (face-background 'tooltip)))
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (add-hook hook #'eldoc-posframe-hide-posframe nil t)))
 

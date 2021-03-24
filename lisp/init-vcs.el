@@ -89,11 +89,12 @@
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 21)
+          transient-posframe-min-height 21
+          transient-posframe-parameters '((lines-truncate . t)))
 
     (with-eval-after-load 'solaire-mode
-      (setq transient-posframe-parameters
-            `((background-color . ,(face-background 'solaire-default-face)))))
+      (add-to-list 'transient-posframe-parameters
+            `(background-color . ,(face-background 'solaire-default-face nil t))))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
@@ -103,7 +104,7 @@
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
                 (with-eval-after-load 'solaire-mode
                   (setf (alist-get 'background-color transient-posframe-parameters)
-                        (face-background 'solaire-default-face)))))))
+                        (face-background 'solaire-default-face nil t)))))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
@@ -180,6 +181,7 @@
                                 :string popuped-message
                                 :left-fringe 8
                                 :right-fringe 8
+                                :background-color (face-background 'tooltip)
                                 :internal-border-width 1
                                 :internal-border-color (face-foreground 'font-lock-comment-face))
                  (unwind-protect

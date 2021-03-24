@@ -98,7 +98,7 @@
 
       (with-eval-after-load 'solaire-mode
         (setq which-key-posframe-parameters
-              `((background-color . ,(face-background 'solaire-default-face)))))
+              `((background-color . ,(face-background 'solaire-default-face nil t)))))
 
       (which-key-posframe-mode 1)
       :config
@@ -110,7 +110,7 @@
                      ((t (:background ,(face-foreground 'font-lock-comment-face))))))
                   (with-eval-after-load 'solaire-mode
                     (setf (alist-get 'background-color which-key-posframe-parameters)
-                          (face-background 'solaire-default-face))))))))
+                          (face-background 'solaire-default-face nil t))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
