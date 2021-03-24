@@ -90,11 +90,9 @@
     :init
     (setq transient-posframe-border-width 3
           transient-posframe-min-height 21
-          transient-posframe-parameters '((lines-truncate . t)))
-
-    (with-eval-after-load 'solaire-mode
-      (add-to-list 'transient-posframe-parameters
-            `(background-color . ,(face-background 'solaire-default-face nil t))))
+          transient-posframe-parameters
+          `((lines-truncate . t)
+            (background-color . ,(face-background 'tooltip))))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
@@ -102,9 +100,8 @@
                 (custom-set-faces
                  `(transient-posframe-border
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (with-eval-after-load 'solaire-mode
-                  (setf (alist-get 'background-color transient-posframe-parameters)
-                        (face-background 'solaire-default-face nil t)))))))
+                (sett (alist-get 'background-color transient-posframe-parameters)
+                      (face-background 'tooltip))))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine

@@ -94,11 +94,8 @@
       (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
       :init
       (setq which-key-posframe-border-width 3
-            which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
-
-      (with-eval-after-load 'solaire-mode
-        (setq which-key-posframe-parameters
-              `((background-color . ,(face-background 'solaire-default-face nil t)))))
+            which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn
+            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
 
       (which-key-posframe-mode 1)
       :config
@@ -108,19 +105,18 @@
                   (custom-set-faces
                    `(which-key-posframe-border
                      ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                  (with-eval-after-load 'solaire-mode
-                    (setf (alist-get 'background-color which-key-posframe-parameters)
-                          (face-background 'solaire-default-face nil t))))))))
+                  (setq which-key-posframe-parameters
+                        `((background-color . ,(face-background 'tooltip)))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
   :diminish
   :bind (:map persistent-scratch-mode-map
-         ([remap kill-buffer] . (lambda (&rest _)
-                                  (interactive)
-                                  (user-error "Scrach buffer cannot be killed")))
-         ([remap revert-buffer] . persistent-scratch-restore)
-         ([remap revert-this-buffer] . persistent-scratch-restore))
+              ([remap kill-buffer] . (lambda (&rest _)
+                                       (interactive)
+                                       (user-error "Scrach buffer cannot be killed")))
+              ([remap revert-buffer] . persistent-scratch-restore)
+              ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode)))
 
@@ -208,8 +204,10 @@
                   (goto-char (point-min))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
               (posframe-show youdao-dictionary-buffer-name
+                             :position (point)
                              :left-fringe 8
                              :right-fringe 8
+                             :background-color (face-background 'tooltip)
                              :internal-border-color (face-foreground 'font-lock-comment-face)
                              :internal-border-width 1)
               (unwind-protect
