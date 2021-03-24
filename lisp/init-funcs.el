@@ -153,7 +153,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
         ((bound-and-true-p counsel-mode)
          (counsel-find-file url))
         (t (find-file url))))
-(defalias #'find-pdf-file #'centaur-find-pdf-file)
+(defalias 'find-pdf-file #'centaur-find-pdf-file)
 
 ;; Mode line
 (defun mode-line-height ()
