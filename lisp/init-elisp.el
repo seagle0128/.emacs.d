@@ -250,15 +250,6 @@ Lisp function does not specify a special indentation."
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (remove-hook hook #'eldoc-posframe-hide-posframe t)))
 
-      (defun eldoc-posframe-poshandler (info)
-        (let* ((pos (posn-x-y (plist-get info :position-info)))
-               (top (plist-get info :parent-window-top))
-               (left (plist-get info :parent-window-left))
-               (height (plist-get info :posframe-height))
-               (x (car pos))
-               (y (cdr pos)))
-          (cons (+ x left) (+ (- y height) top 2))))
-
       (defun eldoc-posframe-show-posframe (str &rest args)
         "Display STR with ARGS."
         (when eldoc-posframe--timer
@@ -277,7 +268,7 @@ Lisp function does not specify a special indentation."
                     eldoc-posframe-buffer
                     :string (apply #'format str args)
                     :postion (point)
-                    :poshandler #'eldoc-posframe-poshandler
+                    :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
                     :left-fringe 8
                     :right-fringe 8
                     :internal-border-width 1
