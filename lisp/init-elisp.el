@@ -280,17 +280,11 @@ Lisp function does not specify a special indentation."
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face
-  (macrostep-expansion-highlight-face ((t (:background ,(face-background 'tooltip) :extend t))))
+  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t))))
   :bind (:map emacs-lisp-mode-map
          ("C-c e" . macrostep-expand)
          :map lisp-interaction-mode-map
-         ("C-c e" . macrostep-expand))
-  :config
-  (add-hook 'after-load-theme-hook
-            (lambda ()
-              (custom-set-faces
-               `(macrostep-expansion-highlight-face
-                 ((t (:background ,(face-background 'tooltip) :extend t))))))))
+         ("C-c e" . macrostep-expand)))
 
 ;; A better *Help* buffer
 (use-package helpful

@@ -136,17 +136,36 @@ FACE defaults to inheriting from default and highlight."
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
+    :functions (macrostep-expand macrostep-collapse)
     :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
                 highlight-indent-guides-responsive 'top)
     :config
-    ;; Don't display first level of indentation
+    ;; WORKAROUND: Reset the faces after changing theme
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                "Re-render indentations after changing theme."
+                (when highlight-indent-guides-mode
+                  (highlight-indent-guides-auto-set-faces))))
+
     (with-no-warnings
+      ;; Don't display first level of indentation
       (defun my-indent-guides-for-all-but-first-column (level responsive display)
         (unless (< level 1)
           (highlight-indent-guides--highlighter-default level responsive display)))
       (setq highlight-indent-guides-highlighter-function
             #'my-indent-guides-for-all-but-first-column)
+
+      ;; Disable in `macrostep' expanding
+      (with-eval-after-load 'macrostep
+        (advice-add #'macrostep-expand
+                    :after (lambda (&rest _)
+                             (when highlight-indent-guides-mode
+                               (highlight-indent-guides-mode -1))))
+        (advice-add #'macrostep-collapse
+                    :after (lambda (&rest _)
+                             (when (derived-mode-p 'prog-mode)
+                               (highlight-indent-guides-mode 1)))))
 
       ;; Don't display indentations in `swiper'
       ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
@@ -211,8 +230,8 @@ FACE defaults to inheriting from default and highlight."
 (use-package diff-hl
   :custom-face
   (diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
-  (diff-hl-insert ((t (:background nil))))
-  (diff-hl-delete ((t (:background nil))))
+  (diff-hl-insert ((t (:inherit diff-added :background nil))))
+  (diff-hl-delete ((t (:inherit diff-removed :background nil))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -224,6 +243,14 @@ FACE defaults to inheriting from default and highlight."
 
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
+
+  ;; Reset faces after changing the color theme
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (custom-set-faces
+               `(diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
+               '(diff-hl-insert ((t (:inherit diff-added :background nil))))
+               '(diff-hl-delete ((t (:inherit diff-removed :background nil)))))))
 
   (with-no-warnings
     (defun my-diff-hl-fringe-bmp-function (_type _pos)
