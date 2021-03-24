@@ -59,7 +59,8 @@
         :custom-face
         (flycheck-posframe-face ((t (:foreground ,(face-foreground 'success)))))
         (flycheck-posframe-info-face ((t (:foreground ,(face-foreground 'success)))))
-        (flycheck-posframe-background-face ((t (:inherit 'tooltip))))
+        (flycheck-posframe-background-face ((t (:inherit tooltip))))
+        (flycheck-posframe-border-face ((t (:inherit font-lock-comment-face))))
         :hook (flycheck-mode . flycheck-posframe-mode)
         :init
         (setq flycheck-posframe-border-width 1)
