@@ -124,7 +124,7 @@ Same as `replace-string C-q C-m RET RET'."
       (progn
         (kill-new filename)
         (message "Copied '%s'" filename))
-    (message "WARNING: Current buffer is not attached to a file!")))
+    (warn "Current buffer is not attached to a file!")))
 
 ;; Browse URL
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
