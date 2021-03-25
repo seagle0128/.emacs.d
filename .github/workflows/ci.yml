@@ -36,11 +36,8 @@ jobs:
       - name: Test
         run: |
           emacs --version
-          pwd
-          mv -f ../.emacs.d ~/.emacs.d; \
-          ls ~/.emacs.d; \
-          echo $PATH; \
-          which emacs; \
+          mv -f ~/work/.emacs.d/.emacs.d/.emacs.d ~; \
+          ls -l ~/.emacs.d; \
           emacs -q --batch --eval "\
           (require 'package)
           (require 'url-vars)
