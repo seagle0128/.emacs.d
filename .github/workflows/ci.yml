@@ -24,21 +24,12 @@ jobs:
         with:
           version: ${{ matrix.emacs-version }}
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.6"
-          architecture: "x64"
-
-      - uses: conao3/setup-cask@master
-        with:
-          version: 0.8.6
-
       - name: Test
         run: |
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
-          emacs -q --batch --eval "\
+          emacs -q --batch ^ --eval "\
           (message \"Testing...\") \
           (setq package-check-signature nil) \
           (setq url-show-status nil) \
