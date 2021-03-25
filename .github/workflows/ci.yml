@@ -33,9 +33,10 @@ jobs:
         with:
           version: 0.8.6
 
-      - name: test
+      - name: Test
         run: |
           mv -f ../.emacs.d $HOME/.emacs.d; \
           ls $HOME/.emacs.d; \
-          which emacs;
+          which emacs; \
+          emacs -q --eval "(message \"test\""
 
