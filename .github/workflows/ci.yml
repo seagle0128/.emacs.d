@@ -33,4 +33,5 @@ jobs:
           --eval "(message \"Testing...\")" \
           --eval "(setq package-check-signature nil)" \
           --eval "(setq url-show-status nil)" \
+          --eval "(setq debug-on-error (>= emacs-major-version 26)" \
           --eval "(message \"Testing...done\")"
