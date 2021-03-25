@@ -35,8 +35,10 @@ jobs:
 
       - name: Test
         run: |
-          mv -f ../.emacs.d $HOME/.emacs.d; \
-          ls $HOME/.emacs.d; \
+          mv -f ../.emacs.d ~/.emacs.d; \
+          ls ~/.emacs.d; \
+          echo $PATH; \
           which emacs; \
-          emacs -q --eval "(message \"test\""
+          emacs --version
+          emacs -q --eval "(message \"test\")"
 
