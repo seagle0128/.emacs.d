@@ -35,10 +35,23 @@ jobs:
 
       - name: Test
         run: |
+          emacs --version
+          pwd
           mv -f ../.emacs.d ~/.emacs.d; \
           ls ~/.emacs.d; \
           echo $PATH; \
           which emacs; \
-          emacs --version
-          emacs -q --eval "(message \"test\")"
-
+          emacs -q --batch --eval "\
+          (require 'package)
+          (require 'url-vars)
+          (let ((debug-on-error (>= emacs-major-version 26))
+            (package-check-signature nil)
+            (url-show-status nil)
+            (early-init-file (locate-user-emacs-file \"early-init.el\"))
+            (user-init-file (locate-user-emacs-file \"init.el\")))
+          (when (>= emacs-major-version 27)
+            (load early-init-file))
+            (load user-init-file)
+            (run-hooks 'after-init-hook)
+            (run-hooks 'emacs-startup-hook)
+            (run-hooks 'window-setup-hook))"
