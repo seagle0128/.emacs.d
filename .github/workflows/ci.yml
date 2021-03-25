@@ -32,4 +32,5 @@ jobs:
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(setq package-check-signature nil)" \
+          --eval "(setq url-show-status nil)" \
           --eval "(message \"Testing...done\")"
