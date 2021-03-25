@@ -29,8 +29,8 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
-          emacs -q --batch --eval " \
-          (message \"Testing...\")
+          emacs -q --batch --eval \
+          "(message \"Testing...\")
           (setq package-check-signature nil)
           (setq url-show-status nil)
           (setq debug-on-error (>= emacs-major-version 26)
