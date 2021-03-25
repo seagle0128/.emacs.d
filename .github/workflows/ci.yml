@@ -18,7 +18,7 @@ jobs:
           - snapshot
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - uses: purcell/setup-emacs@master
         with:
@@ -26,4 +26,5 @@ jobs:
 
       - name: test
         run: 'mv -f ../.emacs.d $HOME/.emacs.d; \
+              which emacs;\
               emacs -nw $HOME/.emacs.d/init.el'
