@@ -34,13 +34,12 @@ jobs:
           --eval "(setq package-check-signature nil)" \
           --eval "(setq url-show-status nil)" \
           --eval "(setq debug-on-error (>= emacs-major-version 26))" \
-          --eval "\
-          (let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
-                (user-init-file (locate-user-emacs-file \"init.el\")))
-            (when (>= emacs-major-version 27)
-              (load early-init-file))
-              (load user-init-file)
-              (run-hooks 'after-init-hook)
-              (run-hooks 'emacs-startup-hook)
-              (run-hooks 'window-setup-hook))" \
+          --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
+                        (user-init-file (locate-user-emacs-file \"init.el\")))
+                    (when (>= emacs-major-version 27)
+                      (load early-init-file))
+                    (load user-init-file)
+                    (run-hooks 'after-init-hook)
+                    (run-hooks 'emacs-startup-hook)
+                    (run-hooks 'window-setup-hook))" \
           --eval "(message \"Testing...done\")"
