@@ -36,7 +36,7 @@ jobs:
       - name: test
         run: |
           mv -f ../.emacs.d $HOME/.emacs.d; \
-          cask emacs -q --batch --eval "\
+          emacs -q --batch --eval "\
           (require 'package)
           (require 'url-vars)
           (let ((debug-on-error (>= emacs-major-version 26))
