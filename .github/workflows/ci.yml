@@ -25,4 +25,5 @@ jobs:
           version: ${{ matrix.emacs-version }}
 
       - name: test
-        run: 'mv -f ../.emacs.d $HOME/.emacs.d; emacs'
+        run: 'mv -f ../.emacs.d $HOME/.emacs.d; \
+              emacs -nw $HOME/.emacs.d/init.el'
