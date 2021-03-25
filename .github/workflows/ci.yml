@@ -38,7 +38,9 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           ls -la ~/.emacs.d; \
+          emacs --version; \
           emacs -q --batch --eval "\
+          (message \"Testing...\")
           (setq package-check-signature nil)
           (setq url-show-status nil)
           (let ((debug-on-error (>= emacs-major-version 26))
@@ -49,4 +51,5 @@ jobs:
             (load user-init-file)
             (run-hooks 'after-init-hook)
             (run-hooks 'emacs-startup-hook)
-            (run-hooks 'window-setup-hook))"
+            (run-hooks 'window-setup-hook))
+            (message \"Done...\")"
