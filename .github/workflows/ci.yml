@@ -31,8 +31,8 @@ jobs:
           emacs --version; \
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
-          --eval "(setq package-check-signature nil)
-                        url-show-status nil)
+          --eval "(setq package-check-signature nil
+                        url-show-status nil
                         debug-on-error (>= emacs-major-version 26))" \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
