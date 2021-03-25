@@ -29,18 +29,13 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
-          emacs -q --batch ^ --eval "\
-          (message \"Testing...\")
+          emacs -q --batch --eval " \
           (setq package-check-signature nil)
-          (message \"Test0...\")
           (setq url-show-status nil)
-          (message \"Test1...\")
           (let ((debug-on-error (>= emacs-major-version 26))
             (early-init-file (locate-user-emacs-file \"early-init.el\"))
             (user-init-file (locate-user-emacs-file \"init.el\")))
-            (message \"Test2...\")
             (when (>= emacs-major-version 27)
-              (message \"Test3...\")
               (load early-init-file))
               (load user-init-file)
               (run-hooks 'after-init-hook)
