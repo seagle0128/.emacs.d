@@ -35,6 +35,7 @@ jobs:
 
       - name: Test
         run: |
+          rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           ls -l ~/.emacs.d; \
           emacs -q --batch --eval "\
