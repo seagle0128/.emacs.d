@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs-version }}
+
       - uses: actions/setup-python@v2
         with:
           python-version: "3.6"
@@ -28,10 +32,6 @@ jobs:
       - uses: conao3/setup-cask@master
         with:
           version: 0.8.6
-
-      - uses: purcell/setup-emacs@master
-        with:
-          version: ${{ matrix.emacs-version }}
 
       - name: test
         run: |
