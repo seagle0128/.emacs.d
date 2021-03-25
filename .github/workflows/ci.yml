@@ -37,13 +37,11 @@ jobs:
         run: |
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
-          ls -l ~/.emacs.d; \
+          ls -la ~/.emacs.d; \
           emacs -q --batch --eval "\
-          (require 'package)
-          (require 'url-vars)
+          (setq package-check-signature nil)
+          (setq url-show-status nil)
           (let ((debug-on-error (>= emacs-major-version 26))
-            (package-check-signature nil)
-            (url-show-status nil)
             (early-init-file (locate-user-emacs-file \"early-init.el\"))
             (user-init-file (locate-user-emacs-file \"init.el\")))
           (when (>= emacs-major-version 27)
