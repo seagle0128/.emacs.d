@@ -36,7 +36,7 @@ jobs:
       - name: Test
         run: |
           emacs --version
-          mv -f ~/work/.emacs.d/.emacs.d/.emacs.d ~; \
+          mv -f ~/work/.emacs.d/.emacs.d ~; \
           ls -l ~/.emacs.d; \
           emacs -q --batch --eval "\
           (require 'package)
