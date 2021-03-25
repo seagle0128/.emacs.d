@@ -30,8 +30,6 @@ jobs:
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
           emacs -q --batch --eval " \
-          (setq package-check-signature nil)
-          (setq url-show-status nil)
           (let ((debug-on-error (>= emacs-major-version 26))
             (early-init-file (locate-user-emacs-file \"early-init.el\"))
             (user-init-file (locate-user-emacs-file \"init.el\")))
