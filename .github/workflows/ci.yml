@@ -32,14 +32,12 @@ jobs:
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(setq package-check-signature nil
-                        url-show-status nil
-                        debug-on-error (>= emacs-major-version 26))" \
+                        url-show-status nil)" \
+          --eval "(when (and (require 'org nil t) (string= (org-version) \"\"))
+                     (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))" \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
-                    (when (and (functionp 'org-version) (string= (org-version) \"\"))
-                      (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))
-                    (when (>= emacs-major-version 27)
-                      (load early-init-file))
+                    (and (>= emacs-major-version 27) (load early-init-file))
                     (load user-init-file)
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
