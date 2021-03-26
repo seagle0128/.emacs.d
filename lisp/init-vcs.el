@@ -100,7 +100,7 @@
                 (custom-set-faces
                  `(transient-posframe-border
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (sett (alist-get 'background-color transient-posframe-parameters)
+                (setf (alist-get 'background-color transient-posframe-parameters)
                       (face-background 'tooltip))))))
 
 ;; Walk through git revisions of a file
