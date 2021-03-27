@@ -170,7 +170,7 @@ For example:
                     centaur-theme-alist)
                  symbol))
 
-(defcustom centaur-completion-style 'childframe
+(defcustom centaur-completion-style 'minibuffer
   "Completion display style."
   :group 'centaur
   :type '(choice (const :tag "Minibuffer" minibuffer)
