@@ -118,10 +118,7 @@
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
         ("t o" (ivy-read "Load custom theme: "
-                         (mapcar #'symbol-name
-                                 (custom-available-themes))
-                         :predicate (lambda (candidate)
-                                      (string-prefix-p "doom-" candidate))
+                         (all-completions "doom" (custom-available-themes))
                          :action (lambda (theme)
                                    (centaur-set-variable
                                     'centaur-theme
