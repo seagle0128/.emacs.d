@@ -145,21 +145,15 @@
     ;; Display an arrow with the selected item
     (defun my-ivy-format-function-arrow (cands)
       "Transform CANDS into a string for minibuffer."
-      (ivy--format-function-generic
-       (lambda (str)
-         (concat (if (and (>= (length str) 1)
-                          (string= " " (substring str 0 1)))
-                     ">"
-                   "> ")
-                 (ivy--add-face str 'ivy-current-match)))
-       (lambda (str)
-         (concat (if (and (>= (length str) 1)
-                          (string= " " (substring str 0 1)))
-                     " "
-                   "  ")
-                 str))
-       cands
-       "\n"))
+      (if (display-graphic-p)
+          (ivy-format-function-line cands)
+        (ivy--format-function-generic
+         (lambda (str)
+           (ivy--add-face (concat "> " str "\n") 'ivy-current-match))
+         (lambda (str)
+           (concat "  " str "\n"))
+         cands
+         "")))
     (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
 
     ;; Pre-fill search keywords
