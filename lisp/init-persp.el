@@ -125,10 +125,13 @@
               (not (buffer-live-p b))))
   (add-hook 'persp-filter-save-buffers-functions
             (lambda (b)
+              "Ignore unneeded buffers."
+              (string-prefix-p " *" (buffer-name b))))
+  (add-hook 'persp-filter-save-buffers-functions
+            (lambda (b)
               "Ignore temporary buffers."
               (let ((bname (file-name-nondirectory (buffer-name b))))
-                (or (string-prefix-p " *" bname)
-                    (string-prefix-p ".newsrc" bname)
+                (or (string-prefix-p ".newsrc" bname)
                     (string-prefix-p "magit" bname)
                     (string-prefix-p "Pfuture-Callback" bname)
                     (string-prefix-p "treemacs-persist" bname)
