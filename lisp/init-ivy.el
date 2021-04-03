@@ -137,11 +137,11 @@
             counsel-find-file-occur-cmd
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
   :config
-  ;; persist views
-  (with-eval-after-load 'savehist
-    (add-to-list 'savehist-additional-variables 'ivy-views))
-
   (with-no-warnings
+    ;; persist views
+    (with-eval-after-load 'savehist
+      (add-to-list 'savehist-additional-variables 'ivy-views))
+
     ;; Display an arrow with the selected item
     (defun my-ivy-format-function-arrow (cands)
       "Transform CANDS into a string for minibuffer."
