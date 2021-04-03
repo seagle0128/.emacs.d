@@ -119,24 +119,21 @@
     (advice-add #'persp-asave-on-exit :around #'my-persp-asave-on-exit))
 
   ;; Don't save dead or temporary buffers
-  (add-to-list 'persp-filter-save-buffers-functions
-               (lambda (b)
-                 "Ignore dead buffers."
-                 (not (buffer-live-p b))))
-  (add-to-list 'persp-filter-save-buffers-functions
-               (lambda (b)
-                 "Ignore temporary buffers."
-                 (let ((bname (file-name-nondirectory (buffer-name b))))
-                   (or (string-prefix-p ".newsrc" bname)
-                       (string-prefix-p "magit" bname)
-                       (string-prefix-p "Pfuture-Callback" bname)
-                       (string-prefix-p "treemacs-persist" bname)
-                       (string-match-p "\\.elc\\|\\.tar\\|\\.gz\\|\\.zip\\'" bname)
-                       (string-match-p "\\.bin\\|\\.so\\|\\.dll\\|\\.exe\\'" bname)
-                       (eq (buffer-local-value 'major-mode b) 'erc-mode)
-                       (eq (buffer-local-value 'major-mode b) 'rcirc-mode)
-                       (eq (buffer-local-value 'major-mode b) 'nov-mode)
-                       (eq (buffer-local-value 'major-mode b) 'vterm-mode)))))
+  (add-hook 'persp-filter-save-buffers-functions
+            (lambda (b)
+              "Ignore dead buffers."
+              (not (buffer-live-p b))))
+  (add-hook 'persp-filter-save-buffers-functions
+            (lambda (b)
+              "Ignore temporary buffers."
+              (let ((bname (file-name-nondirectory (buffer-name b))))
+                (or (string-prefix-p " *" bname)
+                    (string-prefix-p ".newsrc" bname)
+                    (string-prefix-p "magit" bname)
+                    (string-prefix-p "Pfuture-Callback" bname)
+                    (string-prefix-p "treemacs-persist" bname)
+                    (string-match-p "\\.elc\\|\\.tar\\|\\.gz\\|\\.zip\\'" bname)
+                    (string-match-p "\\.bin\\|\\.so\\|\\.dll\\|\\.exe\\'" bname)))))
 
   ;; Don't save persp configs in `recentf'
   (with-eval-after-load 'recentf

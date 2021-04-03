@@ -563,7 +563,7 @@ This is for use in `ivy-re-builders-alist'."
 ;; Display completion in child frame
 (when (childframe-workable-p)
   (use-package ivy-posframe
-    :defines (persp-load-buffer-functions persp-filter-save-buffers-functions)
+    :defines persp-load-buffer-functions
     :custom-face
     (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
     :hook (ivy-mode . ivy-posframe-mode)
@@ -575,12 +575,7 @@ This is for use in `ivy-re-builders-alist'."
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
                 (lambda (&rest _)
-                  (posframe-delete-all)))
-      (add-to-list 'persp-filter-save-buffers-functions
-                   (lambda (b)
-                     "Ignore posframe buffers."
-                     (let ((bname (file-name-nondirectory (buffer-name b))))
-                       (string= ivy-posframe-buffer bname)))))
+                  (posframe-delete-all))))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
