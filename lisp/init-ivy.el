@@ -96,7 +96,6 @@
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
-         ("C-`" . ivy-avy)
 
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
@@ -373,6 +372,11 @@
   ;; Enhance M-x
   (use-package amx
     :init (setq amx-history-length 20))
+
+  ;; Avy integration
+  (use-package ivy-avy
+    :bind (:map ivy-minibuffer-map
+           ("C-'" . ivy-avy)))
 
   ;; Better sorting and filtering
   (use-package prescient
