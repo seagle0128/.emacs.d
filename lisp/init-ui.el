@@ -256,6 +256,8 @@
         (memoize f)))
     (message "Reset all-the-icons"))
 
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(compilation-mode all-the-icons-faicon "cogs" :v-adjust 0.0 :height 0.9))
   (add-to-list 'all-the-icons-icon-alist
                '("^Rakefile$" all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))
   (add-to-list 'all-the-icons-icon-alist
