@@ -123,9 +123,7 @@ M-x centaur-update-packages
 M-x centaur-update-all
 ```
 
-**Tricks**
-
-Update configurations and packages in shell.
+**Trick**: update configurations and packages in shell.
 
 ``` shell
 alias upgrade_emacs='emacs -Q --batch -L "$HOME/.emacs.d/lisp/" -l "init-funcs.el" -l "init-package.el" --eval "(update-config-and-packages t)"'
