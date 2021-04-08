@@ -54,11 +54,11 @@
   (error "This requires Emacs 25.1 and above!"))
 
 ;; Speed up startup
-(defvar centaur-gc-cons-threshold (if (display-graphic-p) 16000000 1600000)
+(defvar centaur-gc-cons-threshold (if (display-graphic-p) 64000000 1600000)
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
 
-(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 400000000 100000000)
+(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 512000000 128000000)
   "The temporary value for `gc-cons-threshold' to defer it.")
 
 (defvar centaur-gc-timer (run-with-idle-timer 10 t #'garbage-collect)

@@ -234,9 +234,9 @@
         ;; restore window layout when done
         (ediff-quit . winner-undo))
   :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-merge-split-window-function 'split-window-horizontally))
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally
+        ediff-merge-split-window-function 'split-window-horizontally))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
