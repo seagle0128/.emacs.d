@@ -430,6 +430,20 @@ This is for use in `ivy-re-builders-alist'."
       (setq hydra-hint-display-type 'posframe)
 
       (with-no-warnings
+        (defun hydra-posframe-delete ()
+          (require 'posframe)
+          (unless hydra--posframe-timer
+            (setq hydra--posframe-timer
+                  (run-with-idle-timer
+                   0 nil (lambda ()
+                           (setq hydra--posframe-timer nil)
+                           (posframe-delete " *hydra-posframe*"))))))
+
+        (setq hydra-hint-display-alist
+              (list (list 'lv #'lv-message #'lv-delete-window)
+                    (list 'message (lambda (str) (message "%s" str)) (lambda () (message "")))
+                    (list 'posframe #'hydra-posframe-show #'hydra-posframe-delete)))
+
         (defun ivy-hydra-poshandler-frame-center-below-fn (info)
           (let ((parent-frame (plist-get info :parent-frame))
                 (height (plist-get info :posframe-height))
