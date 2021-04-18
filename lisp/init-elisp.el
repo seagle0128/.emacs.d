@@ -275,7 +275,9 @@ Lisp function does not specify a special indentation."
                     :internal-border-color (face-attribute 'font-lock-comment-face :foreground)
                     :background-color (face-background 'tooltip)))))))
 
-      (setq eldoc-message-function #'eldoc-posframe-show-posframe))))
+      (add-hook 'emacs-lisp-mode-hook
+                (lambda ()
+                  (setq-local eldoc-message-function #'eldoc-posframe-show-posframe))))))
 
 ;; Interactive macro expander
 (use-package macrostep
