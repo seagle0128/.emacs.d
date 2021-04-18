@@ -642,6 +642,7 @@ If SYNC is non-nil, the updating process is synchronous."
   (setq url-gateway-method 'socks
         socks-noproxy '("localhost")
         socks-server '("Default server" "127.0.0.1" 1086 5))
+  (setenv "all_proxy" (concat "socks5://" centaur-proxy))
   (proxy-socks-show))
 
 (defun proxy-socks-disable ()
@@ -649,6 +650,7 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (setq url-gateway-method 'native
         socks-noproxy nil)
+  (setenv "all_proxy" "")
   (proxy-socks-show))
 
 (defun proxy-socks-toggle ()
