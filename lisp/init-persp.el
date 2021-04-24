@@ -112,9 +112,9 @@
               (lambda ()
                 (add-hook 'find-file-hook #'my-persp-after-load-state)))
 
-    (defun my-persp-asave-on-exit (fn &optional interactive-query)
+    (defun my-persp-asave-on-exit (fn &optional interactive-query opt)
       (if persp-state-loaded
-          (funcall fn interactive-query)
+          (funcall fn interactive-query opt)
         t))
     (advice-add #'persp-asave-on-exit :around #'my-persp-asave-on-exit))
 
