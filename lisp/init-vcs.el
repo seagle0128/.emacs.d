@@ -78,7 +78,11 @@
     (use-package magit-todos
       :init
       (setq magit-todos-nice (if (executable-find "nice") t nil))
-      (magit-todos-mode 1))))
+      (let ((inhibit-message t))
+        (magit-todos-mode 1))
+      :config
+      (transient-append-suffix 'magit-status-jump '(0 0 -1)
+        '("T " "Todos" magit-todos-jump-to-todos)))))
 
 ;; Display transient in child frame
 (when (childframe-workable-p)
