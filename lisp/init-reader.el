@@ -39,12 +39,29 @@
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
     :functions (my-pdf-view-set-midnight-colors my-pdf-view-set-dark-theme)
-    :commands pdf-view-midnight-minor-mode
+    :hook (pdf-view-mode . pdf-view-midnight-minor-mode)
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
            ("C-s" . isearch-forward))
-    :init (setq pdf-annot-activate-created-annotations t)
+    :init
+    (setq pdf-annot-activate-created-annotations t)
+
+    ;; Set dark theme
+    (defun my-pdf-view-set-midnight-colors ()
+      "Set pdf-view midnight colors."
+      (setq pdf-view-midnight-colors
+            `(,(face-foreground 'default) . ,(face-background 'solaire-default-face))))
+    (my-pdf-view-set-midnight-colors)
+
+    (defun my-pdf-view-set-dark-theme ()
+      "Set pdf-view midnight theme as color theme."
+      (my-pdf-view-set-midnight-colors)
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (eq major-mode 'pdf-view-mode)
+            (pdf-view-midnight-minor-mode (if pdf-view-midnight-minor-mode 1 -1))))))
+    (add-hook 'after-load-theme-hook #'my-pdf-view-set-dark-theme)
     :config
     ;; Build pdfinfo if needed, locking until it's complete
     (with-no-warnings
@@ -59,23 +76,6 @@
             (when (file-executable-p pdf-info-epdfinfo-program)
               (set-window-configuration wconf)))))
       (advice-add #'pdf-view-decrypt-document :before #'my-pdf-tools-install))
-
-    ;; Set dark theme
-    (defun my-pdf-view-set-midnight-colors ()
-      "Set pdf-view midnight colors."
-      (setq pdf-view-midnight-colors
-            `(,(face-foreground 'default) . ,(face-background 'default))))
-
-    (defun my-pdf-view-set-dark-theme ()
-      "Set pdf-view midnight theme as color theme."
-      (my-pdf-view-set-midnight-colors)
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (when (eq major-mode 'pdf-view-mode)
-            (pdf-view-midnight-minor-mode (if pdf-view-midnight-minor-mode 1 -1))))))
-
-    (my-pdf-view-set-midnight-colors)
-    (add-hook 'after-load-theme-hook #'my-pdf-view-set-dark-theme)
 
     (with-no-warnings
       ;; FIXME: Support retina display on MAC
@@ -155,7 +155,7 @@
                                    (remove current matches))))))))
       (advice-add #'pdf-isearch-hl-matches :override #'my-pdf-isearch-hl-matches)
 
-      (defun pdf-annot-show-annotation (a &optional highlight-p window)
+      (defun my-pdf-annot-show-annotation (a &optional highlight-p window)
         "Make annotation A visible."
         (save-selected-window
           (when window (select-window window))
@@ -168,9 +168,9 @@
               (when highlight-p
                 (pdf-view-display-image
                  (pdf-view-create-image
-                   (pdf-cache-renderpage-highlight
-                    page (car size)
-                    `("white" "steel blue" 0.35 ,@edges))
+                     (pdf-cache-renderpage-highlight
+                      page (car size)
+                      `("white" "steel blue" 0.35 ,@edges))
                    :map (pdf-view-apply-hotspot-functions
                          window page size)
                    :width (car size))))
