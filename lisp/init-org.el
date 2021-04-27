@@ -259,9 +259,14 @@ prepended to the element after the #+HEADER: tag."
                                     (text-scale-increase 0)
                                     (org-remove-inline-images)
                                     (read-only-mode -1))))
-    :config
-    (org-tree-slide-simple-profile)
-    (setq org-tree-slide-skip-outline-level 2))
+    :init (setq org-tree-slide-header nil
+                org-tree-slide-slide-in-effect t
+                org-tree-slide-heading-emphasis nil
+                org-tree-slide-cursor-init t
+                org-tree-slide-modeline-display 'outside
+                org-tree-slide-skip-done nil
+                org-tree-slide-skip-comments t
+                org-tree-slide-skip-outline-level 3))
 
   ;; Pomodoro
   (use-package org-pomodoro
