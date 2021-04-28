@@ -118,7 +118,8 @@ prepended to the element after the #+HEADER: tag."
       (when text (insert text))))
 
   ;; To speed up startup, don't put to init section
-  (setq org-directory centaur-org-directory
+  (setq org-modules nil                 ; Faster loading
+        org-directory centaur-org-directory
         org-capture-templates
         `(("i" "Idea" entry (file ,(concat org-directory "/idea.org"))
            "*  %^{Title} %?\n%U\n%a\n")
