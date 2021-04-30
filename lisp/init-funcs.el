@@ -453,12 +453,8 @@ If SYNC is non-nil, the updating process is synchronous."
   "Install necessary fonts."
   (interactive)
 
-  ;; all-the-icons
-  (all-the-icons-install-fonts t)
-
-  ;; Symbola
-  ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
-  (let* ((url (concat centaur-homepage "/files/6135060/symbola.zip"))
+  (let* ((url-format "https://raw.githubusercontent.com/domtronn/all-the-icons.el/master/fonts/%s")
+         (url (concat centaur-homepage "/files/6135060/symbola.zip"))
          (font-dest (cond
                      ;; Default Linux install directories
                      ((member system-type '(gnu gnu/linux gnu/kfreebsd))
@@ -473,6 +469,14 @@ If SYNC is non-nil, the updating process is synchronous."
 
     (unless (file-directory-p font-dest) (mkdir font-dest t))
 
+    ;; Download `all-the-fonts'
+    (when (bound-and-true-p all-the-icons-font-names)
+      (mapc (lambda (font)
+              (url-copy-file (format url-format font) (expand-file-name font font-dest) t))
+            all-the-icons-font-names))
+
+    ;; Download `Symbola'
+    ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
     (let* ((temp-file (make-temp-file "symbola-" nil ".zip"))
            (temp-dir (concat (file-name-directory temp-file) "/symbola/"))
            (unzip-script (cond ((executable-find "unzip")
@@ -490,13 +494,15 @@ If SYNC is non-nil, the updating process is synchronous."
                (temp-font (expand-file-name font-name temp-dir)))
           (if (file-exists-p temp-font)
               (copy-file temp-font (expand-file-name font-name font-dest) t)
-            (message "Failed to download `Symbola'!")))
-        (when known-dest?
-          (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
-          (shell-command-to-string (format "fc-cache -f -v")))
-        (message "Successfully %s `Symbola' fonts to `%s'!"
-                 (if known-dest? "installed" "downloaded")
-                 font-dest)))))
+            (message "Failed to download `Symbola'!")))))
+
+    (when known-dest?
+      (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
+      (shell-command-to-string (format "fc-cache -f -v")))
+
+    (message "Successfully %s `all-the-icons' and `Symbola' fonts to `%s'!"
+             (if known-dest? "installed" "downloaded")
+             font-dest)))
 
 
 
