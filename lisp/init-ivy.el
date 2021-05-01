@@ -142,12 +142,40 @@
       (add-to-list 'savehist-additional-variables 'ivy-views))
 
     ;; Highlight the selected item
-    (defun my-ivy-format-functionw (cands)
+    (defun my-ivy--make-image (face width height)
+      "Create a PBM bitmap via FACE, WIDTH and HEIGHT."
+      (when (and (display-graphic-p)
+                 (image-type-available-p 'pbm))
+        (propertize
+         " " 'display
+         (let ((color (or (face-background face nil t) "None")))
+           (ignore-errors
+             (create-image
+              (concat (format "P1\n%i %i\n" width height)
+                      (make-string (* width height) ?1)
+                      "\n")
+              'pbm t :foreground color :ascent 'center))))))
+
+    (defun my-ivy-format-function (cands)
       "Transform CANDS into a string for minibuffer."
-      (if (display-graphic-p)
-          (ivy-format-function-line cands)
+      (if (and (display-graphic-p)
+               (image-type-available-p 'pbm))
+          (let ((width 3)
+                (height (1+ (window-font-height))))
+            (ivy--format-function-generic
+             (lambda (str)
+               (concat
+                (my-ivy--make-image 'highlight width height)
+                (ivy--add-face (concat " " str) 'ivy-current-match)))
+             (lambda (str)
+               (concat
+                (my-ivy--make-image 'default width height)
+                " "
+                str))
+             cands
+             "\n"))
         (ivy-format-function-arrow cands)))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-functionw)
+    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
