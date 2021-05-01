@@ -141,19 +141,13 @@
     (with-eval-after-load 'savehist
       (add-to-list 'savehist-additional-variables 'ivy-views))
 
-    ;; Display an arrow with the selected item
-    (defun my-ivy-format-function-arrow (cands)
+    ;; Highlight the selected item
+    (defun my-ivy-format-functionw (cands)
       "Transform CANDS into a string for minibuffer."
       (if (display-graphic-p)
           (ivy-format-function-line cands)
-        (ivy--format-function-generic
-         (lambda (str)
-           (ivy--add-face (concat "> " str "\n") 'ivy-current-match))
-         (lambda (str)
-           (concat "  " str "\n"))
-         cands
-         "")))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+        (ivy-format-function-arrow cands)))
+    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-functionw)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
