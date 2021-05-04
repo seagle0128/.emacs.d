@@ -386,6 +386,11 @@
 (use-package mixed-pitch
   :diminish)
 
+;; Display ugly ^L page breaks as tidy horizontal lines
+(use-package page-break-lines
+  :diminish
+  :hook (after-init . global-page-break-lines-mode))
+
 (with-no-warnings
   (when sys/macp
     ;; Render thinner fonts
