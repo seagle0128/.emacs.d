@@ -204,6 +204,10 @@
                  (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face))
                  (set-face-background 'lsp-ui-doc-background (face-background 'tooltip)))))
 
+   ;; Focus integration
+   (use-package lsp-focus
+     :hook (focus-mode . lsp-focus-mode))
+
    ;; Ivy integration
    (use-package lsp-ivy
      :after lsp-mode
