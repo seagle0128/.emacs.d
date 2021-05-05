@@ -89,12 +89,12 @@
   (when (childframe-workable-p)
     (use-package which-key-posframe
       :diminish
-      :functions ivy-poshandler-frame-center-near-bottom-fn
+      :functions posframe-poshandler-frame-center-near-bottom-fn
       :custom-face
       (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
       :init
       (setq which-key-posframe-border-width 3
-            which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn
+            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
             which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
 
       (which-key-posframe-mode 1)
