@@ -259,12 +259,14 @@
           (godoc-mode :select t :size 0.4 :align 'below :autoclose t)
 
           ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :size 0.4 :align 'below)
-          (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
+          (Buffer-menu-mode :select t :size 0.5 :align 'below :autoclose t)
           (gnus-article-mode :select t :size 0.7 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
-          (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
-          (tabulated-list-mode :size 0.4 :align 'below))))
+          ("*Process-Environment*" :select t :size 0.3 :align 'below :autoclose t)
+          (("*docker-containers*" "*docker-images*" "*docker-networks*" "*docker-volumes*") :size 0.4 :align 'below :autoclose t)
+          (bookmark-bmenu-mode :select t :size 0.4 :align 'below)
+          (tabulated-list-mode :size 0.4 :align 'below :autclose t))))
 
 (provide 'init-window)
 

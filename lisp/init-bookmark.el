@@ -74,6 +74,21 @@
         (tabulated-list-print t))
       (advice-add #'bookmark-bmenu--revert :override #'my-bookmark-bmenu--revert)
 
+      (defun my-bookmark-bmenu-list ()
+        "Display a list of existing bookmarks.
+The list is displayed in a buffer named `*Bookmark List*'.
+The leftmost column displays a D if the bookmark is flagged for
+deletion, or > if it is flagged for displaying."
+        (interactive)
+        (bookmark-maybe-load-default-file)
+        (let ((buf (get-buffer-create bookmark-bmenu-buffer)))
+          (if (called-interactively-p 'interactive)
+              (pop-to-buffer buf)
+            (set-buffer buf)))
+        (bookmark-bmenu-mode)
+        (bookmark-bmenu--revert))
+      (advice-add #'bookmark-bmenu-list :override #'my-bookmark-bmenu-list)
+
       (define-derived-mode bookmark-bmenu-mode tabulated-list-mode "Bookmark Menu"
         (setq truncate-lines t)
         (setq buffer-read-only t)
