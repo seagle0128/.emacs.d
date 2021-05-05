@@ -127,6 +127,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-company)
 (require 'init-yasnippet)
 
+(require 'init-bookmark)
 (require 'init-calendar)
 (require 'init-dashboard)
 (require 'init-dired)
