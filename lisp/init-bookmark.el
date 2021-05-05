@@ -51,7 +51,7 @@
                                 ((file-remote-p location)
                                  (all-the-icons-octicon "radio-tower" :height 0.8 :v-adjust 0.0))
                                 ((file-directory-p location)
-                                 (all-the-icons-icon-for-dir path :height 0.9 :v-adjust 0.01))
+                                 (all-the-icons-icon-for-dir location :height 0.9 :v-adjust 0.01))
                                 ((not (string-empty-p file))
                                  (all-the-icons-icon-for-file file :height 0.9 :v-adjust 0.0)))))
               (push (list
