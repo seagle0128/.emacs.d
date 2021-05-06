@@ -44,8 +44,11 @@
          ("<C-return>" . rect-hydra/body)
          :map prog-mode-map
          ("<C-return>" . rect-hydra/body))
-  :init (with-eval-after-load 'org
-          (bind-key "<s-return>" #'rect-hydra/body org-mode-map))
+  :init
+  (with-eval-after-load 'org
+    (bind-key "<s-return>" #'rect-hydra/body org-mode-map))
+  (with-eval-after-load 'wdired
+    (bind-key "<C-return>" #'rect-hydra/body wdired-mode-map))
   :pretty-hydra
   ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.2 :v-adjust -0.225)
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
@@ -231,9 +234,9 @@
         ;; restore window layout when done
         (ediff-quit . winner-undo))
   :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-merge-split-window-function 'split-window-horizontally))
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally
+        ediff-merge-split-window-function 'split-window-horizontally))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair

@@ -43,13 +43,40 @@
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
+     :diminish
      :defines (lsp-clients-python-library-directories
                lsp-rust-server)
      :commands (lsp-enable-which-key-integration
                 lsp-format-buffer
                 lsp-organize-imports
                 lsp-install-server)
-     :diminish
+     :custom-face
+     (lsp-headerline-breadcrumb-path-error-face
+      ((t :underline (:style wave :color ,(face-foreground 'error))
+          :inherit lsp-headerline-breadcrumb-path-face)))
+     (lsp-headerline-breadcrumb-path-warning-face
+      ((t :underline (:style wave :color ,(face-foreground 'warning))
+          :inherit lsp-headerline-breadcrumb-path-face)))
+     (lsp-headerline-breadcrumb-path-info-face
+      ((t :underline (:style wave :color ,(face-foreground 'success))
+          :inherit lsp-headerline-breadcrumb-path-face)))
+     (lsp-headerline-breadcrumb-path-hint-face
+      ((t :underline (:style wave :color ,(face-foreground 'success))
+          :inherit lsp-headerline-breadcrumb-path-face)))
+
+     (lsp-headerline-breadcrumb-symbols-error-face
+      ((t :inherit lsp-headerline-breadcrumb-symbols-face
+          :underline (:style wave :color ,(face-foreground 'error)))))
+     (lsp-headerline-breadcrumb-symbols-warning-face
+      ((t :inherit lsp-headerline-breadcrumb-symbols-face
+          :underline (:style wave :color ,(face-foreground 'warning)))))
+     (lsp-headerline-breadcrumb-symbols-info-face
+      ((t :inherit lsp-headerline-breadcrumb-symbols-face
+          :underline (:style wave :color ,(face-foreground 'success)))))
+     (lsp-headerline-breadcrumb-symbols-hint-face
+      ((t :inherit lsp-headerline-breadcrumb-symbols-face
+          :underline (:style wave :color ,(face-foreground 'success)))))
+
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
                              (lsp-deferred))))
@@ -78,7 +105,6 @@
 
            lsp-enable-file-watchers nil
            lsp-enable-folding nil
-           lsp-enable-semantic-highlighting nil
            lsp-enable-symbol-highlighting nil
            lsp-enable-text-document-color nil
 
@@ -87,8 +113,6 @@
 
      ;; For `lsp-clients'
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-     (when (executable-find "rust-analyzer")
-       (setq lsp-rust-server 'rust-analyzer))
      :config
      (with-no-warnings
        (defun my-lsp--init-if-visible (func &rest args)
@@ -185,7 +209,53 @@
      :after lsp-mode
      :bind (:map lsp-mode-map
             ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-            ("C-s-." . lsp-ivy-global-workspace-symbol)))
+            ("C-s-." . lsp-ivy-global-workspace-symbol))
+     :config
+     (with-no-warnings
+       (when (icons-displayable-p)
+         (defvar lsp-ivy-symbol-kind-icons
+           `(,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.15) ; Unknown - 0
+             ,(all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.02) ; File - 1
+             ,(all-the-icons-material "view_module" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-lblue) ; Module - 2
+             ,(all-the-icons-material "view_module" :height 0.95 :v-adjust -0.15 :face 'all-the-icons-lblue) ; Namespace - 3
+             ,(all-the-icons-octicon "package" :height 0.9 :v-adjust -0.15) ; Package - 4
+             ,(all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange) ; Class - 5
+             ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.02 :face 'all-the-icons-purple) ; Method - 6
+             ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.02) ; Property - 7
+             ,(all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue) ; Field - 8
+             ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.02 :face 'all-the-icons-lpurple) ; Constructor - 9
+             ,(all-the-icons-material "storage" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange) ; Enum - 10
+             ,(all-the-icons-material "share" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-lblue) ; Interface - 11
+             ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.02 :face 'all-the-icons-purple) ; Function - 12
+             ,(all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue) ; Variable - 13
+             ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.02 :face 'all-the-icons-purple) ; Constant - 14
+             ,(all-the-icons-faicon "text-width" :height 0.9 :v-adjust -0.02) ; String - 15
+             ,(all-the-icons-material "format_list_numbered" :height 0.95 :v-adjust -0.15) ; Number - 16
+             ,(all-the-icons-octicon "tag" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-lblue) ; Boolean - 17
+             ,(all-the-icons-material "view_array" :height 0.95 :v-adjust -0.15) ; Array - 18
+             ,(all-the-icons-octicon "tag" :height 0.9 :v-adjust 0.0 :face 'all-the-icons-blue) ; Object - 19
+             ,(all-the-icons-faicon "key" :height 0.9 :v-adjust -0.02) ; Key - 20
+             ,(all-the-icons-octicon "tag" :height 0.9 :v-adjust 0.0) ; Null - 21
+             ,(all-the-icons-material "format_align_right" :height 0.95 :v-adjust -0.15 :face 'all-the-icons-lblue) ; EnumMember - 22
+             ,(all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange) ; Struct - 23
+             ,(all-the-icons-octicon "zap" :height 0.9 :v-adjust 0 :face 'all-the-icons-orange) ; Event - 24
+             ,(all-the-icons-material "control_point" :height 0.9 :v-adjust -0.15) ; Operator - 25
+             ,(all-the-icons-faicon "arrows" :height 0.9 :v-adjust -0.02) ; TypeParameter - 26
+             ))
+
+         (lsp-defun my-lsp-ivy--format-symbol-match
+           ((sym &as &SymbolInformation :kind :location (&Location :uri))
+            project-root)
+           "Convert the match returned by `lsp-mode` into a candidate string."
+           (let* ((sanitized-kind (if (< kind (length lsp-ivy-symbol-kind-icons)) kind 0))
+                  (type (elt lsp-ivy-symbol-kind-icons sanitized-kind))
+                  (typestr (if lsp-ivy-show-symbol-kind (format "%s " type) ""))
+                  (pathstr (if lsp-ivy-show-symbol-filename
+                               (propertize (format " · %s" (file-relative-name (lsp--uri-to-path uri) project-root))
+                                           'face font-lock-comment-face)
+                             "")))
+             (concat typestr (lsp-render-symbol-information sym ".") pathstr)))
+         (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
 
    ;; Debug
    (when emacs/>=26p

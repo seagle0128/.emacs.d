@@ -118,7 +118,8 @@ prepended to the element after the #+HEADER: tag."
       (when text (insert text))))
 
   ;; To speed up startup, don't put to init section
-  (setq org-directory centaur-org-directory
+  (setq org-modules nil                 ; Faster loading
+        org-directory centaur-org-directory
         org-capture-templates
         `(("i" "Idea" entry (file ,(concat org-directory "/idea.org"))
            "*  %^{Title} %?\n%U\n%a\n")
@@ -126,9 +127,11 @@ prepended to the element after the #+HEADER: tag."
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Note" entry (file ,(concat org-directory "/note.org"))
            "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("j" "Journal" entry (file+datetree ,(concat org-directory "/journal.org"))
+          ("j" "Journal" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+                                ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry (file+datetree ,(concat org-directory "/book.org"))
+	      ("b" "Book" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+                             ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
         org-agenda-files `(,centaur-org-directory)
@@ -145,7 +148,7 @@ prepended to the element after the #+HEADER: tag."
         org-log-done 'time
         org-catch-invisible-edits 'smart
         org-startup-indented t
-        org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
+        org-ellipsis (if (and (display-graphic-p) (char-displayable-p ?⏷)) "\t⏷" nil)
         org-pretty-entities nil
         org-hide-emphasis-markers t)
 
@@ -174,7 +177,7 @@ prepended to the element after the #+HEADER: tag."
   ;; Prettify UI
   (when emacs/>=26p
     (use-package org-superstar
-      :if (char-displayable-p ?⚫)
+      :if (and (display-graphic-p) (char-displayable-p ?⚫))
       :hook (org-mode . org-superstar-mode)
       :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
 
@@ -182,7 +185,7 @@ prepended to the element after the #+HEADER: tag."
     :diminish
     :hook (org-mode . org-fancy-priorities-mode)
     :init (setq org-fancy-priorities-list
-                (if (char-displayable-p ?⯀)
+                (if (and (display-graphic-p) (char-displayable-p ?⯀))
                     '("⯀" "⯀" "⯀" "⯀")
                   '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
@@ -209,10 +212,6 @@ prepended to the element after the #+HEADER: tag."
 
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-list))
-
-  (use-package ob-ipython
-    :if (executable-find "jupyter")     ; DO NOT remove
-    :init (cl-pushnew '(ipython . t) load-language-list))
 
   ;; Use mermadi-cli: npm install -g @mermaid-js/mermaid-cli
   (use-package ob-mermaid
@@ -261,9 +260,14 @@ prepended to the element after the #+HEADER: tag."
                                     (text-scale-increase 0)
                                     (org-remove-inline-images)
                                     (read-only-mode -1))))
-    :config
-    (org-tree-slide-simple-profile)
-    (setq org-tree-slide-skip-outline-level 2))
+    :init (setq org-tree-slide-header nil
+                org-tree-slide-slide-in-effect t
+                org-tree-slide-heading-emphasis nil
+                org-tree-slide-cursor-init t
+                org-tree-slide-modeline-display 'outside
+                org-tree-slide-skip-done nil
+                org-tree-slide-skip-comments t
+                org-tree-slide-skip-outline-level 3))
 
   ;; Pomodoro
   (use-package org-pomodoro

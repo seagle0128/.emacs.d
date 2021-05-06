@@ -99,10 +99,12 @@
          :toggle (eq centaur-theme 'auto) :exit t)
         ("t m" (centaur-load-theme 'random) "random"
          :toggle (eq centaur-theme 'random) :exit t)
+        ("t s" (centaur-load-theme 'system) "system"
+         :toggle (eq centaur-theme 'system) :exit t)
         ("t d" (centaur-load-theme 'default) "default"
          :toggle (centaur-theme-enable-p 'default) :exit t)
-        ("t i" (centaur-load-theme 'classic) "classic"
-         :toggle (centaur-theme-enable-p 'classic) :exit t)
+        ("t p" (centaur-load-theme 'pro) "pro"
+         :toggle (centaur-theme-enable-p 'pro) :exit t)
         ("t k" (centaur-load-theme 'dark) "dark"
          :toggle (centaur-theme-enable-p 'dark) :exit t)
         ("t l" (centaur-load-theme 'light) "light"
@@ -116,10 +118,7 @@
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
         ("t o" (ivy-read "Load custom theme: "
-                         (mapcar #'symbol-name
-                                 (custom-available-themes))
-                         :predicate (lambda (candidate)
-                                      (string-prefix-p "doom-" candidate))
+                         (all-completions "doom" (custom-available-themes))
                          :action (lambda (theme)
                                    (centaur-set-variable
                                     'centaur-theme

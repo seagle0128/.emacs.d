@@ -97,7 +97,7 @@ extract to `~/.emacs.d`.
 Then start Emacs. Wait for a while to install packages at the first startup.
 Enjoy! :smile:
 
-**NOTE**: Start Emacs with the minimal configuration for fast startup and
+**Note**: Start Emacs with the minimal configuration for fast startup and
 troubleshooting.
 
 ``` shell
@@ -121,6 +121,13 @@ M-x centaur-update-packages
 
 # Update all including configurations, packages and dotfiles
 M-x centaur-update-all
+```
+
+**Trick**: Update configurations and packages in shell.
+
+``` shell
+alias upgrade_emacs='emacs -Q --batch -L "$HOME/.emacs.d/lisp/" -l "init-funcs.el" -l "init-package.el" --eval "(update-config-and-packages t)"'
+
 ```
 
 ### Docker
@@ -150,8 +157,9 @@ For Example:
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-server t)                        ; Enable `server-mode' or not: t or nil
 (setq centaur-icon t)                          ; Display icons or not: t or nil
-(setq centaur-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, netease or tuna
-(setq centaur-theme 'auto)                     ; Color theme: auto, random, default, classic, colorful, dark, light, day or night
+(setq centaur-package-archives 'melpa)         ; Package repo: melpa, emacs-china, netease or tuna
+(setq centaur-theme 'auto)                     ; Color theme: auto, random, system, default, pro, dark, light, warm, cold, day or night
+(setq centaur-completion-style 'childframe)    ; Completion display style: minibuffer or childframe
 (setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
 (setq centaur-restore-frame-geometry nil)      ; Restore the frame's geometry at startup: t or nil
 (setq centaur-lsp 'lsp-mode)                   ; Set LSP client: lsp-mode, eglot or nil
@@ -159,7 +167,6 @@ For Example:
 (setq centaur-chinese-calendar nil)            ; Use Chinese calendar or not: t or nil
 (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
 (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
-(setq centaur-benchmark-init nil)              ; Enable initialization benchmark or not: t or nil
 ```
 
 The default package archives is `melpa`. You can change it in `custom.el`, or
@@ -212,6 +219,9 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 ## FAQ
 
 1. How to display icons correctly in `Centaur Emacs`?
+
+    Generally you just use `M-x centaur-install-fonts` to install all necessary
+    fonts. The manual steps are below.
 
     [all-the-icons](https://github.com/domtronn/all-the-icons.el) are necessary.
     Run `M-x all-the-icons-install-fonts` to install the resource fonts. On

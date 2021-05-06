@@ -84,8 +84,8 @@
     (("F" set-frame-font "font")
      ("T" centaur-load-theme "theme"))))
   :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 3.0))))
-  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
+  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind (([remap other-window] . ace-window)
          ("C-c w" . ace-window-hydra/body))
@@ -175,7 +175,7 @@
       ;; `C-g' can deactivate region
       (when (and (called-interactively-p 'interactive)
                  (not (region-active-p)))
-        (let (window buffer)
+        (let (window buffer process)
           (if (one-window-p)
               (progn
                 (setq window (selected-window))
@@ -183,13 +183,17 @@
                                                  (window-buffer window))
                              window)
                   (winner-undo)))
-            (setq window (caar shackle--popup-window-list))
-            (setq buffer (cdar shackle--popup-window-list))
-            (when (and (window-live-p window)
-                       (equal (window-buffer window) buffer))
-              (delete-window window)
+            (progn
+              (setq window (caar shackle--popup-window-list))
+              (setq buffer (cdar shackle--popup-window-list))
+              (when (and (window-live-p window)
+                         (equal (window-buffer window) buffer))
+                (setq process (get-buffer-process buffer))
+                (when (process-live-p process)
+                  (kill-process process))
+                (delete-window window)
 
-              (pop shackle--popup-window-list))))))
+                (pop shackle--popup-window-list)))))))
 
     (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
     (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
@@ -227,7 +231,6 @@
           (" *Install vterm* " :size 0.35 :same t :align 'below)
           (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
-          (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
           ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
 
           (("*Org Agenda*" " *Agenda Commands*" " *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.1 :align 'below :autoclose t)
@@ -252,13 +255,18 @@
           ((inferior-python-mode inf-ruby-mode swift-repl-mode) :size 0.4 :align 'below)
           ("*prolog*" :size 0.4 :align 'below)
 
+          (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
+          (godoc-mode :select t :size 0.4 :align 'below :autoclose t)
+
           ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :size 0.4 :align 'below)
-          (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
+          (Buffer-menu-mode :select t :size 0.5 :align 'below :autoclose t)
           (gnus-article-mode :select t :size 0.7 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
-          (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
-          (tabulated-list-mode :size 0.4 :align 'below))))
+          ("*Process-Environment*" :select t :size 0.3 :align 'below :autoclose t)
+          (("*docker-containers*" "*docker-images*" "*docker-networks*" "*docker-volumes*") :size 0.4 :align 'below :autoclose t)
+          (bookmark-bmenu-mode :select t :size 0.4 :align 'below)
+          (tabulated-list-mode :size 0.4 :align 'below :autclose t))))
 
 (provide 'init-window)
 

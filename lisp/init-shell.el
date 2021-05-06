@@ -113,7 +113,8 @@
            (executable-find "make"))
   (use-package vterm
     :bind (:map vterm-mode-map
-           ([f9] . shell-pop))))
+           ([f9] . shell-pop))
+    :init (setq vterm-always-compile-module t)))
 
 ;; Shell Pop
 (use-package shell-pop

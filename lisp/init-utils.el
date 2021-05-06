@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-funcs)
 
 ;; Display available keybindings in popup
 (use-package which-key
@@ -83,17 +84,39 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-t" "markdown-header")
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-x" "markdown-toggle"))
+    "C-c C-x" "markdown-toggle")
+
+  (when (childframe-workable-p)
+    (use-package which-key-posframe
+      :diminish
+      :functions posframe-poshandler-frame-center-near-bottom-fn
+      :custom-face
+      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+      :init
+      (setq which-key-posframe-border-width 3
+            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
+            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
+
+      (which-key-posframe-mode 1)
+      :config
+      (add-hook 'after-load-theme-hook
+                (lambda ()
+                  (posframe-delete-all)
+                  (custom-set-faces
+                   `(which-key-posframe-border
+                     ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                  (setq which-key-posframe-parameters
+                        `((background-color . ,(face-background 'tooltip)))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
   :diminish
   :bind (:map persistent-scratch-mode-map
-         ([remap kill-buffer] . (lambda (&rest _)
-                                  (interactive)
-                                  (user-error "Scrach buffer cannot be killed")))
-         ([remap revert-buffer] . persistent-scratch-restore)
-         ([remap revert-this-buffer] . persistent-scratch-restore))
+              ([remap kill-buffer] . (lambda (&rest _)
+                                       (interactive)
+                                       (user-error "Scrach buffer cannot be killed")))
+              ([remap revert-buffer] . persistent-scratch-restore)
+              ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode)))
 
@@ -181,8 +204,10 @@
                   (goto-char (point-min))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
               (posframe-show youdao-dictionary-buffer-name
+                             :position (point)
                              :left-fringe 8
                              :right-fringe 8
+                             :background-color (face-background 'tooltip)
                              :internal-border-color (face-foreground 'font-lock-comment-face)
                              :internal-border-width 1)
               (unwind-protect
@@ -261,6 +286,44 @@
            (mapc 'bongo-insert-file files)))
         (bongo-switch-buffers))
       (bind-key "b" #'bongo-add-dired-files dired-mode-map))))
+
+;; Process
+(use-package proced
+  :ensure nil
+  :init
+  (setq-default proced-format 'verbose)
+  (setq proced-auto-update-flag t
+        proced-auto-update-interval 3))
+
+;; Search
+(use-package webjump
+  :ensure nil
+  :bind ("C-c /" . webjump)
+  :init (setq webjump-sites
+              '(;; Emacs
+                ("Emacs Home Page" .
+                 "www.gnu.org/software/emacs/emacs.html")
+                ("Xah Emacs Site" . "ergoemacs.org/index.html")
+                ("(or emacs irrelevant)" . "oremacs.com")
+                ("Mastering Emacs" .
+                 "https://www.masteringemacs.org/")
+
+                ;; Search engines.
+                ("DuckDuckGo" .
+                 [simple-query "duckduckgo.com"
+                               "duckduckgo.com/?q=" ""])
+                ("Google" .
+                 [simple-query "www.google.com"
+                               "www.google.com/search?q=" ""])
+                ("Bing" .
+                 [simple-query "www.bing.com"
+                               "www.bing.com/search?q=" ""])
+
+                ("Baidu" .
+                 [simple-query "www.baidu.com"
+                               "www.baidu.com/s?wd=" ""])
+                ("Wikipedia" .
+                 [simple-query "wikipedia.org" "wikipedia.org/wiki/" ""]))))
 
 ;; IRC
 (use-package erc

@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  linux-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,24 +18,28 @@ jobs:
           - snapshot
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - uses: purcell/setup-emacs@master
-      with:
-        version: ${{ matrix.emacs-version }}
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs-version }}
 
-    - name: test
-      run: 'mv -f ../.emacs.d ~/.emacs.d;
-            emacs -nw --batch --eval \
-            "(let ((debug-on-error (>= emacs-major-version 26))
-                   (package-check-signature nil)
-                   (url-show-status nil)
-                   (early-init-file (locate-user-emacs-file \"early-init.el\"))
-                   (user-init-file (locate-user-emacs-file \"init.el\")))
-            (when (>= emacs-major-version 27)
-              (load early-init-file))
-            (load user-init-file)
-            (run-hooks (quote after-init-hook))
-            (run-hooks (quote emacs-startup-hook))
-            (run-hooks (quote window-setup-hook)))"'
-   
+      - name: Test
+        run: |
+          rm -rf ~/.emacs.d; \
+          mv -f ~/work/.emacs.d/.emacs.d ~; \
+          emacs --version; \
+          emacs -q --batch \
+          --eval "(message \"Testing...\")" \
+          --eval "(setq package-check-signature nil
+                        url-show-status nil)" \
+          --eval "(when (and (require 'org nil t) (string= (org-version) \"\"))
+                     (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))" \
+          --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
+                        (user-init-file (locate-user-emacs-file \"init.el\")))
+                    (and (>= emacs-major-version 27) (load early-init-file))
+                    (load user-init-file)
+                    (run-hooks 'after-init-hook)
+                    (run-hooks 'emacs-startup-hook)
+                    (run-hooks 'window-setup-hook))" \
+          --eval "(message \"Testing...done\")"

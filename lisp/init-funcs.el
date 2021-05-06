@@ -124,7 +124,7 @@ Same as `replace-string C-q C-m RET RET'."
       (progn
         (kill-new filename)
         (message "Copied '%s'" filename))
-    (message "WARNING: Current buffer is not attached to a file!")))
+    (warn "Current buffer is not attached to a file!")))
 
 ;; Browse URL
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
@@ -144,6 +144,16 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
         (if pop-buffer
             (pop-to-buffer buf)
           (switch-to-buffer buf))))))
+
+(defun centaur-find-pdf-file (&optional url)
+  "Find a PDF file via URL and render by `pdf.js'."
+  (interactive "f")
+  (cond ((featurep 'xwidget-internal)
+         (xwidget-webkit-browse-url (concat "file://" url)))
+        ((bound-and-true-p counsel-mode)
+         (counsel-find-file url))
+        (t (find-file url))))
+(defalias 'find-pdf-file #'centaur-find-pdf-file)
 
 ;; Mode line
 (defun mode-line-height ()
@@ -205,10 +215,10 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (let ((dir (locate-user-emacs-file "site-lisp")))
+  (let ((temp-dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory dir)
-      (byte-recompile-directory dir 0 t))))
+        (async-byte-recompile-directory temp-dir)
+      (byte-recompile-directory temp-dir 0 t))))
 
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
@@ -328,14 +338,14 @@ Return the fastest package archive."
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
-  (let ((dir (expand-file-name user-emacs-directory)))
-    (if (file-exists-p dir)
+  (let ((temp-dir (expand-file-name user-emacs-directory)))
+    (if (file-exists-p temp-dir)
         (progn
           (message "Updating configurations...")
-          (cd dir)
+          (cd temp-dir)
           (shell-command "git pull")
           (message "Updating configurations...done"))
-      (message "\"%s\" doesn't exist" dir))))
+      (message "\"%s\" doesn't exist" temp-dir))))
 (defalias 'centaur-update-config #'update-config)
 
 (defvar centaur--updating-packages nil)
@@ -438,6 +448,64 @@ If SYNC is non-nil, the updating process is synchronous."
 (defalias 'centaur-update-org #'update-org)
 
 
+;; Fonts
+(defun centaur-install-fonts ()
+  "Install necessary fonts."
+  (interactive)
+
+  (let* ((url-format "https://raw.githubusercontent.com/domtronn/all-the-icons.el/master/fonts/%s")
+         (url (concat centaur-homepage "/files/6135060/symbola.zip"))
+         (font-dest (cond
+                     ;; Default Linux install directories
+                     ((member system-type '(gnu gnu/linux gnu/kfreebsd))
+                      (concat (or (getenv "XDG_DATA_HOME")
+                                  (concat (getenv "HOME") "/.local/share"))
+                              "/fonts/"))
+                     ;; Default MacOS install directory
+                     ((eq system-type 'darwin)
+                      (concat (getenv "HOME") "/Library/Fonts/"))))
+         (known-dest? (stringp font-dest))
+         (font-dest (or font-dest (read-directory-name "Font installation directory: " "~/"))))
+
+    (unless (file-directory-p font-dest) (mkdir font-dest t))
+
+    ;; Download `all-the-fonts'
+    (when (bound-and-true-p all-the-icons-font-names)
+      (mapc (lambda (font)
+              (url-copy-file (format url-format font) (expand-file-name font font-dest) t))
+            all-the-icons-font-names))
+
+    ;; Download `Symbola'
+    ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
+    (let* ((temp-file (make-temp-file "symbola-" nil ".zip"))
+           (temp-dir (concat (file-name-directory temp-file) "/symbola/"))
+           (unzip-script (cond ((executable-find "unzip")
+                                (format "mkdir -p %s && unzip -qq %s -d %s"
+                                        temp-dir temp-file temp-dir))
+                               ((executable-find "powershell")
+                                (format "powershell -noprofile -noninteractive \
+  -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'" temp-file temp-dir))
+                               (t (user-error "Unable to extract '%s' to '%s'! \
+  Please check unzip, powershell or extract manually." temp-file temp-dir)))))
+      (url-copy-file url temp-file t)
+      (when (file-exists-p temp-file)
+        (shell-command-to-string unzip-script)
+        (let* ((font-name "Symbola.otf")
+               (temp-font (expand-file-name font-name temp-dir)))
+          (if (file-exists-p temp-font)
+              (copy-file temp-font (expand-file-name font-name font-dest) t)
+            (message "Failed to download `Symbola'!")))))
+
+    (when known-dest?
+      (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
+      (shell-command-to-string (format "fc-cache -f -v")))
+
+    (message "Successfully %s `all-the-icons' and `Symbola' fonts to `%s'!"
+             (if known-dest? "installed" "downloaded")
+             font-dest)))
+
+
+
 
 ;; UI
 (defvar after-load-theme-hook nil
@@ -447,13 +515,21 @@ If SYNC is non-nil, the updating process is synchronous."
   (run-hooks 'after-load-theme-hook))
 (advice-add #'load-theme :after #'run-after-load-theme-hook)
 
+(defun childframe-workable-p ()
+  "Test whether childframe is workable."
+  (and emacs/>=26p
+       (eq centaur-completion-style 'childframe)
+       (not (or noninteractive
+                emacs-basic-display
+                (not (display-graphic-p))))))
+
 (defun centaur--theme-name (theme)
   "Return internal THEME name."
-  (or (alist-get theme centaur-theme-alist) theme))
+  (or (alist-get theme centaur-theme-alist) theme 'doom-one))
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (or (memq theme '(auto random))
+  (or (memq theme '(auto random system))
       (string-prefix-p "doom" (symbol-name (centaur--theme-name theme)))))
 
 (defun centaur-dark-theme-p ()
@@ -462,14 +538,25 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur-theme-enable-p (theme)
   "The THEME is enabled or not."
-  (and (not (memq centaur-theme '(auto random)))
+  (and theme
+       (not (memq centaur-theme '(auto random system)))
        (memq (centaur--theme-name theme) custom-enabled-themes)))
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
-  (message "Loading theme `%s'" theme)
+  (when theme
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)
+    (message "Loaded theme `%s'" theme)))
+
+(defun centaur--load-system-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t))
+  (centaur--load-theme (centaur--theme-name
+                        (pcase appearance
+                          ('light (cdr (assoc 'light centaur-system-themes)))
+                          ('dark (cdr (assoc 'dark centaur-system-themes)))
+                          (_ centaur-theme)))))
 
 (defun centaur-load-random-theme ()
   "Load the random theme."
@@ -485,9 +572,15 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive
    (list (intern (completing-read
                   "Load theme: "
-                  `(auto random ,@(mapcar #'car centaur-theme-alist))))))
+                  `(auto
+                    random
+                    ,(if (boundp 'ns-system-appearance) 'system "")
+                    ,@(mapcar #'car centaur-theme-alist))))))
   ;; Set option
   (centaur-set-variable 'centaur-theme theme no-save)
+
+  ;; Disable system theme
+  (remove-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme)
 
   (pcase centaur-theme
     ('auto
@@ -496,6 +589,13 @@ If SYNC is non-nil, the updating process is synchronous."
        :functions circadian-setup
        :custom (circadian-themes centaur-auto-themes)
        :init (circadian-setup)))
+    ('system
+     ;; System-appearance themes
+     (if (boundp 'ns-system-appearance)
+         (progn
+           (centaur--load-system-theme ns-system-appearance)
+           (add-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme))
+       (warn "The system theme is unavailable on this platform!")))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
@@ -548,6 +648,7 @@ If SYNC is non-nil, the updating process is synchronous."
   (setq url-gateway-method 'socks
         socks-noproxy '("localhost")
         socks-server '("Default server" "127.0.0.1" 1086 5))
+  (setenv "all_proxy" (concat "socks5://" centaur-proxy))
   (proxy-socks-show))
 
 (defun proxy-socks-disable ()
@@ -555,6 +656,7 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (setq url-gateway-method 'native
         socks-noproxy nil)
+  (setenv "all_proxy" "")
   (proxy-socks-show))
 
 (defun proxy-socks-toggle ()
