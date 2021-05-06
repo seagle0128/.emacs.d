@@ -160,7 +160,7 @@
       "Transform CANDS into a string for minibuffer."
       (if (and (display-graphic-p)
                (image-type-available-p 'pbm))
-          (let ((width 3)
+          (let ((width (if sys/macp 3 6))
                 (height (1+ (window-font-height))))
             (ivy--format-function-generic
              (lambda (str)
