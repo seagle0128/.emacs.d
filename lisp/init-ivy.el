@@ -161,7 +161,7 @@
       (if (and (display-graphic-p)
                (image-type-available-p 'pbm))
           (let ((width (if sys/macp 3 6))
-                (height (1+ (window-font-height))))
+                (height (1+ (round (/ (window-font-height) (if sys/macp 1 1.68))))))
             (ivy--format-function-generic
              (lambda (str)
                (concat
