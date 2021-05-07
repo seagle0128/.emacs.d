@@ -46,6 +46,9 @@
 (declare-function flymake-start 'flymake)
 (declare-function upgrade-packages 'init-package)
 
+(unless (fboundp 'caadr)
+  (defalias 'caadr #'cl-caadr))
+
 
 
 ;; Font
