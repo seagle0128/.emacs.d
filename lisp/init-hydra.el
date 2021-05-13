@@ -80,7 +80,7 @@
         ("h d" rainbow-delimiters-mode "delimiter" :toggle t)
         ("h i" highlight-indent-guides-mode "indent" :toggle t)
         ("h t" global-hl-todo-mode "todo" :toggle t))
-       "Coding"
+       "Program"
        (("f" flycheck-mode "flycheck" :toggle t)
         ("F" flymake-mode "flymake" :toggle t)
         ("o" origami-mode "folding" :toggle t)
@@ -88,9 +88,8 @@
         ("u" subword-mode "subword" :toggle t)
         ("W" which-function-mode "which function" :toggle t)
         ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-        ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
-       "Version Control"
-       (("v" global-diff-hl-mode "gutter" :toggle t)
+        ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit))
+        ("v" global-diff-hl-mode "gutter" :toggle t)
         ("V" diff-hl-flydiff-mode "live gutter" :toggle t)
         ("M" diff-hl-margin-mode "margin gutter" :toggle t)
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
