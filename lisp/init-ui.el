@@ -95,6 +95,7 @@
 (use-package doom-modeline
   :custom
   (doom-modeline-icon centaur-icon)
+  (doom-modeline-hud t)
   (doom-modeline-minor-modes t)
   (doom-modeline-unicode-fallback t)
   (doom-modeline-mu4e nil)
