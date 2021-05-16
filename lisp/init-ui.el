@@ -95,6 +95,7 @@
 (use-package doom-modeline
   :custom
   (doom-modeline-icon centaur-icon)
+  (doom-modeline-bar nil)
   (doom-modeline-hud t)
   (doom-modeline-minor-modes t)
   (doom-modeline-unicode-fallback t)
@@ -126,7 +127,11 @@
      ("v" (setq doom-modeline-modal-icon (not doom-modeline-modal-icon))
       "modal" :toggle doom-modeline-modal-icon))
     "Segment"
-    (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
+    (("B" (setq doom-modeline-bar (not doom-modeline-bar))
+      "bar" :toggle doom-modeline-bar)
+     ("H" (setq doom-modeline-hud (not doom-modeline-hud))
+      "hud" :toggle doom-modeline-hud)
+     ("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
      ("W" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
       "word count" :toggle doom-modeline-enable-word-count)
