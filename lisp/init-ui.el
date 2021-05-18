@@ -219,7 +219,7 @@
               (flycheck-list-errors)
             (flymake-show-diagnostics-buffer))
       "list errors" :exit t)
-     ("B" (if (bound-and-true-p grip-mode)
+     ("O" (if (bound-and-true-p grip-mode)
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
