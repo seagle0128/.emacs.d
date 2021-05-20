@@ -269,8 +269,6 @@ Lisp function does not specify a special indentation."
                     :string (apply #'format str args)
                     :postion (point)
                     :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
-                    :left-fringe 8
-                    :right-fringe 8
                     :internal-border-width 1
                     :internal-border-color (face-attribute 'font-lock-comment-face :foreground)
                     :background-color (face-background 'tooltip)))))))
