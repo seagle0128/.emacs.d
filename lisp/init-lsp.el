@@ -203,7 +203,14 @@
        (add-hook 'after-load-theme-hook
                  (lambda ()
                    (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face))
-                   (set-face-background 'lsp-ui-doc-background (face-background 'tooltip)))))
+                   (set-face-background 'lsp-ui-doc-background (face-background 'tooltip))))
+
+       ;; FIXME: Display the border color of the child frame
+       ;; @see https://github.com/emacs-lsp/lsp-ui/issues/615
+       (add-hook 'lsp-ui-doc-frame-hook
+                 (lambda (frame _window)
+                   (when (facep 'child-frame-border)
+                     (set-face-background 'child-frame-border lsp-ui-doc-border frame)))))
 
      ;; Ivy integration
      (use-package lsp-ivy
