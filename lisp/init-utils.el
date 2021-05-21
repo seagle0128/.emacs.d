@@ -91,22 +91,49 @@
       :diminish
       :functions posframe-poshandler-frame-center-near-bottom-fn
       :custom-face
-      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
       :init
       (setq which-key-posframe-border-width 3
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
-            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
-
+            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip nil t))))
       (which-key-posframe-mode 1)
       :config
+      (with-no-warnings
+        (defun my-which-key-posframe--show-buffer (act-popup-dim)
+          "Show which-key buffer when popup type is posframe.
+Argument ACT-POPUP-DIM includes the dimension, (height . width)
+of the buffer text to be displayed in the popup"
+          (when (posframe-workable-p)
+            (with-current-buffer (get-buffer-create which-key-buffer-name)
+              (let ((inhibit-read-only t)
+                    (str (buffer-string)))
+                (erase-buffer)
+                (insert (propertize "\n" 'face '(:height 0.3)))
+                (insert " ")
+                (insert (string-replace "\n" " \n " str))
+                (insert " \n ")
+                (insert (propertize "\n\n" 'face '(:height 0.3)))))
+            (posframe-show which-key--buffer
+		                   :font which-key-posframe-font
+		                   :position (point)
+		                   :poshandler which-key-posframe-poshandler
+		                   :background-color (face-attribute 'which-key-posframe :background nil t)
+		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
+		                   :height (1+ (car act-popup-dim))
+		                   :width (1+ (cdr act-popup-dim))
+		                   :internal-border-width which-key-posframe-border-width
+		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
+		                   :override-parameters which-key-posframe-parameters)))
+        (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer))
+
       (add-hook 'after-load-theme-hook
                 (lambda ()
                   (posframe-delete-all)
                   (custom-set-faces
                    `(which-key-posframe-border
-                     ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                     ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))
                   (setq which-key-posframe-parameters
-                        `((background-color . ,(face-background 'tooltip)))))))))
+                        `((background-color . ,(face-background 'tooltip nil t)))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
@@ -200,15 +227,16 @@
                 (let ((inhibit-read-only t))
                   (erase-buffer)
                   (youdao-dictionary-mode)
-                  (insert string)
-                  (goto-char (point-min))
+                  (insert (propertize "\n" 'face '(:height 0.5)))
+                  (insert "  ")
+                  (insert (string-replace "\n" "  \n  " string))
+                  (insert "  ")
+                  (insert (propertize "\n" 'face '(:height 0.5)))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
               (posframe-show youdao-dictionary-buffer-name
                              :position (point)
-                             :left-fringe 8
-                             :right-fringe 8
-                             :background-color (face-background 'tooltip)
-                             :internal-border-color (face-foreground 'font-lock-comment-face)
+                             :background-color (face-background 'tooltip nil t)
+                             :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                              :internal-border-width 1)
               (unwind-protect
                   (push (read-event) unread-command-events)

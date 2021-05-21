@@ -424,6 +424,20 @@ This is for use in `ivy-re-builders-alist'."
       (setq hydra-hint-display-type 'posframe)
 
       (with-no-warnings
+        (defun my-hydra-posframe-show (str)
+          (require 'posframe)
+          (when hydra--posframe-timer
+            (cancel-timer hydra--posframe-timer))
+          (setq hydra--posframe-timer nil)
+          (apply #'posframe-show
+                 " *hydra-posframe*"
+                 :string (concat (propertize "\n" 'face '(:height 0.5))
+                                 "  "
+                                 (string-replace "\n" "  \n  " str)
+                                 (propertize "\n" 'face '(:height 0.5)))
+                 hydra-posframe-show-params))
+        (advice-add #'hydra-posframe-show :override #'my-hydra-posframe-show)
+
         (defun hydra-posframe-delete ()
           (require 'posframe)
           (unless hydra--posframe-timer
@@ -456,8 +470,8 @@ This is for use in `ivy-re-builders-alist'."
           (posframe-delete-all)
           (setq hydra-posframe-show-params
                 `(:internal-border-width 3
-                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
-                  :background-color ,(face-background 'tooltip)
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
+                  :background-color ,(face-background 'tooltip nil t)
                   :lines-truncate t
                   :poshandler ivy-hydra-poshandler-frame-center-below-fn)))
 
@@ -571,13 +585,15 @@ This is for use in `ivy-re-builders-alist'."
   (use-package ivy-posframe
     :defines persp-load-buffer-functions
     :custom-face
-    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :hook (ivy-mode . ivy-posframe-mode)
     :init
     (setq ivy-height 15
           ivy-posframe-border-width 3
           ivy-posframe-parameters
-          `((background-color . ,(face-background 'tooltip))))
+          `((background-color . ,(face-background 'tooltip nil t))
+            (left-fringe . 8)
+            (right-fringe . 8)))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
@@ -589,9 +605,9 @@ This is for use in `ivy-re-builders-alist'."
                 (posframe-delete-all)
                 (custom-set-faces
                  `(ivy-posframe-border
-                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                   ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))
                 (setf (alist-get 'background-color ivy-posframe-parameters)
-                      (face-background 'tooltip))))
+                      (face-background 'tooltip nil t))))
 
     (with-no-warnings
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)

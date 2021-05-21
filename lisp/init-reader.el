@@ -51,7 +51,7 @@
     (defun my-pdf-view-set-midnight-colors ()
       "Set pdf-view midnight colors."
       (setq pdf-view-midnight-colors
-            `(,(face-foreground 'default) . ,(face-background 'solaire-default-face))))
+            `(,(face-foreground 'default) . ,(face-background 'solaire-default-face nil t))))
     (my-pdf-view-set-midnight-colors)
 
     (defun my-pdf-view-set-dark-theme ()

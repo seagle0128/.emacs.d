@@ -89,23 +89,23 @@
   (use-package transient-posframe
     :diminish
     :custom-face
-    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 21
+          transient-posframe-min-height 22
           transient-posframe-min-width nil
           transient-posframe-parameters
-          `((background-color . ,(face-background 'tooltip))))
+          `((background-color . ,(face-background 'tooltip nil t))))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
                 (posframe-delete-all)
                 (custom-set-faces
                  `(transient-posframe-border
-                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                   ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))
                 (setf (alist-get 'background-color transient-posframe-parameters)
-                      (face-background 'tooltip))))
+                      (face-background 'tooltip nil t))))
 
     (with-no-warnings
       (defun my-transient-posframe--show-buffer (buffer _alist)
@@ -125,7 +125,18 @@
 			               :internal-border-color (face-attribute 'transient-posframe-border :background nil t)
 			               :override-parameters transient-posframe-parameters)))
             (frame-selected-window posframe))))
-      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer))))
+      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer)
+
+      (defun my-transient-posframe--render-buffer ()
+        (with-current-buffer (get-buffer-create transient--buffer-name)
+          (let ((str (buffer-string)))
+            (erase-buffer)
+            (insert (propertize "\n" 'face '(:height 0.3)))
+            (insert " ")
+            (insert (string-replace "\n" " \n " str))
+            (insert " \n")
+            (insert (propertize "\n" 'face '(:height 0.3))))))
+      (advice-add #'transient--show :after #'my-transient-posframe--render-buffer))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
@@ -176,7 +187,8 @@
     (defun my-git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
       (interactive)
-      (let* ((vcs (git-messenger:find-vcs))
+      (let* ((hydra-hint-display-type 'message)
+             (vcs (git-messenger:find-vcs))
              (file (buffer-file-name (buffer-base-buffer)))
              (line (line-number-at-pos))
              (commit-info (git-messenger:commit-info-at-line vcs file line))
@@ -198,13 +210,17 @@
         (git-messenger-hydra/body)
         (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
                (let ((buffer-name "*git-messenger*"))
+                 (with-current-buffer (get-buffer-create buffer-name)
+                   (erase-buffer)
+                   (insert (propertize "\n" 'face '(:height 0.3)))
+                   (insert " ")
+                   (insert (string-replace "\n" " \n " popuped-message))
+                   (insert " \n")
+                   (insert (propertize "\n" 'face '(:height 0.3))))
                  (posframe-show buffer-name
-                                :string popuped-message
-                                :left-fringe 8
-                                :right-fringe 8
-                                :background-color (face-background 'tooltip)
                                 :internal-border-width 1
-                                :internal-border-color (face-foreground 'font-lock-comment-face))
+                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                                :background-color (face-background 'tooltip nil t))
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))

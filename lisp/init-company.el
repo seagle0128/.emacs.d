@@ -137,9 +137,26 @@
         (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
 
         ;; Display borders of child frame
-        (setq company-box-doc-frame-parameters '((internal-border-width . 1)
-                                                 (left-fringe . 8)
-                                                 (right-fringe . 8)))
+        (setq company-box-doc-frame-parameters '((internal-border-width . 1)))
+        (defun my-company-box-doc--make-buffer (object)
+          (let* ((buffer-list-update-hook nil)
+                 (inhibit-modification-hooks t)
+                 (string (cond ((stringp object) object)
+                               ((bufferp object) (with-current-buffer object (buffer-string))))))
+            (when (and string (> (length (string-trim string)) 0))
+              (with-current-buffer (company-box--get-buffer "doc")
+                (erase-buffer)
+                (insert (propertize "\n" 'face '(:height 0.5)))
+                (insert (string-replace "\n" " \n " string))
+                (insert (propertize "\n" 'face '(:height 0.5)))
+                (setq mode-line-format nil
+                      display-line-numbers nil
+                      header-line-format nil
+                      show-trailing-whitespace nil
+                      cursor-in-non-selected-windows nil)
+                (current-buffer)))))
+        (advice-add #'company-box-doc--make-buffer :override #'my-company-box-doc--make-buffer)
+
         (defun my-company-box-doc--show (selection frame)
           (cl-letf (((symbol-function 'completing-read) #'company-box-completing-read)
                     (window-configuration-change-hook nil)

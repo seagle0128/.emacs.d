@@ -75,17 +75,22 @@
             (posframe-hide flycheck-posframe-buffer)
             (when (and errors
                        (not (run-hook-with-args-until-success 'flycheck-posframe-inhibit-functions)))
-              (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position))))
+              (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position)))
+                    (str (flycheck-posframe-format-errors errors)))
                 (unless (functionp poshandler)
                   (setq poshandler nil))
+                (with-current-buffer (get-buffer-create flycheck-posframe-buffer)
+                  (erase-buffer)
+                  (insert (propertize "\n" 'face '(:height 0.3)))
+                  (insert (propertize " " 'display '(space :height (1))))
+                  (insert str)
+                  (insert (propertize " " 'display '(space :height (1))))
+                  (insert (propertize "\n\n" 'face '(:height 0.3))))
                 (flycheck-posframe-check-position)
                 (posframe-show
                  flycheck-posframe-buffer
-                 :string (flycheck-posframe-format-errors errors)
                  :background-color (face-background 'flycheck-posframe-background-face nil t)
                  :position (point)
-                 :left-fringe 8
-                 :right-fringe 8
                  :internal-border-width flycheck-posframe-border-width
                  :internal-border-color (face-foreground 'flycheck-posframe-border-face nil t)
                  :poshandler poshandler
