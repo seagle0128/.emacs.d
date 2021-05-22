@@ -89,23 +89,21 @@
   (use-package transient-posframe
     :diminish
     :custom-face
+    (transient-posframe ((t (:inherit tooltip))))
     (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
           transient-posframe-min-height 22
           transient-posframe-min-width nil
-          transient-posframe-parameters
-          `((background-color . ,(face-background 'tooltip nil t))))
+          transient-posframe-parameters '((left-fringe . 8)
+                                          (right-fringe . 8)))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
-                (posframe-delete-all)
                 (custom-set-faces
-                 `(transient-posframe-border
-                   ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))
-                (setf (alist-get 'background-color transient-posframe-parameters)
-                      (face-background 'tooltip nil t))))
+                 '(transient-posframe ((t (:inherit tooltip))))
+                 `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
       (defun my-transient-posframe--show-buffer (buffer _alist)
@@ -129,13 +127,10 @@
 
       (defun my-transient-posframe--render-buffer ()
         (with-current-buffer (get-buffer-create transient--buffer-name)
-          (let ((str (buffer-string)))
-            (erase-buffer)
-            (insert (propertize "\n" 'face '(:height 0.3)))
-            (insert " ")
-            (insert (string-replace "\n" " \n " str))
-            (insert " \n")
-            (insert (propertize "\n" 'face '(:height 0.3))))))
+          (goto-char (point-min))
+          (insert (propertize "\n" 'face '(:height 0.3)))
+          (goto-char (point-max))
+          (insert (propertize "\n\n" 'face '(:height 0.3)))))
       (advice-add #'transient--show :after #'my-transient-posframe--render-buffer))))
 
 ;; Walk through git revisions of a file

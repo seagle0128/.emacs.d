@@ -91,12 +91,12 @@
       :diminish
       :functions posframe-poshandler-frame-center-near-bottom-fn
       :custom-face
+      (which-key-posframe ((t (:inherit tooltip))))
       (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
       :init
       (setq which-key-posframe-border-width 3
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
-            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip nil t))
-                                            (left-fringe . 8)
+            which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
       (which-key-posframe-mode 1)
       :config
@@ -119,7 +119,7 @@ of the buffer text to be displayed in the popup"
 		                   :background-color (face-attribute 'which-key-posframe :background nil t)
 		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
 		                   :height (1+ (car act-popup-dim))
-		                   :width (cdr act-popup-dim)
+		                   :width (1+ (cdr act-popup-dim))
 		                   :internal-border-width which-key-posframe-border-width
 		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
 		                   :override-parameters which-key-posframe-parameters)))
@@ -127,22 +127,19 @@ of the buffer text to be displayed in the popup"
 
       (add-hook 'after-load-theme-hook
                 (lambda ()
-                  (posframe-delete-all)
                   (custom-set-faces
-                   `(which-key-posframe-border
-                     ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))
-                  (setq which-key-posframe-parameters
-                        `((background-color . ,(face-background 'tooltip nil t)))))))))
+                   '(which-key-posframe ((t (:inherit tooltip))))
+                   `(which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
   :diminish
   :bind (:map persistent-scratch-mode-map
-              ([remap kill-buffer] . (lambda (&rest _)
-                                       (interactive)
-                                       (user-error "Scrach buffer cannot be killed")))
-              ([remap revert-buffer] . persistent-scratch-restore)
-              ([remap revert-this-buffer] . persistent-scratch-restore))
+         ([remap kill-buffer] . (lambda (&rest _)
+                                  (interactive)
+                                  (user-error "Scrach buffer cannot be killed")))
+         ([remap revert-buffer] . persistent-scratch-restore)
+         ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode)))
 
