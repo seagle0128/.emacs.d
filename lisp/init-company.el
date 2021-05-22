@@ -137,7 +137,9 @@
         (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
 
         ;; Display borders of child frame
-        (setq company-box-doc-frame-parameters '((internal-border-width . 1)))
+        (setq company-box-doc-frame-parameters '((internal-border-width . 1)
+                                                 (left-fringe . 10)
+                                                 (right-fringe . 10)))
         (defun my-company-box-doc--make-buffer (object)
           (let* ((buffer-list-update-hook nil)
                  (inhibit-modification-hooks t)
@@ -147,8 +149,8 @@
               (with-current-buffer (company-box--get-buffer "doc")
                 (erase-buffer)
                 (insert (propertize "\n" 'face '(:height 0.5)))
-                (insert (string-replace "\n" " \n " string))
-                (insert (propertize "\n" 'face '(:height 0.5)))
+                (insert string)
+                (insert (propertize "\n\n" 'face '(:height 0.5)))
                 (setq mode-line-format nil
                       display-line-numbers nil
                       header-line-format nil

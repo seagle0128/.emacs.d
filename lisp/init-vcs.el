@@ -210,14 +210,13 @@
         (git-messenger-hydra/body)
         (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
                (let ((buffer-name "*git-messenger*"))
-                 (with-current-buffer (get-buffer-create buffer-name)
-                   (erase-buffer)
-                   (insert (propertize "\n" 'face '(:height 0.3)))
-                   (insert " ")
-                   (insert (string-replace "\n" " \n " popuped-message))
-                   (insert " \n")
-                   (insert (propertize "\n" 'face '(:height 0.3))))
                  (posframe-show buffer-name
+                                :string (concat (propertize "\n" 'face '(:height 0.3))
+                                                popuped-message
+                                                "\n"
+                                                (propertize "\n" 'face '(:height 0.3)))
+                                :left-fringe 8
+                                :right-fringe 8
                                 :internal-border-width 1
                                 :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                                 :background-color (face-background 'tooltip nil t))

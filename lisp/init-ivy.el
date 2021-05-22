@@ -432,8 +432,7 @@ This is for use in `ivy-re-builders-alist'."
           (apply #'posframe-show
                  " *hydra-posframe*"
                  :string (concat (propertize "\n" 'face '(:height 0.5))
-                                 "  "
-                                 (string-replace "\n" "  \n  " str)
+                                 str
                                  (propertize "\n" 'face '(:height 0.5)))
                  hydra-posframe-show-params))
         (advice-add #'hydra-posframe-show :override #'my-hydra-posframe-show)
@@ -472,9 +471,10 @@ This is for use in `ivy-re-builders-alist'."
                 `(:internal-border-width 3
                   :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
                   :background-color ,(face-background 'tooltip nil t)
+                  :left-fringe 16
+                  :right-fringe 16
                   :lines-truncate t
                   :poshandler ivy-hydra-poshandler-frame-center-below-fn)))
-
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 

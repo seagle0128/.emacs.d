@@ -95,7 +95,9 @@
       :init
       (setq which-key-posframe-border-width 3
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
-            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip nil t))))
+            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip nil t))
+                                            (left-fringe . 8)
+                                            (right-fringe . 8)))
       (which-key-posframe-mode 1)
       :config
       (with-no-warnings
@@ -105,14 +107,11 @@ Argument ACT-POPUP-DIM includes the dimension, (height . width)
 of the buffer text to be displayed in the popup"
           (when (posframe-workable-p)
             (with-current-buffer (get-buffer-create which-key-buffer-name)
-              (let ((inhibit-read-only t)
-                    (str (buffer-string)))
-                (erase-buffer)
+              (let ((inhibit-read-only t))
+                (goto-char (point-min))
                 (insert (propertize "\n" 'face '(:height 0.3)))
-                (insert " ")
-                (insert (string-replace "\n" " \n " str))
-                (insert " \n ")
-                (insert (propertize "\n\n" 'face '(:height 0.3)))))
+                (goto-char (point-max))
+                (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
             (posframe-show which-key--buffer
 		                   :font which-key-posframe-font
 		                   :position (point)
@@ -120,7 +119,7 @@ of the buffer text to be displayed in the popup"
 		                   :background-color (face-attribute 'which-key-posframe :background nil t)
 		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
 		                   :height (1+ (car act-popup-dim))
-		                   :width (1+ (cdr act-popup-dim))
+		                   :width (cdr act-popup-dim)
 		                   :internal-border-width which-key-posframe-border-width
 		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
 		                   :override-parameters which-key-posframe-parameters)))
@@ -228,13 +227,13 @@ of the buffer text to be displayed in the popup"
                   (erase-buffer)
                   (youdao-dictionary-mode)
                   (insert (propertize "\n" 'face '(:height 0.5)))
-                  (insert "  ")
-                  (insert (string-replace "\n" "  \n  " string))
-                  (insert "  ")
+                  (insert string)
                   (insert (propertize "\n" 'face '(:height 0.5)))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
               (posframe-show youdao-dictionary-buffer-name
                              :position (point)
+                             :left-fringe 16
+                             :right-fringe 16
                              :background-color (face-background 'tooltip nil t)
                              :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                              :internal-border-width 1)
