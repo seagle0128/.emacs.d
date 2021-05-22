@@ -264,22 +264,18 @@ Lisp function does not specify a special indentation."
                eldoc-posframe-delay nil
                (lambda ()
                  (when str
-                   (with-current-buffer (get-buffer-create eldoc-posframe-buffer)
-                     (erase-buffer)
-                     (insert (propertize "\n" 'face '(:height 0.3)))
-                     (insert (propertize " " 'display '(space :height (1))))
-                     (insert (apply #'format str args))
-                     (insert (propertize " " 'display '(space :height (1))))
-                     (insert (propertize "\n\n" 'face '(:height 0.3))))
-
                    (posframe-show
                     eldoc-posframe-buffer
+                    :string (concat (propertize "\n" 'face '(:height 0.3))
+                                    (apply #'format str args)
+                                    (propertize "\n\n" 'face '(:height 0.3)))
                     :postion (point)
+                    :left-fringe 8
+                    :right-fringe 8
                     :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
                     :internal-border-width 1
                     :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                     :background-color (face-background 'tooltip nil t)))))))
-
       (add-hook 'emacs-lisp-mode-hook
                 (lambda ()
                   (setq-local eldoc-message-function #'eldoc-posframe-show-posframe))))))
