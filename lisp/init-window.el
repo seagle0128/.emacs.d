@@ -68,7 +68,7 @@
      ("j" enlarge-window "↓")
      ("k" shrink-window "↑")
      ("l" enlarge-window-horizontally "→")
-     ("n" balance-windows "balance"))
+     ("n" balance-windows "balance" :exit t))
     "Split"
     (("r" split-window-right "horizontally")
      ("R" split-window-horizontally-instead "horizontally instead")
