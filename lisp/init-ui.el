@@ -404,10 +404,11 @@
       (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
 
       (defun posframe-poshandler-frame-center-near-bottom (info)
-        (let ((parent-frame (plist-get info :parent-frame))
-              (pos (posframe-poshandler-frame-center info)))
-          (cons (car pos)
-                (truncate (/ (frame-pixel-height parent-frame) 2))))))))
+        (cons (/ (- (plist-get info :parent-frame-width)
+                    (plist-get info :posframe-width))
+                 2)
+              (/ (frame-pixel-height (plist-get info :parent-frame))
+                 2))))))
 
 (with-no-warnings
   (when sys/macp
