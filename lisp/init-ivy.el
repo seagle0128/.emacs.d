@@ -451,18 +451,18 @@ This is for use in `ivy-re-builders-alist'."
                     (list 'message (lambda (str) (message "%s" str)) (lambda () (message "")))
                     (list 'posframe #'hydra-posframe-show #'hydra-posframe-delete)))
 
-        (defun ivy-hydra-poshandler-frame-center-below-fn (info)
-          (let ((parent-frame (plist-get info :parent-frame))
-                (height (plist-get info :posframe-height))
-                (pos (posframe-poshandler-frame-center info))
-                (num 0))
+        (defun ivy-hydra-poshandler-frame-center-below (info)
+          (let ((num 0)
+                (pos (posframe-poshandler-frame-center-near-bottom info)))
             (dolist (frame (frame-list))
               (when (and (frame-visible-p frame)
                          (frame-parameter frame 'posframe-buffer))
                 (setq num (1+ num))))
             (cons (car pos)
-                  (- (truncate (/ (frame-pixel-height parent-frame) 2))
-                     (if (>= num 1) height 0)))))
+                  (- (cdr pos)
+                     (if (>= num 1)
+                         (plist-get info :posframe-height)
+                       0)))))
 
         (defun ivy-hydra-set-posframe-show-params ()
           "Set hydra-posframe style."
@@ -473,7 +473,7 @@ This is for use in `ivy-re-builders-alist'."
                   :left-fringe 16
                   :right-fringe 16
                   :lines-truncate t
-                  :poshandler ivy-hydra-poshandler-frame-center-below-fn)))
+                  :poshandler ivy-hydra-poshandler-frame-center-below)))
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 

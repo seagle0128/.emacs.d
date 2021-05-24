@@ -407,7 +407,7 @@
         (cons (/ (- (plist-get info :parent-frame-width)
                     (plist-get info :posframe-width))
                  2)
-              (/ (frame-pixel-height (plist-get info :parent-frame))
+              (/ (plist-get info :parent-frame-height)
                  2))))))
 
 (with-no-warnings
