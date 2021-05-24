@@ -89,13 +89,13 @@
   (when (childframe-workable-p)
     (use-package which-key-posframe
       :diminish
-      :functions posframe-poshandler-frame-center-near-bottom-fn
+      :functions posframe-poshandler-frame-center-near-bottom
       :custom-face
       (which-key-posframe ((t (:inherit tooltip))))
       (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
       :init
       (setq which-key-posframe-border-width 3
-            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
+            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
       (which-key-posframe-mode 1)
