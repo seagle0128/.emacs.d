@@ -608,12 +608,6 @@ This is for use in `ivy-re-builders-alist'."
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)
         (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
 
-      (defun posframe-poshandler-frame-center-near-bottom (info)
-        (let ((parent-frame (plist-get info :parent-frame))
-              (pos (posframe-poshandler-frame-center info)))
-          (cons (car pos)
-                (truncate (/ (frame-pixel-height parent-frame) 2)))))
-
       (setf (alist-get t ivy-posframe-display-functions-alist)
             #'ivy-posframe-display-at-frame-center-near-bottom))))
 

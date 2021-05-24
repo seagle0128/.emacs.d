@@ -397,6 +397,21 @@
   :diminish
   :hook (after-init . global-page-break-lines-mode))
 
+;; Child frame
+(when (childframe-workable-p)
+  (use-package posframe
+    :config
+    (with-no-warnings
+      (defun my-posframe--prettify-frame (&rest _)
+        (set-face-background 'fringe nil posframe--frame))
+      (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
+
+      (defun posframe-poshandler-frame-center-near-bottom (info)
+        (let ((parent-frame (plist-get info :parent-frame))
+              (pos (posframe-poshandler-frame-center info)))
+          (cons (car pos)
+                (truncate (/ (frame-pixel-height parent-frame) 2))))))))
+
 (with-no-warnings
   (when sys/macp
     ;; Render thinner fonts
