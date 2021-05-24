@@ -606,9 +606,9 @@ This is for use in `ivy-re-builders-alist'."
 
     (with-no-warnings
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)
-        (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom-fn))
+        (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
 
-      (defun posframe-poshandler-frame-center-near-bottom-fn (info)
+      (defun posframe-poshandler-frame-center-near-bottom (info)
         (let ((parent-frame (plist-get info :parent-frame))
               (pos (posframe-poshandler-frame-center info)))
           (cons (car pos)

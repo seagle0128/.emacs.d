@@ -58,6 +58,7 @@
                 ("node" . js2-jsx-mode))
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-highlight-unused-variables-mode))
+  :init (setq js-indent-level 2)
   :config
   ;; Use default keybindings for lsp
   (when centaur-lsp
