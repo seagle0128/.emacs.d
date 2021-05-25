@@ -605,6 +605,15 @@ This is for use in `ivy-re-builders-alist'."
                  `(ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
+      (defun my-ivy-posframe-get-size ()
+        "Fixed frame size. Used by `ivy-posframe-size-function'."
+        (list
+         :height ivy-posframe-height
+         :width ivy-posframe-width
+         :min-height (1+ ivy-height)
+         :min-width (truncate (* 0.8 (frame-width)))))
+      (setq ivy-posframe-size-function #'my-ivy-posframe-get-size)
+
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)
         (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
 
