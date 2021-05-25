@@ -111,7 +111,7 @@
   :init
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
-  (setq ivy-height 12
+  (setq ivy-height (if (childframe-workable-p) 15 12)
         ivy-use-selectable-prompt t
         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
         ivy-fixed-height-minibuffer t
@@ -578,38 +578,6 @@ This is for use in `ivy-re-builders-alist'."
   :init
   ;; For better performance
   (setq ivy-rich-parse-remote-buffer nil))
-
-;; Display completion in child frame
-(when (childframe-workable-p)
-  (use-package ivy-posframe
-    :defines persp-load-buffer-functions
-    :custom-face
-    (ivy-posframe ((t (:inherit tooltip))))
-    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
-    :hook (ivy-mode . ivy-posframe-mode)
-    :init
-    (setq ivy-height 15
-          ivy-posframe-border-width 3
-          ivy-posframe-parameters '((left-fringe . 8)
-                                    (right-fringe . 8)))
-
-    (with-eval-after-load 'persp-mode
-      (add-hook 'persp-load-buffer-functions
-                (lambda (&rest _)
-                  (posframe-delete-all))))
-    :config
-    (add-hook 'after-load-theme-hook
-              (lambda ()
-                (custom-set-faces
-                 '(ivy-posframe ((t (:inherit tooltip))))
-                 `(ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
-
-    (with-no-warnings
-      (defun ivy-posframe-display-at-frame-center-near-bottom (str)
-        (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
-
-      (setf (alist-get t ivy-posframe-display-functions-alist)
-            #'ivy-posframe-display-at-frame-center-near-bottom))))
 
 (provide 'init-ivy)
 

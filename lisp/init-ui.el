@@ -408,7 +408,33 @@
                     (plist-get info :posframe-width))
                  2)
               (/ (plist-get info :parent-frame-height)
-                 2))))))
+                 2)))))
+
+  (when (childframe-workable-p)
+    (use-package mini-frame
+      :hook (after-init . mini-frame-mode)
+      :preface
+      (defun my-mini-frame-show-parameters ()
+        `((left . 0.5)
+          (top . ,(/ (frame-pixel-height) 2))
+          (background-color . ,(face-foreground 'font-lock-comment-face nil t))
+          (min-width . 80)
+          (min-height . ,(if (member this-command
+                                     '(swiper
+                                       swiper-backward swiper-all
+                                       swiper-isearch swiper-isearch-backward
+                                       counsel-grep-or-swiper counsel-grep-or-swiper-backward))
+                             16
+                           0))
+          (width . 0.8)
+          (height . ,(if emacs/>=27p 1 16))))
+      :init
+      (setq mini-frame-create-lazy nil
+            mini-frame-show-parameters #'my-mini-frame-show-parameters
+            mini-frame-ignore-commands '("edebug-eval-expression" debugger-eval-expression))
+
+      (when (boundp 'x-gtk-resize-child-frames)
+        (setq x-gtk-resize-child-frames 'resize-mode)))))
 
 (with-no-warnings
   (when sys/macp
