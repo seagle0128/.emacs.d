@@ -394,10 +394,6 @@
 
 ;; Child frame
 (when (childframe-workable-p)
-  ;; To avoid flickers while resizing child frames in GTK
-  (when (boundp 'x-gtk-resize-child-frames)
-    (setq x-gtk-resize-child-frames 'resize-mode))
-
   (use-package posframe
     :config
     (with-no-warnings
