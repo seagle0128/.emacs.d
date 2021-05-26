@@ -605,6 +605,13 @@ This is for use in `ivy-re-builders-alist'."
                  `(ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
+      (defun my-ivy-posframe--adjust-prompt (&rest _)
+        "Add top margin to the prompt."
+        (with-current-buffer ivy-posframe-buffer
+          (goto-char (point-min))
+          (insert (propertize "\n" 'face '(:height 0.3)))))
+      (advice-add #'ivy-posframe--add-prompt :after #'my-ivy-posframe--adjust-prompt)
+
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)
         (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
 
