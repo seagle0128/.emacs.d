@@ -124,9 +124,7 @@
      ("v" (setq doom-modeline-modal-icon (not doom-modeline-modal-icon))
       "modal" :toggle doom-modeline-modal-icon))
     "Segment"
-    (("B" (setq doom-modeline-bar (not doom-modeline-bar))
-      "bar" :toggle doom-modeline-bar)
-     ("H" (setq doom-modeline-hud (not doom-modeline-hud))
+    (("H" (setq doom-modeline-hud (not doom-modeline-hud))
       "hud" :toggle doom-modeline-hud)
      ("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
