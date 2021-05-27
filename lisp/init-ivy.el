@@ -605,6 +605,29 @@ This is for use in `ivy-re-builders-alist'."
                  `(ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
+      (defun my-ivy-posframe--minibuffer-setup (fn &rest args)
+        "Advice function of FN, `ivy--minibuffer-setup' with ARGS."
+        (if (not (display-graphic-p))
+            (apply fn args)
+          (let ((ivy-fixed-height-minibuffer nil))
+            (apply fn args))
+          (when (and ivy-posframe-hide-minibuffer
+                     (posframe-workable-p)
+                     (string-match-p "^ivy-posframe" (symbol-name ivy--display-function)))
+            (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+              (overlay-put ov 'window (selected-window))
+              (overlay-put ov 'ivy-posframe t)
+              (overlay-put ov 'face
+                           (let* ((face (if (facep 'solaire-minibuffer-face)
+                                            'solaire-minibuffer-face
+                                          'default))
+                                  (bg-color (face-background face nil t)))
+                             `(:background ,bg-color :foreground ,bg-color
+                               :box nil :underline nil
+                               :overline nil :strike-through nil)))
+              (setq-local cursor-type nil)))))
+      (advice-add #'ivy-posframe--minibuffer-setup :override #'my-ivy-posframe--minibuffer-setup)
+
       (defun my-ivy-posframe--adjust-prompt (&rest _)
         "Add top margin to the prompt."
         (with-current-buffer ivy-posframe-buffer
