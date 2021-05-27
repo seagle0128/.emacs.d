@@ -36,14 +36,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :defines (flycheck-disabled-checkers calculate-lisp-indent-last-sexp)
-  :functions (helpful-update
-              my-lisp-indent-function
-              function-advices
-              end-of-sexp
-              add-button-to-remove-advice
-              describe-function-1@advice-remove-button
-              helpful-update@advice-remove-button)
+  :defines flycheck-disabled-checkers
   :bind (:map emacs-lisp-mode-map
          ("C-c C-x" . ielm)
          ("C-c C-c" . eval-defun)
@@ -61,10 +54,11 @@
     :hook (emacs-lisp-mode . highlight-defined-mode)
     :init (setq highlight-defined-face-use-itself t))
 
-  ;; Align indent keywords
-  ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
-  (defun my-lisp-indent-function (indent-point state)
-    "This function is the normal value of the variable `lisp-indent-function'.
+  (with-no-warnings
+    ;; Align indent keywords
+    ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
+    (defun my-lisp-indent-function (indent-point state)
+      "This function is the normal value of the variable `lisp-indent-function'.
 The function `calculate-lisp-indent' calls this to determine
 if the arguments of a Lisp function call should be indented specially.
 
@@ -90,139 +84,143 @@ it specifies how to indent.  The property value can be:
 
 This function returns either the indentation to use, or nil if the
 Lisp function does not specify a special indentation."
-    (let ((normal-indent (current-column))
-          (orig-point (point)))
-      (goto-char (1+ (elt state 1)))
-      (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
-      (cond
-       ;; car of form doesn't seem to be a symbol, or is a keyword
-       ((and (elt state 2)
-             (or (not (looking-at "\\sw\\|\\s_"))
+      (let ((normal-indent (current-column))
+            (orig-point (point)))
+        (goto-char (1+ (elt state 1)))
+        (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
+        (cond
+         ;; car of form doesn't seem to be a symbol, or is a keyword
+         ((and (elt state 2)
+               (or (not (looking-at "\\sw\\|\\s_"))
+                   (looking-at ":")))
+          (if (not (> (save-excursion (forward-line 1) (point))
+                      calculate-lisp-indent-last-sexp))
+              (progn (goto-char calculate-lisp-indent-last-sexp)
+                     (beginning-of-line)
+                     (parse-partial-sexp (point)
+                                         calculate-lisp-indent-last-sexp 0 t)))
+          ;; Indent under the list or under the first sexp on the same
+          ;; line as calculate-lisp-indent-last-sexp.  Note that first
+          ;; thing on that line has to be complete sexp since we are
+          ;; inside the innermost containing sexp.
+          (backward-prefix-chars)
+          (current-column))
+         ((and (save-excursion
+                 (goto-char indent-point)
+                 (skip-syntax-forward " ")
+                 (not (looking-at ":")))
+               (save-excursion
+                 (goto-char orig-point)
                  (looking-at ":")))
-        (if (not (> (save-excursion (forward-line 1) (point))
-                    calculate-lisp-indent-last-sexp))
-            (progn (goto-char calculate-lisp-indent-last-sexp)
-                   (beginning-of-line)
-                   (parse-partial-sexp (point)
-                                       calculate-lisp-indent-last-sexp 0 t)))
-        ;; Indent under the list or under the first sexp on the same
-        ;; line as calculate-lisp-indent-last-sexp.  Note that first
-        ;; thing on that line has to be complete sexp since we are
-        ;; inside the innermost containing sexp.
-        (backward-prefix-chars)
-        (current-column))
-       ((and (save-excursion
-               (goto-char indent-point)
-               (skip-syntax-forward " ")
-               (not (looking-at ":")))
-             (save-excursion
-               (goto-char orig-point)
-               (looking-at ":")))
-        (save-excursion
-          (goto-char (+ 2 (elt state 1)))
-          (current-column)))
-       (t
-        (let ((function (buffer-substring (point)
-                                          (progn (forward-sexp 1) (point))))
-              method)
-          (setq method (or (function-get (intern-soft function)
-                                         'lisp-indent-function)
-                           (get (intern-soft function) 'lisp-indent-hook)))
-          (cond ((or (eq method 'defun)
-                     (and (null method)
-                          (> (length function) 3)
-                          (string-match "\\`def" function)))
-                 (lisp-indent-defform state indent-point))
-                ((integerp method)
-                 (lisp-indent-specform method state
-                                       indent-point normal-indent))
-                (method
-                 (funcall method indent-point state))))))))
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
+          (save-excursion
+            (goto-char (+ 2 (elt state 1)))
+            (current-column)))
+         (t
+          (let ((function (buffer-substring (point)
+                                            (progn (forward-sexp 1) (point))))
+                method)
+            (setq method (or (function-get (intern-soft function)
+                                           'lisp-indent-function)
+                             (get (intern-soft function) 'lisp-indent-hook)))
+            (cond ((or (eq method 'defun)
+                       (and (null method)
+                            (> (length function) 3)
+                            (string-match "\\`def" function)))
+                   (lisp-indent-defform state indent-point))
+                  ((integerp method)
+                   (lisp-indent-specform method state
+                                         indent-point normal-indent))
+                  (method
+                   (funcall method indent-point state))))))))
+    (add-hook 'emacs-lisp-mode-hook
+              (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
 
-  ;; Add remove buttons for advices
-  (add-hook 'help-mode-hook 'cursor-sensor-mode)
+    ;; Add remove buttons for advices
+    (add-hook 'help-mode-hook 'cursor-sensor-mode)
 
-  (defun function-advices (function)
-    "Return FUNCTION's advices."
-    (let ((flist (indirect-function function)) advices)
-      (while (advice--p flist)
-        (setq advices `(,@advices ,(advice--car flist)))
-        (setq flist (advice--cdr flist)))
-      advices))
+    (defun function-advices (function)
+      "Return FUNCTION's advices."
+      (let ((flist (indirect-function function)) advices)
+        (while (advice--p flist)
+          (setq advices `(,@advices ,(advice--car flist)))
+          (setq flist (advice--cdr flist)))
+        advices))
 
-  (defun add-remove-advice-button (advice function)
-    (when (and advice (symbolp advice))
-      (let ((inhibit-read-only t))
-        (insert "\t")
-        (insert-text-button
-         "[Remove]"
-         'cursor-sensor-functions `((lambda (&rest _) (message "Remove advice `%s'" ',advice)))
-         'help-echo (format "Remove advice `%s'" advice)
-         'action (lambda (_)
-                   (when (yes-or-no-p (format "Remove advice `%s'?" advice))
-                     (message "Removing advice `%s' from function `%s'" advice function)
-                     (advice-remove function advice)
-                     (if (eq major-mode 'helpful-mode)
-                         (helpful-update)
-                       (revert-buffer nil t))))
-         'follow-link t))))
+    (defun add-remove-advice-button (advice function)
+      (when (and advice (symbolp advice))
+        (let ((inhibit-read-only t))
+          (insert "\t")
+          (insert-text-button
+           "[Remove]"
+           'cursor-sensor-functions `((lambda (&rest _) (message "Remove advice `%s'" ',advice)))
+           'help-echo (format "Remove advice `%s'" advice)
+           'action (lambda (_)
+                     (when (yes-or-no-p (format "Remove advice `%s'?" advice))
+                       (message "Removing advice `%s' from function `%s'" advice function)
+                       (advice-remove function advice)
+                       (if (eq major-mode 'helpful-mode)
+                           (helpful-update)
+                         (revert-buffer nil t))))
+           'follow-link t))))
 
-  (defun add-button-to-remove-advice (buffer-name function)
-    "Add a button to remove advice."
-    (when (get-buffer buffer-name)
-      (with-current-buffer buffer-name
-        (save-excursion
-          (goto-char (point-min))
-          (let ((ad-list (function-advices function)))
-            (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.$" nil t)
-              (let* ((name (string-trim (match-string 1) "[‘'`]" "[’']"))
-                     (advice (intern-soft name)))
-                (when (memq advice ad-list)
-                  (add-remove-advice-button advice function)
-                  (setq ad-list (delq advice ad-list)))))
-
-            ;; Search `:around' advice
+    (defun add-button-to-remove-advice (buffer-name function)
+      "Add a button to remove advice."
+      (when (get-buffer buffer-name)
+        (with-current-buffer buffer-name
+          (save-excursion
             (goto-char (point-min))
-            (when (re-search-forward "^This function is advised.$" nil t)
-              (add-remove-advice-button (car ad-list) function)))))))
+            (let ((ad-list (function-advices function)))
+              (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.$" nil t)
+                (let* ((name (string-trim (match-string 1) "[‘'`]" "[’']"))
+                       (advice (intern-soft name)))
+                  (when (memq advice ad-list)
+                    (add-remove-advice-button advice function)
+                    (setq ad-list (delq advice ad-list)))))
 
-  (define-advice describe-function-1 (:after (function) advice-remove-button)
-    (add-button-to-remove-advice "*Help*" function))
+              ;; Search `:around' advice
+              (goto-char (point-min))
+              (when (re-search-forward "^This function is advised.$" nil t)
+                (add-remove-advice-button (car ad-list) function)))))))
 
-  ;; Remove hook
-  (defun remove-hook-at-point ()
-    "Remove the hook at the point in the *Help* buffer."
-    (interactive)
-    (unless (or (eq major-mode 'help-mode)
-                (eq major-mode 'helpful-mode)
-                (string= (buffer-name) "*Help*"))
-      (error "Only for help-mode or helpful-mode"))
-    (let ((orig-point (point)))
-      (save-excursion
-        (when-let
-            ((hook (progn (goto-char (point-min)) (symbol-at-point)))
-             (func (when (and
-                          (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
-                              (goto-char orig-point))
-                          (sexp-at-point))
-                     (end-of-sexp)
-                     (backward-char 1)
-                     (catch 'break
-                       (while t
-                         (condition-case _err
-                             (backward-sexp)
-                           (scan-error (throw 'break nil)))
-                         (let ((bounds (bounds-of-thing-at-point 'sexp)))
-                           (when (<= (car bounds) orig-point (cdr bounds))
-                             (throw 'break (sexp-at-point)))))))))
-          (when (yes-or-no-p (format "Remove %s from %s? " func hook))
-            (remove-hook hook func)
-            (if (eq major-mode 'helpful-mode)
-                (helpful-update)
-              (revert-buffer nil t)))))))
-  (bind-key "r" #'remove-hook-at-point help-mode-map))
+    (define-advice describe-function-1 (:after (function) advice-remove-button)
+      (add-button-to-remove-advice "*Help*" function))
+    (with-eval-after-load 'helpful
+      (define-advice helpful-update (:after () advice-remove-button)
+        (when helpful--callable-p
+          (add-button-to-remove-advice (helpful--buffer helpful--sym t) helpful--sym))))
+
+    ;; Remove hooks
+    (defun remove-hook-at-point ()
+      "Remove the hook at the point in the *Help* buffer."
+      (interactive)
+      (unless (or (eq major-mode 'help-mode)
+                  (eq major-mode 'helpful-mode)
+                  (string= (buffer-name) "*Help*"))
+        (error "Only for help-mode or helpful-mode"))
+      (let ((orig-point (point)))
+        (save-excursion
+          (when-let
+              ((hook (progn (goto-char (point-min)) (symbol-at-point)))
+               (func (when (and
+                            (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
+                                (goto-char orig-point))
+                            (sexp-at-point))
+                       (end-of-sexp)
+                       (backward-char 1)
+                       (catch 'break
+                         (while t
+                           (condition-case _err
+                               (backward-sexp)
+                             (scan-error (throw 'break nil)))
+                           (let ((bounds (bounds-of-thing-at-point 'sexp)))
+                             (when (<= (car bounds) orig-point (cdr bounds))
+                               (throw 'break (sexp-at-point)))))))))
+            (when (yes-or-no-p (format "Remove %s from %s? " func hook))
+              (remove-hook hook func)
+              (if (eq major-mode 'helpful-mode)
+                  (helpful-update)
+                (revert-buffer nil t)))))))
+    (bind-key "r" #'remove-hook-at-point help-mode-map)))
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
@@ -321,11 +319,6 @@ Lisp function does not specify a special indentation."
        var-bt 'action
        (lambda (button)
          (helpful-variable (button-get button 'apropos-symbol))))))
-
-  ;; Add remove buttons for advices
-  (define-advice helpful-update (:after () advice-remove-button)
-    (when helpful--callable-p
-      (add-button-to-remove-advice (helpful--buffer helpful--sym t) helpful--sym)))
   :config
   (with-no-warnings
     ;; Open the buffer in other window
