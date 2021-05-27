@@ -152,37 +152,41 @@ Lisp function does not specify a special indentation."
         (setq flist (advice--cdr flist)))
       advices))
 
+  (defun add-remove-advice-button (advice function)
+    (when (and advice (symbolp advice))
+      (let ((inhibit-read-only t))
+        (insert "\t")
+        (insert-text-button
+         "[Remove]"
+         'cursor-sensor-functions `((lambda (&rest _) (message "Remove advice `%s'" ',advice)))
+         'help-echo (format "Remove advice `%s'" advice)
+         'action (lambda (_)
+                   (when (yes-or-no-p (format "Remove advice `%s'?" advice))
+                     (message "Removing advice `%s' from function `%s'" advice function)
+                     (advice-remove function advice)
+                     (if (eq major-mode 'helpful-mode)
+                         (helpful-update)
+                       (revert-buffer nil t))))
+         'follow-link t))))
+
   (defun add-button-to-remove-advice (buffer-name function)
     "Add a button to remove advice."
     (when (get-buffer buffer-name)
       (with-current-buffer buffer-name
         (save-excursion
           (goto-char (point-min))
-          (let ((ad-list (reverse (function-advices function))))
-            (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.?$" nil t)
+          (let ((ad-list (function-advices function)))
+            (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.$" nil t)
               (let* ((name (string-trim (match-string 1) "[‘'`]" "[’']"))
-                     (symbol (intern-soft name))
-                     (advice (or symbol (car ad-list))))
-                (when advice
-                  (when symbol
-                    (cl-assert (eq symbol (car ad-list))))
-                  (let ((inhibit-read-only t))
-                    (insert "\t")
-                    (insert-text-button
-                     "[Remove]"
-                     'cursor-sensor-functions `((lambda (&rest _) (message "%s" ',advice)))
-                     'help-echo (format "%s" advice)
-                     'action
-                     ;; In case lexical-binding is off
-                     `(lambda (_)
-                        (when (yes-or-no-p (format "Remove %s ? " ',advice))
-                          (message "Removing %s of advice from %s" ',function ',advice)
-                          (advice-remove ',function ',advice)
-                          (if (eq major-mode 'helpful-mode)
-                              (helpful-update)
-                            (revert-buffer nil t))))
-                     'follow-link t))))
-              (setq ad-list (car ad-list))))))))
+                     (advice (intern-soft name)))
+                (when (memq advice ad-list)
+                  (add-remove-advice-button advice function)
+                  (setq ad-list (delq advice ad-list)))))
+
+            ;; Search `:around' advice
+            (goto-char (point-min))
+            (when (re-search-forward "^This function is advised.$" nil t)
+              (add-remove-advice-button (car ad-list) function)))))))
 
   (define-advice describe-function-1 (:after (function) advice-remove-button)
     (add-button-to-remove-advice "*Help*" function))
