@@ -83,8 +83,6 @@
       ;; Highlight matches
       (defun my-pdf-isearch-hl-matches (current matches &optional occur-hack-p)
         "Highlighting edges CURRENT and MATCHES."
-        (cl-check-type current pdf-isearch-match)
-        (cl-check-type matches (list-of pdf-isearch-match))
         (cl-destructuring-bind (fg1 bg1 fg2 bg2)
           (pdf-isearch-current-colors)
           (let* ((width (car (pdf-view-image-size)))
