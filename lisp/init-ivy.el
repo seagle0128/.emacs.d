@@ -380,7 +380,7 @@
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
     :custom-face
-    (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
+    (ivy-minibuffer-match-face-1 ((t (:foreground ,(face-foreground 'font-lock-doc-face nil t)))))
     :init
     (defun ivy-prescient-non-fuzzy (str)
       "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
@@ -409,7 +409,8 @@ This is for use in `ivy-re-builders-alist'."
             lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
             counsel-grep counsel-git-grep counsel-rg counsel-ag
             counsel-ack counsel-fzf counsel-pt counsel-imenu
-            counsel-org-capture counsel-load-theme counsel-yank-pop
+            counsel-org-capture counsel-outline counsel-org-goto
+            counsel-load-theme counsel-yank-pop
             counsel-recentf counsel-buffer-or-recentf
             centaur-load-theme))
 
