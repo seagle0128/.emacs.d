@@ -1,6 +1,6 @@
 ;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2020 Vincent Zhang
+;; Copyright (C) 2006-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -64,14 +64,8 @@
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       ;; Make certain buffers grossly incandescent
-      ;; Must before loading the theme
       (use-package solaire-mode
-        :functions persp-load-state-from-file
-        :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-               (minibuffer-setup . solaire-mode-in-minibuffer))
-        :init
-        (solaire-global-mode 1)
-        (advice-add #'persp-load-state-from-file :after #'solaire-mode-restore-persp-mode-buffers))
+        :hook (after-load-theme . solaire-global-mode))
 
       (use-package doom-themes
         :custom-face
@@ -95,6 +89,8 @@
 (use-package doom-modeline
   :custom
   (doom-modeline-icon centaur-icon)
+  (doom-modeline-bar nil)
+  (doom-modeline-hud t)
   (doom-modeline-minor-modes t)
   (doom-modeline-unicode-fallback t)
   (doom-modeline-mu4e nil)
@@ -125,7 +121,9 @@
      ("v" (setq doom-modeline-modal-icon (not doom-modeline-modal-icon))
       "modal" :toggle doom-modeline-modal-icon))
     "Segment"
-    (("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
+    (("H" (setq doom-modeline-hud (not doom-modeline-hud))
+      "hud" :toggle doom-modeline-hud)
+     ("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
      ("W" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
       "word count" :toggle doom-modeline-enable-word-count)
@@ -213,7 +211,7 @@
               (flycheck-list-errors)
             (flymake-show-diagnostics-buffer))
       "list errors" :exit t)
-     ("B" (if (bound-and-true-p grip-mode)
+     ("O" (if (bound-and-true-p grip-mode)
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
@@ -269,17 +267,17 @@
   (add-to-list 'all-the-icons-mode-icon-alist
                '(xwidget-webkit-mode all-the-icons-faicon "chrome" :v-adjust -0.1 :face all-the-icons-blue))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-playlist-mode all-the-icons-material "queue_music" :height 1.2 :face 'all-the-icons-green))
+               '(bongo-playlist-mode all-the-icons-material "queue_music" :height 1.2 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-library-mode all-the-icons-material "library_music" :height 1.1 :face 'all-the-icons-green))
+               '(bongo-library-mode all-the-icons-material "library_music" :height 1.1 :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-group-mode all-the-icons-fileicon "gnu" :face 'all-the-icons-silver))
+               '(gnus-group-mode all-the-icons-fileicon "gnu" :face all-the-icons-silver))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-summary-mode all-the-icons-octicon "inbox" :height 1.0 :v-adjust 0.0 :face 'all-the-icons-orange))
+               '(gnus-summary-mode all-the-icons-octicon "inbox" :height 1.0 :v-adjust 0.0 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-article-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face 'all-the-icons-lblue))
+               '(gnus-article-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue))
   (add-to-list 'all-the-icons-mode-icon-alist
-               '(message-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face 'all-the-icons-lblue))
+               '(message-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(diff-mode all-the-icons-octicon "git-compare" :v-adjust 0.0 :face all-the-icons-lred))
   (add-to-list 'all-the-icons-mode-icon-alist
@@ -390,6 +388,22 @@
 (use-package page-break-lines
   :diminish
   :hook (after-init . global-page-break-lines-mode))
+
+;; Child frame
+(when (childframe-workable-p)
+  (use-package posframe
+    :config
+    (with-no-warnings
+      (defun my-posframe--prettify-frame (&rest _)
+        (set-face-background 'fringe nil posframe--frame))
+      (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
+
+      (defun posframe-poshandler-frame-center-near-bottom (info)
+        (cons (/ (- (plist-get info :parent-frame-width)
+                    (plist-get info :posframe-width))
+                 2)
+              (/ (plist-get info :parent-frame-height)
+                 2))))))
 
 (with-no-warnings
   (when sys/macp

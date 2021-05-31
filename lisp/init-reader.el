@@ -1,6 +1,6 @@
 ;; init-reader.el --- Initialize readers.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2020 Vincent Zhang
+;; Copyright (C) 2019-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -39,19 +39,22 @@
     :diminish (pdf-view-midnight-minor-mode pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
     :functions (my-pdf-view-set-midnight-colors my-pdf-view-set-dark-theme)
-    :hook (pdf-view-mode . pdf-view-midnight-minor-mode)
+    :hook ((pdf-view-mode . pdf-view-midnight-minor-mode)
+           (pdf-view-mode . pdf-isearch-minor-mode))
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
     :bind (:map pdf-view-mode-map
            ("C-s" . isearch-forward))
     :init
-    (setq pdf-annot-activate-created-annotations t)
+    (setq pdf-view-use-scaling t
+          pdf-view-use-imagemagick nil
+          pdf-annot-activate-created-annotations t)
 
     ;; Set dark theme
     (defun my-pdf-view-set-midnight-colors ()
       "Set pdf-view midnight colors."
       (setq pdf-view-midnight-colors
-            `(,(face-foreground 'default) . ,(face-background 'solaire-default-face))))
+            `(,(face-foreground 'default) . ,(face-background 'solaire-default-face nil t))))
     (my-pdf-view-set-midnight-colors)
 
     (defun my-pdf-view-set-dark-theme ()
@@ -63,8 +66,8 @@
             (pdf-view-midnight-minor-mode (if pdf-view-midnight-minor-mode 1 -1))))))
     (add-hook 'after-load-theme-hook #'my-pdf-view-set-dark-theme)
     :config
-    ;; Build pdfinfo if needed, locking until it's complete
     (with-no-warnings
+      ;; Build pdfinfo if needed, locking until it's complete
       (defun my-pdf-tools-install ()
         (unless (file-executable-p pdf-info-epdfinfo-program)
           (let ((wconf (current-window-configuration)))
@@ -75,53 +78,9 @@
               (sleep-for 1))
             (when (file-executable-p pdf-info-epdfinfo-program)
               (set-window-configuration wconf)))))
-      (advice-add #'pdf-view-decrypt-document :before #'my-pdf-tools-install))
+      (advice-add #'pdf-view-decrypt-document :before #'my-pdf-tools-install)
 
-    (with-no-warnings
-      ;; FIXME: Support retina display on MAC
-      ;; @see https://emacs-china.org/t/pdf-tools-mac-retina-display/10243/
-      ;; and https://github.com/politza/pdf-tools/pull/501/
-      (setq pdf-view-use-scaling t
-            pdf-view-use-imagemagick nil)
-
-      (defun my-pdf-view-use-scaling-p ()
-        "Return t if scaling should be used."
-        (and (or (and (eq (framep-on-display) 'ns) (>= emacs-major-version 27))
-                 (memq (pdf-view-image-type) '(imagemagick image-io)))
-             pdf-view-use-scaling))
-      (advice-add #'pdf-view-use-scaling-p :override #'my-pdf-view-use-scaling-p)
-
-      (defun my-pdf-view-create-page (page &optional window)
-        "Create an image of PAGE for display on WINDOW."
-        (let* ((size (pdf-view-desired-image-size page window))
-               (width (if (not (pdf-view-use-scaling-p))
-                          (car size)
-                        (* 2 (car size))))
-               (data (pdf-cache-renderpage
-                      page width width))
-               (hotspots (pdf-view-apply-hotspot-functions
-                          window page size)))
-          (pdf-view-create-image data
-            :width width
-            :scale (if (pdf-view-use-scaling-p) 0.5 1)
-            :map hotspots
-            :pointer 'arrow)))
-      (advice-add #'pdf-view-create-page :override #'my-pdf-view-create-page)
-
-      (defun my-pdf-util-frame-scale-factor ()
-        "Return the frame scale factor depending on the image type used for display."
-        (if (and pdf-view-use-scaling
-                 (memq (pdf-view-image-type) '(imagemagick image-io))
-                 (fboundp 'frame-monitor-attributes))
-            (or (cdr (assq 'backing-scale-factor (frame-monitor-attributes)))
-                (if (>= (pdf-util-frame-ppi) 180)
-                    2
-                  1))
-          (if (and pdf-view-use-scaling (eq (framep-on-display) 'ns))
-              2
-            1)))
-      (advice-add #'pdf-util-frame-scale-factor :override #'my-pdf-util-frame-scale-factor)
-
+      ;; Highlight matches
       (defun my-pdf-isearch-hl-matches (current matches &optional occur-hack-p)
         "Highlighting edges CURRENT and MATCHES."
         (cl-destructuring-bind (fg1 bg1 fg2 bg2)
@@ -155,10 +114,11 @@
                                    (remove current matches))))))))
       (advice-add #'pdf-isearch-hl-matches :override #'my-pdf-isearch-hl-matches)
 
+      ;; Show annotation
       (defun my-pdf-annot-show-annotation (a &optional highlight-p window)
         "Make annotation A visible."
         (save-selected-window
-          (when window (select-window window))
+          (when window (select-window window 'norecord))
           (pdf-util-assert-pdf-window)
           (let ((page (pdf-annot-get a 'page))
                 (size (pdf-view-image-size)))

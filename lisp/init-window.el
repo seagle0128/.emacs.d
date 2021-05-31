@@ -1,6 +1,6 @@
 ;; init-window.el --- Initialize window configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2020 Vincent Zhang
+;; Copyright (C) 2006-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -68,7 +68,7 @@
      ("j" enlarge-window "↓")
      ("k" shrink-window "↑")
      ("l" enlarge-window-horizontally "→")
-     ("n" balance-windows "balance"))
+     ("n" balance-windows "balance" :exit t))
     "Split"
     (("r" split-window-right "horizontally")
      ("R" split-window-horizontally-instead "horizontally instead")

@@ -1,6 +1,6 @@
 ;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2020 Vincent Zhang
+;; Copyright (C) 2006-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -89,34 +89,57 @@
   (when (childframe-workable-p)
     (use-package which-key-posframe
       :diminish
-      :functions posframe-poshandler-frame-center-near-bottom-fn
+      :functions posframe-poshandler-frame-center-near-bottom
       :custom-face
-      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+      (which-key-posframe ((t (:inherit tooltip))))
+      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
       :init
       (setq which-key-posframe-border-width 3
-            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom-fn
-            which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
-
+            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
+            which-key-posframe-parameters '((left-fringe . 8)
+                                            (right-fringe . 8)))
       (which-key-posframe-mode 1)
       :config
+      (with-no-warnings
+        (defun my-which-key-posframe--show-buffer (act-popup-dim)
+          "Show which-key buffer when popup type is posframe.
+Argument ACT-POPUP-DIM includes the dimension, (height . width)
+of the buffer text to be displayed in the popup"
+          (when (posframe-workable-p)
+            (with-current-buffer (get-buffer-create which-key-buffer-name)
+              (let ((inhibit-read-only t))
+                (goto-char (point-min))
+                (insert (propertize "\n" 'face '(:height 0.3)))
+                (goto-char (point-max))
+                (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
+            (posframe-show which-key--buffer
+		                   :font which-key-posframe-font
+		                   :position (point)
+		                   :poshandler which-key-posframe-poshandler
+		                   :background-color (face-attribute 'which-key-posframe :background nil t)
+		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
+		                   :height (1+ (car act-popup-dim))
+		                   :width (1+ (cdr act-popup-dim))
+		                   :internal-border-width which-key-posframe-border-width
+		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
+		                   :override-parameters which-key-posframe-parameters)))
+        (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer))
+
       (add-hook 'after-load-theme-hook
                 (lambda ()
-                  (posframe-delete-all)
                   (custom-set-faces
-                   `(which-key-posframe-border
-                     ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                  (setq which-key-posframe-parameters
-                        `((background-color . ,(face-background 'tooltip)))))))))
+                   '(which-key-posframe ((t (:inherit tooltip))))
+                   `(which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))))))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
   :diminish
   :bind (:map persistent-scratch-mode-map
-              ([remap kill-buffer] . (lambda (&rest _)
-                                       (interactive)
-                                       (user-error "Scrach buffer cannot be killed")))
-              ([remap revert-buffer] . persistent-scratch-restore)
-              ([remap revert-this-buffer] . persistent-scratch-restore))
+         ([remap kill-buffer] . (lambda (&rest _)
+                                  (interactive)
+                                  (user-error "Scrach buffer cannot be killed")))
+         ([remap revert-buffer] . persistent-scratch-restore)
+         ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode)))
 
@@ -200,15 +223,16 @@
                 (let ((inhibit-read-only t))
                   (erase-buffer)
                   (youdao-dictionary-mode)
+                  (insert (propertize "\n" 'face '(:height 0.5)))
                   (insert string)
-                  (goto-char (point-min))
+                  (insert (propertize "\n" 'face '(:height 0.5)))
                   (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
               (posframe-show youdao-dictionary-buffer-name
                              :position (point)
-                             :left-fringe 8
-                             :right-fringe 8
-                             :background-color (face-background 'tooltip)
-                             :internal-border-color (face-foreground 'font-lock-comment-face)
+                             :left-fringe 16
+                             :right-fringe 16
+                             :background-color (face-background 'tooltip nil t)
+                             :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                              :internal-border-width 1)
               (unwind-protect
                   (push (read-event) unread-command-events)

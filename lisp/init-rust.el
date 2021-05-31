@@ -1,6 +1,6 @@
 ;; init-rust.el --- Initialize Rust configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2020 Vincent Zhang
+;; Copyright (C) 2019-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -31,7 +31,11 @@
 ;;; Code:
 
 ;; Rust
-(use-package rustic)
+(require 'init-const)
+
+(when emacs/>=26p
+  (use-package rustic))
+
 (use-package rust-playground)
 
 (provide 'init-rust)

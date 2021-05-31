@@ -1,6 +1,6 @@
 ;; init-web.el --- Initialize web configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2016-2020 Vincent Zhang
+;; Copyright (C) 2016-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -58,6 +58,7 @@
                 ("node" . js2-jsx-mode))
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-highlight-unused-variables-mode))
+  :init (setq js-indent-level 2)
   :config
   ;; Use default keybindings for lsp
   (when centaur-lsp

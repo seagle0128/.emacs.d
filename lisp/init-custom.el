@@ -1,6 +1,6 @@
 ;; init-custom.el --- Define customizations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2020 Vincent Zhang
+;; Copyright (C) 2006-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -81,6 +81,9 @@
     `(,(cons 'melpa
              `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
                ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
+      ,(cons 'bfsu
+             `(,(cons "gnu"   (concat proto "://mirrors.bfsu.edu.cn/elpa/gnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.bfsu.edu.cn/elpa/melpa/"))))
       ,(cons 'emacs-china
              `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
                ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/"))))

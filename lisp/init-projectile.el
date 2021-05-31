@@ -1,6 +1,6 @@
 ;; init-projectile.el --- Initialize projectile configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2020 Vincent Zhang
+;; Copyright (C) 2010-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -44,8 +44,6 @@
         projectile-sort-order 'recentf
         projectile-use-git-grep t)
   :config
-  ;; (projectile-update-mode-line)         ; Update mode-line at the first time
-
   ;; Use the faster searcher to handle project files: ripgrep `rg'.
   (when (and (not (executable-find "fd"))
              (executable-find "rg"))

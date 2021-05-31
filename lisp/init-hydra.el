@@ -1,6 +1,6 @@
 ;; init-hydra.el --- Initialize hydra configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2020 Vincent Zhang
+;; Copyright (C) 2019-2021 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -80,7 +80,7 @@
         ("h d" rainbow-delimiters-mode "delimiter" :toggle t)
         ("h i" highlight-indent-guides-mode "indent" :toggle t)
         ("h t" global-hl-todo-mode "todo" :toggle t))
-       "Coding"
+       "Program"
        (("f" flycheck-mode "flycheck" :toggle t)
         ("F" flymake-mode "flymake" :toggle t)
         ("o" origami-mode "folding" :toggle t)
@@ -88,9 +88,8 @@
         ("u" subword-mode "subword" :toggle t)
         ("W" which-function-mode "which function" :toggle t)
         ("E" toggle-debug-on-error "debug on error" :toggle (default-value 'debug-on-error))
-        ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit)))
-       "Version Control"
-       (("v" global-diff-hl-mode "gutter" :toggle t)
+        ("Q" toggle-debug-on-quit "debug on quit" :toggle (default-value 'debug-on-quit))
+        ("v" global-diff-hl-mode "gutter" :toggle t)
         ("V" diff-hl-flydiff-mode "live gutter" :toggle t)
         ("M" diff-hl-margin-mode "margin gutter" :toggle t)
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
@@ -133,6 +132,8 @@
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
+        ("p b" (centaur-set-package-archives 'bfsu t)
+         "bfsu" :toggle (eq centaur-package-archives 'bfsu) :exit t)
         ("p c" (centaur-set-package-archives 'emacs-china t)
          "emacs china" :toggle (eq centaur-package-archives 'emacs-china) :exit t)
         ("p n" (centaur-set-package-archives 'netease t)
