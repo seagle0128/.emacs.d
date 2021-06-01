@@ -228,9 +228,9 @@ Lisp function does not specify a special indentation."
   :ensure nil
   :diminish
   :config
-  ;; Display `eldoc' in child frame
   (with-no-warnings
-    (when (childframe-workable-p)
+    ;; Display `eldoc' in child frame
+    (when (and (require 'posframe nil t) (posframe-workable-p))
       (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
         "The posframe buffer name use by eldoc-posframe.")
 
