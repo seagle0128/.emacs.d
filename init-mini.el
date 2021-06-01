@@ -106,6 +106,9 @@
     (progn
       (fido-mode 1)
 
+      (when (fboundp 'fido-vertical-mode)
+        (fido-vertical-mode 1))
+
       (defun fido-recentf-open ()
         "Use `completing-read' to find a recent file."
         (interactive)
