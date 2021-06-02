@@ -121,12 +121,9 @@
   ;; Don't save dead or temporary buffers
   (add-hook 'persp-filter-save-buffers-functions
             (lambda (b)
-              "Ignore dead buffers."
-              (not (buffer-live-p b))))
-  (add-hook 'persp-filter-save-buffers-functions
-            (lambda (b)
-              "Ignore unneeded buffers."
-              (string-prefix-p " *" (buffer-name b))))
+              "Ignore dead and unneeded buffers."
+              (or (not (buffer-live-p b))
+                  (string-prefix-p " *" (buffer-name b)))))
   (add-hook 'persp-filter-save-buffers-functions
             (lambda (b)
               "Ignore temporary buffers."
@@ -143,7 +140,7 @@
   (with-eval-after-load 'recentf
     (push persp-save-dir recentf-exclude))
 
-  ;; Ivy Integraticon
+  ;; Ivy Integration
   (with-eval-after-load 'ivy
     (add-to-list 'ivy-ignore-buffers
                  #'(lambda (b)
