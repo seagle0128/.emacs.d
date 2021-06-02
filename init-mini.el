@@ -46,7 +46,7 @@
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
 
-;; Miscs
+;; Better defaults
 ;; (setq initial-scratch-message nil)
 (setq inhibit-splash-screen t)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
@@ -101,11 +101,10 @@
 (add-hook 'prog-mode-hook #'subword-mode)
 (add-hook 'minibuffer-setup-hook #'subword-mode)
 
-;; IDO
+;; Completion
 (if (fboundp 'fido-mode)
     (progn
       (fido-mode 1)
-
       (when (fboundp 'fido-vertical-mode)
         (fido-vertical-mode 1))
 
@@ -120,10 +119,10 @@
     (ido-mode 1)
     (ido-everywhere 1)
 
-    (setq ido-use-virtual-buffers t)
-    (setq ido-use-filename-at-point 'guess)
-    (setq ido-create-new-buffer 'always)
-    (setq ido-enable-flex-matching t)
+    (setq ido-use-virtual-buffers t
+          ido-use-filename-at-point 'guess
+          ido-create-new-buffer 'always
+          ido-enable-flex-matching t)
 
     (defun ido-recentf-open ()
       "Use `ido-completing-read' to find a recent file."
