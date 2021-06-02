@@ -237,7 +237,7 @@ of the buffer text to be displayed in the popup"
               (unwind-protect
                   (push (read-event) unread-command-events)
                 (progn
-                  (posframe-delete youdao-dictionary-buffer-name)
+                  (posframe-hide youdao-dictionary-buffer-name)
                   (other-frame 0))))
           (message "Nothing to look up"))))
     (advice-add #'youdao-dictionary--posframe-tip

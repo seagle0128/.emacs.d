@@ -392,6 +392,12 @@
 ;; Child frame
 (when (childframe-workable-p)
   (use-package posframe
+    :hook (after-load-theme . posframe-delete-all)
+    :init
+    (with-eval-after-load 'persp-mode
+      (add-hook 'persp-load-buffer-functions
+                (lambda (&rest _)
+                  (posframe-delete-all))))
     :config
     (with-no-warnings
       (defun my-posframe--prettify-frame (&rest _)
