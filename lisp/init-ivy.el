@@ -546,7 +546,15 @@ This is for use in `ivy-re-builders-alist'."
 ;; Enable it before`ivy-rich-mode' for better performance
 (use-package all-the-icons-ivy-rich
   :if (icons-displayable-p)
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode))
+  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+  :config
+  (plist-put all-the-icons-ivy-rich-display-transformers-list
+             'centaur-load-theme
+             '(:columns
+               ((all-the-icons-ivy-rich-theme-icon)
+                (ivy-rich-candidate))
+               :delimiter "\t"))
+  (all-the-icons-ivy-rich-reload))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
