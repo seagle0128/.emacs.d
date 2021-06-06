@@ -345,12 +345,6 @@
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
 
-;; Record and jump to the last point in the buffer
-(use-package goto-last-point
-  :diminish
-  :bind ("C-M-," . goto-last-point)
-  :hook (after-init . goto-last-point-mode))
-
 ;; Preview when `goto-char'
 (use-package goto-char-preview
   :bind ([remap goto-char] . goto-char-preview))
