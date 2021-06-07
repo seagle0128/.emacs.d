@@ -358,6 +358,10 @@ of the buffer text to be displayed in the popup"
               erc-lurker-hide-list '("JOIN" "PART" "QUIT")
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
 
+;; Browse devdocs.io documents using EWW
+(when emacs/>=27p
+  (use-package devdocs-browser))
+
 ;; A stackoverflow and its sisters' sites reader
 (when emacs/>=26p
   (use-package howdoyou
