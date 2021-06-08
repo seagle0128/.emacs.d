@@ -67,7 +67,7 @@
                                         'help-echo "mouse-2: go to this bookmark in other window")
                           name)
                        ,@(if bookmark-bmenu-toggle-filenames
-                             (list location))])
+                             (list (propertize location 'face 'font-lock-string-face)))])
                     entries)))
           (tabulated-list-init-header)
           (setq tabulated-list-entries entries))
