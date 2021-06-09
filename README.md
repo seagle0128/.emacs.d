@@ -157,7 +157,7 @@ For Example:
 (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
 (setq centaur-server t)                        ; Enable `server-mode' or not: t or nil
 (setq centaur-icon t)                          ; Display icons or not: t or nil
-(setq centaur-package-archives 'melpa)         ; Package repo: melpa, emacs-china, netease or tuna
+(setq centaur-package-archives 'melpa)         ; Package repo: melpa, emacs-china, netease, ustc, tencent or tuna
 (setq centaur-theme 'auto)                     ; Color theme: auto, random, system, default, pro, dark, light, warm, cold, day or night
 (setq centaur-completion-style 'childframe)    ; Completion display style: minibuffer or childframe
 (setq centaur-dashboard t)                     ; Use dashboard at startup or not: t or nil
