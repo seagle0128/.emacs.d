@@ -393,7 +393,8 @@
       scroll-preserve-screen-position t)
 
 ;; Good pixel line scrolling
-(when emacs/>=27p
+(when (and emacs/>=27p
+           (not sys/macp))
   (use-package good-scroll
     :diminish
     :hook (after-init . good-scroll-mode)
@@ -404,7 +405,7 @@
 (when emacs/>=26p
   (use-package iscroll
     :diminish
-    :hook (after-init . iscroll-mode)))
+    :hook (image-mode . iscroll-mode)))
 
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch
