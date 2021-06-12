@@ -355,7 +355,7 @@ Return the fastest package archive."
 (defun update-packages (&optional force sync)
   "Refresh package contents and update all packages.
 
-If FORCE is non-nil, the updating process will be restarted forcely.
+If FORCE is non-nil, the updating process will be restarted by force.
 If SYNC is non-nil, the updating process is synchronous."
   (interactive "P")
 
@@ -392,7 +392,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun update-config-and-packages(&optional force sync)
   "Update confgiurations and packages.
 
-If FORCE is non-nil, the updating process will be restarted forcely.
+If FORCE is non-nil, the updating process will be restarted by force.
 If SYNC is non-nil, the updating process is synchronous."
   (interactive "P")
 
