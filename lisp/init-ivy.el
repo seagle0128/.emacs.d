@@ -559,6 +559,7 @@ This is for use in `ivy-re-builders-alist'."
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
   :hook ((counsel-projectile-mode . ivy-rich-mode) ; MUST after `counsel-projectile'
+         (ivy-rich-mode . ivy-rich-project-root-cache-mode)
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."
                             (setq ivy-virtual-abbreviate
