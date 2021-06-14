@@ -112,6 +112,10 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 
+;; Adds node_modules/.bin directory to `exec_path'
+(use-package add-node-modules-path
+  :hook ((web-mode js-mode js2-mode) . add-node-modules-path))
+
 ;; Format HTML, CSS and JavaScript/JSON
 ;; Install: npm -g install prettier
 (use-package prettier-js
