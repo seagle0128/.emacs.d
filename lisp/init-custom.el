@@ -67,7 +67,7 @@
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-icon (display-graphic-p)
+(defcustom centaur-icon t
   "Display icons or not."
   :group 'centaur
   :type 'boolean)
