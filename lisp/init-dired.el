@@ -98,19 +98,21 @@
                   (let ((case-fold-search t))
                     (when-let* ((file (dired-get-filename 'relative 'noerror))
                                 (icon (if (file-directory-p file)
-                                          (all-the-icons-icon-for-dir file
-                                                                      :face 'all-the-icons-dired-dir-face
-                                                                      :height 0.9
-                                                                      :v-adjust all-the-icons-dired-v-adjust)
-                                        (apply 'all-the-icons-icon-for-file file
+                                          (all-the-icons-icon-for-dir
+                                           file
+                                           :face 'all-the-icons-dired-dir-face
+                                           :height 0.9
+                                           :v-adjust all-the-icons-dired-v-adjust)
+                                        (apply #'all-the-icons-icon-for-file
+                                               file
                                                (append
                                                 '(:height 0.9)
                                                 `(:v-adjust ,all-the-icons-dired-v-adjust)
                                                 (when all-the-icons-dired-monochrome
                                                   `(:face ,(face-at-point))))))))
                       (if (member file '("." ".."))
-                          (all-the-icons-dired--add-overlay (point) "  \t")
-                        (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
+                          (all-the-icons-dired--add-overlay (point) "   \t")
+                        (all-the-icons-dired--add-overlay (point) (concat " " icon "\t"))))))
                 (forward-line 1)))
           (message "Not display icons because of too many items.")))
       (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
