@@ -59,9 +59,10 @@
    ("Actions"
     (("TAB" other-window "switch")
      ("x" ace-delete-window "delete" :exit t)
-     ("m" ace-delete-other-windows "maximize" :exit t)
+     ("X" ace-delete-other-windows "delete other" :exit t)
      ("s" ace-swap-window "swap" :exit t)
      ("a" ace-select-window "select" :exit t)
+     ("m" toggle-frame-maximized "maximize" :exit t)
      ("f" toggle-frame-fullscreen "fullscreen" :exit t))
     "Resize"
     (("h" shrink-window-horizontally "←")
