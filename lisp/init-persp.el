@@ -68,8 +68,7 @@
              (format "        (width . %d)\n" (eval (frame-parameter nil 'width)))
              (format "        (height . %d)\n" (eval (frame-parameter nil 'height)))
              (format "        (fullscreen . %s)))\n" (frame-parameter nil 'fullscreen)))
-            (when (file-writable-p persp-frame-file)
-              (write-file persp-frame-file)))
+            (write-file persp-frame-file))
         (error
          (warn "persp frame: %s" (error-message-string error))))))
 
@@ -78,18 +77,17 @@
     (interactive)
     (when (and (display-graphic-p) centaur-restore-frame-geometry persp-mode)
       (fix-fullscreen-cocoa)
-      (when (file-readable-p persp-frame-file)
-        (condition-case error
-            (progn
-              (load persp-frame-file)
+      (condition-case error
+          (progn
+            (load persp-frame-file)
 
-              ;; Handle multiple monitors gracefully
-              (when (or (>= (eval (frame-parameter nil 'left)) (display-pixel-width))
-                        (>= (eval (frame-parameter nil 'top)) (display-pixel-height)))
-                (set-frame-parameter nil 'left 0)
-                (set-frame-parameter nil 'top 0)))
-          (error
-           (warn "persp frame: %s" (error-message-string error)))))))
+            ;; Handle multiple monitors gracefully
+            (when (or (>= (eval (frame-parameter nil 'left)) (display-pixel-width))
+                      (>= (eval (frame-parameter nil 'top)) (display-pixel-height)))
+              (set-frame-parameter nil 'left 0)
+              (set-frame-parameter nil 'top 0)))
+        (error
+         (warn "persp frame: %s" (error-message-string error))))))
 
   (with-no-warnings
     ;; Don't save if the state is not loaded
