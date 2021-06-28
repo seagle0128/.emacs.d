@@ -196,12 +196,12 @@ If Non-nil, save and restore the frame's geometry."
 
 `lsp-mode': See https://github.com/emacs-lsp/lsp-mode.
 `eglot': See https://github.com/joaotavora/eglot.
-tags: Use TAGS instead of language server. See https://github.com/universal-ctags/citre.
+tags: Use tags file instead of language server. See https://github.com/universal-ctags/citre.
 nil means disabled."
   :group 'centaur
   :type '(choice (const :tag "LSP Mode" lsp-mode)
                  (const :tag "Eglot" eglot)
-                 (const :tag "TAGS" tags)
+                 (const :tag "tags" tags)
                  (const :tag "Disable" nil)))
 
 (defcustom centaur-lsp-format-on-save-ignore-modes
