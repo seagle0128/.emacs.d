@@ -362,7 +362,10 @@ of the buffer text to be displayed in the popup"
 
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
-  (use-package devdocs-browser))
+  (use-package devdocs-browser
+    :diminish devdocs-browser-eww-mode
+    :bind (:map prog-mode-map
+           ("<f1>" . devdocs-browser-open))))
 
 ;; A stackoverflow and its sisters' sites reader
 (when emacs/>=26p
