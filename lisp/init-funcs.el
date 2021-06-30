@@ -661,16 +661,20 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (require 'socks)
   (setq url-gateway-method 'socks
-        socks-noproxy '("localhost")
-        socks-server '("Default server" "127.0.0.1" 1086 5))
-  (setenv "all_proxy" (concat "socks5://" centaur-proxy))
+        socks-noproxy '("localhost"))
+  (let* ((proxy (split-string centaur-socks-proxy ":"))
+         (host (car proxy))
+         (port (cadr  proxy)))
+    (setq socks-server `("Default server" ,host ,port 5)))
+  (setenv "all_proxy" (concat "socks5://" centaur-socks-proxy))
   (proxy-socks-show))
 
 (defun proxy-socks-disable ()
   "Disable SOCKS proxy."
   (interactive)
   (setq url-gateway-method 'native
-        socks-noproxy nil)
+        socks-noproxy nil
+        socks-server nil)
   (setenv "all_proxy" "")
   (proxy-socks-show))
 

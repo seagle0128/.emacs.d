@@ -7,7 +7,8 @@
 ;; (setq centaur-logo nil)                        ; Logo file or nil (official logo)
 ;; (setq centaur-full-name "user name")           ; User full name
 ;; (setq centaur-mail-address "user@email.com")   ; Email address
-;; (setq centaur-proxy "127.0.0.1:1080")          ; Network proxy
+;; (setq centaur-proxy "127.0.0.1:1087")          ; HTTP/HTTPS proxy
+;; (setq centaur-socks-proxy "127.0.0.1:1086")    ; SOCKS proxy
 ;; (setq centaur-server nil)                      ; Enable `server-mode' or not: t or nil
 ;; (setq centaur-icon nil)                        ; Display icons or not: t or nil
 ;; (setq centaur-package-archives 'melpa)         ; Package repo: melpa, emacs-china, netease, ustc, tencent or tuna
@@ -68,6 +69,7 @@
 
 ;; Enable proxy
 ;; (proxy-http-enable)
+;; (proxy-socks-enable)
 
 ;; Display on the specified monitor
 ;; (when (and (> (length (display-monitor-attributes-list)) 1)
