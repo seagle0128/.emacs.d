@@ -206,7 +206,9 @@
        :bind (("C-c u" . lsp-ui-imenu)
               :map lsp-ui-mode-map
               ("M-<f6>" . lsp-ui-hydra/body)
-              ("M-RET" . lsp-ui-sideline-apply-code-actions))
+              ("M-RET" . lsp-ui-sideline-apply-code-actions)
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references))
        :hook (lsp-mode . lsp-ui-mode)
        :init (setq lsp-ui-sideline-show-diagnostics nil
                    lsp-ui-sideline-ignore-duplicate t
