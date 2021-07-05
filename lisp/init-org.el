@@ -275,8 +275,13 @@ prepended to the element after the #+HEADER: tag."
     (org-pomodoro-mode-line ((t (:inherit warning))))
     (org-pomodoro-mode-line-overtime ((t (:inherit error))))
     (org-pomodoro-mode-line-break ((t (:inherit success))))
-    :bind (:map org-agenda-mode-map
-           ("P" . org-pomodoro))))
+    :bind (:map org-mode-map
+           ("C-c C-x m" . org-pomodoro))
+    :init
+    (with-eval-after-load 'org-agenda
+      (bind-keys :map org-agenda-mode-map
+        ("K" . org-pomodoro)
+        ("C-c C-x m" . org-pomodoro)))))
 
 ;; Roam
 (when (and emacs/>=26p (executable-find "cc"))
