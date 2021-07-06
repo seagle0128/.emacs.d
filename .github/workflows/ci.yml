@@ -28,10 +28,11 @@ jobs:
         run: |
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
+          gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
           emacs --version; \
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
-          --eval "(setq package-check-signature nil
+          --eval "(setq package-check-signature t
                         url-show-status nil)" \
           --eval "(when (and (require 'org nil t) (string= (org-version) \"\"))
                      (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))" \
