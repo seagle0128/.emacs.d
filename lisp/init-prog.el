@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-custom)
+(require 'init-const)
 
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
@@ -74,6 +75,57 @@
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
          ("C-c X" . quickrun)))
+
+;; Browse devdocs.io documents using EWW
+(when emacs/>=27p
+  (use-package devdocs
+    :commands devdocs--installed-p
+    :bind (:map prog-mode-map
+           ("M-<f1>" . devdocs-lookup+))
+    :init
+    (defvar devdocs-major-mode-docs-alist
+      '((c-mode . ("C"))
+        (c++-mode . ("C++"))
+        (python-mode . ("Python 3.9" "Python 3.8"))
+        (ruby-mode . ("Ruby 3"))
+        (go-mode . ("Go"))
+        (rust-mode . ("Rust"))
+        (css-mode . ("CSS"))
+        (html-mode . ("HTML"))
+        (js-mode . ("JavaScript" "JQuery"))
+        (js2-mode . ("JavaScript" "JQuery"))
+        (emacs-lisp-mode . ("Elisp")))
+      "Alist of MAJOR-MODE and list of docset names.")
+
+    (mapc
+     (lambda (e)
+       (add-hook (intern (format "%s-hook" (car e)))
+                 (lambda ()
+                   (setq-local devdocs-current-docs (cdr e)))))
+     devdocs-major-mode-docs-alist)
+
+    (defun devdocs-lookup+()
+      "Look up a DevDocs documentation entry.
+
+Install the doc if it's not installed."
+      (interactive)
+
+      ;; Install the doc if it's not installed
+      (mapc
+       (lambda (str)
+         (let* ((docs (split-string str " "))
+                (doc (if (length= docs 1)
+                         (downcase (car docs))
+                       (concat (downcase (car docs)) "~" (downcase (cdr docs))))))
+           (unless (devdocs--installed-p doc)
+             (message "Installing %s" str)
+             (devdocs-install doc))))
+       (alist-get major-mode devdocs-major-mode-docs-alist))
+
+      ;; Lookup the symbol at point
+      (if-let ((symbol (symbol-at-point)))
+          (devdocs-lookup nil (symbol-name symbol))
+        (message "No symbol to lookup!")))))
 
 (use-package cask-mode)
 (use-package csharp-mode)
