@@ -391,14 +391,25 @@ of the buffer text to be displayed in the popup"
     (defun devdocs-lookup+()
       "Look up a DevDocs documentation entry.
 
-Install the doc if it is not installed."
+Install the doc if it's not installed."
       (interactive)
-      ;; (mapc
-      ;;  (lambda (doc)
-      ;;    (unless (devdocs--installed-p doc)
-      ;;      (devdocs-install doc)))
-      ;;  (alist-get major-mode devdocs-major-mode-docs-alist))
-      (devdocs-lookup nil (symbol-name (symbol-at-point))))))
+
+      ;; Install the doc if it's not installed
+      (mapc
+       (lambda (str)
+         (let* ((docs (split-string str " "))
+                (doc (if (length= docs 1)
+                         (downcase (car docs))
+                       (concat (downcase (car docs)) "~" (downcase (cdr docs))))))
+           (unless (devdocs--installed-p doc)
+             (message "Installing %s" str)
+             (devdocs-install doc))))
+       (alist-get major-mode devdocs-major-mode-docs-alist))
+
+      ;; Lookup the symbol at point
+      (if-let ((symbol (symbol-at-point)))
+          (devdocs-lookup nil (symbol-name symbol))
+        (message "No symbol to lookup!")))))
 
 ;; A stackoverflow and its sisters' sites reader
 (when emacs/>=26p
