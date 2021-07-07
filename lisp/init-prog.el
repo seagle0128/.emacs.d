@@ -89,7 +89,7 @@
         (python-mode . ("Python 3.9" "Python 3.8"))
         (ruby-mode . ("Ruby 3"))
         (go-mode . ("Go"))
-        (rust-mode . ("Rust"))
+        (rustic-mode . ("Rust"))
         (css-mode . ("CSS"))
         (html-mode . ("HTML"))
         (js-mode . ("JavaScript" "JQuery"))
