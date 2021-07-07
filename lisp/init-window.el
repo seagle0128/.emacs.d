@@ -207,6 +207,7 @@
           (Buffer-menu-mode :select t :size 0.5 :align 'below :autoclose t)
           (gnus-article-mode :select t :size 0.7 :align 'below :autoclose t)
           (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
+          (devdocs-mode :select t :size 0.4 :align 'below :autoclose t)
           ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
           ("*Process-Environment*" :select t :size 0.3 :align 'below :autoclose t)
           (("*docker-containers*" "*docker-images*" "*docker-networks*" "*docker-volumes*")
