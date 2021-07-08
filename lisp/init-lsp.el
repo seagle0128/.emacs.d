@@ -66,8 +66,7 @@
      ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
      (use-package lsp-mode
        :diminish
-       :defines (lsp-clients-python-library-directories
-                 lsp-rust-server)
+       :defines lsp-clients-python-library-directories
        :commands (lsp-enable-which-key-integration
                   lsp-format-buffer
                   lsp-organize-imports
@@ -519,9 +518,7 @@
 
      ;; Swift/C/C++/Objective-C
      (when sys/macp
-       (use-package lsp-sourcekit
-         :init (setq lsp-sourcekit-executable
-                     "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")))
+       (use-package lsp-sourcekit))
 
      ;; Julia support
      (use-package lsp-julia
