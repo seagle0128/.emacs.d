@@ -48,8 +48,8 @@ latest stable release - currently **27.2**.
 - Better Org/Markdown support.
 - Support multiple programming languages
     - C/C++/Object-C/C#/Java
-    - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
-    - Javascript/Typescript/JSON/YAML
+    - Python/Ruby/Perl/PHP/Shell/PowerShell/Bat
+    - JavaScript/Typescript/JSON/YAML
     - HTML/CSS/XML
     - Golang/Swift/Rust/Dart/Elixir
     - ...
@@ -219,7 +219,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 
 ## FAQ
 
-1. How to display icons correctly in `Centaur Emacs`?
+1. How to display icons correctly in Centaur Emacs?
 
     Generally you just use `M-x centaur-install-fonts` to install all necessary
     fonts. The manual steps are below.
@@ -288,11 +288,11 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
    and terminal?
 
     Please refer to #33. You should instead set environment variables in startup
-    files like .profile, .bash_profile or .zshenv, then `Centaur Emacs` is able
-    to recognize and import the environment variables.
+    files like `.profile`, `.bash_profile` or `.zshenv`, then `Centaur Emacs` is
+    able to recognize and import the environment variables.
 
 1. How to use [zoom-window](https://github.com/syohex/emacs-zoom-window) in
-   `Centaur Emacs`?
+   Centaur Emacs?
 
    See [#169](https://github.com/seagle0128/.emacs.d/issues/169#issuecomment-590035527).
 
