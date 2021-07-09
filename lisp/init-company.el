@@ -117,6 +117,7 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package company-box
+            :disabled
             :diminish
             :defines company-box-icons-all-the-icons
             :hook (company-mode . company-box-mode)
