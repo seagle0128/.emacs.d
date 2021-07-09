@@ -48,7 +48,7 @@ latest stable release - currently **27.2**.
 - Better Org/Markdown support.
 - Support multiple programming languages
     - C/C++/Object-C/C#/Java
-    - Python/Ruby/Perl/PHP/Shell/PowerShell/Bat
+    - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
     - JavaScript/Typescript/JSON/YAML
     - HTML/CSS/XML
     - Golang/Swift/Rust/Dart/Elixir
