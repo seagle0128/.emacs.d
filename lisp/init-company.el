@@ -117,7 +117,6 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package company-box
-            :disabled
             :diminish
             :defines company-box-icons-all-the-icons
             :hook (company-mode . company-box-mode)
@@ -251,7 +250,7 @@
           :bind (:map company-active-map
                  ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
           :hook (global-company-mode . company-quickhelp-mode)
-          :init (setq company-quickhelp-delay 0.5)))
+          :init (setq company-quickhelp-delay 0.3)))
 
     ;; Display documentation for completion candidates in terminal
     (use-package company-quickhelp-terminal
@@ -260,7 +259,7 @@
              ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
       :hook ((global-company-mode . company-quickhelp-mode)
              (company-quickhelp-mode  . company-quickhelp-terminal-mode))
-      :init (setq company-quickhelp-delay 0.5))))
+      :init (setq company-quickhelp-delay 0.3))))
 
 (provide 'init-company)
 
