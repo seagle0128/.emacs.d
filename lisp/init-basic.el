@@ -81,7 +81,7 @@
 (modify-coding-system-alist 'process "*" 'utf-8)
 
 ;; Environment
-(when (or sys/mac-x-p sys/linux-x-p)
+(when (or sys/mac-x-p sys/linux-x-p (daemonp))
   (use-package exec-path-from-shell
     :init
     (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
