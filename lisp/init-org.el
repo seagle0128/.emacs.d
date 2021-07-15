@@ -236,6 +236,11 @@ prepended to the element after the #+HEADER: tag."
            :map org-mode-map
            ("C-c M-o" . org-mime-org-buffer-htmlize)))
 
+  ;; Auto-toggle Org LaTeX fragments
+  (use-package org-fragtog
+    :diminish
+    :hook (org-mode . org-fragtog-mode))
+
   ;; Preview
   (use-package org-preview-html
     :diminish)
