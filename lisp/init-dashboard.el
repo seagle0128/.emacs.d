@@ -83,6 +83,7 @@
     :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
+          dashboard-page-separator "\n\f\n"
           dashboard-center-content t
           dashboard-show-shortcuts nil
           dashboard-items '((recents  . 10)
