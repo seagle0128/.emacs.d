@@ -148,8 +148,6 @@
 
 (use-package time
   :ensure nil
-  :unless (display-graphic-p)
-  :hook (after-init . display-time-mode)
   :init (setq display-time-24hr-format t
               display-time-day-and-date t))
 
