@@ -292,7 +292,6 @@ prepended to the element after the #+HEADER: tag."
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
-    :custom (org-roam-directory (file-truename centaur-org-directory))
     :hook (after-init . org-roam-mode)
     :bind (:map org-roam-mode-map
            (("C-c n l" . org-roam)
@@ -301,6 +300,9 @@ prepended to the element after the #+HEADER: tag."
            :map org-mode-map
            (("C-c n i" . org-roam-insert))
            (("C-c n I" . org-roam-insert-immediate)))
+    :init
+    (setq org-roam-directory (file-truename centaur-org-directory)
+          org-roam-v2-ack t)
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory)))
