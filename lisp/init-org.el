@@ -292,14 +292,14 @@ prepended to the element after the #+HEADER: tag."
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
-    :hook (after-init . org-roam-mode)
-    :bind (:map org-roam-mode-map
-           (("C-c n l" . org-roam)
-            ("C-c n f" . org-roam-find-file)
-            ("C-c n g" . org-roam-graph))
-           :map org-mode-map
-           (("C-c n i" . org-roam-insert))
-           (("C-c n I" . org-roam-insert-immediate)))
+    :hook (after-init . org-roam-setup)
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today)
+           ("C-c n I" . org-roam-insert-immediate))
     :init
     (setq org-roam-directory (file-truename centaur-org-directory)
           org-roam-v2-ack t)
@@ -308,7 +308,7 @@ prepended to the element after the #+HEADER: tag."
       (make-directory org-roam-directory)))
 
   (use-package org-roam-server
-    :functions xwidget-buffer xwidget-webkit-current-session
+    :diminish
     :hook (org-roam-server-mode . org-roam-server-browse)
     :init
     (defun org-roam-server-browse ()
