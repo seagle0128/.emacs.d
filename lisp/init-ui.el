@@ -90,7 +90,7 @@
   :custom
   (doom-modeline-icon centaur-icon)
   (doom-modeline-bar nil)
-  (doom-modeline-hud t)
+  (doom-modeline-hud nil)
   (doom-modeline-minor-modes t)
   (doom-modeline-unicode-fallback t)
   (doom-modeline-mu4e nil)
