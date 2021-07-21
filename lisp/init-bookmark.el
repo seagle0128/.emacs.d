@@ -47,6 +47,16 @@
                    (annotation (bookmark-get-annotation full-record))
                    (location   (bookmark-location full-record))
                    (file       (file-name-nondirectory location))
+                   (type       (let ((fmt "%-8.8s"))
+                                 (cond ((null location)
+                                        (propertize (format fmt "NOFILE") 'face 'warning))
+                                       ((file-remote-p location)
+                                        (propertize (format fmt "REMOTE") 'face 'mode-line-buffer-id))
+                                       ((not (file-exists-p location))
+                                        (propertize (format fmt "NOTFOUND") 'face 'error))
+                                       ((file-directory-p location)
+                                        (propertize (format fmt "DIRED") 'face 'warning))
+                                       (t (propertize (format fmt "FILE") 'face 'success)))))
                    (icon       (cond
                                 ((file-remote-p location)
                                  (all-the-icons-octicon "radio-tower" :height 0.8 :v-adjust 0.0))
@@ -66,8 +76,9 @@
                                         'follow-link t
                                         'help-echo "mouse-2: go to this bookmark in other window")
                           name)
+                       ,type
                        ,@(if bookmark-bmenu-toggle-filenames
-                             (list (propertize location 'face 'font-lock-string-face)))])
+                             (list (propertize location 'face 'completions-annotations)))])
                     entries)))
           (tabulated-list-init-header)
           (setq tabulated-list-entries entries))
@@ -96,6 +107,7 @@ deletion, or > if it is flagged for displaying."
               `[("" 1) ;; Space to add "*" for bookmark with annotation
                 ("" 2) ;; Icons
                 ("Bookmark" ,bookmark-bmenu-file-column bookmark-bmenu--name-predicate)
+                ("Type" 10)
                 ,@(if bookmark-bmenu-toggle-filenames
                       '(("File" 0 bookmark-bmenu--file-predicate)))])
         (setq tabulated-list-padding bookmark-bmenu-marks-width)
