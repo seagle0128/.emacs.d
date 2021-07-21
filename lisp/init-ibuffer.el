@@ -40,7 +40,6 @@
   :config
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
-    :if (icons-displayable-p)
     :init (all-the-icons-ibuffer-mode 1))
 
   (with-eval-after-load 'counsel

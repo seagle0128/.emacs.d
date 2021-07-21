@@ -544,17 +544,16 @@ This is for use in `ivy-re-builders-alist'."
 
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
-(when (icons-displayable-p)
-  (use-package all-the-icons-ivy-rich
-    :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-    :config
-    (plist-put all-the-icons-ivy-rich-display-transformers-list
-               'centaur-load-theme
-               '(:columns
-                 ((all-the-icons-ivy-rich-theme-icon)
-                  (ivy-rich-candidate))
-                 :delimiter "\t"))
-    (all-the-icons-ivy-rich-reload)))
+(use-package all-the-icons-ivy-rich
+  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+  :config
+  (plist-put all-the-icons-ivy-rich-display-transformers-list
+             'centaur-load-theme
+             '(:columns
+               ((all-the-icons-ivy-rich-theme-icon)
+                (ivy-rich-candidate))
+               :delimiter "\t"))
+  (all-the-icons-ivy-rich-reload))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
