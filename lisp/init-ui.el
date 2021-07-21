@@ -89,11 +89,7 @@
 (use-package doom-modeline
   :custom
   (doom-modeline-icon centaur-icon)
-  (doom-modeline-bar nil)
-  (doom-modeline-hud nil)
   (doom-modeline-minor-modes t)
-  (doom-modeline-unicode-fallback t)
-  (doom-modeline-mu4e nil)
   :hook (after-init . doom-modeline-mode)
   :init
   ;; Prevent flash of unstyled modeline at startup
