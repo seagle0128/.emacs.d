@@ -64,16 +64,26 @@ decrease this. If you experience stuttering, increase this.")
 (defvar centaur-gc-timer (run-with-idle-timer 10 t #'garbage-collect)
   "Run garbarge collection when idle 10s.")
 
-(defvar default-file-name-handler-alist file-name-handler-alist)
+(unless (or (daemonp) noninteractive)
+  (let ((old-file-name-handler-alist file-name-handler-alist))
+    ;; If `file-name-handler-alist' is nil, no 256 colors in TUI
+    ;; @see https://emacs-china.org/t/spacemacs-centaur-emacs/3802/839
+    (setq file-name-handler-alist
+          (unless (display-graphic-p)
+            '(("\\(?:\\.tzst\\|\\.zst\\|\\.dz\\|\\.txz\\|\\.xz\\|\\.lzma\\|\\.lz\\|\\.g?z\\|\\.\\(?:tgz\\|svgz\\|sifz\\)\\|\\.tbz2?\\|\\.bz2\\|\\.Z\\)\\(?:~\\|\\.~[-[:alnum:]:#@^._]+\\(?:~[[:digit:]]+\\)?~\\)?\\'" . jka-compr-handler))))
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                "Recover file name handlers."
+                (setq file-name-handler-alist
+                      (delete-dups (append file-name-handler-alist
+                                           old-file-name-handler-alist)))))))
 
-(setq file-name-handler-alist nil)
 (setq gc-cons-threshold centaur-gc-cons-upper-limit
       gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            "Restore defalut values after startup."
-            (setq file-name-handler-alist default-file-name-handler-alist
-                  gc-cons-threshold centaur-gc-cons-threshold
+            "Recover GC values after startup."
+            (setq gc-cons-threshold centaur-gc-cons-threshold
                   gc-cons-percentage 0.1)
 
             ;; GC automatically while unfocusing the frame
