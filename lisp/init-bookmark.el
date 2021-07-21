@@ -107,7 +107,7 @@ deletion, or > if it is flagged for displaying."
               `[("" 1) ;; Space to add "*" for bookmark with annotation
                 ("" 2) ;; Icons
                 ("Bookmark" ,bookmark-bmenu-file-column bookmark-bmenu--name-predicate)
-                ("Type" 10)
+                ("Type" 9)
                 ,@(if bookmark-bmenu-toggle-filenames
                       '(("File" 0 bookmark-bmenu--file-predicate)))])
         (setq tabulated-list-padding bookmark-bmenu-marks-width)
