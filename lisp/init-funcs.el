@@ -589,7 +589,7 @@ If SYNC is non-nil, the updating process is synchronous."
                   "Load theme: "
                   `(auto
                     random
-                    ,(if (boundp 'ns-system-appearance) 'system "")
+                    ,(if (bound-and-true-p ns-system-appearance) 'system "")
                     ,@(mapcar #'car centaur-theme-alist))))))
   ;; Set option
   (centaur-set-variable 'centaur-theme theme no-save)
@@ -606,11 +606,13 @@ If SYNC is non-nil, the updating process is synchronous."
        :init (circadian-setup)))
     ('system
      ;; System-appearance themes
-     (if (boundp 'ns-system-appearance)
+     (if (bound-and-true-p ns-system-appearance)
          (progn
            (centaur--load-system-theme ns-system-appearance)
            (add-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme))
-       (warn "The system theme is unavailable on this platform!")))
+       (progn
+         (message "The `system' theme is unavailable on this platform. Using `default' theme...")
+         (centaur--load-theme (centaur--theme-name 'default)))))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
 (global-set-key (kbd "C-c T") #'centaur-load-theme)
