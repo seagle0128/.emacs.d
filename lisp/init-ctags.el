@@ -41,7 +41,8 @@
     :bind (("C-x c j" . citre-jump+)
            ("C-x c k" . citre-jump-back)
            ("C-x c p" . citre-peek)
-           ("C-x c a" . citre-ace-peek))
+           ("C-x c a" . citre-ace-peek)
+           ("C-x c u" . citre-update-this-tags-file))
     :hook (prog-mode . citre-auto-enable-citre-mode)
     :init
     (defun citre-jump+ ()
