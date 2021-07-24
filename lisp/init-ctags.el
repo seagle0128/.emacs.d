@@ -1,4 +1,4 @@
-;; init-tags.el --- Initialize TAGS configurations.	-*- lexical-binding: t -*-
+;; init-ctags.el --- Initialize TAGS configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018-2021 Vincent Zhang
 
@@ -33,6 +33,8 @@
 (require 'init-const)
 (require 'init-custom)
 
+;; Ctags IDE on the True Editor
+;; @see https://github.com/universal-ctags/citre#quick-start
 (when emacs/>=26p
   (use-package citre
     :diminish
@@ -43,6 +45,8 @@
     :hook (prog-mode . citre-auto-enable-citre-mode)
     :init
     (defun citre-jump+ ()
+      "Jump to the definition of the symbol at point.
+Fallback to `xref-find-definitions'."
       (interactive)
       (condition-case _
           (citre-jump)
@@ -87,24 +91,9 @@
         "Enable the lsp + Citre capf backend in current buffer."
         (add-hook 'completion-at-point-functions #'lsp-citre-capf-function nil t))
 
-      (add-hook 'citre-mode-hook #'enable-lsp-citre-capf-backend)
+      (add-hook 'citre-mode-hook #'enable-lsp-citre-capf-backend))))
 
-      (with-eval-after-load 'company
-        (defun company-citre (-command &optional -arg &rest _ignored)
-          "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
-          (interactive (list 'interactive))
-          (cl-case -command
-            (interactive (company-begin-backend 'company-citre))
-            (prefix (and (bound-and-true-p citre-mode)
-                         (or (citre-get-symbol) 'stop)))
-            (meta (citre-get-property 'signature -arg))
-            (annotation (citre-capf--get-annotation -arg))
-            (candidates (all-completions -arg (citre-capf--get-collection -arg)))
-            (ignore-case (not citre-completion-case-sensitive))))
-
-        (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))))))
-
-(provide 'init-tags)
+(provide 'init-ctags)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-tags.el ends here
+;;; init-ctags.el ends here
