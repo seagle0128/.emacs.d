@@ -236,6 +236,10 @@ prepended to the element after the #+HEADER: tag."
            :map org-mode-map
            ("C-c M-o" . org-mime-org-buffer-htmlize)))
 
+  ;; Add graphical view of agenda
+  (use-package org-timeline
+    :hook (org-agenda-finalize . org-timeline-insert-timeline))
+
   ;; Auto-toggle Org LaTeX fragments
   (use-package org-fragtog
     :diminish
