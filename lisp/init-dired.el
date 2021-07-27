@@ -79,43 +79,43 @@
     :init (diredfl-global-mode 1))
 
   ;; Shows icons
-  (when (icons-displayable-p)
-    (use-package all-the-icons-dired
-      :diminish
-      :hook (dired-mode . all-the-icons-dired-mode)
-      :init (setq all-the-icons-dired-monochrome nil)
-      :config
-      (with-no-warnings
-        (defun my-all-the-icons-dired--refresh ()
-          "Display the icons of files in a dired buffer."
-          (all-the-icons-dired--remove-all-overlays)
-          ;; NOTE: don't display icons it too many items
-          (if (<= (count-lines (point-min) (point-max)) 1000)
-              (save-excursion
-                (goto-char (point-min))
-                (while (not (eobp))
-                  (when (dired-move-to-filename nil)
-                    (let ((case-fold-search t))
-                      (when-let* ((file (dired-get-filename 'relative 'noerror))
-                                  (icon (if (file-directory-p file)
-                                            (all-the-icons-icon-for-dir
-                                             file
-                                             :face 'all-the-icons-dired-dir-face
-                                             :height 0.9
-                                             :v-adjust all-the-icons-dired-v-adjust)
-                                          (apply #'all-the-icons-icon-for-file
-                                                 file
-                                                 (append
-                                                  '(:height 0.9)
-                                                  `(:v-adjust ,all-the-icons-dired-v-adjust)
-                                                  (when all-the-icons-dired-monochrome
-                                                    `(:face ,(face-at-point))))))))
-                        (if (member file '("." ".."))
-                            (all-the-icons-dired--add-overlay (point) "   \t")
-                          (all-the-icons-dired--add-overlay (point) (concat " " icon "\t"))))))
-                  (forward-line 1)))
-            (message "Not display icons because of too many items.")))
-        (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh))))
+  (use-package all-the-icons-dired
+    :diminish
+    :if (icons-displayable-p)
+    :hook (dired-mode . all-the-icons-dired-mode)
+    :init (setq all-the-icons-dired-monochrome nil)
+    :config
+    (with-no-warnings
+      (defun my-all-the-icons-dired--refresh ()
+        "Display the icons of files in a dired buffer."
+        (all-the-icons-dired--remove-all-overlays)
+        ;; NOTE: don't display icons it too many items
+        (if (<= (count-lines (point-min) (point-max)) 1000)
+            (save-excursion
+              (goto-char (point-min))
+              (while (not (eobp))
+                (when (dired-move-to-filename nil)
+                  (let ((case-fold-search t))
+                    (when-let* ((file (dired-get-filename 'relative 'noerror))
+                                (icon (if (file-directory-p file)
+                                          (all-the-icons-icon-for-dir
+                                           file
+                                           :face 'all-the-icons-dired-dir-face
+                                           :height 0.9
+                                           :v-adjust all-the-icons-dired-v-adjust)
+                                        (apply #'all-the-icons-icon-for-file
+                                               file
+                                               (append
+                                                '(:height 0.9)
+                                                `(:v-adjust ,all-the-icons-dired-v-adjust)
+                                                (when all-the-icons-dired-monochrome
+                                                  `(:face ,(face-at-point))))))))
+                      (if (member file '("." ".."))
+                          (all-the-icons-dired--add-overlay (point) "   \t")
+                        (all-the-icons-dired--add-overlay (point) (concat " " icon "\t"))))))
+                (forward-line 1)))
+          (message "Not display icons because of too many items.")))
+      (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
