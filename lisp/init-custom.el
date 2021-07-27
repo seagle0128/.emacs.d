@@ -42,12 +42,12 @@
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-full-name "Vincent Zhang"
+(defcustom centaur-full-name user-full-name
   "Set user full name."
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-mail-address "seagle0128@gmail.com"
+(defcustom centaur-mail-address user-mail-address
   "Set user email address."
   :group 'centaur
   :type 'string)
