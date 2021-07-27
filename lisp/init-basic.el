@@ -38,8 +38,8 @@
 (setq user-full-name centaur-full-name
       user-mail-address centaur-mail-address)
 
-;; Key Modifiers
 (with-no-warnings
+  ;; Key Modifiers
   (cond
    (sys/win32p
     ;; make PC keyboard's Win key or other to type Super or Hyper
@@ -58,7 +58,22 @@
                ([(super s)] . save-buffer)
                ([(super v)] . yank)
                ([(super w)] . delete-frame)
-               ([(super z)] . undo)))))
+               ([(super z)] . undo))))
+
+  ;; Optimization
+  (when sys/win32p
+    (setq w32-get-true-file-attributes nil   ; decrease file IO workload
+          w32-pipe-read-delay 0              ; faster IPC
+          w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
+  (unless sys/macp
+    (setq command-line-ns-option-alist nil))
+  (unless sys/linuxp
+    (setq command-line-x-option-alist nil))
+
+  ;; Garbage Collector Magic Hack
+  (use-package gcmh
+    :diminish
+    :init (gcmh-mode 1)))
 
 ;; Encoding
 ;; UTF-8 as the default coding system

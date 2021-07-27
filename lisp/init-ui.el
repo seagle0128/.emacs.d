@@ -50,6 +50,15 @@
                 (set-frame-parameter nil 'ns-appearance bg)
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
+;; Optimization
+(setq idle-update-delay 1.0)
+
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+(setq fast-but-imprecise-scrolling t)
+(setq redisplay-skip-fontification-on-input t)
+
 ;; Inhibit resizing frame
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)

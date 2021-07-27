@@ -54,15 +54,7 @@
   (error "This requires Emacs 25.1 and above!"))
 
 ;; Speed up startup
-(defvar centaur-gc-cons-threshold (if (display-graphic-p) 16000000 800000)
-  "The default value to use for `gc-cons-threshold'. If you experience freezing,
-decrease this. If you experience stuttering, increase this.")
-
-(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 512000000 128000000)
-  "The temporary value for `gc-cons-threshold' to defer it.")
-
-(defvar centaur-gc-timer (run-with-idle-timer 10 t #'garbage-collect)
-  "Run garbarge collection when idle 10s.")
+(setq auto-mode-case-fold nil)
 
 (unless (or (daemonp) noninteractive)
   (let ((old-file-name-handler-alist file-name-handler-alist))
@@ -78,33 +70,13 @@ decrease this. If you experience stuttering, increase this.")
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
 
-(setq gc-cons-threshold centaur-gc-cons-upper-limit
+(setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."
-            (setq gc-cons-threshold centaur-gc-cons-threshold
-                  gc-cons-percentage 0.1)
-
-            ;; GC automatically while unfocusing the frame
-            ;; `focus-out-hook' is obsolete since 27.1
-            (if (boundp 'after-focus-change-function)
-                (add-function :after after-focus-change-function
-                  (lambda ()
-                    (unless (frame-focus-state)
-                      (garbage-collect))))
-              (add-hook 'focus-out-hook 'garbage-collect))
-
-            ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
-            ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-            (add-hook 'minibuffer-setup-hook
-                      (lambda ()
-                        "Enlarge gc cons threshold while entering minibuffer."
-                        (setq gc-cons-threshold centaur-gc-cons-upper-limit)))
-            (add-hook 'minibuffer-exit-hook
-                      (lambda ()
-                        "Recover gc cons threshold while exiting minibuffer."
-                        (setq gc-cons-threshold centaur-gc-cons-threshold)))))
+            (setq gc-cons-threshold 800000
+                  gc-cons-percentage 0.1)))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
