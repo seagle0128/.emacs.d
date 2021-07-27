@@ -99,19 +99,25 @@ Loaded by `org-babel-load-file'.")
   (>= emacs-major-version 26)
   "Emacs is 26 or above.")
 
-(defconst emacs/>=27p
-  (>= emacs-major-version 27)
-  "Emacs is 27 or above.")
-
 (defconst emacs/>=25.3p
   (or emacs/>=26p
-      (and (= emacs-major-version 25) (>= emacs-minor-version 3)))
+      (and (= emacs-major-version 25)
+           (>= emacs-minor-version 3)))
   "Emacs is 25.3 or above.")
 
 (defconst emacs/>=25.2p
   (or emacs/>=26p
-      (and (= emacs-major-version 25) (>= emacs-minor-version 2)))
+      (and (= emacs-major-version 25)
+           (>= emacs-minor-version 2)))
   "Emacs is 25.2 or above.")
+
+(defconst emacs/>=27p
+  (>= emacs-major-version 27)
+  "Emacs is 27 or above.")
+
+(defconst emacs/>=28p
+  (>= emacs-major-version 28)
+  "Emacs is 28 or above.")
 
 (provide 'init-const)
 

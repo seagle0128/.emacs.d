@@ -70,10 +70,19 @@
   (unless sys/linuxp
     (setq command-line-x-option-alist nil))
 
+  ;; Increase how much is read from processes in a single chunk (default is 4kb)
+  (setq read-process-output-max #x10000)  ; 64kb
+
+  ;; Don't ping things that look like domain names.
+  (setq ffap-machine-p-known 'reject)
+
   ;; Garbage Collector Magic Hack
   (use-package gcmh
     :diminish
-    :init (gcmh-mode 1)))
+    :init
+    (setq gcmh-idle-delay 5
+          gcmh-high-cons-threshold #x1000000) ; 16MB
+    (gcmh-mode 1)))
 
 ;; Encoding
 ;; UTF-8 as the default coding system
