@@ -612,14 +612,6 @@ This is for use in `ivy-re-builders-alist'."
               (setq-local cursor-type nil)))))
       (advice-add #'ivy-posframe--minibuffer-setup :override #'my-ivy-posframe--minibuffer-setup)
 
-      ;; Abort the command that requested the minibuffer input
-      (defun my-ivy-posframe-hidehandler (_)
-        "Hidehandler used by ivy-posframe."
-        (unless (minibufferp)
-          (abort-recursive-edit)
-          t))
-      (advice-add #'ivy-posframe-hidehandler :override #'my-ivy-posframe-hidehandler)
-
       ;; Prettify the buffer
       (defun my-ivy-posframe--prettify-buffer (&rest _)
         "Add top and bottom margin to the prompt."
