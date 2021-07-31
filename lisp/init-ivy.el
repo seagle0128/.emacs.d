@@ -126,7 +126,10 @@
   (setq swiper-action-recenter t)
 
   (setq counsel-find-file-at-point t
+        counsel-preselect-current-file t
+        counsel-find-file-ignore-regexp "\\(?:^[#.]\\)\\|\\(?:[#~]$\\)\\|\\(?:^Icon?\\)"
         counsel-yank-pop-separator "\n────────\n")
+  (add-hook 'counsel-grep-post-action-hook #'recenter)
 
   ;; Use the faster search tool: ripgrep (`rg')
   (when (executable-find "rg")
