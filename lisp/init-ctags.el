@@ -43,8 +43,10 @@
            ("C-x c p" . citre-peek)
            ("C-x c a" . citre-ace-peek)
            ("C-x c u" . citre-update-this-tags-file))
-    :hook (prog-mode . citre-auto-enable-citre-mode)
     :init
+    (require 'citre-config)
+    (setq citre-auto-enable-citre-mode-modes '(prog-mode))
+
     (defun citre-jump+ ()
       "Jump to the definition of the symbol at point.
 Fallback to `xref-find-definitions'."
@@ -54,8 +56,6 @@ Fallback to `xref-find-definitions'."
         (error (call-interactively #'xref-find-definitions))))
     :config
     (with-no-warnings
-      (with-eval-after-load 'cc-mode (require 'citre-lang-c))
-      (with-eval-after-load 'dired (require 'citre-lang-fileref))
       (with-eval-after-load 'projectile
         (setq citre-project-root-function #'projectile-project-root))
 
