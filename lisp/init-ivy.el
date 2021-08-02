@@ -127,17 +127,20 @@
 
   (setq counsel-find-file-at-point t
         counsel-preselect-current-file t
-        counsel-find-file-ignore-regexp "\\(?:^[#.]\\)\\|\\(?:[#~]$\\)\\|\\(?:^Icon?\\)"
         counsel-yank-pop-separator "\n────────\n")
   (add-hook 'counsel-grep-post-action-hook #'recenter)
 
-  ;; Use the faster search tool: ripgrep (`rg')
+  ;; Use the faster search tools
   (when (executable-find "rg")
-    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")
-    (when (and sys/macp (executable-find "gls"))
-      (setq counsel-find-file-occur-use-find nil
-            counsel-find-file-occur-cmd
-            "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s"))
+  (setq counsel-fzf-cmd
+        "fd --type f --hidden --follow --exclude .git --color never || git ls-tree -r --name-only HEAD || find .")
+
+  ;; Be compatible with `gls'
+  (when (and sys/macp (executable-find "gls"))
+    (setq counsel-find-file-occur-use-find nil
+          counsel-find-file-occur-cmd
+          "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first"))
   :config
   (with-no-warnings
     ;; persist views
