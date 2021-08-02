@@ -134,7 +134,7 @@
   (when (executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s"))
   (setq counsel-fzf-cmd
-        "fd --type f --hidden --follow --exclude .git --color never || git ls-tree -r --name-only HEAD || find .")
+        "fd --type f --hidden --follow --exclude .git --color never || git ls-tree -r --name-only HEAD || rg --files --hidden --follow --glob '!.git' --color never || find .")
 
   ;; Be compatible with `gls'
   (when (and sys/macp (executable-find "gls"))
