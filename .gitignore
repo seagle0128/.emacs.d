@@ -4,6 +4,7 @@
 *.elc
 *.log
 *.sqlite
+*.tmp
 *bak/
 .DS_Store
 .cache/
