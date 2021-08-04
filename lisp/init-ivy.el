@@ -256,6 +256,12 @@
       "Switch to `counsel-git' with the current input."
       (counsel-git ivy-text))
 
+    (defun my-ivy-copy-library-path (lib)
+      "Copy the full path of LIB."
+      (let ((path (find-library-name lib)))
+        (kill-new path)
+        (message "Copied path: \"%s\"." path)))
+
     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
     (defun my-swiper-toggle-counsel-rg ()
       "Toggle `counsel-rg' and `swiper'/`swiper-isearch' with the current input."
@@ -360,6 +366,14 @@
      'counsel-fzf
      '(("f" my-ivy-switch-to-counsel-find-file "find file")
        ("g" my-ivy-switch-to-counsel-git "git")))
+
+    (ivy-add-actions
+     'counsel-find-library
+     '(("p" my-ivy-copy-library-path "copy path")))
+
+    (ivy-add-actions
+     'counsel-load-library
+     '(("p" my-ivy-copy-library-path "copy path")))
 
     ;; Integration with `projectile'
     (with-eval-after-load 'projectile
