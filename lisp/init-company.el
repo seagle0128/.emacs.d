@@ -220,9 +220,10 @@
                         (box-border-width (frame-border-width box-frame))
 
                         (window (frame-root-window frame))
-                        ((text-width . text-height) (window-text-pixel-size window nil nil (window-pixel-width) (window-pixel-height)))
+                        ((text-width . text-height) (window-text-pixel-size window nil nil
+                                                                            (/ (frame-pixel-width) 2)
+                                                                            (- (frame-pixel-height) 50)))
                         (border-width (or (alist-get 'internal-border-width company-box-doc-frame-parameters) 0))
-
 
                         (x (- (+ (car box-position) box-width) border-width))
                         (space-right (- (frame-pixel-width) x))
@@ -243,8 +244,7 @@
                              y)))
                   (set-frame-position frame (max x 0) (max y 0))
                   (set-frame-size frame text-width text-height t)))
-              (advice-add #'company-box-doc--set-frame-position
-                          :override #'my-company-box-doc--set-frame-position)
+              (advice-add #'company-box-doc--set-frame-position :override #'my-company-box-doc--set-frame-position)
 
               (when (icons-displayable-p)
                 (setq company-box-icons-all-the-icons
