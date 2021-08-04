@@ -220,7 +220,7 @@
                         (box-border-width (frame-border-width box-frame))
 
                         (window (frame-root-window frame))
-                        ((text-width . text-height) (window-text-pixel-size window nil nil 10000 10000))
+                        ((text-width . text-height) (window-text-pixel-size window nil nil (window-pixel-width) (window-pixel-height)))
                         (border-width (or (alist-get 'internal-border-width company-box-doc-frame-parameters) 0))
 
 
@@ -236,10 +236,10 @@
                                x))
 
                         (y (cdr box-position))
-                        (bottom (+ y box-height))
+                        (bottom (+ company-box--bottom (window-pixel-top) (frame-border-width)))
                         (height (+ text-height (* 2 border-width)))
                         (y (if (> (+ y height) bottom)
-                               (- bottom height)
+                               (- (+ y box-height) height)
                              y)))
                   (set-frame-position frame (max x 0) (max y 0))
                   (set-frame-size frame text-width text-height t)))
