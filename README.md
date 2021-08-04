@@ -1,7 +1,7 @@
 # Centaur Emacs
 
 [![Build Status](https://github.com/seagle0128/.emacs.d/workflows/CI/badge.svg?branch=master)](https://github.com/seagle0128/.emacs.d/actions)
-[![Release Tag](https://img.shields.io/github/tag/seagle0128/.emacs.d.svg?label=Release)](https://github.com/seagle0128/.emacs.d/releases/latest)
+[![Release Tag](https://img.shields.io/github/tag/seagle0128/.emacs.d.svg?label=Release)](https://github.com/seagle0128/.emacs.d/releases)
 [![License](http://img.shields.io/:License-GPL3-blue.svg)](License)
 [![Windows](https://img.shields.io/badge/-Windows-lightblue?logo=windows&style=flat&logoColor=blue)](Windows)
 [![Linux](https://img.shields.io/badge/-Linux-fcc624?logo=linux&style=flat&logoColor=black)](Linux)
