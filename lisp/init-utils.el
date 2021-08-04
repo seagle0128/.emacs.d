@@ -142,7 +142,8 @@ of the buffer text to be displayed in the popup"
          ([remap revert-this-buffer] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
          (lisp-interaction-mode . persistent-scratch-mode))
-  :init (setq persistent-scratch-backup-directory
+  :init (setq persistent-scratch-backup-file-name-format "%Y-%m-%d"
+              persistent-scratch-backup-directory
               (expand-file-name "persistent-scratch" user-emacs-directory)))
 
 ;; Search tools
