@@ -37,7 +37,7 @@
 (unless emacs/>=25.3p (setq centaur-dashboard nil))
 (when centaur-dashboard
   (use-package dashboard
-    :diminish (dashboard-mode page-break-lines-mode)
+    :diminish dashboard-mode
     :functions (all-the-icons-faicon
                 all-the-icons-material
                 winner-undo
@@ -79,7 +79,8 @@
            ("q" . quit-dashboard)
            ("h" . dashboard-hydra/body)
            ("?" . dashboard-hydra/body))
-    :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
+    :hook (dashboard-mode . (lambda () (setq-local frame-title-format nil
+                                              page-break-lines-max-width nil)))
     :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
