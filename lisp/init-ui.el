@@ -389,7 +389,8 @@
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode))
+  :hook (after-init . global-page-break-lines-mode)
+  :init (setq page-break-lines-max-width fill-column))
 
 ;; Child frame
 (when (childframe-workable-p)
