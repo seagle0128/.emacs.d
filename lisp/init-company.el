@@ -163,6 +163,7 @@
               (setq company-box-doc-frame-parameters '((internal-border-width . 1)
                                                        (left-fringe . 10)
                                                        (right-fringe . 10)))
+
               (defun my-company-box-doc--make-buffer (object)
                 (let* ((buffer-list-update-hook nil)
                        (inhibit-modification-hooks t)
@@ -174,6 +175,25 @@
                       (insert (propertize "\n" 'face '(:height 0.5)))
                       (insert string)
                       (insert (propertize "\n\n" 'face '(:height 0.5)))
+
+                      ;; handle hr lines of markdown
+                      ;; @see `lsp-ui-doc--handle-hr-lines'
+                      (let (bolp next before after)
+                        (goto-char 1)
+                        (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
+                          (when (get-text-property next 'markdown-hr)
+                            (goto-char next)
+                            (setq bolp (bolp)
+                                  before (char-before))
+                            (delete-region (point) (save-excursion (forward-visible-line 1) (point)))
+                            (setq after (char-after (1+ (point))))
+                            (insert
+                             (concat
+                              (and bolp (not (equal before ?\n)) "\n")
+                              (delete-backward-char -1)
+                              (propertize (make-string (string-width string) ?─) 'face 'font-lock-comment-face)
+                              (and (not (equal after ?\n)) "\n"))))))
+
                       (setq mode-line-format nil
                             display-line-numbers nil
                             header-line-format nil
@@ -221,7 +241,7 @@
 
                         (window (frame-root-window frame))
                         ((text-width . text-height) (window-text-pixel-size window nil nil
-                                                                            (/ (frame-pixel-width) 2)
+                                                                            (- (frame-pixel-width) 50)
                                                                             (- (frame-pixel-height) 50)))
                         (border-width (or (alist-get 'internal-border-width company-box-doc-frame-parameters) 0))
 
