@@ -190,7 +190,6 @@
                             (insert
                              (concat
                               (and bolp (not (equal before ?\n)) "\n")
-                              (delete-backward-char -1)
                               (propertize (make-string (string-width string) ?─) 'face 'font-lock-comment-face)
                               (and (not (equal after ?\n)) "\n"))))))
 
