@@ -309,18 +309,7 @@ prepended to the element after the #+HEADER: tag."
           org-roam-v2-ack t)
     :config
     (unless (file-exists-p org-roam-directory)
-      (make-directory org-roam-directory)))
-
-  (use-package org-roam-server
-    :diminish
-    :hook (org-roam-server-mode . org-roam-server-browse)
-    :init
-    (defun org-roam-server-browse ()
-      (when org-roam-server-mode
-        (let ((url (format "http://%s:%d" org-roam-server-host org-roam-server-port)))
-          (if (featurep 'xwidget-internal)
-              (centaur-webkit-browse-url url t)
-            (browse-url url)))))))
+      (make-directory org-roam-directory))))
 
 (provide 'init-org)
 
