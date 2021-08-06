@@ -253,7 +253,7 @@ FACE defaults to inheriting from default and highlight."
         '(center t)))
     (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
 
-    (unless (display-graphic-p)
+    (when (or (not (display-graphic-p)) (daemonp))
       ;; Fall back to the display margin since the fringe is unavailable in tty
       (diff-hl-margin-mode 1)
       ;; Avoid restoring `diff-hl-margin-mode'

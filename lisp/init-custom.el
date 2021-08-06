@@ -72,7 +72,7 @@
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-icon t
+(defcustom centaur-icon (or (display-graphic-p) (daemonp))
   "Display icons or not."
   :group 'centaur
   :type 'boolean)
@@ -184,7 +184,7 @@ For example:
   :type '(choice (const :tag "Minibuffer" minibuffer)
                  (const :tag "Child Frame" childframe)))
 
-(defcustom centaur-dashboard t
+(defcustom centaur-dashboard (not (daemonp))
   "Use dashboard at startup or not.
 If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
