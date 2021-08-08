@@ -77,6 +77,7 @@
   ;; Show TODOs in magit
   (when emacs/>=25.2p
     (use-package magit-todos
+      :bind ("C-c C-t" . ivy-magit-todos)
       :init
       (setq magit-todos-nice (if (executable-find "nice") t nil))
       (let ((inhibit-message t))
