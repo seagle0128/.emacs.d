@@ -240,8 +240,8 @@
 
                         (window (frame-root-window frame))
                         ((text-width . text-height) (window-text-pixel-size window nil nil
-                                                                            (- (frame-pixel-width) 50)
-                                                                            (- (frame-pixel-height) 50)))
+                                                                            (/ (frame-pixel-width) 2)
+                                                                            (/ (frame-pixel-height) 2)))
                         (border-width (or (alist-get 'internal-border-width company-box-doc-frame-parameters) 0))
 
                         (x (- (+ (car box-position) box-width) border-width))
