@@ -51,6 +51,7 @@
          ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
          ([remap recentf-open-files] . counsel-recentf)
+         ([remap org-capture] . counsel-org-capture)
 
          ("C-x j"   . counsel-mark-ring)
          ("C-h F"   . counsel-faces)
@@ -68,8 +69,6 @@
          ("C-c o" . counsel-outline)
          ("C-c r" . counsel-rg)
          ("C-c z" . counsel-fzf)
-
-         ([remap org-capture] . counsel-org-capture)
 
          ("C-c c B" . counsel-bookmarked-directory)
          ("C-c c F" . counsel-faces)
