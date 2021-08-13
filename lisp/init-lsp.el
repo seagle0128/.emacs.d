@@ -240,7 +240,7 @@
                                'face `(:background ,(face-foreground 'font-lock-comment-face)))
                    ;; :align-to is added here too
                    (propertize " " 'display '(space :height (1)))
-                   (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
+                   (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.2)))))))))
          (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines))
 
        ;; `C-g'to close doc

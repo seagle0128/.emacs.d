@@ -197,7 +197,7 @@
                                             'company-box-doc--replace-hr t
                                             'face `(:background ,(face-foreground 'font-lock-comment-face)))
                                 (propertize " " 'display '(space :height (1)))
-                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
+                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.3)))))))))
 
                       (setq mode-line-format nil
                             display-line-numbers nil
