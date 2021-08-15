@@ -137,7 +137,7 @@
                           (t . nil)))))
               (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
 
-              ;; Display borders
+              ;; Display borders and optimize performance
               (defun my-company-box--display (string on-update)
                 "Display the completions."
                 (company-box--render-buffer string on-update)
@@ -161,8 +161,8 @@
               (advice-add #'company-box--display :override #'my-company-box--display)
 
               (setq company-box-doc-frame-parameters '((internal-border-width . 1)
-                                                       (left-fringe . 10)
-                                                       (right-fringe . 10)))
+                                                       (left-fringe . 8)
+                                                       (right-fringe . 8)))
 
               (defun my-company-box-doc--make-buffer (object)
                 (let* ((buffer-list-update-hook nil)
@@ -197,7 +197,7 @@
                                             'company-box-doc--replace-hr t
                                             'face `(:background ,(face-foreground 'font-lock-comment-face)))
                                 (propertize " " 'display '(space :height (1)))
-                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.3)))))))))
+                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
 
                       (setq mode-line-format nil
                             display-line-numbers nil
@@ -207,6 +207,7 @@
                       (current-buffer)))))
               (advice-add #'company-box-doc--make-buffer :override #'my-company-box-doc--make-buffer)
 
+              ;; Display the border and fix the markdown header properties
               (defun my-company-box-doc--show (selection frame)
                 (cl-letf (((symbol-function 'completing-read) #'company-box-completing-read)
                           (window-configuration-change-hook nil)
@@ -232,8 +233,7 @@
                         (set-face-background 'child-frame-border border-color frame))
                       (company-box-doc--set-frame-position frame)
 
-                      ;; Fix hr props
-                      ;; @see `lsp-ui-doc--fix-hr-props'
+                      ;; Fix hr props. @see `lsp-ui-doc--fix-hr-props'
                       (with-current-buffer (company-box--get-buffer "doc")
                         (let (next)
                           (while (setq next (next-single-property-change (or next 1) 'company-box-doc--replace-hr))
