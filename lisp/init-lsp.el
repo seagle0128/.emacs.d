@@ -218,7 +218,6 @@
                                          ,(face-foreground 'font-lock-constant-face)
                                          ,(face-foreground 'font-lock-variable-name-face)))
        :config
-
        (with-no-warnings
          (defun my-lsp-ui-doc--handle-hr-lines nil
            (let (bolp next before after)
