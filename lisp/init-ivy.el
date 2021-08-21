@@ -464,11 +464,13 @@ This is for use in `ivy-re-builders-alist'."
               (when (and (frame-visible-p frame)
                          (frame-parameter frame 'posframe-buffer))
                 (setq num (1+ num))))
-            (cons (car pos)
-                  (- (cdr pos)
-                     (if (>= num 1)
-                         (plist-get info :posframe-height)
-                       0)))))
+            (cons
+             (car pos)
+             (- (cdr pos)
+                (if (>= num 1)
+                    (- (plist-get info :posframe-height)
+                       (plist-get hydra-posframe-show-params :internal-border-width))
+                  0)))))
 
         (defun ivy-hydra-set-posframe-show-params ()
           "Set hydra-posframe style."
