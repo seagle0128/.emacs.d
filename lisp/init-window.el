@@ -148,6 +148,7 @@
   (setq shackle-default-size 0.4
         shackle-default-alignment 'below
         shackle-default-rule nil
+        shackle-select-reused-windows t
         shackle-rules
         '((("*Help*" "*Apropos*") :select t :size 0.3 :align 'below :autoclose t)
           (compilation-mode :select t :size 0.3 :align 'below :autoclose t)
