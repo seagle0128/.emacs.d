@@ -378,15 +378,7 @@
 
     (ivy-add-actions
      'counsel-load-library
-     '(("p" my-ivy-copy-library-path "copy path")))
-
-    ;; Integration with `projectile'
-    (with-eval-after-load 'projectile
-      (setq projectile-completion-system 'ivy))
-
-    ;; Integration with `magit'
-    (with-eval-after-load 'magit
-      (setq magit-completing-read-function 'ivy-completing-read)))
+     '(("p" my-ivy-copy-library-path "copy path"))))
 
   ;; Enhance M-x
   (use-package amx
