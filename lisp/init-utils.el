@@ -160,8 +160,6 @@ of the buffer text to be displayed in the popup"
   :bind (:map rg-global-map
          ("c" . rg-dwim-current-dir)
          ("f" . rg-dwim-current-file)
-         ("m" . rg-menu)
-         :map rg-mode-map
          ("m" . rg-menu))
   :init (setq rg-group-result t
               rg-show-columns t)
@@ -169,13 +167,7 @@ of the buffer text to be displayed in the popup"
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
 
   (with-eval-after-load 'projectile
-    (bind-key "s R" #'rg-project projectile-command-map))
-
-  (with-eval-after-load 'counsel
-    (bind-keys
-     :map rg-global-map
-     ("R" . counsel-rg)
-     ("F" . counsel-fzf))))
+    (bind-key "s R" #'rg-project projectile-command-map)))
 
 ;; Dictionary
 (when sys/macp
