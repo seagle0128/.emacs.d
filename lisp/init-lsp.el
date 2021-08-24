@@ -38,7 +38,9 @@
   (pcase centaur-lsp
     ('eglot
      (use-package eglot
-       :hook (prog-mode . eglot-ensure)))
+       :hook (prog-mode . (lambda ()
+                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
+                              (eglot-ensure))))))
 
     ('lsp-mode
      ;; Emacs client for the Language Server Protocol
@@ -77,7 +79,7 @@
         ((t :inherit lsp-headerline-breadcrumb-symbols-face
             :underline (:style wave :color ,(face-foreground 'success)))))
        :hook ((prog-mode . (lambda ()
-                             (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                             (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                                (lsp-deferred))))
               (lsp-mode . (lambda ()
                             ;; Integrate `which-key'
