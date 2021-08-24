@@ -11,7 +11,7 @@ body:
     options:
       - label: I am using the latest version of `Centaur Emacs`.
         required: true
-      - label: "I checked [FAQ](https://github.com/seagle0128/.emacs.d#faq)".
+      - label: I checked [FAQ](https://github.com/seagle0128/.emacs.d#faq).
         required: true
 - type: textarea
   id: bug-description
