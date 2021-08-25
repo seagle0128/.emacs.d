@@ -116,12 +116,19 @@
        (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
        :config
        (with-no-warnings
+         ;; Disable `lsp-mode' in `git-timemachine-mode'
          (defun my-lsp--init-if-visible (fn &rest args)
-           "Not enabling lsp in `git-timemachine-mode'."
            (unless (bound-and-true-p git-timemachine-mode)
              (apply fn args)))
          (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)
 
+         ;; Enable `lsp-mode' in sh/bash/zsh
+         (defun my-lsp-bash-check-sh-shell (&rest _)
+           (and (eq major-mode 'sh-mode)
+                (memq sh-shell '(sh bash zsh))))
+         (advice-add #'lsp-bash-check-sh-shell :override #'my-lsp-bash-check-sh-shell)
+
+         ;; Only display icons in GUI
          (defun my-lsp-icons-get-symbol-kind (fn &rest args)
            (when (and centaur-icon (display-graphic-p))
              (apply fn args)))
