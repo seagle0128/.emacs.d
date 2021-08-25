@@ -210,7 +210,8 @@ FACE defaults to inheriting from default and highlight."
          ([C-f3] . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
          ("C-c t n" . hl-todo-next)
-         ("C-c t o" . hl-todo-occur))
+         ("C-c t o" . hl-todo-occur)
+         ("C-c t i" . hl-todo-insert))
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
