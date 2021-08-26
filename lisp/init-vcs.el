@@ -96,44 +96,30 @@
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 26
-          transient-posframe-min-width nil
+          transient-posframe-min-height nil
+          transient-posframe-min-width 80
+          transient-posframe-poshandler 'posframe-poshandler-frame-center
           transient-posframe-parameters '((left-fringe . 8)
                                           (right-fringe . 8)))
     :config
-    (add-hook 'after-load-theme-hook
-              (lambda ()
-                (custom-set-faces
-                 '(transient-posframe ((t (:inherit tooltip))))
-                 `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
+    (add-hook
+     'after-load-theme-hook
+     (lambda ()
+       (custom-set-faces
+        '(transient-posframe ((t (:inherit tooltip))))
+        `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
-      (defun my-transient-posframe--show-buffer (buffer _alist)
-        "Show BUFFER in posframe and we do not use _ALIST at this period."
-        (when (posframe-workable-p)
-          (let ((posframe (posframe-show
-                           buffer
-			               :font transient-posframe-font
-			               :position (point)
-			               :poshandler transient-posframe-poshandler
-			               :background-color (face-attribute 'transient-posframe :background nil t)
-			               :foreground-color (face-attribute 'transient-posframe :foreground nil t)
-			               :min-width (or transient-posframe-min-width (round (* (frame-width) 0.618)))
-			               :min-height transient-posframe-min-height
-                           :lines-truncate t
-			               :internal-border-width transient-posframe-border-width
-			               :internal-border-color (face-attribute 'transient-posframe-border :background nil t)
-			               :override-parameters transient-posframe-parameters)))
-            (frame-selected-window posframe))))
-      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer)
-
-      (defun my-transient-posframe--render-buffer ()
+      (defun my-transient-posframe--prettify-frame ()
         (with-current-buffer (get-buffer-create transient--buffer-name)
-          (goto-char (point-min))
-          (insert (propertize "\n" 'face '(:height 0.3)))
-          (goto-char (point-max))
-          (insert (propertize "\n\n" 'face '(:height 0.3)))))
-      (advice-add #'transient--show :after #'my-transient-posframe--render-buffer))))
+          (when posframe--frame
+            (goto-char (point-min))
+            (insert (propertize "\n" 'face '(:height 0.3)))
+            (goto-char (point-max))
+            (delete-char -3)          ; delete separate
+            (insert (propertize "\n" 'face '(:height 0.5)))
+            (posframe--set-frame-size posframe--frame nil nil nil nil))))
+      (advice-add #'transient--show :after #'my-transient-posframe--prettify-frame))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
