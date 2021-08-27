@@ -44,7 +44,9 @@
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
   ;; Install or update tools
-  (defvar go--tools '("golang.org/x/tools/cmd/goimports"
+  (defvar go--tools '("golang.org/x/tools/gopls"
+                      "golang.org/x/tools/cmd/goimports"
+                      "honnef.co/go/tools/cmd/staticcheck"
                       "github.com/go-delve/delve/cmd/dlv"
                       "github.com/zmb3/gogetdoc"
                       "github.com/josharian/impl"
@@ -53,11 +55,6 @@
                       "github.com/davidrjenni/reftools/cmd/fillstruct")
     "All necessary go tools.")
 
-  ;; Do not use the -u flag for gopls, as it will update the dependencies to incompatible versions
-  ;; https://github.com/golang/tools/tree/master/gopls#installation
-  (defvar go--tools-no-update '("golang.org/x/tools/gopls@latest")
-    "All necessary go tools without update the dependencies.")
-
   (defun go-update-tools ()
     "Install or update go tools."
     (interactive)
@@ -65,18 +62,9 @@
       (user-error "Unable to find `go' in `exec-path'!"))
 
     (message "Installing go tools...")
-
-    ;; https://github.com/golang/tools/tree/master/gopls#installation
-    (async-shell-command
-     "GO111MODULE=on go get golang.org/x/tools/gopls@latest")
-
-    ;; https://staticcheck.io/docs/install
-    (async-shell-command
-     "go install honnef.co/go/tools/cmd/staticcheck@latest")
-
     (dolist (pkg go--tools)
       (set-process-sentinel
-       (start-process "go-tools" "*Go Tools*" "go" "get" "-u" "-v" pkg)
+       (start-process "go-tools" "*Go Tools*" "go" "install" "-v" "-x" (concat pkg "@latest"))
        (lambda (proc _)
          (let ((status (process-exit-status proc)))
            (if (= 0 status)
