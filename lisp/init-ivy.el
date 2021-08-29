@@ -84,6 +84,7 @@
          ("C-c c h" . counsel-command-history)
          ("C-c c i" . counsel-git)
          ("C-c c j" . counsel-git-grep)
+         ("C-c c k" . counsel-ace-link)
          ("C-c c l" . counsel-git-log)
          ("C-c c m" . counsel-minibuffer-history)
          ("C-c c o" . counsel-outline)
