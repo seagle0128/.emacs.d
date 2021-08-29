@@ -167,8 +167,6 @@
           (" *undo-tree*" :select t)
           ("*quickrun*" :select t :size 15 :align 'below)
           ("*tldr*" :size 0.4 :align 'below :autoclose t)
-          ("*osx-dictionary*" :size 20 :align 'below :autoclose t)
-          ("*Youdao Dictionary*" :size 15 :align 'below :autoclose t)
           ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
           ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
@@ -176,6 +174,8 @@
           (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
           ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
           ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
+
+          ((youdao-dictionary-mode osx-dictionary-mode fanyi-mode) :select t :size 0.5 :align 'below :autoclose t)
 
           (("*Org Agenda*" " *Agenda Commands*" " *Org todo*" "*Org Dashboard*" "*Org Select*")
            :select t :size 0.1 :align 'below :autoclose t)

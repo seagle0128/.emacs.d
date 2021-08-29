@@ -306,7 +306,10 @@
            (ein:notebook-mode             all-the-icons-fileicon "jupyter"       :height 1.2 :face all-the-icons-orange)
            (ein:notebook-multilang-mode   all-the-icons-fileicon "jupyter"       :height 1.2 :face all-the-icons-dorange)
            (nov-mode                      all-the-icons-faicon "book"            :height 1.0 :v-adjust -0.1 :face all-the-icons-green)
-           (gfm-mode                      all-the-icons-octicon "markdown"       :face all-the-icons-lblue))))
+           (gfm-mode                      all-the-icons-octicon "markdown"       :face all-the-icons-lblue)
+           (osx-dictionary-mode           all-the-icons-material "library_books" :face all-the-icons-lblue)
+           (youdao-dictionary-mode        all-the-icons-material "library_books" :face all-the-icons-lblue)
+           (fanyi-mode                    all-the-icons-material "library_books" :face all-the-icons-lblue))))
     (dolist (icon mode-icon-alist)
       (add-to-list 'all-the-icons-mode-icon-alist icon))))
 
