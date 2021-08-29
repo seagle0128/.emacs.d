@@ -204,7 +204,6 @@
            :map elfeed-search-mode-map
            ("?" . elfeed-hydra/body)
            :map elfeed-show-mode-map
-           ("o" . ace-link)
            ("q" . delete-window))
     :hook (elfeed-show-mode . centaur-read-mode)
     :init (setq url-queue-timeout 30

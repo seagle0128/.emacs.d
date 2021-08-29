@@ -149,7 +149,8 @@
   :defines (org-mode-map
             gnus-summary-mode-map
             gnus-article-mode-map
-            ert-results-mode-map)
+            ert-results-mode-map
+            elfeed-show-mode-map)
   :bind ("M-o" . ace-link-addr)
   :hook (after-init . ace-link-setup-default)
   :config
@@ -162,7 +163,9 @@
      :map gnus-article-mode-map
      ("M-o" . ace-link-gnus)))
   (with-eval-after-load 'ert
-    (bind-key "o" #'ace-link-help ert-results-mode-map)))
+    (bind-key "o" #'ace-link-help ert-results-mode-map))
+  (with-eval-after-load 'elfeed
+    (bind-key "o" #'ace-link elfeed-show-mode-map)))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
