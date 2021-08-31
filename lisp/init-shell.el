@@ -118,7 +118,8 @@
 
 ;; Shell Pop
 (use-package shell-pop
-  :bind ([f9] . shell-pop)
+  :bind (("C-`" . shell-pop)
+         ([f9] . shell-pop))
   :init (setq shell-pop-window-size 30
               shell-pop-shell-type
               (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))

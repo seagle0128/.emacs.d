@@ -451,16 +451,17 @@ This is for use in `ivy-re-builders-alist'."
         (advice-add #'hydra-posframe-show :around #'my-hydra-posframe-prettify-string)
 
         (defun ivy-hydra-poshandler-frame-center-below (info)
-          (let ((num 0)
+          (let (ivy-posframe-visible-p
                 (pos (posframe-poshandler-frame-center-near-bottom info)))
             (dolist (frame (frame-list))
               (when (and (frame-visible-p frame)
-                         (frame-parameter frame 'posframe-buffer))
-                (setq num (1+ num))))
+                         (string= (car (frame-parameter frame 'posframe-buffer))
+                                  ivy-posframe-buffer))
+                (setq ivy-posframe-visible-p t)))
             (cons
              (car pos)
              (- (cdr pos)
-                (if (>= num 1)
+                (if ivy-posframe-visible-p
                     (- (plist-get info :posframe-height)
                        (plist-get hydra-posframe-show-params :internal-border-width))
                   0)))))
