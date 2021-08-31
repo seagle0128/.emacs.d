@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-funcs)
 
 (use-package shell
   :ensure nil
@@ -112,18 +113,53 @@
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
-    :init (setq vterm-always-compile-module t)))
+    :init
+    (setq vterm-always-compile-module t)
+
+    (with-no-warnings
+      (when (childframe-workable-p)
+        (defvar vterm-posframe--frame nil)
+        (defun vterm-posframe-toggle ()
+          "Toggle `vterm' child frame."
+          (interactive)
+          (let ((buffer (vterm--internal #'ignore 100))
+                (width  (max 80 (/ (frame-width) 2)))
+                (height (/ (frame-height) 2)))
+            (if (frame-live-p vterm-posframe--frame)
+                (progn
+                  (posframe-delete-frame buffer)
+                  (setq vterm-posframe--frame nil))
+              (setq vterm-posframe--frame
+                    (posframe-show
+                     buffer
+                     :poshandler #'posframe-poshandler-frame-center
+                     :left-fringe 8
+                     :right-fringe 8
+                     :width width
+                     :height height
+                     :min-width width
+                     :min-height height
+                     :internal-border-width 3
+                     :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                     :background-color (face-background 'tooltip nil t)
+                     :accept-focus t)))))
+        (bind-key "C-`" #'vterm-posframe-toggle)))))
 
 ;; Shell Pop
 (use-package shell-pop
-  :bind (("C-`" . shell-pop)
+  :bind (("C-`" . (lambda ()
+                    (interactive)
+                    (if (fboundp 'vterm-posframe-toggle)
+                        (vterm-posframe-toggle)
+                      (shell-pop))))
          ([f9] . shell-pop))
-  :init (setq shell-pop-window-size 30
-              shell-pop-shell-type
-              (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
-                    (sys/win32p '("eshell" "*eshell*" #'eshell))
-                    (t '("terminal" "*terminal*"
-                         (lambda () (term shell-pop-term-shell)))))))
+  :init
+  (setq shell-pop-window-size 30
+        shell-pop-shell-type
+        (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
+              (sys/win32p '("eshell" "*eshell*" #'eshell))
+              (t '("terminal" "*terminal*"
+                   (lambda () (term shell-pop-term-shell)))))))
 
 (provide 'init-shell)
 
