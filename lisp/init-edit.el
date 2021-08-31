@@ -389,10 +389,12 @@
   ((:title (pretty-hydra-title "Origami" 'octicon "fold" :height 1.1 :v-adjust -0.05)
     :color amaranth :quit-key "q")
    ("Node"
-    ((":" origami-recursively-toggle-node "toggle recursively")
+    ((";" origami-recursively-toggle-node "toggle recursively")
      ("a" origami-toggle-all-nodes "toggle all")
      ("t" origami-toggle-node "toggle current")
-     ("o" origami-show-only-node "only show current"))
+     ("o" origami-open-node "open current")
+     ("c" origami-close-node "close current")
+     ("s" origami-show-only-node "only show current"))
     "Actions"
     (("u" origami-undo "undo")
      ("d" origami-redo "redo")
