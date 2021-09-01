@@ -128,9 +128,12 @@
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
-  :hook (before-revert . (lambda ()
-                           (when (bound-and-true-p git-timemachine-mode)
-                             (user-error "Cannot revert the timemachine buffer")))))
+  :hook ((git-timemachine-mode . (lambda ()
+                                   "Display different colors in mode-line."
+                                   (face-remap-add-relative 'mode-line 'custom-saved)))
+         (before-revert . (lambda ()
+                            (when (bound-and-true-p git-timemachine-mode)
+                              (user-error "Cannot revert the timemachine buffer"))))))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
