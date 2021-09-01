@@ -113,6 +113,7 @@
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
+    :commands (vterm--internal)
     :init
     (setq vterm-always-compile-module t)
 
