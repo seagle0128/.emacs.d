@@ -284,13 +284,6 @@ of the buffer text to be displayed in the popup"
               erc-lurker-hide-list '("JOIN" "PART" "QUIT")
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
 
-;; A stackoverflow and its sisters' sites reader
-(when emacs/>=26p
-  (use-package howdoyou
-    :bind (:map howdoyou-mode-map
-           ("q" . kill-buffer-and-window))
-    :hook (howdoyou-mode . read-only-mode)))
-
 ;; text mode directory tree
 (use-package ztree
   :custom-face
@@ -331,8 +324,6 @@ of the buffer text to be displayed in the popup"
 
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
-(use-package diffview)                  ; side-by-side diff view
-(use-package esup)                      ; Emacs startup profiler
 (use-package focus)                     ; Focus on the current region
 (use-package list-environment)
 (use-package memory-usage)
