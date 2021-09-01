@@ -299,14 +299,13 @@ prepended to the element after the #+HEADER: tag."
 (when (and emacs/>=26p (executable-find "cc"))
   (use-package org-roam
     :diminish
-    :hook (after-init . org-roam-setup)
+    :hook (after-init . org-roam-db-autosync-enable)
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n g" . org-roam-graph)
            ("C-c n i" . org-roam-node-insert)
            ("C-c n c" . org-roam-capture)
-           ("C-c n j" . org-roam-dailies-capture-today)
-           ("C-c n I" . org-roam-insert-immediate))
+           ("C-c n j" . org-roam-dailies-capture-today))
     :init
     (setq org-roam-directory (file-truename centaur-org-directory)
           org-roam-v2-ack t)
