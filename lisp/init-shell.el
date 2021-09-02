@@ -152,7 +152,7 @@
                     (interactive)
                     (if (fboundp 'vterm-posframe-toggle)
                         (vterm-posframe-toggle)
-                      (shell-pop))))
+                      (shell-pop nil))))
          ([f9] . shell-pop))
   :init
   (setq shell-pop-window-size 30
