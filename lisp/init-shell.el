@@ -113,7 +113,12 @@
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
-    :commands (vterm--internal)
+    :commands vterm--internal
+    :bind (:map vterm-mode-map
+           ([f9] . (lambda ()
+                     (interactive)
+                     (and (fboundp 'shell-pop)
+                          (shell-pop nil)))))
     :init
     (setq vterm-always-compile-module t)
 
@@ -126,10 +131,13 @@
           (let ((buffer (vterm--internal #'ignore 100))
                 (width  (max 80 (/ (frame-width) 2)))
                 (height (/ (frame-height) 2)))
-            (if (frame-live-p vterm-posframe--frame)
+            (if (and vterm-posframe--frame
+                     (frame-live-p vterm-posframe--frame)
+                     (frame-visible-p vterm-posframe--frame))
                 (progn
-                  (posframe-delete-frame buffer)
-                  (setq vterm-posframe--frame nil))
+                  (posframe-hide buffer)
+                  ;; Focus the parent frame forcibly to address macOS issue
+                  (select-frame-set-input-focus (frame-parent vterm-posframe--frame)))
               (setq vterm-posframe--frame
                     (posframe-show
                      buffer
@@ -143,7 +151,9 @@
                      :internal-border-width 3
                      :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                      :background-color (face-background 'tooltip nil t)
-                     :accept-focus t)))))
+                     :accept-focus t))
+              ;; Focus the child frame forcibly since accept-focus has some bugs
+              (select-frame-set-input-focus vterm-posframe--frame))))
         (bind-key "C-`" #'vterm-posframe-toggle)))))
 
 ;; Shell Pop
