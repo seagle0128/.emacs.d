@@ -171,8 +171,14 @@
         lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol
         counsel-grep-or-swiper counsel-grep-or-swiper-backward
         counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
-    (defvar-local my-ivy-fly--travel nil)
 
+    (defvar my-ivy-fly-back-commands
+      '(self-insert-command
+        ivy-forward-char ivy-delete-char delete-forward-char kill-word kill-sexp
+        end-of-line mwim-end-of-line mwim-end-of-code-or-line mwim-end-of-line-or-code
+        yank ivy-yank-word ivy-yank-char ivy-yank-symbol counsel-yank-pop))
+
+    (defvar-local my-ivy-fly--travel nil)
     (defun my-ivy-fly-back-to-present ()
       (cond ((and (memq last-command my-ivy-fly-commands)
                   (equal (this-command-keys-vector) (kbd "M-p")))
@@ -180,43 +186,31 @@
              (setq unread-command-events
                    (append unread-command-events
                            (listify-key-sequence (kbd "M-p")))))
-            ((or (memq this-command '(self-insert-command
-                                      ivy-forward-char
-                                      ivy-delete-char delete-forward-char
-                                      end-of-line mwim-end-of-line
-                                      mwim-end-of-code-or-line mwim-end-of-line-or-code
-                                      yank ivy-yank-word counsel-yank-pop))
+            ((or (memq this-command my-ivy-fly-back-commands)
                  (equal (this-command-keys-vector) (kbd "M-n")))
              (unless my-ivy-fly--travel
                (delete-region (point) (point-max))
                (when (memq this-command '(ivy-forward-char
                                           ivy-delete-char delete-forward-char
+                                          kill-word kill-sexp
                                           end-of-line mwim-end-of-line
                                           mwim-end-of-code-or-line
                                           mwim-end-of-line-or-code))
                  (insert (ivy-cleanup-string ivy-text))
-                 (when (memq this-command '(ivy-delete-char delete-forward-char))
-                   (beginning-of-line)))
-               (setq my-ivy-fly--travel t)))))
+                 (when (memq this-command '(ivy-delete-char
+                                            delete-forward-char
+                                            kill-word kill-sexp))
+                   (beginning-of-line)))))))
 
     (defun my-ivy-fly-time-travel ()
       (when (memq this-command my-ivy-fly-commands)
-        (let* ((kbd (kbd "M-n"))
-               (cmd (key-binding kbd))
-               (future (and cmd
-                            (with-temp-buffer
-                              (when (ignore-errors
-                                      (call-interactively cmd) t)
-                                (buffer-string))))))
-          (when future
-            (save-excursion
-              (insert (propertize (replace-regexp-in-string
-                                   "\\\\_<" ""
-                                   (replace-regexp-in-string
-                                    "\\\\_>" ""
-                                    future))
-                                  'face 'shadow)))
-            (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
+        (insert (propertize
+                 (save-excursion
+		           (set-buffer (window-buffer (minibuffer-selected-window)))
+		           (ivy-thing-at-point))
+                 'face 'shadow))
+        (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)
+        (beginning-of-line)))
 
     (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
     (add-hook 'minibuffer-exit-hook

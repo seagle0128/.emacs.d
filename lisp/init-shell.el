@@ -136,7 +136,7 @@
                      (frame-visible-p vterm-posframe--frame))
                 (progn
                   (posframe-hide buffer)
-                  ;; Focus the parent frame forcibly to address macOS issue
+                  ;; Focus the parent frame
                   (select-frame-set-input-focus (frame-parent vterm-posframe--frame)))
               (setq vterm-posframe--frame
                     (posframe-show
@@ -152,7 +152,7 @@
                      :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                      :background-color (face-background 'tooltip nil t)
                      :accept-focus t))
-              ;; Focus the child frame forcibly since accept-focus has some bugs
+              ;; Focus the child frame
               (select-frame-set-input-focus vterm-posframe--frame))))
         (bind-key "C-`" #'vterm-posframe-toggle)))))
 
