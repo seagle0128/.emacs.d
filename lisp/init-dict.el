@@ -34,8 +34,8 @@
 
 ;; A multi dictionaries interface
 (use-package fanyi
-  :bind (("C-c d f" . fanyi-at-point)
-         ("C-c d F" . fanyi-dwim))
+  :bind (("C-c d d" . fanyi-at-point)
+         ("C-c d f" . fanyi-dwim))
   :init
   (defun fanyi-at-point ()
     (interactive)
@@ -45,17 +45,11 @@
         (fanyi-dwim word)
       (call-interactively #'fanyi-dwim))))
 
-;; OSX dictionary
-(when sys/macp
-  (use-package osx-dictionary
-    :bind (("C-c d s" . osx-dictionary-search-input)
-           ("C-c d d" . osx-dictionary-search-pointer))))
-
 ;; Youdao Dictionary
 (use-package youdao-dictionary
   :commands youdao-dictionary-play-voice-of-current-word
-  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
-         ("C-c d Y" . my-youdao-dictionary-search-at-point)
+  :bind (("C-c y" . youdao-dictionary-search-at-point+)
+         ("C-c d Y" . youdao-dictionary-search-at-point+)
          ("C-c d y" . youdao-dictionary-search)
          :map youdao-dictionary-mode-map
          ("h" . youdao-dictionary-hydra/body)
@@ -64,11 +58,11 @@
   (setq url-automatic-caching t
         youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
-  (defun my-youdao-dictionary-search-at-point ()
+  (defun youdao-dictionary-search-at-point+ ()
     "Search word at point and display result with `posframe', `pos-tip', or buffer."
     (interactive)
     (if (display-graphic-p)
-        (if emacs/>=26p
+        (if (and (fboundp #'posframe-workable-p) (posframe-workable-p))
             (youdao-dictionary-search-at-point-posframe)
           (youdao-dictionary-search-at-point-tooltip))
       (youdao-dictionary-search-at-point)))
@@ -113,8 +107,13 @@
                 (posframe-hide youdao-dictionary-buffer-name)
                 (other-frame 0)))
             (message "Nothing to look up"))))
-    (advice-add #'youdao-dictionary--posframe-tip
-                :override #'my-youdao-dictionary--posframe-tip)))
+    (advice-add #'youdao-dictionary--posframe-tip :override #'my-youdao-dictionary--posframe-tip)))
+
+;; OSX dictionary
+(when sys/macp
+  (use-package osx-dictionary
+    :bind (("C-c d i" . osx-dictionary-search-input)
+           ("C-c d x" . osx-dictionary-search-pointer))))
 
 (provide 'init-dict)
 
