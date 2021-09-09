@@ -34,7 +34,16 @@
 
 ;; A multi dictionaries interface
 (use-package fanyi
-  :bind ("C-c d f" . fanyi-dwim))
+  :bind (("C-c d f" . fanyi-at-point)
+         ("C-c d F" . fanyi-dwim))
+  :init
+  (defun fanyi-at-point ()
+    (interactive)
+    (if-let ((word (if (use-region-p)
+                       (buffer-substring-no-properties (region-beginning) (region-end))
+                     (thing-at-point 'word t))))
+        (fanyi-dwim word)
+      (call-interactively #'fanyi-dwim))))
 
 ;; OSX dictionary
 (when sys/macp
@@ -79,30 +88,31 @@
       (unless (and (require 'posframe nil t) (posframe-workable-p))
         (error "Posframe not workable"))
 
-      (let ((word (youdao-dictionary--region-or-word)))
-        (if word
-            (progn
-              (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
-                (let ((inhibit-read-only t))
-                  (erase-buffer)
-                  (youdao-dictionary-mode)
-                  (insert (propertize "\n" 'face '(:height 0.5)))
-                  (insert string)
-                  (insert (propertize "\n" 'face '(:height 0.5)))
-                  (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name
-                             :position (point)
-                             :left-fringe 16
-                             :right-fringe 16
-                             :background-color (face-background 'tooltip nil t)
-                             :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                             :internal-border-width 1)
-              (unwind-protect
-                  (push (read-event) unread-command-events)
-                (progn
-                  (posframe-hide youdao-dictionary-buffer-name)
-                  (other-frame 0))))
-          (message "Nothing to look up"))))
+      (if-let ((word (youdao-dictionary--region-or-word)))
+          (progn
+            (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
+              (let ((inhibit-read-only t))
+                (erase-buffer)
+                (youdao-dictionary-mode)
+                (insert (propertize "\n" 'face '(:height 0.5)))
+                (insert string)
+                (insert (propertize "\n" 'face '(:height 0.5)))
+                (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
+            (posframe-show youdao-dictionary-buffer-name
+                           :position (point)
+                           :left-fringe 16
+                           :right-fringe 16
+                           :width (/ (frame-width) 2)
+                           :height (/ (frame-height) 2)
+                           :background-color (face-background 'tooltip nil t)
+                           :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                           :internal-border-width 1)
+            (unwind-protect
+                (push (read-event) unread-command-events)
+              (progn
+                (posframe-hide youdao-dictionary-buffer-name)
+                (other-frame 0)))
+            (message "Nothing to look up"))))
     (advice-add #'youdao-dictionary--posframe-tip
                 :override #'my-youdao-dictionary--posframe-tip)))
 
