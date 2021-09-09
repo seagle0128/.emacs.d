@@ -34,16 +34,8 @@
 
 ;; A multi dictionaries interface
 (use-package fanyi
-  :bind (("C-c d d" . fanyi-at-point)
-         ("C-c d f" . fanyi-dwim))
-  :init
-  (defun fanyi-at-point ()
-    (interactive)
-    (if-let ((word (if (use-region-p)
-                       (buffer-substring-no-properties (region-beginning) (region-end))
-                     (thing-at-point 'word t))))
-        (fanyi-dwim word)
-      (call-interactively #'fanyi-dwim))))
+  :bind (("C-c d f" . fanyi-dwim)
+         ("C-c d d" . fanyi-dwim2)))
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
