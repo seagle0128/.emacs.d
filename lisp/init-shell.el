@@ -125,6 +125,11 @@
     (with-no-warnings
       (when (childframe-workable-p)
         (defvar vterm-posframe--frame nil)
+
+        (defun vterm-posframe-hidehandler (_)
+          "Hidehandler used by `vterm-posframe-toggle'."
+          (not (eq (selected-frame) posframe--frame)))
+
         (defun vterm-posframe-toggle ()
           "Toggle `vterm' child frame."
           (interactive)
@@ -142,6 +147,7 @@
                     (posframe-show
                      buffer
                      :poshandler #'posframe-poshandler-frame-center
+                     :hidehandler #'vterm-posframe-hidehandler
                      :left-fringe 8
                      :right-fringe 8
                      :width width
