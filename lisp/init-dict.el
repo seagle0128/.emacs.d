@@ -54,7 +54,7 @@
     "Search word at point and display result with `posframe', `pos-tip', or buffer."
     (interactive)
     (if (display-graphic-p)
-        (if (and (fboundp #'posframe-workable-p) (posframe-workable-p))
+        (if (and (require 'posframe nil t) (posframe-workable-p))
             (youdao-dictionary-search-at-point-posframe)
           (youdao-dictionary-search-at-point-tooltip))
       (youdao-dictionary-search-at-point)))

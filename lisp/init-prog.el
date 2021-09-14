@@ -79,9 +79,8 @@
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
   (use-package devdocs
-    :commands devdocs--installed-p
     :bind (:map prog-mode-map
-           ("M-<f1>" . devdocs-lookup+))
+           ("M-<f1>" . devdocs-dwim))
     :init
     (defvar devdocs-major-mode-docs-alist
       '((c-mode . ("C"))
@@ -104,12 +103,11 @@
                    (setq-local devdocs-current-docs (cdr e)))))
      devdocs-major-mode-docs-alist)
 
-    (defun devdocs-lookup+()
+    (defun devdocs-dwim()
       "Look up a DevDocs documentation entry.
 
 Install the doc if it's not installed."
       (interactive)
-
       ;; Install the doc if it's not installed
       (mapc
        (lambda (str)
@@ -117,15 +115,14 @@ Install the doc if it's not installed."
                 (doc (if (length= docs 1)
                          (downcase (car docs))
                        (concat (downcase (car docs)) "~" (downcase (cdr docs))))))
-           (unless (devdocs--installed-p doc)
-             (message "Installing %s" str)
+           (unless (and (file-directory-p devdocs-data-dir)
+                        (directory-files devdocs-data-dir nil "^[^.]"))
+             (message "Installing %s..." str)
              (devdocs-install doc))))
        (alist-get major-mode devdocs-major-mode-docs-alist))
 
       ;; Lookup the symbol at point
-      (if-let ((symbol (symbol-at-point)))
-          (devdocs-lookup nil (symbol-name symbol))
-        (message "No symbol to lookup!")))))
+      (devdocs-lookup nil (thing-at-point 'symbol t)))))
 
 (use-package cask-mode)
 (use-package csharp-mode)
