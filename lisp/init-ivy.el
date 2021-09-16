@@ -444,6 +444,12 @@ This is for use in `ivy-re-builders-alist'."
                               (propertize "\n" 'face '(:height 0.5)))))
         (advice-add #'hydra-posframe-show :around #'my-hydra-posframe-prettify-string)
 
+        (defun my-ivy-posframe-hidehandler (_)
+          "Hidehandler used by ivy-posframe."
+          (and (not (minibufferp))
+               (not (string= (buffer-name) ivy-posframe-buffer))))
+        (advice-add #'ivy-posframe-hidehandler :override #'my-ivy-posframe-hidehandler)
+
         (defun ivy-hydra-poshandler-frame-center-below (info)
           (let (ivy-posframe-visible-p
                 (pos (posframe-poshandler-frame-center-near-bottom info)))
