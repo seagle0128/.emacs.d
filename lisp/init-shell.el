@@ -161,6 +161,8 @@
                        :accept-focus t))
                 ;; Blink cursor
                 (with-current-buffer buffer
+                  (save-excursion
+                    (vterm-clear))
                   (setq-local cursor-type 'box))
                 ;; Focus the child frame
                 (select-frame-set-input-focus vterm-posframe--frame)))))
