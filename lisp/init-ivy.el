@@ -439,19 +439,20 @@ This is for use in `ivy-re-builders-alist'."
 
       (with-no-warnings
         (defun my-hydra-posframe-prettify-string (fn str)
-          (funcall fn (concat (propertize "\n" 'face '(:height 0.5))
+          (funcall fn (concat (propertize "\n" 'face '(:height 0.3))
                               str
-                              (propertize "\n" 'face '(:height 0.5)))))
+                              (propertize "\n\n" 'face '(:height 0.3)))))
         (advice-add #'hydra-posframe-show :around #'my-hydra-posframe-prettify-string)
 
         (defun ivy-hydra-poshandler-frame-center-below (info)
           (let (ivy-posframe-visible-p
                 (pos (posframe-poshandler-frame-center-near-bottom info)))
-            (dolist (frame (frame-list))
-              (when (and (frame-visible-p frame)
-                         (string= (car (frame-parameter frame 'posframe-buffer))
-                                  ivy-posframe-buffer))
-                (setq ivy-posframe-visible-p t)))
+            (catch 'break
+              (dolist (frame (visible-frame-list))
+                (when (string= (car (frame-parameter frame 'posframe-buffer))
+                               ivy-posframe-buffer)
+                  (setq ivy-posframe-visible-p t)
+                  (throw 'break t))))
             (cons
              (car pos)
              (- (cdr pos)
@@ -460,18 +461,24 @@ This is for use in `ivy-re-builders-alist'."
                        (plist-get hydra-posframe-show-params :internal-border-width))
                   0)))))
 
-        (defun ivy-hydra-set-posframe-show-params ()
+        (defun my-ivy-posframe-read-action-by-key (actions)
+          "Ivy-posframe's `ivy-read-action-by-key'. Use `ivy-hydra-read-action' instead."
+          (ivy-hydra-read-action actions))
+        (advice-add #'ivy-posframe-read-action-by-key
+                    :override #'my-ivy-posframe-read-action-by-key)
+
+        (defun hydra-set-posframe-show-params ()
           "Set hydra-posframe style."
           (setq hydra-posframe-show-params
-                `(:internal-border-width 3
+                `(:left-fringe 10
+                  :right-fringe 10
+                  :internal-border-width 3
                   :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
                   :background-color ,(face-background 'tooltip nil t)
-                  :left-fringe 16
-                  :right-fringe 16
                   :lines-truncate t
                   :poshandler ivy-hydra-poshandler-frame-center-below)))
-        (ivy-hydra-set-posframe-show-params)
-        (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
+        (hydra-set-posframe-show-params)
+        (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params))))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
