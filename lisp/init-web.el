@@ -116,14 +116,6 @@
 (use-package add-node-modules-path
   :hook ((web-mode js-mode js2-mode) . add-node-modules-path))
 
-;; Format HTML, CSS and JavaScript/JSON
-;; Install: npm -g install prettier
-(use-package prettier-js
-  :diminish
-  :hook ((js-mode js2-mode json-mode web-mode css-mode sgml-mode html-mode)
-         .
-         prettier-js-mode))
-
 (use-package haml-mode)
 (use-package php-mode)
 

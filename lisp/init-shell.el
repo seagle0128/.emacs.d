@@ -106,7 +106,7 @@
   (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
   (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
-;; Better term
+;; Better terminal emulator
 ;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")

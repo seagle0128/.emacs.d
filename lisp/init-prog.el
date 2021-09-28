@@ -67,9 +67,16 @@
   (setq dumb-jump-prefer-searcher 'rg
         dumb-jump-selector 'ivy))
 
+;; Code styles
 (use-package editorconfig
   :diminish
   :hook (after-init . editorconfig-mode))
+
+;; Code formatting
+;; Install: npm -g install prettier
+(use-package prettier
+  :diminish
+  :hook (after-init . global-prettier-mode))
 
 ;; Run commands quickly
 (use-package quickrun
