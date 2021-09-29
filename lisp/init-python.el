@@ -39,7 +39,10 @@
                                    (get-process "Python"))))
   :init
   ;; Disable readline based native completion
-  (setq python-shell-completion-native-enable nil)
+  ;; Don't use prettier-mode change buffer-local setting
+  (setq python-shell-completion-native-enable nil
+        prettier-mode-sync-config-flag nil)
+
   :config
   ;; Default to Python 3. Prefer the versioned Python binaries since some
   ;; systems stupidly make the unversioned one point at Python 2.
