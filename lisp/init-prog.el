@@ -76,7 +76,8 @@
 ;; Install: npm -g install prettier
 (use-package prettier
   :diminish
-  :hook (after-init . global-prettier-mode))
+  :hook (after-init . global-prettier-mode)
+  :init (setq prettier-mode-sync-config-flag nil))
 
 ;; Run commands quickly
 (use-package quickrun
