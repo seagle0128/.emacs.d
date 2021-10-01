@@ -573,17 +573,19 @@
              (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
         `(progn
            (defun ,intern-pre (info)
-             (let ((file-name (->> info caddr (alist-get :file))))
-               (unless file-name
-                 (user-error "LSP:: specify `:file' property to enable"))
-
-               (setq buffer-file-name file-name)
-               (pcase centaur-lsp
-                 ('eglot
-                  (and (fboundp 'eglot-ensure) (eglot-ensure)))
-                 ('lsp-mode
-                  (and (fboundp 'lsp-deferred) (lsp-deferred)))
-                 (_ (user-error "LSP:: invalid `centaur-lsp' type")))))
+             (setq buffer-file-name (or (->> info caddr (alist-get :file))
+                                        "org-src-babel.tmp"))
+             (pcase centaur-lsp
+               ('eglot
+                (when (fboundp 'eglot-ensure)
+                  (eglot-ensure)))
+               ('lsp-mode
+                (when (fboundp 'lsp-deferred)
+                  ;; Avoid headerline conflicts
+                  (setq-local lsp-headerline-breadcrumb-enable nil)
+                  (lsp-deferred)))
+               (_
+                (user-error "LSP:: invalid `centaur-lsp' type"))))
            (put ',intern-pre 'function-documentation
                 (format "Enable `%s' in the buffer of org source block (%s)."
                         centaur-lsp (upcase ,lang)))
@@ -601,8 +603,7 @@
       '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
     (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
     (dolist (lang org-babel-lang-list)
-      (eval `(lsp-org-babel-enable ,lang))))
-  )
+      (eval `(lsp-org-babel-enable ,lang)))))
 
 (provide 'init-lsp)
 
