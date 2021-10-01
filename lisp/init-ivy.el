@@ -489,13 +489,6 @@ This is for use in `ivy-re-builders-alist'."
   (use-package ivy-yasnippet
     :bind ("C-c C-y" . ivy-yasnippet))
 
-  ;; Select from xref candidates with Ivy
-  (use-package ivy-xref
-    :init
-    (when (boundp 'xref-show-definitions-function)
-      (setq xref-show-definitions-function #'ivy-xref-show-defs))
-    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
-
   ;; Quick launch apps
   (cond
    (sys/linux-x-p
