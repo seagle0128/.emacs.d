@@ -40,8 +40,8 @@
 ;; Youdao Dictionary
 (use-package youdao-dictionary
   :commands youdao-dictionary-play-voice-of-current-word
-  :bind (("C-c y" . youdao-dictionary-search-at-point+)
-         ("C-c d Y" . youdao-dictionary-search-at-point+)
+  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
+         ("C-c d Y" . my-youdao-dictionary-search-at-point)
          ("C-c d y" . youdao-dictionary-search)
          :map youdao-dictionary-mode-map
          ("h" . youdao-dictionary-hydra/body)
@@ -50,7 +50,7 @@
   (setq url-automatic-caching t
         youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
-  (defun youdao-dictionary-search-at-point+ ()
+  (defun my-youdao-dictionary-search-at-point ()
     "Search word at point and display result with `posframe', `pos-tip', or buffer."
     (interactive)
     (if (display-graphic-p)
@@ -70,7 +70,7 @@
 
   (with-no-warnings
     (defun my-youdao-dictionary--posframe-tip (string)
-      "Show STRING using posframe-show."
+      "Show STRING using `posframe-show'."
       (unless (and (require 'posframe nil t) (posframe-workable-p))
         (error "Posframe not workable"))
 
