@@ -35,7 +35,8 @@
 ;; A multi dictionaries interface
 (use-package fanyi
   :bind (("C-c d f" . fanyi-dwim)
-         ("C-c d d" . fanyi-dwim2)))
+         ("C-c d d" . fanyi-dwim2)
+         ("C-c d h" . fanyi-from-history)))
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
