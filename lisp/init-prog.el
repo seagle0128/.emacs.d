@@ -91,13 +91,6 @@
   :diminish
   :hook (after-init . editorconfig-mode))
 
-;; Code formatting
-;; Install: npm -g install prettier
-(use-package prettier
-  :diminish
-  :hook (after-init . global-prettier-mode)
-  :init (setq prettier-mode-sync-config-flag nil))
-
 ;; Run commands quickly
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
