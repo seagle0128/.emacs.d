@@ -430,7 +430,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defalias 'centaur-update #'update-config-and-packages)
 
 (defun update-all()
-  "Update dotfiles, org files, Emacs confgiurations and packages to the latest versions."
+  "Update dotfiles, org files, configurations and packages to the latest."
   (interactive)
   (update-org)
   (update-dotfiles)
