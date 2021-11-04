@@ -118,7 +118,7 @@
             (goto-char (point-max))
             (delete-char -3)          ; delete separate
             (insert (propertize "\n" 'face '(:height 0.5)))
-            (posframe--set-frame-size posframe--frame nil nil nil nil nil nil))))
+            (posframe--set-frame-size '(posframe--frame nil nil nil nil nil nil)))))
       (advice-add #'transient--show :after #'my-transient-posframe--prettify-frame))))
 
 ;; Walk through git revisions of a file
