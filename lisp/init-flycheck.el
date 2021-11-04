@@ -89,8 +89,8 @@
                  :position (point)
                  :left-fringe 8
                  :right-fringe 8
-                 :width (round (* (frame-width) 0.62))
-                 :height (round (* (frame-height) 0.62))
+                 :max-width (round (* (frame-width) 0.62))
+                 :max-height (round (* (frame-height) 0.62))
                  :internal-border-width flycheck-posframe-border-width
                  :internal-border-color (face-foreground 'flycheck-posframe-border-face nil t)
                  :poshandler poshandler

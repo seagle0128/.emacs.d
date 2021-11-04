@@ -89,8 +89,8 @@
                            :position (point)
                            :left-fringe 16
                            :right-fringe 16
-                           :width (/ (frame-width) 2)
-                           :height (/ (frame-height) 2)
+                           :max-width (/ (frame-width) 2)
+                           :max-height (/ (frame-height) 2)
                            :background-color (face-background 'tooltip nil t)
                            :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                            :internal-border-width 1)
