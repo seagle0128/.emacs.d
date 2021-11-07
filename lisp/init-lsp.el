@@ -38,10 +38,10 @@
   (pcase centaur-lsp
     ('eglot
      (use-package eglot
-       :hook (prog-mode . (lambda ()
-                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
-                              (eglot-ensure))))))
-
+       :hook ((prog-mode . (lambda ()
+                             (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
+                               (eglot-ensure))))
+              (markdown-mode . lsp-deferred))))
     ('lsp-mode
      ;; Emacs client for the Language Server Protocol
      ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
@@ -81,6 +81,7 @@
        :hook ((prog-mode . (lambda ()
                              (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                                (lsp-deferred))))
+              (markdown-mode . lsp-deferred)
               (lsp-mode . (lambda ()
                             ;; Integrate `which-key'
                             (lsp-enable-which-key-integration)
