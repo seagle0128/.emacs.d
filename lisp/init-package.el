@@ -61,12 +61,12 @@
 
 ;; Load custom-post file
 (defun load-custom-post-file ()
-"Load custom-post file."
-(cond ((file-exists-p centaur-custom-post-org-file)
-       (and (fboundp 'org-babel-load-file)
-            (org-babel-load-file centaur-custom-post-org-file)))
-      ((file-exists-p centaur-custom-post-file)
-       (load centaur-custom-post-file))))
+  "Load custom-post file."
+  (cond ((file-exists-p centaur-custom-post-org-file)
+         (and (fboundp 'org-babel-load-file)
+              (org-babel-load-file centaur-custom-post-org-file)))
+        ((file-exists-p centaur-custom-post-file)
+         (load centaur-custom-post-file))))
 (add-hook 'after-init-hook #'load-custom-post-file)
 
 ;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
