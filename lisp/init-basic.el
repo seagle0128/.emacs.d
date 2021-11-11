@@ -294,7 +294,8 @@ Also, delete any process that is exited or signaled."
       adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
       adaptive-fill-first-line-regexp "^* *$"
       sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
-      sentence-end-double-space nil)
+      sentence-end-double-space nil
+      word-wrap-by-category t)
 
 ;; Fullscreen
 (when (display-graphic-p)
