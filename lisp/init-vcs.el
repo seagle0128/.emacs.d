@@ -223,8 +223,9 @@
   :hook (after-init . global-blamer-mode)
   :init (setq blamer-idle-time 0.5
               blamer-min-offset 40
-              blamer-author-formatter " ✏ %s "
-              blamer-datetime-formatter "[%s]"))
+              blamer-author-formatter "%s "
+              blamer-datetime-formatter "[%s] "
+              blamer-commit-formatter "- %s"))
 
 ;; Resolve diff3 conflicts
 (use-package smerge-mode
