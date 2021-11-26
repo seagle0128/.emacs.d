@@ -374,13 +374,14 @@
       scroll-preserve-screen-position t)
 
 ;; Good pixel line scrolling
-(when (and emacs/>=27p
-           (not sys/macp))
-  (use-package good-scroll
-    :diminish
-    :hook (after-init . good-scroll-mode)
-    :bind (([remap next] . good-scroll-up-full-screen)
-           ([remap prior] . good-scroll-down-full-screen))))
+(if (boundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode t)
+  (when (and emacs/>=27p (not sys/macp))
+    (use-package good-scroll
+      :diminish
+      :hook (after-init . good-scroll-mode)
+      :bind (([remap next] . good-scroll-up-full-screen)
+             ([remap prior] . good-scroll-down-full-screen)))))
 
 ;; Smooth scrolling over images
 (when emacs/>=26p
