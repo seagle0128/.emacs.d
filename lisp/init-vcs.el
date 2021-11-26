@@ -217,6 +217,15 @@
     (advice-add #'git-messenger:popup-close :override #'ignore)
     (advice-add #'git-messenger:popup-message :override #'my-git-messenger:popup-message)))
 
+;; Show git blame info
+(use-package blamer
+  :custom-face (blamer-face ((t (:inherit completions-annotations))))
+  :hook (after-init . global-blamer-mode)
+  :init (setq blamer-idle-time 0.5
+              blamer-min-offset 40
+              blamer-author-formatter " ✏ %s "
+              blamer-datetime-formatter "[%s]"))
+
 ;; Resolve diff3 conflicts
 (use-package smerge-mode
   :ensure nil
