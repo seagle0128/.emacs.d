@@ -219,7 +219,7 @@
 
 ;; Show git blame info
 (use-package blamer
-  :custom-face (blamer-face ((t (:inherit completions-annotations))))
+  :custom-face (blamer-face ((t (:inherit completions-annotations :height 0.85))))
   :hook (after-init . global-blamer-mode)
   :init (setq blamer-idle-time 0.5
               blamer-min-offset 40
