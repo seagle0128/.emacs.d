@@ -75,12 +75,10 @@
   (defun persp-load-frame ()
     "Load frame with the previous frame's geometry."
     (interactive)
-    (when (and (display-graphic-p)
-               centaur-restore-frame-geometry
-               persp-mode)
-      (fix-fullscreen-cocoa)
+    (when (and (display-graphic-p) centaur-restore-frame-geometry persp-mode)
       (condition-case error
           (progn
+            (fix-fullscreen-cocoa)
             (load persp-frame-file)
 
             ;; Handle multiple monitors gracefully
