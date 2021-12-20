@@ -258,7 +258,7 @@
                             (smerge-mode 1)))))
          (magit-diff-visit-file . (lambda ()
                                     (when smerge-mode
-                                      (hydra-smerge/body))))))
+                                      (smerge-mode-hydra/body))))))
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
