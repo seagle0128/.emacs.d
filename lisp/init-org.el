@@ -307,11 +307,15 @@ prepended to the element after the #+HEADER: tag."
            ("C-c n c" . org-roam-capture)
            ("C-c n j" . org-roam-dailies-capture-today))
     :init
-    (setq org-roam-directory (file-truename centaur-org-directory)
-          org-roam-v2-ack t)
+    (setq org-roam-directory (file-truename centaur-org-directory))
     :config
     (unless (file-exists-p org-roam-directory)
-      (make-directory org-roam-directory))))
+      (make-directory org-roam-directory))
+
+    (use-package org-roam-ui
+      :init
+      (when (featurep 'xwidget-internal)
+        (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url)))))
 
 (provide 'init-org)
 
