@@ -102,6 +102,15 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Use quelpa install packages
+(use-package quelpa
+  :init
+  (setq quelpa-upgrade-p nil))
+
+(use-package quelpa-use-package)
+(eval-when-compile
+  (require 'quelpa-use-package))
+
 ;; Required by `use-package'
 (use-package diminish)
 (use-package bind-key)
@@ -132,7 +141,11 @@
   :init
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t)
-  (defalias 'upgrade-packages #'auto-package-update-now))
+  (defun my-upgrade-packages (&optional async)
+    (interactive)
+    (auto-package-update-now async)
+    (quelpa-upgrade-all))
+  (defalias 'upgrade-packages #'my-upgrade-packages))
 
 (provide 'init-package)
 
