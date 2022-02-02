@@ -40,6 +40,8 @@
                treemacs-filewatch-mode
                treemacs-fringe-indicator-mode
                treemacs-git-mode)
+    :custom-face
+    (cfrs-border-color ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :bind (([f8]        . treemacs)
            ("M-0"       . treemacs-select-window)
            ("C-x 1"     . treemacs-delete-other-windows)
