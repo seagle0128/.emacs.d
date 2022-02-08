@@ -107,7 +107,7 @@
                      (len (length arg)))
                 (put-text-property 0 len 'yas-annotation snip arg)
                 (put-text-property 0 len 'yas-annotation-patch t arg)))
-            (funcall fn cmd  arg))))
+            (funcall fn cmd arg))))
       (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)))
 
   ;; Better sorting and filtering
