@@ -40,7 +40,6 @@
                pdf-view-midnight-minor-mode
                pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
-    :functions (my-pdf-view-set-midnight-colors my-pdf-view-set-dark-theme)
     :hook ((pdf-tools-enabled . pdf-view-themed-minor-mode)
            (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
            (pdf-tools-enabled . pdf-isearch-minor-mode))
@@ -61,7 +60,7 @@
       (defun my-pdf-isearch-hl-matches (current matches &optional occur-hack-p)
         "Highlighting edges CURRENT and MATCHES."
         (cl-destructuring-bind (fg1 bg1 fg2 bg2)
-          (pdf-isearch-current-colors)
+            (pdf-isearch-current-colors)
           (let* ((width (car (pdf-view-image-size)))
                  (page (pdf-view-current-page))
                  (window (selected-window))
