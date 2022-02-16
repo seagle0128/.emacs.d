@@ -243,14 +243,15 @@ prepended to the element after the #+HEADER: tag."
   (use-package org-timeline
     :hook (org-agenda-finalize . org-timeline-insert-timeline))
 
-  ;; Auto-toggle Org LaTeX fragments
-  (use-package org-fragtog
-    :diminish
-    :hook (org-mode . org-fragtog-mode))
+  (when emacs/>=27p
+    ;; Auto-toggle Org LaTeX fragments
+    (use-package org-fragtog
+      :diminish
+      :hook (org-mode . org-fragtog-mode))
 
-  ;; Preview
-  (use-package org-preview-html
-    :diminish)
+    ;; Preview
+    (use-package org-preview-html
+      :diminish))
 
   ;; Presentation
   (use-package org-tree-slide
@@ -312,10 +313,11 @@ prepended to the element after the #+HEADER: tag."
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
 
-    (use-package org-roam-ui
-      :init
-      (when (featurep 'xwidget-internal)
-        (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url)))))
+    (when emacs/>=27p
+      (use-package org-roam-ui
+        :init
+        (when (featurep 'xwidget-internal)
+          (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))))))
 
 (provide 'init-org)
 
