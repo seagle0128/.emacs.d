@@ -40,7 +40,7 @@
                pdf-view-midnight-minor-mode
                pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
-    :hook ((pdf-tools-enabled . pdf-view-themed-minor-mode)
+    :hook (;(pdf-tools-enabled . pdf-view-themed-minor-mode)
            (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
            (pdf-tools-enabled . pdf-isearch-minor-mode))
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
