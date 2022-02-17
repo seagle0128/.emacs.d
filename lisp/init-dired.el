@@ -86,6 +86,11 @@
     :init (setq all-the-icons-dired-monochrome nil)
     :config
     (with-no-warnings
+      ;; Add missing advices
+      ;; @see `all-the-icons-dired--setup'
+      (with-eval-after-load 'dired-aux
+        (advice-add #'dired-do-redisplay :around #'all-the-icons-dired--refresh-advice))
+
       (defun my-all-the-icons-dired--refresh ()
         "Display the icons of files in a dired buffer."
         (all-the-icons-dired--remove-all-overlays)
