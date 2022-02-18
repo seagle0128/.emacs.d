@@ -239,7 +239,7 @@
 (use-package all-the-icons
   :if (and centaur-icon (display-graphic-p))
   :init (unless (or sys/win32p (font-installed-p "all-the-icons"))
-          (all-the-icons-install-fonts t))
+          (centaur-install-fonts))
   :config
   (with-no-warnings
     (defun all-the-icons-reset ()

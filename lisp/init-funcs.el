@@ -470,9 +470,7 @@ If SYNC is non-nil, the updating process is synchronous."
   "Install necessary fonts."
   (interactive)
 
-  (let* ((url-format "https://raw.githubusercontent.com/domtronn/all-the-icons.el/master/fonts/%s")
-         (url (concat centaur-homepage "/files/6135060/symbola.zip"))
-         (font-dest (cond
+  (let* ((font-dest (cond
                      ;; Default Linux install directories
                      ((member system-type '(gnu gnu/linux gnu/kfreebsd))
                       (concat (or (getenv "XDG_DATA_HOME")
@@ -488,13 +486,15 @@ If SYNC is non-nil, the updating process is synchronous."
 
     ;; Download `all-the-fonts'
     (when (bound-and-true-p all-the-icons-font-names)
-      (mapc (lambda (font)
-              (url-copy-file (format url-format font) (expand-file-name font font-dest) t))
-            all-the-icons-font-names))
+      (let ((url-format "https://raw.githubusercontent.com/domtronn/all-the-icons.el/master/fonts/%s"))
+        (mapc (lambda (font)
+                (url-copy-file (format url-format font) (expand-file-name font font-dest) t))
+              all-the-icons-font-names)))
 
     ;; Download `Symbola'
     ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
-    (let* ((temp-file (make-temp-file "symbola-" nil ".zip"))
+    (let* ((url (concat centaur-homepage "/files/6135060/symbola.zip"))
+           (temp-file (make-temp-file "symbola-" nil ".zip"))
            (temp-dir (concat (file-name-directory temp-file) "/symbola/"))
            (unzip-script (cond ((executable-find "unzip")
                                 (format "mkdir -p %s && unzip -qq %s -d %s"
