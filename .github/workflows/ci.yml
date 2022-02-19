@@ -6,6 +6,7 @@ jobs:
   linux-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         emacs-version:
           - 27.1
