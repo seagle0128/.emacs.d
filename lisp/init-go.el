@@ -42,6 +42,14 @@
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+             
+  ;; go mod project
+  (when (featurep 'projectile)
+    (projectile-register-project-type 'go '("go.mod")
+                                      :project-file "go.mod"
+                                      :test "go test"
+                                      :run "go run"
+                                      :test-suffix "_test"))
 
   ;; Install or update tools
   (defvar go--tools '("golang.org/x/tools/gopls"
