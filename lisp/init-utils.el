@@ -201,7 +201,7 @@ of the buffer text to be displayed in the popup"
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :init (setq olivetti-body-width 0.618))
+  :init (setq olivetti-body-width 0.62))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
