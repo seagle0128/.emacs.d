@@ -86,7 +86,10 @@
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (defun add-subdirs-to-load-path (&rest _)
-  "Add subdirectories to `load-path'."
+  "Add subdirectories to `load-path'.
+
+Don't put large files in `site-lisp' directory, e.g. EAF.
+Otherwise the startup will be very slow. "
   (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
