@@ -177,7 +177,8 @@ prepended to the element after the #+HEADER: tag."
   ;; Prettify UI
   (if emacs/>=27p
       (use-package org-modern
-        :hook (org-mode . org-modern-mode))
+        :hook ((org-mode . org-modern-mode)
+               (org-modern-mode . (lambda () (setq line-spacing 0.1)))))
     (progn
       (when emacs/>=26p
         (use-package org-superstar
