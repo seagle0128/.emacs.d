@@ -178,7 +178,13 @@ prepended to the element after the #+HEADER: tag."
   (if emacs/>=27p
       (use-package org-modern
         :hook ((org-mode . org-modern-mode)
-               (org-modern-mode . (lambda () (setq line-spacing 0.1)))))
+               (org-modern-mode . (lambda ()
+                                    "Adapt `org-modern-mode'."
+                                    ;; Looks better for tags
+                                    (setq line-spacing 0.1)
+                                    ;; Disable Prettify Symbols mode
+                                    (setq prettify-symbols-alist nil)
+                                    (prettify-symbols-mode -1)))))
     (progn
       (when emacs/>=26p
         (use-package org-superstar
