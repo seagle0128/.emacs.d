@@ -177,16 +177,16 @@ prepended to the element after the #+HEADER: tag."
   ;; Prettify UI
   (when emacs/>=26p
     (use-package org-superstar
-      :if (and (display-graphic-p) (char-displayable-p ?⚫))
+      :if (and (display-graphic-p) (char-displayable-p ?◉))
       :hook (org-mode . org-superstar-mode)
-      :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
+      :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕"))))
 
   (use-package org-fancy-priorities
     :diminish
     :hook (org-mode . org-fancy-priorities-mode)
     :init (setq org-fancy-priorities-list
-                (if (and (display-graphic-p) (char-displayable-p ?⯀))
-                    '("⯀" "⯀" "⯀" "⯀")
+                (if (and (display-graphic-p) (char-displayable-p ?🅐))
+                    '("🅐" "🅑" "🅒" "🅓")
                   '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
   ;; Babel
