@@ -268,11 +268,8 @@ Also, delete any process that is exited or signaled."
   :init (setq display-time-24hr-format t
               display-time-day-and-date t))
 
-(when emacs/>=27p
-  (use-package so-long
-    :ensure nil
-    :hook (after-init . global-so-long-mode)
-    :config (setq so-long-threshold 400)))
+(use-package so-long
+  :hook (after-init . global-so-long-mode))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
