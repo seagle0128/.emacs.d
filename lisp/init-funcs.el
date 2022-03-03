@@ -618,11 +618,6 @@ If SYNC is non-nil, the updating process is synchronous."
 
 ;; Frame
 (defvar centaur-frame--geometry nil)
-(defun centaur-frame-restore ()
-  "Restore frame's size and position."
-  (interactive)
-  (modify-frame-parameters nil centaur-frame--geometry))
-
 (defun centaur-frame--save-geometry ()
   "Save current frame's geometry."
   (setq-local centaur-frame--geometry
@@ -636,13 +631,24 @@ If SYNC is non-nil, the updating process is synchronous."
   "Returns Non-nil if the frame is fullscreen."
   (memq (frame-parameter nil 'fullscreen) '(fullscreen fullboth)))
 
+(defun centaur-frame-maximize ()
+  "Maximize the frame."
+  (interactive)
+  (centaur-frame--save-geometry)
+  (set-frame-parameter nil 'fullscreen 'maximized))
+
+(defun centaur-frame-restore ()
+  "Restore the frame's size and position."
+  (interactive)
+  (modify-frame-parameters nil centaur-frame--geometry))
+
 (defun centaur-frame-left-half ()
   "Put the frame to the left-half."
   (interactive)
   (unless (centaur-frame--fullscreen-p)
     (centaur-frame--save-geometry)
     (let* ((attr (frame-monitor-workarea))
-           (width (/ (nth 2 attr) 2))
+           (width (- (/ (nth 2 attr) 2) 20))
            (height (nth 3 attr))
            (left (nth 0 attr))
            (top (nth 1 attr)))
@@ -656,9 +662,9 @@ If SYNC is non-nil, the updating process is synchronous."
   (unless (centaur-frame--fullscreen-p)
     (centaur-frame--save-geometry)
     (let* ((attr (frame-monitor-workarea))
-           (width (/ (nth 2 attr) 2))
+           (width (- (/ (nth 2 attr) 2) 20))
            (height (nth 3 attr))
-           (left (+ (nth 0 attr) width -20))
+           (left (+ (nth 0 attr) width 20))
            (top (nth 1 attr)))
       (set-frame-parameter nil 'fullscreen 'maximized)
       (set-frame-position nil left top)
@@ -691,13 +697,6 @@ If SYNC is non-nil, the updating process is synchronous."
       (set-frame-parameter nil 'fullscreen 'maximized)
       (set-frame-position nil left top)
       (set-frame-size nil width height t))))
-
-(frame-monitor-attributes)
-(member (frame-monitor-attributes) (display-monitor-attributes-list))
-(remove (frame-monitor-attributes) (display-monitor-attributes-list))
-(frame-parameter )
-(length (display-monitor-attributes-list))
-(terminal-list)
 
 
 

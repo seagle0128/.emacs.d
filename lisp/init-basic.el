@@ -293,17 +293,13 @@ Also, delete any process that is exited or signaled."
 
 ;; Frame
 (when (display-graphic-p)
-  (bind-keys ("C-<f11>" . toggle-frame-fullscreen)
-             ("S-s-<return>" . toggle-frame-fullscreen)
-             ("M-S-<return>" . toggle-frame-fullscreen))
-
-  (when sys/mac-x-p
-    (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
-    (bind-key "C-s-f" #'toggle-frame-fullscreen))
+  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
+  (bind-key "S-s-<return>" #'toggle-frame-fullscreen)
+  (and sys/mac-x-p (bind-key "C-s-f" #'toggle-frame-fullscreen))
 
   ;; Resize and re-position frames conveniently
   ;; Same keybindings as Rectangle on macOS
-  (bind-keys ("C-M-<return>" . toggle-frame-maximized)
+  (bind-keys ("C-M-<return>" . centaur-frame-maximize)
              ("C-M-<backspace>" . centaur-frame-restore)
              ("C-M-<left>" . centaur-frame-left-half)
              ("C-M-<right>" . centaur-frame-right-half)
