@@ -621,6 +621,72 @@ If SYNC is non-nil, the updating process is synchronous."
 
 
 
+;; Frame
+(defvar centaur-frame--geometry nil)
+(defun centaur-frame-restore ()
+  "Restore frame's size and position."
+  (interactive)
+  (modify-frame-parameters nil centaur-frame--geometry))
+
+(defun centaur-frame--save-geometry ()
+  "Save current frame's geometry."
+  (setq-local centaur-frame--geometry
+              `((left . ,(frame-parameter nil 'left))
+                (top . ,(frame-parameter nil 'top))
+                (width . ,(frame-parameter nil 'width))
+                (height . ,(frame-parameter nil 'height))
+                (fullscreen . ,(frame-parameter nil 'fullscreen)))))
+
+(defun centaur-frame-left-half ()
+  "Put the frame to the left-half."
+  (interactive)
+  (centaur-frame--save-geometry)
+  (let* ((attr (frame-monitor-workarea))
+         (left (nth 0 attr))
+         (top (nth 1 attr))
+         (width (/ (nth 2 attr) 2))
+         (height (nth 3 attr)))
+    (set-frame-position nil left top)
+    (set-frame-size nil width height t)))
+
+(defun centaur-frame-right-half ()
+  "Put the frame to the right-half."
+  (interactive)
+  (centaur-frame--save-geometry)
+  (let* ((attr (frame-monitor-workarea))
+         (left (/ (nth 2 attr) 2))
+         (top (nth 1 attr))
+         (width (/ (nth 2 attr) 2))
+         (height (nth 3 attr)))
+    (set-frame-position nil left top)
+    (set-frame-size nil width height t)))
+
+(defun centaur-frame-top-half ()
+  "Put the frame to the top-half."
+  (interactive)
+  (centaur-frame--save-geometry)
+  (let* ((attr (frame-monitor-workarea))
+         (left (nth 0 attr))
+         (top (nth 1 attr))
+         (width (nth 2 attr))
+         (height (/ (nth 3 attr) 2)))
+    (set-frame-position nil left top)
+    (set-frame-size nil width height t)))
+
+(defun centaur-frame-bottom-half ()
+  "Put the frame to the bottom-half."
+  (interactive)
+  (centaur-frame--save-geometry)
+  (let* ((attr (frame-monitor-workarea))
+         (left (nth 0 attr))
+         (top (/ (nth 3 attr) 2))
+         (width (nth 2 attr))
+         (height (/ (nth 3 attr) 2)))
+    (set-frame-position nil left top)
+    (set-frame-size nil width height t)))
+
+
+
 ;; Network Proxy
 (defun proxy-http-show ()
   "Show HTTP/HTTPS proxy."
