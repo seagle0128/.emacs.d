@@ -32,6 +32,8 @@
 
 (require 'init-const)
 
+(bind-key "M-<f7>" #'centaur-read-mode)
+
 ;; PDF reader
 (when (display-graphic-p)
   (use-package pdf-view

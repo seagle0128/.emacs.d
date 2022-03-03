@@ -77,6 +77,7 @@
         :hook (after-load-theme . solaire-global-mode))
 
       (use-package doom-themes
+        :bind ("C-c T" . centaur-load-theme)
         :custom-face
         (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
         :custom

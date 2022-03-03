@@ -83,7 +83,6 @@ Same as `replace-string C-q C-m RET RET'."
   (unless (minibuffer-window-active-p (selected-window))
     (revert-buffer t t)
     (message "Reverted this buffer")))
-(global-set-key (kbd "s-r") #'revert-this-buffer)
 
 (defun delete-this-file ()
   "Delete the current file, and kill the buffer."
@@ -94,7 +93,6 @@ Same as `replace-string C-q C-m RET RET'."
                              (file-name-nondirectory buffer-file-name)))
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
-(global-set-key (kbd "C-x K") #'delete-this-file)
 
 (defun rename-this-file (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -170,7 +168,6 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
   (interactive)
   (load user-init-file))
 (defalias 'centaur-reload-init-file #'reload-init-file)
-(global-set-key (kbd "C-c C-l") #'reload-init-file)
 
 ;; Browse the homepage
 (defun browse-homepage ()
@@ -259,7 +256,6 @@ Save to `custom-file' if NO-SAVE is nil."
       (and (fboundp 'olivetti-mode) (olivetti-mode -1))
       (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1))
       (text-scale-set 0))))
-(global-set-key (kbd "M-<f7>") #'centaur-read-mode)
 
 ;; Pakcage repository (ELPA)
 (defun set-package-archives (archives &optional refresh async no-save)
@@ -617,7 +613,6 @@ If SYNC is non-nil, the updating process is synchronous."
          (centaur--load-theme (centaur--theme-name 'default)))))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
-(global-set-key (kbd "C-c T") #'centaur-load-theme)
 
 
 

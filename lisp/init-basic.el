@@ -310,6 +310,11 @@ Also, delete any process that is exited or signaled."
              ("C-M-<up>" . centaur-frame-top-half)
              ("C-M-<down>" . centaur-frame-bottom-half)))
 
+;; Global keybindings
+(bind-keys ("s-r" . revert-this-buffer)
+           ("C-x K" . delete-this-file)
+           ("C-c C-l" . reload-init-file))
+
 (provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
