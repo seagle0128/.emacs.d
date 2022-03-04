@@ -86,11 +86,6 @@
     :init (setq all-the-icons-dired-monochrome nil)
     :config
     (with-no-warnings
-      ;; Add missing advices
-      ;; @see `all-the-icons-dired--setup'
-      (with-eval-after-load 'dired-aux
-        (advice-add #'dired-do-redisplay :around #'all-the-icons-dired--refresh-advice))
-
       (defun my-all-the-icons-dired--refresh ()
         "Display the icons of files in a dired buffer."
         (all-the-icons-dired--remove-all-overlays)
@@ -116,8 +111,8 @@
                                                 (when all-the-icons-dired-monochrome
                                                   `(:face ,(face-at-point))))))))
                       (if (member file '("." ".."))
-                          (all-the-icons-dired--add-overlay (point) "   \t")
-                        (all-the-icons-dired--add-overlay (point) (concat " " icon "\t"))))))
+                          (all-the-icons-dired--add-overlay (dired-move-to-filename) "   \t")
+                        (all-the-icons-dired--add-overlay (dired-move-to-filename) (concat " " icon "\t"))))))
                 (forward-line 1)))
           (message "Not display icons because of too many items.")))
       (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
