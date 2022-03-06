@@ -206,6 +206,8 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
+  :custom-face
+  (hl-todo ((t (:inherit variable-pitch :box (:line-width -1) :height 0.9 :width condensed :weight semibold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
          ([C-f3] . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
@@ -213,6 +215,8 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t o" . hl-todo-occur)
          ("C-c t i" . hl-todo-insert))
   :hook (after-init . global-hl-todo-mode)
+  :init (setq hl-todo-require-punctuation t
+              hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
     (cl-pushnew `(,keyword . ,(face-foreground 'error)) hl-todo-keyword-faces))
