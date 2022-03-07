@@ -143,13 +143,13 @@
 
 ;; Enforce rules for popups
 (use-package popper
+  :defines popper-echo-dispatch-actions
   :commands popper-group-by-projectile
   :bind (:map popper-mode-map
          ("C-h z" . popper-toggle-latest)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :hook ((after-init . popper-mode)
-         (after-init . popper-echo-mode))
+         ("C-<tab>"   . popper-cycle)
+         ("C-M-<tab>" . popper-toggle-type))
+  :hook (after-init . popper-mode)
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
@@ -198,8 +198,23 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-test-moed))
+
   (with-eval-after-load 'projectile
-    (setq popper-group-function #'popper-group-by-projectile)))
+    (setq popper-group-function #'popper-group-by-projectile))
+  (setq popper-echo-dispatch-actions t)
+  :config
+  (popper-echo-mode 1)
+  (with-no-warnings
+    (defun popper-close-window-hack (&rest _)
+      "Close popper window via `C-g'."
+      ;; `C-g' can deactivate region
+      (when (and (called-interactively-p 'interactive)
+                 (not (region-active-p))
+                 popper-open-popup-alist)
+        (let ((window (caar popper-open-popup-alist)))
+          (when (window-live-p window)
+            (delete-window window)))))
+    (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
 (provide 'init-window)
 
