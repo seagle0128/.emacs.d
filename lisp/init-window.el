@@ -197,12 +197,7 @@
           "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
-          rustic-cargo-outdated-mode rustic-cargo-test-moed
-
-          (lambda (buf)
-            (with-current-buffer buf
-              (and (derived-mode-p 'fundamental-mode)
-                   (< (count-lines (point-min) (point-max)) 10))))))
+          rustic-cargo-outdated-mode rustic-cargo-test-moed))
   (with-eval-after-load 'projectile
     (setq popper-group-function #'popper-group-by-projectile)))
 
