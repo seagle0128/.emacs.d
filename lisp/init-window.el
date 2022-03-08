@@ -154,6 +154,7 @@
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
+          "\\*Compile-Log\\*"
           "\\*Completions\\*"
           "\\*Warnings\\*"
           "\\*Async Shell Command\\*"
