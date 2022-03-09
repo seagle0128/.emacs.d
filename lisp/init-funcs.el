@@ -625,7 +625,7 @@ If SYNC is non-nil, the updating process is synchronous."
                 (top . ,(frame-parameter nil 'top))
                 (width . ,(frame-parameter nil 'width))
                 (height . ,(frame-parameter nil 'height))
-                (fullscreen . ,(frame-parameter nil 'fullscreen)))))
+                (fullscreen))))
 
 (defun centaur-frame--fullscreen-p ()
   "Returns Non-nil if the frame is fullscreen."
