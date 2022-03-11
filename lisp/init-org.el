@@ -264,7 +264,9 @@ prepended to the element after the #+HEADER: tag."
 
     ;; Preview
     (use-package org-preview-html
-      :diminish))
+      :diminish
+      :init (when (featurep 'xwidget-internal)
+              (setq org-preview-html-viewer 'xwidget))))
 
   ;; Presentation
   (use-package org-tree-slide
