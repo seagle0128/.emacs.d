@@ -234,7 +234,8 @@
 
     (defun my-ivy-switch-to-rg-dwim (&rest _)
       "Switch to `rg-dwim' with the current input."
-      (rg-dwim default-directory))
+      (ivy-quit-and-run
+        (rg-dwim default-directory)))
 
     (defun my-ivy-switch-to-counsel-rg (&rest _)
       "Switch to `counsel-rg' with the current input."
