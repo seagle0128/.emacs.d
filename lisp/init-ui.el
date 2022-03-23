@@ -375,7 +375,7 @@
       scroll-preserve-screen-position t)
 
 ;; Good pixel line scrolling
-(if (boundp 'pixel-scroll-precision-mode)
+(if (fboundp 'pixel-scroll-precision-mode)
     (pixel-scroll-precision-mode t)
   (when (and emacs/>=27p (not sys/macp))
     (use-package good-scroll
