@@ -5,19 +5,15 @@ on: [push, pull_request]
 jobs:
   linux-test:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        emacs-version:
-          - 25.1
-          - 25.2
-          - 25.3
-          - 26.1
-          - 26.2
-          - 26.3
-          - 27.1
-          - 27.2
-          - snapshot
+        emacs-version: [25.1, 25.2, 25.3, 26.1, 26.2, 26.3, 27.1, 27.2]
+        experimental: [false]
+        include:
+          - emacs-version: snapshot
+            experimental: true
 
     steps:
       - uses: actions/checkout@v1
