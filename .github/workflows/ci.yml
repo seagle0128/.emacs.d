@@ -35,9 +35,10 @@ jobs:
           --eval "(when (and (require 'org nil t) (string= (org-version) \"\"))
                      (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))" \
           --eval "(let ((package-check-signature nil)
-                        (url-show-status nil)
                         (early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
+                    (setq package-check-signature nil
+                          url-show-status nil)
                     (and (>= emacs-major-version 27) (load early-init-file))
                     (load user-init-file)
                     (run-hooks 'after-init-hook)
