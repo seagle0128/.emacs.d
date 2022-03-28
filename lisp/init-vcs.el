@@ -67,6 +67,7 @@
   (when (executable-find "cc")
     (use-package forge
       :demand
+      :defines forge-topic-list-columns
       :init
       (setq forge-topic-list-columns
             '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
@@ -77,6 +78,7 @@
   ;; Show TODOs in magit
   (when emacs/>=25.2p
     (use-package magit-todos
+      :defines magit-todos-nice
       :bind ("C-c C-t" . ivy-magit-todos)
       :init
       (setq magit-todos-nice (if (executable-find "nice") t nil))
