@@ -38,8 +38,6 @@ jobs:
           --eval "(let ((package-check-signature nil)
                         (early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
-                    (setq package-check-signature nil
-                          url-show-status nil)
                     (and (>= emacs-major-version 27) (load early-init-file))
                     (load user-init-file)
                     (run-hooks 'after-init-hook)
