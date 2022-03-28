@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(require 'init-const)
+
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
