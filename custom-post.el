@@ -135,10 +135,28 @@
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
   (require 'org-roam-protocol))
-  
+
+(use-package org
+  :config
+  (setq org-directory "~/Org/")
+  (setq org-capture-templates nil)
+  (setq org-capture-templates '(
+                                ("t" "Task" entry (file+headline "~/Org/task.org" "Task" )
+                                 "* TODO [#A] %i%? \nSCHEDULED: %T " :empty-lines 1)
+                                ("s" "School" entry (file+headline "~/Org/task.org" "School" )
+                                 "* TODO [#A] %i%? \nDEADLINE: %T " :empty-lines 1)
+                                ("w" "Work" entry (file+headline "~/Org/task.org" "Work" )
+                                 "* TODO [#B] %i%? \nSCHEDULED: %t " :empty-lines 1)
+                                ("p" "Project" entry (file "~/Org/project.org" )
+                                 "* TODO [#B] %i%?" :empty-lines 1)
+                                ("n" "Routine" entry (file "~/Org/routine.org")
+                                 "* TODO [#C] %i%?" :empty-lines 1)
+                                ("a" "Plan" entry (file "~/Org/plan.org")
+                                 "* TODO [#C] %i%?" :empty-lines 1)
+                                ))
   (setq org-agenda-files
-    ("~/Org/task.org"
-     "~/Org/project.org"
-     "~/Org/plan.org"
-     "~/Org/routine.org"
-     "~/Org/notes.org"))
+        '("~/Org/task.org"
+          "~/Org/project.org"
+          "~/Org/plan.org"
+          "~/Org/routine.org"
+          "~/Org/notes.org")))
