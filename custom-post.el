@@ -83,43 +83,25 @@
    '("x" . meow-delete)
    '("X" . meow-backward-delete)
    '("y" . meow-save)
-   '("Y" . meow-yank)
+   '("Y" . "C-y")
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
 
 (require 'meow)
 (meow-setup)
-
 (meow-global-mode 1)
-
+(require 'posframe)
 (use-package rime
   :custom
   (default-input-method "rime")
-  (rime-user-data-dir "~/.local/share/fcitx5/rime")
-  (setq rime-show-candidate 'posframe))
+  (rime-show-candidate 'posframe)
+  (rime-user-data-dir "~/.local/share/fcitx5/rime"))
+(setq rime-disable-predicates
+      '(meow-normal-mode-p
+        meow-motion-mode-p
+        meow-keypad-mode-p))
 
-(use-package sis
-  :after meow
-  :config
-  (sis-ism-lazyman-config nil "rime" 'native)
-  (setq sis-do-get (lambda() current-input-method))
-  (setq sis-do-set (lambda(source)
-                     (unless (equal source current-input-method)
-                       (toggle-input-method))))
-  (add-hook 'meow-insert-exit-hook #'sis-set-english)
-  (add-to-list 'sis-context-hooks 'meow-insert-enter-hook)
-  ;; enable the /cursor color/ mode
-  (sis-global-cursor-color-mode t)
-  ;; enable the /respect/ mode
-  ;; 不能开启 global-respect-mode 会导致 meow 的 keypad 模式快捷键不起作用
-  ;; (sis-global-respect-mode t)
-  ;; e
-  ;; nable the /context/ mode for all buffers
-  ;; (sis-global-context-mode t)
-  ;; enable the /inline english/ mode for all buffers
-  (sis-global-inline-mode t)
-  )
 (use-package org-roam
   :custom
   (org-roam-directory "~/Org/Notes")
