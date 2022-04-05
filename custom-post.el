@@ -1,3 +1,4 @@
+
 (use-package meow)
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
@@ -93,14 +94,18 @@
 (meow-global-mode 1)
 (require 'posframe)
 (use-package rime
+  :config
+  (setq rime-disable-predicates
+        '(meow-normal-mode-p
+          meow-motion-mode-p
+          meow-keypad-mode-p))
+  (setq rime-posframe-properties
+        (list :font "Source Han Sans CN"
+              :internal-border-width 10))
   :custom
   (default-input-method "rime")
   (rime-show-candidate 'posframe)
-  (rime-share-data-dir "~/.local/share/fcitx5/rime"))
-(setq rime-disable-predicates
-      '(meow-normal-mode-p
-        meow-motion-mode-p
-        meow-keypad-mode-p))
+  (rime-user-data-dir "~/.local/share/fcitx5/rime"))
 
 (use-package org-roam
   :custom
