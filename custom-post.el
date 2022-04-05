@@ -96,7 +96,7 @@
   :custom
   (default-input-method "rime")
   (rime-show-candidate 'posframe)
-  (rime-user-data-dir "~/.local/share/fcitx5/rime"))
+  (rime-share-data-dir "~/.local/share/fcitx5/rime"))
 (setq rime-disable-predicates
       '(meow-normal-mode-p
         meow-motion-mode-p
