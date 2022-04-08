@@ -403,14 +403,7 @@ This is for use in `ivy-re-builders-alist'."
             (counsel-unicode-char . ivy-prescient-non-fuzzy)
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
-          '(:not swiper swiper-isearch ivy-switch-buffer
-            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-            counsel-grep counsel-git-grep counsel-rg counsel-ag
-            counsel-ack counsel-fzf counsel-pt counsel-imenu
-            counsel-org-capture counsel-outline counsel-org-goto
-            counsel-load-theme counsel-yank-pop
-            counsel-recentf counsel-buffer-or-recentf
-            centaur-load-theme))
+          '(counsel-M-x execute-extended-command execute-extended-command-for-buffer))
 
     (ivy-prescient-mode 1))
 
