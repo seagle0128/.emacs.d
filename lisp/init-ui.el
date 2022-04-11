@@ -418,7 +418,8 @@
         (cons (/ (- (plist-get info :parent-frame-width)
                     (plist-get info :posframe-width))
                  2)
-              (/ (plist-get info :parent-frame-height)
+              (/ (+ (plist-get info :parent-frame-height)
+                    (* 2 (plist-get info :font-height)))
                  2))))))
 
 (with-no-warnings

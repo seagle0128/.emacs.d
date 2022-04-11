@@ -272,7 +272,7 @@ Also, delete any process that is exited or signaled."
   :hook (after-init . global-so-long-mode))
 
 ;; Misc
-(if (boundp use-short-answers)
+(if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (fset 'yes-or-no-p 'y-or-n-p))
 (setq-default major-mode 'text-mode
