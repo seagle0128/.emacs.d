@@ -1,4 +1,3 @@
-
 (use-package meow)
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
@@ -93,6 +92,7 @@
 (meow-setup)
 (meow-global-mode 1)
 (require 'posframe)
+(global-set-key (kbd "<f5>") 'vterm-other-window)
 (use-package rime
   :config
   (setq rime-disable-predicates
