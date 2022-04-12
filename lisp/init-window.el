@@ -199,6 +199,7 @@
             "^\\*elfeed-entry\\*$"
             "^\\*macro expansion\\**"
 
+            "\\*Agenda Commands\\*" "\\*Org Agenda.*\\*"
             "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
             "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
             "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
