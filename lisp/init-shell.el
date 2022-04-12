@@ -137,9 +137,9 @@
     (defun shell-pop-posframe-toggle ()
       "Toggle shell in child frame."
       (interactive)
-      (let* ((buffer (shell-pop--shell 100))
+      (let* ((buffer (shell-pop--shell))
              (window (get-buffer-window buffer)))
-        ;; Hide window
+        ;; Hide window: for `popper'
         (when (window-live-p window)
           (delete-window window))
 
@@ -184,15 +184,19 @@
   (defun shell-pop-toggle ()
     "Toggle shell."
     (interactive)
-    ;; Hide child frame
     (unless (and (frame-live-p shell-pop--frame)
                  (frame-visible-p shell-pop--frame))
       (if (window-live-p shell-pop--window)
           (progn
             (delete-window shell-pop--window)
             (setq shell-pop--window nil))
-        (setq shell-pop--window
-              (get-buffer-window (shell-pop--shell))))))
+        (let ((buffer (shell-pop--shell)))
+          ;; Restore mode-line since it may be hidden by `posframe'
+          (with-current-buffer buffer
+            (unless mode-line-format
+              (setq mode-line-format (default-value 'mode-line-format))
+              (force-mode-line-update)))
+          (setq shell-pop--window (get-buffer-window buffer))))))
   (bind-key [f9] #'shell-pop-toggle))
 
 (provide 'init-shell)
