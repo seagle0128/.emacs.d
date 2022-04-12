@@ -190,13 +190,8 @@
           (progn
             (delete-window shell-pop--window)
             (setq shell-pop--window nil))
-        (let ((buffer (shell-pop--shell)))
-          ;; Restore mode-line since it may be hidden by `posframe'
-          (with-current-buffer buffer
-            (unless mode-line-format
-              (setq mode-line-format (default-value 'mode-line-format))
-              (force-mode-line-update)))
-          (setq shell-pop--window (get-buffer-window buffer))))))
+        (setq shell-pop--window
+              (get-buffer-window (shell-pop--shell))))))
   (bind-key [f9] #'shell-pop-toggle))
 
 (provide 'init-shell)
