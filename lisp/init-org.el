@@ -137,7 +137,6 @@ prepended to the element after the #+HEADER: tag."
                              ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
-        org-agenda-files `(,centaur-org-directory)
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
@@ -146,6 +145,16 @@ prepended to the element after the #+HEADER: tag."
         org-priority-faces '((?A . error)
                              (?B . warning)
                              (?C . success))
+
+        ;; Agenda styling
+        org-agenda-files `(,centaur-org-directory)
+        org-agenda-block-separator ?─
+        org-agenda-time-grid
+        '((daily today require-timed)
+          (800 1000 1200 1400 1600 1800 2000)
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-current-time-string
+        "⭠ now ─────────────────────────────────────────────────"
 
         org-tags-column -80
         org-log-done 'time
@@ -181,6 +190,7 @@ prepended to the element after the #+HEADER: tag."
   (if emacs/>=27p
       (use-package org-modern
         :hook ((org-mode . org-modern-mode)
+               (org-agenda-finalize . org-modern-agenda)
                (org-modern-mode . (lambda ()
                                     "Adapt `org-modern-mode'."
                                     ;; Looks better for tags
