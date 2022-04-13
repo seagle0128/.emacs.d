@@ -132,12 +132,11 @@
   ;; Ivy Integration
   (with-eval-after-load 'ivy
     (add-to-list 'ivy-ignore-buffers
-                 #'(lambda (b)
-                     (when persp-mode
-                       (let ((persp (get-current-persp)))
-                         (if persp
-                             (not (persp-contain-buffer-p b persp))
-                           nil))))))
+                 (lambda (b)
+                   (when persp-mode
+                     (if-let ((persp (get-current-persp)))
+                         (not (persp-contain-buffer-p b persp))
+                       nil)))))
 
   ;; Eshell integration
   (persp-def-buffer-save/load
