@@ -27,7 +27,6 @@
 ;;
 ;; Better defaults.
 ;;
-
 ;;; Code:
 
 (require 'init-const)
