@@ -33,8 +33,8 @@
    '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
-   '("," . meow-inner-of-thing)
-   '("." . meow-bounds-of-thing)
+   '("," . meow-inner-of-thing) ;; 内部
+   '("." . meow-bounds-of-thing) ;; 整个
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("/" . meow-visit)
@@ -52,7 +52,7 @@
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
    '("h" . meow-search)
-   '("H" . meow-next-word)
+   ;; '("H" . meow-next-word)
    '("i" . meow-right)
    '("I" . meow-right-expand)
    '("j" . meow-join)
@@ -193,7 +193,11 @@
    ([remap dired-do-copy] . dirvish-yank)
    ([remap mode-line-other-buffer] . dirvish-other-buffer)))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
-(require 'eaf)
-(require 'eaf-browser)
-(require 'eaf-pdf-viewer)
+;;;(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
+;;;(require 'eaf)
+;;;(require 'eaf-browser)
+;;;(require 'eaf-pdf-viewer)
+;;;
+(require 'keyfreq)
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
