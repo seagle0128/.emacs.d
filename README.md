@@ -1,3 +1,8 @@
+
+# 東百荒誕怪談の偙國猛箎 🇪Ⓜ️🅰️©️🫠
+
+fork for centaur emacs
+
 # Centaur Emacs
 
 [![Build Status](https://github.com/seagle0128/.emacs.d/workflows/CI/badge.svg?branch=master)](https://github.com/seagle0128/.emacs.d/actions)
