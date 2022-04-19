@@ -1,0 +1,13 @@
+* 東百荒誕怪談の偙國猛箎 🇪Ⓜ️🅰️©️🫠
+
+fork for [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]
+
+Old [[file:README_old.md][README]]
+
+* Lang
+
+* Tools
+
+* Edit
++ meow-edit
+  
