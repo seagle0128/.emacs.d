@@ -114,7 +114,7 @@
            (executable-find "make"))
   (use-package vterm
     :bind (:map vterm-mode-map
-           ([f9] . (lambda ()
+           ([f5] . (lambda ()
                      (interactive)
                      (and (fboundp 'shell-pop-toggle)
                           (shell-pop-toggle)))))
@@ -192,7 +192,7 @@
             (setq shell-pop--window nil))
         (setq shell-pop--window
               (get-buffer-window (shell-pop--shell))))))
-  (bind-key [f9] #'shell-pop-toggle))
+  (bind-key [f5] #'shell-pop-toggle))
 
 (provide 'init-shell)
 

@@ -124,19 +124,20 @@ prepended to the element after the #+HEADER: tag."
   (setq org-modules nil                 ; Faster loading
         org-directory centaur-org-directory
         org-capture-templates
-        `(("i" "Idea" entry (file ,(concat org-directory "/idea.org"))
-           "*  %^{Title} %?\n%U\n%a\n")
-          ("t" "Todo" entry (file ,(concat org-directory "/gtd.org"))
-           "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("n" "Note" entry (file ,(concat org-directory "/note.org"))
-           "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+        `(("p" "Plan" entry (file ,(concat org-directory "/plan.org"))
+           "*  %^{Title} %?\n%U\n")
+          ("t" "Todo" entry (file ,(concat org-directory "/task.org"))
+           "* TODO %i%?\nSCHEDULED: %T " :empty-lines 1)
+          ("n" "Note" entry (file ,(concat org-directory "/notes.org"))
+           "* %? :NOTE:\n%U\n")
           ("j" "Journal" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
-                                ,(concat org-directory "/journal.org"))
-           "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                                ,(concat org-directory "/routine.org"))
+           "*  %^{Title} %?\n%U\n" :clock-in t :clock-resume t)
 	      ("b" "Book" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
-                             ,(concat org-directory "/book.org"))
-	       "* Topic: %^{Description}  %^g %? Added: %U"))
-
+                             ,(concat org-directory "/project.org"))
+	       "* Topic: %^{Description}  %^g %? Added: %U")
+          ("w" "Work" entry (file,(concat org-directory "/task.org"))
+           "%i%? \nDEADLINE: %T" :empty-lines 1))
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
