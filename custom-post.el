@@ -53,7 +53,6 @@
 ;;;(require 'eaf-browser)
 ;;;(require 'eaf-pdf-viewer)
 
-(use-package keyfreq
-  :config
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1))
+(require 'keyfreq)
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
