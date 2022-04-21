@@ -1,4 +1,5 @@
 (setq inhibit-startup-screen t)
+(require 'posframe)
 (require 'init-meow)
 (require 'init-rime)
 
@@ -9,7 +10,6 @@
   (setq dired-dwim-target t)
   (setq dired-listing-switches
         "-AGhlv --group-directories-first --time-style=long-iso"))
-
 (use-package dirvish
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.

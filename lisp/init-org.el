@@ -329,12 +329,12 @@ prepended to the element after the #+HEADER: tag."
   (use-package org-roam
     :diminish
     :hook (after-init . org-roam-db-autosync-enable)
-    :bind (("C-c C-n l" . org-roam-buffer-toggle)
-           ("C-c C-n f" . org-roam-node-find)
-           ("C-c C-n g" . org-roam-graph)
-           ("C-c C-n i" . org-roam-node-insert)
-           ("C-c C-n c" . org-roam-capture)
-           ("C-c C-n j" . org-roam-dailies-capture-today))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today))
     :init
     (setq org-roam-directory (file-truename centaur-org-directory))
     :config
@@ -346,7 +346,12 @@ prepended to the element after the #+HEADER: tag."
         :init
         (when (featurep 'xwidget-internal)
           (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))))))
-
+;; org-download
+(require 'org-download)
+(defun dummy-org-download-annotate-function (link)
+  "")
+(setq org-download-annotate-function
+      #'dummy-org-download-annotate-function)
 (provide 'init-org)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
