@@ -55,13 +55,14 @@
 (use-package xref
   :ensure nil
   :init
-  (when (and (boundp 'xref-search-program) (executable-find "rg"))
-    (setq xref-search-program 'ripgrep))
-
   (with-no-warnings
+    (when (executable-find "rg")
+      (setq xref-search-program 'ripgrep))
+
     (if emacs/>=28p
-        (setq xref-show-xrefs-function #'xref-show-definitions-completing-read
-              xref-show-definitions-function #'xref-show-definitions-completing-read)
+        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+              xref-show-xrefs-function #'xref-show-definitions-completing-read)
+
       ;; Select from xref candidates with Ivy
       (use-package ivy-xref
         :after ivy
