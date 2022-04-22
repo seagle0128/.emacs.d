@@ -538,6 +538,7 @@ This is for use in `ivy-re-builders-alist'."
 
 ;; Ivy
 (use-package ivy-dired-history
+  :demand t
   :after (savehist dired)
   :bind (:map dired-mode-map
          ("," . dired))
