@@ -331,7 +331,7 @@
       :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
       :init (setq display-line-numbers-width-start t))
   (use-package linum-off
-    :deman t
+    :demand t
     :defines linum-format
     :hook (after-init . global-linum-mode)
     :init (setq linum-format "%4d ")
