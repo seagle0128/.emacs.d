@@ -40,9 +40,8 @@
   :config
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
-    :init
-    (setq all-the-icons-ibuffer-icon centaur-icon)
-    (all-the-icons-ibuffer-mode 1))
+    :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
+    :init (setq all-the-icons-ibuffer-icon centaur-icon))
 
   (with-eval-after-load 'counsel
     (with-no-warnings
