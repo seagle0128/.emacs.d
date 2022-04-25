@@ -162,9 +162,10 @@
 
 ;; Projectile integration
 (use-package persp-mode-projectile-bridge
+  :after persp-mode projectile
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives)
-  :hook ((projectile-mode . persp-mode-projectile-bridge-mode)
+  :hook ((after-init . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode
           .
           (lambda ()
