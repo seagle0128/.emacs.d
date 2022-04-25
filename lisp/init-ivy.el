@@ -120,7 +120,7 @@
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
         ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
-                             "\\`\\*.+-posframe-buffer\\*")
+                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
