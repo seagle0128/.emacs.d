@@ -32,7 +32,7 @@
 
 (require 'init-const)
 
-(when emacs>=26
+(when emacs/>=26p
   (use-package markdown-mode
     :mode (("README\\.md\\'" . gfm-mode))
     :init
@@ -106,7 +106,7 @@ mermaid.initialize({
     (use-package grip-mode
       :defines org-mode-map
       :bind (:map markdown-mode-command-map
-             ("g" . grip-mode))
+                  ("g" . grip-mode))
       :init
       (with-eval-after-load 'org
         (bind-key "C-c C-g" #'grip-mode org-mode-map))
@@ -119,7 +119,7 @@ mermaid.initialize({
     ;; Table of contents
     (use-package markdown-toc
       :bind (:map markdown-mode-command-map
-             ("r" . markdown-toc-generate-or-refresh-toc)))))
+                  ("r" . markdown-toc-generate-or-refresh-toc)))))
 
 (provide 'init-markdown)
 
