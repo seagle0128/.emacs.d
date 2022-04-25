@@ -164,7 +164,7 @@
 (use-package persp-mode-projectile-bridge
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives)
-  :hook ((persp-mode . persp-mode-projectile-bridge-mode)
+  :hook ((projectile-mode . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode
           .
           (lambda ()
