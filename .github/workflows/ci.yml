@@ -36,7 +36,7 @@ jobs:
       - name: Test
         run: |
           rm -rf ~/.emacs.d; \
-          mv -f ~/work/.emacs.d ~/; \
+          mv -f ~/work/.emacs.d/.emacs.d ~/; \
           mkdir -p ~/.emacs.d/elpa/gnupg && gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
           emacs --version; \
           emacs -q --batch \
