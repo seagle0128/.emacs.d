@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
@@ -36,6 +36,7 @@ jobs:
 
       - name: Test
         run: |
+          echo $HOME; \
           export HOME="/home/runner/work/.emacs.d"; \
           mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
           emacs --version; \
