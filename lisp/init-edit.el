@@ -368,8 +368,8 @@
      ("h" hs-hide-block "hide block")
      ("l" hs-hide-level "hide level"))
     "Move"
-    (("C-a" mwim-beginning-of-code-or-line "↖")
-     ("C-e" mwim-end-of-code-or-line "↘")
+    (("C-a" mwim-beginning-of-code-or-line "⇤")
+     ("C-e" mwim-end-of-code-or-line "⇥")
      ("C-b" backward-char "←")
      ("C-n" next-line "↓")
      ("C-p" previous-line "↑")
