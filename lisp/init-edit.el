@@ -351,12 +351,28 @@
   :hook ((prog-mode . subword-mode)
          (minibuffer-setup . subword-mode)))
 
-;; Hideshow
+;; Flexible text folding
 (use-package hideshow
   :ensure nil
   :diminish hs-minor-mode
+  :pretty-hydra
+  ((:title (pretty-hydra-title "HideShow" 'octicon "fold" :height 1.1 :v-adjust -0.05)
+    :color amaranth :quit-key "q")
+   ("Fold"
+    (("a" hs-show-all "show all")
+     ("i" hs-hide-all "hide all")
+     ("t" hs-toggle-hiding "toggle hiding")
+     ("s" hs-show-block "show block")
+     ("h" hs-hide-block "hide block")
+     ("l" hs-hide-level "hide level"))
+    "Move"
+    (("h" backward-char "←")
+     ("j" next-line "↓")
+     ("k" previous-line "↑")
+     ("l" forward-char "→"))))
   :bind (:map hs-minor-mode-map
-         ("C-`" . hs-toggle-hiding)))
+         ("C-~" . hideshow-hydra/body))
+  :hook (prog-mode . hs-minor-mode))
 
 ;; Open files as another user
 (unless sys/win32p

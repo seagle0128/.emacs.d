@@ -198,6 +198,7 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 | `smerge-mode-hydra`      | smerge-mode           | `C-c m`           | Actions for `smerge-mode`            |
 | `rect-hydra`             | text-mode, prog-mode  | `C-<return>`      | Actions for Rectangle                |
 | `rect-hydra`             | org-mode              | `S-<return>`      | Actions for Rectangle                |
+| `hideshow-hydra`         | prog-mode             | `C-~`             | Actions for `hideshow`               |
 | `lsp-ui-hydra`           | lsp-ui-mode           | `M-<f6>`          | Actions for `lsp-ui`                 |
 | `dap-hydra`              | dap-mode              | `M-<f5>`          | Actions for `dap-debug`              |
 | `elfeed-hydra`           | elfeed                | `?`               | Actions for RSS reader `elfeed`      |
