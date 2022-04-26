@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
