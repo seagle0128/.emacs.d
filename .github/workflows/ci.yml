@@ -36,7 +36,7 @@ jobs:
 
       - name: Test
         run: |
-          export HOME="/home/runner/work/.emacs.d"; \
+          export HOME="$HOME/work/.emacs.d"; \
           mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
           emacs --version; \
           emacs -q --batch \
