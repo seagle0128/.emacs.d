@@ -328,7 +328,7 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+      :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
       :init (setq display-line-numbers-width-start t))
   (use-package linum-off
     :demand t
