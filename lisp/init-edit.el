@@ -378,6 +378,7 @@
          ("C-~" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
+  ;; More functions
   ;; @see https://karthinks.com/software/simple-folding-with-hideshow/
   (defun hs-cycle (&optional level)
     (interactive "p")
@@ -408,7 +409,25 @@
       ('hs-toggle-all
        (save-excursion (hs-show-all))
        (setq this-command 'hs-global-show))
-      (_ (hs-hide-all)))))
+      (_ (hs-hide-all))))
+
+  ;; Display line counts
+  (defun hs-display-code-line-counts (ov)
+    "Display line counts when hiding codes."
+    (when (eq 'code (overlay-get ov 'hs))
+      (overlay-put ov 'display
+                   (concat
+                    " "
+                    (propertize
+                     (if (char-displayable-p ?⏷) "⏷" "...")
+                     'face 'shadow)
+                    (propertize
+                     (format " (%d lines)"
+                             (count-lines (overlay-start ov)
+                                          (overlay-end ov)))
+                     'face '(:inherit shadow :height 0.8))
+                    " "))))
+  (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
 ;; Open files as another user
 (unless sys/win32p
