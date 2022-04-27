@@ -378,6 +378,7 @@
          ("C-~" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
+  ;; @see https://karthinks.com/software/simple-folding-with-hideshow/
   (defun hs-cycle (&optional level)
     (interactive "p")
     (let (message-log-max
@@ -388,11 +389,7 @@
              (hs-hide-level 1)
              (setq this-command 'hs-cycle-children))
             ('hs-cycle-children
-             ;; TODO: Fix this case. `hs-show-block' needs to be
-             ;; called twice to open all folds of the parent
-             ;; block.
              (save-excursion (hs-show-block))
-             (hs-show-block)
              (setq this-command 'hs-cycle-subtree))
             ('hs-cycle-subtree
              (hs-hide-block))
