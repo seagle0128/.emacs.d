@@ -408,6 +408,17 @@
   (use-package posframe
     :hook (after-load-theme . posframe-delete-all)
     :init
+    (defface posframe-border
+      `((t (:background ,(face-foreground 'shadow nil t))))
+      "Face used by the posframe border."
+      :group 'posframe)
+
+    (add-hook
+     'after-load-theme-hook
+     (lambda ()
+       (custom-set-faces
+        `(posframe-border ((t (:background ,(face-foreground 'shadow nil t))))))))
+
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
                 (lambda (&rest _)

@@ -165,7 +165,7 @@
                    :min-width width
                    :min-height height
                    :internal-border-width 3
-                   :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                   :internal-border-color (face-background 'posframe-border nil t)
                    :background-color (face-background 'tooltip nil t)
                    :override-parameters '((cursor-type . t))
                    :accept-focus t))

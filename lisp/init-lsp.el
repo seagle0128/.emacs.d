@@ -244,7 +244,7 @@
                  (posframe-show lsp-ui-peek--buffer
                                 :string (mapconcat 'identity string "")
                                 :min-width (frame-width)
-                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                                :internal-border-color (face-background 'posframe-border nil t)
                                 :internal-border-width 1
                                 :poshandler #'posframe-poshandler-frame-center))
              (funcall fn src1 src2)))

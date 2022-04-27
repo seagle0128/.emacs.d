@@ -60,7 +60,7 @@
         (flycheck-posframe-face ((t (:foreground ,(face-foreground 'success)))))
         (flycheck-posframe-info-face ((t (:foreground ,(face-foreground 'success)))))
         (flycheck-posframe-background-face ((t (:inherit tooltip))))
-        (flycheck-posframe-border-face ((t (:inherit font-lock-comment-face))))
+        (flycheck-posframe-border-face ((t (:inherit posframe-border))))
         :hook (flycheck-mode . flycheck-posframe-mode)
         :init
         (setq flycheck-posframe-border-width 1)
@@ -92,7 +92,7 @@
                  :max-width (round (* (frame-width) 0.62))
                  :max-height (round (* (frame-height) 0.62))
                  :internal-border-width flycheck-posframe-border-width
-                 :internal-border-color (face-foreground 'flycheck-posframe-border-face nil t)
+                 :internal-border-color (face-background 'flycheck-posframe-border-face nil t)
                  :poshandler poshandler
                  :hidehandler #'flycheck-posframe-hidehandler))))
           (advice-add #'flycheck-posframe-show-posframe :override #'my-flycheck-posframe-show-posframe)))

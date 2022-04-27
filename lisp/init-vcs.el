@@ -95,7 +95,7 @@
     :diminish
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
-    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
+    (transient-posframe-border ((t (:inherit posframe-border))))
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
@@ -105,13 +105,6 @@
           transient-posframe-parameters '((left-fringe . 8)
                                           (right-fringe . 8)))
     :config
-    (add-hook
-     'after-load-theme-hook
-     (lambda ()
-       (custom-set-faces
-        '(transient-posframe ((t (:inherit tooltip))))
-        `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
-
     (with-no-warnings
       (defun my-transient-posframe--hide ()
         "Hide transient posframe."
@@ -214,7 +207,7 @@
                                 :max-width (round (* (frame-width) 0.62))
                                 :max-height (round (* (frame-height) 0.62))
                                 :internal-border-width 1
-                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                                :internal-border-color (face-background 'posframe-border nil t)
                                 :background-color (face-background 'tooltip nil t))
                  (unwind-protect
                      (push (read-event) unread-command-events)
