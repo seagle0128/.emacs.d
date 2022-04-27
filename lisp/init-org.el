@@ -193,11 +193,10 @@ prepended to the element after the #+HEADER: tag."
                (org-agenda-finalize . org-modern-agenda)
                (org-modern-mode . (lambda ()
                                     "Adapt `org-modern-mode'."
-                                    ;; Looks better for tags
-                                    (setq line-spacing 0.1)
                                     ;; Disable Prettify Symbols mode
                                     (setq prettify-symbols-alist nil)
-                                    (prettify-symbols-mode -1)))))
+                                    (prettify-symbols-mode -1))))
+        :init (setq org-modern-label-border nil))
     (progn
       (when emacs/>=26p
         (use-package org-superstar
