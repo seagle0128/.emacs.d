@@ -584,7 +584,7 @@ This is for use in `ivy-re-builders-alist'."
                                     (right-fringe . 8)))
     :config
     (with-no-warnings
-      ;; FIXME: hide minibuffer with same colors
+      ;; HACK: hide minibuffer with same colors
       (defun my-ivy-posframe--minibuffer-setup (fn &rest args)
         "Advice function of FN, `ivy--minibuffer-setup' with ARGS."
         (if (not (display-graphic-p))

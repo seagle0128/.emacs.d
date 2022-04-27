@@ -156,7 +156,7 @@
             (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
 
-    ;; FIXME: Insert copyright
+    ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
       "Insert copyright in the footer."
