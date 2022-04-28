@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
@@ -21,7 +21,14 @@ jobs:
         emacs-version: [25.1, 25.3, 26.3, 27.2, 28.1]
         experimental: [false]
         include:
-          - emacs-version: snapshot
+          - os: ubuntu-latest
+            emacs-version: snapshot
+            experimental: true
+          - os: macos-latest
+            emacs-version: snapshot
+            experimental: true
+          - os: windows-latest
+            emacs-version: snapshot
             experimental: true
 
     steps:
