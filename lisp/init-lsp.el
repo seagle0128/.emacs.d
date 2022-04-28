@@ -222,7 +222,7 @@
        :init (setq lsp-ui-sideline-show-diagnostics nil
                    lsp-ui-sideline-ignore-duplicate t
                    lsp-ui-doc-delay 0.1
-                   lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
+                   lsp-ui-doc-border (face-background 'posframe-border nil t)
                    lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                          ,(face-foreground 'font-lock-string-face)
                                          ,(face-foreground 'font-lock-constant-face)
@@ -286,8 +286,8 @@
        ;; Reset `lsp-ui-doc-background' after loading theme
        (add-hook 'after-load-theme-hook
                  (lambda ()
-                   (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t))
-                   (set-face-background 'lsp-ui-doc-background (face-background 'tooltip nil t)))))
+                   (setq lsp-ui-doc-border (face-background 'posframe-border nil t)))
+                 t))
 
      ;; Ivy integration
      (use-package lsp-ivy
@@ -555,7 +555,7 @@
 
              (setq lsp-treemacs-theme "centaur-colors")))))
 
-     ;; Python: pyright
+     ;; Python
      (use-package lsp-pyright
        :preface
        ;; Use yapf to format
@@ -569,7 +569,7 @@
        :init (when (executable-find "python3")
                (setq lsp-pyright-python-executable-cmd "python3")))
 
-     ;; C/C++/Objective-C support
+     ;; C/C++/Objective-C
      (use-package ccls
        :defines projectile-project-root-files-top-down-recurring
        :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls)))
@@ -588,16 +588,15 @@
              (xref--show-xrefs xrefs nil)))
          (advice-add #'lsp-execute-command :override #'my-lsp-execute-command)))
 
-     ;; Swift/C/C++/Objective-C
-     (when sys/macp
-       (use-package lsp-sourcekit))
+     ;; Swift
+     (use-package lsp-sourcekit)
 
-     ;; Julia support
+     ;; Julia
      (use-package lsp-julia
        :hook (julia-mode . (lambda () (require 'lsp-julia))))
 
-     ;; Java support
-     (when emacs/>=25.2p
+     ;; Java
+     (when emacs/>=26p
        (use-package lsp-java
          :hook (java-mode . (lambda () (require 'lsp-java)))))))
 

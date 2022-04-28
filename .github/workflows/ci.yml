@@ -33,11 +33,10 @@ jobs:
         with:
           version: ${{ matrix.emacs-version }}
 
-      - name: Test
+      - name: test
         run: |
           export HOME="/home/runner/work/.emacs.d"; \
           mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
-          emacs --version; \
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
