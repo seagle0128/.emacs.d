@@ -32,19 +32,25 @@ jobs:
             experimental: true
 
     steps:
-      - name: setenv
-        run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
-
       - uses: actions/checkout@v2
 
       - uses: jcs090218/setup-emacs@master
         with:
           version: ${{ matrix.emacs-version }}
 
+      - name: setenv
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+        run: |
+          echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV; \
+          export HOME="$HOME/work/.emacs.d"; \
+          mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40;
+
+      - name: setenv_win
+        if: matrix.os == 'windows-latest'
+        run: export HOME='D:\a\.emacs.d';
+
       - name: Test
         run: |
-          export HOME="$HOME/work/.emacs.d"; \
-          mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
           emacs --version; \
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
