@@ -123,16 +123,15 @@
 ;; Shell Pop: leverage `popper'
 (with-no-warnings
   (defvar shell-pop--frame nil)
+  (defun shell-pop--shell (&optional arg)
+    "Run shell and return the buffer."
+    (cond ((fboundp 'vterm) (vterm arg))
+          (sys/win32p (eshell arg))
+          (t (shell))))
   (when (childframe-workable-p)
     (defun shell-pop-posframe-hidehandler (_)
       "Hidehandler used by `shell-pop-posframe-toggle'."
       (not (eq (selected-frame) posframe--frame)))
-
-    (defun shell-pop--shell (&optional arg)
-      "Run shell and return the buffer."
-      (cond ((fboundp 'vterm) (vterm arg))
-            (sys/win32p (eshell arg))
-            (t (shell))))
 
     (defun shell-pop-posframe-toggle ()
       "Toggle shell in child frame."
