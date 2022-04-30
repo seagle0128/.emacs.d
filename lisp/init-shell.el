@@ -122,15 +122,37 @@
 
 ;; Shell Pop: leverage `popper'
 (with-no-warnings
+  (defvar shell-pop--frame nil)
+  (defvar shell-pop--window nil)
+
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
     (cond ((fboundp 'vterm) (vterm arg))
           (sys/win32p (eshell arg))
           (t (shell))))
 
-  (when (childframe-workable-p)
-    (defvar shell-pop--frame nil)
+  (defun shell-pop--hide-frame ()
+    "Hide child frame and refocus in parent frame."
+    (when (and (childframe-workable-p)
+               (frame-live-p shell-pop--frame)
+               (frame-visible-p shell-pop--frame))
+      (make-frame-invisible shell-pop--frame)
+      (select-frame-set-input-focus (frame-parent shell-pop--frame))
+      (setq shell-pop--frame nil)))
 
+  (defun shell-pop-toggle ()
+    "Toggle shell."
+    (interactive)
+    (shell-pop--hide-frame)
+    (if (window-live-p shell-pop--window)
+        (progn
+          (delete-window shell-pop--window)
+          (setq shell-pop--window nil))
+      (setq shell-pop--window
+            (get-buffer-window (shell-pop--shell)))))
+  (bind-key [f9] #'shell-pop-toggle)
+
+  (when (childframe-workable-p)
     (defun shell-pop-posframe-hidehandler (_)
       "Hidehandler used by `shell-pop-posframe-toggle'."
       (not (eq (selected-frame) posframe--frame)))
@@ -138,6 +160,9 @@
     (defun shell-pop-posframe-toggle ()
       "Toggle shell in child frame."
       (interactive)
+      (unless (childframe-workable-p)
+        (user-error "Child frame is not supported!"))
+
       (let* ((buffer (shell-pop--shell))
              (window (get-buffer-window buffer)))
         ;; Hide window: for `popper'
@@ -179,21 +204,7 @@
               (goto-char (point-max))
               (when (fboundp 'vterm-reset-cursor-point)
                 (vterm-reset-cursor-point)))))))
-    (bind-key "C-`" #'shell-pop-posframe-toggle))
-
-  (defvar shell-pop--window nil)
-  (defun shell-pop-toggle ()
-    "Toggle shell."
-    (interactive)
-    (unless (and (frame-live-p shell-pop--frame)
-                 (frame-visible-p shell-pop--frame))
-      (if (window-live-p shell-pop--window)
-          (progn
-            (delete-window shell-pop--window)
-            (setq shell-pop--window nil))
-        (setq shell-pop--window
-              (get-buffer-window (shell-pop--shell))))))
-  (bind-key [f9] #'shell-pop-toggle))
+    (bind-key "C-`" #'shell-pop-posframe-toggle)))
 
 (provide 'init-shell)
 
