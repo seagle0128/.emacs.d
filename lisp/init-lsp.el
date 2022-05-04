@@ -219,14 +219,16 @@
               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references] . lsp-ui-peek-find-references))
        :hook (lsp-mode . lsp-ui-mode)
-       :init (setq lsp-ui-sideline-show-diagnostics nil
-                   lsp-ui-sideline-ignore-duplicate t
-                   lsp-ui-doc-delay 0.1
-                   lsp-ui-doc-border (face-background 'posframe-border nil t)
-                   lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
-                                         ,(face-foreground 'font-lock-string-face)
-                                         ,(face-foreground 'font-lock-constant-face)
-                                         ,(face-foreground 'font-lock-variable-name-face)))
+       :init
+       (setq lsp-ui-sideline-show-diagnostics nil
+             lsp-ui-sideline-ignore-duplicate t
+             lsp-ui-doc-delay 0.1
+             lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+                                   ,(face-foreground 'font-lock-string-face)
+                                   ,(face-foreground 'font-lock-constant-face)
+                                   ,(face-foreground 'font-lock-variable-name-face)))
+       (when (facep 'posframe-border)
+         (setq lsp-ui-doc-border (face-background 'posframe-border nil t)))
        :config
        (with-no-warnings
          ;; Display peek in child frame if possible
