@@ -150,7 +150,8 @@
           (setq shell-pop--window nil))
       (setq shell-pop--window
             (get-buffer-window (shell-pop--shell)))))
-  (bind-key [f9] #'shell-pop-toggle)
+  (bind-keys ([f9]  . shell-pop-toggle)
+             ("C-`" . shell-pop-toggle))
 
   (when (childframe-workable-p)
     (defun shell-pop-posframe-hidehandler (_)
