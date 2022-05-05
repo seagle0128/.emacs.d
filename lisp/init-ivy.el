@@ -260,6 +260,10 @@
       "Switch to `list-bookmarks'."
       (ivy-quit-and-run (call-interactively #'list-bookmarks)))
 
+    (defun my-ivy-switch-to-list-colors (&rest _)
+      "Switch to `list-colors-display'."
+      (ivy-quit-and-run (list-colors-display)))
+
     (defun my-ivy-switch-to-list-packages (&rest _)
       "Switch to `list-packages'."
       (ivy-quit-and-run (list-packages)))
@@ -315,6 +319,8 @@
       (interactive)
       (pcase (ivy-state-caller ivy-last)
         ('counsel-bookmark (my-ivy-switch-to-list-bookmarks))
+        ('counsel-colors-emacs (my-ivy-switch-to-list-colors))
+        ('counsel-colors-web (my-ivy-switch-to-list-colors))
         ('counsel-list-processes (my-ivy-switch-to-list-processes))
         ('counsel-package (my-ivy-switch-to-list-packages))
         (_ (ignore))))
@@ -384,6 +390,14 @@
     (ivy-add-actions
      #'counsel-bookmark
      '(("l" my-ivy-switch-to-list-bookmarks "list")))
+
+    (ivy-add-actions
+     #'counsel-colors-emacs
+     '(("l" my-ivy-switch-to-list-colors "list")))
+
+    (ivy-add-actions
+     #'counsel-colors-web
+     '(("l" my-ivy-switch-to-list-colors "list")))
 
     (ivy-add-actions
      #'counsel-package
