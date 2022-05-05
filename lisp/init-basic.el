@@ -179,24 +179,24 @@
       (let ((entries tabulated-list-entries))
         (setq tabulated-list-entries nil)
         (dolist (p (process-list))
-          (let* ((val (cadr (assoc p entries)))
-                 (icon (if (icons-displayable-p)
-                           (all-the-icons-octicon "zap"
-                                                  :height 0.8 :v-adjust -0.05
-                                                  :face 'all-the-icons-lblue)
-                         "x"))
-                 (name (aref val 0))
-                 (pid (aref val 1))
-                 (status (aref val 2))
-                 (status (list status
-                               'face
-                               (if (memq status '(stop exit closed failed))
-                                   'error
-                                 'success)))
-                 (buf-label (aref val 3))
-                 (tty (list (aref val 4) 'face 'font-lock-doc-face))
-                 (thread (list (aref val 5) 'face 'font-lock-doc-face))
-                 (cmd (list (aref val 6) 'face 'completions-annotations)))
+          (when-let* ((val (cadr (assoc p entries)))
+                      (icon (if (icons-displayable-p)
+                                (all-the-icons-octicon "zap"
+                                                       :height 0.8 :v-adjust -0.05
+                                                       :face 'all-the-icons-lblue)
+                              "x"))
+                      (name (aref val 0))
+                      (pid (aref val 1))
+                      (status (aref val 2))
+                      (status (list status
+                                    'face
+                                    (if (memq status '(stop exit closed failed))
+                                        'error
+                                      'success)))
+                      (buf-label (aref val 3))
+                      (tty (list (aref val 4) 'face 'font-lock-doc-face))
+                      (thread (list (aref val 5) 'face 'font-lock-doc-face))
+                      (cmd (list (aref val 6) 'face 'completions-annotations)))
             (push (list p (vector icon name pid status buf-label tty thread cmd))
 		          tabulated-list-entries)))))
     (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
