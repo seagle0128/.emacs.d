@@ -169,23 +169,21 @@
 
   ;; Prettify the process list
   (with-no-warnings
-    (define-derived-mode process-menu-mode tabulated-list-mode "Process Menu"
-      "Major mode for listing the processes called by Emacs."
-      (setq tabulated-list-format `[("" ,(if (icons-displayable-p) 2 0))
-                                    ("Process" 25 t)
-			                        ("PID"      7 t)
-			                        ("Status"   7 t)
-                                    ;; 25 is the length of the long standard buffer
-                                    ;; name "*Async Shell Command*<10>" (bug#30016)
-			                        ("Buffer"  25 t)
-			                        ("TTY"     12 t)
-			                        ("Thread"  12 t)
-			                        ("Command"  0 t)])
-      (make-local-variable 'process-menu-query-only)
-      (setq tabulated-list-sort-key (cons "Process" nil))
-      (add-hook 'tabulated-list-revert-hook 'list-processes--refresh nil t))
+    (add-hook 'process-menu-mode-hook
+              (lambda ()
+                (setq tabulated-list-format
+                      `[("" ,(if (icons-displayable-p) 2 0))
+                        ("Process" 25 t)
+			            ("PID"      7 t)
+			            ("Status"   7 t)
+                        ;; 25 is the length of the long standard buffer
+                        ;; name "*Async Shell Command*<10>" (bug#30016)
+			            ("Buffer"  25 t)
+			            ("TTY"     12 t)
+			            ("Thread"  12 t)
+			            ("Command"  0 t)])))
 
-    (defun list-processes--refresh ()
+    (defun my-list-processes--refresh ()
       "Recompute the list of processes for the Process List buffer.
 Also, delete any process that is exited or signaled."
       (setq tabulated-list-entries nil)
@@ -261,7 +259,8 @@ Also, delete any process that is exited or signaled."
                          face completions-annotations)))
 	             (push (list p (vector icon name pid status buf-label tty thread cmd))
 		               tabulated-list-entries)))))
-      (tabulated-list-init-header))))
+      (tabulated-list-init-header))
+    (advice-add #'list-processes--refresh :override #'my-list-processes--refresh)))
 
 (use-package time
   :ensure nil

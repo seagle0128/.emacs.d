@@ -322,8 +322,32 @@ of the buffer text to be displayed in the popup"
 (use-package list-environment)
 (use-package memory-usage)
 (unless sys/win32p
-  (use-package daemons)                 ; system services/daemons
-  (use-package tldr))
+  (use-package tldr)
+
+  ;; system services/daemons
+  (use-package daemons
+    :init
+    (add-hook 'list-environment-mode-hook
+              (lambda ()
+                (setq tabulated-list-format `[("" ,(if (icons-displayable-p) 2 0))
+                                              ("Name" 25 t)
+                                              ("Value" 50 t)])
+                (tabulated-list-init-header)))
+
+    (with-no-warnings
+      (defun my-list-environment-entries ()
+        "Generate environment variable entries list for tabulated-list."
+        (mapcar (lambda (env)
+                  (let* ((kv (split-string env "="))
+                         (key (car kv))
+                         (val (mapconcat #'identity (cdr kv) "=")))
+                    (list key (vector
+                               (and (icons-displayable-p)
+                                    (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05))
+                               `(,key face font-lock-keyword-face)
+                               `(,val face font-lock-string-face)))))
+                process-environment))
+      (advice-add #'list-environment-entries :override #'my-list-environment-entries))))
 
 (provide 'init-utils)
 
