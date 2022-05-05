@@ -342,8 +342,9 @@ of the buffer text to be displayed in the popup"
                          (key (car kv))
                          (val (mapconcat #'identity (cdr kv) "=")))
                     (list key (vector
-                               (and (icons-displayable-p)
-                                    (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05))
+                               (if (icons-displayable-p)
+                                   (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05)
+                                 "")
                                `(,key face font-lock-keyword-face)
                                `(,val face font-lock-string-face)))))
                 process-environment))

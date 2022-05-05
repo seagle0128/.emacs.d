@@ -193,12 +193,11 @@ Also, delete any process that is exited or signaled."
 	          ((or (not process-menu-query-only)
 	               (process-query-on-exit-flag p))
 	           (let* ((icon
-                       (or
-                        (and (icons-displayable-p)
-                             (all-the-icons-octicon "zap"
-                                                    :height 1.0 :v-adjust -0.05
-                                                    :face 'all-the-icons-lblue))
-                        ""))
+                       (if (icons-displayable-p)
+                           (all-the-icons-octicon "zap"
+                                                  :height 1.0 :v-adjust -0.05
+                                                  :face 'all-the-icons-lblue)
+                         ""))
                       (buf (process-buffer p))
 		              (type (process-type p))
 		              (pid  (if (process-id p) (format "%d" (process-id p)) "--"))
