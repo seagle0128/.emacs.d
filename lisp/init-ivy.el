@@ -234,8 +234,7 @@
 
     (defun my-ivy-switch-to-rg-dwim (&rest _)
       "Switch to `rg-dwim' with the current input."
-      (ivy-quit-and-run
-        (rg-dwim default-directory)))
+      (ivy-quit-and-run (rg-dwim default-directory)))
 
     (defun my-ivy-switch-to-counsel-rg (&rest _)
       "Switch to `counsel-rg' with the current input."
@@ -256,6 +255,18 @@
     (defun my-ivy-switch-to-counsel-git (&rest _)
       "Switch to `counsel-git' with the current input."
       (counsel-git ivy-text))
+
+    (defun my-ivy-switch-to-list-bookmarks (&rest _)
+      "Switch to `list-bookmarks'."
+      (ivy-quit-and-run (call-interactively #'list-bookmarks)))
+
+    (defun my-ivy-switch-to-list-packages (&rest _)
+      "Switch to `list-packages'."
+      (ivy-quit-and-run (list-packages)))
+
+    (defun my-ivy-switch-to-list-processes (&rest _)
+      "Switch to `list-processes'."
+      (ivy-quit-and-run (list-processes)))
 
     (defun my-ivy-copy-library-path (lib)
       "Copy the full path of LIB."
@@ -298,6 +309,16 @@
       (ivy-quit-and-run
         (counsel-fzf (or ivy-text "") default-directory)))
     (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
+
+    (defun my-counsel-toggle ()
+      "Toggle `counsel' commands and original commands."
+      (interactive)
+      (pcase (ivy-state-caller ivy-last)
+        ('counsel-bookmark (my-ivy-switch-to-list-bookmarks))
+        ('counsel-list-processes (my-ivy-switch-to-list-processes))
+        ('counsel-package (my-ivy-switch-to-list-packages))
+        (_ (ignore))))
+    (bind-key "<C-return>" #'my-counsel-toggle ivy-minibuffer-map)
 
     ;; More actions
     (ivy-add-actions
@@ -358,7 +379,19 @@
 
     (ivy-add-actions
      'counsel-load-library
-     '(("p" my-ivy-copy-library-path "copy path"))))
+     '(("p" my-ivy-copy-library-path "copy path")))
+
+    (ivy-add-actions
+     #'counsel-bookmark
+     '(("l" my-ivy-switch-to-list-bookmarks "list")))
+
+    (ivy-add-actions
+     #'counsel-package
+     '(("l" my-ivy-switch-to-list-packages "list packages")))
+
+    (ivy-add-actions
+     #'counsel-list-processes
+     '(("l" my-ivy-switch-to-list-processes "list"))))
 
   ;; Enhance M-x
   (use-package amx
