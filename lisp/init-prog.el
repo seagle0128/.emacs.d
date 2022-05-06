@@ -42,9 +42,9 @@
   (setq-default prettify-symbols-alist centaur-prettify-symbols-alist)
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
-;; Tree-sitter
-;; Only support with dynamic module
-(when (functionp 'module-load)
+;; Tree-sitter: need dynamic module feature
+(when (and centaur-tree-sitter
+           (functionp 'module-load))
   (use-package tree-sitter
     :ensure tree-sitter-langs
     :diminish

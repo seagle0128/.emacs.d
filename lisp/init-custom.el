@@ -185,7 +185,7 @@ For example:
                  (const :tag "Child Frame" childframe)))
 
 (defcustom centaur-dashboard (not (daemonp))
-  "Use dashboard at startup or not.
+  "Display dashboard at startup or not.
 If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'centaur
   :type 'boolean)
@@ -208,6 +208,11 @@ nil means disabled."
                  (const :tag "Eglot" eglot)
                  (const :tag "Disable" nil)))
 
+(defcustom centaur-tree-sitter t
+  "Enable `tree-sitter' or not."
+  :group 'centaur
+  :type 'boolean)
+
 (defcustom centaur-lsp-format-on-save-ignore-modes
   '(c-mode c++-mode python-mode markdown-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
@@ -217,7 +222,7 @@ nil means disabled."
   :type '(repeat (symbol :tag "Major-Mode")))
 
 (defcustom centaur-chinese-calendar nil
-  "Use Chinese calendar or not."
+  "Enable Chinese calendar or not."
   :group 'centaur
   :type 'boolean)
 
