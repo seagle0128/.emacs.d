@@ -227,8 +227,15 @@
                                    ,(face-foreground 'font-lock-string-face)
                                    ,(face-foreground 'font-lock-constant-face)
                                    ,(face-foreground 'font-lock-variable-name-face)))
-       (when (facep 'posframe-border)
-         (setq lsp-ui-doc-border (face-background 'posframe-border nil t)))
+       ;; Set correct color to borders
+       (defun my-lsp-ui-doc-set-border ()
+         "Set the border color of lsp doc."
+         (setq lsp-ui-doc-border
+               (if (facep 'posframe-border)
+                   (face-background 'posframe-border nil t)
+                 (face-foreground 'shadow nil t))))
+       (my-lsp-ui-doc-set-border)
+       (add-hook 'after-load-theme-hook #'my-lsp-ui-doc-set-border t)
        :config
        (with-no-warnings
          ;; Display peek in child frame if possible
@@ -283,13 +290,7 @@
                    ;; :align-to is added here too
                    (propertize " " 'display '(space :height (1)))
                    (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
-         (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines))
-
-       ;; Reset `lsp-ui-doc-background' after loading theme
-       (add-hook 'after-load-theme-hook
-                 (lambda ()
-                   (setq lsp-ui-doc-border (face-background 'posframe-border nil t)))
-                 t))
+         (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
 
      ;; Ivy integration
      (use-package lsp-ivy
