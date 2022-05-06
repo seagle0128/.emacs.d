@@ -1,19 +1,23 @@
-# This dockerfile is for Centaur Emacs (25)
-# VERSION 1.0.0
+# This dockerfile is for Centaur Emacs with 25
+# VERSION 1.2.0
 # Author: Vincent Zhang <seagle0128@gmail.com>
 # Command format: Instruction [arguments / command] ..
 
 # Base image to use
-FROM ubuntu
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Commands to update the image
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak
-RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN sed -i "s/ports.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install -y software-properties-common git curl
 
 # Install Centaur Emacs
-RUN apt-get install -y emacs-nox git
+RUN add-apt-repository -y ppa:ubuntu-elisp/ppa
+RUN apt-get update
+RUN apt-get install -y emacs25-nox
 RUN git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 
 ENV TERM xterm-256color
