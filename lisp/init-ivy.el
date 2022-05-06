@@ -200,7 +200,8 @@
                  (when (memq this-command '(ivy-delete-char
                                             delete-forward-char
                                             kill-word kill-sexp))
-                   (beginning-of-line)))))))
+                   (beginning-of-line)))
+               (setq my-ivy-fly--travel t)))))
 
     (defun my-ivy-fly-time-travel ()
       (when (memq this-command my-ivy-fly-commands)
