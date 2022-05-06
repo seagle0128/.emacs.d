@@ -155,7 +155,9 @@ Install the doc if it's not installed."
       ;; Lookup the symbol at point
       (devdocs-lookup nil (thing-at-point 'symbol t)))))
 
+;; Misc. programming modes
 (use-package cask-mode)
+(use-package cmake-mode)
 (use-package csharp-mode)
 (use-package csv-mode)
 (use-package julia-mode)
