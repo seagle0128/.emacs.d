@@ -93,7 +93,7 @@
           dashboard-set-init-info t
           dashboard-set-file-icons centaur-icon
           dashboard-set-heading-icons centaur-icon
-          dashboard-heading-icons '((recents   . "file-text")
+          dashboard-heading-icons '((recents   . "history")
                                     (bookmarks . "bookmark")
                                     (agenda    . "calendar")
                                     (projects  . "briefcase")
