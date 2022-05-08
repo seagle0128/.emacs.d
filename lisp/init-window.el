@@ -199,8 +199,7 @@
             "^\\*elfeed-entry\\*$"
             "^\\*macro expansion\\**"
 
-            "\\*Agenda Commands\\*" "\\*Org Agenda.*\\*"
-            "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
+            "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
             "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
             "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
             "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
