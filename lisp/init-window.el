@@ -35,7 +35,8 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :hook (after-init . windmove-default-keybindings))
+  :hook (after-init . (lambda ()
+                        (windmove-default-keybindings 'super))))
 
 ;; Restore old window configurations
 (use-package winner
