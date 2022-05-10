@@ -78,8 +78,6 @@
 
       (use-package doom-themes
         :bind ("C-c T" . centaur-load-theme)
-        :custom-face
-        (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
         :custom (doom-themes-treemacs-theme "doom-colors")
         :init (centaur-load-theme centaur-theme t)
         :config
@@ -87,11 +85,11 @@
         (doom-themes-visual-bell-config)
 
         ;; Enable customized theme
-        ;; FIXME https://github.com/emacs-lsp/lsp-treemacs/issues/89
+        ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
         (with-eval-after-load 'lsp-treemacs
           (doom-themes-treemacs-config))))
   (progn
-    (warn "The current theme may not be compatible!")
+    (warn "The current theme is incompatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
