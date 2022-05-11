@@ -130,10 +130,10 @@ prepended to the element after the #+HEADER: tag."
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Note" entry (file ,(concat org-directory "/note.org"))
            "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("j" "Journal" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+          ("j" "Journal" entry ('file+olp+datetree
                                 ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+	      ("b" "Book" entry ('file+olp+datetree
                              ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
@@ -197,11 +197,10 @@ prepended to the element after the #+HEADER: tag."
                                     (setq prettify-symbols-alist nil)
                                     (prettify-symbols-mode -1)))))
     (progn
-      (when emacs/>=26p
-        (use-package org-superstar
-          :if (and (display-graphic-p) (char-displayable-p ?◉))
-          :hook (org-mode . org-superstar-mode)
-          :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕"))))
+      (use-package org-superstar
+        :if (and (display-graphic-p) (char-displayable-p ?◉))
+        :hook (org-mode . org-superstar-mode)
+        :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")))
       (use-package org-fancy-priorities
         :diminish
         :hook (org-mode . org-fancy-priorities-mode)
@@ -227,9 +226,7 @@ prepended to the element after the #+HEADER: tag."
                                (plantuml . t)))
 
   ;; ob-sh renamed to ob-shell since 26.1.
-  (if emacs/>=26p
-      (cl-pushnew '(shell . t) load-language-list)
-    (cl-pushnew '(sh . t) load-language-list))
+  (cl-pushnew '(shell . t) load-language-list)
 
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-list))
@@ -322,7 +319,7 @@ prepended to the element after the #+HEADER: tag."
         ("C-c C-x m" . org-pomodoro)))))
 
 ;; Roam
-(when (and emacs/>=26p (executable-find "cc"))
+(when (executable-find "cc")
   (use-package org-roam
     :diminish
     :hook (after-init . org-roam-db-autosync-enable)

@@ -40,7 +40,7 @@ configuration for Emacs newcomers and lots of additional power for
 Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
-GNU Emacs 25.1 and above**. In general you're advised to always run with the
+GNU Emacs 26.1 and above**. In general you're advised to always run with the
 latest stable release - currently **28.1**.
 
 ## Features

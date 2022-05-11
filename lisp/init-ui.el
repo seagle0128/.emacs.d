@@ -232,9 +232,8 @@
            flycheck-error-list-mode) . hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
-(when emacs/>=25.2p
-  (use-package minions
-    :hook (doom-modeline-mode . minions-mode)))
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
@@ -387,10 +386,9 @@
              ([remap prior] . good-scroll-down-full-screen)))))
 
 ;; Smooth scrolling over images
-(when emacs/>=26p
-  (use-package iscroll
-    :diminish
-    :hook (image-mode . iscroll-mode)))
+(use-package iscroll
+  :diminish
+  :hook (image-mode . iscroll-mode))
 
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch

@@ -64,7 +64,7 @@
     (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
   ;; Access Git forges from Magit
-  (when (and emacs/>=26p (executable-find "cc"))
+  (when (executable-find "cc")
     (use-package forge
       :demand t
       :defines forge-topic-list-columns
@@ -78,18 +78,17 @@
               ("Updated" 10 t nil updated nil)))))
 
   ;; Show TODOs in magit
-  (when emacs/>=25.2p
-    (use-package magit-todos
-      :defines magit-todos-nice
-      :bind ("C-c C-t" . ivy-magit-todos)
-      :init
-      (setq magit-todos-nice (if (executable-find "nice") t nil))
-      (let ((inhibit-message t))
-        (magit-todos-mode 1))
-      :config
-      (with-eval-after-load 'magit-status
-        (transient-append-suffix 'magit-status-jump '(0 0 -1)
-          '("t " "Todos" magit-todos-jump-to-todos))))))
+  (use-package magit-todos
+    :defines magit-todos-nice
+    :bind ("C-c C-t" . ivy-magit-todos)
+    :init
+    (setq magit-todos-nice (if (executable-find "nice") t nil))
+    (let ((inhibit-message t))
+      (magit-todos-mode 1))
+    :config
+    (with-eval-after-load 'magit-status
+      (transient-append-suffix 'magit-status-jump '(0 0 -1)
+        '("t " "Todos" magit-todos-jump-to-todos)))))
 
 ;; Display transient in child frame
 (when (childframe-workable-p)

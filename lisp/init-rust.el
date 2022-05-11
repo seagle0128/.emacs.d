@@ -33,9 +33,7 @@
 ;; Rust
 (require 'init-const)
 
-(when emacs/>=26p
-  (use-package rustic))
-
+(use-package rustic)
 (use-package rust-playground)
 
 (provide 'init-rust)

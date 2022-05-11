@@ -328,7 +328,6 @@ Return the fastest package archive."
   "Address blank screen issue with child-frame in fullscreen.
 This issue has been addressed in 28."
   (and sys/mac-cocoa-p
-       emacs/>=26p
        (not emacs/>=28p)
        (bound-and-true-p ns-use-native-fullscreen)
        (setq ns-use-native-fullscreen nil)))
@@ -530,8 +529,7 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
-  (and emacs/>=26p
-       (eq centaur-completion-style 'childframe)
+  (and (eq centaur-completion-style 'childframe)
        (not (or noninteractive
                 emacs-basic-display
                 (not (display-graphic-p))))))

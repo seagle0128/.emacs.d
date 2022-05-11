@@ -34,7 +34,6 @@
 (require 'init-custom)
 
 ;; Dashboard
-(unless emacs/>=26p (setq centaur-dashboard nil))
 (when centaur-dashboard
   (use-package dashboard
     :diminish dashboard-mode

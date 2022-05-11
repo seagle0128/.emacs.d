@@ -50,8 +50,8 @@
 
 ;;; Code:
 
-(when (version< emacs-version "25.1")
-  (error "This requires Emacs 25.1 and above!"))
+(when (version< emacs-version "26.1")
+  (error "This requires Emacs 26.1 and above!"))
 
 ;; Speed up startup
 (setq auto-mode-case-fold nil)

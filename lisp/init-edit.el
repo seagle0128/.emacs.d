@@ -194,13 +194,12 @@
   :hook (after-init . global-anzu-mode))
 
 ;; Redefine M-< and M-> for some modes
-(when emacs/>=25.3p
-  (use-package beginend
-    :diminish beginend-global-mode
-    :hook (after-init . beginend-global-mode)
-    :config (mapc (lambda (pair)
-                    (diminish (cdr pair)))
-                  beginend-modes)))
+(use-package beginend
+  :diminish beginend-global-mode
+  :hook (after-init . beginend-global-mode)
+  :config (mapc (lambda (pair)
+                  (diminish (cdr pair)))
+                beginend-modes))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
