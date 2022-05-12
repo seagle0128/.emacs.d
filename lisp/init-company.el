@@ -36,6 +36,9 @@
 (use-package company
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  :custom-face
+  (company-tooltip-annotation ((t (:inherit completions-annotations :foreground nil))))
+  (company-box-selection ((t (:inherit company-tooltip :weight semibold :extend t))))
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
          :map company-mode-map
@@ -168,7 +171,8 @@
         :hook (company-mode . company-box-mode)
         :init (setq company-box-enable-icon centaur-icon
                     company-box-backends-colors nil
-                    company-box-doc-delay 0.1)
+                    company-box-doc-delay 0.1
+                    company-box-scrollbar 'right)
         :config
         (with-no-warnings
           ;; Prettify icons
@@ -206,10 +210,10 @@
               (company-box--maybe-move-number (or company-box--last-start 1))))
           (advice-add #'company-box--display :override #'my-company-box--display)
 
-          (setq company-box-doc-frame-parameters '((internal-border-width . 1)
+          (setq company-box-doc-frame-parameters '((vertical-scroll-bars)
+                                                   (internal-border-width . 1)
                                                    (left-fringe . 8)
                                                    (right-fringe . 8)))
-
           (defun my-company-box-doc--make-buffer (object)
             (let* ((buffer-list-update-hook nil)
                    (inhibit-modification-hooks t)
