@@ -210,10 +210,12 @@
               (company-box--maybe-move-number (or company-box--last-start 1))))
           (advice-add #'company-box--display :override #'my-company-box--display)
 
-          (setq company-box-doc-frame-parameters '((vertical-scroll-bars)
+          (setq company-box-doc-frame-parameters '((vertical-scroll-bars . nil)
+                                                   (horizontal-scroll-bars . nil)
                                                    (internal-border-width . 1)
                                                    (left-fringe . 8)
                                                    (right-fringe . 8)))
+
           (defun my-company-box-doc--make-buffer (object)
             (let* ((buffer-list-update-hook nil)
                    (inhibit-modification-hooks t)
