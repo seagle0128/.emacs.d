@@ -324,7 +324,7 @@ of the buffer text to be displayed in the popup"
 (use-package list-environment
   :hook (list-environment-mode . (lambda ()
                                    (setq tabulated-list-format
-                                         (vconcat `(("" ,(if (icons-displayable-p) 2 0)))
+                                         (vconcat `(("" ,(if (icon-displayable-p) 2 0)))
                                                   tabulated-list-format))
                                    (tabulated-list-init-header)))
   :init
@@ -336,7 +336,7 @@ of the buffer text to be displayed in the popup"
                        (key (car kv))
                        (val (mapconcat #'identity (cdr kv) "=")))
                   (list key (vector
-                             (if (icons-displayable-p)
+                             (if (icon-displayable-p)
                                  (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05)
                                "")
                              `(,key face font-lock-keyword-face)

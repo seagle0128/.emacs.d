@@ -220,7 +220,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
         (async-byte-recompile-directory temp-dir)
       (byte-recompile-directory temp-dir 0 t))))
 
-(defun icons-displayable-p ()
+(defun icon-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
   (and centaur-icon
        (display-graphic-p)

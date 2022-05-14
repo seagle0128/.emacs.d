@@ -162,7 +162,7 @@
     (add-hook 'process-menu-mode-hook
               (lambda ()
                 (setq tabulated-list-format
-                      (vconcat `(("" ,(if (icons-displayable-p) 2 0))) tabulated-list-format))))
+                      (vconcat `(("" ,(if (icon-displayable-p) 2 0))) tabulated-list-format))))
 
     (defun my-list-processes--prettify ()
       "Prettify process list."
@@ -170,7 +170,7 @@
         (setq tabulated-list-entries nil)
         (dolist (p (process-list))
           (when-let* ((val (cadr (assoc p entries)))
-                      (icon (if (icons-displayable-p)
+                      (icon (if (icon-displayable-p)
                                 (all-the-icons-octicon "zap"
                                                        :height 0.8 :v-adjust -0.05
                                                        :face 'all-the-icons-lblue)

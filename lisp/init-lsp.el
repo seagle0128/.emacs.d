@@ -300,7 +300,7 @@
             ("C-s-." . lsp-ivy-global-workspace-symbol))
      :config
      (with-no-warnings
-       (when (icons-displayable-p)
+       (when (icon-displayable-p)
          (defvar lsp-ivy-symbol-kind-icons
            `(,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.15) ; Unknown - 0
              ,(all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.02) ; File - 1

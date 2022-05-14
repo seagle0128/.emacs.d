@@ -82,7 +82,7 @@
   (use-package all-the-icons-dired
     :diminish
     :hook (dired-mode . (lambda ()
-                          (when (icons-displayable-p)
+                          (when (icon-displayable-p)
                             (all-the-icons-dired-mode))))
     :init (setq all-the-icons-dired-monochrome nil)
     :config

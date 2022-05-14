@@ -338,7 +338,7 @@
               (set-frame-size frame text-width text-height t)))
           (advice-add #'company-box-doc--set-frame-position :override #'my-company-box-doc--set-frame-position)
 
-          (when (icons-displayable-p)
+          (when (icon-displayable-p)
             (setq company-box-icons-all-the-icons
                   `((Unknown . ,(all-the-icons-material "find_in_page" :height 1.0 :v-adjust -0.2))
                     (Text . ,(all-the-icons-faicon "text-width" :height 1.0 :v-adjust -0.02))
