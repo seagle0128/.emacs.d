@@ -344,7 +344,11 @@
 (setq use-file-dialog nil
       use-dialog-box nil
       inhibit-startup-screen t
-      inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t
+      initial-scratch-message nil)
+(unless (daemonp)
+  (advice-add #'display-startup-echo-area-message :override #'ignore))
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
