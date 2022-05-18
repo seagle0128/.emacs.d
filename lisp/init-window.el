@@ -212,7 +212,10 @@
   (when (display-grayscale-p)
     (setq popper-mode-line
           '(:eval
-            (format " %s " (all-the-icons-octicon "pin" :height 0.9 :v-adjust 0.0 :face 'mode-line-emphasis)))))
+            (concat
+             (propertize " " 'face 'mode-line-emphasis)
+             (all-the-icons-octicon "pin" :height 0.9 :v-adjust 0.0 :face 'mode-line-emphasis)
+             (propertize " " 'face 'mode-line-emphasis)))))
 
   (setq popper-echo-dispatch-actions t)
   :config
