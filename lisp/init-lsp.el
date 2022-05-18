@@ -132,19 +132,15 @@
 
        ;; Only display icons in GUI
        (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-         (when (and centaur-icon (display-graphic-p))
-           (apply fn args)))
+         (and (icon-displayable-p) (apply fn args)))
        (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
        (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-         (when (and centaur-icon (display-graphic-p))
-           (apply fn args)))
+         (and (icon-displayable-p) (apply fn args)))
        (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
 
        (defun my-lsp-icons-all-the-icons-material-icon (icon-name face fallback &optional feature)
-         (if (and centaur-icon
-                  (display-graphic-p)
-                  (functionp 'all-the-icons-material)
+         (if (and (icon-displayable-p)
                   (lsp-icons--enabled-for-feature feature))
              (all-the-icons-material icon-name
                                      :face face)
