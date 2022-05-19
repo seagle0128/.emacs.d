@@ -33,7 +33,7 @@
 ;; Docker
 (use-package docker
   :defines docker-image-run-arguments
-  :bind ("C-c k" . docker)
+  :bind ("C-c D" . docker)
   :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
               docker-container-shell-file-name "/bin/bash"))
 
