@@ -220,7 +220,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."
   (and centaur-icon
-       (display-graphic-p)
+       (or (display-graphic-p) (daemonp))
        (featurep 'all-the-icons)))
 
 (defun centaur-set-variable (variable value &optional no-save)
@@ -529,9 +529,10 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
   (and (eq centaur-completion-style 'childframe)
-       (not (or noninteractive
-                emacs-basic-display
-                (not (display-graphic-p))))))
+       (or (not (or noninteractive
+                    emacs-basic-display
+                    (not (display-graphic-p))))
+           (daemonp))))
 
 (defun centaur--theme-name (theme)
   "Return internal THEME name."

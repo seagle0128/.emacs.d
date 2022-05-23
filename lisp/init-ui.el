@@ -239,7 +239,9 @@
 ;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
 (when centaur-icon
   (use-package all-the-icons
-    :init (unless (or sys/win32p (font-installed-p "all-the-icons"))
+    :init (unless (or sys/win32p
+                      (daemonp)
+                      (font-installed-p "all-the-icons"))
             (centaur-install-fonts))
     :config
     (with-no-warnings
@@ -406,18 +408,18 @@
 ;; Child frame
 (when (childframe-workable-p)
   (use-package posframe
-    :hook (after-load-theme . posframe-delete-all)
+    :hook ((after-load-theme . posframe-delete-all)
+           ((after-load-theme server-after-make-frame) . my-set-posframe-faces))
     :init
     (defface posframe-border
       `((t (:background ,(face-foreground 'shadow nil t))))
-      "Face used by the posframe border."
+      "Face used by the `posframe' border."
       :group 'posframe)
 
-    (add-hook
-     'after-load-theme-hook
-     (lambda ()
-       (custom-set-faces
-        `(posframe-border ((t (:background ,(face-foreground 'shadow nil t))))))))
+    (defun my-set-posframe-faces ()
+      "Set `posframe' faces."
+      (custom-set-faces
+       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
