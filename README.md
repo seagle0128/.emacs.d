@@ -170,6 +170,7 @@ For Example:
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode markdown-mode)) ; Ignore format on save for some languages
 (setq centaur-tree-sitter nil)                 ; Enable `tree-sitter' or not: t or nil
 (setq centaur-chinese-calendar nil)            ; Support Chinese calendar or not: t or nil
+(setq centaur-player t)                        ; Enable players or not: t or nil
 (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
 (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
 ```
