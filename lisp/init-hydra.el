@@ -149,8 +149,6 @@
          "netease" :toggle (eq centaur-package-archives 'netease) :exit t)
         ("p s" (centaur-set-package-archives 'ustc t)
          "ustc" :toggle (eq centaur-package-archives 'ustc) :exit t)
-        ("p t" (centaur-set-package-archives 'tencent t)
-         "tencent" :toggle (eq centaur-package-archives 'tencent) :exit t)
         ("p u" (centaur-set-package-archives 'tuna t)
          "tuna" :toggle (eq centaur-package-archives 'tuna) :exit t)
         ("p T" (centaur-test-package-archives) "speed test" :exit t))))))
