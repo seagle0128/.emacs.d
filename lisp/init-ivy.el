@@ -425,7 +425,11 @@
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
     :custom-face
-    (ivy-minibuffer-match-face-1 ((t (:foreground ,(face-foreground 'font-lock-doc-face nil t)))))
+    (ivy-current-match ((t (:inherit hl-line :distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-1 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
     :init
     (defun ivy-prescient-non-fuzzy (str)
       "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
