@@ -97,6 +97,15 @@ or download the [zip
 package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and
 extract to `~/.emacs.d`.
 
+If you are using Linux, you may prefer an XDG-compatible location, please use
+
+``` shell
+# Please make sure ~/.emacs.d, ~/.emacs and ~/.emacs.el don't exist
+git clone --depth 1 https://github.com/seagle0128/.emacs.d.git $XDG_CONFIG_HOME/emacs
+```
+
+or extract the zip package to `$XDG_CONFIG_HOME/emacs` directory.
+
 Then start Emacs. Wait for a while to install packages at the first startup.
 Enjoy! :smile:
 
