@@ -93,6 +93,7 @@
 ;; Explicitly set the prefered coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
+(setq system-time-locale "C")
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
