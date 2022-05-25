@@ -221,7 +221,8 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
   "Return non-nil if icons are displayable."
   (and centaur-icon
        (or (display-graphic-p) (daemonp))
-       (featurep 'all-the-icons)))
+       (or (featurep 'all-the-icons)
+           (require 'all-the-icons nil t))))
 
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
