@@ -424,17 +424,13 @@
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
-    :hook ((after-load-theme server-after-make-frame) . my-set-ivy-minibuffer-faces)
+    :custom-face
+    (ivy-current-match ((t (:inherit hl-line :distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-1 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
     :init
-    (defun my-set-ivy-minibuffer-faces ()
-      "Prettify ivy minibuffer match faces."
-      (custom-set-faces
-       `(ivy-current-match ((t (:inherit region :distant-background nil :background nil :extend t))))
-       `(ivy-minibuffer-match-face-1 ((t (:foreground ,(doom-lighten 'grey 0.2) :background nil))))
-       `(ivy-minibuffer-match-face-2 ((t (:background ,(doom-blend 'violet 'bg 0.2)))))
-       `(ivy-minibuffer-match-face-3 ((t (:background ,(doom-blend 'green 'bg 0.2)))))
-       `(ivy-minibuffer-match-face-4 ((t (:background ,(doom-blend 'yellow 'bg 0.2)))))))
-
     (defun ivy-prescient-non-fuzzy (str)
       "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
 This is for use in `ivy-re-builders-alist'."
