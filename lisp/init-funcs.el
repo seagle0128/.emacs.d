@@ -575,9 +575,9 @@ If SYNC is non-nil, the updating process is synchronous."
   (interactive)
   (let* ((themes (mapcar #'cdr centaur-theme-alist))
          (theme (nth (random (length themes)) themes)))
-    (if theme
-        (centaur--load-theme theme)
-      (user-error "Failed to load `random' theme"))))
+    (if (eq theme centaur-theme)
+        (centaur-load-random-theme)
+      (centaur--load-theme theme))))
 
 (defun centaur-load-theme (theme &optional no-save)
   "Load color THEME. Save to `custom-file' if NO-SAVE is nil."
