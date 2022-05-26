@@ -107,16 +107,6 @@ FACE defaults to inheriting from default and highlight."
          (iedit-mode . turn-off-symbol-overlay)
          (iedit-mode-end . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.1)
-  (with-eval-after-load 'all-the-icons
-    (setq symbol-overlay-faces
-          '((:inherit (all-the-icons-blue bold) :inverse-video t)
-            (:inherit (all-the-icons-pink bold) :inverse-video t)
-            (:inherit (all-the-icons-yellow bold) :inverse-video t)
-            (:inherit (all-the-icons-purple bold) :inverse-video t)
-            (:inherit (all-the-icons-red bold) :inverse-video t)
-            (:inherit (all-the-icons-orange bold) :inverse-video t)
-            (:inherit (all-the-icons-green bold) :inverse-video t)
-            (:inherit (all-the-icons-cyan bold) :inverse-video t))))
   :config
   ;; Disable symbol highlighting while selecting
   (defun turn-off-symbol-overlay (&rest _)

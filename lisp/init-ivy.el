@@ -425,8 +425,8 @@
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
     :custom-face
-    (ivy-current-match ((t (:inherit hl-line :distant-foreground nil :background nil))))
-    (ivy-minibuffer-match-face-1 ((t (:distant-foreground nil :background nil))))
+    (ivy-current-match ((t (:inherit region :distant-foreground nil :background nil))))
+    (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground nil :background nil))))
     (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
     (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
     (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
