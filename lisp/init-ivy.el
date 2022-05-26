@@ -34,6 +34,12 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
+  :custom-face
+  (ivy-current-match ((t (:inherit region :distant-foreground nil :background nil))))
+  (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground nil :background nil))))
+  (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
+  (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
+  (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
   :bind (("C-s"   . swiper-isearch)
          ("C-r"   . swiper-isearch-backward)
          ("s-f"   . swiper)
@@ -416,26 +422,6 @@
   (use-package ivy-avy
     :bind (:map ivy-minibuffer-map
            ("C-'" . ivy-avy)))
-
-  ;; Better sorting and filtering
-  (use-package prescient
-    :commands prescient-persist-mode
-    :init (prescient-persist-mode 1))
-
-  (use-package ivy-prescient
-    :commands ivy-prescient-re-builder
-    :custom-face
-    (ivy-current-match ((t (:inherit region :distant-foreground nil :background nil))))
-    (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground nil :background nil))))
-    (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
-    (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
-    (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
-    :init
-    (setq ivy-prescient-retain-classic-highlighting t
-          ivy-prescient-enable-filtering nil
-          ivy-prescient-sort-commands
-          '(counsel-M-x execute-extended-command execute-extended-command-for-buffer))
-    (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra

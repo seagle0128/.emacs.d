@@ -159,7 +159,10 @@
             (funcall fn cmd arg))))
       (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)))
 
-  ;; Better sorting and filtering
+  ;; Better sorting
+  (use-package prescient
+    :commands prescient-persist-mode
+    :init (prescient-persist-mode 1))
   (use-package company-prescient
     :init (company-prescient-mode 1))
 
