@@ -205,7 +205,7 @@ nil means disabled."
                  (const :tag "Eglot" eglot)
                  (const :tag "Disable" nil)))
 
-(defcustom centaur-tree-sitter t
+(defcustom centaur-tree-sitter nil
   "Enable `tree-sitter' or not."
   :group 'centaur
   :type 'boolean)

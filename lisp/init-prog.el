@@ -49,7 +49,9 @@
     :ensure tree-sitter-langs
     :diminish
     :hook ((after-init . global-tree-sitter-mode)
-           (tree-sitter-after-on . tree-sitter-hl-mode))))
+           (tree-sitter-after-on . tree-sitter-hl-mode)
+           (global-tree-sitter-mode . (lambda ()
+                                        (tree-sitter-langs-install-grammars t))))))
 
 ;; Cross-referencing commands
 (use-package xref
