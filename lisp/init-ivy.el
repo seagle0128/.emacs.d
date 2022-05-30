@@ -130,6 +130,17 @@
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
+  ;; Use orderless regex strategy
+  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+
+  ;; Set minibuffer height for different commands
+  (setq ivy-height-alist '((counsel-evil-registers . 5)
+                           (counsel-yank-pop . 8)
+                           (counsel-git-log . 4)
+                           (swiper . 15)
+                           (counsel-projectile-ag . 15)
+                           (counsel-projectile-rg . 15)))
+
   ;; Better performance on Windows
   (when sys/win32p
     (setq ivy-dynamic-exhibit-delay-ms 200))
@@ -510,11 +521,6 @@
     :commands pinyinlib-build-regexp-string
     :init
     (with-no-warnings
-      (defun ivy--regex-pinyin (str)
-        "The regex builder wrapper to support pinyin."
-        (or (pinyin-to-utf8 str)
-            (ivy--regex-plus str)))
-
       (defun my-pinyinlib-build-regexp-string (str)
         "Build a pinyin regexp sequence from STR."
         (cond ((equal str ".*") ".*")
@@ -540,14 +546,12 @@
                 ""))
               (t nil)))
 
-      (mapcar
-       (lambda (item)
-         (let ((key (car item))
-               (value (cdr item)))
-           (when (eq value 'ivy--regex-plus)
-             (setf (alist-get key ivy-re-builders-alist)
-                   #'ivy--regex-pinyin))))
-       ivy-re-builders-alist))))
+      (defun my-ivy--regex-pinyin (fn str)
+        "The regex builder advice to support pinyin."
+        (or (pinyin-to-utf8 str)
+            (funcall fn str)))
+      (advice-add #'ivy--regex-plus :around #'my-ivy--regex-pinyin)
+      (advice-add #'ivy--regex-ignore-order :around #'my-ivy--regex-pinyin))))
 
 ;; Ivy
 (use-package ivy-dired-history
@@ -591,7 +595,7 @@
     (ivy-posframe-border ((t (:inherit posframe-border))))
     :hook (ivy-mode . ivy-posframe-mode)
     :init
-    (setq ivy-height 15
+    (setq ivy-height 15                 ; Use bigger minibuffer height for child frame
           ivy-posframe-border-width 3
           ivy-posframe-parameters '((left-fringe . 8)
                                     (right-fringe . 8)))
