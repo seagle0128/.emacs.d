@@ -44,13 +44,7 @@
          :map company-mode-map
          ("<backtab>" . company-yasnippet)
          :map company-active-map
-         ("C-p" . company-select-previous)
-         ("C-n" . company-select-next)
-         ("<tab>" . company-complete-common-or-cycle)
-         ("<backtab>" . my-company-yasnippet)
-         :map company-search-map
-         ("C-p" . company-select-previous)
-         ("C-n" . company-select-next))
+         ("<backtab>" . my-company-yasnippet))
   :hook (after-init . global-company-mode)
   :init
   (setq company-tooltip-align-annotations t
@@ -169,7 +163,8 @@
   ;; Icons and quickhelp
   (use-package company-box
     :diminish
-    :defines company-box-icons-all-the-icons
+    :bind (:map company-active-map
+           ([remap company-show-doc-buffer] . company-box-doc-manually))
     :hook (company-mode . company-box-mode)
     :init (setq company-box-enable-icon centaur-icon
                 company-box-backends-colors nil
@@ -307,7 +302,7 @@
                 (box-position (frame-position box-frame))
                 (box-width (frame-pixel-width box-frame))
                 (box-height (frame-pixel-height box-frame))
-                (box-border-width (frame-border-width box-frame))
+                ;; (box-border-width (frame-border-width box-frame))
 
                 (window (frame-root-window frame))
                 ((text-width . text-height) (window-text-pixel-size window nil nil
