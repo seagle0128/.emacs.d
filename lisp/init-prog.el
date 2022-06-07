@@ -156,10 +156,12 @@ Install the doc if it's not installed."
       (devdocs-lookup nil (thing-at-point 'symbol t)))))
 
 ;; Misc. programming modes
+(when emacs/>=27p
+  (use-package csv-mode))
+
 (use-package cask-mode)
 (use-package cmake-mode)
 (use-package csharp-mode)
-(use-package csv-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
