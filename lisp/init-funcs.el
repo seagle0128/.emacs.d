@@ -157,7 +157,10 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun mode-line-height ()
   "Get the height of the mode-line."
   (- (elt (window-pixel-edges) 3)
-     (elt (window-inside-pixel-edges) 3)))
+     (elt (window-inside-pixel-edges) 3)
+     (if (bound-and-true-p window-divider-mode)
+         window-divider-default-bottom-width
+       0)))
 
 ;; Reload configurations
 (defun reload-init-file ()
