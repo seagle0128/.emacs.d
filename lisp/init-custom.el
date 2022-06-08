@@ -85,21 +85,27 @@
          (proto (if no-ssl "http" "https")))
     `(,(cons 'melpa
              `(,(cons "gnu"   (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "nongnu"   (concat proto "://elpa.nongnu.org/packages/"))
                ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
       ,(cons 'bfsu
              `(,(cons "gnu"   (concat proto "://mirrors.bfsu.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.bfsu.edu.cn/elpa/nongnu/"))
                ,(cons "melpa" (concat proto "://mirrors.bfsu.edu.cn/elpa/melpa/"))))
       ,(cons 'emacs-china
              `(,(cons "gnu"   (concat proto "://elpa.emacs-china.org/gnu/"))
+               ,(cons "nongnu"   (concat proto "://elpa.emacs-china.org/nongnu/"))
                ,(cons "melpa" (concat proto "://elpa.emacs-china.org/melpa/"))))
       ,(cons 'netease
              `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.163.com/elpa/nongnu/"))
                ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
       ,(cons 'ustc
              `(,(cons "gnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/nongnu/"))
                ,(cons "melpa" (concat proto "://mirrors.ustc.edu.cn/elpa/melpa/"))))
       ,(cons 'tuna
              `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))
                ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))))
   "The package archives group list."
   :group 'centaur
