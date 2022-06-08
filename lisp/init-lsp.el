@@ -40,7 +40,7 @@
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                              (eglot-ensure))))
-            (markdown-mode . lsp-deferred))))
+            ((markdown-mode yaml-mode) . eglot-ensure))))
   ('lsp-mode
    ;; Performace tuning
    ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -85,7 +85,7 @@
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                              (lsp-deferred))))
-            (markdown-mode . lsp-deferred)
+            ((markdown-mode yaml-mode) . lsp-deferred)
             (lsp-mode . (lambda ()
                           ;; Integrate `which-key'
                           (lsp-enable-which-key-integration)
