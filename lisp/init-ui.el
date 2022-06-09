@@ -452,15 +452,17 @@
   (setq x-gtk-use-system-tooltips nil))
 
 ;; When `centaur-prettify-symbols-alist' is `nil' use font supported ligatures
-(use-package composite
-  :ensure nil
-  :unless centaur-prettify-symbols-alist
-  :init (defvar composition-ligature-table (make-char-table nil))
-  :hook (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-          . (lambda () (setq-local composition-function-table composition-ligature-table))))
-  :config
-  ;; support ligatures, some toned down to prevent hang
-  (when emacs/>=27p
+(when emacs/>=27p
+  (use-package composite
+    :ensure nil
+    :unless centaur-prettify-symbols-alist
+    :init (defvar composition-ligature-table (make-char-table nil))
+    :hook (((prog-mode
+             conf-mode nxml-mode markdown-mode help-mode
+             shell-mode eshell-mode term-mode vterm-mode)
+            . (lambda () (setq-local composition-function-table composition-ligature-table))))
+    :config
+    ;; support ligatures, some toned down to prevent hang
     (let ((alist
            '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
              (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
