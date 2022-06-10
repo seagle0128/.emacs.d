@@ -81,7 +81,8 @@
   (use-package gcmh
     :diminish
     :init
-    (setq gcmh-idle-delay 5
+    (setq gcmh-idle-delay 'auto
+          gcmh-auto-idle-delay-factor 10
           gcmh-high-cons-threshold #x1000000) ; 16MB
     (gcmh-mode 1)))
 

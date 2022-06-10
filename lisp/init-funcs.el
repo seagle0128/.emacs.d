@@ -560,9 +560,10 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
   (when theme
+    (message "Loading theme `%s'..." theme)
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)
-    (message "Loaded theme `%s'" theme)))
+    (message "Loading theme `%s'...done" theme)))
 
 (defun centaur--load-system-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."

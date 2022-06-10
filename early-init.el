@@ -40,11 +40,10 @@
 ;; initialization, so we must prevent Emacs from doing it early!
 (setq package-enable-at-startup nil)
 
+(setq load-prefer-newer noninteractive)
+
 ;; Inhibit resizing frame
 (setq frame-inhibit-implied-resize t)
-
-;; Set default coding system
-(set-language-environment "UTF-8")
 
 ;; Faster to disable these here (before they've been initialized)
 (push '(menu-bar-lines . 0) default-frame-alist)

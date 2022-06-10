@@ -79,7 +79,7 @@
       (condition-case error
           (progn
             (fix-fullscreen-cocoa)
-            (load persp-frame-file)
+            (load persp-frame-file nil t)
 
             ;; NOTE: Only usable in `emacs-startup-hook' while not `window-setup-hook'.
             (add-hook 'emacs-startup-hook
