@@ -66,7 +66,7 @@
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
 
-;; Reset in `gcmh'
+;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook
           (lambda ()
