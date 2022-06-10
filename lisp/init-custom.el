@@ -99,14 +99,18 @@
              `(,(cons "gnu"   (concat proto "://mirrors.163.com/elpa/gnu/"))
                ,(cons "nongnu"   (concat proto "://mirrors.163.com/elpa/nongnu/"))
                ,(cons "melpa" (concat proto "://mirrors.163.com/elpa/melpa/"))))
-      ,(cons 'ustc
-             `(,(cons "gnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/gnu/"))
-               ,(cons "nongnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/nongnu/"))
-               ,(cons "melpa" (concat proto "://mirrors.ustc.edu.cn/elpa/melpa/"))))
+      ,(cons 'sjtu
+             `(,(cons "gnu"   (concat proto "://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/nongnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/melpa/"))))
       ,(cons 'tuna
              `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
                ,(cons "nongnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))
-               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))))
+               ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+      ,(cons 'ustc
+             `(,(cons "gnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu"   (concat proto "://mirrors.ustc.edu.cn/elpa/nongnu/"))
+               ,(cons "melpa" (concat proto "://mirrors.ustc.edu.cn/elpa/melpa/"))))))
   "The package archives group list."
   :group 'centaur
   :type '(alist :key-type (symbol :tag "Archive group name")

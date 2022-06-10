@@ -292,7 +292,7 @@ Return the fastest package archive."
                 (lambda (url)
                   (concat url "archive-contents"))
                 (mapcar #'cdr
-                        (mapcar #'cadr
+                        (mapcar #'caddr
                                 (mapcar #'cdr
                                         centaur-package-archives-alist)))))
          (durations (mapcar
