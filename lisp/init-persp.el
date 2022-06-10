@@ -86,17 +86,10 @@
                       (lambda ()
                         "Adjust initial frame position."
                         ;; Handle multiple monitors gracefully
-                        (if (or (>= (eval (frame-parameter nil 'top)) (display-pixel-height))
-                                (>= (eval (frame-parameter nil 'left)) (display-pixel-width)))
-                            (progn
-                              (set-frame-parameter nil 'top 0)
-                              (set-frame-parameter nil 'left 0))
-                          (progn
-                            (set-frame-parameter nil 'top (cdr (assq 'top initial-frame-alist)))
-                            (set-frame-parameter nil 'left (cdr (assq 'left initial-frame-alist)))))
-
-                        (set-frame-parameter nil 'width (cdr (assq 'width initial-frame-alist)))
-                        (set-frame-parameter nil 'height (cdr (assq 'height initial-frame-alist))))))
+                        (when (or (>= (eval (frame-parameter nil 'top)) (display-pixel-height))
+                                  (>= (eval (frame-parameter nil 'left)) (display-pixel-width)))
+                          (set-frame-parameter nil 'top 0)
+                          (set-frame-parameter nil 'left 0)))))
         (error
          (warn "persp frame: %s" (error-message-string error))))))
 
