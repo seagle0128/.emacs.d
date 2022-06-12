@@ -287,21 +287,16 @@ Not displaying the chart if NO-CHART is non-nil.
 Return the fastest package archive."
   (interactive)
 
-  (let* ((urls (mapcar
-                (lambda (url)
-                  (concat url "archive-contents"))
-                (mapcar #'cdr
-                        (mapcar #'caddr
-                                (mapcar #'cdr
-                                        centaur-package-archives-alist)))))
-         (durations (mapcar
-                     (lambda (url)
-                       (let ((start (current-time)))
+  (let* ((durations (mapcar
+                     (lambda (pair)
+                       (let ((url (concat (cdr (nth 2 (cdr pair)))
+                                          "archive-contents"))
+                             (start (current-time)))
                          (message "Fetching %s..." url)
                          (ignore-errors
                            (url-copy-file url null-device t))
                          (float-time (time-subtract (current-time) start))))
-                     urls))
+                     centaur-package-archives-alist))
          (fastest (car (nth (cl-position (apply #'min durations) durations)
                             centaur-package-archives-alist))))
 
@@ -312,12 +307,11 @@ Return the fastest package archive."
       (chart-bar-quickie
        'horizontal
        "Speed test for the ELPA mirrors"
-       (mapcar (lambda (url) (url-host (url-generic-parse-url url))) urls) "ELPA"
+       (mapcar (lambda (p) (symbol-name (car p))) centaur-package-archives-alist)
+       "ELPA"
        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
 
-    (message "%s" urls)
-    (message "%s" durations)
-    (message "%s is the fastest package archive" fastest)
+    (message "`%s' is the fastest package archive" fastest)
 
     ;; Return the fastest
     fastest))
