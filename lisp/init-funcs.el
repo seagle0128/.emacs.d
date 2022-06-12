@@ -29,7 +29,6 @@
 ;;
 
 ;;; Code:
-
 (require 'cl-lib)
 
 (require 'init-const)
@@ -299,11 +298,8 @@ Return the fastest package archive."
                      (lambda (url)
                        (let ((start (current-time)))
                          (message "Fetching %s..." url)
-                         (cond ((executable-find "curl")
-                                (call-process "curl" nil nil nil "--max-time" "10" url))
-                               ((executable-find "wget")
-                                (call-process "wget" nil nil nil "--timeout=10" url))
-                               (t (user-error "curl or wget is not found")))
+                         (ignore-errors
+                           (url-copy-file url null-device t))
                          (float-time (time-subtract (current-time) start))))
                      urls))
          (fastest (car (nth (cl-position (apply #'min durations) durations)
