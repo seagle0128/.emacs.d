@@ -214,10 +214,10 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
   (interactive)
-  (let ((temp-dir (locate-user-emacs-file "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory temp-dir)
-      (byte-recompile-directory temp-dir 0 t))))
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
 
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."
@@ -331,14 +331,14 @@ This issue has been addressed in 28."
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
-  (let ((temp-dir (expand-file-name user-emacs-directory)))
-    (if (file-exists-p temp-dir)
-        (progn
-          (message "Updating configurations...")
-          (cd temp-dir)
-          (shell-command "git pull")
-          (message "Updating configurations...done"))
-      (message "\"%s\" doesn't exist" temp-dir))))
+  (let ((dir (expand-file-name user-emacs-directory)))
+    (unless (file-exists-p dir)
+      (user-error "\"%s\" doesn't exist" dir))
+
+    (message "Updating configurations...")
+    (cd dir)
+    (shell-command "git pull")
+    (message "Updating configurations...done")))
 (defalias 'centaur-update-config #'update-config)
 
 (defvar centaur--updating-packages nil)
@@ -347,7 +347,7 @@ This issue has been addressed in 28."
 
 If FORCE is non-nil, the updating process will be restarted by force.
 If SYNC is non-nil, the updating process is synchronous."
-  (interactive "P")
+  (interactive)
 
   (if (process-live-p centaur--updating-packages)
       (when force
@@ -355,27 +355,25 @@ If SYNC is non-nil, the updating process is synchronous."
         (setq centaur--updating-packages nil))
     (setq centaur--updating-packages nil))
 
-  (when centaur--updating-packages
-    (user-error "Still updating packages..."))
-
   (message "Updating packages...")
-  (if (and (not sync)
-           (require 'async nil t))
-      (setq centaur--updating-packages
-            (async-start
-             `(lambda ()
-                ,(async-inject-variables "\\`\\(load-path\\)\\'")
-                (require 'init-funcs)
-                (require 'init-package)
-                (upgrade-packages)
-                (with-current-buffer auto-package-update-buffer-name
-                  (buffer-string)))
-             (lambda (result)
-               (setq centaur--updating-packages nil)
-               (message "%s" result)
-               (message "Updating packages...done"))))
-    (upgrade-packages)
-    (message "Updating packages...done")))
+  (unless centaur--updating-packages
+    (if (and (not sync)
+             (require 'async nil t))
+        (setq centaur--updating-packages
+              (async-start
+               `(lambda ()
+                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
+                  (require 'init-package)
+                  (upgrade-packages)
+                  (with-current-buffer auto-package-update-buffer-name
+                    (buffer-string)))
+               (lambda (result)
+                 (setq centaur--updating-packages nil)
+                 (message "Updating packages...done")
+                 (message "%s" result))))
+      (upgrade-packages)
+      (message "Updating packages...done"))))
 (defalias 'centaur-update-packages #'update-packages)
 
 (defvar centaur--updating nil)
@@ -392,29 +390,27 @@ If SYNC is non-nil, the updating process is synchronous."
         (setq centaur--updating nil))
     (setq centaur--updating nil))
 
-  (when centaur--updating
-    (user-error "Centaur Emacs is still updating..."))
-
-  (message "This will update Centaur Emacs to the latest")
-  (if (and (not sync)
-           (require 'async nil t))
-      (setq centaur--updating
-            (async-start
-             `(lambda ()
-                ,(async-inject-variables "\\`\\(load-path\\)\\'")
-                (require 'init-funcs)
-                (require 'init-package)
-                (update-config)
-                (update-packages nil t)
-                (with-current-buffer auto-package-update-buffer-name
-                  (buffer-string)))
-             (lambda (result)
-               (setq centaur--updating nil)
-               (message "%s" result)
-               (message "Done. Restart to complete process"))))
-    (update-config)
-    (update-packages nil t)
-    (message "Done. Restart to complete process")))
+  (message "Updating Centaur Emacs...")
+  (unless centaur--updating
+    (if (and (not sync)
+             (require 'async nil t))
+        (setq centaur--updating
+              (async-start
+               `(lambda ()
+                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
+                  (require 'init-package)
+                  (update-config)
+                  (update-packages nil t)
+                  (with-current-buffer auto-package-update-buffer-name
+                    (buffer-string)))
+               (lambda (result)
+                 (setq centaur--updating nil)
+                 (message "Updating Centaur Emacs...done")
+                 (message "%s" result))))
+      (update-config)
+      (update-packages nil t)
+      (message "Updating Centaur Emacs...done"))))
 (defalias 'centaur-update #'update-config-and-packages)
 
 (defun update-all()
@@ -483,20 +479,20 @@ If SYNC is non-nil, the updating process is synchronous."
     ;; See https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
     (let* ((url (concat centaur-homepage "/files/6135060/symbola.zip"))
            (temp-file (make-temp-file "symbola-" nil ".zip"))
-           (temp-dir (concat (file-name-directory temp-file) "/symbola/"))
+           (dir (concat (file-name-directory temp-file) "/symbola/"))
            (unzip-script (cond ((executable-find "unzip")
                                 (format "mkdir -p %s && unzip -qq %s -d %s"
-                                        temp-dir temp-file temp-dir))
+                                        dir temp-file dir))
                                ((executable-find "powershell")
                                 (format "powershell -noprofile -noninteractive \
-  -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'" temp-file temp-dir))
+  -nologo -ex bypass Expand-Archive -path '%s' -dest '%s'" temp-file dir))
                                (t (user-error "Unable to extract '%s' to '%s'! \
-  Please check unzip, powershell or extract manually." temp-file temp-dir)))))
+  Please check unzip, powershell or extract manually." temp-file dir)))))
       (url-copy-file url temp-file t)
       (when (file-exists-p temp-file)
         (shell-command-to-string unzip-script)
         (let* ((font-name "Symbola.otf")
-               (temp-font (expand-file-name font-name temp-dir)))
+               (temp-font (expand-file-name font-name dir)))
           (if (file-exists-p temp-font)
               (copy-file temp-font (expand-file-name font-name font-dest) t)
             (message "Failed to download `Symbola'!")))))
