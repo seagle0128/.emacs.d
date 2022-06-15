@@ -242,25 +242,12 @@
 ;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
 (when centaur-icon
   (use-package all-the-icons
+    :custom (all-the-icons-scale-factor 1.1)
     :init (unless (or sys/win32p
                       (daemonp)
                       (font-installed-p "all-the-icons"))
             (centaur-install-fonts))
     :config
-    (with-no-warnings
-      (defun all-the-icons-reset ()
-        "Reset the icons."
-        (interactive)
-        (dolist (func '(all-the-icons-icon-for-dir
-                        all-the-icons-icon-for-file
-                        all-the-icons-icon-for-mode
-                        all-the-icons-icon-for-url
-                        all-the-icons-icon-family-for-file
-                        all-the-icons-icon-family-for-mode
-                        all-the-icons-icon-family))
-          (all-the-icons-cache func))
-        (message "Reset all-the-icons")))
-
     ;; Support more icons
     (let ((extension-icon-alist
            '(("bat"  all-the-icons-alltheicon "terminal" :face all-the-icons-lsilver)
