@@ -171,9 +171,6 @@
         (insert "\n")))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
-    (defvar dashboard-recover-layout-p nil
-      "Wether recovers the layout.")
-
     (defun restore-previous-session ()
       "Restore the previous session."
       (interactive)
@@ -210,25 +207,26 @@
       (let ((func (local-key-binding "m")))
         (and func (funcall func))))
 
+    (defvar dashboard-recover-layout-p nil
+      "Wether recovers the layout.")
+
     (defun open-dashboard ()
       "Open the *dashboard* buffer and jump to the first widget."
       (interactive)
       ;; Check if need to recover layout
-      (if (> (length (window-list-1))
-             ;; exclude `treemacs' window
-             (if (and (fboundp 'treemacs-current-visibility)
-                      (eq (treemacs-current-visibility) 'visible))
-                 2
-               1))
+      (if (length> (window-list-1)
+                   ;; exclude `treemacs' window
+                   (if (and (fboundp 'treemacs-current-visibility)
+                            (eq (treemacs-current-visibility) 'visible))
+                       2
+                     1))
           (setq dashboard-recover-layout-p t))
 
+      ;; Display dashboard in maximized window
       (delete-other-windows)
 
       ;; Refresh dashboard buffer
-      (when (get-buffer dashboard-buffer-name)
-        (kill-buffer dashboard-buffer-name))
-      (dashboard-insert-startupify-lists)
-      (switch-to-buffer dashboard-buffer-name)
+      (dashboard-refresh-buffer)
 
       ;; Jump to the first section
       (dashboard-goto-recent-files))
@@ -237,10 +235,9 @@
       "Quit dashboard window."
       (interactive)
       (quit-window t)
-      (when (and dashboard-recover-layout-p
-                 (bound-and-true-p winner-mode))
-        (winner-undo)
-        (setq dashboard-recover-layout-p nil)))))
+      (and dashboard-recover-layout-p
+           (and (bound-and-true-p winner-mode) (winner-undo))
+           (setq dashboard-recover-layout-p nil)))))
 
 (provide 'init-dashboard)
 
