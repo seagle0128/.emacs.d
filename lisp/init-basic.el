@@ -101,6 +101,10 @@
   (use-package exec-path-from-shell
     :init (exec-path-from-shell-initialize)))
 
+;; Compatibility
+(use-package compat
+  :demand t)
+
 ;; Start server
 (use-package server
   :ensure nil
