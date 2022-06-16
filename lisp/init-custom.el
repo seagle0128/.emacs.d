@@ -150,13 +150,14 @@ For example:
   :type '(alist :key-type (string :tag "Time")
                 :value-type (symbol :tag "Theme")))
 
-(when (boundp 'ns-system-appearance)
-  (defcustom centaur-system-themes '((light . doom-one-light)
-				                     (dark  . doom-one))
-    "List of themes related the system appearance. It's only available on macOS."
-    :group 'centaur
-    :type '(alist :key-type (symbol :tag "Appearance")
-                  :value-type (symbol :tag "Theme"))))
+(defcustom centaur-system-themes '((light . doom-one-light)
+				                   (dark  . doom-one))
+  "List of themes related the system appearance.
+
+It's only available on macOS currently."
+  :group 'centaur
+  :type '(alist :key-type (symbol :tag "Appearance")
+                :value-type (symbol :tag "Theme")))
 
 (defcustom centaur-theme 'default
   "The color theme."
