@@ -517,12 +517,16 @@ If SYNC is non-nil, the updating process is synchronous."
 (advice-add #'load-theme :after #'run-after-load-theme-hook)
 
 (defun childframe-workable-p ()
-  "Test whether childframe is workable."
+  "Whether childframe is workable."
+  (or (not (or noninteractive
+               emacs-basic-display
+               (not (display-graphic-p))))
+      (daemonp)))
+
+(defun childframe-completion-workable-p ()
+  "Whether childframe completion is workable."
   (and (eq centaur-completion-style 'childframe)
-       (or (not (or noninteractive
-                    emacs-basic-display
-                    (not (display-graphic-p))))
-           (daemonp))))
+       (childframe-workable-p)))
 
 (defun centaur--theme-name (theme)
   "Return internal THEME name."

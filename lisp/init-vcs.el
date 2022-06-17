@@ -91,7 +91,7 @@
         '("t " "Todos" magit-todos-jump-to-todos)))))
 
 ;; Display transient in child frame
-(when (childframe-workable-p)
+(when (childframe-completion-workable-p)
   (use-package transient-posframe
     :diminish
     :custom-face

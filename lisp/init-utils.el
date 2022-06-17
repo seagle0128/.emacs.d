@@ -86,7 +86,7 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle")
 
-  (when (childframe-workable-p)
+  (when (childframe-completion-workable-p)
     (use-package which-key-posframe
       :diminish
       :functions posframe-poshandler-frame-center-near-bottom
