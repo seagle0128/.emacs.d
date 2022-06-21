@@ -167,6 +167,7 @@
           "\\*Embark Actions\\*"
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
+          "\\*Go-Translate\\*"
 
           bookmark-bmenu-mode
           comint-mode

@@ -37,7 +37,11 @@
   (use-package fanyi
     :bind (("C-c d f" . fanyi-dwim)
            ("C-c d d" . fanyi-dwim2)
-           ("C-c d h" . fanyi-from-history))))
+           ("C-c d h" . fanyi-from-history)))
+
+  (use-package go-translate
+    :bind (("C-c d g" . gts-do-translate))
+    :init (setq gts-translate-list '(("en" "zh") ("zh" "en")))))
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
