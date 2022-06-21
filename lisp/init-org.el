@@ -172,11 +172,7 @@ prepended to the element after the #+HEADER: tag."
     (push '("\\.\\(x?html?\\|pdf\\)\\'"
             .
             (lambda (file _link)
-              (xwidget-webkit-browse-url (concat "file://" file))
-              (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
-                (when (buffer-live-p buf)
-                  (and (eq buf (current-buffer)) (quit-window))
-                  (pop-to-buffer buf)))))
+              (centaur-webkit-browse-url (concat "file://" file) t)))
           org-file-apps))
 
   ;; Add gfm/md backends

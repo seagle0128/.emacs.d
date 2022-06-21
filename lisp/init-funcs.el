@@ -115,38 +115,40 @@ Same as `replace-string C-q C-m RET RET'."
 (defun copy-file-name ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
-  (if-let ((filename (if (equal major-mode 'dired-mode)
-                         default-directory
-                       (buffer-file-name))))
-      (progn
-        (kill-new filename)
-        (message "Copied '%s'" filename))
-    (warn "Current buffer is not attached to a file!")))
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (if filename
+        (progn
+          (kill-new filename)
+          (message "Copied '%s'" filename))
+      (warn "Current buffer is not attached to a file!"))))
 
 ;; Browse URL
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
-  "Browse url with webkit and switch or pop to the buffer.
+  "Browse URL with xwidget-webkit' and switch or pop to the buffer.
+
 POP-BUFFER specifies whether to pop to the buffer.
 NEW-SESSION specifies whether to create a new xwidget-webkit session."
   (interactive (progn
                  (require 'browse-url)
                  (browse-url-interactive-arg "xwidget-webkit URL: ")))
-  (when (and (featurep 'xwidget-internal)
-             (fboundp 'xwidget-buffer)
-             (fboundp 'xwidget-webkit-current-session))
-    (xwidget-webkit-browse-url url new-session)
-    (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
-      (when (buffer-live-p buf)
-        (and (eq buf (current-buffer)) (quit-window))
-        (if pop-buffer
-            (pop-to-buffer buf)
-          (switch-to-buffer buf))))))
+  (or (featurep 'xwidget-internal)
+      (user-error "Your Emacs was not compiled with xwidgets support"))
+  (xwidget-webkit-browse-url url new-session)
+  (let ((buf (xwidget-buffer (and (fboundp 'xwidget-webkit-current-session)
+                                  (xwidget-webkit-current-session)))))
+    (when (buffer-live-p buf)
+      (and (eq buf (current-buffer)) (quit-window))
+      (if pop-buffer
+          (pop-to-buffer buf)
+        (switch-to-buffer buf)))))
 
 (defun centaur-find-pdf-file (&optional url)
   "Find a PDF file via URL and render by `pdf.js'."
   (interactive "f")
   (cond ((featurep 'xwidget-internal)
-         (xwidget-webkit-browse-url (concat "file://" url)))
+         (centaur-webkit-browse-url (concat "file://" url) t t))
         ((bound-and-true-p counsel-mode)
          (counsel-find-file url))
         (t (find-file url))))
@@ -229,7 +231,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 
-Save to `custom-file' if NO-SAVE is nil."
+  Save to `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
   (when (and (not no-save)
              (file-writable-p custom-file))
@@ -238,8 +240,8 @@ Save to `custom-file' if NO-SAVE is nil."
       (goto-char (point-min))
       (while (re-search-forward
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-              nil t)
-        (replace-match (format "(setq %s '%s)" variable value) nil nil))
+                               nil t)
+  (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
 
