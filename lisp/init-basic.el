@@ -168,7 +168,9 @@
     (add-hook 'process-menu-mode-hook
               (lambda ()
                 (setq tabulated-list-format
-                      (vconcat `(("" ,(if (icon-displayable-p) 2 0))) tabulated-list-format))))
+                      (vconcat `(("" 0)
+                                 ("" ,(if (icon-displayable-p) 2 0)))
+                               tabulated-list-format))))
 
     (defun my-list-processes--prettify ()
       "Prettify process list."
@@ -194,8 +196,8 @@
                       (thread (list (aref val 5) 'face 'font-lock-doc-face))
                       (cmd (list (aref val (if emacs/>=27p 6 5)) 'face 'completions-annotations)))
             (push (list p (if emacs/>=27p
-                              (vector icon name pid status buf-label tty thread cmd)
-                            (vector icon name pid status buf-label tty cmd)))
+                              (vector " " icon name pid status buf-label tty thread cmd)
+                            (vector " " icon name pid status buf-label tty cmd)))
 		          tabulated-list-entries)))))
     (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
 
