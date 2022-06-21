@@ -41,22 +41,23 @@
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
-  :commands youdao-dictionary-play-voice-of-current-word
   :bind (("C-c y" . my-youdao-dictionary-search-at-point)
          ("C-c d Y" . my-youdao-dictionary-search-at-point)
-         ("C-c d y" . youdao-dictionary-search)
+         ("C-c d y" . youdao-dictionary-search-async)
          :map youdao-dictionary-mode-map
          ("h" . my-youdao-dictionary-help)
          ("?" . my-youdao-dictionary-help))
   :init
-  (setq url-automatic-caching t
-        youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
+  (setq url-automatic-caching t)
+  (setq youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
 
   (defun my-youdao-dictionary-search-at-point ()
-    "Search word at point and display result with `posframe', `pos-tip', or buffer."
+    "Search word at point and display result with `posframe', `pos-tip' or buffer."
     (interactive)
+    ;; Load explicitly since it's not loaded automatically in 29
+    (require 'youdao-dictionary)
     (if (display-graphic-p)
-        (if (posframe-workable-p)
+        (if (and (fboundp 'posframe-workable-p) (posframe-workable-p))
             (youdao-dictionary-search-at-point-posframe)
           (youdao-dictionary-search-at-point-tooltip))
       (youdao-dictionary-search-at-point)))
@@ -91,22 +92,24 @@
                 (insert string)
                 (insert (propertize "\n" 'face '(:height 0.5)))
                 (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-            (posframe-show youdao-dictionary-buffer-name
-                           :position (point)
-                           :left-fringe 16
-                           :right-fringe 16
-                           :max-width (/ (frame-width) 2)
-                           :max-height (/ (frame-height) 2)
-                           :background-color (face-background 'tooltip nil t)
-                           :internal-border-color (face-background 'posframe-border nil t)
-                           :internal-border-width 1)
+            (posframe-show
+             youdao-dictionary-buffer-name
+             :position (point)
+             :left-fringe 16
+             :right-fringe 16
+             :max-width (/ (frame-width) 2)
+             :max-height (/ (frame-height) 2)
+             :background-color (face-background 'tooltip nil t)
+             :internal-border-color (face-background 'posframe-border nil t)
+             :internal-border-width 1)
             (unwind-protect
                 (push (read-event) unread-command-events)
               (progn
                 (posframe-hide youdao-dictionary-buffer-name)
                 (other-frame 0)))
             (message "Nothing to look up"))))
-    (advice-add #'youdao-dictionary--posframe-tip :override #'my-youdao-dictionary--posframe-tip)))
+    (advice-add #'youdao-dictionary--posframe-tip
+                :override #'my-youdao-dictionary--posframe-tip)))
 
 ;; OSX dictionary
 (when sys/macp
