@@ -144,16 +144,6 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
           (pop-to-buffer buf)
         (switch-to-buffer buf)))))
 
-(defun centaur-find-pdf-file (&optional url)
-  "Find a PDF file via URL and render by `pdf.js'."
-  (interactive "f")
-  (cond ((featurep 'xwidget-internal)
-         (centaur-webkit-browse-url (concat "file://" url) t t))
-        ((bound-and-true-p counsel-mode)
-         (counsel-find-file url))
-        (t (find-file url))))
-(defalias 'find-pdf-file #'centaur-find-pdf-file)
-
 ;; Mode line
 (defun mode-line-height ()
   "Get the height of the mode-line."
