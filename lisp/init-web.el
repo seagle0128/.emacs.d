@@ -109,7 +109,7 @@
       (setq js2-mode-show-strict-warnings nil))
     (when (executable-find "eslint_d")
       ;; https://github.com/mantoni/eslint_d.js
-      ;; npm -i -g eslint_d
+      ;; Install: npm -i -g eslint_d
       (setq flycheck-javascript-eslint-executable "eslint_d")))
 
   (use-package js2-refactor
