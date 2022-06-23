@@ -39,8 +39,7 @@
            ("C-c d d" . fanyi-dwim2)
            ("C-c d h" . fanyi-from-history))
     :custom (fanyi-providers '(fanyi-haici-provider
-                               fanyi-longman-provider
-                               fanyi-youdao-thesaurus-provider)))
+                               fanyi-longman-provider)))
 
   (use-package go-translate
     :bind (("C-c d g" . gts-do-translate))
