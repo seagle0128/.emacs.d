@@ -101,7 +101,7 @@
     (ustc     . (("gnu"    . "http://mirrors.ustc.edu.cn/elpa/gnu/")
                  ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")
                  ("melpa"  . "http://mirrors.ustc.edu.cn/elpa/melpa/"))))
-  "The package archives group list."
+  "A list of the package archives."
   :group 'centaur
   :type '(alist :key-type (symbol :tag "Archive group name")
                 :value-type (alist :key-type (string :tag "Archive name")
@@ -236,24 +236,24 @@ nil means disabled."
 
 (defcustom centaur-prettify-symbols-alist
   '(("lambda" . ?λ)
-    ("<-" . ?←)
-    ("->" . ?→)
-    ("->>" . ?↠)
-    ("=>" . ?⇒)
-    ("map" . ?↦)
-    ("/=" . ?≠)
-    ("!=" . ?≠)
-    ("==" . ?≡)
-    ("<=" . ?≤)
-    (">=" . ?≥)
-    ("=<<" . (?= (Br . Bl) ?≪))
-    (">>=" . (?≫ (Br . Bl) ?=))
-    ("<=<" . ?↢)
-    (">=>" . ?↣)
-    ("&&" . ?∧)
-    ("||" . ?∨)
-    ("not" . ?¬))
-  "Alist of symbol prettifications.
+    ("<-"     . ?←)
+    ("->"     . ?→)
+    ("->>"    . ?↠)
+    ("=>"     . ?⇒)
+    ("map"    . ?↦)
+    ("/="     . ?≠)
+    ("!="     . ?≠)
+    ("=="     . ?≡)
+    ("<="     . ?≤)
+    (">="     . ?≥)
+    ("=<<"    . (?= (Br . Bl) ?≪))
+    (">>="    . (?≫ (Br . Bl) ?=))
+    ("<=<"    . ?↢)
+    (">=>"    . ?↣)
+    ("&&"     . ?∧)
+    ("||"     . ?∨)
+    ("not"    . ?¬))
+  "A list of symbol prettifications.
 Nil to use font supports ligatures."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
@@ -263,24 +263,24 @@ Nil to use font supports ligatures."
     ("[X]" . ?☑)
     ("[-]" . ?⛝)
 
-    ("#+ARCHIVE:" . ?📦)
-    ("#+AUTHOR:" . ?👤)
-    ("#+CREATOR:" . ?💁)
-    ("#+DATE:" . ?📆)
+    ("#+ARCHIVE:"     . ?📦)
+    ("#+AUTHOR:"      . ?👤)
+    ("#+CREATOR:"     . ?💁)
+    ("#+DATE:"        . ?📆)
     ("#+DESCRIPTION:" . ?⸙)
-    ("#+EMAIL:" . ?📧)
-    ("#+OPTIONS:" . ?⛭)
-    ("#+SETUPFILE:" . ?⛮)
-    ("#+TAGS:" . ?🏷)
-    ("#+TITLE:" . ?📓)
+    ("#+EMAIL:"       . ?📧)
+    ("#+OPTIONS:"     . ?⛭)
+    ("#+SETUPFILE:"   . ?⛮)
+    ("#+TAGS:"        . ?🏷)
+    ("#+TITLE:"       . ?📓)
 
-    ("#+BEGIN_SRC" . ?✎)
-    ("#+END_SRC" . ?□)
+    ("#+BEGIN_SRC"   . ?✎)
+    ("#+END_SRC"     . ?□)
     ("#+BEGIN_QUOTE" . ?»)
-    ("#+END_QUOTE" . ?«)
-    ("#+HEADERS" . ?☰)
-    ("#+RESULTS:" . ?💻))
-  "Alist of symbol prettifications for `org-mode'."
+    ("#+END_QUOTE"   . ?«)
+    ("#+HEADERS"     . ?☰)
+    ("#+RESULTS:"    . ?💻))
+  "A list of symbol prettifications for `org-mode'."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
