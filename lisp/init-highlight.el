@@ -104,8 +104,8 @@ FACE defaults to inheriting from default and highlight."
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
   :hook (((prog-mode yaml-mode) . symbol-overlay-mode)
-         (iedit-mode . turn-off-symbol-overlay)
-         (iedit-mode-end . turn-on-symbol-overlay))
+         (iedit-mode            . turn-off-symbol-overlay)
+         (iedit-mode-end        . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.1)
   :config
   ;; Disable symbol highlighting while selecting
@@ -202,7 +202,7 @@ FACE defaults to inheriting from default and highlight."
   :custom-face
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
-         ([C-f3] . hl-todo-occur)
+         ([C-f3]    . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
          ("C-c t n" . hl-todo-next)
          ("C-c t o" . hl-todo-occur)

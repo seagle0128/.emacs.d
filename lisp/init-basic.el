@@ -245,16 +245,16 @@
 
   ;; Resize and re-position frames conveniently
   ;; Same keybindings as Rectangle on macOS
-  (bind-keys ("C-M-<return>" . centaur-frame-maximize)
+  (bind-keys ("C-M-<return>"    . centaur-frame-maximize)
              ("C-M-<backspace>" . centaur-frame-restore)
-             ("C-M-<left>" . centaur-frame-left-half)
-             ("C-M-<right>" . centaur-frame-right-half)
-             ("C-M-<up>" . centaur-frame-top-half)
-             ("C-M-<down>" . centaur-frame-bottom-half)))
+             ("C-M-<left>"      . centaur-frame-left-half)
+             ("C-M-<right>"     . centaur-frame-right-half)
+             ("C-M-<up>"        . centaur-frame-top-half)
+             ("C-M-<down>"      . centaur-frame-bottom-half)))
 
 ;; Global keybindings
-(bind-keys ("s-r" . revert-this-buffer)
-           ("C-x K" . delete-this-file)
+(bind-keys ("s-r"     . revert-this-buffer)
+           ("C-x K"   . delete-this-file)
            ("C-c C-l" . reload-init-file))
 
 (provide 'init-basic)

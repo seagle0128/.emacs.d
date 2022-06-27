@@ -47,12 +47,12 @@
 
 ;; Youdao Dictionary
 (use-package youdao-dictionary
-  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
+  :bind (("C-c y"   . my-youdao-dictionary-search-at-point)
          ("C-c d Y" . my-youdao-dictionary-search-at-point)
          ("C-c d y" . youdao-dictionary-search-async)
          :map youdao-dictionary-mode-map
-         ("h" . my-youdao-dictionary-help)
-         ("?" . my-youdao-dictionary-help))
+         ("h"       . my-youdao-dictionary-help)
+         ("?"       . my-youdao-dictionary-help))
   :init
   (setq url-automatic-caching t)
   (setq youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词

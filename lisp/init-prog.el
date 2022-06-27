@@ -104,7 +104,7 @@
 ;; Run commands quickly
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
-         ("C-c X" . quickrun)))
+         ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
@@ -113,16 +113,16 @@
            ("M-<f1>" . devdocs-dwim))
     :init
     (defvar devdocs-major-mode-docs-alist
-      '((c-mode . ("C"))
-        (c++-mode . ("C++"))
-        (python-mode . ("Python 3.9" "Python 3.8"))
-        (ruby-mode . ("Ruby 3"))
-        (go-mode . ("Go"))
-        (rustic-mode . ("Rust"))
-        (css-mode . ("CSS"))
-        (html-mode . ("HTML"))
-        (js-mode . ("JavaScript" "JQuery"))
-        (js2-mode . ("JavaScript" "JQuery"))
+      '((c-mode          . ("C"))
+        (c++-mode        . ("C++"))
+        (python-mode     . ("Python 3.9" "Python 3.8"))
+        (ruby-mode       . ("Ruby 3"))
+        (go-mode         . ("Go"))
+        (rustic-mode     . ("Rust"))
+        (css-mode        . ("CSS"))
+        (html-mode       . ("HTML"))
+        (js-mode         . ("JavaScript" "JQuery"))
+        (js2-mode        . ("JavaScript" "JQuery"))
         (emacs-lisp-mode . ("Elisp")))
       "Alist of MAJOR-MODE and list of docset names.")
 

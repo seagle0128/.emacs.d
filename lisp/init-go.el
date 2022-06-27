@@ -36,7 +36,7 @@
   :commands godoc-gogetdoc
   :bind (:map go-mode-map
          ("C-c R" . go-remove-unused-imports)
-         ("<f1>" . godoc-at-point))
+         ("<f1>"  . godoc-at-point))
   :init (setq godoc-at-point-function #'godoc-gogetdoc)
   :config
   ;; Env vars
