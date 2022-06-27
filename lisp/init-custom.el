@@ -144,7 +144,7 @@
 The keywords `:sunrise' and `:sunset' can be used for the time
 if `calendar-latitude' and `calendar-longitude' are set.
 For example:
-  '((:sunrise . doom-one-light)
+  \\='((:sunrise . doom-one-light)
     (:sunset  . doom-one))"
   :group 'centaur
   :type '(alist :key-type (string :tag "Time")
