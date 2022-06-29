@@ -122,7 +122,9 @@
   :hook ((git-timemachine-mode . (lambda ()
                                    "Improve `git-timemachine' buffers."
                                    ;; Display different colors in mode-line
-                                   (face-remap-add-relative 'mode-line 'custom-state)
+                                   (if (facep 'mode-line-active)
+                                       (face-remap-add-relative 'mode-line-active 'custom-state)
+                                     (face-remap-add-relative 'mode-line 'custom-state))
 
                                    ;; Highlight symbols in elisp
                                    (and (derived-mode-p 'emacs-lisp-mode)
