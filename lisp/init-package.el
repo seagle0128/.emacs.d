@@ -131,16 +131,16 @@
                 ("deleted"    . font-lock-comment-face)
                 ("unsigned"   . font-lock-warning-face)))
   :config
-  (when (fboundp 'page-break-lines-mode)
-    (add-hook 'paradox-after-execute-functions
-              (lambda (&rest _)
-                "Display `page-break-lines' in \"*Paradox Report*\"."
+  (add-hook 'paradox-after-execute-functions
+            (lambda (_)
+              "Display `page-break-lines' in \"*Paradox Report*\" buffer."
+              (when (fboundp 'page-break-lines-mode)
                 (let ((buf (get-buffer "*Paradox Report*"))
                       (inhibit-read-only t))
                   (when (buffer-live-p buf)
                     (with-current-buffer buf
-                      (page-break-lines-mode 1)))))
-              t)))
+                      (page-break-lines-mode 1))))))
+            t))
 
 ;; Auto update packages
 (use-package auto-package-update

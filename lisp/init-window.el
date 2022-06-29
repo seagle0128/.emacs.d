@@ -203,7 +203,7 @@
 
           "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
           "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
-          "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
+          "\\*docker-.+\\*"
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-test-moed))
@@ -213,11 +213,12 @@
 
   (when (display-grayscale-p)
     (setq popper-mode-line
-          '(:eval
-            (concat
-             (propertize " " 'face 'mode-line-emphasis)
-             (all-the-icons-octicon "pin" :height 0.9 :v-adjust 0.0 :face 'mode-line-emphasis)
-             (propertize " " 'face 'mode-line-emphasis)))))
+          '(:eval (format " %s "
+                          (all-the-icons-octicon
+                           "pin"
+                           :height 0.9
+                           :v-adjust 0.0
+                           :face 'mode-line-emphasis)))))
 
   (setq popper-echo-dispatch-actions t)
   :config
