@@ -222,7 +222,7 @@ FACE defaults to inheriting from default and highlight."
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)
-         ((after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
+         ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
   :init (setq diff-hl-draw-borders nil)
   :config
   ;; Highlight on-the-fly
@@ -234,7 +234,7 @@ FACE defaults to inheriting from default and highlight."
   (defun my-set-diff-hl-faces ()
     "Set `diff-hl' faces."
     (custom-set-faces
-     `(diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
+     `(diff-hl-change ((t (:foreground ,(face-foreground 'custom-changed) :background nil))))
      '(diff-hl-insert ((t (:inherit diff-added :background nil))))
      '(diff-hl-delete ((t (:inherit diff-removed :background nil))))))
 
