@@ -721,11 +721,10 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun proxy-socks-show ()
   "Show SOCKS proxy."
   (interactive)
-  (when (fboundp 'cadddr)                ; defined 25.2+
-    (if (bound-and-true-p socks-noproxy)
-        (message "Current SOCKS%d proxy is %s:%s"
-                 (cadddr socks-server) (cadr socks-server) (caddr socks-server))
-      (message "No SOCKS proxy"))))
+  (if (bound-and-true-p socks-noproxy)
+      (message "Current SOCKS%d proxy is %s:%s"
+               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+    (message "No SOCKS proxy")))
 
 (defun proxy-socks-enable ()
   "Enable SOCKS proxy."
@@ -735,7 +734,7 @@ If SYNC is non-nil, the updating process is synchronous."
         socks-noproxy '("localhost"))
   (let* ((proxy (split-string centaur-socks-proxy ":"))
          (host (car proxy))
-         (port (cadr  proxy)))
+         (port (string-to-number (cadr proxy))))
     (setq socks-server `("Default server" ,host ,port 5)))
   (setenv "all_proxy" (concat "socks5://" centaur-socks-proxy))
   (proxy-socks-show))
