@@ -172,7 +172,7 @@ FACE defaults to inheriting from default and highlight."
   :defines helpful-mode-map
   :bind (:map help-mode-map
          ("w" . rainbow-mode))
-  :hook ((html-mode php-mode help-mode helpful-mode) . rainbow-mode)
+  :hook ((html-mode php-mode helpful-mode) . rainbow-mode)
   :init (with-eval-after-load 'helpful
           (bind-key "w" #'rainbow-mode helpful-mode-map))
   :config
