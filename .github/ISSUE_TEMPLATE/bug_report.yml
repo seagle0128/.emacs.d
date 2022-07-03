@@ -3,75 +3,76 @@ description: Create a report to help us improve
 title: "[Bug] "
 labels: "bug"
 body:
-- type: checkboxes
-  id: requirements
-  attributes:
-    label: Thank you for the bug report
-    description: Please check the suggestion below before proceeding
-    options:
-      - label: I am using the latest version of `Centaur Emacs`.
-        required: true
-      - label: I checked [FAQ](https://github.com/seagle0128/.emacs.d#faq).
-        required: true
-- type: textarea
-  id: bug-description
-  attributes:
-    label: Bug description
-    description: A clear and concise description of what the bug is
-  validations:
-    required: true
-- type: textarea
-  id: steps-to-reproduce
-  attributes:
-    label: Steps to reproduce
-    description: Steps to reproduce the behavior.
-  validations:
-    required: true
-- type: textarea
-  id: expected-behavior
-  attributes:
-    label: Expected behavior
-    description: A clear and concise description of what you expected to happen
-  validations:
-    required: true
-- type: dropdown
-  id: which-os
-  attributes:
-    label: OS
-    description: Which OS are you using?
-    options:
-      - Linux
-      - MacOS
-      - Windows
-  validations:
-    required: true
-- type: dropdown
-  id: emacs-version
-  attributes:
-    label: Emacs Version
-    description: Which version of Emacs are you using?
-    options:
-      - 25
-      - 26
-      - 27
-      - 28
-      - gccemacs-28
-  validations:
-    required: true
-- type: textarea
-  id: error-callstack
-  attributes:
-    label: Error callstack
-    description: |
-      If there is an error please reproduce the issue with `toggle-debug-on-error`.
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Thank you for the bug report
+      description: Please check the suggestion below before proceeding
+      options:
+        - label: I am using the latest version of `Centaur Emacs`.
+          required: true
+        - label: I checked [FAQ](https://github.com/seagle0128/.emacs.d#faq).
+          required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug description
+      description: A clear and concise description of what the bug is
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen
+    validations:
+      required: true
+  - type: dropdown
+    id: which-os
+    attributes:
+      label: OS
+      description: Which OS are you using?
+      options:
+        - Linux
+        - MacOS
+        - Windows
+    validations:
+      required: true
+  - type: dropdown
+    id: emacs-version
+    attributes:
+      label: Emacs Version
+      description: Which version of Emacs are you using?
+      options:
+        - 26
+        - 27
+        - 28
+        - 29
+        - gccemacs-28
+        - gccemacs-29
+    validations:
+      required: true
+  - type: textarea
+    id: error-callstack
+    attributes:
+      label: Error callstack
+      description: |
+        If there is an error please reproduce the issue with `toggle-debug-on-error`.
 
-      If `emacs` hangs please do `M-x` `toggle-debug-on-quit` and then do `C-g` when emacs hangs and include the callstack as part of the issue report.
+        If `emacs` hangs please do `M-x` `toggle-debug-on-quit` and then do `C-g` when emacs hangs and include the callstack as part of the issue report.
 
-    render: "emacs-lisp"
-- type: textarea
-  id: anything-else
-  attributes:
-    label: Anything else
-    description: Let us know if you have any additional context, like screenshots, recordings and logs, etc.
-  validations:
-    required: false
+      render: "emacs-lisp"
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else
+      description: Let us know if you have any additional context, like screenshots, recordings and logs, etc.
+    validations:
+      required: false
