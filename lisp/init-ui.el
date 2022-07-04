@@ -430,11 +430,10 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-;; When `centaur-prettify-symbols-alist' is `nil' use font supported ligatures
-(when emacs/>=27p
+;; Ligatures support
+(when (and emacs/>=28p (not centaur-prettify-symbols-alist))
   (use-package composite
     :ensure nil
-    :unless centaur-prettify-symbols-alist
     :init (defvar composition-ligature-table (make-char-table nil))
     :hook (((prog-mode
              conf-mode nxml-mode markdown-mode help-mode
