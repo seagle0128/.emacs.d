@@ -86,6 +86,24 @@
         ;; Enable flashing mode-line on errors
         (doom-themes-visual-bell-config)
 
+        ;; WORKAROUND: Visual bell on 29
+        ;; @see https://github.com/doomemacs/themes/issues/733
+        (with-no-warnings
+          (defun my-doom-themes-visual-bell-fn ()
+            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+            (let* ((buf (current-buffer))
+                   (cookies `(,(face-remap-add-relative 'mode-line-active
+                                                        'doom-themes-visual-bell)
+                              ,(face-remap-add-relative 'mode-line
+                                                        'doom-themes-visual-bell))))
+              (force-mode-line-update)
+              (run-with-timer 0.15 nil
+                              (lambda ()
+                                (with-current-buffer buf
+                                  (mapc #'face-remap-remove-relative cookies)
+                                  (force-mode-line-update))))))
+          (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))
+
         ;; Enable customized theme
         ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
         (with-eval-after-load 'lsp-treemacs
