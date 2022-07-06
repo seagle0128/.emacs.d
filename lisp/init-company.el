@@ -168,8 +168,7 @@
     :hook (company-mode . company-box-mode)
     :init (setq company-box-enable-icon centaur-icon
                 company-box-backends-colors nil
-                company-box-doc-delay 0.1
-                company-box-scrollbar 'right)
+                company-box-doc-delay 0.1)
     :config
     (with-no-warnings
       ;; Prettify icons
