@@ -173,7 +173,7 @@
     (with-no-warnings
       ;; Prettify icons
       (defun my-company-box-icons--elisp (candidate)
-        (when (or (derived-mode-p 'emacs-lisp-mode) (derived-mode-p 'lisp-mode))
+        (when (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
           (let ((sym (intern candidate)))
             (cond ((fboundp sym) 'Function)
                   ((featurep sym) 'Module)
