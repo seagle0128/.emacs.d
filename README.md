@@ -109,6 +109,10 @@ or extract the zip package to `$XDG_CONFIG_HOME/emacs` directory.
 Then start Emacs. Wait for a while to install packages at the first startup.
 Enjoy! :smile:
 
+**Attention**: It may take long time to download packages at the first startup.
+It's up to your network speed. If it takes too long time and no response, check
+the connection or use proxy.
+
 **Note**: Start Emacs with the minimal configuration for fast startup and
 troubleshooting.
 
