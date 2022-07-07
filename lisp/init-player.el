@@ -87,7 +87,7 @@
                         (info-strs (split-string info))
                         (state (nth 0 info-strs))
                         (time (nth 2 info-strs)))
-              (propertize (format "%s%s [%s]"
+              (propertize (format "%s%s [%s] "
                                   (and (icon-displayable-p)
                                        (pcase state
                                          ("[playing]" " ")
