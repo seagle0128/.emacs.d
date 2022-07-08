@@ -35,7 +35,6 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :custom-face
-  (ivy-current-match ((t (:inherit region :distant-foreground nil :background nil))))
   (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground nil :background nil))))
   (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
   (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
