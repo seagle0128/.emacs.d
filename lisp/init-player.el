@@ -68,11 +68,24 @@
   ;; Simple client for mpd
   (use-package simple-mpc
     :if (executable-find "mpc")
-    :commands simple-mpc-call-mpc-strings
+    :commands (simple-mpc-call-mpc simple-mpc-call-mpc-strings)
     :functions (simple-mpc-current simple-mpc-start-timer)
-    :bind ("M-<f9>" . simple-mpc)
+    :bind (("M-<f9>" . simple-mpc)
+           :map simple-mpc-mode-map
+           ("P" . simple-mpc-play)
+           ("O" . simple-mpc-stop))
     :init
     (setq simple-mpc-playlist-format "[[%artist% - ]%title%]|[%file%]")
+
+    (defun simple-mpc-play ()
+      "Play the song."
+      (interactive)
+      (simple-mpc-call-mpc nil "play"))
+
+    (defun simple-mpc-stop ()
+      "Stop the song."
+      (interactive)
+      (simple-mpc-call-mpc nil "stop"))
 
     ;; Display current song in mode-line
     (defvar simple-mpc-current nil)
