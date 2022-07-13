@@ -43,8 +43,7 @@
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Tree-sitter: need dynamic module feature
-(when (and centaur-tree-sitter
-           (functionp 'module-load))
+(when (and centaur-tree-sitter (functionp 'module-load))
   (use-package tree-sitter
     :ensure tree-sitter-langs
     :diminish
@@ -55,15 +54,14 @@
 (use-package xref
   :ensure nil
   :init
-  (with-no-warnings
-    (when (executable-find "rg")
-      (setq xref-search-program 'ripgrep))
+  (when (executable-find "rg")
+    (setq xref-search-program 'ripgrep))
 
+  (with-no-warnings
+    ;; Select from xref candidates with Ivy
     (if emacs/>=28p
         (setq xref-show-definitions-function #'xref-show-definitions-completing-read
               xref-show-xrefs-function #'xref-show-definitions-completing-read)
-
-      ;; Select from xref candidates with Ivy
       (use-package ivy-xref
         :after ivy
         :init
