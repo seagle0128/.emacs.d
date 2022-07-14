@@ -126,10 +126,10 @@
 (defcustom centaur-theme-alist
   '((default . doom-one)
     (pro     . doom-monokai-pro)
-    (dark    . doom-dark+)
+    (dark    . doom-nord-aurora)
     (light   . doom-one-light)
     (warm    . doom-solarized-light)
-    (cold    . doom-city-lights)
+    (cold    . doom-palenight)
     (day     . doom-tomorrow-day)
     (night   . doom-tomorrow-night))
   "List of themes mapped to internal themes."
