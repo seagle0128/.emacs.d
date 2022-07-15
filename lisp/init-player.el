@@ -78,12 +78,12 @@
     (setq simple-mpc-playlist-format "[[%artist% - ]%title%]|[%file%]")
 
     (defun simple-mpc-play ()
-      "Play the song."
+      "Start playing the song."
       (interactive)
       (simple-mpc-call-mpc nil "play"))
 
     (defun simple-mpc-stop ()
-      "Stop the song."
+      "Stop the playback."
       (interactive)
       (simple-mpc-call-mpc nil "stop"))
 
@@ -114,7 +114,7 @@
     (defvar simple-mpc--timer nil)
     (defun simple-mpc-start-timer ()
       "Start simple-mpc timer to refresh current song."
-      (setq simple-mpc--timer (run-with-timer 0 1 #'simple-mpc-current)))
+      (setq simple-mpc--timer (run-with-timer 1 1 #'simple-mpc-current)))
     (defun simple-mpc-stop-timer ()
       "Stop simple-mpc timer."
       (when (timerp simple-mpc--timer)
