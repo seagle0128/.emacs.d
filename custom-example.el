@@ -44,6 +44,15 @@
                                                       (sys/win32p 110)
                                                       (t 100))))
 
+    ;; Set mode-line font
+    ;; (cl-loop for font in '("Menlo" "SF Pro Display" "Helvetica")
+    ;;          when (font-installed-p font)
+    ;;          return (progn
+    ;;                   (set-face-attribute 'mode-line nil :family font :height 120)
+    ;;                   (when (facep 'mode-line-active)
+    ;;                     (set-face-attribute 'mode-line-active nil :family font :height 120))
+    ;;                   (set-face-attribute 'mode-line-inactive nil :family font :height 120)))
+
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
              when (font-installed-p font)
@@ -60,7 +69,9 @@
     (cl-loop for font in '("WenQuanYi Micro Hei" "Microsoft Yahei")
              when (font-installed-p font)
              return (set-fontset-font t '(#x4e00 . #x9fff) font))))
+
 (centaur-setup-fonts)
+(add-hook 'window-setup-hook #'centaur-setup-fonts)
 (add-hook 'server-after-make-frame-hook #'centaur-setup-fonts)
 
 ;; Mail
