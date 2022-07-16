@@ -118,7 +118,7 @@
   :init
   (setq doom-modeline-icon centaur-icon
         doom-modeline-height 1
-        doom-modeline-window-width-limit 120
+        doom-modeline-window-width-limit 110
         doom-modeline-minor-modes t)
   ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
