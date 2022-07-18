@@ -34,29 +34,16 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-;; Load `custom-file'
+;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
            (not (file-exists-p custom-file)))
-  ;; At the first startup copy `custom-file' from the example
   (copy-file centaur-custom-example-file custom-file)
 
-  ;; Select the package archives
-  (if (or (executable-find "curl") (executable-find "wget"))
-      (progn
-        ;; Get and select the fastest package archives automatically
-        (message "Testing connection... Please wait a moment.")
-        (set-package-archives
-         (centaur-test-package-archives 'no-chart)))
-    ;; Select package archives manually
-    ;; Use `ido-completing-read' for better experience since
-    ;; `ivy-mode' is not available at this moment.
-    (set-package-archives
-     (intern
-      (ido-completing-read
-       "Select package archives: "
-       (mapcar #'symbol-name
-               (mapcar #'car centaur-package-archives-alist)))))))
+  ;; Test and select the fastest package archives
+  (message "Testing connection... Please wait a moment.")
+  (set-package-archives (centaur-test-package-archives 'no-chart)))
 
+;; Load `custom-file'
 (and (file-readable-p custom-file) (load custom-file))
 
 ;; Load custom-post file
