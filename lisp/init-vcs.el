@@ -41,11 +41,6 @@
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  (when (fboundp 'transient-append-suffix)
-    ;; Add switch: --tags
-    (transient-append-suffix 'magit-fetch
-      "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
-
   ;; Exterminate Magit buffers
   (with-no-warnings
     (defun my-magit-kill-buffers (&rest _)
