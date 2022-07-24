@@ -277,12 +277,9 @@ FACE defaults to inheriting from default and highlight."
   :ensure nil
   :custom-face
   (pulse-highlight-start-face ((t (:inherit region))))
-  (pulse-highlight-face ((t (:inherit region))))
-  :hook (((dumb-jump-after-jump
-           imenu-after-jump) . my-recenter-and-pulse)
-         ((bookmark-after-jump
-           magit-diff-visit-file
-           next-error) . my-recenter-and-pulse-line))
+  (pulse-highlight-face ((t (:inherit region :extend t))))
+  :hook (((dumb-jump-after-jump imenu-after-jump) . my-recenter-and-pulse)
+         ((bookmark-after-jump magit-diff-visit-file next-error) . my-recenter-and-pulse-line))
   :init
   (with-no-warnings
     (defun my-pulse-momentary-line (&rest _)
