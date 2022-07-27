@@ -62,10 +62,12 @@ latest stable release - currently **28.1**.
 - Git integration.
 - Project/Workspace integration.
 - Pomodor integration.
+- MPD integration.
 - Support docker.
 - Better Chinese support:
     - Chinese calendar
     - Youdao dictionary
+    - Google translation
     - Pinyin search
 
 ## Prerequisite
