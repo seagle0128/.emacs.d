@@ -130,10 +130,10 @@ prepended to the element after the #+HEADER: tag."
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Note" entry (file ,(concat org-directory "/note.org"))
            "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("j" "Journal" entry ('file+olp+datetree
+          ("j" "Journal" entry (file+olp+datetree
                                 ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry ('file+olp+datetree
+	      ("b" "Book" entry (file+olp+datetree
                              ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
