@@ -295,8 +295,7 @@
              ("\\.zshenv$"                     all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dred)
              ("Cask\\'"                        all-the-icons-fileicon "elisp"      :height 1.0 :v-adjust -0.2 :face all-the-icons-blue)
              ("NEWS$"                          all-the-icons-faicon "newspaper-o"  :height 0.9 :v-adjust -0.2)
-             ("^Rakefile$"                     all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red)
-             ("^go.\\(sum\\|mod\\)$"           all-the-icons-fileicon "go"         :face all-the-icons-dpurple))))
+             ("^Rakefile$"                     all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))))
       (dolist (icon regexp-icon-alist)
         (add-to-list 'all-the-icons-regexp-icon-alist icon)))
 
