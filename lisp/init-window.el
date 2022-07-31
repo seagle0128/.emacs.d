@@ -184,10 +184,10 @@
           "^\\*Process List\\*" process-menu-mode
           list-environment-mode cargo-process-mode
 
-          "^\\*eshell.*\\*.*$" eshell-mode
-          "^\\*shell.*\\*.*$"  shell-mode
-          "^\\*terminal.*\\*.*$" term-mode
-          "^\\*vterm.*\\*.*$"  vterm-mode
+          "^\\*eshell.*\\*.*$"       eshell-mode
+          "^\\*shell.*\\*.*$"        shell-mode
+          "^\\*terminal.*\\*.*$"     term-mode
+          "^\\*vterm[inal]*.*\\*.*$" vterm-mode
 
           "\\*DAP Templates\\*$" dap-server-log-mode
           "\\*ELP Profiling Restuls\\*" profiler-report-mode
