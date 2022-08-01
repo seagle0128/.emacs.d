@@ -140,6 +140,7 @@ Otherwise the startup will be very slow. "
 (require 'init-utils)
 
 ;; Programming
+(require 'init-lua)
 (require 'init-vcs)
 (require 'init-flycheck)
 (require 'init-projectile)
