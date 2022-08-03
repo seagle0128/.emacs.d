@@ -212,9 +212,11 @@ FACE defaults to inheriting from default and highlight."
               hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
-    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#ff6c6c")))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
   (dolist (keyword '("TRICK" "WORKAROUND"))
-    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f"))))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
+  (dolist (keyword '("DEBUG" "STUB"))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb"))))
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
