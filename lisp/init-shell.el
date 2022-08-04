@@ -121,6 +121,7 @@
     :init (setq vterm-always-compile-module t))
 
   (use-package multi-vterm
+    :init (setq multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
       (defun my-multi-vterm ()
