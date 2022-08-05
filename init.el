@@ -151,12 +151,12 @@ Otherwise the startup will be very slow. "
 (require 'init-elisp)
 (require 'init-c)
 (require 'init-go)
-(require 'init-rust)
+;; (require 'init-rust)
 (require 'init-python)
 (require 'init-ruby)
 (require 'init-dart)
-(require 'init-elixir)
-(require 'init-web)
+;; (require 'init-elixir)
+;; (require 'init-web)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
