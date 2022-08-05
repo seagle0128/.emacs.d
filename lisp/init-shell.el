@@ -192,8 +192,8 @@
               (make-frame-invisible shell-pop--frame)
               (select-frame-set-input-focus (frame-parent shell-pop--frame))
               (setq shell-pop--frame nil))
-          (let ((width  (max 100 (floor (* (frame-width) 0.628))))
-                (height (floor (* (frame-height) 0.628))))
+          (let ((width  (max 100 (round (* (frame-width) 0.62))))
+                (height (round (* (frame-height) 0.62))))
             ;; Shell pop in child frame
             (setq shell-pop--frame
                   (posframe-show
