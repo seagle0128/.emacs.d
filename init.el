@@ -109,6 +109,7 @@ Otherwise the startup will be very slow. "
 ;; Preferences
 (require 'init-basic)
 (require 'init-hydra)
+(require 'init-sis)
 
 (require 'init-ui)
 (require 'init-edit)
