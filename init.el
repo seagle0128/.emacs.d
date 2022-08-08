@@ -109,7 +109,8 @@ Otherwise the startup will be very slow. "
 ;; Preferences
 (require 'init-basic)
 (require 'init-hydra)
-(require 'init-sis)
+(require 'init-pyim)
+(require 'init-orderless)
 
 (require 'init-ui)
 (require 'init-edit)
@@ -143,9 +144,9 @@ Otherwise the startup will be very slow. "
 ;; Programming
 (require 'init-lua)
 (require 'init-vcs)
-(require 'init-flycheck)
+;; (require 'init-flycheck)
 (require 'init-projectile)
-(require 'init-lsp)
+;; (require 'init-lsp)
 (require 'init-ctags)
 
 (require 'init-prog)
