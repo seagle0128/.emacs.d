@@ -44,7 +44,7 @@
         projectile-sort-order 'recentf
         projectile-use-git-grep t)
   :config
-  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  ;; Use the faster searcher to handle project files
   (when (and (not (executable-find "fd"))
              (executable-find "rg"))
     (setq projectile-generic-command

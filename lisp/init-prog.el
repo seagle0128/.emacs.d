@@ -50,14 +50,31 @@
     :hook ((after-init . global-tree-sitter-mode)
            (tree-sitter-after-on . tree-sitter-hl-mode))))
 
+;; Search tool
+(use-package grep
+  :ensure nil
+  :config
+  (cond
+   ((executable-find "ugrep")
+    (setq grep-template "ugrep --color=always -0Iinr -e <R>"))
+   ((executable-find "rg")
+    (setq grep-template "rg --color=always --no-heading <R>"))))
+
 ;; Cross-referencing commands
 (use-package xref
   :ensure nil
-  :init
-  (when (executable-find "rg")
-    (setq xref-search-program 'ripgrep))
-
+  :config
   (with-no-warnings
+    ;; Use faster search tool
+    (when emacs/>=28p
+      (add-to-list 'xref-search-program-alist
+                   '(ugrep . "xargs -0 ugrep <C> --null -ns -e <R>"))
+      (cond
+       ((executable-find "ugrep")
+        (setq xref-search-program 'ugrep))
+       ((executable-find "rg")
+        (setq xref-search-program 'ripgrep))))
+
     ;; Select from xref candidates with Ivy
     (if emacs/>=28p
         (setq xref-show-definitions-function #'xref-show-definitions-completing-read
