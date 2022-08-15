@@ -107,6 +107,7 @@ Otherwise the startup will be very slow. "
 (require 'init-package)
 
 ;; Preferences
+(require 'init-keybindings)
 (require 'init-basic)
 (require 'init-hydra)
 ;; (require 'init-pyim)
