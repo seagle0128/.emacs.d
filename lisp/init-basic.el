@@ -45,8 +45,8 @@
    (sys/win32p
     ;; make PC keyboard's Win key or other to type Super or Hyper
     ;; (setq w32-pass-lwindow-to-system nil)
-    (setq w32-lwindow-modifier 'super     ; Left Windows key
-          w32-apps-modifier 'hyper)       ; Menu/App key
+    (setq w32-lwindow-modifier 'hyper     ; Left Windows key
+          w32-apps-modifier 'super)       ; Menu/App key
     (w32-register-hot-key [s-t]))
    (sys/mac-port-p
     ;; Compatible with Emacs Mac port
