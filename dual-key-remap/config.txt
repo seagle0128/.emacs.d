@@ -1,0 +1,3 @@
+remap_key=SPACE
+when_alone=SPACE
+with_other=CTRL

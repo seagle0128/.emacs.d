@@ -43,6 +43,17 @@ It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 26.1 and above**. In general you're advised to always run with the
 latest stable release - currently **28.1**.
 
+## Using space bar as both space and control
+It is also possible to use the space bar as an additional control key. When this behavior is enabled, the space bar will behave as a control key when it is held, and will behave normally when pressed and    released by itself.
+
+You can achieve this behavior in Linux with at-home-modifier or Xcape, in MS Windows with the https://github.com/ililim/dual-key-remap, and in MacOS with the Spacebar changes rule for Karabiner-Elements (formerly “Keyremap4MacBook”).
+
+Using the aforementioned tools, similar behavior can be enabled for any modifier key—Ctrl, Shift, Meta, or otherwise.
+
+See also the following Japanese keyboard section.
+
+History: This trick was invented by K. Kimura in 2001, and has been known as “SandS”, standing for “Space and Shift” (the original idea was to use the space as shift) to some users in Japan. See the README of at-home-modifier for the full history.
+
 ## Features
 
 - Out of box.
