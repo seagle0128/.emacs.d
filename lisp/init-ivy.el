@@ -554,10 +554,15 @@
 ;; Use Ivy to open recent directories
 (use-package ivy-dired-history
   :demand t
-  :after (savehist dired)
+  :after dired
+  :defines (savehist-additional-variables desktop-globals-to-save)
   :bind (:map dired-mode-map
          ("," . dired))
-  :init (add-to-list 'savehist-additional-variables 'ivy-dired-history-variable))
+  :init
+  (with-eval-after-load 'savehist
+    (add-to-list 'savehist-additional-variables 'ivy-dired-history-variable))
+  (with-eval-after-load 'desktop
+    (add-to-list 'desktop-globals-to-save 'ivy-dired-history-variable)))
 
 
 ;; `projectile' integration
