@@ -121,13 +121,15 @@
     :init (setq vterm-always-compile-module t))
 
   (use-package multi-vterm
+    :init (setq multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
       (defun my-multi-vterm ()
         "Create new vterm buffer."
         (interactive)
-        (let* ((vterm-buffer (multi-vterm-get-buffer)))
-          (setq multi-vterm-buffer-list (nconc multi-vterm-buffer-list (list vterm-buffer)))
+        (let ((vterm-buffer (multi-vterm-get-buffer)))
+          (setq multi-vterm-buffer-list
+                (nconc multi-vterm-buffer-list (list vterm-buffer)))
           (set-buffer vterm-buffer)
           (multi-vterm-internal)
           (pop-to-buffer vterm-buffer)))
@@ -190,8 +192,8 @@
               (make-frame-invisible shell-pop--frame)
               (select-frame-set-input-focus (frame-parent shell-pop--frame))
               (setq shell-pop--frame nil))
-          (let ((width  (max 100 (floor (* (frame-width) 0.628))))
-                (height (floor (* (frame-height) 0.628))))
+          (let ((width  (max 100 (round (* (frame-width) 0.62))))
+                (height (round (* (frame-height) 0.62))))
             ;; Shell pop in child frame
             (setq shell-pop--frame
                   (posframe-show

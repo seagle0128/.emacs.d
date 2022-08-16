@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-funcs)
 
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode))
@@ -83,16 +84,16 @@ mermaid.initialize({
   ;; `multimarkdown' is necessary for `highlight.js' and `mermaid.js'
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
-
-  ;; Use `which-key' instead
-  (with-no-warnings
-    (advice-add #'markdown--command-map-prompt :override #'ignore)
-    (advice-add #'markdown--style-map-prompt   :override #'ignore))
   :config
+  ;; Support `mermaid'
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
 
-  ;; Preview with built-in webkit
   (with-no-warnings
+    ;; Use `which-key' instead
+    (advice-add #'markdown--command-map-prompt :override #'ignore)
+    (advice-add #'markdown--style-map-prompt   :override #'ignore)
+
+    ;; Preview with built-in webkit
     (defun my-markdown-export-and-preview (fn)
       "Preview with `xwidget' if applicable, otherwise with the default browser."
       (if (featurep 'xwidget-internal)

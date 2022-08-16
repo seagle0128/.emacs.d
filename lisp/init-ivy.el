@@ -152,8 +152,12 @@
   (add-hook 'counsel-grep-post-action-hook #'recenter)
 
   ;; Use the faster search tools
-  (when (executable-find "rg")
-    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' '%s'"))
+  (cond
+   ((executable-find "ugrep")
+    (setq counsel-grep-base-command "ugrep --color=never -n -e '%s' '%s'"))
+   ((executable-find "rg")
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' '%s'")))
+
   (when (executable-find "fd")
     (setq counsel-fzf-cmd
           "fd --type f --hidden --follow --exclude .git --color never '%s'"))
@@ -487,7 +491,10 @@
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
     :hook (counsel-mode . counsel-projectile-mode)
-    :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
+    :init
+    (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
+    (when (executable-find "ugrep")
+      (setq counsel-projectile-grep-base-command "ugrep --color=never -rnEI %s")))
 
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
