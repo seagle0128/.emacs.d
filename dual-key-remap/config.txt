@@ -1,3 +1,11 @@
 remap_key=SPACE
 when_alone=SPACE
 with_other=CTRL
+
+remap_key=CAPSLOCK
+when_alone=BACKSPACE
+with_other=BACKSPACE
+
+remap_key=RIGHT_CTRL
+when_alone=CAPSLOCK
+with_other=CAPSLOCK
