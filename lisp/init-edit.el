@@ -378,7 +378,8 @@
      ("M-<" beginning-of-buffer "⭶")
      ("M->" end-of-buffer "⭸"))))
   :bind (:map hs-minor-mode-map
-         ("C-~" . hideshow-hydra/body))
+         ("C-~" . hideshow-hydra/body)
+         ("C-S-<escape>" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; More functions
