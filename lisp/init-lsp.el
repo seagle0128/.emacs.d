@@ -106,6 +106,9 @@
                  lsp-modeline-workspace-status-enable nil
                  lsp-headerline-breadcrumb-enable nil
 
+                 lsp-semantic-tokens-enable t
+                 lsp-progress-spinner-type 'horizontal-breathing
+
                  lsp-enable-file-watchers nil
                  lsp-enable-folding nil
                  lsp-enable-symbol-highlighting nil
