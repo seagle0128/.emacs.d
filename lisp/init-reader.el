@@ -42,8 +42,7 @@
                pdf-view-midnight-minor-mode
                pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
-    :hook (;(pdf-tools-enabled . pdf-view-themed-minor-mode)
-           (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
+    :hook ((pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
            (pdf-tools-enabled . pdf-isearch-minor-mode))
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
     :magic ("%PDF" . pdf-view-mode)
@@ -52,7 +51,7 @@
     :init (setq pdf-view-use-scaling t
                 pdf-view-use-imagemagick nil
                 pdf-annot-activate-created-annotations t)
-    :config (pdf-tools-install t nil t nil)))    ; Activate the package
+    :config (pdf-tools-install t nil t nil)))
 
 ;; Epub reader
 (use-package nov
