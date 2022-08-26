@@ -57,77 +57,72 @@
   ;;
   ;; Music Player Daemon
   ;;
-  ;; Built-in mpd client
+  ;; Built-in mpc client
   (use-package mpc
     :ensure nil
-    :bind ("S-<f8>" . mpc)
+    :bind ("s-<f8>" . mpc)
     :init
     (defun restart-mpd ()
       (interactive)
       (call-process "pkill" nil nil nil "mpd")
       (call-process "mpd")))
 
-  ;; MPD Interface
-  (use-package mingus
-    :bind ("s-<f8>" . mingus)
-    :config (add-to-list 'global-mode-string mingus-mode-line-object))
-
   ;; Simple mpd client
-  (when (executable-find "mpc")
-    (use-package simple-mpc
-      :commands (simple-mpc-call-mpc simple-mpc-call-mpc-strings)
-      :functions (simple-mpc-current simple-mpc-start-timer)
-      :bind (("M-<f8>" . simple-mpc)
-             :map simple-mpc-mode-map
-             ("P" . simple-mpc-play)
-             ("O" . simple-mpc-stop))
-      :init
-      (setq simple-mpc-playlist-format "[[%artist% - ]%title%]|[%file%]")
-      :config
-      (defun simple-mpc-play ()
-        "Start playing the song."
-        (interactive)
-        (simple-mpc-call-mpc nil "play"))
+  (use-package simple-mpc
 
-      (defun simple-mpc-stop ()
-        "Stop the playback."
-        (interactive)
-        (simple-mpc-call-mpc nil "stop"))
+    :commands (simple-mpc-call-mpc simple-mpc-call-mpc-strings)
+    :functions (simple-mpc-current simple-mpc-start-timer)
+    :bind (("M-<f8>" . simple-mpc)
+           :map simple-mpc-mode-map
+           ("P" . simple-mpc-play)
+           ("O" . simple-mpc-stop))
+    :init
+    (setq simple-mpc-playlist-format "[[%artist% - ]%title%]|[%file%]")
+    :config
+    (defun simple-mpc-play ()
+      "Start playing the song."
+      (interactive)
+      (simple-mpc-call-mpc nil "play"))
 
-      ;; Display current song in mode-line
-      (defvar simple-mpc-current nil)
-      (add-to-list 'global-mode-string '("" (:eval simple-mpc-current)))
+    (defun simple-mpc-stop ()
+      "Stop the playback."
+      (interactive)
+      (simple-mpc-call-mpc nil "stop"))
 
-      (defun simple-mpc-current ()
-        "Get current song information."
-        (setq simple-mpc-current
-              (when (derived-mode-p 'simple-mpc-mode)
-                (let ((strs (simple-mpc-call-mpc-strings nil)))
-                  (when (length> strs 2)
-                    (when-let* ((title (nth 0 strs))
-                                (info (nth 1 strs))
-                                (info-strs (split-string info))
-                                (state (nth 0 info-strs))
-                                (time (nth 2 info-strs)))
-                      (propertize (format " %s%s [%s] "
-                                          (when (icon-displayable-p)
-                                            (pcase state
-                                              ("[playing]" " ")
-                                              ("[paused]" " ")
-                                              (_ "")))
-                                          title time)
-                                  'face 'font-lock-comment-face))))))
-        (force-mode-line-update))
+    ;; Display current song in mode-line
+    (defvar simple-mpc-current nil)
+    (add-to-list 'global-mode-string '("" (:eval simple-mpc-current)))
 
-      (defvar simple-mpc--timer nil)
-      (defun simple-mpc-start-timer ()
-        "Start simple-mpc timer to refresh current song."
-        (setq simple-mpc--timer (run-with-timer 1 1 #'simple-mpc-current)))
-      (defun simple-mpc-stop-timer ()
-        "Stop simple-mpc timer."
-        (when (timerp simple-mpc--timer)
-          (cancel-timer simple-mpc--timer)))
-      (simple-mpc-start-timer))))
+    (defun simple-mpc-current ()
+      "Get current song information."
+      (setq simple-mpc-current
+            (when (derived-mode-p 'simple-mpc-mode)
+              (let ((strs (simple-mpc-call-mpc-strings nil)))
+                (when (length> strs 2)
+                  (when-let* ((title (nth 0 strs))
+                              (info (nth 1 strs))
+                              (info-strs (split-string info))
+                              (state (nth 0 info-strs))
+                              (time (nth 2 info-strs)))
+                    (propertize (format " %s%s [%s] "
+                                        (when (icon-displayable-p)
+                                          (pcase state
+                                            ("[playing]" " ")
+                                            ("[paused]" " ")
+                                            (_ "")))
+                                        title time)
+                                'face 'font-lock-comment-face))))))
+      (force-mode-line-update))
+
+    (defvar simple-mpc--timer nil)
+    (defun simple-mpc-start-timer ()
+      "Start simple-mpc timer to refresh current song."
+      (setq simple-mpc--timer (run-with-timer 1 1 #'simple-mpc-current)))
+    (defun simple-mpc-stop-timer ()
+      "Stop simple-mpc timer."
+      (when (timerp simple-mpc--timer)
+        (cancel-timer simple-mpc--timer)))
+    (simple-mpc-start-timer)))
 
 (provide 'init-player)
 
