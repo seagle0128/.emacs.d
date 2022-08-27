@@ -200,6 +200,7 @@ Install the doc if it's not installed."
 (use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)
+(use-package v-mode)
 (use-package vimrc-mode)
 
 (use-package protobuf-mode
