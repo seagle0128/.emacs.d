@@ -145,28 +145,29 @@
            ("C-h D"  . devdocs-dwim))
     :init
     (defconst devdocs-major-mode-docs-alist
-      '((c-mode          . ("C"))
-        (c++-mode        . ("C++"))
-        (python-mode     . ("Python 3.10" "Python 2.7"))
-        (ruby-mode       . ("Ruby 3.1"))
-        (go-mode         . ("Go"))
-        (rustic-mode     . ("Rust"))
-        (css-mode        . ("CSS"))
-        (html-mode       . ("HTML"))
-        (julia-mode      . ("Julia 1.8"))
-        (js-mode         . ("JavaScript" "JQuery"))
-        (js2-mode        . ("JavaScript" "JQuery"))
-        (emacs-lisp-mode . ("Elisp")))
-      "Alist of major-mode and list of docset names.")
+      '((c-mode          . ("c"))
+        (c++-mode        . ("cpp"))
+        (python-mode     . ("python~3.10" "python~2.7"))
+        (ruby-mode       . ("ruby~3.1"))
+        (go-mode         . ("go"))
+        (rustic-mode     . ("rust"))
+        (css-mode        . ("css"))
+        (html-mode       . ("html"))
+        (julia-mode      . ("julia~1.8"))
+        (js-mode         . ("javascript" "jquery"))
+        (js2-mode        . ("javascript" "jquery"))
+        (emacs-lisp-mode . ("elisp")))
+      "Alist of major-mode and docs.")
 
     (mapc
-     (lambda (e)
-       (add-hook (intern (format "%s-hook" (car e)))
+     (lambda (mode)
+       (add-hook (intern (format "%s-hook" (car mode)))
                  (lambda ()
-                   (setq-local devdocs-current-docs (cdr e)))))
+                   (setq-local devdocs-current-docs (cdr mode)))))
      devdocs-major-mode-docs-alist)
 
     (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+
     (defun devdocs-dwim()
       "Look up a DevDocs documentation entry.
 
@@ -174,20 +175,16 @@ Install the doc if it's not installed."
       (interactive)
       ;; Install the doc if it's not installed
       (mapc
-       (lambda (str)
-         (let* ((docs (split-string str " "))
-                (slug (downcase (if (length= docs 1)
-                                    (car docs)
-                                  (concat (car docs) "~" (cdr docs))))))
-           (unless (member slug (let ((default-directory devdocs-data-dir))
-                                  (seq-filter #'file-directory-p
-                                              (when (file-directory-p devdocs-data-dir)
-                                                (directory-files "." nil "^[^.]")))))
-             (mapc
-              (lambda (metadata)
-                (when (string= (alist-get 'slug metadata) slug)
-                  (devdocs-install metadata)))
-              (append (devdocs--available-docs) nil)))))
+       (lambda (slug)
+         (unless (member slug (let ((default-directory devdocs-data-dir))
+                                (seq-filter #'file-directory-p
+                                            (when (file-directory-p devdocs-data-dir)
+                                              (directory-files "." nil "^[^.]")))))
+           (mapc
+            (lambda (doc)
+              (when (string= (alist-get 'slug doc) slug)
+                (devdocs-install doc)))
+            (devdocs--available-docs))))
        (alist-get major-mode devdocs-major-mode-docs-alist))
 
       ;; Lookup the symbol at point

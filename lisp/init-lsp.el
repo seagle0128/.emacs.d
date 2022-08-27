@@ -107,7 +107,7 @@
                  lsp-headerline-breadcrumb-enable nil
 
                  lsp-semantic-tokens-enable t
-                 lsp-progress-spinner-type 'horizontal-breathing
+                 lsp-progress-spinner-type 'progress-bar-filled
 
                  lsp-enable-file-watchers nil
                  lsp-enable-folding nil
