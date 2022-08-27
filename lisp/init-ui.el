@@ -154,6 +154,8 @@
       "encoding" :toggle doom-modeline-buffer-encoding)
      ("I" (setq doom-modeline-indent-info (not doom-modeline-indent-info))
       "indent" :toggle doom-modeline-indent-info)
+     ("C" (setq doom-modeline-display-misc-in-all-mode-lines (not doom-modeline-display-misc-in-all-mode-lines))
+      "misc info" :toggle doom-modeline-display-misc-in-all-mode-lines)
      ("L" (setq doom-modeline-lsp (not doom-modeline-lsp))
       "lsp" :toggle doom-modeline-lsp)
      ("P" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
@@ -172,6 +174,8 @@
             (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
             (and (bound-and-true-p flycheck-mode) (flycheck-buffer)))
       "simple checker" :toggle doom-modeline-checker-simple-format)
+     ("T" (setq doom-modeline-time (not doom-modeline-time))
+      "time" :toggle doom-modeline-time)
      ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
       "version" :toggle doom-modeline-env-version))
     "Style"
