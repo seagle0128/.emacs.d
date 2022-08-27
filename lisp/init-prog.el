@@ -139,22 +139,25 @@
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
   (use-package devdocs
+    :commands (devdocs--installed-docs devdocs--available-docs)
     :bind (:map prog-mode-map
-           ("M-<f1>" . devdocs-dwim))
+           ("M-<f1>" . devdocs-dwim)
+           ("C-h D"  . devdocs-dwim))
     :init
-    (defvar devdocs-major-mode-docs-alist
+    (defconst devdocs-major-mode-docs-alist
       '((c-mode          . ("C"))
         (c++-mode        . ("C++"))
-        (python-mode     . ("Python 3.9" "Python 3.8"))
-        (ruby-mode       . ("Ruby 3"))
+        (python-mode     . ("Python 3.10" "Python 2.7"))
+        (ruby-mode       . ("Ruby 3.1"))
         (go-mode         . ("Go"))
         (rustic-mode     . ("Rust"))
         (css-mode        . ("CSS"))
         (html-mode       . ("HTML"))
+        (julia-mode      . ("Julia 1.8"))
         (js-mode         . ("JavaScript" "JQuery"))
         (js2-mode        . ("JavaScript" "JQuery"))
         (emacs-lisp-mode . ("Elisp")))
-      "Alist of MAJOR-MODE and list of docset names.")
+      "Alist of major-mode and list of docset names.")
 
     (mapc
      (lambda (e)
@@ -173,13 +176,18 @@ Install the doc if it's not installed."
       (mapc
        (lambda (str)
          (let* ((docs (split-string str " "))
-                (doc (if (length= docs 1)
-                         (downcase (car docs))
-                       (concat (downcase (car docs)) "~" (downcase (cdr docs))))))
-           (unless (and (file-directory-p devdocs-data-dir)
-                        (directory-files devdocs-data-dir nil "^[^.]"))
-             (message "Installing %s..." str)
-             (devdocs-install doc))))
+                (slug (downcase (if (length= docs 1)
+                                    (car docs)
+                                  (concat (car docs) "~" (cdr docs))))))
+           (unless (member slug (let ((default-directory devdocs-data-dir))
+                                  (seq-filter #'file-directory-p
+                                              (when (file-directory-p devdocs-data-dir)
+                                                (directory-files "." nil "^[^.]")))))
+             (mapc
+              (lambda (metadata)
+                (when (string= (alist-get 'slug metadata) slug)
+                  (devdocs-install metadata)))
+              (append (devdocs--available-docs) nil)))))
        (alist-get major-mode devdocs-major-mode-docs-alist))
 
       ;; Lookup the symbol at point
