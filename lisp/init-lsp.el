@@ -300,7 +300,7 @@
      :config
      (with-no-warnings
        (when (icon-displayable-p)
-         (defvar lsp-ivy-symbol-kind-icons
+         (defconst lsp-ivy-symbol-kind-icons
            `(,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.15) ; Unknown - 0
              ,(all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.02) ; File - 1
              ,(all-the-icons-material "view_module" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-lblue) ; Module - 2
@@ -634,7 +634,7 @@
                   (format "Prepare local buffer environment for org source block (%s)."
                           (upcase ,lang))))))))
 
-  (defvar org-babel-lang-list
+  (defconst org-babel-lang-list
     '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++"))
   (add-to-list 'org-babel-lang-list "shell")
   (dolist (lang org-babel-lang-list)
