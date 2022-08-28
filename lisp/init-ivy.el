@@ -154,8 +154,7 @@
   ;; Use the faster search tools
   (cond
    ((executable-find "ugrep")
-    (setq counsel-grep-base-command "ugrep --color=never -n -e '%s' '%s'")
-    (setq counsel-rg-base-command '("ugrep" "--color=never" "--ignore-files" "-rnEI" "%s")))
+    (setq counsel-grep-base-command "ugrep --color=never -n -e '%s' '%s'"))
    ((executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' '%s'")))
 
