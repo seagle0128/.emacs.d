@@ -1,4 +1,4 @@
-;; init-org.el --- Initialize org configurations.	-*- lexical-binding: t -*-
+;; init-org.el --- Initialize Org configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2022 Vincent Zhang
 
