@@ -43,21 +43,33 @@
   :config
   (which-key-add-key-based-replacements "C-c !" "flycheck")
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
+  (which-key-add-key-based-replacements "C-c @" "hideshow")
   (which-key-add-key-based-replacements "C-c c" "counsel")
+  (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
   (which-key-add-key-based-replacements "C-c v" "ivy-view")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
-  (which-key-add-key-based-replacements "C-x RET" "coding-system")
   (which-key-add-key-based-replacements "C-x 8" "unicode")
+  (which-key-add-key-based-replacements "C-x 8 e" "emoji")
   (which-key-add-key-based-replacements "C-x @" "modifior")
-  (which-key-add-key-based-replacements "C-x X" "edebug")
   (which-key-add-key-based-replacements "C-x a" "abbrev")
+  (which-key-add-key-based-replacements "C-x c" "citre")
   (which-key-add-key-based-replacements "C-x n" "narrow")
-  (which-key-add-key-based-replacements "C-x t" "tab")
+  (which-key-add-key-based-replacements "C-x r" "rect & bookmark")
+  (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
+  (which-key-add-key-based-replacements "C-x x" "buffer")
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
+  (which-key-add-key-based-replacements "C-x RET" "coding-system")
+  (which-key-add-key-based-replacements "C-x X" "edebug")
 
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c \"" "org-plot")
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c C-v" "org-babel")
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c C-x" "org-misc")
 
   (which-key-add-major-mode-key-based-replacements 'emacs-lisp-mode
     "C-c ," "overseer")
