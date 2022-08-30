@@ -74,9 +74,9 @@
     :bind (:map dired-mode-map
            ("C-c C-r" . dired-rsync)))
 
-  ;; Colourful dired
+  ;; Colorful dired
   (use-package diredfl
-    :init (diredfl-global-mode 1))
+    :hook (dired-mode . diredfl-mode))
 
   ;; Shows icons
   (use-package all-the-icons-dired
