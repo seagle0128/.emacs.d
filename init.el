@@ -144,6 +144,8 @@ Otherwise the startup will be very slow. "
 
 ;; Programming
 (require 'init-lua)
+(require 'init-shader)
+(require 'init-csv)
 (require 'init-vcs)
 ;; (require 'init-flycheck)
 (require 'init-projectile)
