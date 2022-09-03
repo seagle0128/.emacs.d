@@ -77,7 +77,7 @@
              ("P" . simple-mpc-play)
              ("O" . simple-mpc-stop))
       :init (setq simple-mpc-playlist-format
-                  "%time%\t[[%title%\t%artist%\t%album%]|[%file%]]"
+                  "%time%\t[[%title%\t[%artist%|%albumartist%]\t%album%]|[%file%]]"
                   simple-mpc-table-separator "\t")
       :config
       (defun simple-mpc-play ()
