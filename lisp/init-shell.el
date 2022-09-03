@@ -177,9 +177,6 @@
     (defun shell-pop-posframe-toggle ()
       "Toggle shell in child frame."
       (interactive)
-      (unless (childframe-workable-p)
-        (user-error "Child frame is not supported!"))
-
       (let* ((buffer (shell-pop--shell))
              (window (get-buffer-window buffer)))
         ;; Hide window: for `popper'
