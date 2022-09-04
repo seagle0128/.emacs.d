@@ -50,7 +50,7 @@
                    files (append files (list file)))
              nil t)
             (with-bongo-library-buffer
-              (mapc 'bongo-insert-file files)))
+             (mapc 'bongo-insert-file files)))
           (bongo-switch-buffers))
         (bind-key "b" #'bongo-add-dired-files dired-mode-map))))
 
@@ -75,7 +75,8 @@
       :bind (("M-<f8>" . simple-mpc)
              :map simple-mpc-mode-map
              ("P" . simple-mpc-play)
-             ("O" . simple-mpc-stop))
+             ("O" . simple-mpc-stop)
+             ("u" . simple-mpc-update))
       :init (setq simple-mpc-playlist-format
                   "%time%\t[[%title%\t%artist%\t%album%]|[%file%]]"
                   simple-mpc-table-separator "\t")
@@ -89,6 +90,13 @@
         "Stop the playback."
         (interactive)
         (simple-mpc-call-mpc nil "stop"))
+
+      (defun simple-mpc-update ()
+        "Update database."
+        (interactive)
+        (message "Updating music database...")
+        (simple-mpc-call-mpc nil "update")
+        (message "Updating music database...done"))
 
       ;; Display current song in mode-line
       (defvar simple-mpc-current nil)
