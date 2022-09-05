@@ -91,16 +91,11 @@ Actually it is just named after that great bass player."
           (setq mingus-timer (run-with-idle-timer mingus-timer-interval
                                                   mingus-timer-interval
                                                   'mingus-timer-handler)))
-        (mingus-playlist)
-        (mingus-redraw-buffer))
+        (mingus-playlist))
 
-      ;; WORKAROUND:  https://github.com/pft/mingus/issues/42
-      (defun mingus-switch-to-playlist ()
-        (cond
-         ((get-buffer-window "*Mingus*")
-          (select-window (get-buffer-window "*Mingus*")))
-         (t
-          (switch-to-buffer "*Mingus*"))))))
+      ;; WORKAROUND: Redraw to display faces
+      ;; @see https://github.com/pft/mingus/issues/42
+      (add-hook 'mingus-playlist-hooks #'mingus-redraw-buffer)))
 
   ;; Simple mpd client
   (when (executable-find "mpc")
