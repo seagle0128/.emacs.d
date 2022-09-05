@@ -60,12 +60,43 @@
   ;; Built-in mpc client
   (use-package mpc
     :ensure nil
-    :bind ("s-<f8>" . mpc)
+    :bind ("S-<f8>" . mpc)
     :init
     (defun restart-mpd ()
       (interactive)
       (call-process "pkill" nil nil nil "mpd")
       (call-process "mpd")))
+
+  ;; MPD Interface
+  (use-package mingus
+    :bind ("s-<f8>" . mingus)
+    :config
+    (add-to-list 'global-mode-string mingus-mode-line-object)
+    (with-no-warnings
+      ;; WORKAROUND:Don't reactivate the timer
+      ;; @see https://github.com/pft/mingus/issues/43
+      (defun mingus (&optional set-variables)
+        "MPD Interface by Niels Giesen, Useful and Simple.
+
+Actually it is just named after that great bass player."
+        (interactive "P")
+        (when set-variables
+          (call-interactively 'mingus-set-variables-interactively))
+        (mingus-switch-to-playlist)
+        (cond ((boundp 'mode-line-modes)
+               (add-to-list 'mode-line-modes mingus-mode-line-object))
+              ((boundp 'global-mode-string)
+               (add-to-list 'global-mode-string mingus-mode-line-object)))
+        (unless (timerp mingus-timer)
+          (setq mingus-timer (run-with-idle-timer mingus-timer-interval
+                                                  mingus-timer-interval
+                                                  'mingus-timer-handler)))
+        (mingus-playlist)
+        (mingus-redraw-buffer))
+
+      ;; WORKAROUND: Redraw to display faces
+      ;; @see https://github.com/pft/mingus/issues/42
+      (advice-add #'mingus-timer-handler :after #'mingus-redraw-buffer)))
 
   ;; Simple mpd client
   (when (executable-find "mpc")
@@ -97,9 +128,9 @@
       (defun simple-mpc-update ()
         "Update database."
         (interactive)
-        (message "Updating music database...")
+        (message "Updating music DB...")
         (simple-mpc-call-mpc nil "update")
-        (message "Updating music database...done"))
+        (message "Updating music DB...done"))
 
       ;; Enhance UI
       (defun simple-mpc+ (&optional _ignore-auto _noconfirm)
