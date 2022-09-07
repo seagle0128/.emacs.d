@@ -236,9 +236,9 @@ FACE defaults to inheriting from default and highlight."
   (defun my-set-diff-hl-faces ()
     "Set `diff-hl' faces."
     (custom-set-faces
-     `(diff-hl-change ((t (:foreground ,(face-foreground 'custom-changed) :background unspecified))))
-     '(diff-hl-insert ((t (:inherit diff-added :background unspecified))))
-     '(diff-hl-delete ((t (:inherit diff-removed :background unspecified))))))
+     `(diff-hl-change ((t (:foreground ,(face-foreground 'custom-changed) :background nil))))
+     '(diff-hl-insert ((t (:inherit diff-added :background nil))))
+     '(diff-hl-delete ((t (:inherit diff-removed :background nil))))))
 
   (with-no-warnings
     (defun my-diff-hl-fringe-bmp-function (_type _pos)
