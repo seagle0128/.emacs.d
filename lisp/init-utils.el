@@ -265,8 +265,7 @@ of the buffer text to be displayed in the popup"
 (use-package erc
   :ensure nil
   :defines erc-autojoin-channels-alist
-  :init (setq erc-rename-buffers t
-              erc-interpret-mirc-color t
+  :init (setq erc-interpret-mirc-color t
               erc-lurker-hide-list '("JOIN" "PART" "QUIT")
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
 
