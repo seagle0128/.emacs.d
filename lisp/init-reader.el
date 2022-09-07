@@ -51,7 +51,16 @@
     :init (setq pdf-view-use-scaling t
                 pdf-view-use-imagemagick nil
                 pdf-annot-activate-created-annotations t)
-    :config (pdf-tools-install t nil t nil)))
+    :config
+    ;; Activate the package
+    (pdf-tools-install t nil t nil)
+
+    ;; Recover last viewed position
+    (use-package saveplace-pdf-view
+      :commands (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
+      :init
+      (advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
+      (advice-add 'save-place-to-alist :around #'saveplace-pdf-view-to-alist-advice))))
 
 ;; Epub reader
 (use-package nov
