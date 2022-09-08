@@ -305,8 +305,9 @@ FACE defaults to inheriting from default and highlight."
       (my-pulse-momentary-line))
 
     (dolist (cmd '(recenter-top-bottom
-                   other-window windmove-do-window-select
-                   ace-window aw--select-window
+                   other-window switch-to-buffer
+                   aw-select toggle-window-split
+                   windmove-do-window-select
                    pager-page-down pager-page-up
                    treemacs-select-window
                    symbol-overlay-basic-jump))
