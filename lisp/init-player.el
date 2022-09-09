@@ -95,7 +95,46 @@ Actually it is just named after that great bass player."
 
       ;; WORKAROUND: Redraw to display faces
       ;; @see https://github.com/pft/mingus/issues/42
-      (add-hook 'mingus-playlist-hooks #'mingus-redraw-buffer)))
+      (add-hook 'mingus-playlist-hooks #'mingus-redraw-buffer)
+
+      ;; Redefine major modes
+      (define-derived-mode mingus-help-mode special-mode "Mingus-help"
+        "Help screen for `mingus'.
+
+\\{mingus-help-map}"
+        (set (make-local-variable 'font-lock-defaults)
+             '(mingus-help-font-lock-keywords))
+        (setq buffer-undo-list t)
+        (font-lock-mode t)
+        (use-local-map mingus-help-map)
+        (setq buffer-read-only t))
+
+      (define-derived-mode mingus-playlist-mode special-mode "Mingus-playlist"
+        "Mingus playlist mode.
+
+See function `mingus-help' for instructions.
+\\{mingus-playlist-map}"
+        (use-local-map mingus-playlist-map)
+        (setq buffer-undo-list t)
+        (delete-all-overlays)
+        (font-lock-mode -1)
+        (setq buffer-read-only t)
+        (setq left-fringe-width 16)
+        (run-hooks 'mingus-playlist-hooks))
+
+      (define-derived-mode mingus-browse-mode special-mode "Mingus-browse"
+        "Mingus browse mode.
+
+\\{mingus-browse-map}"
+        (let ((res mingus-last-query-results))
+          (use-local-map mingus-browse-map)
+          (setq buffer-undo-list t)
+          (delete-all-overlays)
+          (run-hooks 'mingus-browse-hook)
+          (set (make-local-variable '*mingus-positions*) nil)
+          (setq buffer-read-only t)
+          (setq mingus-last-query-results res)))
+      ))
 
   ;; Simple mpd client
   (when (executable-find "mpc")
