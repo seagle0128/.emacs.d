@@ -314,6 +314,7 @@
              (mingus-playlist-mode          all-the-icons-faicon "music"           :v-adjust -0.1 :face all-the-icons-green)
              (mingus-help-mode              all-the-icons-material "music_note"    :height 1.2 :face all-the-icons-green)
              (mingus-browse-mode            all-the-icons-material "library_music" :height 1.1 :face all-the-icons-green)
+             (mingus-burn-mode              all-the-icons-material "queue_music"   :height 1.3 :face all-the-icons-green)
              (gnus-group-mode               all-the-icons-fileicon "gnu"           :face all-the-icons-silver)
              (gnus-summary-mode             all-the-icons-octicon "inbox"          :height 1.0 :v-adjust 0.0 :face all-the-icons-orange)
              (gnus-article-mode             all-the-icons-octicon "mail"           :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue)
