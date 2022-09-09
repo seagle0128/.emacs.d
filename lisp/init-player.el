@@ -111,8 +111,7 @@ Actually it is just named after that great bass player."
              ("O" . simple-mpc-stop)
              ("u" . simple-mpc-update))
       :init (setq simple-mpc-playlist-format
-                  "%time%\t[[%title%\t%artist%\t%album%]|[%file%]]"
-                  simple-mpc-table-separator "\t")
+                  "[%time% ][[%title%[ - %artist%[ (%album%)]]]|[%file%]]")
       :config
       (defun simple-mpc-play ()
         "Start playing the song."
