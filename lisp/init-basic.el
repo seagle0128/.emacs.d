@@ -86,14 +86,8 @@
         gcmh-auto-idle-delay-factor 10
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
-;; Encoding
-;; UTF-8 as the default coding system
-(when (fboundp 'set-charset-priority)
-  (set-charset-priority 'unicode))
-
-;; Explicitly set the prefered coding systems to avoid annoying prompt
-;; from emacs (especially on Microsoft Windows)
-(prefer-coding-system 'utf-8)
+;; Set UTF-8 as the default coding system
+(set-language-environment "UTF-8")
 (setq system-time-locale "C")
 
 ;; Environment
