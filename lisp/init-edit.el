@@ -232,6 +232,9 @@
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
+;; Visual `align-regexp'
+(use-package ialign)
+
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
   :defines desktop-minor-mode-table
