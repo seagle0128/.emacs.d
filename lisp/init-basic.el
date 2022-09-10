@@ -87,7 +87,7 @@
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
 ;; Set UTF-8 as the default coding system
-(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
 (setq system-time-locale "C")
 
 ;; Environment

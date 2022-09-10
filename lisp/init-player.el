@@ -166,7 +166,7 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
             (insert (propertize "🔊 Simple MPC\n"
                                 'face 'simple-mpc-main-name)
 
-                    (propertize "\n  ⚙️ Controls\n" 'face 'simple-mpc-main-headers)
+                    (propertize "\n  ⚙ Controls\n" 'face 'simple-mpc-main-headers)
                     "\t [t]oggle\n"
                     "\t [n]ext track\n"
                     "\t [p]revious track\n"
@@ -186,7 +186,7 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
                     "\t [u]pdate database\n"
                     "\t [s]earch database\n"
 
-                    (propertize "\n  🛠️️ Misc\n" 'face 'simple-mpc-main-headers)
+                    (propertize "\n 🛠 Misc\n" 'face 'simple-mpc-main-headers)
                     "\t [q]uit")
             (simple-mpc-mode) ; start major mode
             (switch-to-buffer buf))))

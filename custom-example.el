@@ -61,9 +61,14 @@
     ;; Emoji
     (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
              when (font-installed-p font)
-             return (if (>= emacs-major-version 28)
-                        (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend)
-                      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend)))
+             return (cond
+                     ((< emacs-major-version 27)
+                      (set-fontset-font
+                       "fontset-default" 'unicode font nil 'prepend))
+                     ((< emacs-major-version 28)
+                      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
+                     (t
+                      (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))))
 
     ;; Specify font for Chinese characters
     (cl-loop for font in '("WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
