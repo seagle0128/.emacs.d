@@ -88,8 +88,8 @@
     (("F" set-frame-font "font")
      ("T" centaur-load-theme "theme"))))
   :custom-face
-  (aw-leading-char-face ((t (:foreground "dodgerblue" :bold t :height 4.0))))
-  (aw-minibuffer-leading-char-face ((t (:foreground "dodgerblue" :bold t))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 4.0))))
+  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind (([remap other-window] . ace-window)
          ("C-c w" . ace-window-hydra/body))
