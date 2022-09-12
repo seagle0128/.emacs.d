@@ -243,10 +243,16 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
       (goto-char (point-min))
       (while (re-search-forward
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-                               nil t)
-  (replace-match (format "(setq %s '%s)" variable value) nil nil))
+              nil t)
+        (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
+
+(defun too-long-file-p ()
+  "Check whether the file is too long."
+  (if (fboundp 'buffer-line-statistics)
+      (> (car (buffer-line-statistics)) 3000)
+    (> (buffer-size) 100000)))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
