@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        emacs-version: [26.3, 27.2, 28.1]
+        emacs-version: [26.3, 27.2, 28.2]
         experimental: [false]
         include:
           - emacs-version: snapshot
