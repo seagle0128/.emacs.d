@@ -125,6 +125,7 @@
     :init (setq multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
+      ;; Use `pop-to-buffer' instead of `switch-to-buffer'
       (defun my-multi-vterm ()
         "Create new vterm buffer."
         (interactive)
@@ -134,7 +135,20 @@
           (set-buffer vterm-buffer)
           (multi-vterm-internal)
           (pop-to-buffer vterm-buffer)))
-      (advice-add #'multi-vterm :override #'my-multi-vterm))))
+      (advice-add #'multi-vterm :override #'my-multi-vterm)
+
+      ;; FIXME: `project-root' is introduced in 27+.
+      (defun my-multi-vterm-project-root ()
+        "Get `default-directory' for project using projectile or project.el."
+        (unless (boundp 'multi-vterm-projectile-installed-p)
+          (setq multi-vterm-projectile-installed-p (require 'projectile nil t)))
+        (if multi-vterm-projectile-installed-p
+            (projectile-project-root)
+          (let ((project (or (project-current) `(transient . ,default-directory))))
+            (if (fboundp 'project-root)
+                (project-root project)
+              (cdr project)))))
+      (advice-add #'multi-vterm-project-root :override #'my-multi-vterm-project-root))))
 
 ;; Shell Pop: leverage `popper'
 (with-no-warnings
