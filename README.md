@@ -13,35 +13,34 @@
 **Table of Contents**
 
 - [Centaur Emacs](#centaur-emacs)
-    - [Features](#features)
-    - [Prerequisite](#prerequisite)
-        - [OS](#os)
-        - [GNU Emacs](#gnu-emacs)
-        - [Dotfiles](#dotfiles)
-    - [Quick Start](#quick-start)
-        - [Install](#install)
-        - [Update](#update)
-        - [Docker](#docker)
-    - [Customization](#customization)
-        - [Customize Group](#customize-group)
-        - [Manual](#manual)
-    - [Hydra](#hydra)
-    - [Screenshots](#screenshots)
-    - [FAQ](#faq)
-    - [Donate](#donate)
+  - [Features](#features)
+  - [Prerequisite](#prerequisite)
+    - [OS](#os)
+    - [GNU Emacs](#gnu-emacs)
+    - [Dotfiles](#dotfiles)
+  - [Quick Start](#quick-start)
+    - [Install](#install)
+    - [Update](#update)
+    - [Docker](#docker)
+  - [Customization](#customization)
+    - [Customize Group](#customize-group)
+    - [Manual](#manual)
+  - [Hydra](#hydra)
+  - [Screenshots](#screenshots)
+  - [FAQ](#faq)
+  - [Donate](#donate)
 
 <!-- markdown-toc end -->
 
-This is an Emacs distribution that aims to enhance the default
-Emacs experience. It alters a lot of the default settings,
-bundles a plethora of additional packages and adds its own core
-library to the mix. The final product offers an easy to use Emacs
-configuration for Emacs newcomers and lots of additional power for
-Emacs power users.
+This is an Emacs distribution that aims to enhance the default Emacs experience.
+It alters a lot of the default settings, bundles a plethora of additional
+packages and adds its own core library to the mix. The final product offers
+an easy to use Emacs configuration for Emacs newcomers and lots of additional
+power for Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 26.1 and above**. In general you're advised to always run with the
-latest stable release - currently **28.1**.
+latest stable release - currently **28.2**.
 
 ## Features
 
@@ -50,12 +49,12 @@ latest stable release - currently **28.1**.
 - Quick fuzzy search.
 - Better Org/Markdown support.
 - Support multiple programming languages
-    - C/C++/Object-C/C#/Java
-    - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
-    - JavaScript/Typescript/JSON/YAML
-    - HTML/CSS/XML
-    - Golang/Swift/Rust/Dart/Elixir
-    - ...
+  - C/C++/Object-C/C#/Java
+  - Python/Ruby/Perl/PHP/Shell/Powershell/Bat
+  - JavaScript/Typescript/JSON/YAML
+  - HTML/CSS/XML
+  - Golang/Swift/Rust/Dart/Elixir
+  - ...
 - Auto completion.
 - Fly syntax check.
 - Fly spell check.
@@ -65,10 +64,10 @@ latest stable release - currently **28.1**.
 - MPD integration.
 - Support docker.
 - Better Chinese support:
-    - Chinese calendar
-    - Youdao dictionary
-    - Google translation
-    - Pinyin search
+  - Chinese calendar
+  - Youdao dictionary
+  - Google translation
+  - Pinyin search
 
 ## Prerequisite
 
@@ -160,7 +159,8 @@ docker run -it centaur/emacs bash
 
 ### Customize Group
 
-`M-x customize-group` and select `centaur`. Set and save the configurations, then restart Emacs.
+`M-x customize-group` and select `centaur`. Set and save the configurations,
+then restart Emacs.
 
 ### Manual
 
@@ -337,6 +337,6 @@ alt="PayPal" width="120" />
 </a>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <a href="https://www.buymeacoffee.com/s9giES1" target="_blank">
-<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee"
-width="160"/>
+<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png"
+alt="Buy Me A Coffee" width="160"/>
 </a>
