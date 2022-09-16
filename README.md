@@ -243,9 +243,8 @@ or`~/.emacs.d/custom-post.el`.
    [all-the-icons](https://github.com/domtronn/all-the-icons.el) are necessary.
    Run `M-x all-the-icons-install-fonts` to install the resource fonts. On
    Windows, the fonts should be installed manually. `all-the-icons` only
-   support GUI. If you don't like color icons, `(setq all-the-icons-color-icons nil)` to disable it. Please refer to
-   [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for
-   details.
+   support GUI. If you don't like color icons, `(setq all-the-icons-color-icons nil)` to disable it.
+   Please refer to [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for details.
 
    If the icons are not displayed correctly although `all-the-icons` fonts are
    installed correctly, please install the
@@ -287,7 +286,8 @@ or`~/.emacs.d/custom-post.el`.
 1. Does Centaur Emacs support Language Server Protocol (LSP)?
 
    The LSP feature is supported and enabled by default in Centaur Emacs.
-   `lsp-mode` is the default client, and `eglot` is another choice. Use `(setq centaur-lsp nil)` to disable LSP if you don't like it.
+   `lsp-mode` is the default client, and `eglot` is another choice. Use `(setq centaur-lsp nil)` to
+   disable LSP if you don't like it.
 
    To use LSP you should install the language servers. Refer to [lsp-mode:
    supported-languages](https://github.com/emacs-lsp/lsp-mode#supported-languages)
