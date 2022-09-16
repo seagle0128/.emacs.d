@@ -123,7 +123,21 @@ mermaid.initialize({
            ("r" . markdown-toc-generate-or-refresh-toc))
     :hook (markdown-mode . markdown-toc-mode)
     :init (setq markdown-toc-indentation-space 2
-                markdown-toc-header-toc-title "\n## Table of Contents")))
+                markdown-toc-header-toc-title "\n## Table of Contents")
+    :config
+    (with-no-warnings
+      (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
+        "Generate or refresh toc after disabling lsp."
+        (cond
+         ((bound-and-true-p lsp-managed-mode)
+          (lsp-managed-mode -1))
+         ((bound-and-true-p eglot--manage-mode)
+          (eglot--manage-mode)))
+
+        (apply fn args)
+
+        (save-buffer)
+        (revert-buffer nil t)))))
 
 (provide 'init-markdown)
 
