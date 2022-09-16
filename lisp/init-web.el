@@ -121,7 +121,9 @@
 ;; Install: npm -g install prettier
 (use-package prettier
   :diminish
-  :hook (after-init . global-prettier-mode))
+  :hook ((js-mode js2-mode web-mode css-mode sgml-mode html-mode)
+         .
+         prettier-mode))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
