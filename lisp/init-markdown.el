@@ -123,7 +123,8 @@ mermaid.initialize({
            ("r" . markdown-toc-generate-or-refresh-toc))
     :hook (markdown-mode . markdown-toc-mode)
     :init (setq markdown-toc-indentation-space 2
-                markdown-toc-header-toc-title "\n## Table of Contents")
+                markdown-toc-header-toc-title "\n## Table of Contents"
+                markdown-toc-user-toc-structure-manipulation-fn 'cdr)
     :config
     (with-no-warnings
       (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)

@@ -13,23 +13,22 @@
 
 ## Table of Contents
 
-- [Centaur Emacs](#centaur-emacs)
-  - [Features](#features)
-  - [Prerequisite](#prerequisite)
-    - [OS](#os)
-    - [GNU Emacs](#gnu-emacs)
-    - [Dotfiles](#dotfiles)
-  - [Quick Start](#quick-start)
-    - [Install](#install)
-    - [Update](#update)
-    - [Docker](#docker)
-  - [Customization](#customization)
-    - [Customize Group](#customize-group)
-    - [Manual](#manual)
-  - [Hydra](#hydra)
-  - [Screenshots](#screenshots)
-  - [FAQ](#faq)
-  - [Donate](#donate)
+- [Features](#features)
+- [Prerequisite](#prerequisite)
+  - [OS](#os)
+  - [GNU Emacs](#gnu-emacs)
+  - [Dotfiles](#dotfiles)
+- [Quick Start](#quick-start)
+  - [Install](#install)
+  - [Update](#update)
+  - [Docker](#docker)
+- [Customization](#customization)
+  - [Customize Group](#customize-group)
+  - [Manual](#manual)
+- [Hydra](#hydra)
+- [Screenshots](#screenshots)
+- [FAQ](#faq)
+- [Donate](#donate)
 
 <!-- markdown-toc end -->
 
@@ -90,7 +89,7 @@ Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
 ### Install
 
-``` shell
+```shell
 mv ~/.emacs.d ~/.emacs.d.bak
 git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 ```
@@ -101,7 +100,7 @@ extract to `~/.emacs.d`.
 
 If you are using Linux, you may prefer an XDG-compatible location, please use
 
-``` shell
+```shell
 # Please make sure ~/.emacs.d, ~/.emacs and ~/.emacs.el don't exist
 git clone --depth 1 https://github.com/seagle0128/.emacs.d.git $XDG_CONFIG_HOME/emacs
 ```
@@ -118,13 +117,13 @@ the connection or use proxy.
 **Note**: Start Emacs with the minimal configuration for fast startup and
 troubleshooting.
 
-``` shell
+```shell
 emacs -Q -l ~/.emacs.d/init-mini.el
 ```
 
 ### Update
 
-``` emacs-lisp
+```emacs-lisp
 # Update Centaur Emacs, including configurations and packages
 M-x centaur-update
 
@@ -143,14 +142,14 @@ M-x centaur-update-all
 
 **Trick**: Update configurations and packages in shell.
 
-``` shell
+```shell
 alias upgrade_emacs='emacs -Q --batch -L "$HOME/.emacs.d/lisp/" -l "init-funcs.el" -l "init-package.el" --eval "(update-config-and-packages t)"'
 
 ```
 
 ### Docker
 
-``` shell
+```shell
 cd ~/.emacs.d/Dockerfile
 docker build -t centaur/emacs .
 docker run -it centaur/emacs bash
@@ -169,7 +168,7 @@ Add or change the configurations in `custom.el`, then restart Emacs.
 
 For Example:
 
-``` emacs-lisp
+```emacs-lisp
 (setq centaur-logo nil)                        ; Logo file or nil (official logo)
 (setq centaur-full-name "user name")           ; User full name
 (setq centaur-mail-address "user@email.com")   ; Email address
@@ -195,12 +194,12 @@ The default package archives is `melpa`. You can change it in `custom.el`, or
 set manually via `M-x set-package-archives` anytime.
 
 For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
- or`~/.emacs.d/custom-post.el`.
+or`~/.emacs.d/custom-post.el`.
 
 ## Hydra
 
 | Name                     | Scope                 | Keybinding        | Description                          |
-|--------------------------|-----------------------|-------------------|--------------------------------------|
+| ------------------------ | --------------------- | ----------------- | ------------------------------------ |
 | `toggles-hydra`          | global                | `<f6>`            | Global option toggles                |
 | `window-hydra`           | global                | `C-c w`/`C-x o w` | Window management                    |
 | `doom-modeline-hydra`    | doom-modeline-mode    | `C-<f6>`          | Mode-line options and actions        |
@@ -224,54 +223,49 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/140797/97093362-c793b000-167d-11eb-924a-1892c6e95b8a.png
-"Dashboard (default theme)")
+![Dashboard](https://user-images.githubusercontent.com/140797/97093362-c793b000-167d-11eb-924a-1892c6e95b8a.png "Dashboard (default theme)")
 
-![color_icons](https://user-images.githubusercontent.com/140797/97093358-b9de2a80-167d-11eb-9e5a-8591b1248c37.png
-"Main (color icons)")
+![color_icons](https://user-images.githubusercontent.com/140797/97093358-b9de2a80-167d-11eb-9e5a-8591b1248c37.png "Main (color icons)")
 
-![markdown_magit](https://user-images.githubusercontent.com/140797/56489193-7f894f80-6513-11e9-9c95-ea1ef41efb1f.png
-"Markdown and Magit")
+![markdown_magit](https://user-images.githubusercontent.com/140797/56489193-7f894f80-6513-11e9-9c95-ea1ef41efb1f.png "Markdown and Magit")
 
-![org_classic](https://user-images.githubusercontent.com/140797/56489410-2837af00-6514-11e9-9e04-a1663ac479e8.png
-"Org (classic theme)")
+![org_classic](https://user-images.githubusercontent.com/140797/56489410-2837af00-6514-11e9-9e04-a1663ac479e8.png "Org (classic theme)")
 
-![main_light](https://user-images.githubusercontent.com/140797/56489516-85cbfb80-6514-11e9-9dd4-8602bf8a4ec7.png
-"Main (light theme)")
+![main_light](https://user-images.githubusercontent.com/140797/56489516-85cbfb80-6514-11e9-9dd4-8602bf8a4ec7.png "Main (light theme)")
 
 ## FAQ
 
 1. How to display icons correctly in Centaur Emacs?
 
-    Generally you just use `M-x centaur-install-fonts` to install all necessary
-    fonts. The manual steps are below.
+   Generally you just use `M-x centaur-install-fonts` to install all necessary
+   fonts. The manual steps are below.
 
-    [all-the-icons](https://github.com/domtronn/all-the-icons.el) are necessary.
-    Run `M-x all-the-icons-install-fonts` to install the resource fonts. On
-    Windows, the fonts should be installed manually. `all-the-icons` only
-    support GUI. If you don't like color icons, `(setq all-the-icons-color-icons
-    nil)` to disable it. Please refer to
-    [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for
-    details.
+   [all-the-icons](https://github.com/domtronn/all-the-icons.el) are necessary.
+   Run `M-x all-the-icons-install-fonts` to install the resource fonts. On
+   Windows, the fonts should be installed manually. `all-the-icons` only
+   support GUI. If you don't like color icons, `(setq all-the-icons-color-icons nil)` to disable it. Please refer to
+   [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) for
+   details.
 
-    If the icons are not displayed correctly although `all-the-icons` fonts are
-    installed correctly, please install the
-    [non-free](http://users.teilar.gr/~g1951d/License.pdf) font
-    [Symbola](https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip).
-    This issue usually occurs on Windows. Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121)
-    for more details.
+   If the icons are not displayed correctly although `all-the-icons` fonts are
+   installed correctly, please install the
+   [non-free](http://users.teilar.gr/~g1951d/License.pdf) font
+   [Symbola](https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip).
+   This issue usually occurs on Windows. Refer to [#121](https://github.com/seagle0128/.emacs.d/issues/121)
+   for more details.
 
-    If you are using [cnfonts](https://github.com/tumashu/cnfonts), it will
-    conflict with `all-the-icons`. The workaround is
-    [here](https://github.com/seagle0128/doom-modeline/issues/278#issuecomment-569510336).
+   If you are using [cnfonts](https://github.com/tumashu/cnfonts), it will
+   conflict with `all-the-icons`. The workaround is
+   [here](https://github.com/seagle0128/doom-modeline/issues/278#issuecomment-569510336).
 
-    For better experience, I don't recommend to use GUI with `emacsclient` in
-    `daemon` mode. See [#154](https://github.com/seagle0128/.emacs.d/issues/154).
+   For better experience, I don't recommend to use GUI with `emacsclient` in
+   `daemon` mode. See [#154](https://github.com/seagle0128/.emacs.d/issues/154).
 
 1. The packages cannot be installed, what should I do?
 
    Generally it's due to connection issue. Please refer to
    [#98](https://github.com/seagle0128/.emacs.d/issues/98).
+
    - `M-x package-refresh-contents` and try again.
    - `(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")`.
    - Use other mirror of ELPA.
@@ -279,39 +273,38 @@ For the personal configurations, you could put to `~/.emacs.d/custom-post.org`
 
 1. How to search Chinese via pinyin?
 
-    In Emacs, `C-s !`. If you just want to search `!`, use `C-s \!`.
+   In Emacs, `C-s !`. If you just want to search `!`, use `C-s \!`.
 
 1. How to use the Centaur Dashboard?
 
-    If `centaur-dashboard` is non-nil the Centaur Dashboard will be opened at
-    startup automatically. After startup, you could use `F2` to reopen it
-    anytime. In the dashboard, please press `?` or `h` to get the help. You can
-    easily jump to the sections or buttons with keybindings, e.g. Homepage(`H`),
-    Session(`R`, `L`), Settings(`S`), Update(`U`), Recent Files (`r`),
-    Bookmarks(`m`) and Projects(`p`).
+   If `centaur-dashboard` is non-nil the Centaur Dashboard will be opened at
+   startup automatically. After startup, you could use `F2` to reopen it
+   anytime. In the dashboard, please press `?` or `h` to get the help. You can
+   easily jump to the sections or buttons with keybindings, e.g. Homepage(`H`),
+   Session(`R`, `L`), Settings(`S`), Update(`U`), Recent Files (`r`),
+   Bookmarks(`m`) and Projects(`p`).
 
 1. Does Centaur Emacs support Language Server Protocol (LSP)?
 
-    The LSP feature is supported and enabled by default in Centaur Emacs.
-    `lsp-mode` is the default client, and `eglot` is another choice. Use `(setq
-    centaur-lsp nil)` to disable LSP if you don't like it.
+   The LSP feature is supported and enabled by default in Centaur Emacs.
+   `lsp-mode` is the default client, and `eglot` is another choice. Use `(setq centaur-lsp nil)` to disable LSP if you don't like it.
 
-    To use LSP you should install the language servers. Refer to [lsp-mode:
-    supported-languages](https://github.com/emacs-lsp/lsp-mode#supported-languages)
-    or [eglot: Connecting to a
-    server](https://github.com/joaotavora/eglot#connecting-to-a-server) for
-    the details.
+   To use LSP you should install the language servers. Refer to [lsp-mode:
+   supported-languages](https://github.com/emacs-lsp/lsp-mode#supported-languages)
+   or [eglot: Connecting to a
+   server](https://github.com/joaotavora/eglot#connecting-to-a-server) for
+   the details.
 
 1. How to enable `plantuml` in `org-mode`?
 
-    Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
+   Put `(setq org-plantuml-jar-path "<path of plantumx.x.x.jar>")` in `custom.el`.
 
 1. Why the Emacs environment variables and `exec-path` are different between GUI
    and terminal?
 
-    Please refer to #33. You should instead set environment variables in startup
-    files like `.profile`, `.bash_profile` or `.zshenv`, then `Centaur Emacs` is
-    able to recognize and import the environment variables.
+   Please refer to #33. You should instead set environment variables in startup
+   files like `.profile`, `.bash_profile` or `.zshenv`, then `Centaur Emacs` is
+   able to recognize and import the environment variables.
 
 1. How to use [zoom-window](https://github.com/syohex/emacs-zoom-window) in
    Centaur Emacs?
