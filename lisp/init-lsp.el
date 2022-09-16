@@ -51,7 +51,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish
-     :defines lsp-clients-python-library-directories
+     :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
      :commands (lsp-enable-which-key-integration
                 lsp-format-buffer
                 lsp-organize-imports
@@ -117,7 +117,10 @@
                  lsp-enable-indentation nil
                  lsp-enable-on-type-formatting nil
 
-                 ;; For `lsp-clients'
+                 ;; For diagnostics
+                 lsp-diagnostics-disabled-modes '(markdown-mode gfm-mode)
+
+                 ;; For clients
                  lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
      (with-no-warnings
