@@ -122,7 +122,7 @@
 
   (use-package multi-vterm
     :bind ("C-<f9>" . multi-vterm)
-    :init (setq multi-vterm-buffer-name "vterm")
+    :custom (multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
       ;; Use `pop-to-buffer' instead of `switch-to-buffer'
@@ -186,7 +186,7 @@
   (when (childframe-workable-p)
     (defun shell-pop-posframe-hidehandler (_)
       "Hidehandler used by `shell-pop-posframe-toggle'."
-      (not (eq (selected-frame) posframe--frame)))
+      (not (eq (selected-frame) shell-pop--frame)))
 
     (defun shell-pop-posframe-toggle ()
       "Toggle shell in child frame."
