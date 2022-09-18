@@ -68,27 +68,24 @@
                   (lambda (&rest _) (bound-and-true-p company-backend)))
         :config
         (with-no-warnings
-          ;; FIXME: Add paddings to the child frame.
+          ;; FIXME: Prettify the child frame.
           ;; @see https://github.com/alexmurray/flycheck-posframe/issues/28
           (defun my-flycheck-posframe-show-posframe (errors)
             "Display ERRORS, using posframe.el library."
             (posframe-hide flycheck-posframe-buffer)
             (when (and errors
                        (not (run-hook-with-args-until-success 'flycheck-posframe-inhibit-functions)))
-              (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position)))
-                    (str (flycheck-posframe-format-errors errors)))
+              (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position))))
                 (unless (functionp poshandler)
                   (setq poshandler nil))
                 (flycheck-posframe-check-position)
                 (posframe-show
                  flycheck-posframe-buffer
-                 :string (concat (propertize "\n" 'face '(:height 0.3))
-                                 str
-                                 (propertize "\n\n" 'face '(:height 0.3)))
+                 :string (flycheck-posframe-format-errors errors)
                  :background-color (face-background 'flycheck-posframe-background-face nil t)
                  :position (point)
-                 :left-fringe 8
-                 :right-fringe 8
+                 :left-fringe 4
+                 :right-fringe 4
                  :max-width (round (* (frame-width) 0.62))
                  :max-height (round (* (frame-height) 0.62))
                  :internal-border-width flycheck-posframe-border-width

@@ -139,31 +139,35 @@
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
   (use-package devdocs
+    :commands (devdocs--installed-docs devdocs--available-docs)
     :bind (:map prog-mode-map
-           ("M-<f1>" . devdocs-dwim))
+           ("M-<f1>" . devdocs-dwim)
+           ("C-h D"  . devdocs-dwim))
     :init
-    (defvar devdocs-major-mode-docs-alist
-      '((c-mode          . ("C"))
-        (c++-mode        . ("C++"))
-        (python-mode     . ("Python 3.9" "Python 3.8"))
-        (ruby-mode       . ("Ruby 3"))
-        (go-mode         . ("Go"))
-        (rustic-mode     . ("Rust"))
-        (css-mode        . ("CSS"))
-        (html-mode       . ("HTML"))
-        (js-mode         . ("JavaScript" "JQuery"))
-        (js2-mode        . ("JavaScript" "JQuery"))
-        (emacs-lisp-mode . ("Elisp")))
-      "Alist of MAJOR-MODE and list of docset names.")
+    (defconst devdocs-major-mode-docs-alist
+      '((c-mode          . ("c"))
+        (c++-mode        . ("cpp"))
+        (python-mode     . ("python~3.10" "python~2.7"))
+        (ruby-mode       . ("ruby~3.1"))
+        (go-mode         . ("go"))
+        (rustic-mode     . ("rust"))
+        (css-mode        . ("css"))
+        (html-mode       . ("html"))
+        (julia-mode      . ("julia~1.8"))
+        (js-mode         . ("javascript" "jquery"))
+        (js2-mode        . ("javascript" "jquery"))
+        (emacs-lisp-mode . ("elisp")))
+      "Alist of major-mode and docs.")
 
     (mapc
-     (lambda (e)
-       (add-hook (intern (format "%s-hook" (car e)))
+     (lambda (mode)
+       (add-hook (intern (format "%s-hook" (car mode)))
                  (lambda ()
-                   (setq-local devdocs-current-docs (cdr e)))))
+                   (setq-local devdocs-current-docs (cdr mode)))))
      devdocs-major-mode-docs-alist)
 
     (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+
     (defun devdocs-dwim()
       "Look up a DevDocs documentation entry.
 
@@ -171,15 +175,16 @@ Install the doc if it's not installed."
       (interactive)
       ;; Install the doc if it's not installed
       (mapc
-       (lambda (str)
-         (let* ((docs (split-string str " "))
-                (doc (if (length= docs 1)
-                         (downcase (car docs))
-                       (concat (downcase (car docs)) "~" (downcase (cdr docs))))))
-           (unless (and (file-directory-p devdocs-data-dir)
-                        (directory-files devdocs-data-dir nil "^[^.]"))
-             (message "Installing %s..." str)
-             (devdocs-install doc))))
+       (lambda (slug)
+         (unless (member slug (let ((default-directory devdocs-data-dir))
+                                (seq-filter #'file-directory-p
+                                            (when (file-directory-p devdocs-data-dir)
+                                              (directory-files "." nil "^[^.]")))))
+           (mapc
+            (lambda (doc)
+              (when (string= (alist-get 'slug doc) slug)
+                (devdocs-install doc)))
+            (devdocs--available-docs))))
        (alist-get major-mode devdocs-major-mode-docs-alist))
 
       ;; Lookup the symbol at point
@@ -200,6 +205,7 @@ Install the doc if it's not installed."
 (use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)
+(use-package v-mode)
 (use-package vimrc-mode)
 
 (use-package protobuf-mode

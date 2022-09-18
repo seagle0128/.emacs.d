@@ -51,7 +51,7 @@
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
      :diminish
-     :defines lsp-clients-python-library-directories
+     :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
      :commands (lsp-enable-which-key-integration
                 lsp-format-buffer
                 lsp-organize-imports
@@ -106,6 +106,9 @@
                  lsp-modeline-workspace-status-enable nil
                  lsp-headerline-breadcrumb-enable nil
 
+                 lsp-semantic-tokens-enable t
+                 lsp-progress-spinner-type 'progress-bar-filled
+
                  lsp-enable-file-watchers nil
                  lsp-enable-folding nil
                  lsp-enable-symbol-highlighting nil
@@ -114,7 +117,10 @@
                  lsp-enable-indentation nil
                  lsp-enable-on-type-formatting nil
 
-                 ;; For `lsp-clients'
+                 ;; For diagnostics
+                 lsp-diagnostics-disabled-modes '(markdown-mode gfm-mode)
+
+                 ;; For clients
                  lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
      (with-no-warnings
@@ -297,7 +303,7 @@
      :config
      (with-no-warnings
        (when (icon-displayable-p)
-         (defvar lsp-ivy-symbol-kind-icons
+         (defconst lsp-ivy-symbol-kind-icons
            `(,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.15) ; Unknown - 0
              ,(all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.02) ; File - 1
              ,(all-the-icons-material "view_module" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-lblue) ; Module - 2
@@ -363,10 +369,8 @@
             (elixir-mode            . (lambda () (require 'dap-elixir)))
             ((js-mode js2-mode)     . (lambda () (require 'dap-chrome)))
             (powershell-mode        . (lambda () (require 'dap-pwsh))))
-     :init
-     (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls))
-     (when (executable-find "python3")
-       (setq dap-python-executable "python3")))
+     :init (when (executable-find "python3")
+             (setq dap-python-executable "python3")))
 
    ;; `lsp-mode' and `treemacs' integration
    (use-package lsp-treemacs
@@ -633,7 +637,7 @@
                   (format "Prepare local buffer environment for org source block (%s)."
                           (upcase ,lang))))))))
 
-  (defvar org-babel-lang-list
+  (defconst org-babel-lang-list
     '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++"))
   (add-to-list 'org-babel-lang-list "shell")
   (dolist (lang org-babel-lang-list)

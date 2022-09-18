@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-funcs)
 
 ;; Delete selection if you insert
 (use-package delsel
@@ -163,11 +164,11 @@
 (use-package aggressive-indent
   :diminish
   :hook ((after-init . global-aggressive-indent-mode)
-         ;; WORKAROUND: Disable in big files due to the performance issues
+         ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
-                        (if (> (buffer-size) (* 3000 80))
-                            (aggressive-indent-mode -1)))))
+                        (when (too-long-file-p)
+                          (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
   (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
@@ -231,6 +232,9 @@
   :ensure nil
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+
+;; Visual `align-regexp'
+(use-package ialign)
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
@@ -378,7 +382,8 @@
      ("M-<" beginning-of-buffer "⭶")
      ("M->" end-of-buffer "⭸"))))
   :bind (:map hs-minor-mode-map
-         ("C-~" . hideshow-hydra/body))
+         ("C-~" . hideshow-hydra/body)
+         ("C-S-<escape>" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; More functions

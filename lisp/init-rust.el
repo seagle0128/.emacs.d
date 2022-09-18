@@ -31,8 +31,6 @@
 ;;; Code:
 
 ;; Rust
-(require 'init-const)
-
 (use-package rustic)
 (use-package rust-playground)
 
