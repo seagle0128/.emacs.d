@@ -59,7 +59,7 @@
              return (set-fontset-font t 'unicode font nil 'prepend))
 
     ;; Emoji
-    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
+    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
              when (font-installed-p font)
              return (cond
                      ((< emacs-major-version 27)
