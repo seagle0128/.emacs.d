@@ -57,7 +57,8 @@
     (setq ls-lisp-use-insert-directory-program t)
 
     ;; Show directory first
-    (setq dired-listing-switches "-alh --group-directories-first")
+    (unless sys/win32p
+      (setq dired-listing-switches "-alh --group-directories-first"))
 
     ;; Quick sort dired buffers via hydra
     (use-package dired-quick-sort
