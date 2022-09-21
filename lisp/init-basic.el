@@ -88,6 +88,7 @@
 
 ;; Set UTF-8 as the default coding system
 (prefer-coding-system 'utf-8)
+(set-language-environment "utf-8")
 (setq system-time-locale "C")
 
 ;; Environment
