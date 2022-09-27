@@ -226,6 +226,7 @@ FACE defaults to inheriting from default and highlight."
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
+         (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode)
          ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
   :init (setq diff-hl-draw-borders nil)
