@@ -219,11 +219,6 @@ nil means disabled."
   :group 'centaur
   :type '(repeat (symbol :tag "Major-Mode")))
 
-(defcustom centaur-tree-sitter t
-  "Enable `tree-sitter' or not."
-  :group 'centaur
-  :type 'boolean)
-
 (defcustom centaur-chinese-calendar nil
   "Enable Chinese calendar or not."
   :group 'centaur
