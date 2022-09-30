@@ -87,9 +87,10 @@
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
 ;; Set UTF-8 as the default coding system
-(set-language-environment "utf-8")
-(when (fboundp 'set-charset-priority)
-  (set-charset-priority 'unicode))
+(unless sys/win32p
+  (set-language-environment "utf-8")
+  (when (fboundp 'set-charset-priority)
+    (set-charset-priority 'unicode)))
 (setq system-time-locale "C")
 
 ;; Environment
