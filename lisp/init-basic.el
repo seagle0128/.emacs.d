@@ -87,11 +87,13 @@
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
 ;; Set UTF-8 as the default coding system
-(unless sys/win32p
-  (set-language-environment "utf-8")
-  (when (fboundp 'set-charset-priority)
-    (set-charset-priority 'unicode)))
+(when (fboundp 'set-charset-priority)
+  (set-charset-priority 'unicode))
+(prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 (setq system-time-locale "C")
+(unless sys/win32p
+  (set-selection-coding-system 'utf-8))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
