@@ -52,10 +52,9 @@
       (setq insert-directory-program "gls")))
 
   (when (or (and sys/macp (executable-find "gls"))
-            (and (or sys/linuxp sys/cygwinp) (executable-find "ls")))
+            (and (not sys/macp) (executable-find "ls")))
     ;; Using `insert-directory-program'
     (setq ls-lisp-use-insert-directory-program t)
-
     ;; Show directory first
     (setq dired-listing-switches "-alh --group-directories-first"))
 
