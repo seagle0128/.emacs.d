@@ -212,7 +212,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
   :custom-face
-  (hl-todo ((t (:inherit default :height 0.5 :width condensed :weight bold :underline nil :inverse-video t))))
+  (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
          ([C-f3]    . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
