@@ -41,13 +41,13 @@
                          (eshell/alias "f" "find-file $1")
                          (eshell/alias "fo" "find-file-other-window $1")
                          (eshell/alias "d" "dired $1")
-                         (eshell/alias "l" "ls -lFh")
+                         (eshell/alias "l" "ls -lh")
                          (eshell/alias "ll" "ls -l")
-                         (eshell/alias "la" "ls -lAFh")
-                         (eshell/alias "lr" "ls -tRFh")
-                         (eshell/alias "lrt" "ls -lFcrt")
+                         (eshell/alias "la" "ls -lAh")
+                         (eshell/alias "lr" "ls -tRh")
+                         (eshell/alias "lrt" "ls -lcrt")
                          (eshell/alias "lsa" "ls -lah")
-                         (eshell/alias "lt" "ls -ltFh")))
+                         (eshell/alias "lt" "ls -lth")))
   :config
   (with-no-warnings
     (defun eshell/clear ()

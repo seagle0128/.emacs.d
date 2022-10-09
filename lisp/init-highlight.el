@@ -96,7 +96,16 @@ FACE defaults to inheriting from default and highlight."
 (use-package symbol-overlay
   :diminish
   :functions (turn-off-symbol-overlay turn-on-symbol-overlay)
-  :custom-face (symbol-overlay-default-face ((t (:inherit (region bold)))))
+  :custom-face
+  (symbol-overlay-default-face ((t (:background ,(doom-color 'region)))))
+  (symbol-overlay-face-1 ((t (:background ,(doom-blend 'blue 'bg 0.5)    :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-2 ((t (:background ,(doom-blend 'violet 'bg 0.5)  :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-3 ((t (:background ,(doom-blend 'yellow 'bg 0.5)  :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-4 ((t (:background ,(doom-blend 'orange 'bg 0.5)  :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-5 ((t (:background ,(doom-blend 'red 'bg 0.5)     :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-6 ((t (:background ,(doom-blend 'magenta 'bg 0.5) :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-7 ((t (:background ,(doom-blend 'green 'bg 0.5)   :foreground ,(doom-color 'fg)))))
+  (symbol-overlay-face-8 ((t (:background ,(doom-blend 'cyan 'bg 0.5)    :foreground ,(doom-color 'fg)))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -227,6 +236,7 @@ FACE defaults to inheriting from default and highlight."
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
+         (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode)
          ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
   :init (setq diff-hl-draw-borders nil)
@@ -248,7 +258,7 @@ FACE defaults to inheriting from default and highlight."
     (defun my-diff-hl-fringe-bmp-function (_type _pos)
       "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
       (define-fringe-bitmap 'my-diff-hl-bmp
-        (vector (if sys/macp #b11100000 #b11111100))
+        (vector (if sys/linuxp #b11111100 #b11100000))
         1 8
         '(center t)))
     (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)

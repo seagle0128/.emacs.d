@@ -603,7 +603,6 @@
 (when (childframe-completion-workable-p)
   (use-package ivy-posframe
     :custom-face
-    (ivy-posframe ((t (:inherit tooltip))))
     (ivy-posframe-border ((t (:inherit posframe-border))))
     :hook (ivy-mode . ivy-posframe-mode)
     :init

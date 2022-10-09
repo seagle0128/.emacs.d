@@ -38,7 +38,7 @@
 (use-package citre
   :diminish
   :commands citre-jump-back
-  :functions projectile-project-root
+  :functions (projectile-project-root xref-go-back)
   :bind (:map prog-mode-map
          ("C-x c j" . citre-jump+)
          ("C-x c k" . citre-jump-back+)
@@ -68,7 +68,9 @@ Fallback to `xref-go-back'."
     (interactive)
     (condition-case _
         (citre-jump-back)
-      (error (call-interactively #'xref-go-back))))
+      (error (if (fboundp #'xref-go-back)
+                 (call-interactively #'xref-go-back)
+               (call-interactively #'xref-pop-marker-stack)))))
   :config
   (with-no-warnings
     ;; Use Citre xref backend as a fallback

@@ -126,7 +126,7 @@
 (defcustom centaur-theme-alist
   '((default . doom-one)
     (pro     . doom-monokai-pro)
-    (dark    . doom-nord-aurora)
+    (dark    . doom-vibrant)
     (light   . doom-one-light)
     (warm    . doom-solarized-light)
     (cold    . doom-palenight)
@@ -218,11 +218,6 @@ nil means disabled."
 "
   :group 'centaur
   :type '(repeat (symbol :tag "Major-Mode")))
-
-(defcustom centaur-tree-sitter t
-  "Enable `tree-sitter' or not."
-  :group 'centaur
-  :type 'boolean)
 
 (defcustom centaur-chinese-calendar nil
   "Enable Chinese calendar or not."
