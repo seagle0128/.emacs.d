@@ -98,6 +98,9 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle")
 
+  (which-key-add-major-mode-key-based-replacements 'csv-mode
+    "C-c C-a" "csv-align-fields")
+
   (when (childframe-completion-workable-p)
     (use-package which-key-posframe
       :diminish

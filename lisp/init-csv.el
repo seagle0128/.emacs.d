@@ -31,7 +31,18 @@
 ;;; Code:
 
 ;; csv Mode
-(use-package csv-mode)
+(use-package csv-mode
+  :bind (:map csv-mode-map
+         ("C-c C-a" . csv-align-fields)
+         ("C-c C-u" . csv-unalign-fields)
+         ("C-c C-k" . csv-kill-fields)
+         ("C-c C-y" . csv-yank-fields))
+  :config
+  (setq csv-align-max-width 14)
+  ;; csv-invisibility-default t
+  ;; csv-toggle-invisibility nil
+  ;; (add-hook 'csv-mode-hook 'csv-guess-set-separator))
+  (add-hook 'csv-mode-hook 'csv-align-mode))
 
 (provide 'init-csv)
 
