@@ -147,7 +147,7 @@
 ;; Enforce rules for popups
 (use-package popper
   :defines popper-echo-dispatch-actions
-  :commands popper-group-by-projectile
+  :autoload popper-group-by-projectile
   :bind (:map popper-mode-map
          ("C-h z"     . popper-toggle-latest)
          ("C-<tab>"   . popper-cycle)

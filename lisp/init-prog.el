@@ -53,7 +53,7 @@
 ;; Search tool
 (use-package grep
   :ensure nil
-  :commands grep-apply-setting
+  :autoload grep-apply-setting
   :config
   (cond
    ((executable-find "ugrep")
@@ -139,7 +139,7 @@
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
   (use-package devdocs
-    :commands (devdocs--installed-docs devdocs--available-docs)
+    :autoload (devdocs--installed-docs devdocs--available-docs)
     :bind (:map prog-mode-map
            ("M-<f1>" . devdocs-dwim)
            ("C-h D"  . devdocs-dwim))

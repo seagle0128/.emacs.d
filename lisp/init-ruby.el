@@ -61,7 +61,7 @@
 ;; RSpec
 (use-package rspec-mode
   :diminish
-  :commands rspec-install-snippets
+  :autoload rspec-install-snippets
   :hook (dired-mode . rspec-dired-mode)
   :config (with-eval-after-load 'yasnippet
             (rspec-install-snippets)))

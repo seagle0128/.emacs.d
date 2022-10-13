@@ -37,7 +37,6 @@
 (use-package treemacs
   :commands (treemacs-follow-mode
              treemacs-filewatch-mode
-             treemacs-fringe-indicator-mode
              treemacs-git-mode)
   :custom-face
   (cfrs-border-color ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
@@ -75,7 +74,7 @@
 
   (use-package treemacs-magit
     :after magit
-    :commands treemacs-magit--schedule-update
+    :autoload treemacs-magit--schedule-update
     :hook ((magit-post-commit
             git-commit-post-finish
             magit-post-stage

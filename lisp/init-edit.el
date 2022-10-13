@@ -209,7 +209,7 @@
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish
-  :commands drag-stuff-define-keys
+  :autoload drag-stuff-define-keys
   :hook (after-init . drag-stuff-global-mode)
   :config
   (add-to-list 'drag-stuff-except-modes 'org-mode)

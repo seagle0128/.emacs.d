@@ -57,7 +57,7 @@
 
     ;; Recover last viewed position
     (use-package saveplace-pdf-view
-      :commands (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
+      :autoload (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
       :init
       (advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
       (advice-add 'save-place-to-alist :around #'saveplace-pdf-view-to-alist-advice))))

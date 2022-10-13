@@ -52,7 +52,7 @@
    (use-package lsp-mode
      :diminish
      :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
-     :commands (lsp-enable-which-key-integration
+     :autoload (lsp-enable-which-key-integration
                 lsp-format-buffer
                 lsp-organize-imports
                 lsp-install-server)
