@@ -201,7 +201,6 @@ Install the doc if it's not installed."
 (use-package lua-mode)
 (use-package mermaid-mode)
 (use-package plantuml-mode)
-(use-package powershell)
 (use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)
