@@ -423,8 +423,8 @@
 
     (defun my-set-posframe-faces ()
       "Set `posframe' faces."
-      (custom-set-faces
-       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
+      (apply #'face-spec-set
+             `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
