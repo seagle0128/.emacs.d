@@ -210,14 +210,20 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
                                   (info-strs (split-string info))
                                   (state (nth 0 info-strs))
                                   (time (nth 2 info-strs)))
-                        (propertize (format " %s%s [%s] "
-                                            (when (icon-displayable-p)
-                                              (pcase state
-                                                ("[playing]" " ")
-                                                ("[paused]" " ")
-                                                (_ "")))
-                                            title time)
-                                    'face 'font-lock-comment-face))))))
+                        (concat
+                         (when (icon-displayable-p)
+                           (pcase state
+                             ("[playing]"
+                              (concat
+                               " "
+                               (all-the-icons-material "play_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                             ("[paused]"
+                              (concat
+                               " "
+                               (all-the-icons-material "pause_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                             (_ "")))
+                         (propertize (format " %s [%s] " title time)
+                                     'face '(:inherit 'font-lock-comment-face :height 0.9))))))))
           (force-mode-line-update))
 
         (defvar simple-mpc--timer nil)
