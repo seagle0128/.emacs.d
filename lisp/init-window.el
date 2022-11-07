@@ -220,7 +220,7 @@
           '(:eval (let ((face (if (doom-modeline--active)
                                   'mode-line-emphasis
                                 'mode-line-inactive)))
-                    (if (and (display-graphic-p)
+                    (if (and (icon-displayable-p)
                              (bound-and-true-p doom-modeline-mode))
                         (format " %s "
                                 (all-the-icons-octicon
