@@ -243,39 +243,39 @@
     ;;
     (defun my-ivy-switch-to-swiper (&rest _)
       "Switch to `swiper' with the current input."
-      (swiper ivy-text))
+      (ivy-quit-and-run (swiper ivy-text)))
 
     (defun my-ivy-switch-to-swiper-isearch (&rest _)
       "Switch to `swiper-isearch' with the current input."
-      (swiper-isearch ivy-text))
+      (ivy-quit-and-run (swiper-isearch ivy-text)))
 
     (defun my-ivy-switch-to-swiper-all (&rest _)
       "Switch to `swiper-all' with the current input."
-      (swiper-all ivy-text))
+      (ivy-quit-and-run (swiper-all ivy-text)))
 
     (defun my-ivy-switch-to-rg-dwim (&rest _)
       "Switch to `rg-dwim' with the current input."
-      (ivy-quit-and-run (rg-dwim default-directory)))
+      (ivy-exit-with-action #'rg-dwim))
 
     (defun my-ivy-switch-to-counsel-rg (&rest _)
       "Switch to `counsel-rg' with the current input."
-      (counsel-rg ivy-text default-directory))
+      (ivy-quit-and-run (counsel-rg ivy-text default-directory)))
 
     (defun my-ivy-switch-to-counsel-git-grep (&rest _)
       "Switch to `counsel-git-grep' with the current input."
-      (counsel-git-grep ivy-text default-directory))
+      (ivy-quit-and-run (counsel-git-grep ivy-text default-directory)))
 
     (defun my-ivy-switch-to-counsel-find-file (&rest _)
       "Switch to `counsel-find-file' with the current input."
-      (counsel-find-file ivy-text))
+      (ivy-quit-and-run (counsel-find-file ivy-text)))
 
     (defun my-ivy-switch-to-counsel-fzf (&rest _)
       "Switch to `counsel-fzf' with the current input."
-      (counsel-fzf ivy-text default-directory))
+      (ivy-quit-and-run (counsel-fzf ivy-text default-directory)))
 
     (defun my-ivy-switch-to-counsel-git (&rest _)
       "Switch to `counsel-git' with the current input."
-      (counsel-git ivy-text))
+      (ivy-quit-and-run (counsel-git ivy-text)))
 
     (defun my-ivy-switch-to-list-bookmarks (&rest _)
       "Switch to `list-bookmarks'."
@@ -303,10 +303,9 @@
     (defun my-swiper-toggle-counsel-rg ()
       "Toggle `counsel-rg' and `swiper'/`swiper-isearch' with the current input."
       (interactive)
-      (ivy-quit-and-run
-        (if (memq (ivy-state-caller ivy-last) '(swiper swiper-isearch))
-            (my-ivy-switch-to-counsel-rg)
-          (my-ivy-switch-to-swiper-isearch))))
+      (if (memq (ivy-state-caller ivy-last) '(swiper swiper-isearch))
+          (my-ivy-switch-to-counsel-rg)
+        (my-ivy-switch-to-swiper-isearch)))
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
@@ -314,8 +313,7 @@
       (defun my-swiper-toggle-rg-dwim ()
         "Toggle `rg-dwim' with the current input."
         (interactive)
-        (ivy-quit-and-run
-          (rg-dwim default-directory)))
+        (ivy-exit-with-action #'rg-dwim))
       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
 
