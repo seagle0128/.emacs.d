@@ -255,6 +255,7 @@
 
     (defun my-ivy-switch-to-rg-dwim (&rest _)
       "Switch to `rg-dwim' with the current input."
+      (interactive)
       (ivy-exit-with-action #'rg-dwim))
 
     (defun my-ivy-switch-to-counsel-rg (&rest _)
@@ -310,12 +311,8 @@
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
     (with-eval-after-load 'rg
-      (defun my-swiper-toggle-rg-dwim ()
-        "Toggle `rg-dwim' with the current input."
-        (interactive)
-        (ivy-exit-with-action #'rg-dwim))
-      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
-      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
+      (bind-key "<M-return>" #'my-ivy-switch-to-rg-dwim swiper-map)
+      (bind-key "<M-return>" #'my-ivy-switch-to-rg-dwim counsel-ag-map))
 
     (defun my-swiper-toggle-swiper-isearch ()
       "Toggle `swiper' and `swiper-isearch' with the current input."
