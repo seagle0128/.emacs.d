@@ -33,8 +33,7 @@
 ;; Integrate rbenv
 (use-package rbenv
   :hook (after-init . global-rbenv-mode)
-  :init (setq rbenv-show-active-ruby-in-modeline nil
-              rbenv-executable "rbenv"))
+  :init (setq rbenv-show-active-ruby-in-modeline nil))
 
 ;; YAML mode
 (use-package yaml-mode)
