@@ -146,7 +146,7 @@ prepended to the element after the #+HEADER: tag."
                              (?C . success))
 
         ;; Agenda styling
-        org-agenda-files `(,centaur-org-directory)
+        org-agenda-files (list centaur-org-directory)
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
@@ -331,6 +331,8 @@ prepended to the element after the #+HEADER: tag."
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
+
+    (add-to-list 'org-agenda-files (format "%s/%s" centaur-org-directory "roam"))
 
     (when emacs/>=27p
       (use-package org-roam-ui

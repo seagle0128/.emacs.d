@@ -52,7 +52,7 @@
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-org-directory (expand-file-name "~/org/")
+(defcustom centaur-org-directory (expand-file-name "~/org")
   "Set org directory."
   :group 'centaur
   :type 'string)
