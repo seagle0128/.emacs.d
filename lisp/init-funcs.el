@@ -592,14 +592,15 @@ If SYNC is non-nil, the updating process is synchronous."
      (ivy-read "Load theme: "
                `(auto
                  random
-                 ,(if (bound-and-true-p ns-system-appearance) 'system "")
+                 system
                  ,@(mapcar #'car centaur-theme-alist))
                :preselect (symbol-name centaur-theme)))))
   ;; Set option
   (centaur-set-variable 'centaur-theme theme no-save)
 
   ;; Disable system theme
-  (remove-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme)
+  (when (bound-and-true-p auto-dark-mode)
+    (auto-dark-mode -1))
 
   (pcase centaur-theme
     ('auto
@@ -610,13 +611,14 @@ If SYNC is non-nil, the updating process is synchronous."
        :init (circadian-setup)))
     ('system
      ;; System-appearance themes
-     (if (bound-and-true-p ns-system-appearance)
-         (progn
-           (centaur--load-system-theme ns-system-appearance)
-           (add-hook 'ns-system-appearance-change-functions #'centaur--load-system-theme))
-       (progn
-         (message "The `system' theme is unavailable on this platform. Using `default' theme...")
-         (centaur--load-theme (centaur--theme-name 'default)))))
+     (if (or sys/macp sys/win32p)
+         (use-package auto-dark
+           :init
+           (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
+                 auto-dark-dark-theme  (alist-get 'dark centaur-system-themes))
+           (auto-dark-mode 1)))
+     (message "The `system' theme is unavailable on this platform. Using `default' theme...")
+     (centaur--load-theme (centaur--theme-name 'default)))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
 
