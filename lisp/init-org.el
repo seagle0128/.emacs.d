@@ -331,8 +331,7 @@ prepended to the element after the #+HEADER: tag."
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
-
-    (add-to-list 'org-agenda-files (format "%s/%s" centaur-org-directory "roam"))
+    (add-to-list 'org-agenda-files (format "%s/%s" org-roam-directory "roam"))
 
     (when emacs/>=27p
       (use-package org-roam-ui
