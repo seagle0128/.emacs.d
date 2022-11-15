@@ -97,7 +97,7 @@ FACE defaults to inheriting from default and highlight."
   :diminish
   :functions (turn-off-symbol-overlay turn-on-symbol-overlay)
   :custom-face
-  (symbol-overlay-default-face ((t (:background ,(doom-color 'region)))))
+  (symbol-overlay-default-face ((t (:inherit region :background unspecified))))
   (symbol-overlay-face-1 ((t (:background ,(doom-blend 'blue 'bg 0.5)    :foreground ,(doom-color 'fg)))))
   (symbol-overlay-face-2 ((t (:background ,(doom-blend 'violet 'bg 0.5)  :foreground ,(doom-color 'fg)))))
   (symbol-overlay-face-3 ((t (:background ,(doom-blend 'yellow 'bg 0.5)  :foreground ,(doom-color 'fg)))))
