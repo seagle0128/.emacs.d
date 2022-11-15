@@ -615,10 +615,10 @@ If SYNC is non-nil, the updating process is synchronous."
          (use-package auto-dark
            :init
            (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
-                 auto-dark-dark-theme  (alist-get 'dark centaur-system-themes))
-           (auto-dark-mode 1)))
-     (message "The `system' theme is unavailable on this platform. Using `default' theme...")
-     (centaur--load-theme (centaur--theme-name 'default)))
+                 auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
+           (auto-dark-mode 1))
+       (message "The `system' theme is unavailable on this platform. Using `default' theme...")
+       (centaur--load-theme (centaur--theme-name 'default))))
     ('random (centaur-load-random-theme))
     (_ (centaur--load-theme (centaur--theme-name theme)))))
 
