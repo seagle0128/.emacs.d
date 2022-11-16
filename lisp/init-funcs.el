@@ -135,9 +135,9 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
                  (browse-url-interactive-arg "xwidget-webkit URL: ")))
   (or (featurep 'xwidget-internal)
       (user-error "Your Emacs was not compiled with xwidgets support"))
+
   (xwidget-webkit-browse-url url new-session)
-  (let ((buf (xwidget-buffer (and (fboundp 'xwidget-webkit-current-session)
-                                  (xwidget-webkit-current-session)))))
+  (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
     (when (buffer-live-p buf)
       (and (eq buf (current-buffer)) (quit-window))
       (if pop-buffer
@@ -560,7 +560,7 @@ If SYNC is non-nil, the updating process is synchronous."
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
-  (when theme
+  (when-let ((theme (centaur--theme-name theme)))
     (message "Loading theme `%s'..." theme)
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)
@@ -569,11 +569,7 @@ If SYNC is non-nil, the updating process is synchronous."
 (defun centaur--load-system-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
-  (centaur--load-theme (centaur--theme-name
-                        (pcase appearance
-                          ('light (cdr (assoc 'light centaur-system-themes)))
-                          ('dark (cdr (assoc 'dark centaur-system-themes)))
-                          (_ centaur-theme)))))
+  (centaur--load-theme (alist-get appearance centaur-system-themes)))
 
 (defun centaur-load-random-theme ()
   "Load the random theme."
@@ -618,9 +614,9 @@ If SYNC is non-nil, the updating process is synchronous."
                  auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
            (auto-dark-mode 1))
        (message "The `system' theme is unavailable on this platform. Using `default' theme...")
-       (centaur--load-theme (centaur--theme-name 'default))))
+       (centaur--load-theme 'default)))
     ('random (centaur-load-random-theme))
-    (_ (centaur--load-theme (centaur--theme-name theme)))))
+    (_ (centaur--load-theme theme))))
 
 
 
