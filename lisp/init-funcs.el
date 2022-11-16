@@ -596,6 +596,7 @@ If SYNC is non-nil, the updating process is synchronous."
 
   ;; Disable system theme
   (when (bound-and-true-p auto-dark-mode)
+    (setq auto-dark--last-dark-mode-state 'unknown)
     (auto-dark-mode -1))
 
   (pcase centaur-theme
@@ -624,12 +625,12 @@ If SYNC is non-nil, the updating process is synchronous."
 (defvar centaur-frame--geometry nil)
 (defun centaur-frame--save-geometry ()
   "Save current frame's geometry."
-  (setq-local centaur-frame--geometry
-              `((left . ,(frame-parameter nil 'left))
-                (top . ,(frame-parameter nil 'top))
-                (width . ,(frame-parameter nil 'width))
-                (height . ,(frame-parameter nil 'height))
-                (fullscreen))))
+  (setq centaur-frame--geometry
+        `((left   . ,(frame-parameter nil 'left))
+          (top    . ,(frame-parameter nil 'top))
+          (width  . ,(frame-parameter nil 'width))
+          (height . ,(frame-parameter nil 'height))
+          (fullscreen))))
 
 (defun centaur-frame--fullscreen-p ()
   "Returns Non-nil if the frame is fullscreen."
