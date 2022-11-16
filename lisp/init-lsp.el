@@ -233,7 +233,7 @@
        (setq lsp-ui-doc-border
              (if (facep 'posframe-border)
                  (face-background 'posframe-border nil t)
-               (face-foreground 'shadow nil t))))
+               (face-background 'region nil t))))
      (my-lsp-ui-doc-set-border)
      (add-hook 'after-load-theme-hook #'my-lsp-ui-doc-set-border t)
      :config

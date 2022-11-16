@@ -413,18 +413,12 @@
 ;; Child frame
 (when (childframe-workable-p)
   (use-package posframe
-    :hook ((after-load-theme . posframe-delete-all)
-           ((after-load-theme server-after-make-frame) . my-set-posframe-faces))
+    :hook (after-load-theme . posframe-delete-all)
     :init
     (defface posframe-border
-      `((t (:background ,(face-foreground 'shadow nil t))))
+      `((t (:inherit region)))
       "Face used by the `posframe' border."
       :group 'posframe)
-
-    (defun my-set-posframe-faces ()
-      "Set `posframe' faces."
-      (apply #'face-spec-set
-             `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
