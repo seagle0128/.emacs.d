@@ -156,7 +156,7 @@
           (insert-image spec)
           (insert "\n\n")
           (when title
-            (dashboard-center-line title)
+            (dashboard-insert-center title)
             (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
 
@@ -166,7 +166,7 @@
       "Insert copyright in the footer."
       (when dashboard-footer
         (insert "\n  ")
-        (dashboard-center-line dashboard-footer)
+        (dashboard-insert-center dashboard-footer)
         (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
         (insert "\n")))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
