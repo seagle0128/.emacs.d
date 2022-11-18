@@ -35,10 +35,10 @@
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :custom-face
-  (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground nil :background nil))))
-  (ivy-minibuffer-match-face-2 ((t (:distant-foreground nil :background nil))))
-  (ivy-minibuffer-match-face-3 ((t (:distant-foreground nil :background nil))))
-  (ivy-minibuffer-match-face-4 ((t (:distant-foreground nil :background nil))))
+  (ivy-minibuffer-match-face-1 ((t (:foreground "dimgray" :distant-foreground unspecified :background unspecified))))
+  (ivy-minibuffer-match-face-2 ((t (:distant-foreground unspecified :background unspecified))))
+  (ivy-minibuffer-match-face-3 ((t (:distant-foreground unspecified :background unspecified))))
+  (ivy-minibuffer-match-face-4 ((t (:distant-foreground unspecified :background unspecified))))
   :bind (("C-s"   . swiper-isearch)
          ("C-r"   . swiper-isearch-backward)
          ("s-f"   . swiper)

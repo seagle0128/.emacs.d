@@ -260,7 +260,7 @@
                              ;; :align-to is added with lsp-ui-doc--fix-hr-props
                              'display '(space :height (1))
                              'lsp-ui-doc--replace-hr t
-                             'face `(:background ,(face-foreground 'font-lock-comment-face)))
+                             'face `(:background ,(face-foreground 'font-lock-comment-face nil t)))
                  ;; :align-to is added here too
                  (propertize " " 'display '(space :height (1)))
                  (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
