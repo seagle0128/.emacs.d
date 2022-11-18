@@ -104,7 +104,6 @@
                                     (registers . "database"))
 
           dashboard-set-footer t
-          dashboard-footer (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
           dashboard-footer-icon (cond ((icon-displayable-p)
                                        (all-the-icons-faicon "heart"
                                                              :height 1.1
@@ -156,19 +155,18 @@
           (insert-image spec)
           (insert "\n\n")
           (when title
-            (dashboard-insert-center title)
-            (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
+            (dashboard-insert-center
+             (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
 
     ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
       "Insert copyright in the footer."
-      (when dashboard-footer
-        (insert "\n  ")
-        (dashboard-insert-center dashboard-footer)
-        (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
-        (insert "\n")))
+      (when dashboard-set-footer
+        (dashboard-insert-center
+         (propertize (format "\nPowered by Vincent Zhang, %s\n" (format-time-string "%Y"))
+                     'face 'font-lock-comment-face))))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
     (defun restore-previous-session ()
