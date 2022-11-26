@@ -608,18 +608,17 @@ If SYNC is non-nil, the updating process is synchronous."
        :init (circadian-setup)))
     ('system
      ;; System-appearance themes
-     (if (or sys/macp sys/win32p)
-         (use-package auto-dark
-           :init
-           (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
-                 auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
-           (auto-dark-mode 1)
-           (when (bound-and-true-p ns-system-appearance)
-             (centaur--load-system-theme ns-system-appearance)))
-       (message "The `system' theme is unavailable on this platform. Using `default' theme...")
-       (centaur--load-theme 'default)))
-    ('random (centaur-load-random-theme))
-    (_ (centaur--load-theme theme))))
+     (use-package auto-dark
+       :init
+       (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
+             auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
+       (auto-dark-mode 1)
+       (when (bound-and-true-p ns-system-appearance)
+         (centaur--load-system-theme ns-system-appearance))))
+    ('random
+     (centaur-load-random-theme))
+    (_
+     (centaur--load-theme theme))))
 
 
 
