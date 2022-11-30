@@ -58,7 +58,7 @@
 (use-package ace-window
   :pretty-hydra
   ((:title (pretty-hydra-title "Window Management" 'faicon "th" :height 1.1 :v-adjust -0.1)
-    :foreign-keys warn :quit-key "q")
+    :foreign-keys warn :quit-key ("q" "C-g"))
    ("Actions"
     (("TAB" other-window "switch")
      ("x" ace-delete-window "delete" :exit t)

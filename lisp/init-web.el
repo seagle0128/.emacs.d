@@ -41,7 +41,7 @@
          ("h"         . xwidget-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Webkit" 'faicon "chrome" :face 'all-the-icons-blue)
-    :color amaranth :quit-key "q")
+    :color amaranth :quit-key ("q" "C-g"))
    ("Navigate"
     (("b" xwidget-webkit-back "back")
      ("f" xwidget-webkit-forward "forward")

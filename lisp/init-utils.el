@@ -285,7 +285,7 @@ of the buffer text to be displayed in the popup"
   (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
   :pretty-hydra
   ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
-    :color pink :quit-key "q")
+    :color pink :quit-key ("q" "C-g"))
    ("Diff"
     (("C" ztree-diff-copy "copy" :exit t)
      ("h" ztree-diff-toggle-show-equal-files "show/hide equals" :exit t)

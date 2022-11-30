@@ -63,7 +63,7 @@
   ;; Global toggles
   (with-no-warnings
     (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on" :v-adjust -0.1)
-                                        :color amaranth :quit-key "q")
+                                        :color amaranth :quit-key ("q" "C-g"))
       ("Basic"
        (("n" (cond ((fboundp 'display-line-numbers-mode)
                     (display-line-numbers-mode (if display-line-numbers-mode -1 1)))
