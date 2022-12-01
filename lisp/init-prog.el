@@ -194,9 +194,11 @@ Install the doc if it's not installed."
 (when emacs/>=27p
   (use-package csv-mode))
 
+(unless emacs/>=29p
+  (use-package csharp-mode))
+
 (use-package cask-mode)
 (use-package cmake-mode)
-(use-package csharp-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
