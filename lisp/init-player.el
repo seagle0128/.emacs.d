@@ -69,7 +69,7 @@
 
   ;; MPD Interface
   (use-package mingus
-    :bind ("s-<f8>" . mingus)
+    :bind ("M-<f8>" . mingus)
     :config
     (add-to-list 'global-mode-string mingus-mode-line-object)
     (with-no-warnings
@@ -127,7 +127,7 @@ See function `mingus-help' for instructions.
       (simple-mpc-main-name ((t (:inherit font-lock-string-face :bold t :height 1.3))))
       (simple-mpc-main-headers ((t (:inherit font-lock-keyword-face :bold t :height 1.1))))
       (simple-mpc-current-track-face ((t (:inherit font-lock-keyword-face))))
-      :bind (("M-<f8>" . simple-mpc+)
+      :bind (("s-<f8>" . simple-mpc+)
              :map simple-mpc-mode-map
              ("P" . simple-mpc-play)
              ("O" . simple-mpc-stop)
