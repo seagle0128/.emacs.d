@@ -36,11 +36,10 @@
 
 (use-package org
   :ensure nil
-  :commands (org-dynamic-block-define)
-  :custom-face (org-ellipsis ((t (:foreground nil))))
+  :custom-face (org-ellipsis ((t (:foreground unspecified))))
   :pretty-hydra
   ((:title (pretty-hydra-title "Org Template" 'fileicon "org" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
-    :color blue :quit-key "q")
+    :color blue :quit-key ("q" "C-g"))
    ("Basic"
     (("a" (hot-expand "<a") "ascii")
      ("c" (hot-expand "<c") "center")
@@ -147,7 +146,7 @@ prepended to the element after the #+HEADER: tag."
                              (?C . success))
 
         ;; Agenda styling
-        org-agenda-files `(,centaur-org-directory)
+        org-agenda-files (list centaur-org-directory)
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
@@ -332,6 +331,7 @@ prepended to the element after the #+HEADER: tag."
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
+    (add-to-list 'org-agenda-files (format "%s/%s" org-roam-directory "roam"))
 
     (when emacs/>=27p
       (use-package org-roam-ui

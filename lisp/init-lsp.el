@@ -52,36 +52,8 @@
    (use-package lsp-mode
      :diminish
      :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
-     :commands (lsp-enable-which-key-integration
-                lsp-format-buffer
-                lsp-organize-imports
-                lsp-install-server)
-     :custom-face
-     (lsp-headerline-breadcrumb-path-error-face
-      ((t :underline (:style wave :color ,(face-foreground 'error))
-          :inherit lsp-headerline-breadcrumb-path-face)))
-     (lsp-headerline-breadcrumb-path-warning-face
-      ((t :underline (:style wave :color ,(face-foreground 'warning))
-          :inherit lsp-headerline-breadcrumb-path-face)))
-     (lsp-headerline-breadcrumb-path-info-face
-      ((t :underline (:style wave :color ,(face-foreground 'success))
-          :inherit lsp-headerline-breadcrumb-path-face)))
-     (lsp-headerline-breadcrumb-path-hint-face
-      ((t :underline (:style wave :color ,(face-foreground 'success))
-          :inherit lsp-headerline-breadcrumb-path-face)))
-
-     (lsp-headerline-breadcrumb-symbols-error-face
-      ((t :inherit lsp-headerline-breadcrumb-symbols-face
-          :underline (:style wave :color ,(face-foreground 'error)))))
-     (lsp-headerline-breadcrumb-symbols-warning-face
-      ((t :inherit lsp-headerline-breadcrumb-symbols-face
-          :underline (:style wave :color ,(face-foreground 'warning)))))
-     (lsp-headerline-breadcrumb-symbols-info-face
-      ((t :inherit lsp-headerline-breadcrumb-symbols-face
-          :underline (:style wave :color ,(face-foreground 'success)))))
-     (lsp-headerline-breadcrumb-symbols-hint-face
-      ((t :inherit lsp-headerline-breadcrumb-symbols-face
-          :underline (:style wave :color ,(face-foreground 'success)))))
+     :autoload lsp-enable-which-key-integration
+     :commands (lsp-format-buffer lsp-organize-imports)
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                              (lsp-deferred))))
@@ -91,7 +63,7 @@
                           (lsp-enable-which-key-integration)
 
                           ;; Format and organize imports
-                          (unless (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes)
+                          (unless (or (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes) centaur-lsp-format-disable-on-save)
                             (add-hook 'before-save-hook #'lsp-format-buffer t t)
                             (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
      :bind (:map lsp-mode-map
@@ -165,7 +137,7 @@
      (lsp-ui-sideline-code-action ((t (:inherit warning))))
      :pretty-hydra
      ((:title (pretty-hydra-title "LSP UI" 'faicon "rocket" :face 'all-the-icons-green)
-       :color amaranth :quit-key "q")
+       :color amaranth :quit-key ("q" "C-g"))
       ("Doc"
        (("d e" (progn
                  (lsp-ui-doc-enable (not lsp-ui-doc-mode))
@@ -235,7 +207,7 @@
        (setq lsp-ui-doc-border
              (if (facep 'posframe-border)
                  (face-background 'posframe-border nil t)
-               (face-foreground 'shadow nil t))))
+               (face-background 'region nil t))))
      (my-lsp-ui-doc-set-border)
      (add-hook 'after-load-theme-hook #'my-lsp-ui-doc-set-border t)
      :config
@@ -288,7 +260,7 @@
                              ;; :align-to is added with lsp-ui-doc--fix-hr-props
                              'display '(space :height (1))
                              'lsp-ui-doc--replace-hr t
-                             'face `(:background ,(face-foreground 'font-lock-comment-face)))
+                             'face `(:background ,(face-foreground 'font-lock-comment-face nil t)))
                  ;; :align-to is added here too
                  (propertize " " 'display '(space :height (1)))
                  (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))

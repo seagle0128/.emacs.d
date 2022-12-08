@@ -127,7 +127,7 @@
          ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs" :face 'all-the-icons-purple :v-adjust -0.1)
-    :color amaranth :quit-key "q")
+    :color amaranth :quit-key ("q" "C-g"))
    ("Icon"
     (("i" (setq doom-modeline-icon (not doom-modeline-icon))
       "display icons" :toggle doom-modeline-icon)
@@ -413,18 +413,12 @@
 ;; Child frame
 (when (childframe-workable-p)
   (use-package posframe
-    :hook ((after-load-theme . posframe-delete-all)
-           ((after-load-theme server-after-make-frame) . my-set-posframe-faces))
+    :hook (after-load-theme . posframe-delete-all)
     :init
     (defface posframe-border
-      `((t (:background ,(face-foreground 'shadow nil t))))
+      `((t (:inherit region)))
       "Face used by the `posframe' border."
       :group 'posframe)
-
-    (defun my-set-posframe-faces ()
-      "Set `posframe' faces."
-      (custom-set-faces
-       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions

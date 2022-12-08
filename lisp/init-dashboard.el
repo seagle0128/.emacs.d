@@ -44,7 +44,7 @@
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :pretty-hydra
     ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.2 :v-adjust -0.2)
-      :color pink :quit-key "q")
+      :color pink :quit-key ("q" "C-g"))
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
        ("H" browse-homepage "homepage" :exit t)
@@ -78,7 +78,12 @@
            ("q" . quit-dashboard)
            ("h" . dashboard-hydra/body)
            ("?" . dashboard-hydra/body))
-    :hook (dashboard-mode . (lambda () (setq-local frame-title-format nil)))
+    :hook (dashboard-mode . (lambda ()
+                              ;; No title
+                              (setq-local frame-title-format nil)
+                              ;; Enable `page-break-lines-mode'
+                              (when (fboundp 'page-break-lines-mode)
+                                (page-break-lines-mode 1))))
     :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
@@ -99,7 +104,6 @@
                                     (registers . "database"))
 
           dashboard-set-footer t
-          dashboard-footer (format "Powered by Vincent Zhang, %s" (format-time-string "%Y"))
           dashboard-footer-icon (cond ((icon-displayable-p)
                                        (all-the-icons-faicon "heart"
                                                              :height 1.1
@@ -151,19 +155,18 @@
           (insert-image spec)
           (insert "\n\n")
           (when title
-            (dashboard-center-line title)
-            (insert (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
+            (dashboard-insert-center
+             (format "%s\n\n" (propertize title 'face 'dashboard-banner-logo-title)))))))
     (advice-add #'dashboard-insert-image-banner :override #'my-dashboard-insert-image-banner)
 
     ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
       "Insert copyright in the footer."
-      (when dashboard-footer
-        (insert "\n  ")
-        (dashboard-center-line dashboard-footer)
-        (insert (propertize dashboard-footer 'face 'font-lock-comment-face))
-        (insert "\n")))
+      (when dashboard-set-footer
+        (dashboard-insert-center
+         (propertize (format "\nPowered by Vincent Zhang, %s\n" (format-time-string "%Y"))
+                     'face 'font-lock-comment-face))))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
     (defun restore-previous-session ()

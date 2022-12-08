@@ -209,7 +209,7 @@
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish
-  :commands drag-stuff-define-keys
+  :autoload drag-stuff-define-keys
   :hook (after-init . drag-stuff-global-mode)
   :config
   (add-to-list 'drag-stuff-except-modes 'org-mode)
@@ -360,7 +360,7 @@
   :diminish hs-minor-mode
   :pretty-hydra
   ((:title (pretty-hydra-title "HideShow" 'octicon "fold" :height 1.1 :v-adjust -0.05)
-    :color amaranth :quit-key "q")
+    :color amaranth :quit-key ("q" "C-g"))
    ("Fold"
     (("t" hs-toggle-all "toggle all")
      ("a" hs-show-all "show all")

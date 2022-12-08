@@ -33,8 +33,7 @@
 ;; Integrate rbenv
 (use-package rbenv
   :hook (after-init . global-rbenv-mode)
-  :init (setq rbenv-show-active-ruby-in-modeline nil
-              rbenv-executable "rbenv"))
+  :init (setq rbenv-show-active-ruby-in-modeline nil))
 
 ;; YAML mode
 (use-package yaml-mode)
@@ -61,7 +60,7 @@
 ;; RSpec
 (use-package rspec-mode
   :diminish
-  :commands rspec-install-snippets
+  :autoload rspec-install-snippets
   :hook (dired-mode . rspec-dired-mode)
   :config (with-eval-after-load 'yasnippet
             (rspec-install-snippets)))

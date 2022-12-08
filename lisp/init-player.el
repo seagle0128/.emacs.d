@@ -69,7 +69,7 @@
 
   ;; MPD Interface
   (use-package mingus
-    :bind ("s-<f8>" . mingus)
+    :bind ("M-<f8>" . mingus)
     :config
     (add-to-list 'global-mode-string mingus-mode-line-object)
     (with-no-warnings
@@ -127,7 +127,7 @@ See function `mingus-help' for instructions.
       (simple-mpc-main-name ((t (:inherit font-lock-string-face :bold t :height 1.3))))
       (simple-mpc-main-headers ((t (:inherit font-lock-keyword-face :bold t :height 1.1))))
       (simple-mpc-current-track-face ((t (:inherit font-lock-keyword-face))))
-      :bind (("M-<f8>" . simple-mpc+)
+      :bind (("s-<f8>" . simple-mpc+)
              :map simple-mpc-mode-map
              ("P" . simple-mpc-play)
              ("O" . simple-mpc-stop)
@@ -210,14 +210,20 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
                                   (info-strs (split-string info))
                                   (state (nth 0 info-strs))
                                   (time (nth 2 info-strs)))
-                        (propertize (format " %s%s [%s] "
-                                            (when (icon-displayable-p)
-                                              (pcase state
-                                                ("[playing]" " ")
-                                                ("[paused]" " ")
-                                                (_ "")))
-                                            title time)
-                                    'face 'font-lock-comment-face))))))
+                        (concat
+                         (when (icon-displayable-p)
+                           (pcase state
+                             ("[playing]"
+                              (concat
+                               " "
+                               (all-the-icons-material "play_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                             ("[paused]"
+                              (concat
+                               " "
+                               (all-the-icons-material "pause_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                             (_ "")))
+                         (propertize (format " %s [%s] " title time)
+                                     'face '(:inherit 'font-lock-comment-face :height 0.9))))))))
           (force-mode-line-update))
 
         (defvar simple-mpc--timer nil)

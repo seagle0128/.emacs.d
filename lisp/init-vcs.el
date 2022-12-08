@@ -91,7 +91,7 @@
     :diminish
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
-    (transient-posframe-border ((t (:inherit posframe-border))))
+    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
@@ -110,8 +110,8 @@
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
-  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
-  (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+  (git-timemachine-minibuffer-author-face ((t (:inherit success :foreground unspecified))))
+  (git-timemachine-minibuffer-detail-face ((t (:inherit warning :foreground unspecified))))
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
   :hook ((git-timemachine-mode . (lambda ()
@@ -228,7 +228,7 @@
   :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "Smerge" 'octicon "diff")
-    :color pink :quit-key "q")
+    :color pink :quit-key ("q" "C-g"))
    ("Move"
     (("n" smerge-next "next")
      ("p" smerge-prev "previous"))

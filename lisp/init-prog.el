@@ -53,7 +53,7 @@
 ;; Search tool
 (use-package grep
   :ensure nil
-  :commands grep-apply-setting
+  :autoload grep-apply-setting
   :config
   (cond
    ((executable-find "ugrep")
@@ -105,7 +105,7 @@
 (use-package dumb-jump
   :pretty-hydra
   ((:title (pretty-hydra-title "Dump Jump" 'faicon "anchor")
-    :color blue :quit-key "q")
+    :color blue :quit-key ("q" "C-g"))
    ("Jump"
     (("j" dumb-jump-go "Go")
      ("o" dumb-jump-go-other-window "Go other window")
@@ -139,7 +139,7 @@
 ;; Browse devdocs.io documents using EWW
 (when emacs/>=27p
   (use-package devdocs
-    :commands (devdocs--installed-docs devdocs--available-docs)
+    :autoload (devdocs--installed-docs devdocs--available-docs)
     :bind (:map prog-mode-map
            ("M-<f1>" . devdocs-dwim)
            ("C-h D"  . devdocs-dwim))
@@ -194,14 +194,15 @@ Install the doc if it's not installed."
 (when emacs/>=27p
   (use-package csv-mode))
 
+(unless emacs/>=29p
+  (use-package csharp-mode))
+
 (use-package cask-mode)
 (use-package cmake-mode)
-(use-package csharp-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
 (use-package plantuml-mode)
-(use-package powershell)
 (use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)

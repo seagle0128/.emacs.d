@@ -119,7 +119,7 @@
   (use-package eshell-prompt-extras
     :after esh-opt
     :defines eshell-highlight-prompt
-    :commands (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
+    :autoload (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
     :init (setq eshell-highlight-prompt nil
                 eshell-prompt-function #'epe-theme-lambda))
 

@@ -41,7 +41,7 @@
          ("h"         . xwidget-hydra/body))
   :pretty-hydra
   ((:title (pretty-hydra-title "Webkit" 'faicon "chrome" :face 'all-the-icons-blue)
-    :color amaranth :quit-key "q")
+    :color amaranth :quit-key ("q" "C-g"))
    ("Navigate"
     (("b" xwidget-webkit-back "back")
      ("f" xwidget-webkit-forward "forward")
@@ -119,9 +119,11 @@
 
 ;; Format HTML, CSS and JavaScript/JSON
 ;; Install: npm -g install prettier
-(use-package prettier
-  :diminish
-  :hook ((js-mode js2-mode css-mode sgml-mode web-mode) . prettier-mode))
+(when (executable-find "prettier")
+  (use-package prettier
+    :diminish
+    :hook ((js-mode js2-mode css-mode sgml-mode web-mode) . prettier-mode)
+    :init (setq prettier-pre-warm 'none)))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

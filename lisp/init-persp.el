@@ -37,7 +37,7 @@
 (use-package persp-mode
   :diminish
   :defines (recentf-exclude ivy-ignore-buffers)
-  :commands (get-current-persp persp-contain-buffer-p)
+  :autoload (get-current-persp persp-contain-buffer-p)
   :hook ((after-init . persp-mode)
          (persp-mode . persp-load-frame)
          (kill-emacs . persp-save-frame))
@@ -156,7 +156,7 @@
 ;; Projectile integration
 (use-package persp-mode-projectile-bridge
   :after (persp-mode projectile)
-  :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
+  :autoload (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives)
   :hook ((after-init . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode

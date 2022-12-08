@@ -58,7 +58,7 @@
 (use-package ace-window
   :pretty-hydra
   ((:title (pretty-hydra-title "Window Management" 'faicon "th" :height 1.1 :v-adjust -0.1)
-    :foreign-keys warn :quit-key "q")
+    :foreign-keys warn :quit-key ("q" "C-g"))
    ("Actions"
     (("TAB" other-window "switch")
      ("x" ace-delete-window "delete" :exit t)
@@ -88,7 +88,7 @@
     (("F" set-frame-font "font")
      ("T" centaur-load-theme "theme"))))
   :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 3.0))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :foreground unspecified :bold t :height 3.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind (([remap other-window] . ace-window)
@@ -147,7 +147,7 @@
 ;; Enforce rules for popups
 (use-package popper
   :defines popper-echo-dispatch-actions
-  :commands popper-group-by-projectile
+  :autoload popper-group-by-projectile
   :bind (:map popper-mode-map
          ("C-h z"     . popper-toggle-latest)
          ("C-<tab>"   . popper-cycle)
@@ -215,14 +215,20 @@
   (with-eval-after-load 'projectile
     (setq popper-group-function #'popper-group-by-projectile))
 
-  (when (display-grayscale-p)
+  (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
-          '(:eval (format " %s "
-                          (all-the-icons-octicon
-                           "pin"
-                           :height 0.9
-                           :v-adjust 0.0
-                           :face 'mode-line-emphasis)))))
+          '(:eval (let ((face (if (doom-modeline--active)
+                                  'mode-line-emphasis
+                                'mode-line-inactive)))
+                    (if (and (icon-displayable-p)
+                             (bound-and-true-p doom-modeline-mode))
+                        (format " %s "
+                                (all-the-icons-octicon
+                                 "pin"
+                                 :height 0.9
+                                 :v-adjust 0.0
+                                 :face face))
+                      (propertize " POP" 'face face))))))
 
   (setq popper-echo-dispatch-actions t)
   :config

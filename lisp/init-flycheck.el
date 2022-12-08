@@ -35,7 +35,7 @@
 
 (use-package flycheck
   :diminish
-  :commands flycheck-redefine-standard-error-levels
+  :autoload flycheck-redefine-standard-error-levels
   :hook (after-init . global-flycheck-mode)
   :init (setq flycheck-global-modes
               '(not text-mode outline-mode fundamental-mode lisp-interaction-mode

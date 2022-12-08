@@ -33,7 +33,7 @@
 ;; Golang
 (use-package go-mode
   :functions go-update-tools
-  :commands godoc-gogetdoc
+  :autoload godoc-gogetdoc
   :bind (:map go-mode-map
          ("C-c R" . go-remove-unused-imports)
          ("<f1>"  . godoc-at-point))
@@ -118,7 +118,7 @@
 ;; Local Golang playground for short snippets
 (use-package go-playground
   :diminish
-  :commands (go-playground-mode))
+  :commands go-playground-mode)
 
 (provide 'init-go)
 
