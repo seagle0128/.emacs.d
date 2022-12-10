@@ -228,6 +228,9 @@ prepended to the element after the #+HEADER: tag."
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-alist))
 
+  (use-package ob-powershell
+    :init (cl-pushnew '(powershell . t) load-language-alist))
+
   (use-package ob-rust
     :init (cl-pushnew '(rust . t) load-language-alist))
 
