@@ -32,6 +32,14 @@
 
 (require 'init-custom)
 
+;; eww
+(use-package eww
+  :ensure nil
+  :init
+  ;; Install: npm install -g readability-cli
+  (when (executable-find "readable")
+    (setq eww-retrieve-command '("readable"))))
+
 ;; Webkit browser
 (use-package xwidget
   :ensure nil
