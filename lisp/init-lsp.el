@@ -124,13 +124,7 @@
                                      :face face)
            (propertize fallback 'face face)))
        (advice-add #'lsp-icons-all-the-icons-material-icon
-                   :override #'my-lsp-icons-all-the-icons-material-icon))
-
-     (defun lsp-update-server ()
-       "Update LSP server."
-       (interactive)
-       ;; Equals to `C-u M-x lsp-install-server'
-       (lsp-install-server t)))
+                   :override #'my-lsp-icons-all-the-icons-material-icon)))
 
    (use-package lsp-ui
      :custom-face
