@@ -1,10 +1,10 @@
-# This dockerfile is for Centaur Emacs with snapshot
+# This dockerfile is for Centaur Emacs with 28
 # VERSION 1.3.0
 # Author: Vincent Zhang <seagle0128@gmail.com>
 # Command format: Instruction [arguments / command] ..
 
 # Base image to use
-FROM ubuntu
+FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Commands to update the image
@@ -15,9 +15,9 @@ RUN apt-get upgrade -y
 RUN apt-get install -y software-properties-common git
 
 # Install Centaur Emacs
-RUN add-apt-repository -y ppa:ubuntu-elisp/ppa
+RUN add-apt-repository -y ppa:kelleyk/emacs
 RUN apt-get update
-RUN apt-get install -y emacs-snapshot-nox
+RUN apt-get install -y emacs28-nox
 RUN git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 
 ENV TERM xterm-256color

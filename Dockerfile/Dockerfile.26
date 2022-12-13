@@ -1,5 +1,5 @@
 # This dockerfile is for Centaur Emacs with 26
-# VERSION 1.2.0
+# VERSION 1.3.0
 # Author: Vincent Zhang <seagle0128@gmail.com>
 # Command format: Instruction [arguments / command] ..
 
