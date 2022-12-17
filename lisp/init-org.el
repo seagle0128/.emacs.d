@@ -340,6 +340,7 @@ prepended to the element after the #+HEADER: tag."
 
     (when emacs/>=27p
       (use-package org-roam-ui
+        :bind ("C-c n u" . org-roam-ui-mode)
         :init
         (when (featurep 'xwidget-internal)
           (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))))))
