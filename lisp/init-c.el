@@ -37,8 +37,9 @@
   :ensure nil
   :bind (:map c-mode-base-map
          ("<f12>" . compile))
-  :hook (c-mode-common . (lambda () (c-set-style "stroustrup")))
-  :init (setq-default c-basic-offset 4)
+  :init
+  (setq c-default-style "stroustrup")
+  (setq-default c-basic-offset 4)
   :config
   (use-package modern-cpp-font-lock
     :diminish
