@@ -231,6 +231,12 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
        (or (featurep 'all-the-icons)
            (require 'all-the-icons nil t))))
 
+(defun centaur-treesit-available-p ()
+  "Check whether tree-sitter is available.
+Native tree-sitter is introduced since 29."
+  (and (fboundp 'treesit-available-p)
+       (treesit-available-p)))
+
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 

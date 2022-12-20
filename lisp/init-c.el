@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(require 'init-funcs)
+
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil
@@ -41,6 +43,11 @@
   (use-package modern-cpp-font-lock
     :diminish
     :init (modern-c++-font-lock-global-mode t)))
+
+(use-package c-ts-mode
+  :ensure nil
+  :when (centaur-treesit-available-p)
+  :init (setq c-ts-mode-indent-offset 4))
 
 (provide 'init-c)
 
