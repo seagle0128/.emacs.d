@@ -63,7 +63,8 @@
                           (lsp-enable-which-key-integration)
 
                           ;; Format and organize imports
-                          (unless (or (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes) centaur-lsp-format-disable-on-save)
+                          (when (and centaur-lsp-format-on-save
+                                     (not (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes)))
                             (add-hook 'before-save-hook #'lsp-format-buffer t t)
                             (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
      :bind (:map lsp-mode-map

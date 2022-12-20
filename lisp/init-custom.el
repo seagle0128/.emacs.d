@@ -211,8 +211,8 @@ Native tree-sitter is introduced in 29."
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-lsp-format-disable-on-save nil
-  "Disable auto formatting for all files."
+(defcustom centaur-lsp-format-on-save nil
+  "Auto format buffers on save."
   :group 'centaur
   :type 'boolean)
 
