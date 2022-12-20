@@ -34,7 +34,7 @@
 (use-package cc-mode
   :ensure nil
   :bind (:map c-mode-base-map
-         ("C-c c" . compile))
+         ("<f12>" . compile))
   :hook (c-mode-common . (lambda () (c-set-style "stroustrup")))
   :init (setq-default c-basic-offset 4)
   :config
