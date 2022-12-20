@@ -42,13 +42,32 @@
   (setq-default prettify-symbols-alist centaur-prettify-symbols-alist)
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
-;; Tree-sitter: need dynamic module feature
-(when (and centaur-tree-sitter (functionp 'module-load))
-  (use-package tree-sitter
-    :ensure tree-sitter-langs
-    :diminish
-    :hook ((after-init . global-tree-sitter-mode)
-           (tree-sitter-after-on . tree-sitter-hl-mode))))
+;; Tree-sitter support
+;; @see https://github.com/casouri/tree-sitter-module
+;;      https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
+(use-package treesit
+  :ensure nil
+  :when centaur-tree-sitter
+  :init
+  (mapc
+   (lambda (mode)
+     (add-to-list 'major-mode-remap-alist mode))
+   '((c-mode          . c-ts-mode)
+     (c++-mode        . c++-ts-mode)
+     (cmake-mode      . cmake-ts-mode)
+     (conf-toml-mode  . toml-ts-mode)
+     (csharp-mode     . csharp-ts-mode)
+     (css-mode        . css-ts-mode)
+     (dockerfile-mode . dockerfile-ts-mode)
+     (go-mode         . go-ts-mode)
+     (java-mode       . java-ts-mode)
+     (js-mode         . js-ts-mode)
+     (js2-mode        . js-ts-mode)
+     (json-mode       . json-ts-mode)
+     (python-mode     . python-ts-mode)
+     (sh-mode         . bash-ts-mode)
+     (toml-mode       . toml-ts-mode)
+     (typescript-mode . typescript-ts-mode))))
 
 ;; Search tool
 (use-package grep

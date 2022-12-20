@@ -204,13 +204,14 @@ nil means disabled."
                  (const :tag "Eglot" eglot)
                  (const :tag "Disable" nil)))
 
-(defcustom centaur-tree-sitter nil
-  "Enable `tree-sitter' or not."
+(defcustom centaur-tree-sitter
+  (and (fboundp 'treesit-available-p) (treesit-available-p))
+  "Enable tree-sitter or not.
+Native tree-sitter is introduced in 29."
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-lsp-format-disable-on-save
-  nil
+(defcustom centaur-lsp-format-disable-on-save nil
   "Disable auto formatting for all files."
   :group 'centaur
   :type 'boolean)
@@ -218,8 +219,7 @@ nil means disabled."
 (defcustom centaur-lsp-format-on-save-ignore-modes
   '(c-mode c++-mode python-mode markdown-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
-`prog-mode' means ignoring all derived modes.
-"
+`prog-mode' means ignoring all derived modes."
   :group 'centaur
   :type '(repeat (symbol :tag "Major-Mode")))
 
