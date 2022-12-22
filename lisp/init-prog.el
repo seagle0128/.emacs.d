@@ -48,26 +48,23 @@
 (use-package treesit
   :ensure nil
   :when centaur-tree-sitter
-  :init
-  (mapc
-   (lambda (mode)
-     (add-to-list 'major-mode-remap-alist mode))
-   '((c-mode          . c-ts-mode)
-     (c++-mode        . c++-ts-mode)
-     (cmake-mode      . cmake-ts-mode)
-     (conf-toml-mode  . toml-ts-mode)
-     (csharp-mode     . csharp-ts-mode)
-     (css-mode        . css-ts-mode)
-     (dockerfile-mode . dockerfile-ts-mode)
-     (go-mode         . go-ts-mode)
-     (java-mode       . java-ts-mode)
-     (js-mode         . js-ts-mode)
-     (js2-mode        . js-ts-mode)
-     (json-mode       . json-ts-mode)
-     (python-mode     . python-ts-mode)
-     (sh-mode         . bash-ts-mode)
-     (toml-mode       . toml-ts-mode)
-     (typescript-mode . typescript-ts-mode))))
+  :init (setq major-mode-remap-alist
+              '((c-mode          . c-ts-mode)
+                (c++-mode        . c++-ts-mode)
+                (cmake-mode      . cmake-ts-mode)
+                (conf-toml-mode  . toml-ts-mode)
+                (csharp-mode     . csharp-ts-mode)
+                (css-mode        . css-ts-mode)
+                (dockerfile-mode . dockerfile-ts-mode)
+                (go-mode         . go-ts-mode)
+                (java-mode       . java-ts-mode)
+                (js-mode         . js-ts-mode)
+                (js2-mode        . js-ts-mode)
+                (json-mode       . json-ts-mode)
+                (python-mode     . python-ts-mode)
+                (sh-mode         . bash-ts-mode)
+                (toml-mode       . toml-ts-mode)
+                (typescript-mode . typescript-ts-mode))))
 
 ;; Search tool
 (use-package grep
