@@ -32,6 +32,7 @@
 
 (require 'init-custom)
 (require 'init-const)
+(require 'init-funcs)
 
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
@@ -47,7 +48,7 @@
 ;;      https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
 (use-package treesit
   :ensure nil
-  :when centaur-tree-sitter
+  :when (and centaur-tree-sitter (centaur-treesit-available-p))
   :init (setq major-mode-remap-alist
               '((c-mode          . c-ts-mode)
                 (c++-mode        . c++-ts-mode)

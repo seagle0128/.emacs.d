@@ -204,8 +204,7 @@ nil means disabled."
                  (const :tag "Eglot" eglot)
                  (const :tag "Disable" nil)))
 
-(defcustom centaur-tree-sitter
-  (and (fboundp 'treesit-available-p) (treesit-available-p))
+(defcustom centaur-tree-sitter t
   "Enable tree-sitter or not.
 Native tree-sitter is introduced in 29."
   :group 'centaur
