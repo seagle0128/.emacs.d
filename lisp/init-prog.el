@@ -64,7 +64,6 @@
                 (json-mode       . json-ts-mode)
                 (python-mode     . python-ts-mode)
                 (sh-mode         . bash-ts-mode)
-                (toml-mode       . toml-ts-mode)
                 (typescript-mode . typescript-ts-mode))))
 
 ;; Search tool
@@ -234,10 +233,6 @@ Install the doc if it's not installed."
 (use-package nxml-mode
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
-
-;; New `conf-toml-mode' in Emacs 26
-(unless (fboundp 'conf-toml-mode)
-  (use-package toml-mode))
 
 ;; Batch Mode eXtras
 (use-package bmx-mode
