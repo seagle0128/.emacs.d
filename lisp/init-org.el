@@ -332,7 +332,10 @@ prepended to the element after the #+HEADER: tag."
            ("C-c n c" . org-roam-capture)
            ("C-c n j" . org-roam-dailies-capture-today))
     :init
-    (setq org-roam-directory (file-truename centaur-org-directory))
+    (setq org-roam-directory (file-truename centaur-org-directory)
+          org-roam-graph-viewer (if (featurep 'xwidget-internal)
+                                    #'xwidget-webkit-browse-url
+                                  #'browse-url))
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
