@@ -258,6 +258,7 @@
            completion-in-region-mode
            eshell-mode shell-mode
            term-mode vterm-mode
+           lsp-ui-imenu-mode
            pdf-annot-list-mode) . hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line

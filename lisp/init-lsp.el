@@ -192,6 +192,7 @@
      (setq lsp-ui-sideline-show-diagnostics nil
            lsp-ui-sideline-ignore-duplicate t
            lsp-ui-doc-delay 0.1
+           lsp-ui-imenu-auto-refresh 'after-save
            lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                  ,(face-foreground 'font-lock-string-face)
                                  ,(face-foreground 'font-lock-constant-face)
