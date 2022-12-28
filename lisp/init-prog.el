@@ -215,6 +215,7 @@ Install the doc if it's not installed."
 
 (use-package cask-mode)
 (use-package cmake-mode)
+(use-package groovy-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
