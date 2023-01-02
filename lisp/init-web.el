@@ -93,7 +93,8 @@
   (use-package less-css-mode))
 
 ;; JSON mode
-(use-package json-mode)
+(unless (fboundp 'js-json-mode)
+  (use-package json-mode))
 
 ;; JavaScript
 (use-package js2-mode
