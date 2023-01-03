@@ -60,9 +60,10 @@
                 (go-mode         . go-ts-mode)
                 (java-mode       . java-ts-mode)
                 (js-mode         . js-ts-mode)
-                (js2-mode        . js-ts-mode)
+                (js-json-mode    . json-ts-mode)
                 (json-mode       . json-ts-mode)
                 (python-mode     . python-ts-mode)
+                (rust-mode       . rust-ts-mode)
                 (sh-mode         . bash-ts-mode)
                 (typescript-mode . typescript-ts-mode))))
 
