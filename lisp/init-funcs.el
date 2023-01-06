@@ -597,15 +597,13 @@ If SYNC is non-nil, the updating process is synchronous."
                  system
                  ,@(mapcar #'car centaur-theme-alist))
                :preselect (symbol-name centaur-theme)))))
-  ;; Set option
-  (centaur-set-variable 'centaur-theme theme no-save)
 
   ;; Disable system theme
   (when (bound-and-true-p auto-dark-mode)
     (setq auto-dark--last-dark-mode-state 'unknown)
     (auto-dark-mode -1))
 
-  (pcase centaur-theme
+  (pcase theme
     ('auto
      ;; Time-switching themes
      (use-package circadian
@@ -624,7 +622,10 @@ If SYNC is non-nil, the updating process is synchronous."
     ('random
      (centaur-load-random-theme))
     (_
-     (centaur--load-theme theme))))
+     (centaur--load-theme theme)))
+
+  ;; Set option
+  (centaur-set-variable 'centaur-theme theme no-save))
 
 
 
