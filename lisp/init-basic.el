@@ -257,6 +257,10 @@
            ("C-x K"   . delete-this-file)
            ("C-c C-l" . reload-init-file))
 
+;; Sqlite
+(when emacs/>=29p
+  (use-package emacsql-sqlite-builtin))
+
 (provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
