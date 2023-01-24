@@ -69,71 +69,7 @@
 
   ;; MPD Interface
   (use-package mingus
-    :bind ("M-<f8>" . mingus)
-    :config
-    (with-no-warnings
-      ;; Fix "timer already activated" error
-      (defun mingus (&optional set-variables)
-        "MPD Interface by Niels Giesen, Useful and Simple.
-
-Actually it is just named after that great bass player."
-        (interactive "P")
-        (when set-variables
-          (call-interactively 'mingus-set-variables-interactively))
-        (mingus-switch-to-playlist)
-        (add-to-list 'global-mode-string mingus-mode-line-object)
-        (unless (timerp mingus-timer)
-          (setq mingus-timer (run-with-idle-timer mingus-timer-interval
-                                                  mingus-timer-interval
-                                                  'mingus-timer-handler)))
-        (mingus-playlist))
-
-      ;; FIXME: Remove once https://github.com/pft/mingus/pull/44 is merged.
-      ;; Redefine major modes
-      (define-derived-mode mingus-help-mode special-mode "Mingus-help"
-        "Help screen for `mingus'.
-
-\\{mingus-help-map}"
-        (set (make-local-variable 'font-lock-defaults)
-             '(mingus-help-font-lock-keywords))
-        (setq buffer-undo-list t)
-        (font-lock-mode t)
-        (use-local-map mingus-help-map)
-        (setq buffer-read-only t))
-
-      (define-derived-mode mingus-playlist-mode special-mode "Mingus-playlist"
-        "Mingus playlist mode.
-
-See function `mingus-help' for instructions.
-\\{mingus-playlist-map}"
-        (use-local-map mingus-playlist-map)
-        (setq buffer-undo-list t)
-        (delete-all-overlays)
-        (font-lock-mode -1)
-        (setq buffer-read-only t)
-        (setq left-fringe-width 16)
-        (run-hooks 'mingus-playlist-hooks))
-
-      (define-derived-mode mingus-browse-mode special-mode "Mingus-browse"
-        "Mingus browse mode.
-
-\\{mingus-browse-map}"
-        (let ((res mingus-last-query-results))
-          (use-local-map mingus-browse-map)
-          (setq buffer-undo-list t)
-          (delete-all-overlays)
-          (run-hooks 'mingus-browse-hook)
-          (set (make-local-variable '*mingus-positions*) nil)
-          (setq buffer-read-only t)
-          (setq mingus-last-query-results res)))
-
-      (define-derived-mode mingus-burn-mode special-mode "Mingus-burns"
-        "Mingus burning mode.
-
-\\{mingus-burnin-mode-map}"
-        (setq buffer-undo-list t)
-        (use-local-map mingus-burnin-map)
-        (setq buffer-read-only t))))
+    :bind ("M-<f8>" . mingus))
 
   ;; Simple mpd client
   (when (executable-find "mpc")
