@@ -43,7 +43,7 @@
 (declare-function chart-bar-quickie 'chart)
 (declare-function flycheck-buffer 'flycheck)
 (declare-function flymake-start 'flymake)
-(declare-function upgrade-packages 'init-package)
+(declare-function xwidget-webkit-current-session 'xwidget)
 
 
 
@@ -382,14 +382,16 @@ If SYNC is non-nil, the updating process is synchronous."
                   ,(async-inject-variables "\\`\\(load-path\\)\\'")
                   (require 'init-funcs)
                   (require 'init-package)
-                  (upgrade-packages)
-                  (with-current-buffer auto-package-update-buffer-name
-                    (buffer-string)))
+                  (package-update-all)
+                  (and (bound-and-true-p auto-package-update-buffer-name)
+                       (buffer-live-p auto-package-update-buffer-name)
+                       (with-current-buffer auto-package-update-buffer-name
+                         (buffer-string))))
                (lambda (result)
                  (setq centaur--updating-packages nil)
-                 (message "%s" result)
+                 (and result (message "%s" result))
                  (message "Updating packages...done"))))
-      (upgrade-packages)
+      (package-update-all)
       (message "Updating packages...done"))))
 (defalias 'centaur-update-packages #'update-packages)
 
@@ -419,11 +421,13 @@ If SYNC is non-nil, the updating process is synchronous."
                   (require 'init-package)
                   (update-config)
                   (update-packages nil t)
-                  (with-current-buffer auto-package-update-buffer-name
-                    (buffer-string)))
+                  (and (bound-and-true-p auto-package-update-buffer-name)
+                       (buffer-live-p auto-package-update-buffer-name)
+                       (with-current-buffer auto-package-update-buffer-name
+                         (buffer-string))))
                (lambda (result)
                  (setq centaur--updating nil)
-                 (message "%s" result)
+                 (and result (message "%s" result))
                  (message "Updating Centaur Emacs...done"))))
       (update-config)
       (update-packages nil t)
