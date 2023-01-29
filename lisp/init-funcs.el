@@ -620,9 +620,7 @@ If SYNC is non-nil, the updating process is synchronous."
        :init
        (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
              auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
-       (auto-dark-mode 1)
-       (when (bound-and-true-p ns-system-appearance)
-         (centaur--load-system-theme ns-system-appearance))))
+       (auto-dark-mode 1)))
     ('random
      (centaur-load-random-theme))
     (_
