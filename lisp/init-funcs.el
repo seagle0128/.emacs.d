@@ -617,6 +617,7 @@ If SYNC is non-nil, the updating process is synchronous."
     ('system
      ;; System-appearance themes
      (use-package auto-dark
+       :diminish
        :init
        (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
              auto-dark-dark-theme (alist-get 'dark centaur-system-themes))

@@ -597,6 +597,7 @@
 ;; Display completion in child frame
 (when (childframe-completion-workable-p)
   (use-package ivy-posframe
+    :diminish
     :custom-face
     (ivy-posframe-border ((t (:inherit posframe-border))))
     :hook (ivy-mode . ivy-posframe-mode)
