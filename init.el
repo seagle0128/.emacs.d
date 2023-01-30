@@ -74,13 +74,14 @@
             (setq gc-cons-threshold 800000)))
 
 ;; Suppress flashing at startup
-(setq-default inhibit-redisplay t
-              inhibit-message t)
-(add-hook 'window-setup-hook
-          (lambda ()
-            (setq-default inhibit-redisplay nil
-                          inhibit-message nil)
-            (redisplay)))
+(unless (length> command-line-args 1)
+  (setq-default inhibit-redisplay t
+                inhibit-message t)
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (setq-default inhibit-redisplay nil
+                            inhibit-message nil)
+              (redisplay))))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
