@@ -53,35 +53,52 @@
 (when (version< emacs-version "26.1")
   (error "This requires Emacs 26.1 and above!"))
 
+;;
 ;; Speed up startup
+;;
+
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Don't pass case-insensitive to `auto-mode-alist'
 (setq auto-mode-case-fold nil)
 
 (unless (or (daemonp) noninteractive init-file-debug)
-  (let ((old-file-name-handler-alist file-name-handler-alist))
+  ;; Suppress file handlers operations at startup
+  ;; `file-name-handler-alist' is consulted on each call to `require' and `load'
+  (let ((old-value file-name-handler-alist))
     (setq file-name-handler-alist nil)
+    (set-default-toplevel-value 'file-name-handler-alist file-name-handler-alist)
+    (put 'file-name-handler-alist 'initial-value old-value)
     (add-hook 'emacs-startup-hook
               (lambda ()
                 "Recover file name handlers."
                 (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist
-                                           old-file-name-handler-alist)))))))
+                      (delete-dups (append file-name-handler-alist old-value))))
+              101))
 
-;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            "Recover GC values after startup."
-            (setq gc-cons-threshold 800000)))
+  ;; Prevent flash of unstyled modeline at startup
+  (put 'mode-line-format 'initial-value (default-toplevel-value 'mode-line-format))
+  (setq-default mode-line-format nil)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf (setq mode-line-format nil)))
 
-;; Suppress flashing at startup
-(unless (length> command-line-args 1)
+  ;; Prevent flash of messages at startup
   (setq-default inhibit-redisplay t
                 inhibit-message t)
   (add-hook 'window-setup-hook
             (lambda ()
               (setq-default inhibit-redisplay nil
                             inhibit-message nil)
-              (redisplay))))
+              (redraw-frame)))
+
+  (define-advice startup--load-user-iFnit-file (:after (&rest _) undo-inhibit-vars)
+    (when init-file-had-error
+      (setq-default inhibit-redisplay nil
+                    inhibit-message nil)
+      (redraw-frame))
+    (unless (default-toplevel-value 'mode-line-format)
+      (setq-default mode-line-format (get 'mode-line-format 'initial-value)))))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
