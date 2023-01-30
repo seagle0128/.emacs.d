@@ -258,7 +258,7 @@
            ("C-c C-l" . reload-init-file))
 
 ;; Sqlite
-(when emacs/>=29p
+(when (fboundp 'sqlite-open)
   (use-package emacsql-sqlite-builtin
     :defines emacsql-sqlite-c-compilers
     :init (setq emacsql-sqlite-c-compilers nil)))
