@@ -446,6 +446,10 @@
   :diminish
   :hook (after-init . fancy-narrow-mode))
 
+;; Hanlde minified code
+(use-package so-long
+  :hook (after-init . global-so-long-mode))
+
 (provide 'init-edit)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

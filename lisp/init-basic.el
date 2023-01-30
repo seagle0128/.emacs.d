@@ -207,14 +207,6 @@
 		          tabulated-list-entries)))))
     (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
 
-(use-package time
-  :ensure nil
-  :init (setq display-time-24hr-format t
-              display-time-day-and-date t))
-
-(use-package so-long
-  :hook (after-init . global-so-long-mode))
-
 ;; Misc
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)

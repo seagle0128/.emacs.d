@@ -372,6 +372,11 @@
          ("C-s--" . default-text-scale-decrease)
          ("C-s-0" . default-text-scale-reset)))
 
+(use-package time
+  :ensure nil
+  :init (setq display-time-24hr-format t
+              display-time-day-and-date t))
+
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
 (when (display-graphic-p)
