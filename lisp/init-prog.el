@@ -44,28 +44,9 @@
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Tree-sitter support
-;; @see https://github.com/casouri/tree-sitter-module
-;;      https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
-(use-package treesit
-  :ensure nil
-  :when (and centaur-tree-sitter (centaur-treesit-available-p))
-  :init (setq major-mode-remap-alist
-              '((c-mode          . c-ts-mode)
-                (c++-mode        . c++-ts-mode)
-                (cmake-mode      . cmake-ts-mode)
-                (conf-toml-mode  . toml-ts-mode)
-                (csharp-mode     . csharp-ts-mode)
-                (css-mode        . css-ts-mode)
-                (dockerfile-mode . dockerfile-ts-mode)
-                (go-mode         . go-ts-mode)
-                (java-mode       . java-ts-mode)
-                (json-mode       . json-ts-mode)
-                (js-json-mode    . json-ts-mode)
-                (js-mode         . js-ts-mode)
-                (python-mode     . python-ts-mode)
-                (rust-mode       . rust-ts-mode)
-                (sh-mode         . bash-ts-mode)
-                (typescript-mode . typescript-ts-mode))))
+(when (and centaur-tree-sitter (centaur-treesit-available-p))
+  (use-package treesit-auto
+    :hook (after-init . global-treesit-auto-mode)))
 
 ;; Search tool
 (use-package grep
