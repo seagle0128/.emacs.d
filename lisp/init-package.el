@@ -101,7 +101,7 @@
   :custom-face
   (paradox-archive-face ((t (:inherit font-lock-doc-face))))
   (paradox-description-face ((t (:inherit completions-annotations))))
-  :hook (after-init . paradox-enable)
+  :hook (emacs-startup . paradox-enable)
   :init (setq paradox-execute-asynchronously t
               paradox-github-token t
               paradox-display-star-count nil

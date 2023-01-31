@@ -1,4 +1,4 @@
-;; init-basic.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; init-base.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2022 Vincent Zhang
 
@@ -255,7 +255,7 @@
     :defines emacsql-sqlite-c-compilers
     :init (setq emacsql-sqlite-c-compilers nil)))
 
-(provide 'init-basic)
+(provide 'init-base)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-basic.el ends here
+;;; init-base.el ends here

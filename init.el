@@ -92,7 +92,7 @@
                             inhibit-message nil)
               (redraw-frame)))
 
-  (define-advice startup--load-user-iFnit-file (:after (&rest _) undo-inhibit-vars)
+  (define-advice startup--load-user-init-file (:after (&rest _) undo-inhibit-vars)
     (when init-file-had-error
       (setq-default inhibit-redisplay nil
                     inhibit-message nil)
@@ -125,7 +125,7 @@ Otherwise the startup will be very slow. "
 (require 'init-package)
 
 ;; Preferences
-(require 'init-basic)
+(require 'init-base)
 (require 'init-hydra)
 
 (require 'init-ui)
