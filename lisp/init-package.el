@@ -129,6 +129,14 @@
                       (page-break-lines-mode 1))))))
             t))
 
+;; Update packages
+(unless (fboundp 'package-update-all)
+  (use-package auto-package-update
+    :init
+    (setq auto-package-update-delete-old-versions t
+          auto-package-update-hide-results t)
+    (defalias 'package-update-all #'auto-package-update-now)))
+
 (provide 'init-package)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

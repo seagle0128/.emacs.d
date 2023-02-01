@@ -345,7 +345,7 @@ This issue has been addressed in 28."
 
 
 ;; Update
-(defun centaur-update-config ()
+(defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
   (let ((dir (expand-file-name user-emacs-directory)))
@@ -356,22 +356,10 @@ This issue has been addressed in 28."
     (cd dir)
     (shell-command "git pull")
     (message "Updating configurations...done")))
-(defalias 'update-config #'centaur-update-config)
-
-(defun centaur--update-package ()
-  (cond
-   ((fboundp 'paradox-upgrade-packages)
-    (paradox-upgrade-packages))
-   ((fboundp 'package-update-all)
-    (package-update-all))))
-
-(defun centaur--display-update-report ()
-  (let ((buf (get-buffer "*Paradox Report*")))
-    (when (buffer-live-p buf)
-      (pop-to-buffer buf))))
+(defalias 'centaur-update-config #'update-config)
 
 (defvar centaur--updating-packages nil)
-(defun centaur-update-packages (&optional force sync)
+(defun update-packages (&optional force sync)
   "Refresh package contents and update all packages.
 
 If FORCE is non-nil, the updating process will be restarted by force.
@@ -392,19 +380,23 @@ If SYNC is non-nil, the updating process is synchronous."
               (async-start
                `(lambda ()
                   ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
                   (require 'init-package)
-                  (centaur--update-package))
-               (lambda (_)
+                  (package-update-all)
+                  (and (bound-and-true-p auto-package-update-buffer-name)
+                       (buffer-live-p auto-package-update-buffer-name)
+                       (with-current-buffer auto-package-update-buffer-name
+                         (buffer-string))))
+               (lambda (result)
                  (setq centaur--updating-packages nil)
-                 (centaur--display-update-report)
+                 (and result (message "%s" result))
                  (message "Updating packages...done"))))
-      (centaur--update-package)
-      (centaur--display-update-report)
+      (package-update-all)
       (message "Updating packages...done"))))
-(defalias 'update-packages #'centaur-update-packages)
+(defalias 'centaur-update-packages #'update-packages)
 
 (defvar centaur--updating nil)
-(defun centaur-update (&optional force sync)
+(defun update-config-and-packages(&optional force sync)
   "Update confgiurations and packages.
 
 If FORCE is non-nil, the updating process will be restarted by force.
@@ -425,28 +417,32 @@ If SYNC is non-nil, the updating process is synchronous."
               (async-start
                `(lambda ()
                   ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
                   (require 'init-package)
-                  (centaur-update-config)
-                  (centaur-update-packages nil t))
-               (lambda (_)
+                  (update-config)
+                  (update-packages nil t)
+                  (and (bound-and-true-p auto-package-update-buffer-name)
+                       (buffer-live-p auto-package-update-buffer-name)
+                       (with-current-buffer auto-package-update-buffer-name
+                         (buffer-string))))
+               (lambda (result)
                  (setq centaur--updating nil)
-                 (centaur--display-update-report)
+                 (and result (message "%s" result))
                  (message "Updating Centaur Emacs...done"))))
-      (centaur-update-config)
-      (centaur-update-packages nil t)
-      (centaur--display-update-report)
+      (update-config)
+      (update-packages nil t)
       (message "Updating Centaur Emacs...done"))))
-(defalias 'update-config-and-packages #'centaur-update)
+(defalias 'centaur-update #'update-config-and-packages)
 
-(defun centaur-update-all ()
+(defun update-all()
   "Update dotfiles, org files, configurations and packages to the latest."
   (interactive)
-  (centaur-update-org)
-  (centaur-update-dotfiles)
-  (centaur-update))
-(defalias 'update-all #'centaur-update-all)
+  (update-org)
+  (update-dotfiles)
+  (update-config-and-packages))
+(defalias 'centaur-update-all #'update-all)
 
-(defun centaur-update-dotfiles ()
+(defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
   (let ((dir (or (getenv "DOTFILES")
@@ -458,9 +454,9 @@ If SYNC is non-nil, the updating process is synchronous."
           (shell-command "git pull")
           (message "Updating dotfiles...done"))
       (message "\"%s\" doesn't exist" dir))))
-(defalias 'update-dotfiles #'centaur-update-dotfiles)
+(defalias 'centaur-update-dotfiles #'update-dotfiles)
 
-(defun centaur-update-org ()
+(defun update-org ()
   "Update Org files to the latest version."
   (interactive)
   (let ((dir (expand-file-name "~/org/")))
@@ -471,7 +467,7 @@ If SYNC is non-nil, the updating process is synchronous."
           (shell-command "git pull")
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist" dir))))
-(defalias 'update-org #'centaur-update-org)
+(defalias 'centaur-update-org #'update-org)
 
 
 ;; Fonts
