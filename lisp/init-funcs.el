@@ -39,10 +39,7 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
-(declare-function async-inject-variables 'async)
 (declare-function chart-bar-quickie 'chart)
-(declare-function flycheck-buffer 'flycheck)
-(declare-function flymake-start 'flymake)
 (declare-function xwidget-webkit-current-session 'xwidget)
 
 
@@ -358,89 +355,20 @@ This issue has been addressed in 28."
     (message "Updating configurations...done")))
 (defalias 'centaur-update-config #'update-config)
 
-(defvar centaur--updating-packages nil)
-(defun update-packages (&optional force sync)
-  "Refresh package contents and update all packages.
-
-If FORCE is non-nil, the updating process will be restarted by force.
-If SYNC is non-nil, the updating process is synchronous."
+(defun update-packages ()
+  "Refresh package contents and update all packages."
   (interactive)
-
-  (if (process-live-p centaur--updating-packages)
-      (when force
-        (kill-process centaur--updating-packages)
-        (setq centaur--updating-packages nil))
-    (setq centaur--updating-packages nil))
-
   (message "Updating packages...")
-  (unless centaur--updating-packages
-    (if (and (not sync)
-             (require 'async nil t))
-        (setq centaur--updating-packages
-              (async-start
-               `(lambda ()
-                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
-                  (require 'init-funcs)
-                  (require 'init-package)
-                  (package-update-all)
-                  (and (bound-and-true-p auto-package-update-buffer-name)
-                       (buffer-live-p auto-package-update-buffer-name)
-                       (with-current-buffer auto-package-update-buffer-name
-                         (buffer-string))))
-               (lambda (result)
-                 (setq centaur--updating-packages nil)
-                 (and result (message "%s" result))
-                 (message "Updating packages...done"))))
-      (package-update-all)
-      (message "Updating packages...done"))))
+  (package-update-all)
+  (message "Updating packages...done"))
 (defalias 'centaur-update-packages #'update-packages)
 
-(defvar centaur--updating nil)
-(defun update-config-and-packages(&optional force sync)
-  "Update confgiurations and packages.
-
-If FORCE is non-nil, the updating process will be restarted by force.
-If SYNC is non-nil, the updating process is synchronous."
-  (interactive "P")
-
-  (if (process-live-p centaur--updating)
-      (when force
-        (kill-process centaur--updating)
-        (setq centaur--updating nil))
-    (setq centaur--updating nil))
-
-  (message "Updating Centaur Emacs...")
-  (unless centaur--updating
-    (if (and (not sync)
-             (require 'async nil t))
-        (setq centaur--updating
-              (async-start
-               `(lambda ()
-                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
-                  (require 'init-funcs)
-                  (require 'init-package)
-                  (update-config)
-                  (update-packages nil t)
-                  (and (bound-and-true-p auto-package-update-buffer-name)
-                       (buffer-live-p auto-package-update-buffer-name)
-                       (with-current-buffer auto-package-update-buffer-name
-                         (buffer-string))))
-               (lambda (result)
-                 (setq centaur--updating nil)
-                 (and result (message "%s" result))
-                 (message "Updating Centaur Emacs...done"))))
-      (update-config)
-      (update-packages nil t)
-      (message "Updating Centaur Emacs...done"))))
-(defalias 'centaur-update #'update-config-and-packages)
-
-(defun update-all()
-  "Update dotfiles, org files, configurations and packages to the latest."
+(defun update-config-and-packages()
+  "Update confgiurations and packages."
   (interactive)
-  (update-org)
-  (update-dotfiles)
-  (update-config-and-packages))
-(defalias 'centaur-update-all #'update-all)
+  (update-config)
+  (update-packages))
+(defalias 'centaur-update #'update-config-and-packages)
 
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
@@ -468,6 +396,14 @@ If SYNC is non-nil, the updating process is synchronous."
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
+
+(defun update-all()
+  "Update dotfiles, org files, configurations and packages to the latest."
+  (interactive)
+  (update-org)
+  (update-dotfiles)
+  (update-config-and-packages))
+(defalias 'centaur-update-all #'update-all)
 
 
 ;; Fonts
