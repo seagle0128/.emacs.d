@@ -507,10 +507,8 @@ This issue has been addressed in 28."
 (defun centaur--load-theme (theme)
   "Disable others and enable new one."
   (when-let ((theme (centaur--theme-name theme)))
-    (message "Loading theme `%s'..." theme)
     (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme t)
-    (message "Loading theme `%s'...done" theme)))
+    (load-theme theme t)))
 
 (defun centaur--load-system-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."

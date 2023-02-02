@@ -60,6 +60,9 @@
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; Prevent flash of unstyled modeline at startup
+(setq-default mode-line-format nil)
+
 ;; Don't pass case-insensitive to `auto-mode-alist'
 (setq auto-mode-case-fold nil)
 
@@ -69,36 +72,12 @@
   (let ((old-value file-name-handler-alist))
     (setq file-name-handler-alist nil)
     (set-default-toplevel-value 'file-name-handler-alist file-name-handler-alist)
-    (put 'file-name-handler-alist 'initial-value old-value)
     (add-hook 'emacs-startup-hook
               (lambda ()
                 "Recover file name handlers."
                 (setq file-name-handler-alist
                       (delete-dups (append file-name-handler-alist old-value))))
-              101))
-
-  ;; Prevent flash of unstyled modeline at startup
-  (put 'mode-line-format 'initial-value (default-toplevel-value 'mode-line-format))
-  (setq-default mode-line-format nil)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf (setq mode-line-format nil)))
-
-  ;; Prevent flash of messages at startup
-  (setq-default inhibit-redisplay t
-                inhibit-message t)
-  (add-hook 'window-setup-hook
-            (lambda ()
-              (setq-default inhibit-redisplay nil
-                            inhibit-message nil)
-              (redraw-frame)))
-
-  (define-advice startup--load-user-init-file (:after (&rest _) undo-inhibit-vars)
-    (when init-file-had-error
-      (setq-default inhibit-redisplay nil
-                    inhibit-message nil)
-      (redraw-frame))
-    (unless (default-toplevel-value 'mode-line-format)
-      (setq-default mode-line-format (get 'mode-line-format 'initial-value)))))
+              101)))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.

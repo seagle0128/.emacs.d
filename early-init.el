@@ -62,8 +62,7 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (when (featurep 'ns)
   (push '(ns-transparent-titlebar . t) default-frame-alist))
-
-(setq frame-title-format "Centaur Emacs - loading...")
+(setq-default mode-line-format nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
