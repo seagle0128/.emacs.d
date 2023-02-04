@@ -46,7 +46,8 @@
 ;; Tree-sitter support
 (when (and centaur-tree-sitter (centaur-treesit-available-p))
   (use-package treesit-auto
-    :hook (after-init . global-treesit-auto-mode)))
+    :hook (after-init . global-treesit-auto-mode)
+    :init (setq treesit-auto-install 'prompt)))
 
 ;; Search tool
 (use-package grep
