@@ -178,7 +178,7 @@ prepended to the element after the #+HEADER: tag."
 
   ;; Add gfm/md backends
   (use-package ox-gfm)
-  (add-to-list 'org-export-backends 'md)
+  (add-to-list 'org-export-backends 'gfm)
 
   (with-eval-after-load 'counsel
     (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
