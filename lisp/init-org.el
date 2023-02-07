@@ -176,9 +176,10 @@ prepended to the element after the #+HEADER: tag."
               (centaur-webkit-browse-url (concat "file://" file) t)))
           org-file-apps))
 
-  ;; Add gfm/md backends
-  (use-package ox-gfm)
-  (add-to-list 'org-export-backends 'gfm)
+  ;; Add md/gfm backends
+  (add-to-list 'org-export-backends 'md)
+  (use-package ox-gfm
+    :init (add-to-list 'org-export-backends 'gfm))
 
   (with-eval-after-load 'counsel
     (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
