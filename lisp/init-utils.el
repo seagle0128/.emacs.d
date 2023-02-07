@@ -308,7 +308,6 @@ of the buffer text to be displayed in the popup"
               ztree-show-number-of-children t))
 
 ;; Misc
-(use-package copyit)                    ; copy path, url, etc.
 (use-package focus)                     ; Focus on the current region
 (use-package memory-usage)
 
