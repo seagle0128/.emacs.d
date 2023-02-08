@@ -32,17 +32,14 @@
 
 ;; Golang
 (use-package go-mode
-  :functions go-update-tools
+  :functions go-install-tools
   :autoload godoc-gogetdoc
   :bind (:map go-mode-map
          ("<f1>" . godoc))
-  :init (setq godoc-at-point-function #'godoc-gogetdoc)
-  :config
-  ;; Env vars
-  (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+  :init
+  (setq godoc-at-point-function #'godoc-gogetdoc)
 
-  ;; Install or update tools
+  ;; Install tools
   (defconst go--tools
     '("golang.org/x/tools/gopls"
       "golang.org/x/tools/cmd/goimports"
@@ -55,7 +52,7 @@
       "github.com/davidrjenni/reftools/cmd/fillstruct")
     "All necessary go tools.")
 
-  (defun go-update-tools ()
+  (defun go-install-tools ()
     "Install or update go tools."
     (interactive)
     (unless (executable-find "go")
@@ -70,10 +67,14 @@
            (if (= 0 status)
                (message "Installed %s" pkg)
              (message "Failed to install %s: %d" pkg status)))))))
+  :config
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
   ;; Try to install go tools if `gopls' is not found
   (unless (executable-find "gopls")
-    (go-update-tools))
+    (go-install-tools))
 
   ;; Misc
   (use-package go-dlv)
