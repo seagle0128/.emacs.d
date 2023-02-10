@@ -159,7 +159,7 @@
     (let ((buffer (or buffer "*powershell*"))
           (program (if (executable-find "pwsh") "pwsh"
                      "powershell")))
-      (make-comint-in-buffer "Powershell" buffer program)
+      (make-comint-in-buffer "Powershell" buffer program nil "-NoProfile")
       (with-current-buffer buffer
         (setq-local mode-line-format nil))
       (pop-to-buffer buffer))))
