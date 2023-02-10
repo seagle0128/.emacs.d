@@ -34,20 +34,8 @@
 (use-package eshell
   :ensure nil
   :defines eshell-prompt-function
-  :functions eshell/alias
-  :hook (eshell-mode . (lambda ()
-                         (bind-key "C-l" 'eshell/clear eshell-mode-map)
-                         ;; Aliases
-                         (eshell/alias "f" "find-file $1")
-                         (eshell/alias "fo" "find-file-other-window $1")
-                         (eshell/alias "d" "dired $1")
-                         (eshell/alias "l" "ls -lh")
-                         (eshell/alias "ll" "ls -l")
-                         (eshell/alias "la" "ls -lAh")
-                         (eshell/alias "lr" "ls -tRh")
-                         (eshell/alias "lrt" "ls -lcrt")
-                         (eshell/alias "lsa" "ls -lah")
-                         (eshell/alias "lt" "ls -lth")))
+  :bind (:map eshell-mode-map
+         ([remap recenter-top-bottom] . eshell/clear))
   :config
   (with-no-warnings
     (defun eshell/clear ()
@@ -122,20 +110,6 @@
     :autoload (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
     :init (setq eshell-highlight-prompt nil
                 eshell-prompt-function #'epe-theme-lambda))
-
-  ;; Fish-like history autosuggestions
-  (use-package esh-autosuggest
-    :defines ivy-display-functions-alist
-    :bind (:map eshell-mode-map
-           ([remap eshell-pcomplete] . completion-at-point))
-    :hook ((eshell-mode . esh-autosuggest-mode)
-           (eshell-mode . eshell-setup-ivy-completion))
-    :init (defun eshell-setup-ivy-completion ()
-            "Setup `ivy' completion in `eshell'."
-            (setq-local ivy-display-functions-alist
-                        (remq (assoc 'ivy-completion-in-region
-                                     ivy-display-functions-alist)
-                              ivy-display-functions-alist))))
 
   ;; `eldoc' support
   (use-package esh-help
