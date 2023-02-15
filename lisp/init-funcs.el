@@ -545,12 +545,14 @@ This issue has been addressed in 28."
     ('auto
      ;; Time-switching themes
      (use-package circadian
+       :ensure t
        :functions circadian-setup
        :custom (circadian-themes centaur-auto-themes)
        :init (circadian-setup)))
     ('system
      ;; System-appearance themes
      (use-package auto-dark
+       :ensure t
        :diminish
        :init
        (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
