@@ -64,7 +64,15 @@
   (with-no-warnings
     (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on" :v-adjust -0.1)
                                         :color amaranth :quit-key ("q" "C-g"))
-      ("Basic"
+     ("Compiler"
+      (("r e" org-beamer-export-to-latex "B. Latex" :toogle t)
+        ("r t" org-beamer-export-to-pdf "B. PDF" :toogle t)
+        ("r l" org-latex-export-to-latex "Latex" :toogle t)
+        ("r r" org-latex-export-to-pdf "PDF" :toogle t)
+        ("r h" org-html-export-to-html "HTML" :toogle t)
+        ) 
+     
+     "Basic"
        (("n" (cond ((fboundp 'display-line-numbers-mode)
                     (display-line-numbers-mode (if display-line-numbers-mode -1 1)))
                    ((fboundp 'gblobal-linum-mode)
