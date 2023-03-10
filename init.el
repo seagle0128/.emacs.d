@@ -64,15 +64,16 @@
 (setq-default mode-line-format nil)
 
 ;; Prevent flash of messages at startup
-(setq-default inhibit-redisplay t
-              inhibit-message t)
-(defun reset-inhibit-vars ()
-  (setq-default inhibit-redisplay nil
-                inhibit-message nil)
-  (redraw-frame))
-(add-hook 'window-setup-hook #'reset-inhibit-vars)
-(define-advice startup--load-user-init-file (:after (&rest _) reset-inhibit-vars)
-  (and init-file-had-error (reset-inhibit-vars)))
+(unless (or (daemonp) noninteractive init-file-debug (not (display-graphic-p)))
+  (setq-default inhibit-redisplay t
+                inhibit-message t)
+  (defun reset-inhibit-vars ()
+    (setq-default inhibit-redisplay nil
+                  inhibit-message nil)
+    (redraw-frame))
+  (add-hook 'window-setup-hook #'reset-inhibit-vars)
+  (define-advice startup--load-user-init-file (:after (&rest _) reset-inhibit-vars)
+    (and init-file-had-error (reset-inhibit-vars))))
 
 ;; Don't pass case-insensitive to `auto-mode-alist'
 (setq auto-mode-case-fold nil)
