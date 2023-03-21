@@ -39,24 +39,27 @@
   :bind (:map dired-mode-map
          ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
+  ;; Guess a default target directory
+  (setq dired-dwim-target t)
+
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always
         dired-recursive-copies 'always)
 
+  ;; Show directory first
+  (setq dired-listing-switches "-alh --group-directories-first")
+
   (when sys/macp
-    ;; Suppress the warning: `ls does not support --dired'.
-    (setq dired-use-ls-dired nil)
-
-    (when (executable-find "gls")
-      ;; Use GNU ls as `gls' from `coreutils' if available.
-      (setq insert-directory-program "gls")))
-
-  (when (or (and sys/macp (executable-find "gls"))
-            (and (or sys/linuxp sys/cygwinp) (executable-find "ls")))
-    ;; Using `insert-directory-program'
-    (setq ls-lisp-use-insert-directory-program t)
-    ;; Show directory first
-    (setq dired-listing-switches "-alh --group-directories-first"))
+    (if (executable-find "gls")
+        (progn
+          ;; Use GNU ls as `gls' from `coreutils' if available.
+          (setq insert-directory-program "gls")
+          ;; Using `insert-directory-program'
+          (setq ls-lisp-use-insert-directory-program t))
+      (progn
+        ;; Suppress the warning: `ls does not support --dired'.
+        (setq dired-use-ls-dired nil)
+        (setq dired-listing-switches "-alh"))))
 
   ;; Quick sort dired buffers via hydra
   (use-package dired-quick-sort

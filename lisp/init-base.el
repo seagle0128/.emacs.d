@@ -35,6 +35,9 @@
 (require 'init-custom)
 (require 'init-funcs)
 
+;; Compatibility
+(use-package compat :demand t)
+
 ;; Personal information
 (setq user-full-name centaur-full-name
       user-mail-address centaur-mail-address)
@@ -100,10 +103,6 @@
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
   (use-package exec-path-from-shell
     :init (exec-path-from-shell-initialize)))
-
-;; Compatibility
-(use-package compat
-  :demand t)
 
 ;; Start server
 (use-package server
@@ -251,9 +250,7 @@
 
 ;; Sqlite
 (when (fboundp 'sqlite-open)
-  (use-package emacsql-sqlite-builtin
-    :defines emacsql-sqlite-c-compilers
-    :init (setq emacsql-sqlite-c-compilers nil)))
+  (use-package emacsql-sqlite-builtin))
 
 (provide 'init-base)
 

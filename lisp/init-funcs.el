@@ -557,6 +557,8 @@ This issue has been addressed in 28."
        :init
        (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
              auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
+       (when (and sys/macp (not (display-graphic-p)))
+         (setq auto-dark-detection-method 'osascript))
        (auto-dark-mode 1)))
     ('random
      (centaur-load-random-theme))
