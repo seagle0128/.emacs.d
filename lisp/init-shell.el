@@ -172,7 +172,8 @@
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
     (cond ((fboundp 'vterm) (vterm arg))
-          ((fboundp 'powershell) (powershell arg))
+          ((or (executable-find "pwsh") (executable-find "powershell"))
+           (powershell arg))
           (sys/win32p (eshell arg))
           (t (shell))))
 
