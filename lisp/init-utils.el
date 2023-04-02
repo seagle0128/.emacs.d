@@ -304,7 +304,7 @@ of the buffer text to be displayed in the popup"
               ztree-show-number-of-children t))
 
 ;; Misc
-(use-package focus)                     ; Focus on the current region
+(use-package disk-usage)
 (use-package memory-usage)
 
 (use-package list-environment
