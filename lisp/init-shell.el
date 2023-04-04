@@ -147,7 +147,8 @@
           (let ((project (or (project-current) `(transient . ,default-directory))))
             (if (fboundp 'project-root)
                 (project-root project)
-              (cdr project)))))
+              (car (with-no-warnings
+                     (project-roots project)))))))
       (advice-add #'multi-vterm-project-root :override #'my-multi-vterm-project-root))))
 
 ;; Powershell
