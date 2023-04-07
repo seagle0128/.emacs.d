@@ -88,12 +88,16 @@
 ;;   (global-linum-mode 1))
 
 ;; Basic modes
-(recentf-mode 1)
-(ignore-errors (savehist-mode 1))
-(save-place-mode 1)
 (show-paren-mode 1)
 (delete-selection-mode 1)
 (global-auto-revert-mode 1)
+(recentf-mode 1)
+(when (fboundp 'savehist-mode)
+  (savehist-mode 1))
+(if (fboundp 'save-place-mode)
+    (save-place-mode 1)
+  (require 'saveplace)
+  (setq-default save-place t))
 
 (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 (electric-pair-mode 1)
