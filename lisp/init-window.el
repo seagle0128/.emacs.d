@@ -57,7 +57,7 @@
 ;; Quickly switch windows
 (use-package ace-window
   :pretty-hydra
-  ((:title (pretty-hydra-title "Window Management" 'faicon "th" :height 1.1 :v-adjust -0.1)
+  ((:title (pretty-hydra-title "Window Management" 'faicon "nf-fa-th")
     :foreign-keys warn :quit-key ("q" "C-g"))
    ("Actions"
     (("TAB" other-window "switch")
@@ -223,11 +223,7 @@
                     (if (and (icon-displayable-p)
                              (bound-and-true-p doom-modeline-mode))
                         (format " %s "
-                                (all-the-icons-octicon
-                                 "pin"
-                                 :height 0.9
-                                 :v-adjust 0.0
-                                 :face face))
+                                (nerd-icons-octicon "nf-oct-pin" :face face))
                       (propertize " POP" 'face face))))))
 
   (setq popper-echo-dispatch-actions t)

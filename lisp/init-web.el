@@ -48,7 +48,7 @@
          :map xwidget-webkit-mode-map
          ("h"         . xwidget-hydra/body))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Webkit" 'faicon "chrome" :face 'all-the-icons-blue)
+  ((:title (pretty-hydra-title "Webkit" 'faicon "nf-fa-chrome" :face 'nerd-icons-blue)
     :color amaranth :quit-key ("q" "C-g"))
    ("Navigate"
     (("b" xwidget-webkit-back "back")

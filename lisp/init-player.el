@@ -167,11 +167,11 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
                              ("[playing]"
                               (concat
                                " "
-                               (all-the-icons-material "play_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                               (nerd-icons-mdicon "nf-md-play_circle_outline" :face font-lock-comment-face)))
                              ("[paused]"
                               (concat
                                " "
-                               (all-the-icons-material "pause_circle_outline" :height 0.9 :v-adjust -0.15 :face font-lock-comment-face)))
+                               (nerd-icons-mdicon "nf-md-pause_circle_outline" :face font-lock-comment-face)))
                              (_ "")))
                          (propertize (format " %s [%s] " title time)
                                      'face '(:inherit 'font-lock-comment-face :height 0.9))))))))

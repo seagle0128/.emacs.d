@@ -39,9 +39,13 @@
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Display icons for buffers
-  (use-package all-the-icons-ibuffer
-    :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
-    :init (setq all-the-icons-ibuffer-icon centaur-icon))
+  ;; TODO: fix it
+  (use-package nerd-icons-ibuffer
+    :ensure nil
+    :load-path "~/workspace/nerd-icons-ibuffer"
+    :commands nerd-icons-ibuffer-mode
+    :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+    :init (setq nerd-icons-ibuffer-icon centaur-icon))
 
   (with-eval-after-load 'counsel
     (with-no-warnings
@@ -57,7 +61,7 @@
 
 ;; Group ibuffer's list by project
 (use-package ibuffer-projectile
-  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
+  :functions nerd-icons-octicon ibuffer-do-sort-by-alphabetic
   :hook ((ibuffer . (lambda ()
                       (ibuffer-projectile-set-filter-groups)
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
@@ -66,10 +70,9 @@
   (setq ibuffer-projectile-prefix
         (if (icon-displayable-p)
             (concat
-             (all-the-icons-octicon "repo"
-                                    :face ibuffer-filter-group-name-face
-                                    :v-adjust 0.0
-                                    :height 1.1)
+             (nerd-icons-octicon "nf-oct-repo"
+                                 :face ibuffer-filter-group-name-face
+                                 :height 1.2)
              " ")
           "Project: ")))
 

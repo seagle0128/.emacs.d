@@ -38,13 +38,13 @@
 (when centaur-dashboard
   (use-package dashboard
     :diminish dashboard-mode
-    :functions (all-the-icons-faicon
-                all-the-icons-material
+    :functions (nerd-icons-faicon
+                nerd-icons-mdicon
                 winner-undo
                 widget-forward)
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :pretty-hydra
-    ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.2 :v-adjust -0.2)
+    ((:title (pretty-hydra-title "Dashboard" 'mdicon "nf-md-dashboard")
       :color pink :quit-key ("q" "C-g"))
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
@@ -105,34 +105,32 @@
                                     (registers . "database"))
 
           dashboard-set-footer t
-          dashboard-footer-icon (cond ((icon-displayable-p)
-                                       (all-the-icons-faicon "heart"
-                                                             :height 1.1
-                                                             :v-adjust -0.05
-                                                             :face 'error))
-                                      ((char-displayable-p ?🧡) "🧡 ")
-                                      (t (propertize ">" 'face 'dashboard-footer)))
+          dashboard-footer-icon (cond
+                                 ((icon-displayable-p)
+                                  (nerd-icons-mdicon "nf-md-heart" :height 1.2 :face 'nerd-icons-lred))
+                                 ((char-displayable-p ?🧡) "🧡 ")
+                                 (t (propertize ">" 'face 'dashboard-footer)))
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
           `(((,(when (icon-displayable-p)
-                 (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
+                 (nerd-icons-mdicon "nf-md-github" :height 1.5))
               "Homepage" "Browse homepage"
               (lambda (&rest _) (browse-url centaur-homepage)))
              (,(when (icon-displayable-p)
-                 (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
+                 (nerd-icons-mdicon "nf-md-backup_restore" :height 1.5))
               "Restore" "Restore previous session"
               (lambda (&rest _) (restore-previous-session)))
              (,(when (icon-displayable-p)
-                 (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
+                 (nerd-icons-mdicon "nf-md-tools" :height 1.5))
               "Settings" "Open custom file"
               (lambda (&rest _) (find-file custom-file)))
              (,(when (icon-displayable-p)
-                 (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
+                 (nerd-icons-mdicon "nf-md-update" :height 1.5))
               "Update" "Update Centaur Emacs"
               (lambda (&rest _) (centaur-update)))
              (,(if (icon-displayable-p)
-                   (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1)
+                   (nerd-icons-mdicon "nf-md-help" :height 1.5)
                  "?")
               "" "Help (?/h)"
               (lambda (&rest _) (dashboard-hydra/body))

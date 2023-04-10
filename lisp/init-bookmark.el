@@ -59,11 +59,11 @@
                  (icon       (if (icon-displayable-p)
                                  (cond
                                   ((file-remote-p location)
-                                   (all-the-icons-octicon "radio-tower" :height 0.8 :v-adjust 0.0))
+                                   (nerd-icons-octicon "nf-oct-radio_tower"))
                                   ((file-directory-p location)
-                                   (all-the-icons-icon-for-dir location :height 0.9 :v-adjust 0.01))
+                                   (nerd-icons-icon-for-dir location))
                                   ((not (string-empty-p file))
-                                   (all-the-icons-icon-for-file file :height 0.9 :v-adjust 0.0)))
+                                   (nerd-icons-icon-for-file file)))
                                "")))
             (push (list
                    full-record
