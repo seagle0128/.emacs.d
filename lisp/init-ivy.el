@@ -570,6 +570,7 @@
 
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
+;; TODO: nerd-icons-ivy-rich
 (use-package all-the-icons-ivy-rich
   :hook (ivy-mode . all-the-icons-ivy-rich-mode)
   :init (setq all-the-icons-ivy-rich-icon centaur-icon)

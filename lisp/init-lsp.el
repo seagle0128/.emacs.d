@@ -117,16 +117,7 @@
 
        (defun my-lsp-icons-get-by-file-ext (fn &rest args)
          (and (icon-displayable-p) (apply fn args)))
-       (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
-
-       (defun my-lsp-icons-all-the-icons-material-icon (icon-name face fallback &optional feature)
-         (if (and (icon-displayable-p)
-                  (lsp-icons--enabled-for-feature feature))
-             (nerd-icons-codicon icon-name
-                                 :face face)
-           (propertize fallback 'face face)))
-       (advice-add #'lsp-icons-all-the-icons-material-icon
-                   :override #'my-lsp-icons-all-the-icons-material-icon)))
+       (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)))
 
    (use-package lsp-ui
      :custom-face
@@ -432,13 +423,13 @@
               :icon (format "%s " (nerd-icons-codicon "nf-cod-symbol_snippet"))
               :extensions (template))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-chevron_right" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-chevron_right" :face 'nerd-icons-dsilver))
               :extensions (collapsed) :fallback "+")
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-chevron_down" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-chevron_down" :face 'nerd-icons-dsilver))
               :extensions (expanded) :fallback "-")
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_binary" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_binary" :face 'nerd-icons-dsilver))
               :extensions (classfile))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-blue))
@@ -447,22 +438,22 @@
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-blue))
               :extensions (default-folder))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'all-the-icons-green))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-green))
               :extensions (default-root-folder-opened))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'all-the-icons-green))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-green))
               :extensions (default-root-folder))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_binary" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_binary" :face 'nerd-icons-dsilver))
               :extensions ("class"))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_zip" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-file_zip" :face 'nerd-icons-dsilver))
               :extensions (file-type-jar))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-dsilver))
               :extensions (folder-open))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-dsilver))
               :extensions (folder))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-orange))
@@ -471,46 +462,46 @@
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-orange))
               :extensions (folder-type-component))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'all-the-icons-green))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-green))
               :extensions (folder-type-library-opened))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'all-the-icons-green))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-green))
               :extensions (folder-type-library))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'all-the-icons-pink))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-pink))
               :extensions (folder-type-maven-opened))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'all-the-icons-pink))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-pink))
               :extensions (folder-type-maven))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'font-lock-type-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-orange))
               :extensions (folder-type-package-opened))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'font-lock-type-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-orange))
               :extensions (folder-type-package))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-add" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-add" :face 'nerd-icons-dsilver))
               :extensions (icon-create))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-list_flat" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-list_flat" :face 'nerd-icons-dsilver))
               :extensions (icon-flat))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-codicon "nf-cod-symbol_class" :face 'nerd-icons-blue))
               :extensions (icon-hierarchical))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-link" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-link" :face 'nerd-icons-dsilver))
               :extensions (icon-link))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-refresh" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-refresh" :face 'nerd-icons-dsilver))
               :extensions (icon-refresh))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-faicon "nf-fa-unlink" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-faicon "nf-fa-unlink" :face 'nerd-icons-dsilver))
               :extensions (icon-unlink))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-devicon "nf-dev-java" :face 'nerd-icons-orange))
               :extensions (jar))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-library" :face 'all-the-icons-green))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-library" :face 'nerd-icons-green))
               :extensions (library))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder_opened" :face 'nerd-icons-lblue))
@@ -519,7 +510,7 @@
               :icon (format "%s " (nerd-icons-codicon "nf-cod-folder" :face 'nerd-icons-lblue))
               :extensions (packagefolder))
              (treemacs-create-icon
-              :icon (format "%s " (nerd-icons-codicon "nf-cod-archive" :face 'font-lock-doc-face))
+              :icon (format "%s " (nerd-icons-codicon "nf-cod-archive" :face 'nerd-icons-dsilver))
               :extensions (package))
              (treemacs-create-icon
               :icon (format "%s " (nerd-icons-codicon "nf-cod-repo" :face 'nerd-icons-blue))
