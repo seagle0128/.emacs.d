@@ -221,7 +221,7 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
     (if (fboundp 'native-compile-async)
         (native-compile-async dir t))))
 
-(defun icon-displayable-p ()
+(defun icons-displayable-p ()
   "Return non-nil if icons are displayable."
   (and centaur-icon
        (or (featurep 'nerd-icons)

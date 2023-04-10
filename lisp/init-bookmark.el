@@ -56,10 +56,10 @@
                                      ((file-directory-p location)
                                       (propertize (format fmt "DIRED") 'face 'warning))
                                      (t (propertize (format fmt "FILE") 'face 'success)))))
-                 (icon       (if (icon-displayable-p)
+                 (icon       (if (icons-displayable-p)
                                  (cond
                                   ((file-remote-p location)
-                                   (nerd-icons-octicon "nf-oct-radio_tower"))
+                                   (nerd-icons-codicon "nf-cod-radio_tower"))
                                   ((file-directory-p location)
                                    (nerd-icons-icon-for-dir location))
                                   ((not (string-empty-p file))
@@ -106,7 +106,7 @@ deletion, or > if it is flagged for displaying."
       (setq buffer-read-only t)
       (setq tabulated-list-format
             `[("" 1) ;; Space to add "*" for bookmark with annotation
-              ("" ,(if (icon-displayable-p) 2 0)) ;; Icons
+              ("" ,(if (icons-displayable-p) 2 0)) ;; Icons
               ("Bookmark" ,bookmark-bmenu-file-column bookmark-bmenu--name-predicate)
               ("Type" 9)
               ,@(if bookmark-bmenu-toggle-filenames

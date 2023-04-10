@@ -96,6 +96,7 @@
                             (projects . 5))
 
           dashboard-set-init-info t
+          dashboard-display-icons-p #'icons-displayable-p
           dashboard-set-file-icons centaur-icon
           dashboard-set-heading-icons centaur-icon
           dashboard-heading-icons '((recents   . "history")
@@ -106,35 +107,71 @@
 
           dashboard-set-footer t
           dashboard-footer-icon (cond
-                                 ((icon-displayable-p)
+                                 ((icons-displayable-p)
                                   (nerd-icons-mdicon "nf-md-heart" :height 1.2 :face 'nerd-icons-lred))
-                                 ((char-displayable-p ?🧡) "🧡 ")
+
                                  (t (propertize ">" 'face 'dashboard-footer)))
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
-          `(((,(when (icon-displayable-p)
+          `(((,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-github" :height 1.5))
               "Homepage" "Browse homepage"
               (lambda (&rest _) (browse-url centaur-homepage)))
-             (,(when (icon-displayable-p)
+             (,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-backup_restore" :height 1.5))
               "Restore" "Restore previous session"
               (lambda (&rest _) (restore-previous-session)))
-             (,(when (icon-displayable-p)
+             (,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-tools" :height 1.5))
               "Settings" "Open custom file"
               (lambda (&rest _) (find-file custom-file)))
-             (,(when (icon-displayable-p)
+             (,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-update" :height 1.5))
               "Update" "Update Centaur Emacs"
               (lambda (&rest _) (centaur-update)))
-             (,(if (icon-displayable-p)
+             (,(if (icons-displayable-p)
                    (nerd-icons-mdicon "nf-md-help" :height 1.5)
                  "?")
               "" "Help (?/h)"
               (lambda (&rest _) (dashboard-hydra/body))
               font-lock-string-face))))
+
+    (defmacro dashboard-insert-section-list (section-name list action &rest rest)
+      "Insert into SECTION-NAME a LIST of items, expanding ACTION and passing REST
+to widget creation."
+      `(when (car ,list)
+         (mapc
+          (lambda (el)
+            (let ((tag ,@rest))
+              (insert "\n    ")
+
+              (when (and (dashboard-display-icons-p)
+                         dashboard-set-file-icons
+                         (or (fboundp 'nerd-icons-icon-for-dir)
+                             (require 'nerd-icons nil 'noerror)))
+                (let* ((path (car (last (split-string ,@rest " - "))))
+                       (icon (if (and (not (file-remote-p path))
+                                      (file-directory-p path))
+                                 (nerd-icons-icon-for-dir path nil "")
+                               (cond
+                                ((or (string-equal ,section-name "Agenda for today:")
+                                     (string-equal ,section-name "Agenda for the coming week:"))
+                                 (nerd-icons-octicon "nf-oct-primitive_dot"))
+                                ((file-remote-p path)
+                                 (nerd-icons-codicon "nf-cod-radio_tower"))
+                                (t (nerd-icons-icon-for-file (file-name-nondirectory path)))))))
+                  (setq tag (concat icon " " ,@rest))))
+
+              (widget-create 'item
+                             :tag tag
+                             :action ,action
+                             :button-face 'dashboard-items-face
+                             :mouse-face 'highlight
+                             :button-prefix ""
+                             :button-suffix ""
+                             :format "%[%t%]")))
+          ,list)))
 
     (dashboard-setup-startup-hook)
     :config

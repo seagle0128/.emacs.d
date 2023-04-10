@@ -162,7 +162,7 @@ IGNORE-AUTO and NOCONFIRM are passed by `revert-buffer'."
                                   (state (nth 0 info-strs))
                                   (time (nth 2 info-strs)))
                         (concat
-                         (when (icon-displayable-p)
+                         (when (icons-displayable-p)
                            (pcase state
                              ("[playing]"
                               (concat

@@ -331,7 +331,7 @@
           (set-frame-size frame text-width text-height t)))
       (advice-add #'company-box-doc--set-frame-position :override #'my-company-box-doc--set-frame-position)
 
-      (when (icon-displayable-p)
+      (when (icons-displayable-p)
         (defvar company-box-icons-nerd
           `((Unknown       . ,(nerd-icons-codicon "nf-cod-symbol_namespace"))
             (Text          . ,(nerd-icons-codicon "nf-cod-symbol_string"))

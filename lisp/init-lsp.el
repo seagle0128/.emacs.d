@@ -112,11 +112,11 @@
 
        ;; Only display icons in GUI
        (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-         (and (icon-displayable-p) (apply fn args)))
+         (and (icons-displayable-p) (apply fn args)))
        (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
        (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-         (and (icon-displayable-p) (apply fn args)))
+         (and (icons-displayable-p) (apply fn args)))
        (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)))
 
    (use-package lsp-ui
@@ -263,7 +263,7 @@
             ("C-s-." . lsp-ivy-global-workspace-symbol))
      :config
      (with-no-warnings
-       (when (icon-displayable-p)
+       (when (icons-displayable-p)
          (defconst lsp-ivy-symbol-kind-icons
            `(,(nerd-icons-codicon "nf-cod-symbol_namespace") ; Unknown - 0
              ,(nerd-icons-codicon "nf-cod-symbol_file") ; File - 1
@@ -348,7 +348,7 @@
          (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers)))
 
      (with-no-warnings
-       (when (icon-displayable-p)
+       (when (icons-displayable-p)
          (treemacs-create-theme "centaur-colors"
            :extends "doom-colors"
            :config

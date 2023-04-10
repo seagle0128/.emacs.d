@@ -52,7 +52,7 @@
           (height (or height 1.2))
           (v-adjust (or v-adjust 0.0)))
       (concat
-       (when (and (icon-displayable-p) icon-type icon-name)
+       (when (and (icons-displayable-p) icon-type icon-name)
          (let ((f (intern (format "nerd-icons-%s" icon-type))))
            (when (fboundp f)
              (concat

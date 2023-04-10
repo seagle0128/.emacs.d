@@ -68,7 +68,7 @@
                         (ibuffer-do-sort-by-alphabetic)))))
   :config
   (setq ibuffer-projectile-prefix
-        (if (icon-displayable-p)
+        (if (icons-displayable-p)
             (concat
              (nerd-icons-octicon "nf-oct-repo"
                                  :face ibuffer-filter-group-name-face
