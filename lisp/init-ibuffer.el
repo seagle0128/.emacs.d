@@ -39,7 +39,7 @@
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Display icons for buffers
-  ;; TODO: fix it
+  ;; TODO: FIX IT
   (use-package nerd-icons-ibuffer
     :ensure nil
     :load-path "~/workspace/nerd-icons-ibuffer"
