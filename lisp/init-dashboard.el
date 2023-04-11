@@ -42,7 +42,10 @@
                 nerd-icons-mdicon
                 winner-undo
                 widget-forward)
-    :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+    :custom-face
+    (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+    (dashboard-items-face ((t (:weight normal))))
+    (dashboard-no-items-face ((t (:weight normal))))
     :pretty-hydra
     ((:title (pretty-hydra-title "Dashboard" 'mdicon "nf-md-dashboard")
       :color pink :quit-key ("q" "C-g"))
@@ -99,11 +102,11 @@
           dashboard-display-icons-p #'icons-displayable-p
           dashboard-set-file-icons centaur-icon
           dashboard-set-heading-icons centaur-icon
-          dashboard-heading-icons '((recents   . "history")
-                                    (bookmarks . "bookmark")
-                                    (agenda    . "calendar")
-                                    (projects  . "briefcase")
-                                    (registers . "database"))
+          dashboard-heading-icons '((recents   . "nf-cod-history")
+                                    (bookmarks . "nf-cod-bookmark")
+                                    (agenda    . "nf-cod-calendar")
+                                    (projects  . "nf-cod-folder")
+                                    (registers . "nf-cod-database"))
 
           dashboard-set-footer t
           dashboard-footer-icon (cond
@@ -137,6 +140,8 @@
               (lambda (&rest _) (dashboard-hydra/body))
               font-lock-string-face))))
 
+    (dashboard-setup-startup-hook)
+    :config
     (defmacro dashboard-insert-section-list (section-name list action &rest rest)
       "Insert into SECTION-NAME a LIST of items, expanding ACTION and passing REST
 to widget creation."
@@ -157,9 +162,7 @@ to widget creation."
                                (cond
                                 ((or (string-equal ,section-name "Agenda for today:")
                                      (string-equal ,section-name "Agenda for the coming week:"))
-                                 (nerd-icons-octicon "nf-oct-primitive_dot"))
-                                ((file-remote-p path)
-                                 (nerd-icons-codicon "nf-cod-radio_tower"))
+                                 (nerd-icons-codicon "nf-oct-primitive_dot"))
                                 (t (nerd-icons-icon-for-file (file-name-nondirectory path)))))))
                   (setq tag (concat icon " " ,@rest))))
 
@@ -172,9 +175,52 @@ to widget creation."
                              :button-suffix ""
                              :format "%[%t%]")))
           ,list)))
+    ;; (advice-add #'dashboard-insert-section-list :override #'my-dashboard-insert-section-list)
 
-    (dashboard-setup-startup-hook)
-    :config
+    ;; Insert heading
+    (defun my-dashboard-insert-heading (heading &optional shortcut icon)
+      "Insert a widget HEADING in dashboard buffer, adding SHORTCUT, ICON if provided."
+      (when (and (dashboard-display-icons-p) dashboard-set-heading-icons)
+        ;; Try loading `nerd-icons'
+        (unless (or (fboundp 'nerd-icons-codicon)
+                    (require 'nerd-icons nil 'noerror))
+          (error "Package `nerd-icons' isn't installed"))
+
+        (insert (cond
+                 ((string-equal heading "Recent Files:")
+                  (nerd-icons-codicon (cdr (assoc 'recents dashboard-heading-icons))
+                                      :height 1.1 :face 'dashboard-heading))
+                 ((string-equal heading "Bookmarks:")
+                  (nerd-icons-codicon (cdr (assoc 'bookmarks dashboard-heading-icons))
+                                      :height 1.1 :face 'dashboard-heading))
+                 ((or (string-equal heading "Agenda for today:")
+                      (string-equal heading "Agenda for the coming week:"))
+                  (nerd-icons-codicon (cdr (assoc 'agenda dashboard-heading-icons))
+                                      :height 1.1 :face 'dashboard-heading))
+                 ((string-equal heading "Registers:")
+                  (nerd-icons-codicon (cdr (assoc 'registers dashboard-heading-icons))
+                                      :height 1.1 :face 'dashboard-heading))
+                 ((string-equal heading "Projects:")
+                  (nerd-icons-codicon (cdr (assoc 'projects dashboard-heading-icons))
+                                      :height 1.1 :face 'dashboard-heading))
+                 ((not (null icon)) icon)
+                 (t " ")))
+        (insert " "))
+
+      (insert (propertize heading 'face 'dashboard-heading))
+
+      ;; Turn the inserted heading into an overlay, so that we may freely change
+      ;; its name without breaking any of the functions that expect the default name.
+      ;; If there isn't a suitable entry in `dashboard-item-names',
+      ;; we fallback to using HEADING.  In that case we still want it to be an
+      ;; overlay to maintain consistent behavior (such as the point movement)
+      ;; between modified and default headings.
+      (let ((ov (make-overlay (- (point) (length heading)) (point) nil t)))
+        (overlay-put ov 'display (or (cdr (assoc heading dashboard-item-names)) heading))
+        (overlay-put ov 'face 'dashboard-heading))
+      (when shortcut (insert (format " (%s)" shortcut))))
+    (advice-add #'dashboard-insert-heading :override #'my-dashboard-insert-heading)
+
     ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()

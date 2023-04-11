@@ -570,12 +570,13 @@
 
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
-;; TODO: nerd-icons-ivy-rich
-(use-package all-the-icons-ivy-rich
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-  :init (setq all-the-icons-ivy-rich-icon centaur-icon)
+;; FIXME:
+(use-package nerd-icons-ivy-rich
+  :ensure nil
+  :hook (ivy-mode . nerd-icons-ivy-rich-mode)
+  :init (setq nerd-icons-ivy-rich-icon centaur-icon)
   :config
-  (plist-put all-the-icons-ivy-rich-display-transformers-list
+  (plist-put nerd-icons-ivy-rich-display-transformers-list
              'centaur-load-theme
              '(:columns
                ((all-the-icons-ivy-rich-theme-icon)

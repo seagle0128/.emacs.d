@@ -81,7 +81,7 @@
     :hook (dired-mode . diredfl-mode))
 
   ;; Shows icons
-  ;; TODO: FIX IT
+  ;; FIXME:
   (use-package nerd-icons-dired
     :ensure nil
     :diminish

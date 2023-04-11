@@ -117,7 +117,6 @@
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon centaur-icon
-        doom-modeline-height 1
         doom-modeline-window-width-limit 110
         doom-modeline-minor-modes t)
   :bind (:map doom-modeline-mode-map
@@ -265,7 +264,7 @@
 ;; Icons
 (use-package nerd-icons)
 
-;; TODO: REMOVE IT
+;; FIXME: REMOVE IT
 (use-package all-the-icons :demand)
 
 ;; Show line numbers

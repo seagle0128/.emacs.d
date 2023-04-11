@@ -66,7 +66,7 @@
     (`(t . _)
      (treemacs-git-mode 'simple)))
 
-  ;; TODO: FIX IT
+  ;; FIXME:
   (use-package treemacs-nerd-icons
     :ensure nil
     :demand
