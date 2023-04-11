@@ -114,7 +114,6 @@
 ;; Mode-line
 (use-package doom-modeline
   :ensure nil
-  :load-path "~/workspace/doom-modeline"
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon centaur-icon
@@ -264,14 +263,10 @@
   :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
-(when centaur-icon
-  ;; TODO: REMOVE IT
-  (use-package all-the-icons :demand)
+(use-package nerd-icons)
 
-  (use-package nerd-icons
-    :config
-    (unless (or sys/win32p (daemonp) (font-installed-p nerd-icons-font-family))
-      (centaur-install-fonts))))
+;; TODO: REMOVE IT
+(use-package all-the-icons :demand)
 
 ;; Show line numbers
 (use-package display-line-numbers

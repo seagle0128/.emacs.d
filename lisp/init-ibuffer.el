@@ -42,7 +42,6 @@
   ;; TODO: FIX IT
   (use-package nerd-icons-ibuffer
     :ensure nil
-    :load-path "~/workspace/nerd-icons-ibuffer"
     :commands nerd-icons-ibuffer-mode
     :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
     :init (setq nerd-icons-ibuffer-icon centaur-icon))
