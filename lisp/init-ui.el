@@ -262,10 +262,8 @@
   :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
-(use-package nerd-icons)
-
-;; FIXME: REMOVE IT
-(use-package all-the-icons :demand)
+(use-package nerd-icons
+  :ensure nil)
 
 ;; Show line numbers
 (use-package display-line-numbers

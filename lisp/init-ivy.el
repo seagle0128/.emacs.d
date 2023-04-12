@@ -579,10 +579,10 @@
   (plist-put nerd-icons-ivy-rich-display-transformers-list
              'centaur-load-theme
              '(:columns
-               ((all-the-icons-ivy-rich-theme-icon)
+               ((nerd-icons-ivy-rich-theme-icon)
                 (ivy-rich-candidate))
                :delimiter "\t"))
-  (all-the-icons-ivy-rich-reload))
+  (nerd-icons-ivy-rich-reload))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
