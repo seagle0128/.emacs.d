@@ -265,6 +265,9 @@
 (use-package nerd-icons
   :ensure nil)
 
+;; FIXME: dahsboard needs it so far
+(use-package all-the-icons)
+
 ;; Show line numbers
 (use-package display-line-numbers
   :ensure nil
