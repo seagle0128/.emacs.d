@@ -100,7 +100,7 @@
 
           dashboard-set-init-info t
           dashboard-display-icons-p #'icons-displayable-p
-          dashboard-set-file-icons centaur-icon
+          dashboard-set-file-icons nil
           dashboard-set-heading-icons centaur-icon
           dashboard-heading-icons '((recents   . "nf-cod-history")
                                     (bookmarks . "nf-cod-bookmark")

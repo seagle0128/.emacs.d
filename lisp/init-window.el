@@ -164,6 +164,7 @@
           "\\*Apropos\\*"
           "\\*Backtrace\\*"
           "\\*Calendar\\*"
+          "\\*Checkdoc Status\\*"
           "\\*Embark Actions\\*"
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
