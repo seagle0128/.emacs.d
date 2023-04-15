@@ -105,6 +105,11 @@
           dashboard-icon-type 'nerd-icons
           dashboard-set-file-icons centaur-icon
           dashboard-set-heading-icons centaur-icon
+          dashboard-heading-icons '((recents   . "nf-oct-history")
+                                    (bookmarks . "nf-oct-bookmark")
+                                    (agenda    . "nf-oct-calendar")
+                                    (projects  . "nf-oct-briefcase")
+                                    (registers . "nf-oct-database"))
 
           dashboard-set-footer t
           dashboard-footer-icon (cond
