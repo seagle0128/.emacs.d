@@ -39,10 +39,7 @@
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Display icons for buffers
-  ;; FIXME:
   (use-package nerd-icons-ibuffer
-    :ensure nil
-    :commands nerd-icons-ibuffer-mode
     :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
     :init (setq nerd-icons-ibuffer-icon centaur-icon))
 

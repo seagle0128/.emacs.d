@@ -262,8 +262,7 @@
   :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
-(use-package nerd-icons
-  :ensure nil)
+(use-package nerd-icons)
 
 ;; Show line numbers
 (use-package display-line-numbers
