@@ -94,6 +94,8 @@
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)
           dashboard-page-separator "\n\f\n"
+          dashboard-path-style 'truncate-middle
+          dashboard-path-max-length 60
           dashboard-center-content t
           dashboard-show-shortcuts nil
           dashboard-items '((recents  . 10)
