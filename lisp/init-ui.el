@@ -105,8 +105,9 @@
 
         ;; Enable customized theme
         ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-        (with-eval-after-load 'lsp-treemacs
-          (doom-themes-treemacs-config))))
+        (when (featurep 'all-the-icons)
+          (with-eval-after-load 'lsp-treemacs
+            (doom-themes-treemacs-config)))))
   (progn
     (warn "The current theme is incompatible!")
     (centaur-load-theme centaur-theme t)))
@@ -254,6 +255,7 @@
            completion-in-region-mode
            eshell-mode shell-mode
            term-mode vterm-mode
+           treemacs-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . hide-mode-line-mode)))
 
