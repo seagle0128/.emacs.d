@@ -124,8 +124,9 @@
         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
-        ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
-                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
+        ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful .+\\*"
+                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*"
+                             "\\`flycheck_.+")
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
