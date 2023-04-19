@@ -349,8 +349,7 @@
 
      (with-no-warnings
        (when (icons-displayable-p)
-         (treemacs-create-theme "centaur-colors"
-           :extends "doom-colors"
+         (treemacs-create-theme "lsp-nerd-icons"
            :config
            (progn
              (treemacs-create-icon
@@ -516,7 +515,7 @@
               :icon (format "%s " (nerd-icons-codicon "nf-cod-repo" :face 'nerd-icons-blue))
               :extensions (java-project))))
 
-         (setq lsp-treemacs-theme "centaur-colors"))))
+         (setq lsp-treemacs-theme "lsp-nerd-icons"))))
 
    ;; Python
    (use-package lsp-pyright
