@@ -147,13 +147,14 @@
 ;; Enforce rules for popups
 (use-package popper
   :defines popper-echo-dispatch-actions
-  :autoload popper-group-by-projectile
+  :autoload popper-group-by-directory
   :bind (:map popper-mode-map
          ("C-h z"     . popper-toggle-latest)
          ("C-<tab>"   . popper-cycle)
          ("C-M-<tab>" . popper-toggle-type))
   :hook (emacs-startup . popper-mode)
   :init
+  (setq popper-group-function #'popper-group-by-directory)
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
@@ -202,7 +203,6 @@
           "\\*quickrun\\*$"
           "\\*tldr\\*$"
           "\\*vc-.*\\*$"
-          "^\\*elfeed-entry\\*$"
           "^\\*macro expansion\\**"
 
           "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
@@ -211,9 +211,6 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
-
-  (with-eval-after-load 'projectile
-    (setq popper-group-function #'popper-group-by-projectile))
 
   (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
