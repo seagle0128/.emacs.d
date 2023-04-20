@@ -94,7 +94,7 @@
 ;; Atom/RSS reader
 (use-package elfeed
   :pretty-hydra
-  ((:title (pretty-hydra-title "Elfeed" 'faicon "nf-fa-rss-square" :face 'nerd-icons-orange)
+  ((:title (pretty-hydra-title "Elfeed" 'faicon "nf-fa-rss_square" :face 'nerd-icons-orange)
     :color amaranth :quit-key ("q" "C-g"))
    ("Search"
     (("c" elfeed-db-compact "compact db")
