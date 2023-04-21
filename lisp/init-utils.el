@@ -161,7 +161,6 @@ of the buffer text to be displayed in the popup"
 
 ;; Fast search tool `ripgrep'
 (use-package rg
-  :defines projectile-command-map
   :hook (after-init . rg-enable-default-bindings)
   :bind (:map rg-global-map
          ("c" . rg-dwim-current-dir)
@@ -170,10 +169,7 @@ of the buffer text to be displayed in the popup"
   :init (setq rg-group-result t
               rg-show-columns t)
   :config
-  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
-
-  (with-eval-after-load 'projectile
-    (bind-key "s R" #'rg-project projectile-command-map)))
+  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases))
 
 ;; A Simple and cool pomodoro timer
 (use-package pomidor

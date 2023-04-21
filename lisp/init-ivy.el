@@ -137,9 +137,7 @@
   (setq ivy-height-alist '((counsel-evil-registers . 5)
                            (counsel-yank-pop       . 8)
                            (counsel-git-log        . 4)
-                           (swiper                 . 15)
-                           (counsel-projectile-ag  . 15)
-                           (counsel-projectile-rg  . 15)))
+                           (swiper                 . 15)))
 
   ;; Better performance on Windows
   (when sys/win32p
@@ -560,15 +558,6 @@
   (with-eval-after-load 'desktop
     (add-to-list 'desktop-globals-to-save 'ivy-dired-history-variable)))
 
-
-;; `projectile' integration
-(use-package counsel-projectile
-  :hook (counsel-mode . counsel-projectile-mode)
-  :init
-  (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-  (when (executable-find "ugrep")
-    (setq counsel-projectile-grep-base-command "ugrep --color=never -rnEI %s")))
-
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
 ;; FIXME:
@@ -587,7 +576,7 @@
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :hook ((counsel-projectile-mode . ivy-rich-mode) ; MUST after `counsel-projectile'
+  :hook ((counsel-mode . ivy-rich-mode)
          (ivy-rich-mode . ivy-rich-project-root-cache-mode)
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."

@@ -75,11 +75,6 @@
     (treemacs-nerd-icons-file-face ((t (:inherit nerd-icons-dsilver))))
     :config (treemacs-load-theme "nerd-icons"))
 
-  (use-package treemacs-projectile
-    :after projectile
-    :bind (:map projectile-command-map
-           ("h" . treemacs-projectile)))
-
   (use-package treemacs-magit
     :after magit
     :autoload treemacs-magit--schedule-update
