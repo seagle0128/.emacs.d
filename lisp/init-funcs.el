@@ -253,7 +253,7 @@ Native tree-sitter is introduced since 29."
 (defun too-long-file-p ()
   "Check whether the file is too long."
   (if (fboundp 'buffer-line-statistics)
-      (> (car (buffer-line-statistics)) 3000)
+      (> (car (buffer-line-statistics)) 10000)
     (> (buffer-size) 100000)))
 
 (define-minor-mode centaur-read-mode
