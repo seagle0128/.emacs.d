@@ -558,13 +558,20 @@
   (with-eval-after-load 'desktop
     (add-to-list 'desktop-globals-to-save 'ivy-dired-history-variable)))
 
-;; Better experience with icons
-;; Enable it before`ivy-rich-mode' for better performance
-;; FIXME:
+;; More friendly display transformer for Ivy
+;; Enable before`ivy-rich-mode' for better performance
 (use-package nerd-icons-ivy-rich
-  :ensure nil
-  :hook (ivy-mode . nerd-icons-ivy-rich-mode)
-  :init (setq nerd-icons-ivy-rich-icon centaur-icon)
+  :hook ((ivy-mode      . nerd-icons-ivy-rich-mode)
+         (counsel-mode  . ivy-rich-mode)
+         (ivy-rich-mode . ivy-rich-project-root-cache-mode)
+         (ivy-rich-mode . (lambda ()
+                            "Use abbreviate in `ivy-rich-mode'."
+                            (setq ivy-virtual-abbreviate
+                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
+  :init
+  ;; For better performance
+  (setq ivy-rich-parse-remote-buffer nil)
+  (setq nerd-icons-ivy-rich-icon centaur-icon)
   :config
   (plist-put nerd-icons-ivy-rich-display-transformers-list
              'centaur-load-theme
@@ -573,18 +580,6 @@
                 (ivy-rich-candidate))
                :delimiter "\t"))
   (nerd-icons-ivy-rich-reload))
-
-;; More friendly display transformer for Ivy
-(use-package ivy-rich
-  :hook ((counsel-mode . ivy-rich-mode)
-         (ivy-rich-mode . ivy-rich-project-root-cache-mode)
-         (ivy-rich-mode . (lambda ()
-                            "Use abbreviate in `ivy-rich-mode'."
-                            (setq ivy-virtual-abbreviate
-                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :init
-  ;; For better performance
-  (setq ivy-rich-parse-remote-buffer nil))
 
 ;; Display completion in child frame
 (when (childframe-completion-workable-p)
