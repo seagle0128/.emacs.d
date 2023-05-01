@@ -56,7 +56,7 @@
         treemacs-follow-after-init       t
         treemacs-width                   30
         treemacs-no-png-images           (not centaur-icon))
-  :config
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (pcase (cons (not (null (executable-find "git")))
@@ -66,9 +66,7 @@
     (`(t . _)
      (treemacs-git-mode 'simple)))
 
-  ;; FIXME:
   (use-package treemacs-nerd-icons
-    :ensure nil
     :demand
     :custom-face
     (treemacs-nerd-icons-root-face ((t (:inherit nerd-icons-green :height 1.3))))
