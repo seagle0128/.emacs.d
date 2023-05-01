@@ -164,15 +164,17 @@ NEW-SESSION specifies whether to create a new xwidget-webkit session."
   (browse-url centaur-homepage))
 
 ;; Open custom file
-(defun open-custom-file()
-  "Open or create `custom-file'."
+(defun find-custom-file()
+  "Open custom files."
   (interactive)
   (unless (file-exists-p custom-file)
     (if (file-exists-p centaur-custom-example-file)
         (copy-file centaur-custom-example-file custom-file)
       (user-error "The file `%s' doesn't exist" centaur-custom-example-file)))
-  (find-file custom-file)
-  (find-file-other-window centaur-custom-post-file))
+  (when (file-exists-p custom-file)
+    (find-file custom-file))
+  (when (file-exists-p centaur-custom-post-file)
+    (find-file-other-window centaur-custom-post-file)))
 
 ;; Misc
 (defun create-scratch-buffer ()
