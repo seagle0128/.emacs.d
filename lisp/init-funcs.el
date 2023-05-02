@@ -360,7 +360,7 @@ This issue has been addressed in 28."
   "Refresh package contents and update all packages."
   (interactive)
   (message "Updating packages...")
-  (package-update-all)
+  (package-upgrade-all)
   (message "Updating packages...done"))
 (defalias 'centaur-update-packages #'update-packages)
 
