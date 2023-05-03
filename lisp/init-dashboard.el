@@ -37,8 +37,6 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :ensure nil
-    :commands dashboard-setup-startup-hook
     :diminish dashboard-mode
     :functions (nerd-icons-faicon
                 nerd-icons-mdicon
@@ -56,7 +54,7 @@
        ("H" browse-homepage "homepage" :exit t)
        ("R" restore-previous-session "recover session" :exit t)
        ("L" restore-session "list sessions" :exit t)
-       ("S" open-custom-file "settings" :exit t))
+       ("S" find-custom-file "settings" :exit t))
       "Section"
       (("}" dashboard-next-section "next")
        ("{" dashboard-previous-section "previous")
@@ -79,7 +77,7 @@
            ("H" . browse-homepage)
            ("R" . restore-previous-session)
            ("L" . restore-session)
-           ("S" . open-custom-file)
+           ("S" . find-custom-file)
            ("U" . update-config-and-packages)
            ("q" . quit-dashboard)
            ("h" . dashboard-hydra/body)
