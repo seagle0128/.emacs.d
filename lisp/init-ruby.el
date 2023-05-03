@@ -65,11 +65,6 @@
   :config (with-eval-after-load 'yasnippet
             (rspec-install-snippets)))
 
-;; Rails
-(use-package projectile-rails
-  :diminish
-  :hook (projectile-mode . projectile-rails-global-mode))
-
 (provide 'init-ruby)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

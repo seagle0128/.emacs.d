@@ -161,7 +161,6 @@ of the buffer text to be displayed in the popup"
 
 ;; Fast search tool `ripgrep'
 (use-package rg
-  :defines projectile-command-map
   :hook (after-init . rg-enable-default-bindings)
   :bind (:map rg-global-map
          ("c" . rg-dwim-current-dir)
@@ -170,10 +169,7 @@ of the buffer text to be displayed in the popup"
   :init (setq rg-group-result t
               rg-show-columns t)
   :config
-  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
-
-  (with-eval-after-load 'projectile
-    (bind-key "s R" #'rg-project projectile-command-map)))
+  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases))
 
 ;; A Simple and cool pomodoro timer
 (use-package pomidor
@@ -181,21 +177,21 @@ of the buffer text to be displayed in the popup"
   :init
   (setq alert-default-style 'mode-line)
 
-  (with-eval-after-load 'all-the-icons
+  (with-eval-after-load 'nerd-icons
     (setq alert-severity-faces
-          '((urgent   . all-the-icons-red)
-            (high     . all-the-icons-orange)
-            (moderate . all-the-icons-yellow)
-            (normal   . all-the-icons-green)
-            (low      . all-the-icons-blue)
-            (trivial  . all-the-icons-purple))
+          '((urgent   . nerd-icons-red)
+            (high     . nerd-icons-orange)
+            (moderate . nerd-icons-yellow)
+            (normal   . nerd-icons-green)
+            (low      . nerd-icons-blue)
+            (trivial  . nerd-icons-purple))
           alert-severity-colors
-          `((urgent   . ,(face-foreground 'all-the-icons-red))
-            (high     . ,(face-foreground 'all-the-icons-orange))
-            (moderate . ,(face-foreground 'all-the-icons-yellow))
-            (normal   . ,(face-foreground 'all-the-icons-green))
-            (low      . ,(face-foreground 'all-the-icons-blue))
-            (trivial  . ,(face-foreground 'all-the-icons-purple)))))
+          `((urgent   . ,(face-foreground 'nerd-icons-red))
+            (high     . ,(face-foreground 'nerd-icons-orange))
+            (moderate . ,(face-foreground 'nerd-icons-yellow))
+            (normal   . ,(face-foreground 'nerd-icons-green))
+            (low      . ,(face-foreground 'nerd-icons-blue))
+            (trivial  . ,(face-foreground 'nerd-icons-purple)))))
 
   (when sys/macp
     (setq pomidor-play-sound-file
@@ -280,7 +276,7 @@ of the buffer text to be displayed in the popup"
   (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
   (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
+  ((:title (pretty-hydra-title "Ztree" 'octicon "nf-oct-diff" :face 'nerd-icons-green)
     :color pink :quit-key ("q" "C-g"))
    ("Diff"
     (("C" ztree-diff-copy "copy" :exit t)
@@ -310,7 +306,7 @@ of the buffer text to be displayed in the popup"
 (use-package list-environment
   :hook (list-environment-mode . (lambda ()
                                    (setq tabulated-list-format
-                                         (vconcat `(("" ,(if (icon-displayable-p) 2 0)))
+                                         (vconcat `(("" ,(if (icons-displayable-p) 2 0)))
                                                   tabulated-list-format))
                                    (tabulated-list-init-header)))
   :init
@@ -322,8 +318,8 @@ of the buffer text to be displayed in the popup"
                        (key (car kv))
                        (val (mapconcat #'identity (cdr kv) "=")))
                   (list key (vector
-                             (if (icon-displayable-p)
-                                 (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05)
+                             (if (icons-displayable-p)
+                                 (nerd-icons-octicon "key" :height 0.8 :v-adjust -0.05)
                                "")
                              `(,key face font-lock-keyword-face)
                              `(,val face font-lock-string-face)))))

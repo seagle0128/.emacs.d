@@ -81,28 +81,12 @@
     :hook (dired-mode . diredfl-mode))
 
   ;; Shows icons
-  (use-package all-the-icons-dired
+  (use-package nerd-icons-dired
     :diminish
-    :hook (dired-mode . (lambda ()
-                          (when (icon-displayable-p)
-                            (all-the-icons-dired-mode))))
-    :init (setq all-the-icons-dired-monochrome nil)
-    :config
-    (with-no-warnings
-      (defun my-all-the-icons-dired--icon (file)
-        "Return the icon for FILE."
-        (if (file-directory-p file)
-            (all-the-icons-icon-for-dir file
-                                        :height 0.9
-                                        :face 'all-the-icons-dired-dir-face
-                                        :v-adjust all-the-icons-dired-v-adjust)
-          (apply 'all-the-icons-icon-for-file file
-                 (append
-                  '(:height 0.9)
-                  `(:v-adjust ,all-the-icons-dired-v-adjust)
-                  (when all-the-icons-dired-monochrome
-                    `(:face ,(face-at-point)))))))
-      (advice-add #'all-the-icons-dired--icon :override #'my-all-the-icons-dired--icon)))
+    :commands nerd-icons-dired-mode
+    :custom-face
+    (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
+    :hook (dired-mode . nerd-icons-dired-mode))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)

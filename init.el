@@ -151,7 +151,7 @@ Otherwise the startup will be very slow. "
 ;; Programming
 (require 'init-vcs)
 (require 'init-flycheck)
-(require 'init-projectile)
+(require 'init-project)
 (require 'init-lsp)
 (require 'init-ctags)
 
@@ -162,7 +162,6 @@ Otherwise the startup will be very slow. "
 (require 'init-rust)
 (require 'init-python)
 (require 'init-ruby)
-(require 'init-dart)
 (require 'init-elixir)
 (require 'init-web)
 

@@ -56,7 +56,7 @@
         treemacs-follow-after-init       t
         treemacs-width                   30
         treemacs-no-png-images           (not centaur-icon))
-  :config
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (pcase (cons (not (null (executable-find "git")))
@@ -66,10 +66,12 @@
     (`(t . _)
      (treemacs-git-mode 'simple)))
 
-  (use-package treemacs-projectile
-    :after projectile
-    :bind (:map projectile-command-map
-           ("h" . treemacs-projectile)))
+  (use-package treemacs-nerd-icons
+    :demand
+    :custom-face
+    (treemacs-nerd-icons-root-face ((t (:inherit nerd-icons-green :height 1.3))))
+    (treemacs-nerd-icons-file-face ((t (:inherit nerd-icons-dsilver))))
+    :config (treemacs-load-theme "nerd-icons"))
 
   (use-package treemacs-magit
     :after magit
