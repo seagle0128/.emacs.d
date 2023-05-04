@@ -114,7 +114,6 @@
 
 ;; Mode-line
 (use-package doom-modeline
-  :ensure nil
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon centaur-icon
