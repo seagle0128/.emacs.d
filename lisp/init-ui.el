@@ -94,6 +94,8 @@
                    (cookies `(,(face-remap-add-relative 'mode-line-active
                                                         'doom-themes-visual-bell)
                               ,(face-remap-add-relative 'mode-line
+                                                        'doom-themes-visual-bell)
+                              ,(face-remap-add-relative 'doom-modeline
                                                         'doom-themes-visual-bell))))
               (force-mode-line-update)
               (run-with-timer 0.15 nil
