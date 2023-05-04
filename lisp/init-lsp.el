@@ -310,6 +310,7 @@
 
    ;; Debug
    (use-package dap-mode
+     :disabled
      :defines dap-python-executable
      :functions dap-hydra/nil
      :diminish
