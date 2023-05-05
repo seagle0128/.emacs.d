@@ -172,14 +172,6 @@
     (with-eval-after-load 'savehist
       (add-to-list 'savehist-additional-variables 'ivy-views))
 
-    ;; Highlight the selected item
-    (defun my-ivy-format-function (cands)
-      "Transform CANDS into a string for minibuffer."
-      (if (display-graphic-p)
-          (ivy-format-function-line cands)
-        (ivy-format-function-arrow cands)))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function)
-
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
     (defconst my-ivy-fly-commands
