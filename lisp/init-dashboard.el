@@ -47,7 +47,7 @@
     (dashboard-items-face ((t (:weight normal))))
     (dashboard-no-items-face ((t (:weight normal))))
     :pretty-hydra
-    ((:title (pretty-hydra-title "Dashboard" 'mdicon "nf-md-dashboard")
+    ((:title (pretty-hydra-title "Dashboard" 'mdicon "nf-md-view_dashboard")
       :color pink :quit-key ("q" "C-g"))
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
