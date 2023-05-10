@@ -31,7 +31,8 @@
 ;;; Code:
 
 (use-package flymake
-  :hook (prog-mode . flymake-mode))
+  :hook (prog-mode . flymake-mode)
+  :init (setq flymake-fringe-indicator-position 'right-fringe))
 
 (use-package flymake-elisp-config
   :hook ((after-init . flymake-elisp-config-global-mode)
@@ -45,42 +46,32 @@
              (require 'posframe nil t))
     (defvar flymake-posframe-buffer " *flymake-posframe-buffer*"
       "Name of the flymake posframe buffer.")
-
-    (defvar flymake-posframe-last-position nil
-      "Last position for which a flycheck posframe was displayed.")
-
-    (defun flymake-posframe-check-position ()
-      "Update `flymake-posframe-last-position', returning t if there was no change."
-      (equal flymake-posframe-last-position
-             (setq flymake-posframe-last-position
-                   (list (current-buffer) (buffer-modified-tick) (point)))))
-
-    (defun flymake-posframe-hidehandler (_info)
-      "Hide posframe if position has changed since last display."
-      (not (flymake-posframe-check-position)))
-
     (defun flymake-diagnostic-at-point-display-posframe (text)
       "Display the flymake diagnostic TEXT inside a child frame."
-      (flycheck-posframe-check-position)
-      (posframe-show flymake-posframe-buffer
-                     :string (concat flymake-diagnostic-at-point-error-prefix text)
-	                 :left-fringe 4
-	                 :right-fringe 4
-                     :max-width (round (* (frame-width) 0.62))
-                     :max-height (round (* (frame-height) 0.62))
-                     :internal-border-width 1
-                     :internal-border-color (face-background 'posframe-border nil t)
-                     :background-color (face-background 'tooltip nil t)
-                     :hidehandler #'flymake-posframe-hidehandler))
-
-    (defun flymake-posframe-hide ()
-      (posframe-hide flymake-posframe-buffer)
-      (dolist (hook flymake-posframe-hide-posframe-hooks)
-        (remove-hook hook #'flymake-posframe-hide t)))
-
-    ;; (dolist (hook flymake-posframe-hide-posframe-hooks)
-    ;;   (add-hook hook #'flymake-posframe-hide nil t))
-
+      (posframe-show
+       flymake-posframe-buffer
+       :string (propertize
+                (concat flymake-diagnostic-at-point-error-prefix text)
+                'face (if-let ((type (get-char-property (point) 'flymake-diagnostic)))
+                          (pcase (flymake--diag-type type)
+                            (:error 'error)
+                            (:warning 'warning)
+                            (:note 'success)
+                            (_ 'default))
+                        'default))
+	   :left-fringe 4
+	   :right-fringe 4
+       :max-width (round (* (frame-width) 0.62))
+       :max-height (round (* (frame-height) 0.62))
+       :internal-border-width 1
+       :internal-border-color (face-background 'posframe-border nil t)
+       :background-color (face-background 'tooltip nil t)
+       :hidehandler #'flymake-posframe-hidehandler)
+      (unwind-protect
+          (push (read-event) unread-command-events)
+        (progn
+          (posframe-hide flymake-posframe-buffer)
+          (other-frame 0))))
     (setq flymake-diagnostic-at-point-display-diagnostic-function
           #'flymake-diagnostic-at-point-display-posframe)))
 
