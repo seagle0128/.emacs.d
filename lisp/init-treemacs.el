@@ -1,6 +1,6 @@
 ;; init-treemacs.el --- Initialize treemacs.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2018-2022 Vincent Zhang
+;; Copyright (C) 2018-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
