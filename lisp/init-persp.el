@@ -1,6 +1,6 @@
 ;;; init-persp.el --- Initialize perspectives configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2018-2022 Vincent Zhang
+;; Copyright (C) 2018-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -168,7 +168,17 @@
             (setq persp-mode-project-bridge-persp-name-prefix ""))
     :config
     (with-no-warnings
-      ;; HACK: Allow saving to files
+      ;;Add buffer while `find-file'
+      (defun persp-mode-project-bridge-hook-find-file (&rest _args)
+        (let ((persp
+               (persp-mode-project-bridge-find-perspective-for-buffer
+                (current-buffer))))
+          (when persp
+            (persp-add-buffer (current-buffer) persp nil nil))))
+      (add-hook 'find-file-hook
+                #'persp-mode-project-bridge-hook-find-file)
+
+      ;; Allow saving to files
       (defun my-persp-mode-project-bridge-add-new-persp (name)
         (let ((persp (persp-get-by-name name *persp-hash* :nil)))
           (if (eq :nil persp)
@@ -180,17 +190,7 @@
                                     persp nil nil)))
             persp)))
       (advice-add #'persp-mode-project-bridge-add-new-persp
-                  :override #'my-persp-mode-project-bridge-add-new-persp)
-
-      ;; HACK: Switch to buffer after switching perspective
-      (defun my-persp-mode-project-bridge-hook-switch (fn &rest _args)
-        "Switch to a perspective when hook is activated."
-        (let ((buf (current-buffer)))
-          (funcall fn)
-          (when (buffer-live-p buf)
-            (switch-to-buffer buf))))
-      (advice-add #'persp-mode-project-bridge-hook-switch
-                  :around #'my-persp-mode-project-bridge-hook-switch))))
+                  :override #'my-persp-mode-project-bridge-add-new-persp))))
 
 (provide 'init-persp)
 
