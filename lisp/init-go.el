@@ -81,21 +81,6 @@
   (use-package go-fill-struct)
   (use-package go-impl)
 
-  ;; Install: See https://github.com/golangci/golangci-lint#install
-  (use-package flycheck-golangci-lint
-    :if (executable-find "golangci-lint")
-    :after flycheck
-    :defines flycheck-disabled-checkers
-    :hook (go-mode . (lambda ()
-                       "Enable golangci-lint."
-                       (setq flycheck-disabled-checkers '(go-gofmt
-                                                          go-golint
-                                                          go-vet
-                                                          go-build
-                                                          go-test
-                                                          go-errcheck))
-                       (flycheck-golangci-lint-setup))))
-
   (use-package go-tag
     :bind (:map go-mode-map
            ("C-c t a" . go-tag-add)
