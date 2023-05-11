@@ -62,8 +62,7 @@
        :max-height (round (* (frame-height) 0.62))
        :internal-border-width 1
        :internal-border-color (face-background 'posframe-border nil t)
-       :background-color (face-background 'tooltip nil t)
-       :hidehandler #'flymake-posframe-hidehandler)
+       :background-color (face-background 'tooltip nil t))
       (unwind-protect
           (push (read-event) unread-command-events)
         (progn
