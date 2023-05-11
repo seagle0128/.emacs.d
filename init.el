@@ -151,7 +151,6 @@ Otherwise the startup will be very slow. "
 ;; Programming
 (require 'init-vcs)
 (require 'init-flymake)
-(require 'init-project)
 (require 'init-lsp)
 (require 'init-ctags)
 
