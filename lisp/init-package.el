@@ -59,7 +59,7 @@
 ;; HACK: DO NOT save package-selected-packages to `custom-file'.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-package--save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+  "Set `package-selected-packages' to VALUE but don't save to variable `custom-file'."
   (when value
     (setq package-selected-packages value))
   (unless after-init-time
@@ -89,9 +89,8 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Required by `use-package'
+;; Don't display minor modes
 (use-package diminish)
-(use-package bind-key)
 
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
