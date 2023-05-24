@@ -1,6 +1,6 @@
 ;; init-ctags.el --- Initialize TAGS configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2018-2022 Vincent Zhang
+;; Copyright (C) 2018-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -38,7 +38,7 @@
 (use-package citre
   :diminish
   :commands citre-jump-back
-  :functions (projectile-project-root xref-go-back)
+  :functions xref-go-back
   :bind (:map prog-mode-map
          ("C-x c j" . citre-jump+)
          ("C-x c k" . citre-jump-back+)
@@ -50,9 +50,6 @@
         citre-default-create-tags-file-location 'global-cache
         citre-use-project-root-when-creating-tags t
         citre-prompt-language-for-ctags-command t)
-
-  (with-eval-after-load 'projectile
-    (setq citre-project-root-function #'projectile-project-root))
 
   (defun citre-jump+ ()
     "Jump to the definition of the symbol at point.

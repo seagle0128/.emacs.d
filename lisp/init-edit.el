@@ -1,6 +1,6 @@
 ;; init-edit.el --- Initialize editing configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -53,7 +53,7 @@
   (with-eval-after-load 'wdired
     (bind-key "<C-return>" #'rect-hydra/body wdired-mode-map))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Rectangle" 'material "border_all" :height 1.2 :v-adjust -0.225)
+  ((:title (pretty-hydra-title "Rectangle" 'mdicon "nf-md-border_all")
     :color amaranth :body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g"))
    ("Move"
     (("h" backward-char "←")
@@ -202,10 +202,6 @@
                   (diminish (cdr pair)))
                 beginend-modes))
 
-;; An all-in-one comment command to rule them all
-(use-package comment-dwim-2
-  :bind ([remap comment-dwim] . comment-dwim-2)) ;
-
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish
@@ -268,7 +264,7 @@
          :map mc/keymap
          ("C-|" . mc/vertical-align-with-space))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Multiple Cursors" 'material "border_all" :height 1.2 :v-adjust -0.225)
+  ((:title (pretty-hydra-title "Multiple Cursors" 'mdicon "nf-md-border_all")
     :color amaranth :quit-key ("q" "C-g"))
    ("Up"
 	(("p" mc/mark-previous-like-this "prev")
@@ -343,18 +339,17 @@
          ([M-kp-2] . pager-row-down)))
 
 ;; Treat undo history as a tree
-(use-package undo-tree
-  :diminish
-  :hook (after-init . global-undo-tree-mode)
-  :init
-  (setq undo-tree-visualizer-timestamps t
-        undo-tree-enable-undo-in-region nil
-        undo-tree-auto-save-history nil)
-
-  ;; HACK: keep the diff window
-  (with-no-warnings
-    (make-variable-buffer-local 'undo-tree-visualizer-diff)
-    (setq-default undo-tree-visualizer-diff t)))
+(if emacs/>=28p
+    (use-package vundo
+      :bind ("C-x u" . vundo)
+      :config (setq vundo-glyph-alist vundo-unicode-symbols))
+  (use-package undo-tree
+    :diminish
+    :hook (after-init . global-undo-tree-mode)
+    :init (setq undo-tree-visualizer-timestamps t
+                undo-tree-visualizer-diff t
+                undo-tree-enable-undo-in-region nil
+                undo-tree-auto-save-history nil)))
 
 ;; Goto last change
 (use-package goto-chg
@@ -380,7 +375,7 @@
   :ensure nil
   :diminish hs-minor-mode
   :pretty-hydra
-  ((:title (pretty-hydra-title "HideShow" 'octicon "fold" :height 1.1 :v-adjust -0.05)
+  ((:title (pretty-hydra-title "HideShow" 'octicon "nf-oct-fold")
     :color amaranth :quit-key ("q" "C-g"))
    ("Fold"
     (("t" hs-toggle-all "toggle all")

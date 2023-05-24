@@ -1,6 +1,6 @@
 ;; init-shell.el --- Initialize shell configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -135,20 +135,7 @@
           (set-buffer vterm-buffer)
           (multi-vterm-internal)
           (pop-to-buffer vterm-buffer)))
-      (advice-add #'multi-vterm :override #'my-multi-vterm)
-
-      ;; FIXME: `project-root' is introduced in 27+.
-      (defun my-multi-vterm-project-root ()
-        "Get `default-directory' for project using projectile or project.el."
-        (unless (boundp 'multi-vterm-projectile-installed-p)
-          (setq multi-vterm-projectile-installed-p (require 'projectile nil t)))
-        (if multi-vterm-projectile-installed-p
-            (projectile-project-root)
-          (let ((project (or (project-current) `(transient . ,default-directory))))
-            (if (fboundp 'project-root)
-                (project-root project)
-              (cdr project)))))
-      (advice-add #'multi-vterm-project-root :override #'my-multi-vterm-project-root))))
+      (advice-add #'multi-vterm :override #'my-multi-vterm))))
 
 ;; Powershell
 (use-package powershell
@@ -172,7 +159,8 @@
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
     (cond ((fboundp 'vterm) (vterm arg))
-          ((fboundp 'powershell) (powershell arg))
+          ((or (executable-find "pwsh") (executable-find "powershell"))
+           (powershell arg))
           (sys/win32p (eshell arg))
           (t (shell))))
 

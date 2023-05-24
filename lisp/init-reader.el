@@ -1,6 +1,6 @@
 ;; init-reader.el --- Initialize readers.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2022 Vincent Zhang
+;; Copyright (C) 2019-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -94,7 +94,7 @@
 ;; Atom/RSS reader
 (use-package elfeed
   :pretty-hydra
-  ((:title (pretty-hydra-title "Elfeed" 'faicon "rss-square" :face 'all-the-icons-orange :height 1.1 :v-adjust -0.05)
+  ((:title (pretty-hydra-title "Elfeed" 'faicon "nf-fa-rss_square" :face 'nerd-icons-orange)
     :color amaranth :quit-key ("q" "C-g"))
    ("Search"
     (("c" elfeed-db-compact "compact db")

@@ -1,6 +1,6 @@
 ;; init-prog.el --- Initialize programming configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -103,7 +103,7 @@
 ;; Jump to definition
 (use-package dumb-jump
   :pretty-hydra
-  ((:title (pretty-hydra-title "Dump Jump" 'faicon "anchor")
+  ((:title (pretty-hydra-title "Dump Jump" 'faicon "nf-fa-anchor")
     :color blue :quit-key ("q" "C-g"))
    ("Jump"
     (("j" dumb-jump-go "Go")
@@ -198,6 +198,7 @@ Install the doc if it's not installed."
 
 (use-package cask-mode)
 (use-package cmake-mode)
+(use-package dart-mode)
 (use-package groovy-mode)
 (use-package julia-mode)
 (use-package lua-mode)

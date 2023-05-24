@@ -1,6 +1,6 @@
 ;; init-buffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -39,9 +39,9 @@
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Display icons for buffers
-  (use-package all-the-icons-ibuffer
-    :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
-    :init (setq all-the-icons-ibuffer-icon centaur-icon))
+  (use-package nerd-icons-ibuffer
+    :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+    :init (setq nerd-icons-ibuffer-icon centaur-icon))
 
   (with-eval-after-load 'counsel
     (with-no-warnings
@@ -55,23 +55,16 @@
           (counsel-find-file default-directory)))
       (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
 
-;; Group ibuffer's list by project root
-(use-package ibuffer-projectile
-  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
-  :hook ((ibuffer . (lambda ()
-                      (ibuffer-projectile-set-filter-groups)
-                      (unless (eq ibuffer-sorting-mode 'alphabetic)
-                        (ibuffer-do-sort-by-alphabetic)))))
+;; Group ibuffer's list by project
+(use-package ibuffer-project
+  :hook (ibuffer . (lambda ()
+                     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+                     (unless (eq ibuffer-sorting-mode 'project-file-relative)
+                       (ibuffer-do-sort-by-project-file-relative))))
+  :init (setq ibuffer-project-use-cache t)
   :config
-  (setq ibuffer-projectile-prefix
-        (if (icon-displayable-p)
-            (concat
-             (all-the-icons-octicon "file-directory"
-                                    :face ibuffer-filter-group-name-face
-                                    :v-adjust 0.0
-                                    :height 1.0)
-             " ")
-          "Project: ")))
+  (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
+  (add-to-list 'ibuffer-project-root-functions '("\\*.+\\*" . "Default")))
 
 (provide 'init-ibuffer)
 

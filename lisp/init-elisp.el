@@ -1,6 +1,6 @@
 ;; init-elisp.el --- Initialize Emacs Lisp configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -36,19 +36,11 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :defines flycheck-disabled-checkers
   :bind (:map emacs-lisp-mode-map
          ("C-c C-x" . ielm)
          ("C-c C-c" . eval-defun)
          ("C-c C-b" . eval-buffer))
-  :hook (emacs-lisp-mode . (lambda ()
-                             "Disable the checkdoc checker."
-                             (setq-local flycheck-disabled-checkers
-                                         '(emacs-lisp-checkdoc))))
   :config
-  (when (boundp 'elisp-flymake-byte-compile-load-path)
-    (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
-
   ;; Syntax highlighting of known Elisp symbols
   (use-package highlight-defined
     :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))

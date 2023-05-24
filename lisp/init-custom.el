@@ -1,6 +1,6 @@
 ;; init-custom.el --- Define customizations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2022 Vincent Zhang
+;; Copyright (C) 2006-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -72,7 +72,7 @@
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-icon (or (display-graphic-p) (daemonp))
+(defcustom centaur-icon t
   "Display icons or not."
   :group 'centaur
   :type 'boolean)
@@ -84,9 +84,9 @@
     `((melpa    . (("gnu"    . ,(format "%s://elpa.gnu.org/packages/" proto))
                    ("nongnu" . ,(format "%s://elpa.nongnu.org/nongnu/" proto))
                    ("melpa"  . ,(format "%s://melpa.org/packages/" proto))))
-      (emacs-cn . (("gnu"    . ,(format "%s://1.15.88.122/gnu/" proto))
-                   ("nongnu" . ,(format "%s://1.15.88.122/nongnu/" proto))
-                   ("melpa"  . ,(format "%s://1.15.88.122/melpa/" proto))))
+      (emacs-cn . (("gnu"    . "http://1.15.88.122/gnu/")
+                   ("nongnu" . "http://1.15.88.122/nongnu/")
+                   ("melpa"  . "http://1.15.88.122/melpa/")))
       (bfsu     . (("gnu"    . ,(format "%s://mirrors.bfsu.edu.cn/elpa/gnu/" proto))
                    ("nongnu" . ,(format "%s://mirrors.bfsu.edu.cn/elpa/nongnu/" proto))
                    ("melpa"  . ,(format "%s://mirrors.bfsu.edu.cn/elpa/melpa/" proto))))

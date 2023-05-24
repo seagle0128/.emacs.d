@@ -1,6 +1,6 @@
 ;; init-vcs.el --- Initialize version control system configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2016-2022 Vincent Zhang
+;; Copyright (C) 2016-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -233,7 +233,7 @@
   :ensure nil
   :diminish
   :pretty-hydra
-  ((:title (pretty-hydra-title "Smerge" 'octicon "diff")
+  ((:title (pretty-hydra-title "Smerge" 'octicon "nf-oct-diff")
     :color pink :quit-key ("q" "C-g"))
    ("Move"
     (("n" smerge-next "next")

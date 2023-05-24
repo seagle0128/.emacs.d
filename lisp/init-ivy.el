@@ -1,6 +1,6 @@
 ;;; init-ivy.el --- Initialize ivy configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2016-2022 Vincent Zhang
+;; Copyright (C) 2016-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -124,8 +124,9 @@
         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
-        ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
-                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
+        ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful .+\\*"
+                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*"
+                             "\\`flycheck_.+")
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
@@ -136,9 +137,7 @@
   (setq ivy-height-alist '((counsel-evil-registers . 5)
                            (counsel-yank-pop       . 8)
                            (counsel-git-log        . 4)
-                           (swiper                 . 15)
-                           (counsel-projectile-ag  . 15)
-                           (counsel-projectile-rg  . 15)))
+                           (swiper                 . 15)))
 
   ;; Better performance on Windows
   (when sys/win32p
@@ -172,14 +171,6 @@
     ;; persist views
     (with-eval-after-load 'savehist
       (add-to-list 'savehist-additional-variables 'ivy-views))
-
-    ;; Highlight the selected item
-    (defun my-ivy-format-function (cands)
-      "Transform CANDS into a string for minibuffer."
-      (if (display-graphic-p)
-          (ivy-format-function-line cands)
-        (ivy-format-function-arrow cands)))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
@@ -559,32 +550,11 @@
   (with-eval-after-load 'desktop
     (add-to-list 'desktop-globals-to-save 'ivy-dired-history-variable)))
 
-
-;; `projectile' integration
-(use-package counsel-projectile
-  :hook (counsel-mode . counsel-projectile-mode)
-  :init
-  (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-  (when (executable-find "ugrep")
-    (setq counsel-projectile-grep-base-command "ugrep --color=never -rnEI %s")))
-
-;; Better experience with icons
-;; Enable it before`ivy-rich-mode' for better performance
-(use-package all-the-icons-ivy-rich
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-  :init (setq all-the-icons-ivy-rich-icon centaur-icon)
-  :config
-  (plist-put all-the-icons-ivy-rich-display-transformers-list
-             'centaur-load-theme
-             '(:columns
-               ((all-the-icons-ivy-rich-theme-icon)
-                (ivy-rich-candidate))
-               :delimiter "\t"))
-  (all-the-icons-ivy-rich-reload))
-
 ;; More friendly display transformer for Ivy
-(use-package ivy-rich
-  :hook ((counsel-projectile-mode . ivy-rich-mode) ; MUST after `counsel-projectile'
+;; Enable before`ivy-rich-mode' for better performance
+(use-package nerd-icons-ivy-rich
+  :hook ((ivy-mode      . nerd-icons-ivy-rich-mode)
+         (counsel-mode  . ivy-rich-mode)
          (ivy-rich-mode . ivy-rich-project-root-cache-mode)
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."
@@ -592,7 +562,16 @@
                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
   :init
   ;; For better performance
-  (setq ivy-rich-parse-remote-buffer nil))
+  (setq ivy-rich-parse-remote-buffer nil)
+  (setq nerd-icons-ivy-rich-icon centaur-icon)
+  :config
+  (plist-put nerd-icons-ivy-rich-display-transformers-list
+             'centaur-load-theme
+             '(:columns
+               ((nerd-icons-ivy-rich-theme-icon)
+                (ivy-rich-candidate))
+               :delimiter "\t"))
+  (nerd-icons-ivy-rich-reload))
 
 ;; Display completion in child frame
 (when (childframe-completion-workable-p)

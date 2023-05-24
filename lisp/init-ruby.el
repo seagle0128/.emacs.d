@@ -1,6 +1,6 @@
 ;; init-ruby.el --- Initialize ruby configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2022 Vincent Zhang
+;; Copyright (C) 2010-2023 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -64,11 +64,6 @@
   :hook (dired-mode . rspec-dired-mode)
   :config (with-eval-after-load 'yasnippet
             (rspec-install-snippets)))
-
-;; Rails
-(use-package projectile-rails
-  :diminish
-  :hook (projectile-mode . projectile-rails-global-mode))
 
 (provide 'init-ruby)
 
