@@ -162,8 +162,13 @@
 (use-package marginalia
   :hook (after-init . marginalia-mode))
 
-(use-package embark)
-(use-package embark-consult)
+(use-package embark
+  :bind ("M-." . embark-dwim))
+
+(use-package embark-consult
+  :bind (:map minibuffer-mode-map
+         ("C-c C-o" . embark-export))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package nerd-icons-completion
   :hook (after-init . nerd-icons-completion-mode))
