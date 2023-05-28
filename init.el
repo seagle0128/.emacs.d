@@ -122,7 +122,7 @@ Otherwise the startup will be very slow."
 (require 'init-ui)
 (require 'init-edit)
 (require 'init-ivy)
-(require 'init-company)
+(require 'init-corfu)
 (require 'init-yasnippet)
 
 (require 'init-bookmark)
