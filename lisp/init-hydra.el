@@ -126,15 +126,10 @@
          :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
-        ("t o" (ivy-read "Load custom theme: "
-                         (all-completions "doom" (custom-available-themes))
-                         :action (lambda (theme)
-                                   (centaur-set-variable
-                                    'centaur-theme
-                                    (let ((x (intern theme)))
-                                      (or (car (rassoc x centaur-theme-alist)) x)))
-                                   (counsel-load-theme-action theme))
-                         :caller 'counsel-load-theme)
+        ("t o" (centaur-load-theme
+                (let ((x (intern (completing-read "Load custom theme: "
+                                                  (all-completions "doom" (custom-available-themes))))))
+                  (or (car (rassoc x centaur-theme-alist)) x)))
          "others"
          :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
                           (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))

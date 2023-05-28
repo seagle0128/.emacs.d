@@ -160,24 +160,7 @@ FACE defaults to inheriting from default and highlight."
       (advice-add #'macrostep-collapse
                   :after (lambda (&rest _)
                            (when (derived-mode-p 'prog-mode 'yaml-mode)
-                             (highlight-indent-guides-mode 1)))))
-
-    ;; Don't display indentations in `swiper'
-    ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
-    (with-eval-after-load 'ivy
-      (defun my-ivy-cleanup-indentation (str)
-        "Clean up indentation highlighting in ivy minibuffer."
-        (let ((pos 0)
-              (next 0)
-              (limit (length str))
-              (prop 'highlight-indent-guides-prop))
-          (while (and pos next)
-            (setq next (text-property-not-all pos limit prop nil str))
-            (when next
-              (setq pos (text-property-any next limit prop nil str))
-              (ignore-errors
-                (remove-text-properties next pos '(display nil face nil) str))))))
-      (advice-add #'ivy-cleanup-string :after #'my-ivy-cleanup-indentation))))
+                             (highlight-indent-guides-mode 1)))))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

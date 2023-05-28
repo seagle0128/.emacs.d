@@ -182,7 +182,6 @@
 
           gnus-article-mode devdocs-mode
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
-          ivy-occur-mode ivy-occur-grep-mode
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 
           "^\\*Process List\\*" process-menu-mode

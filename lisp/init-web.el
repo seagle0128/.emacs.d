@@ -67,15 +67,7 @@
      ("v" xwwp-follow-link "follow link" :exit t)
      ("w" xwidget-webkit-current-url-message-kill "copy url" :exit t)
      ("?" describe-mode "help" :exit t)
-     ("Q" quit-window "quit" :exit t))))
-  :init
-  ;; Link navigation
-  (use-package xwwp-follow-link-ivy
-    :after ivy
-    :bind (("C-c C-z x" . xwwp)
-           :map xwidget-webkit-mode-map
-           ("v"         . xwwp-follow-link))
-    :init (setq xwwp-follow-link-completion-system 'ivy)))
+     ("Q" quit-window "quit" :exit t)))))
 
 ;; CSS
 (use-package css-mode

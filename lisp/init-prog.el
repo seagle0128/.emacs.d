@@ -89,16 +89,10 @@
        ((executable-find "rg")
         (setq xref-search-program 'ripgrep))))
 
-    ;; Select from xref candidates with Ivy
+    ;; Select from xref candidates in minibuffer
     (if emacs/>=28p
         (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-              xref-show-xrefs-function #'xref-show-definitions-completing-read)
-      (use-package ivy-xref
-        :after ivy
-        :init
-        (when emacs/>=27p
-          (setq xref-show-definitions-function #'ivy-xref-show-defs))
-        (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))))
+              xref-show-xrefs-function #'xref-show-definitions-completing-read))))
 
 ;; Jump to definition
 (use-package dumb-jump
@@ -123,7 +117,7 @@
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq dumb-jump-prefer-searcher 'rg
-        dumb-jump-selector 'ivy))
+        dumb-jump-selector 'completing-read))
 
 ;; Code styles
 (use-package editorconfig

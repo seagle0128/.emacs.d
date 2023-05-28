@@ -204,8 +204,6 @@ or`~/.emacs.d/custom-post.el`.
 | `toggles-hydra`          | global                | `<f6>`            | Global option toggles                |
 | `window-hydra`           | global                | `C-c w`/`C-x o w` | Window management                    |
 | `doom-modeline-hydra`    | doom-modeline-mode    | `C-<f6>`          | Mode-line options and actions        |
-| `hydra-ivy`              | minibuffer, ivy-mode  | `C-o`             | Additional key bindings for Ivy      |
-| `ivy-hydra-read-action`  | minibuffer, ivy-mode  | `M-o`             | Actions for`ivy-dispatching-done`    |
 | `hydra-dired-qick-sort`  | dired                 | `S`               | Options for `dired-quick-sort`       |
 | `org-hydra`              | org-mode              | `<`               | Org template                         |
 | `dashboard-hydra`        | dashboard-mode        | `h`/`?`           | Actions for the dashboard            |

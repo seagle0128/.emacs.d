@@ -80,7 +80,6 @@
   (use-package magit-todos
     :defines magit-todos-nice
     :commands magit-todos--scan-with-git-grep
-    :bind ("C-c C-t" . ivy-magit-todos)
     :init
     (setq magit-todos-nice (if (executable-find "nice") t nil))
     (setq magit-todos-scanner #'magit-todos--scan-with-git-grep)

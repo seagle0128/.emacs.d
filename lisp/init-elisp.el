@@ -234,12 +234,6 @@ Lisp function does not specify a special indentation."
   :hook (helpful-mode . cursor-sensor-mode) ; for remove-advice button
   :init
   (with-no-warnings
-    (with-eval-after-load 'counsel
-      (setq counsel-describe-function-function #'helpful-callable
-            counsel-describe-variable-function #'helpful-variable
-            counsel-describe-symbol-function #'helpful-symbol
-            counsel-descbinds-function #'helpful-callable))
-
     (with-eval-after-load 'apropos
       ;; patch apropos buttons to call helpful instead of help
       (dolist (fun-bt '(apropos-function apropos-macro apropos-command))

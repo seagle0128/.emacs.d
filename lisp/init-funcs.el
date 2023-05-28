@@ -274,17 +274,16 @@ Native tree-sitter is introduced since 29."
 
 ;; Pakcage repository (ELPA)
 (defun set-package-archives (archives &optional refresh async no-save)
-  "Set the package archives (ELPA).
+  "Set the package ARCHIVES (ELPA).
 
 REFRESH is non-nil, will refresh archive contents.
 ASYNC specifies whether to perform the downloads in the background.
-Save to `custom-file' if NO-SAVE is nil."
+Save to variable `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern
-     (ivy-read "Select package archives: "
-               (mapcar #'car centaur-package-archives-alist)
-               :preselect (symbol-name centaur-package-archives)))))
+     (completing-read "Select package archives: "
+                      (mapcar #'car centaur-package-archives-alist)))))
   ;; Set option
   (centaur-set-variable 'centaur-package-archives archives no-save)
 
@@ -456,7 +455,7 @@ This issue has been addressed in 28."
        (memq (centaur--theme-name theme) custom-enabled-themes)))
 
 (defun centaur--load-theme (theme)
-  "Disable others and enable new one."
+  "Disable others and enable new THEME."
   (when-let ((theme (centaur--theme-name theme)))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)))
@@ -476,16 +475,15 @@ This issue has been addressed in 28."
       (centaur--load-theme theme))))
 
 (defun centaur-load-theme (theme &optional no-save)
-  "Load color THEME. Save to `custom-file' if NO-SAVE is nil."
+  "Load color THEME. Save to variable `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern
-     (ivy-read "Load theme: "
-               `(auto
-                 random
-                 system
-                 ,@(mapcar #'car centaur-theme-alist))
-               :preselect (symbol-name centaur-theme)))))
+     (completing-read "Load theme: "
+                      `(auto
+                        random
+                        system
+                        ,@(mapcar #'car centaur-theme-alist))))))
 
   ;; Disable system theme
   (when (bound-and-true-p auto-dark-mode)

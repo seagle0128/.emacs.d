@@ -310,59 +310,6 @@
                  (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
        (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
 
-   ;; Ivy integration
-   (use-package lsp-ivy
-     :after lsp-mode
-     :bind (:map lsp-mode-map
-            ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-            ("C-s-." . lsp-ivy-global-workspace-symbol))
-     :config
-     (with-no-warnings
-       (when (icons-displayable-p)
-         (defconst lsp-ivy-symbol-kind-icons
-           `(,(nerd-icons-codicon "nf-cod-symbol_namespace") ; Unknown - 0
-             ,(nerd-icons-codicon "nf-cod-symbol_file") ; File - 1
-             ,(nerd-icons-codicon "nf-cod-symbol_namespace" :face 'nerd-icons-lblue) ; Module - 2
-             ,(nerd-icons-codicon "nf-cod-symbol_namespace" :face 'nerd-icons-lblue) ; Namespace - 3
-             ,(nerd-icons-codicon "nf-cod-package") ; Package - 4
-             ,(nerd-icons-codicon "nf-cod-symbol_class" :face 'nerd-icons-orange) ; Class - 5
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-purple) ; Method - 6
-             ,(nerd-icons-codicon "nf-cod-symbol_property") ; Property - 7
-             ,(nerd-icons-codicon "nf-cod-symbol_field" :face 'nerd-icons-lblue) ; Field - 8
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-lpurple) ; Constructor - 9
-             ,(nerd-icons-codicon "nf-cod-symbol_enum" :face 'nerd-icons-orange) ; Enum - 10
-             ,(nerd-icons-codicon "nf-cod-symbol_interface" :face 'nerd-icons-lblue) ; Interface - 11
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-purple) ; Function - 12
-             ,(nerd-icons-codicon "nf-cod-symbol_variable" :face 'nerd-icons-lblue) ; Variable - 13
-             ,(nerd-icons-codicon "nf-cod-symbol_constant") ; Constant - 14
-             ,(nerd-icons-codicon "nf-cod-symbol_string") ; String - 15
-             ,(nerd-icons-codicon "nf-cod-symbol_numeric") ; Number - 16
-             ,(nerd-icons-codicon "nf-cod-symbol_boolean" :face 'nerd-icons-lblue) ; Boolean - 17
-             ,(nerd-icons-codicon "nf-cod-symbol_array") ; Array - 18
-             ,(nerd-icons-codicon "nf-cod-symbol_class" :face 'nerd-icons-blue) ; Object - 19
-             ,(nerd-icons-codicon "nf-cod-symbol_key") ; Key - 20
-             ,(nerd-icons-codicon "nf-cod-symbol_numeric" :face 'nerd-icons-dsilver) ; Null - 21
-             ,(nerd-icons-codicon "nf-cod-symbol_enum_member" :face 'nerd-icons-lblue) ; EnumMember - 22
-             ,(nerd-icons-codicon "nf-cod-symbol_structure" :face 'nerd-icons-orange) ; Struct - 23
-             ,(nerd-icons-codicon "nf-cod-symbol_event" :face 'nerd-icons-orange) ; Event - 24
-             ,(nerd-icons-codicon "nf-cod-symbol_operator") ; Operator - 25
-             ,(nerd-icons-codicon "nf-cod-symbol_class") ; TypeParameter - 26
-             ))
-
-         (lsp-defun my-lsp-ivy--format-symbol-match
-           ((sym &as &SymbolInformation :kind :location (&Location :uri))
-            project-root)
-           "Convert the match returned by `lsp-mode` into a candidate string."
-           (let* ((sanitized-kind (if (length> lsp-ivy-symbol-kind-icons kind) kind 0))
-                  (type (elt lsp-ivy-symbol-kind-icons sanitized-kind))
-                  (typestr (if lsp-ivy-show-symbol-kind (format "%s " type) ""))
-                  (pathstr (if lsp-ivy-show-symbol-filename
-                               (propertize (format " · %s" (file-relative-name (lsp--uri-to-path uri) project-root))
-                                           'face font-lock-comment-face)
-                             "")))
-             (concat typestr (lsp-render-symbol-information sym ".") pathstr)))
-         (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
-
    ;; Debug
    (use-package dap-mode
      :disabled

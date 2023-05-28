@@ -300,14 +300,7 @@
                               (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
               ispell-program-name "aspell"
-              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
-  :config
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after ivy
-    :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Hungry deletion
 (use-package hungry-delete

@@ -36,7 +36,7 @@
 ;; Windows/buffers sets shared among frames + save/load.
 (use-package persp-mode
   :diminish
-  :defines (recentf-exclude ivy-ignore-buffers)
+  :defines recentf-exclude
   :autoload (get-current-persp persp-contain-buffer-p)
   :hook ((after-init . persp-mode)
          (persp-mode . persp-load-frame)
@@ -132,15 +132,6 @@
   ;; Don't save persp configs in `recentf'
   (with-eval-after-load 'recentf
     (push persp-save-dir recentf-exclude))
-
-  ;; Ivy Integration
-  (with-eval-after-load 'ivy
-    (add-to-list 'ivy-ignore-buffers
-                 (lambda (b)
-                   (when persp-mode
-                     (if-let ((persp (get-current-persp)))
-                         (not (persp-contain-buffer-p b persp))
-                       nil)))))
 
   ;; Eshell integration
   (persp-def-buffer-save/load

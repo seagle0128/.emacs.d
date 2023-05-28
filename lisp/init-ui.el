@@ -244,10 +244,30 @@
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
-     ("z h" (counsel-set-variable 'doom-modeline-height) "set height" :exit t)
-     ("z w" (counsel-set-variable 'doom-modeline-bar-width) "set bar width" :exit t)
-     ("z g" (counsel-set-variable 'doom-modeline-github-interval) "set github interval" :exit t)
-     ("z n" (counsel-set-variable 'doom-modeline-gnus-timer) "set gnus interval" :exit t)))))
+     ("z h" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-height
+                     (symbol-value 'doom-modeline-height)))
+      "set height" :exit t)
+     ("z w" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-bar-width
+                     (symbol-value 'doom-modeline-bar-width)))
+      "set bar width" :exit t)
+     ("z g" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-github-interval
+                     (symbol-value 'doom-modeline-github-interval)))
+      "set github interval" :exit t)
+     ("z n" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-gnus-timer
+                     (symbol-value 'doom-modeline-gnus-timer)))
+      "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
   :hook (((treemacs-mode

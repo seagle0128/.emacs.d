@@ -44,11 +44,9 @@
   (which-key-add-key-based-replacements "C-c !" "flycheck")
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
   (which-key-add-key-based-replacements "C-c @" "hideshow")
-  (which-key-add-key-based-replacements "C-c c" "counsel")
   (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
-  (which-key-add-key-based-replacements "C-c v" "ivy-view")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
   (which-key-add-key-based-replacements "C-x 8" "unicode")

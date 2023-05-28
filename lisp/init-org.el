@@ -181,9 +181,6 @@ prepended to the element after the #+HEADER: tag."
   (use-package ox-gfm
     :init (add-to-list 'org-export-backends 'gfm))
 
-  (with-eval-after-load 'counsel
-    (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
-
   ;; Prettify UI
   (if emacs/>=27p
       (use-package org-modern

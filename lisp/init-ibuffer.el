@@ -41,19 +41,7 @@
   ;; Display icons for buffers
   (use-package nerd-icons-ibuffer
     :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
-    :init (setq nerd-icons-ibuffer-icon centaur-icon))
-
-  (with-eval-after-load 'counsel
-    (with-no-warnings
-      (defun my-ibuffer-find-file ()
-        (interactive)
-        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                   (if (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         default-directory)
-                                     default-directory))))
-          (counsel-find-file default-directory)))
-      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
+    :init (setq nerd-icons-ibuffer-icon centaur-icon)))
 
 ;; Group ibuffer's list by project
 (use-package ibuffer-project
