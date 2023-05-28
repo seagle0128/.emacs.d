@@ -250,11 +250,9 @@
      ("z n" (counsel-set-variable 'doom-modeline-gnus-timer) "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
+  :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode
-           treemacs-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . hide-mode-line-mode)))
 
