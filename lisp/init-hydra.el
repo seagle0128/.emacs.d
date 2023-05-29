@@ -34,7 +34,18 @@
 (require 'init-funcs)
 
 (use-package hydra
-  :hook (emacs-lisp-mode . hydra-add-imenu))
+  :hook (emacs-lisp-mode . hydra-add-imenu)
+  :init
+  (when (childframe-completion-workable-p)
+    (setq hydra-hint-display-type 'posframe
+          hydra-posframe-show-params
+          `(:left-fringe 8
+            :right-fringe 8
+            :internal-border-width 2
+            :internal-border-color ,(face-background 'posframe-border nil t)
+            :background-color ,(face-background 'tooltip nil t)
+            :lines-truncate t
+            :poshandler posframe-poshandler-frame-center-near-bottom))))
 
 (use-package pretty-hydra
   :bind ("<f6>" . toggles-hydra/body)
