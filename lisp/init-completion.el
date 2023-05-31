@@ -186,13 +186,24 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
+(use-package embark
+  :bind (("s-." . embark-act)
+         ([remap xref-find-definitions] . embark-dwim)
+         ([remap describe-bindings] . embark-bindings))
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
 (use-package embark-consult
   :bind (:map minibuffer-mode-map
          ("C-c C-o" . embark-export))
   :hook (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package embark
-  :bind ("M-." . embark-dwim))
 
 (provide 'init-completion)
 
