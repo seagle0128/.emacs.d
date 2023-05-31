@@ -130,6 +130,14 @@
          ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
          ;; Minibuffer history
          :map minibuffer-local-map
+         ("C-s" . (lambda ()
+                    "Insert the currunt symbol."
+                    (interactive)
+                    (insert (save-excursion
+		                      (set-buffer (window-buffer (minibuffer-selected-window)))
+		                      (if-let ((sym (symbol-at-point)))
+                                  (symbol-name sym)
+                                "")))))
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
