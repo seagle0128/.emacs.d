@@ -182,27 +182,14 @@ prepended to the element after the #+HEADER: tag."
     :init (add-to-list 'org-export-backends 'gfm))
 
   ;; Prettify UI
-  (if emacs/>=27p
-      (use-package org-modern
-        :hook ((org-mode . org-modern-mode)
-               (org-agenda-finalize . org-modern-agenda)
-               (org-modern-mode . (lambda ()
-                                    "Adapt `org-modern-mode'."
-                                    ;; Disable Prettify Symbols mode
-                                    (setq prettify-symbols-alist nil)
-                                    (prettify-symbols-mode -1)))))
-    (progn
-      (use-package org-superstar
-        :if (and (display-graphic-p) (char-displayable-p ?◉))
-        :hook (org-mode . org-superstar-mode)
-        :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")))
-      (use-package org-fancy-priorities
-        :diminish
-        :hook (org-mode . org-fancy-priorities-mode)
-        :init (setq org-fancy-priorities-list
-                    (if (and (display-graphic-p) (char-displayable-p ?🅐))
-                        '("🅐" "🅑" "🅒" "🅓")
-                      '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))))
+  (use-package org-modern
+    :hook ((org-mode . org-modern-mode)
+           (org-agenda-finalize . org-modern-agenda)
+           (org-modern-mode . (lambda ()
+                                "Adapt `org-modern-mode'."
+                                ;; Disable Prettify Symbols mode
+                                (setq prettify-symbols-alist nil)
+                                (prettify-symbols-mode -1)))))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
@@ -241,7 +228,7 @@ prepended to the element after the #+HEADER: tag."
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-alist)
 
-  ;; Rich text clipboard
+
   (use-package org-rich-yank
     :bind (:map org-mode-map
            ("C-M-y" . org-rich-yank)))
@@ -261,19 +248,18 @@ prepended to the element after the #+HEADER: tag."
   (use-package org-timeline
     :hook (org-agenda-finalize . org-timeline-insert-timeline))
 
-  (when emacs/>=27p
-    ;; Auto-toggle Org LaTeX fragments
-    (use-package org-fragtog
-      :diminish
-      :hook (org-mode . org-fragtog-mode))
+  ;; Auto-toggle Org LaTeX fragments
+  (use-package org-fragtog
+    :diminish
+    :hook (org-mode . org-fragtog-mode))
 
-    ;; Preview
-    (use-package org-preview-html
-      :diminish
-      :bind (:map org-mode-map
-             ("C-c C-h" . org-preview-html-mode))
-      :init (when (featurep 'xwidget-internal)
-              (setq org-preview-html-viewer 'xwidget))))
+  ;; Preview
+  (use-package org-preview-html
+    :diminish
+    :bind (:map org-mode-map
+           ("C-c C-h" . org-preview-html-mode))
+    :init (when (featurep 'xwidget-internal)
+            (setq org-preview-html-viewer 'xwidget)))
 
   ;; Presentation
   (use-package org-tree-slide
@@ -341,11 +327,10 @@ prepended to the element after the #+HEADER: tag."
 
   (org-roam-db-autosync-enable))
 
-(when emacs/>=27p
-  (use-package org-roam-ui
-    :bind ("C-c n u" . org-roam-ui-mode)
-    :init (when (featurep 'xwidget-internal)
-            (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))))
+(use-package org-roam-ui
+  :bind ("C-c n u" . org-roam-ui-mode)
+  :init (when (featurep 'xwidget-internal)
+          (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url)))
 
 (provide 'init-org)
 

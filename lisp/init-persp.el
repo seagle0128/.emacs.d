@@ -145,43 +145,42 @@
    :save-vars '(major-mode default-directory)))
 
 ;; Project integration
-(when emacs/>=27p
-  (use-package persp-mode-project-bridge
-    :autoload (persp-mode-project-bridge-find-perspectives-for-all-buffers
-               persp-mode-project-bridge-kill-perspectives)
-    :hook
-    (persp-mode-project-bridge-mode . (lambda ()
-                                        (if persp-mode-project-bridge-mode
-                                            (persp-mode-project-bridge-find-perspectives-for-all-buffers)
-                                          (persp-mode-project-bridge-kill-perspectives))))
-    (persp-mode . persp-mode-project-bridge-mode)
-    :init (when (icons-displayable-p)
-            (setq persp-mode-project-bridge-persp-name-prefix ""))
-    :config
-    (with-no-warnings
-      ;;Add buffer while `find-file'
-      (defun persp-mode-project-bridge-hook-find-file (&rest _args)
-        (let ((persp
-               (persp-mode-project-bridge-find-perspective-for-buffer
-                (current-buffer))))
-          (when persp
-            (persp-add-buffer (current-buffer) persp nil nil))))
-      (add-hook 'find-file-hook
-                #'persp-mode-project-bridge-hook-find-file)
+(use-package persp-mode-project-bridge
+  :autoload (persp-mode-project-bridge-find-perspectives-for-all-buffers
+             persp-mode-project-bridge-kill-perspectives)
+  :hook
+  (persp-mode-project-bridge-mode . (lambda ()
+                                      (if persp-mode-project-bridge-mode
+                                          (persp-mode-project-bridge-find-perspectives-for-all-buffers)
+                                        (persp-mode-project-bridge-kill-perspectives))))
+  (persp-mode . persp-mode-project-bridge-mode)
+  :init (when (icons-displayable-p)
+          (setq persp-mode-project-bridge-persp-name-prefix ""))
+  :config
+  (with-no-warnings
+    ;;Add buffer while `find-file'
+    (defun persp-mode-project-bridge-hook-find-file (&rest _args)
+      (let ((persp
+             (persp-mode-project-bridge-find-perspective-for-buffer
+              (current-buffer))))
+        (when persp
+          (persp-add-buffer (current-buffer) persp nil nil))))
+    (add-hook 'find-file-hook
+              #'persp-mode-project-bridge-hook-find-file)
 
-      ;; Allow saving to files
-      (defun my-persp-mode-project-bridge-add-new-persp (name)
-        (let ((persp (persp-get-by-name name *persp-hash* :nil)))
-          (if (eq :nil persp)
-              (prog1
-                  (setq persp (persp-add-new name))
-                (when persp
-                  (set-persp-parameter 'persp-mode-project-bridge t persp)
-                  (persp-add-buffer (cl-remove-if-not #'get-file-buffer (project-files (project-current)))
-                                    persp nil nil)))
-            persp)))
-      (advice-add #'persp-mode-project-bridge-add-new-persp
-                  :override #'my-persp-mode-project-bridge-add-new-persp))))
+    ;; Allow saving to files
+    (defun my-persp-mode-project-bridge-add-new-persp (name)
+      (let ((persp (persp-get-by-name name *persp-hash* :nil)))
+        (if (eq :nil persp)
+            (prog1
+                (setq persp (persp-add-new name))
+              (when persp
+                (set-persp-parameter 'persp-mode-project-bridge t persp)
+                (persp-add-buffer (cl-remove-if-not #'get-file-buffer (project-files (project-current)))
+                                  persp nil nil)))
+          persp)))
+    (advice-add #'persp-mode-project-bridge-add-new-persp
+                :override #'my-persp-mode-project-bridge-add-new-persp)))
 
 (provide 'init-persp)
 

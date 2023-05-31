@@ -63,14 +63,6 @@
                 (set-frame-parameter nil 'ns-appearance bg)
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
-;; Menu/Tool/Scroll bars
-(unless emacs/>=27p
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist)
-  (when (featurep 'ns)
-    (push '(ns-transparent-titlebar . t) default-frame-alist)))
-
 ;; Theme
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
@@ -309,7 +301,7 @@
 ;; Good pixel line scrolling
 (if (fboundp 'pixel-scroll-precision-mode)
     (pixel-scroll-precision-mode t)
-  (when (and emacs/>=27p (not sys/macp))
+  (unless sys/macp
     (use-package good-scroll
       :diminish
       :hook (after-init . good-scroll-mode)

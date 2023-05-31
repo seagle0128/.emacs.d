@@ -192,10 +192,8 @@
                       (buf-label (aref val 3))
                       (tty (list (aref val 4) 'face 'font-lock-doc-face))
                       (thread (list (aref val 5) 'face 'font-lock-doc-face))
-                      (cmd (list (aref val (if emacs/>=27p 6 5)) 'face 'completions-annotations)))
-            (push (list p (if emacs/>=27p
-                              (vector icon name pid status buf-label tty thread cmd)
-                            (vector icon name pid status buf-label tty cmd)))
+                      (cmd (list (aref val 6) 'face 'completions-annotations)))
+            (push (list p (vector icon name pid status buf-label tty thread cmd))
 		          tabulated-list-entries)))))
     (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
 

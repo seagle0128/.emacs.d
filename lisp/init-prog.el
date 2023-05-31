@@ -130,62 +130,60 @@
          ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
-(when emacs/>=27p
-  (use-package devdocs
-    :autoload (devdocs--installed-docs devdocs--available-docs)
-    :bind (:map prog-mode-map
-           ("M-<f1>" . devdocs-dwim)
-           ("C-h D"  . devdocs-dwim))
-    :init
-    (defconst devdocs-major-mode-docs-alist
-      '((c-mode          . ("c"))
-        (c++-mode        . ("cpp"))
-        (python-mode     . ("python~3.10" "python~2.7"))
-        (ruby-mode       . ("ruby~3.1"))
-        (go-mode         . ("go"))
-        (rustic-mode     . ("rust"))
-        (css-mode        . ("css"))
-        (html-mode       . ("html"))
-        (julia-mode      . ("julia~1.8"))
-        (js-mode         . ("javascript" "jquery"))
-        (js2-mode        . ("javascript" "jquery"))
-        (emacs-lisp-mode . ("elisp")))
-      "Alist of major-mode and docs.")
+(use-package devdocs
+  :autoload (devdocs--installed-docs devdocs--available-docs)
+  :bind (:map prog-mode-map
+         ("M-<f1>" . devdocs-dwim)
+         ("C-h D"  . devdocs-dwim))
+  :init
+  (defconst devdocs-major-mode-docs-alist
+    '((c-mode          . ("c"))
+      (c++-mode        . ("cpp"))
+      (python-mode     . ("python~3.10" "python~2.7"))
+      (ruby-mode       . ("ruby~3.1"))
 
-    (mapc
-     (lambda (mode)
-       (add-hook (intern (format "%s-hook" (car mode)))
-                 (lambda ()
-                   (setq-local devdocs-current-docs (cdr mode)))))
-     devdocs-major-mode-docs-alist)
+      (rustic-mode     . ("rust"))
+      (css-mode        . ("css"))
+      (html-mode       . ("html"))
+      (julia-mode      . ("julia~1.8"))
+      (js-mode         . ("javascript" "jquery"))
+      (js2-mode        . ("javascript" "jquery"))
+      (emacs-lisp-mode . ("elisp")))
+    "Alist of major-mode and docs.")
 
-    (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+  (mapc
+   (lambda (mode)
+     (add-hook (intern (format "%s-hook" (car mode)))
+               (lambda ()
+                 (setq-local devdocs-current-docs (cdr mode)))))
+   devdocs-major-mode-docs-alist)
 
-    (defun devdocs-dwim()
-      "Look up a DevDocs documentation entry.
+  (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+
+  (defun devdocs-dwim()
+    "Look up a DevDocs documentation entry.
 
 Install the doc if it's not installed."
-      (interactive)
-      ;; Install the doc if it's not installed
-      (mapc
-       (lambda (slug)
-         (unless (member slug (let ((default-directory devdocs-data-dir))
-                                (seq-filter #'file-directory-p
-                                            (when (file-directory-p devdocs-data-dir)
-                                              (directory-files "." nil "^[^.]")))))
-           (mapc
-            (lambda (doc)
-              (when (string= (alist-get 'slug doc) slug)
-                (devdocs-install doc)))
-            (devdocs--available-docs))))
-       (alist-get major-mode devdocs-major-mode-docs-alist))
+    (interactive)
+    ;; Install the doc if it's not installed
+    (mapc
+     (lambda (slug)
+       (unless (member slug (let ((default-directory devdocs-data-dir))
+                              (seq-filter #'file-directory-p
+                                          (when (file-directory-p devdocs-data-dir)
+                                            (directory-files "." nil "^[^.]")))))
+         (mapc
+          (lambda (doc)
+            (when (string= (alist-get 'slug doc) slug)
+              (devdocs-install doc)))
+          (devdocs--available-docs))))
+     (alist-get major-mode devdocs-major-mode-docs-alist))
 
-      ;; Lookup the symbol at point
-      (devdocs-lookup nil (thing-at-point 'symbol t)))))
+    ;; Lookup the symbol at point
+    (devdocs-lookup nil (thing-at-point 'symbol t))))
 
 ;; Misc. programming modes
-(when emacs/>=27p
-  (use-package csv-mode))
+(use-package csv-mode)
 
 (unless emacs/>=29p
   (use-package csharp-mode))

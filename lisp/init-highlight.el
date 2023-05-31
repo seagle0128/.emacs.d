@@ -300,13 +300,9 @@ FACE defaults to inheriting from default and highlight."
       (advice-add cmd :after #'my-recenter-and-pulse))))
 
 ;; Pulse modified region
-(if emacs/>=27p
-    (use-package goggles
-      :diminish
-      :hook ((prog-mode text-mode) . goggles-mode))
-  (use-package volatile-highlights
-    :diminish
-    :hook (after-init . volatile-highlights-mode)))
+(use-package goggles
+  :diminish
+  :hook ((prog-mode text-mode) . goggles-mode))
 
 (provide 'init-highlight)
 
