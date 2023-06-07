@@ -337,10 +337,6 @@
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
 
-;; Preview when `goto-char'
-(use-package goto-char-preview
-  :bind ([remap goto-char] . goto-char-preview))
-
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :ensure nil
