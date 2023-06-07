@@ -84,9 +84,8 @@
                              (t 'grep)))
 
   ;; Select from xref candidates in minibuffer
-  ;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-  ;;       xref-show-xrefs-function #'xref-show-definitions-completing-read)
-  )
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+        xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 ;; Jump to definition
 (use-package dumb-jump

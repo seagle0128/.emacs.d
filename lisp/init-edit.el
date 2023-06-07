@@ -320,17 +320,6 @@
   :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
          ([remap move-end-of-line] . mwim-end-of-code-or-line)))
 
-;; Windows-scroll commands
-(use-package pager
-  :bind (([remap scroll-up-command] . pager-page-down)
-         ([remap scroll-down-command] . pager-page-up)
-         ([next]   . pager-page-down)
-         ([prior]  . pager-page-up)
-         ([M-up]   . pager-row-up)
-         ([M-kp-8] . pager-row-up)
-         ([M-down] . pager-row-down)
-         ([M-kp-2] . pager-row-down)))
-
 ;; Treat undo history as a tree
 (if emacs/>=28p
     (use-package vundo
@@ -351,10 +340,6 @@
 ;; Preview when `goto-char'
 (use-package goto-char-preview
   :bind ([remap goto-char] . goto-char-preview))
-
-;; Preview when `goto-line'
-(use-package goto-line-preview
-  :bind ([remap goto-line] . goto-line-preview))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

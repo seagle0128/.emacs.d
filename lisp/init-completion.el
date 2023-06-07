@@ -158,8 +158,9 @@
   (advice-add #'register-preview :override #'consult-register-window)
 
   ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  (with-eval-after-load 'xref
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref))
 
   :config
   ;; Optionally configure preview. The default value
@@ -177,6 +178,8 @@
   ;;  consult--source-recent-file consult--source-project-recent-file
   ;;  ;; :preview-key "M-."
   ;;  :preview-key '(:debounce 0.4 any))
+  (consult-customize
+   consult-goto-line :preview-key '(:debounce 0.2 any))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
