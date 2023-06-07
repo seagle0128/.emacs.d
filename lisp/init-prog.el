@@ -53,7 +53,7 @@
 (use-package grep
   :ensure nil
   :autoload grep-apply-setting
-  :config
+  :init
   (cond
    ((executable-find "ugrep")
     (grep-apply-setting
@@ -76,23 +76,17 @@
 
 ;; Cross-referencing commands
 (use-package xref
-  :ensure nil
-  :config
-  (with-no-warnings
-    ;; Use faster search tool
-    (when emacs/>=28p
-      (add-to-list 'xref-search-program-alist
-                   '(ugrep . "xargs -0 ugrep <C> --null -ns -e <R>"))
-      (cond
-       ((executable-find "ugrep")
-        (setq xref-search-program 'ugrep))
-       ((executable-find "rg")
-        (setq xref-search-program 'ripgrep))))
+  :init
+  ;; Use faster search tool
+  (setq xref-search-program (cond
+                             ((executable-find "ugrep") 'ugrep)
+                             ((executable-find "rg") 'ripgrep)
+                             (t 'grep)))
 
-    ;; Select from xref candidates in minibuffer
-    (if emacs/>=28p
-        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-              xref-show-xrefs-function #'xref-show-definitions-completing-read))))
+  ;; Select from xref candidates in minibuffer
+  ;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+  ;;       xref-show-xrefs-function #'xref-show-definitions-completing-read)
+  )
 
 ;; Jump to definition
 (use-package dumb-jump
@@ -108,16 +102,10 @@
     (("i" dumb-jump-go-prompt "Prompt")
      ("l" dumb-jump-quick-look "Quick look")
      ("b" dumb-jump-back "Back"))))
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window)
-         ("C-M-j" . dumb-jump-hydra/body))
+  :bind (("C-M-j" . dumb-jump-hydra/body))
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq dumb-jump-prefer-searcher 'rg
-        dumb-jump-selector 'completing-read))
+  (setq dumb-jump-selector 'completing-read))
 
 ;; Code styles
 (use-package editorconfig
