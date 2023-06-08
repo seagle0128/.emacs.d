@@ -171,19 +171,14 @@ Install the doc if it's not installed."
 
 ;; Misc. programming modes
 (use-package csv-mode)
-
 (unless emacs/>=29p
   (use-package csharp-mode))
-
 (use-package cask-mode)
 (use-package cmake-mode)
 (use-package dart-mode)
-(use-package groovy-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
-(use-package plantuml-mode)
-(use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)
 (use-package v-mode)
@@ -197,12 +192,6 @@ Install the doc if it's not installed."
 (use-package nxml-mode
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
-
-;; Batch Mode eXtras
-(use-package bmx-mode
-  :after company
-  :diminish
-  :hook (after-init . bmx-mode-setup-defaults))
 
 ;; Fish shell
 (use-package fish-mode
