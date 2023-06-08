@@ -47,6 +47,13 @@
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
 
+;; Initial frame
+(setq initial-frame-alist '((top . 0.5)
+                            (left . 0.5)
+                            (width . 0.8)
+                            (height . 0.8)
+                            (fullscreen)))
+
 ;; Logo
 (setq fancy-splash-image centaur-logo)
 
@@ -331,11 +338,6 @@
       `((t (:inherit region)))
       "Face used by the `posframe' border."
       :group 'posframe)
-
-    (with-eval-after-load 'persp-mode
-      (add-hook 'persp-load-buffer-functions
-                (lambda (&rest _)
-                  (posframe-delete-all))))
     :config
     (with-no-warnings
       (defun my-posframe--prettify-frame (&rest _)

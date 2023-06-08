@@ -82,11 +82,10 @@
             magit-post-unstage)
            . treemacs-magit--schedule-update))
 
-  (use-package treemacs-persp
-    :after persp-mode
+  (use-package treemacs-tab-bar
     :demand t
     :functions treemacs-set-scope-type
-    :config (treemacs-set-scope-type 'Perspectives)))
+    :config (treemacs-set-scope-type 'Tabs)))
 
 (provide 'init-treemacs)
 
