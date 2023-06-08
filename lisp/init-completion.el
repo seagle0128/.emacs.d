@@ -135,9 +135,7 @@
                     (interactive)
                     (insert (save-excursion
 		                      (set-buffer (window-buffer (minibuffer-selected-window)))
-		                      (if-let ((sym (symbol-at-point)))
-                                  (symbol-name sym)
-                                "")))))
+		                      (or (thing-at-point 'symbol t) "")))))
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
