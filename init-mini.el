@@ -157,7 +157,6 @@
   (global-set-key [(super z)] #'undo)))
 
 ;; Keybindings
-(global-set-key (kbd "C-.") #'imenu)
 (global-set-key (kbd "<C-return>") #'rectangle-mark-mode)
 
 (defun revert-current-buffer ()

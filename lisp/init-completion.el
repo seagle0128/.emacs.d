@@ -84,7 +84,6 @@
          ("C-c r" . consult-ripgrep)
 
          ([remap Info-search] . consult-info)
-         ([remap imenu] . consult-imenu)
          ([remap isearch-forward] . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
 
@@ -181,7 +180,7 @@
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
 (use-package embark
-  :bind (("s-." . embark-act)
+  :bind (("C-." . embark-act)
          ([remap xref-find-definitions] . embark-dwim)
          ([remap describe-bindings] . embark-bindings))
   :init

@@ -159,8 +159,10 @@
     (defun restore-session ()
       "Restore the previous session."
       (interactive)
+      (message "Restoring previous session...")
       (quit-window t)
-      (desktop-read))
+      (desktop-read)
+      (message "Restoring previous session...done"))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."
