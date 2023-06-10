@@ -99,7 +99,7 @@
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook (after-init . transient-posframe-mode)
     :init
-    (setq transient-posframe-border-width 3
+    (setq transient-posframe-border-width posframe-border-width
           transient-posframe-min-height nil
           transient-posframe-min-width 80
           transient-posframe-poshandler 'posframe-poshandler-frame-center

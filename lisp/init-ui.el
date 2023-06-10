@@ -50,7 +50,7 @@
 ;; Initial frame
 (setq initial-frame-alist '((top . 0.5)
                             (left . 0.5)
-                            (width . 0.8)
+                            (width . 0.628)
                             (height . 0.8)
                             (fullscreen)))
 
@@ -338,6 +338,8 @@
       `((t (:inherit region)))
       "Face used by the `posframe' border."
       :group 'posframe)
+    (defvar posframe-border-width 2
+      "Default posframe border width.")
     :config
     (with-no-warnings
       (defun my-posframe--prettify-frame (&rest _)

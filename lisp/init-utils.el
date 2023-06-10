@@ -104,7 +104,7 @@
       (which-key-posframe ((t (:inherit tooltip))))
       (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
       :init
-      (setq which-key-posframe-border-width 3
+      (setq which-key-posframe-border-width posframe-border-width
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
