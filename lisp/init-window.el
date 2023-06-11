@@ -168,6 +168,7 @@
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
           "\\*Go-Translate\\*"
+          "\\*Embark \\(Collect\\|Live\\):.*\\*"
 
           bookmark-bmenu-mode
           comint-mode

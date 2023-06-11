@@ -245,6 +245,7 @@
   :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode
+           embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . hide-mode-line-mode)))
 
