@@ -31,9 +31,6 @@
 ;;; Code:
 
 (require 'subr-x)
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
 
 ;; Compatibility
 (use-package compat :demand t)

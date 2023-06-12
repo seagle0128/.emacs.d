@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
-
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
            (not (file-exists-p custom-file)))

@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
-
 (pcase centaur-lsp
   ('eglot
    (use-package eglot
@@ -125,8 +121,7 @@
            (nerd-icons-icon-for-extension file-ext)))
        (advice-add #'lsp-icons-get-by-file-ext :override #'my-lsp-icons-get-by-file-ext)
        (defvar lsp-symbol-alist
-         '(
-           (misc          nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-warning-face)
+         '((misc          nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-warning-face)
            (document      nerd-icons-codicon "nf-cod-symbol_file" :face font-lock-string-face)
            (namespace     nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-type-face)
            (string        nerd-icons-codicon "nf-cod-symbol_string" :face font-lock-doc-face)

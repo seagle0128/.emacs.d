@@ -111,6 +111,11 @@ Otherwise the startup will be very slow."
 
 (update-load-path)
 
+;; Requisites
+(require 'init-const)
+(require 'init-custom)
+(require 'init-funcs)
+
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
 (require 'init-package)

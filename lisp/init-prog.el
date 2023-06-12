@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
 (use-package prog-mode

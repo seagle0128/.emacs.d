@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 (use-package ibuffer
   :ensure nil
   :bind ("C-x C-b" . ibuffer)

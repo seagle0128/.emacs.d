@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
-
 ;; eww
 (use-package eww
   :ensure nil

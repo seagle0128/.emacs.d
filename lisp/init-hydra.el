@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 (use-package hydra
   :hook (emacs-lisp-mode . hydra-add-imenu)
   :init

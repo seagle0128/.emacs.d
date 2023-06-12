@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 (use-package shell
   :ensure nil
   :hook ((shell-mode . my-shell-mode-hook)

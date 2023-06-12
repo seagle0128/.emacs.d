@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
-
 (use-package org
   :ensure nil
   :custom-face (org-ellipsis ((t (:foreground unspecified))))

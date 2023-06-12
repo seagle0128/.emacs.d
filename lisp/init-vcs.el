@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Git
 ;; See `magit-maybe-define-global-key-bindings'
 (use-package magit

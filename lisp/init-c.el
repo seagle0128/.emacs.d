@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'init-funcs)
-
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil

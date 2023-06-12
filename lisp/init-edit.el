@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil

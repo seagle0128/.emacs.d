@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil

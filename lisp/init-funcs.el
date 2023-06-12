@@ -31,9 +31,6 @@
 ;;; Code:
 (require 'cl-lib)
 
-(require 'init-const)
-(require 'init-custom)
-
 ;; Suppress warnings
 (defvar circadian-themes)
 (defvar socks-noproxy)

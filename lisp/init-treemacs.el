@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-
 ;; A tree layout file explorer
 (use-package treemacs
   :commands (treemacs-follow-mode
