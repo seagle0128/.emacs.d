@@ -110,6 +110,10 @@
 ;;            (> (display-pixel-width) 1920))
 ;;   (set-frame-parameter nil 'left 1920))
 
+;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
+;; (put 'pdf-view-create-image 'lisp-indent-function 'defun)
+;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
