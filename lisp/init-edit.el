@@ -314,8 +314,10 @@
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
-  :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
-         ([remap move-end-of-line] . mwim-end-of-code-or-line)))
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)
+         ("<home>" . mwim-beginning-of-line-or-code)
+         ("<end>" . mwim-end-of-line-or-code)))
 
 ;; Treat undo history as a tree
 (if emacs/>=28p
