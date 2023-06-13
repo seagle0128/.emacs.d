@@ -235,7 +235,7 @@ Native tree-sitter is introduced since 29."
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 
-  Save to `custom-file' if NO-SAVE is nil."
+  Save to option `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
   (when (and (not no-save)
              (file-writable-p custom-file))
@@ -275,7 +275,7 @@ Native tree-sitter is introduced since 29."
 
 REFRESH is non-nil, will refresh archive contents.
 ASYNC specifies whether to perform the downloads in the background.
-Save to variable `custom-file' if NO-SAVE is nil."
+Save to option `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern
@@ -472,7 +472,7 @@ This issue has been addressed in 28."
       (centaur--load-theme theme))))
 
 (defun centaur-load-theme (theme &optional no-save)
-  "Load color THEME. Save to variable `custom-file' if NO-SAVE is nil."
+  "Load color THEME. Save to option `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern
