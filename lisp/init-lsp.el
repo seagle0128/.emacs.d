@@ -54,23 +54,6 @@
      :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
      :autoload lsp-enable-which-key-integration
      :commands (lsp-format-buffer lsp-organize-imports)
-     :custom-face
-     (lsp-headerline-breadcrumb-path-error-face ((t :inherit lsp-headerline-breadcrumb-path-face
-                                                    :underline (:style wave :color ,(face-foreground 'error)))))
-     (lsp-headerline-breadcrumb-path-warning-face ((t :inherit lsp-headerline-breadcrumb-path-face
-                                                      :underline (:style wave :color ,(face-foreground 'warning)))))
-     (lsp-headerline-breadcrumb-path-info-face ((t :inherit lsp-headerline-breadcrumb-path-face
-                                                   :underline (:style wave :color ,(face-foreground 'success)))))
-     (lsp-headerline-breadcrumb-path-hint-face ((t :inherit lsp-headerline-breadcrumb-path-face
-                                                   :underline (:style wave :color ,(face-foreground 'success)))))
-     (lsp-headerline-breadcrumb-symbols-error-face ((t :inherit lsp-headerline-breadcrumb-symbols-face
-                                                       :underline (:style wave :color ,(face-foreground 'error)))))
-     (lsp-headerline-breadcrumb-symbols-warning-face ((t :inherit lsp-headerline-breadcrumb-symbols-face
-                                                         :underline (:style wave :color ,(face-foreground 'warning)))))
-     (lsp-headerline-breadcrumb-symbols-info-face ((t :inherit lsp-headerline-breadcrumb-symbols-face
-                                                      :underline (:style wave :color ,(face-foreground 'success)))))
-     (lsp-headerline-breadcrumb-symbols-hint-face ((t :inherit lsp-headerline-breadcrumb-symbols-face
-                                                      :underline (:style wave :color ,(face-foreground 'success)))))
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (lsp-deferred))))
