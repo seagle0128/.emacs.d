@@ -100,6 +100,10 @@
            ("C-c t c" . go-test-current-coverage)
            ("C-c t x" . go-run))))
 
+(when (and centaur-tree-sitter (centaur-treesit-available-p))
+  (use-package go-ts-mode
+    :init (setq go-ts-mode-indent-offset 4)))
+
 ;; Local Golang playground for short snippets
 (use-package go-playground
   :diminish

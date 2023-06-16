@@ -37,10 +37,9 @@
          ("<f12>" . compile))
   :init (setq-default c-basic-offset 4))
 
-(use-package c-ts-mode
-  :ensure nil
-  :when (centaur-treesit-available-p)
-  :init (setq c-ts-mode-indent-offset 4))
+(when (and centaur-tree-sitter (centaur-treesit-available-p))
+  (use-package c-ts-mode
+    :init (setq c-ts-mode-indent-offset 4)))
 
 (provide 'init-c)
 
