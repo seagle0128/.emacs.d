@@ -36,7 +36,11 @@
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (eglot-ensure))))
-            ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))))
+            ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+     :config
+     (use-package consult-eglot
+       :bind (:map eglot-mode-map
+              ("C-M-." . consult-eglot-symbols)))))
   ('lsp-mode
    ;; Performace tuning
    ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -91,6 +95,10 @@
                  ;; For clients
                  lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
+     (use-package consult-lsp
+       :bind (:map lsp-mode-map
+              ("C-M-." . consult-lsp-symbols)))
+
      (with-no-warnings
        ;; Disable `lsp-mode' in `git-timemachine-mode'
        (defun my-lsp--init-if-visible (fn &rest args)
