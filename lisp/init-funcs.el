@@ -59,7 +59,7 @@
 
 (defun delete-carrage-returns ()
   "Delete `^M' characters in the buffer.
-Same as `replace-string C-q C-m RET RET'."
+Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (save-excursion
     (goto-char 0)
@@ -122,8 +122,8 @@ Same as `replace-string C-q C-m RET RET'."
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
   "Browse URL with xwidget-webkit' and switch or pop to the buffer.
 
-POP-BUFFER specifies whether to pop to the buffer.
-NEW-SESSION specifies whether to create a new xwidget-webkit session."
+  POP-BUFFER specifies whether to pop to the buffer.
+  NEW-SESSION specifies whether to create a new xwidget-webkit session."
   (interactive (progn
                  (require 'browse-url)
                  (browse-url-interactive-arg "xwidget-webkit URL: ")))
@@ -244,8 +244,8 @@ Native tree-sitter is introduced since 29."
       (goto-char (point-min))
       (while (re-search-forward
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-              nil t)
-        (replace-match (format "(setq %s '%s)" variable value) nil nil))
+                               nil t)
+  (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
 
@@ -528,7 +528,7 @@ This issue has been addressed in 28."
           (fullscreen))))
 
 (defun centaur-frame--fullscreen-p ()
-  "Returns Non-nil if the frame is fullscreen."
+  "Return Non-nil if the frame is fullscreen."
   (memq (frame-parameter nil 'fullscreen) '(fullscreen fullboth)))
 
 (defun centaur-frame-maximize ()
