@@ -179,6 +179,9 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
+(use-package consult-flyspell
+  :bind ("M-g s" . consult-flyspell))
+
 (use-package embark
   :bind (("C-." . embark-act)
          ([remap xref-find-definitions] . embark-dwim)
