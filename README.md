@@ -181,7 +181,7 @@ For Example:
 (setq centaur-completion-style 'minibuffer)    ; Completion display style: minibuffer or childframe
 (setq centaur-dashboard nil)                   ; Display dashboard at startup or not: t or nil
 (setq centaur-restore-frame-geometry nil)      ; Restore the frame's geometry at startup: t or nil
-(setq centaur-lsp 'eglot)                      ; Set LSP client: lsp-mode, eglot or nil
+(setq centaur-lsp 'lsp-mode)                   ; Set LSP client: lsp-mode, eglot or nil
 (setq centaur-lsp-format-on-save t)            ; Auto format buffers on save: t or nil
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode markdown-mode)) ; Ignore format on save for some languages
 (setq centaur-tree-sitter nil)                 ; Enable tree-sitter or not: t or nil. Only available in 29+.
