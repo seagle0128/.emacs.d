@@ -172,22 +172,6 @@ of the buffer text to be displayed in the popup"
   :init
   (setq alert-default-style 'mode-line)
 
-  (with-eval-after-load 'nerd-icons
-    (setq alert-severity-faces
-          '((urgent   . nerd-icons-red)
-            (high     . nerd-icons-orange)
-            (moderate . nerd-icons-yellow)
-            (normal   . nerd-icons-green)
-            (low      . nerd-icons-blue)
-            (trivial  . nerd-icons-purple))
-          alert-severity-colors
-          `((urgent   . ,(face-foreground 'nerd-icons-red))
-            (high     . ,(face-foreground 'nerd-icons-orange))
-            (moderate . ,(face-foreground 'nerd-icons-yellow))
-            (normal   . ,(face-foreground 'nerd-icons-green))
-            (low      . ,(face-foreground 'nerd-icons-blue))
-            (trivial  . ,(face-foreground 'nerd-icons-purple)))))
-
   (when sys/macp
     (setq pomidor-play-sound-file
           (lambda (file)

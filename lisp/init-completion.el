@@ -69,6 +69,7 @@
                   (right-fringe . 4)))))
 
 (use-package nerd-icons-completion
+  :when (icons-displayable-p)
   :hook (vertico-mode . nerd-icons-completion-mode))
 
 (use-package marginalia

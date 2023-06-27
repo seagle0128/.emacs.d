@@ -48,6 +48,7 @@
     :hook (global-corfu-mode . corfu-terminal-mode)))
 
 (use-package kind-icon
+  :when (icons-displayable-p)
   :after corfu
   :init
   (defconst corfu-kind-icon-mapping
