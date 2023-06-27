@@ -43,6 +43,7 @@
 ;; Group ibuffer's list by project
 (use-package ibuffer-project
   :hook (ibuffer . (lambda ()
+                     "Group ibuffer's list by project."
                      (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
                      (unless (eq ibuffer-sorting-mode 'project-file-relative)
                        (ibuffer-do-sort-by-project-file-relative))))
@@ -51,14 +52,10 @@
   (if (icons-displayable-p)
       (setq ibuffer-project-root-functions
             `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
-              (identity . ,(nerd-icons-octicon "nf-oct-file_directory" :height 1.1 :face ibuffer-filter-group-name-face))
-              (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face))
-              ("\\*.+\\*" . ,(nerd-icons-octicon "nf-oct-file_directory" :height 1.1 :face ibuffer-filter-group-name-face))))
+              (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face))))
     (setq ibuffer-project-root-functions
           '((ibuffer-project-project-root . "Project")
-            (identity . "Directory")
-            (file-remote-p . "Remote")
-            ("\\*.+\\*" . "Default")))))
+            (file-remote-p . "Remote")))))
 
 (provide 'init-ibuffer)
 
