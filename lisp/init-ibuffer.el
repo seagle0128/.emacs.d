@@ -48,8 +48,17 @@
                        (ibuffer-do-sort-by-project-file-relative))))
   :init (setq ibuffer-project-use-cache t)
   :config
-  (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
-  (add-to-list 'ibuffer-project-root-functions '("\\*.+\\*" . "Default")))
+  (if (icons-displayable-p)
+      (setq ibuffer-project-root-functions
+            `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
+              (identity . ,(nerd-icons-octicon "nf-oct-file_directory" :height 1.1 :face ibuffer-filter-group-name-face))
+              (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face))
+              ("\\*.+\\*" . ,(nerd-icons-octicon "nf-oct-file_directory" :height 1.1 :face ibuffer-filter-group-name-face))))
+    (setq ibuffer-project-root-functions
+          '((ibuffer-project-project-root . "Project")
+            (identity . "Directory")
+            (file-remote-p . "Remote")
+            ("\\*.+\\*" . "Default")))))
 
 (provide 'init-ibuffer)
 
