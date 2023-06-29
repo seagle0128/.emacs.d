@@ -60,6 +60,11 @@
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-hook 'server-after-make-frame-hook
+            (lambda ()
+              (if (display-graphic-p)
+                  (menu-bar-mode 1)
+                (menu-bar-mode -1))))
   (add-hook 'after-load-theme-hook
             (lambda ()
               (let ((bg (frame-parameter nil 'background-mode)))
