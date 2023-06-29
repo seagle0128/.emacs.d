@@ -59,7 +59,7 @@
 (use-package vertico
   :hook (after-init . vertico-mode))
 
-(when (display-graphic-p)
+(when (childframe-completion-workable-p)
   (use-package vertico-posframe
     :hook (vertico-mode . vertico-posframe-mode)
     :init (setq vertico-posframe-poshandler
