@@ -482,6 +482,10 @@ This issue has been addressed in 28."
                         system
                         ,@(mapcar #'car centaur-theme-alist))))))
 
+  ;; Disable time-switching themes
+  (when (fboundp #'circadian-activate-latest-theme)
+    (cancel-function-timers #'circadian-activate-latest-theme))
+
   ;; Disable system theme
   (when (bound-and-true-p auto-dark-mode)
     (setq auto-dark--last-dark-mode-state 'unknown)
