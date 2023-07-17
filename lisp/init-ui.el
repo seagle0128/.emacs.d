@@ -255,7 +255,10 @@
   :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
-(use-package nerd-icons)
+(use-package nerd-icons
+  :config
+  (unless (font-installed-p nerd-icons-font-family)
+    (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
 (use-package display-line-numbers
