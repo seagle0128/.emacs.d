@@ -257,7 +257,8 @@
 ;; Icons
 (use-package nerd-icons
   :config
-  (unless (font-installed-p nerd-icons-font-family)
+  (when (and (display-graphic-p)
+             (not (font-installed-p nerd-icons-font-family)))
     (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
