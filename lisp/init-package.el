@@ -81,6 +81,9 @@
       use-package-expand-minimally t
       use-package-enable-imenu-support t)
 
+;; Required by `use-package'
+(use-package diminish)
+
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 
