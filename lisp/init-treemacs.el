@@ -72,8 +72,6 @@
     :config (treemacs-load-theme "nerd-icons"))
 
   (use-package treemacs-magit
-    :after magit
-    :autoload treemacs-magit--schedule-update
     :hook ((magit-post-commit
             git-commit-post-finish
             magit-post-stage
