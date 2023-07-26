@@ -203,12 +203,6 @@ Lisp function does not specify a special indentation."
                 (revert-buffer nil t)))))))
     (bind-key "r" #'remove-hook-at-point help-mode-map)))
 
-;; Show function arglist or variable docstring
-;; `global-eldoc-mode' is enabled by default.
-(use-package eldoc
-  :ensure nil
-  :diminish)
-
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face

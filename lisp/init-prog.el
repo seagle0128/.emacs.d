@@ -45,6 +45,20 @@
     :hook (after-init . global-treesit-auto-mode)
     :init (setq treesit-auto-install 'prompt)))
 
+;; Show function arglist or variable docstring
+(use-package eldoc
+  :ensure nil
+  :diminish
+  :config
+  (when (childframe-workable-p)
+    (use-package eldoc-box
+      :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+      :custom-face
+      (eldoc-box-border ((t (:background ,(face-background 'posframe-border nil t)))))
+      (eldoc-box-body ((t (:inherit tooltip))))
+      :hook ((emacs-lisp-mode . eldoc-box-hover-at-point-mode)
+             (eglot-managed-mode . eldoc-box-hover-at-point-mode)))))
+
 ;; Search tool
 (use-package grep
   :ensure nil
