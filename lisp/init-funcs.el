@@ -422,10 +422,9 @@ This issue has been addressed in 28."
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
-  (or (not (or noninteractive
-               emacs-basic-display
-               (not (display-graphic-p))))
-      (daemonp)))
+  (not (or noninteractive
+           emacs-basic-display
+           (not (display-graphic-p)))))
 
 (defun childframe-completion-workable-p ()
   "Whether childframe completion is workable."
