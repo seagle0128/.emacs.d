@@ -54,7 +54,7 @@
     (use-package eldoc-box
       :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
       :custom-face
-      (eldoc-box-border ((t (:background ,(face-background 'posframe-border nil t)))))
+      (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
       (eldoc-box-body ((t (:inherit tooltip))))
       :hook ((emacs-lisp-mode . eldoc-box-hover-at-point-mode)
              (eglot-managed-mode . eldoc-box-hover-at-point-mode)))))
