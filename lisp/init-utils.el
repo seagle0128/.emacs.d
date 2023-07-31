@@ -188,11 +188,14 @@ of the buffer text to be displayed in the popup"
 (use-package atomic-chrome
   :hook ((emacs-startup . atomic-chrome-start-server)
          (atomic-chrome-edit-mode . delete-other-windows))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
+  :init (setq atomic-chrome-buffer-frame-width 100
+              atomic-chrome-buffer-frame-height 30
+              atomic-chrome-buffer-open-style 'frame)
   :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
+  (when (fboundp 'gfm-mode)
+    (setq atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)
+            ("gitlab\\.com" . gfm-mode)))))
 
 ;; Process
 (use-package proced
