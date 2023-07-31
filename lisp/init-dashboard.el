@@ -118,7 +118,7 @@
           dashboard-set-navigator t
           dashboard-navigator-buttons
           `(((,(when (icons-displayable-p)
-                 (nerd-icons-mdicon "nf-md-github" :height 1.5))
+                 (nerd-icons-mdicon "nf-md-github" :height 1.4))
               "Homepage" "Browse homepage"
               (lambda (&rest _) (browse-url centaur-homepage)))
              (,(when (icons-displayable-p)
@@ -126,19 +126,18 @@
               "Restore" "Restore previous session"
               (lambda (&rest _) (restore-session)))
              (,(when (icons-displayable-p)
-                 (nerd-icons-mdicon "nf-md-tools" :height 1.5))
+                 (nerd-icons-mdicon "nf-md-tools" :height 1.3))
               "Settings" "Open custom file"
               (lambda (&rest _) (find-file custom-file)))
              (,(when (icons-displayable-p)
-                 (nerd-icons-mdicon "nf-md-update" :height 1.5))
+                 (nerd-icons-mdicon "nf-md-update" :height 1.3))
               "Update" "Update Centaur Emacs"
               (lambda (&rest _) (centaur-update)))
              (,(if (icons-displayable-p)
-                   (nerd-icons-mdicon "nf-md-help" :height 1.5)
+                   (nerd-icons-mdicon "nf-md-help" :height 1.2)
                  "?")
               "" "Help (?/h)"
-              (lambda (&rest _) (dashboard-hydra/body))
-              font-lock-string-face))))
+              (lambda (&rest _) (dashboard-hydra/body))))))
 
     (dashboard-setup-startup-hook)
     :config
