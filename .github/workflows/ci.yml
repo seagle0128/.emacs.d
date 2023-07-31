@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feat/modern-completion
   pull_request:
 
 concurrency:
@@ -17,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        emacs-version: [26.3, 27.2, 28.2]
+        emacs-version: [27.2, 28.2, 29.1]
         experimental: [false]
         include:
           - emacs-version: snapshot

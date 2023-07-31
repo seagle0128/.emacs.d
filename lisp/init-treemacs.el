@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-
 ;; A tree layout file explorer
 (use-package treemacs
   :commands (treemacs-follow-mode
@@ -68,25 +65,22 @@
 
   (use-package treemacs-nerd-icons
     :demand t
+    :when (icons-displayable-p)
     :custom-face
     (treemacs-nerd-icons-root-face ((t (:inherit nerd-icons-green :height 1.3))))
     (treemacs-nerd-icons-file-face ((t (:inherit nerd-icons-dsilver))))
     :config (treemacs-load-theme "nerd-icons"))
 
   (use-package treemacs-magit
-    :after magit
-    :autoload treemacs-magit--schedule-update
     :hook ((magit-post-commit
             git-commit-post-finish
             magit-post-stage
             magit-post-unstage)
            . treemacs-magit--schedule-update))
 
-  (use-package treemacs-persp
-    :after persp-mode
+  (use-package treemacs-tab-bar
     :demand t
-    :functions treemacs-set-scope-type
-    :config (treemacs-set-scope-type 'Perspectives)))
+    :config (treemacs-set-scope-type 'Tabs)))
 
 (provide 'init-treemacs)
 

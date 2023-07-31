@@ -4,7 +4,7 @@
 # Command format: Instruction [arguments / command] ..
 
 # Base image to use
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Commands to update the image

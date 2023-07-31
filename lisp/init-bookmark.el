@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'init-funcs)
-
 ;; Bookmark
 (use-package bookmark
   :ensure nil

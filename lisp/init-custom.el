@@ -193,12 +193,11 @@ If Non-nil, save and restore the frame's geometry."
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-lsp 'lsp-mode
+(defcustom centaur-lsp 'eglot
   "Set language server.
 
 `lsp-mode': See https://github.com/emacs-lsp/lsp-mode.
 `eglot': See https://github.com/joaotavora/eglot.
-tags: Use tags file instead of language server. See https://github.com/universal-ctags/citre.
 nil means disabled."
   :group 'centaur
   :type '(choice (const :tag "LSP Mode" lsp-mode)

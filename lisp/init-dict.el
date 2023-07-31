@@ -30,15 +30,12 @@
 
 ;;; Code:
 
-(require 'init-const)
-
 ;; A multi dictionaries interface
-(when emacs/>=27p
-  (use-package fanyi
-    :bind (("C-c d f" . fanyi-dwim)
-           ("C-c d d" . fanyi-dwim2)
-           ("C-c d h" . fanyi-from-history))
-    :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider)))
+(use-package fanyi
+  :bind (("C-c d f" . fanyi-dwim)
+         ("C-c d d" . fanyi-dwim2)
+         ("C-c d h" . fanyi-from-history))
+  :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider))
 
   (use-package go-translate
     :bind (("C-c d g" . gts-do-translate))

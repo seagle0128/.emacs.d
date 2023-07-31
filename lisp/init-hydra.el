@@ -30,11 +30,25 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 (use-package hydra
-  :hook (emacs-lisp-mode . hydra-add-imenu))
+  :hook (emacs-lisp-mode . hydra-add-imenu)
+  :init
+  (when (childframe-completion-workable-p)
+    (setq hydra-hint-display-type 'posframe)
+
+    (with-eval-after-load 'posframe
+      (defun hydra-set-posframe-show-params ()
+        "Set hydra-posframe style."
+        (setq hydra-posframe-show-params
+              `(:left-fringe 8
+                :right-fringe 8
+                :internal-border-width 2
+                :internal-border-color ,(face-background 'posframe-border nil t)
+                :background-color ,(face-background 'tooltip nil t)
+                :lines-truncate t
+                :poshandler posframe-poshandler-frame-center-near-bottom)))
+      (hydra-set-posframe-show-params)
+      (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t))))
 
 (use-package pretty-hydra
   :bind ("<f6>" . toggles-hydra/body)
@@ -126,15 +140,10 @@
          :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
-        ("t o" (ivy-read "Load custom theme: "
-                         (all-completions "doom" (custom-available-themes))
-                         :action (lambda (theme)
-                                   (centaur-set-variable
-                                    'centaur-theme
-                                    (let ((x (intern theme)))
-                                      (or (car (rassoc x centaur-theme-alist)) x)))
-                                   (counsel-load-theme-action theme))
-                         :caller 'counsel-load-theme)
+        ("t o" (centaur-load-theme
+                (let ((x (intern (completing-read "Load custom theme: "
+                                                  (all-completions "doom" (custom-available-themes))))))
+                  (or (car (rassoc x centaur-theme-alist)) x)))
          "others"
          :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
                           (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))

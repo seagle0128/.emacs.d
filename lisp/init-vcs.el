@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Git
 ;; See `magit-maybe-define-global-key-bindings'
 (use-package magit
@@ -40,23 +37,6 @@
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
-
-  ;; Exterminate Magit buffers
-  (with-no-warnings
-    (defun my-magit-kill-buffers (&rest _)
-      "Restore window configuration and kill all Magit buffers."
-      (interactive)
-      (magit-restore-window-configuration)
-      (let ((buffers (magit-mode-get-buffers)))
-        (when (eq major-mode 'magit-status-mode)
-          (mapc (lambda (buf)
-                  (with-current-buffer buf
-                    (if (and magit-this-process
-                             (eq (process-status magit-this-process) 'run))
-                        (bury-buffer buf)
-                      (kill-buffer buf))))
-                buffers))))
-    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
   ;; Access Git forges from Magit
   (use-package forge
@@ -80,7 +60,6 @@
   (use-package magit-todos
     :defines magit-todos-nice
     :commands magit-todos--scan-with-git-grep
-    :bind ("C-c C-t" . ivy-magit-todos)
     :init
     (setq magit-todos-nice (if (executable-find "nice") t nil))
     (setq magit-todos-scanner #'magit-todos--scan-with-git-grep)
@@ -100,7 +79,7 @@
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook (after-init . transient-posframe-mode)
     :init
-    (setq transient-posframe-border-width 3
+    (setq transient-posframe-border-width posframe-border-width
           transient-posframe-min-height nil
           transient-posframe-min-width 80
           transient-posframe-poshandler 'posframe-poshandler-frame-center

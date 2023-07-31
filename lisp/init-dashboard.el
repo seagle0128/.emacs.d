@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
-
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
@@ -52,7 +48,7 @@
      ("Navigator"
       (("U" update-config-and-packages "update" :exit t)
        ("H" browse-homepage "homepage" :exit t)
-       ("R" restore-previous-session "recover session" :exit t)
+       ("R" restore-session "recover session" :exit t)
        ("L" restore-session "list sessions" :exit t)
        ("S" find-custom-file "settings" :exit t))
       "Section"
@@ -75,7 +71,7 @@
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
-           ("R" . restore-previous-session)
+           ("R" . restore-session)
            ("L" . restore-session)
            ("S" . find-custom-file)
            ("U" . update-config-and-packages)
@@ -128,7 +124,7 @@
              (,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-backup_restore" :height 1.5))
               "Restore" "Restore previous session"
-              (lambda (&rest _) (restore-previous-session)))
+              (lambda (&rest _) (restore-session)))
              (,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-tools" :height 1.5))
               "Settings" "Open custom file"
@@ -156,23 +152,13 @@
                      'face 'font-lock-comment-face))))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
-    (defun restore-previous-session ()
+    (defun restore-session ()
       "Restore the previous session."
       (interactive)
-      (when (bound-and-true-p persp-mode)
-        (restore-session persp-auto-save-fname)))
-
-    (defun restore-session (fname)
-      "Restore the specified session."
-      (interactive (list (read-file-name "Load perspectives from a file: "
-                                         persp-save-dir)))
-      (when (bound-and-true-p persp-mode)
-        (message "Restoring session...")
-        (quit-window t)
-        (condition-case-unless-debug err
-            (persp-load-state-from-file fname)
-          (error "Error: Unable to restore session -- %s" err))
-        (message "Restoring session...done")))
+      (message "Restoring previous session...")
+      (quit-window t)
+      (desktop-read)
+      (message "Restoring previous session...done"))
 
     (defun dashboard-goto-recent-files ()
       "Go to recent files."

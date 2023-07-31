@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 (when centaur-player
   ;; Music player
   (use-package bongo

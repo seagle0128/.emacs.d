@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
@@ -44,11 +41,9 @@
   (which-key-add-key-based-replacements "C-c !" "flycheck")
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
   (which-key-add-key-based-replacements "C-c @" "hideshow")
-  (which-key-add-key-based-replacements "C-c c" "counsel")
   (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
-  (which-key-add-key-based-replacements "C-c v" "ivy-view")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
   (which-key-add-key-based-replacements "C-x 8" "unicode")
@@ -106,7 +101,7 @@
       (which-key-posframe ((t (:inherit tooltip))))
       (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
       :init
-      (setq which-key-posframe-border-width 3
+      (setq which-key-posframe-border-width posframe-border-width
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
@@ -177,22 +172,6 @@ of the buffer text to be displayed in the popup"
   :init
   (setq alert-default-style 'mode-line)
 
-  (with-eval-after-load 'nerd-icons
-    (setq alert-severity-faces
-          '((urgent   . nerd-icons-red)
-            (high     . nerd-icons-orange)
-            (moderate . nerd-icons-yellow)
-            (normal   . nerd-icons-green)
-            (low      . nerd-icons-blue)
-            (trivial  . nerd-icons-purple))
-          alert-severity-colors
-          `((urgent   . ,(face-foreground 'nerd-icons-red))
-            (high     . ,(face-foreground 'nerd-icons-orange))
-            (moderate . ,(face-foreground 'nerd-icons-yellow))
-            (normal   . ,(face-foreground 'nerd-icons-green))
-            (low      . ,(face-foreground 'nerd-icons-blue))
-            (trivial  . ,(face-foreground 'nerd-icons-purple)))))
-
   (when sys/macp
     (setq pomidor-play-sound-file
           (lambda (file)
@@ -209,11 +188,14 @@ of the buffer text to be displayed in the popup"
 (use-package atomic-chrome
   :hook ((emacs-startup . atomic-chrome-start-server)
          (atomic-chrome-edit-mode . delete-other-windows))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
+  :init (setq atomic-chrome-buffer-frame-width 100
+              atomic-chrome-buffer-frame-height 30
+              atomic-chrome-buffer-open-style 'frame)
   :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
+  (when (fboundp 'gfm-mode)
+    (setq atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)
+            ("gitlab\\.com" . gfm-mode)))))
 
 ;; Process
 (use-package proced

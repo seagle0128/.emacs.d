@@ -4,7 +4,7 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 7.1.0
+;; Version: 8.0.0
 ;; Keywords: .emacs.d centaur
 
 ;;
@@ -50,8 +50,8 @@
 
 ;;; Code:
 
-(when (version< emacs-version "26.1")
-  (error "This requires Emacs 26.1 and above!"))
+(when (version< emacs-version "27.1")
+  (error "This requires Emacs 27.1 and above!"))
 
 ;;
 ;; Speed up startup
@@ -67,18 +67,6 @@
 (setq auto-mode-case-fold nil)
 
 (unless (or (daemonp) noninteractive init-file-debug)
-  ;; Prevent flashing of messages at startup
-  (when (display-graphic-p)
-    (setq-default inhibit-redisplay t
-                  inhibit-message t)
-    (defun reset-inhibit-vars ()
-      (setq-default inhibit-redisplay nil
-                    inhibit-message nil)
-      (redraw-frame))
-    (add-hook 'window-setup-hook #'reset-inhibit-vars)
-    (define-advice startup--load-user-init-file (:after (&rest _) reset-inhibit-vars)
-      (and init-file-had-error (reset-inhibit-vars))))
-
   ;; Suppress file handlers operations at startup
   ;; `file-name-handler-alist' is consulted on each call to `require' and `load'
   (let ((old-value file-name-handler-alist))
@@ -111,6 +99,11 @@ Otherwise the startup will be very slow."
 
 (update-load-path)
 
+;; Requisites
+(require 'init-const)
+(require 'init-custom)
+(require 'init-funcs)
+
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
 (require 'init-package)
@@ -121,8 +114,8 @@ Otherwise the startup will be very slow."
 
 (require 'init-ui)
 (require 'init-edit)
-(require 'init-ivy)
-(require 'init-company)
+(require 'init-completion)
+(require 'init-corfu)
 (require 'init-yasnippet)
 
 (require 'init-bookmark)
@@ -132,7 +125,7 @@ Otherwise the startup will be very slow."
 (require 'init-highlight)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
-(require 'init-persp)
+(require 'init-workspace)
 (require 'init-window)
 (require 'init-treemacs)
 

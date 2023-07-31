@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
@@ -165,10 +163,10 @@
           "\\*Apropos\\*"
           "\\*Backtrace\\*"
           "\\*Calendar\\*"
-          "\\*Embark Actions\\*"
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
           "\\*Go-Translate\\*"
+          "\\*Embark \\(Collect\\|Live\\):.*\\*"
 
           bookmark-bmenu-mode
           comint-mode
@@ -182,7 +180,6 @@
 
           gnus-article-mode devdocs-mode
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
-          ivy-occur-mode ivy-occur-grep-mode
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 
           "^\\*Process List\\*" process-menu-mode

@@ -30,10 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
-
 ;; Optimization
 (setq idle-update-delay 1.0)
 
@@ -47,6 +43,13 @@
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
 
+;; Initial frame
+(setq initial-frame-alist '((top . 0.5)
+                            (left . 0.5)
+                            (width . 0.628)
+                            (height . 0.8)
+                            (fullscreen)))
+
 ;; Logo
 (setq fancy-splash-image centaur-logo)
 
@@ -57,19 +60,16 @@
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-hook 'server-after-make-frame-hook
+            (lambda ()
+              (if (display-graphic-p)
+                  (menu-bar-mode 1)
+                (menu-bar-mode -1))))
   (add-hook 'after-load-theme-hook
             (lambda ()
               (let ((bg (frame-parameter nil 'background-mode)))
                 (set-frame-parameter nil 'ns-appearance bg)
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
-
-;; Menu/Tool/Scroll bars
-(unless emacs/>=27p
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist)
-  (when (featurep 'ns)
-    (push '(ns-transparent-titlebar . t) default-frame-alist)))
 
 ;; Theme
 (if (centaur-compatible-theme-p centaur-theme)
@@ -77,37 +77,10 @@
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
         :hook (after-load-theme . solaire-global-mode))
-
+      ;; Excellent themes
       (use-package doom-themes
         :bind ("C-c T" . centaur-load-theme)
-        :init (centaur-load-theme centaur-theme t)
-        :config
-        ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)
-
-        ;; WORKAROUND: Visual bell on 29
-        ;; @see https://github.com/doomemacs/themes/issues/733
-        (with-no-warnings
-          (defun my-doom-themes-visual-bell-fn ()
-            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-            (let* ((buf (current-buffer))
-                   (cookies `(,(face-remap-add-relative 'mode-line-active
-                                                        'doom-themes-visual-bell)
-                              ,(face-remap-add-relative 'mode-line
-                                                        'doom-themes-visual-bell))))
-              (force-mode-line-update)
-              (run-with-timer 0.15 nil
-                              (lambda ()
-                                (with-current-buffer buf
-                                  (mapc #'face-remap-remove-relative cookies)
-                                  (force-mode-line-update))))))
-          (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))
-
-        ;; Enable customized theme
-        ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-        (when (featurep 'all-the-icons)
-          (with-eval-after-load 'lsp-treemacs
-            (doom-themes-treemacs-config)))))
+        :init (centaur-load-theme centaur-theme t)))
   (progn
     (warn "The current theme is incompatible!")
     (centaur-load-theme centaur-theme t)))
@@ -156,8 +129,8 @@
       "misc info" :toggle doom-modeline-display-misc-in-all-mode-lines)
      ("g l" (setq doom-modeline-lsp (not doom-modeline-lsp))
       "lsp" :toggle doom-modeline-lsp)
-     ("g p" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
-      "perspective" :toggle doom-modeline-persp-name)
+     ("g k" (setq doom-modeline-workspace-name (not doom-modeline-workspace-name))
+      "workspace" :toggle doom-modeline-workspace-name)
      ("g g" (setq doom-modeline-github (not doom-modeline-github))
       "github" :toggle doom-modeline-github)
      ("g n" (setq doom-modeline-gnus (not doom-modeline-gnus))
@@ -244,17 +217,36 @@
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
-     ("z h" (counsel-set-variable 'doom-modeline-height) "set height" :exit t)
-     ("z w" (counsel-set-variable 'doom-modeline-bar-width) "set bar width" :exit t)
-     ("z g" (counsel-set-variable 'doom-modeline-github-interval) "set github interval" :exit t)
-     ("z n" (counsel-set-variable 'doom-modeline-gnus-timer) "set gnus interval" :exit t)))))
+     ("z h" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-height
+                     (symbol-value 'doom-modeline-height)))
+      "set height" :exit t)
+     ("z w" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-bar-width
+                     (symbol-value 'doom-modeline-bar-width)))
+      "set bar width" :exit t)
+     ("z g" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-github-interval
+                     (symbol-value 'doom-modeline-github-interval)))
+      "set github interval" :exit t)
+     ("z n" (read-from-minibuffer
+             "Eval: "
+             (format "(setq %s %s)"
+                     'doom-modeline-gnus-timer
+                     (symbol-value 'doom-modeline-gnus-timer)))
+      "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
+  :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode
-           treemacs-mode
+           embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . hide-mode-line-mode)))
 
@@ -263,7 +255,11 @@
   :hook (doom-modeline-mode . minions-mode))
 
 ;; Icons
-(use-package nerd-icons :demand t)
+(use-package nerd-icons
+  :config
+  (when (and (display-graphic-p)
+             (not (font-installed-p nerd-icons-font-family)))
+    (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
 (use-package display-line-numbers
@@ -318,7 +314,7 @@
 ;; Good pixel line scrolling
 (if (fboundp 'pixel-scroll-precision-mode)
     (pixel-scroll-precision-mode t)
-  (when (and emacs/>=27p (not sys/macp))
+  (unless sys/macp
     (use-package good-scroll
       :diminish
       :hook (after-init . good-scroll-mode)
@@ -348,11 +344,8 @@
       `((t (:inherit region)))
       "Face used by the `posframe' border."
       :group 'posframe)
-
-    (with-eval-after-load 'persp-mode
-      (add-hook 'persp-load-buffer-functions
-                (lambda (&rest _)
-                  (posframe-delete-all))))
+    (defvar posframe-border-width 2
+      "Default posframe border width.")
     :config
     (with-no-warnings
       (defun my-posframe--prettify-frame (&rest _)
