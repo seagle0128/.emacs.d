@@ -32,8 +32,9 @@
 
 (use-package flymake
   :hook (prog-mode . flymake-mode)
-  :init (setq flymake-fringe-indicator-position 'right-fringe
-              elisp-flymake-byte-compile-load-path load-path))
+  :init (setq flymake-fringe-indicator-position 'right-fringe)
+  :config (setq elisp-flymake-byte-compile-load-path
+                (append elisp-flymake-byte-compile-load-path load-path)))
 
 (provide 'init-flymake)
 
