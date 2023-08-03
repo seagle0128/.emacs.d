@@ -90,7 +90,6 @@
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon centaur-icon
-        doom-modeline-window-width-limit 110
         doom-modeline-minor-modes t)
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))

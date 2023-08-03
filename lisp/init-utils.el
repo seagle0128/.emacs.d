@@ -36,6 +36,7 @@
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
+              which-key-lighter nil
               which-key-show-remaining-keys t)
   :config
   (which-key-add-key-based-replacements "C-c !" "flycheck")
