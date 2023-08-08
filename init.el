@@ -116,7 +116,7 @@ Otherwise the startup will be very slow."
 (require 'init-edit)
 (require 'init-completion)
 (require 'init-corfu)
-(require 'init-template)
+(require 'init-yasnippet)
 
 (require 'init-bookmark)
 (require 'init-calendar)
