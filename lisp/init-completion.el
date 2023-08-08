@@ -180,6 +180,9 @@
 (use-package consult-flyspell
   :bind ("M-g s" . consult-flyspell))
 
+(use-package consult-yasnippet
+  :bind ("M-g y" . consult-yasnippet))
+
 (use-package embark
   :bind (("s-." . embark-act)
          ("s-M-." . embark-dwim)
