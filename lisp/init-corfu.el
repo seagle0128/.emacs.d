@@ -121,11 +121,14 @@ function to the relevant margin-formatters list."
 (use-package cape
   :init
   (setq cape-dict-case-fold t)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev))
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  :config
+  (require 'cape-yasnippet)
+  (add-to-list 'completion-at-point-functions #'cape-yasnippet))
 
 (provide 'init-corfu)
 
