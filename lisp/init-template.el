@@ -1,4 +1,4 @@
-;; init-yasnippet.el --- Initialize yasnippet configurations.	-*- lexical-binding: t -*-
+;; init-template.el --- Initialize template configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2023 Vincent Zhang
 
@@ -25,20 +25,40 @@
 
 ;;; Commentary:
 ;;
-;; Yasnippet configurations.
+;; Template configurations.
 ;;
 
 ;;; Code:
 
-;; Yet another snippet extension
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode))
+;; Configure Tempel
+(use-package tempel
+  :diminish
+  ;; Require trigger prefix before template name when completing.
+  ;; :custom
+  ;; (tempel-trigger-prefix "<")
 
-;; Collection of yasnippet snippets
-(use-package yasnippet-snippets)
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+         ("M-*" . tempel-insert))
+  :hook (after-init . global-tempel-abbrev-mode)
+  :init
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand completion-at-point-functions)))
 
-(provide 'init-yasnippet)
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf))
+
+;; Collection of templates for Tempel
+(use-package tempel-collection)
+
+;; Use eglot as inline template expander
+(use-package eglot-tempel
+  :diminish
+  :hook (after-init . eglot-tempel-mode))
+
+(provide 'init-template)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-yasnippet.el ends here
+;;; init-template.el ends here
