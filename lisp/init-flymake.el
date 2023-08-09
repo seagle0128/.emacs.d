@@ -37,6 +37,7 @@
                 (append elisp-flymake-byte-compile-load-path load-path)))
 
 (use-package sideline-flymake
+  :diminish sideline-mode
   :hook (flymake-mode . sideline-mode)
   :init (setq sideline-flymake-display-mode 'point
               sideline-backends-right '(sideline-flymake)))
