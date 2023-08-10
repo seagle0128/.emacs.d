@@ -57,7 +57,11 @@
       (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
       (eldoc-box-body ((t (:inherit tooltip))))
       :hook ((emacs-lisp-mode . eldoc-box-hover-at-point-mode)
-             (eglot-managed-mode . eldoc-box-hover-at-point-mode)))))
+             (eglot-managed-mode . eldoc-box-hover-at-point-mode))
+      :config
+      ;; Prettify `eldoc-box' frame
+      (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+            (alist-get 'right-fringe eldoc-box-frame-parameters) 8))))
 
 ;; Search tool
 (use-package grep
