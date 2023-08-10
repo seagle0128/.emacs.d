@@ -205,8 +205,6 @@ Lisp function does not specify a special indentation."
 
 ;; Interactive macro expander
 (use-package macrostep
-  :custom-face
-  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t))))
   :bind (:map emacs-lisp-mode-map
          ("C-c e" . macrostep-expand)
          :map lisp-interaction-mode-map
@@ -219,6 +217,9 @@ Lisp function does not specify a special indentation."
          ([remap describe-variable] . helpful-variable)
          ([remap describe-key]      . helpful-key)
          ([remap describe-symbol]   . helpful-symbol)
+         :map emacs-lisp-mode-map
+         ("C-c C-d"                 . helpful-at-point)
+         :map lisp-interaction-mode-map
          ("C-c C-d"                 . helpful-at-point)
          :map helpful-mode-map
          ("r"                       . remove-hook-at-point))
