@@ -93,7 +93,7 @@
           dashboard-path-max-length 60
           dashboard-center-content t
           dashboard-show-shortcuts nil
-          dashboard-items '((recents  . 10)
+          dashboard-items '((recents  . 8)
                             (bookmarks . 5)
                             (projects . 5))
 
@@ -105,13 +105,6 @@
                                     (agenda    . "nf-oct-calendar")
                                     (projects  . "nf-oct-briefcase")
                                     (registers . "nf-oct-database"))
-
-          dashboard-set-footer t
-          dashboard-footer-icon (cond
-                                 ((icons-displayable-p)
-                                  (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred))
-
-                                 (t (propertize ">" 'face 'dashboard-footer)))
 
           dashboard-set-navigator t
           dashboard-navigator-buttons
@@ -135,7 +128,13 @@
                    (nerd-icons-mdicon "nf-md-help" :height 1.2)
                  "?")
               "" "Help (?/h)"
-              (lambda (&rest _) (dashboard-hydra/body))))))
+              (lambda (&rest _) (dashboard-hydra/body)))))
+
+          dashboard-set-footer t
+          dashboard-footer-icon
+          (if (icons-displayable-p)
+              (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
+            (propertize ">" 'face 'dashboard-footer)))
 
     (dashboard-setup-startup-hook)
     :config
