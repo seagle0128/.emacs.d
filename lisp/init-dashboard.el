@@ -97,9 +97,7 @@
                             (bookmarks . 5)
                             (projects . 5))
 
-          dashboard-set-init-info t
           dashboard-display-icons-p #'icons-displayable-p
-          dashboard-icon-type 'nerd-icons
           dashboard-set-file-icons centaur-icon
           dashboard-set-heading-icons centaur-icon
           dashboard-heading-icons '((recents   . "nf-oct-history")
@@ -141,6 +139,10 @@
 
     (dashboard-setup-startup-hook)
     :config
+    ;; WORKAROUND: no icons are displayed on Windows
+    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/471
+    (advice-add #'dashboard-replace-displayable :override #'identity)
+
     ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
