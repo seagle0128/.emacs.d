@@ -45,6 +45,7 @@
 (use-package kind-icon
   :when (icons-displayable-p)
   :after corfu
+  :functions nerd-icons-codicon
   :init
   (defconst corfu-kind-icon-mapping
     `((array . ,(nerd-icons-codicon "nf-cod-symbol_array" :face 'font-lock-type-face))
