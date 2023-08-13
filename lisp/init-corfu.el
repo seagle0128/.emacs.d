@@ -34,11 +34,6 @@
   :custom
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-auto-prefix 2)          ;; Trigger auto completion with 2 chars
-  (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
-  (corfu-quit-no-match t)        ;; Automatically quit if there is no match
-  (corfu-preview-current nil)    ;; Disable current candidate preview
-  (corfu-preselect 'prompt)      ;; Preselect the prompt
-  (corfu-scroll-margin 5)        ;; Use scroll margin
   :bind ("M-/" . completion-at-point)
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode)))
