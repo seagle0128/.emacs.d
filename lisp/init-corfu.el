@@ -32,8 +32,11 @@
 
 (use-package corfu
   :custom
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-auto-prefix 2)          ;; Trigger auto completion with 2 chars
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-preview-current nil)
+  (corfu-auto-delay 0.1)
+  (corfu-popupinfo-delay '(0.2 . 0.1))
   :bind ("M-/" . completion-at-point)
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode)))
