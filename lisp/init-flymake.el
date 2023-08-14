@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package flymake
+  :diminish
   :hook (prog-mode . flymake-mode)
   :init (setq flymake-fringe-indicator-position 'right-fringe)
   :config (setq elisp-flymake-byte-compile-load-path
