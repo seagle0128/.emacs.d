@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; A tree layout file explorer
 (use-package treemacs
   :commands (treemacs-follow-mode

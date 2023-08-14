@@ -143,7 +143,7 @@
   "List of themes mapped to the time they should be loaded.
 
 The keywords `:sunrise' and `:sunset' can be used for the time
-if `calendar-latitude' and `calendar-longitude' are set.
+if the option `calendar-latitude' and option `calendar-longitude' are set.
 For example:
   \\='((:sunrise . doom-one-light)
     (:sunset  . doom-one))"

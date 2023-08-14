@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (bind-key "M-<f7>" #'centaur-read-mode)
 
 ;; PDF reader

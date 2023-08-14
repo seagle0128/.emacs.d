@@ -30,6 +30,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
            (not (file-exists-p custom-file)))

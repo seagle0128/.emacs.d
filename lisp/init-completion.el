@@ -31,7 +31,6 @@
 ;;; Code:
 
 ;; A few more useful configurations...
-;; A few more useful configurations...
 (use-package emacs
   :init
   ;; TAB cycle if there are only few candidates
@@ -184,8 +183,9 @@
   :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
-  :bind (("s-." . embark-act)
-         ("M-." . embark-dwim)
+  :bind (("C-s-." . embark-act)
+         ("M-s-." . embark-dwim)
+         ("s-."   . embark-dwim)
          ([remap describe-bindings] . embark-bindings))
   :init
   ;; Optionally replace the key help with a completing-read interface

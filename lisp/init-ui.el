@@ -30,6 +30,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 ;; Optimization
 (setq idle-update-delay 1.0)
 

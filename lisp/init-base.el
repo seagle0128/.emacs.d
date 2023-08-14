@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'subr-x)
+(require 'init-funcs)
 
 ;; Compatibility
 (use-package compat :demand t)

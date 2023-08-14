@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; eww
 (use-package eww
   :ensure nil
@@ -116,6 +119,7 @@
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :diminish
+  :functions diminish
   :hook (((js-mode js2-mode)   . skewer-mode)
          (css-mode             . skewer-css-mode)
          ((html-mode web-mode) . skewer-html-mode))

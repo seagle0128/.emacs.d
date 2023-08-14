@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Docker
 (use-package docker
   :defines docker-image-run-arguments

@@ -61,7 +61,7 @@
               `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
                 (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face)))))
     (progn
-      (advice-remove #'ibuffer-project-group-name :override #'my-ibuffer-project-group-name)
+      (advice-remove #'ibuffer-project-group-name #'my-ibuffer-project-group-name)
       (setq ibuffer-project-root-functions
             '((ibuffer-project-project-root . "Project")
               (file-remote-p . "Remote"))))))

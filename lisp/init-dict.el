@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; A multi dictionaries interface
 (use-package fanyi
   :bind (("C-c d f" . fanyi-dwim)

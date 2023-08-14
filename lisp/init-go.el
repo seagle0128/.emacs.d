@@ -30,9 +30,12 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; Golang
 (use-package go-mode
-  :functions go-install-tools
+  :functions (go-install-tools exec-path-from-shell-copy-envs)
   :autoload godoc-gogetdoc
   :bind (:map go-mode-map
          ("<f1>" . godoc))

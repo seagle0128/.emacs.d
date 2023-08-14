@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (use-package org
   :ensure nil
   :custom-face (org-ellipsis ((t (:foreground unspecified))))

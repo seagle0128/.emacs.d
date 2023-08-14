@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (when centaur-player
   ;; Music player
   (use-package bongo

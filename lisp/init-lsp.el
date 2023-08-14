@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (pcase centaur-lsp
   ('eglot
    (use-package eglot

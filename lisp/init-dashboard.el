@@ -30,14 +30,13 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
     :diminish dashboard-mode
-    :functions (nerd-icons-faicon
-                nerd-icons-mdicon
-                winner-undo
-                widget-forward)
     :custom-face
     (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     (dashboard-items-face ((t (:weight normal))))

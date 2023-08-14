@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Git
 ;; See `magit-maybe-define-global-key-bindings'
 (use-package magit
@@ -74,6 +77,7 @@
 (when (childframe-completion-workable-p)
   (use-package transient-posframe
     :diminish
+    :defines posframe-border-width
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
