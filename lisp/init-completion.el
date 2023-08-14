@@ -183,9 +183,8 @@
   :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
-  :bind (("C-s-." . embark-act)
+  :bind (("s-." . embark-act)
          ("M-s-." . embark-dwim)
-         ("s-."   . embark-dwim)
          ([remap describe-bindings] . embark-bindings))
   :init
   ;; Optionally replace the key help with a completing-read interface
