@@ -126,8 +126,8 @@ function to the relevant margin-formatters list."
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
   :config
-  (require 'cape-yasnippet)
-  (add-to-list 'completion-at-point-functions #'cape-yasnippet))
+  (require 'yasnippet-capf)
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 (provide 'init-corfu)
 
