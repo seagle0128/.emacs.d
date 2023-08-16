@@ -156,6 +156,7 @@
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
+          "^\\*eldoc.*\\*$"
           "\\*Compile-Log\\*"
           "\\*Completions\\*"
           "\\*Warnings\\*"
