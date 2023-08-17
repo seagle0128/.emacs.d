@@ -29,6 +29,7 @@
 ;;
 
 ;;; Code:
+
 (require 'cl-lib)
 
 ;; Suppress warnings
