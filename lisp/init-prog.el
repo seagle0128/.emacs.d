@@ -51,7 +51,7 @@
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
-  :ensure nil
+  :pin gnu
   :diminish
   :config
   (when (childframe-workable-p)
@@ -93,6 +93,7 @@
 
 ;; Cross-referencing commands
 (use-package xref
+  :pin gnu
   :init
   ;; Use faster search tool
   (setq xref-search-program (cond
