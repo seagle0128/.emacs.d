@@ -38,6 +38,12 @@
 ;; Collection of yasnippet snippets
 (use-package yasnippet-snippets)
 
+;; Yasnippet Completion At Point Function
+(use-package yasnippet-capf
+  :init
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+
 (provide 'init-yasnippet)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
