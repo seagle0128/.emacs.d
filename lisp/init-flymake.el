@@ -31,7 +31,6 @@
 ;;; Code:
 
 (use-package flymake
-  :pin gnu
   :diminish
   :hook (prog-mode . flymake-mode)
   :init (setq flymake-fringe-indicator-position 'right-fringe)

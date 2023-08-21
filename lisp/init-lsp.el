@@ -36,7 +36,6 @@
 (pcase centaur-lsp
   ('eglot
    (use-package eglot
-     :pin gnu
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (eglot-ensure))))
