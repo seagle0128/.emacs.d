@@ -89,15 +89,13 @@
               (let ((inhibit-read-only t))
                 (erase-buffer)
                 (youdao-dictionary-mode)
-                (insert (propertize "\n" 'face '(:height 0.5)))
                 (insert string)
-                (insert (propertize "\n" 'face '(:height 0.5)))
                 (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
             (posframe-show
              youdao-dictionary-buffer-name
              :position (point)
-             :left-fringe 16
-             :right-fringe 16
+             :left-fringe 8
+             :right-fringe 8
              :max-width (/ (frame-width) 2)
              :max-height (/ (frame-height) 2)
              :background-color (face-background 'tooltip nil t)

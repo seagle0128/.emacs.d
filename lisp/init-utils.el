@@ -106,32 +106,7 @@
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
-      (which-key-posframe-mode 1)
-      :config
-      (with-no-warnings
-        (defun my-which-key-posframe--show-buffer (act-popup-dim)
-          "Show which-key buffer when popup type is posframe.
-Argument ACT-POPUP-DIM includes the dimension, (height . width)
-of the buffer text to be displayed in the popup"
-          (when (posframe-workable-p)
-            (with-current-buffer (get-buffer-create which-key-buffer-name)
-              (let ((inhibit-read-only t))
-                (goto-char (point-min))
-                (insert (propertize "\n" 'face '(:height 0.3)))
-                (goto-char (point-max))
-                (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
-            (posframe-show which-key--buffer
-		                   :font which-key-posframe-font
-		                   :position (point)
-		                   :poshandler which-key-posframe-poshandler
-		                   :background-color (face-attribute 'which-key-posframe :background nil t)
-		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
-		                   :height (1+ (car act-popup-dim))
-		                   :width (1+ (cdr act-popup-dim))
-		                   :internal-border-width which-key-posframe-border-width
-		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
-		                   :override-parameters which-key-posframe-parameters)))
-        (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer)))))
+      (which-key-posframe-mode 1))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch

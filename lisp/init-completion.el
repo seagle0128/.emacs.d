@@ -184,7 +184,8 @@
 
 (use-package embark
   :bind (("s-." . embark-act)
-         ("M-s-." . embark-dwim)
+         ("M-." . embark-dwim)
+         ("M-s-." . xref-find-definitions)
          ([remap describe-bindings] . embark-bindings))
   :init
   ;; Optionally replace the key help with a completing-read interface
