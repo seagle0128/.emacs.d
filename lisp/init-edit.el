@@ -277,7 +277,7 @@
          :map mc/keymap
          ("C-|" . mc/vertical-align-with-space))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Multiple Cursors" 'mdicon "nf-md-border_all")
+  ((:title (pretty-hydra-title "Multiple Cursors" 'mdicon "nf-md-cursor_move")
     :color amaranth :quit-key ("q" "C-g"))
    ("Up"
 	(("p" mc/mark-previous-like-this "prev")

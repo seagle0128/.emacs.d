@@ -55,7 +55,7 @@
 ;; Quickly switch windows
 (use-package ace-window
   :pretty-hydra
-  ((:title (pretty-hydra-title "Window Management" 'faicon "nf-fa-th")
+  ((:title (pretty-hydra-title "Window Management" 'mdicon "nf-md-border_all")
     :foreign-keys warn :quit-key ("q" "C-g"))
    ("Actions"
     (("TAB" other-window "switch")
