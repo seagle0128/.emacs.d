@@ -51,7 +51,8 @@
       (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t))))
 
 (use-package pretty-hydra
-  :custom (pretty-hydra-default-title-body-format-spec " %s%s")
+  :custom (pretty-hydra-default-title-body-format-spec (format "%s %%s\n%%s"
+                                                               (propertize "\n" 'face '(:height 0.5))))
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()
                              (add-to-list
