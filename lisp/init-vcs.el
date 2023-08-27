@@ -57,21 +57,7 @@
           '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
             ("Title" 60 t nil title  nil)
             ("State" 6 t nil state nil)
-            ("Updated" 10 t nil updated nil))))
-
-  ;; Show TODOs in magit
-  (use-package magit-todos
-    :defines magit-todos-nice
-    :commands magit-todos--scan-with-git-grep
-    :init
-    (setq magit-todos-nice (if (executable-find "nice") t nil))
-    (setq magit-todos-scanner #'magit-todos--scan-with-git-grep)
-    (let ((inhibit-message t))
-      (magit-todos-mode 1))
-    :config
-    (with-eval-after-load 'magit-status
-      (transient-append-suffix 'magit-status-jump '(0 0 -1)
-        '("t " "Todos" magit-todos-jump-to-todos)))))
+            ("Updated" 10 t nil updated nil)))))
 
 ;; Display transient in child frame
 (when (childframe-completion-workable-p)
