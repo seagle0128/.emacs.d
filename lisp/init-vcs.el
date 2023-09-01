@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const))
 
 ;; Git
 ;; See `magit-maybe-define-global-key-bindings'
@@ -40,23 +40,6 @@
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
-
-  ;; Exterminate Magit buffers
-  (with-no-warnings
-    (defun my-magit-kill-buffers (&rest _)
-      "Restore window configuration and kill all Magit buffers."
-      (interactive)
-      (magit-restore-window-configuration)
-      (let ((buffers (magit-mode-get-buffers)))
-        (when (eq major-mode 'magit-status-mode)
-          (mapc (lambda (buf)
-                  (with-current-buffer buf
-                    (if (and magit-this-process
-                             (eq (process-status magit-this-process) 'run))
-                        (bury-buffer buf)
-                      (kill-buffer buf))))
-                buffers))))
-    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
   ;; Access Git forges from Magit
   (use-package forge
@@ -74,33 +57,19 @@
           '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
             ("Title" 60 t nil title  nil)
             ("State" 6 t nil state nil)
-            ("Updated" 10 t nil updated nil))))
-
-  ;; Show TODOs in magit
-  (use-package magit-todos
-    :defines magit-todos-nice
-    :commands magit-todos--scan-with-git-grep
-    :bind ("C-c C-t" . ivy-magit-todos)
-    :init
-    (setq magit-todos-nice (if (executable-find "nice") t nil))
-    (setq magit-todos-scanner #'magit-todos--scan-with-git-grep)
-    (let ((inhibit-message t))
-      (magit-todos-mode 1))
-    :config
-    (with-eval-after-load 'magit-status
-      (transient-append-suffix 'magit-status-jump '(0 0 -1)
-        '("t " "Todos" magit-todos-jump-to-todos)))))
+            ("Updated" 10 t nil updated nil)))))
 
 ;; Display transient in child frame
 (when (childframe-completion-workable-p)
   (use-package transient-posframe
     :diminish
+    :defines posframe-border-width
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook (after-init . transient-posframe-mode)
     :init
-    (setq transient-posframe-border-width 3
+    (setq transient-posframe-border-width posframe-border-width
           transient-posframe-min-height nil
           transient-posframe-min-width 80
           transient-posframe-poshandler 'posframe-poshandler-frame-center

@@ -31,45 +31,17 @@
 ;;; Code:
 
 (use-package flymake
+  :diminish
   :hook (prog-mode . flymake-mode)
-  :init (setq flymake-fringe-indicator-position 'right-fringe
-              elisp-flymake-byte-compile-load-path load-path))
+  :init (setq flymake-fringe-indicator-position 'right-fringe)
+  :config (setq elisp-flymake-byte-compile-load-path
+                (append elisp-flymake-byte-compile-load-path load-path)))
 
-(use-package flymake-diagnostic-at-point
-  :commands flymake-diagnostic-at-point-mode
-  :hook (flymake-mode . flymake-diagnostic-at-point-mode)
-  :config
-  (when (and (childframe-workable-p)
-             (require 'posframe nil t))
-    (defvar flymake-posframe-buffer " *flymake-posframe-buffer*"
-      "Name of the flymake posframe buffer.")
-    (defun flymake-diagnostic-at-point-display-posframe (text)
-      "Display the flymake diagnostic TEXT inside a child frame."
-      (posframe-show
-       flymake-posframe-buffer
-       :string (propertize
-                (concat flymake-diagnostic-at-point-error-prefix text)
-                'face (if-let ((type (get-char-property (point) 'flymake-diagnostic)))
-                          (pcase (flymake--diag-type type)
-                            (:error 'error)
-                            (:warning 'warning)
-                            (:note 'success)
-                            (_ 'default))
-                        'default))
-	   :left-fringe 4
-	   :right-fringe 4
-       :max-width (round (* (frame-width) 0.62))
-       :max-height (round (* (frame-height) 0.62))
-       :internal-border-width 1
-       :internal-border-color (face-background 'posframe-border nil t)
-       :background-color (face-background 'tooltip nil t))
-      (unwind-protect
-          (push (read-event) unread-command-events)
-        (progn
-          (posframe-hide flymake-posframe-buffer)
-          (other-frame 0))))
-    (setq flymake-diagnostic-at-point-display-diagnostic-function
-          #'flymake-diagnostic-at-point-display-posframe)))
+(use-package sideline-flymake
+  :diminish sideline-mode
+  :hook (flymake-mode . sideline-mode)
+  :init (setq sideline-flymake-display-mode 'point
+              sideline-backends-right '(sideline-flymake)))
 
 (provide 'init-flymake)
 

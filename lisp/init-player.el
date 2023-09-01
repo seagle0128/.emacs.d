@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom))
 
 (when centaur-player
   ;; Music player

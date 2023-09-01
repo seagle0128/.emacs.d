@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const))
 
 ;; Directory operations
 (use-package dired
@@ -83,7 +83,7 @@
   ;; Shows icons
   (use-package nerd-icons-dired
     :diminish
-    :commands nerd-icons-dired-mode
+    :when (icons-displayable-p)
     :custom-face
     (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
     :hook (dired-mode . nerd-icons-dired-mode))

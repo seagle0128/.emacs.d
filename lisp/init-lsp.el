@@ -30,9 +30,8 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom))
 
 (pcase centaur-lsp
   ('eglot
@@ -40,7 +39,11 @@
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (eglot-ensure))))
-            ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))))
+            ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+     :config
+     (use-package consult-eglot
+       :bind (:map eglot-mode-map
+              ("C-M-." . consult-eglot-symbols)))))
   ('lsp-mode
    ;; Performace tuning
    ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -95,6 +98,10 @@
                  ;; For clients
                  lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
+     (use-package consult-lsp
+       :bind (:map lsp-mode-map
+              ("C-M-." . consult-lsp-symbols)))
+
      (with-no-warnings
        ;; Disable `lsp-mode' in `git-timemachine-mode'
        (defun my-lsp--init-if-visible (fn &rest args)
@@ -109,59 +116,61 @@
        (advice-add #'lsp-bash-check-sh-shell :override #'my-lsp-bash-check-sh-shell)
        (add-to-list 'lsp-language-id-configuration '(bash-ts-mode . "shellscript"))
 
-       ;; Only display icons in GUI
-       (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-         (and (icons-displayable-p) (apply fn args)))
-       (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
+       ;; Display icons
+       (when (icons-displayable-p)
+         (defun my-lsp-icons-get-symbol-kind (fn &rest args)
+           (and (icons-displayable-p) (apply fn args)))
+         (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
-       ;; For `lsp-headerline'
-       (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-         (and (icons-displayable-p) (apply fn args)))
-       (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
+         ;; For `lsp-headerline'
+         (defun my-lsp-icons-get-by-file-ext (fn &rest args)
+           (and (icons-displayable-p) (apply fn args)))
+         (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
 
-       (defun my-lsp-icons-get-by-file-ext (file-ext &optional feature)
-         (when (and file-ext
-                    (lsp-icons--enabled-for-feature feature))
-           (nerd-icons-icon-for-extension file-ext)))
-       (advice-add #'lsp-icons-get-by-file-ext :override #'my-lsp-icons-get-by-file-ext)
-       (defvar lsp-symbol-alist
-         '(
-           (misc          nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-warning-face)
-           (document      nerd-icons-codicon "nf-cod-symbol_file" :face font-lock-string-face)
-           (namespace     nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-type-face)
-           (string        nerd-icons-codicon "nf-cod-symbol_string" :face font-lock-doc-face)
-           (boolean-data  nerd-icons-codicon "nf-cod-symbol_boolean" :face font-lock-builtin-face)
-           (numeric       nerd-icons-codicon "nf-cod-symbol_numeric" :face font-lock-builtin-face)
-           (method        nerd-icons-codicon "nf-cod-symbol_method" :face font-lock-function-name-face)
-           (field         nerd-icons-codicon "nf-cod-symbol_field" :face font-lock-variable-name-face)
-           (localvariable nerd-icons-codicon "nf-cod-symbol_variable" :face font-lock-variable-name-face)
-           (class         nerd-icons-codicon "nf-cod-symbol_class" :face font-lock-type-face)
-           (interface     nerd-icons-codicon "nf-cod-symbol_interface" :face font-lock-type-face)
-           (property      nerd-icons-codicon "nf-cod-symbol_property" :face font-lock-variable-name-face)
-           (indexer       nerd-icons-codicon "nf-cod-symbol_enum" :face font-lock-builtin-face)
-           (enumerator    nerd-icons-codicon "nf-cod-symbol_enum" :face font-lock-builtin-face)
-           (enumitem      nerd-icons-codicon "nf-cod-symbol_enum_member" :face font-lock-builtin-face)
-           (constant      nerd-icons-codicon "nf-cod-symbol_constant" :face font-lock-constant-face)
-           (structure     nerd-icons-codicon "nf-cod-symbol_structure" :face font-lock-variable-name-face)
-           (event         nerd-icons-codicon "nf-cod-symbol_event" :face font-lock-warning-face)
-           (operator      nerd-icons-codicon "nf-cod-symbol_operator" :face font-lock-comment-delimiter-face)
-           (template      nerd-icons-codicon "nf-cod-symbol_snippet" :face font-lock-type-face)))
-       (defun my-lsp-icons-get-by-symbol-kind (kind &optional feature)
-         (when (and kind
-                    (lsp-icons--enabled-for-feature feature))
-           (let* ((icon (cdr (assoc (lsp-treemacs-symbol-kind->icon kind) lsp-symbol-alist)))
-                  (args (cdr icon)))
-             (apply (car icon) args))))
-       (advice-add #'lsp-icons-get-by-symbol-kind :override #'my-lsp-icons-get-by-symbol-kind)
+         (defun my-lsp-icons-get-by-file-ext (file-ext &optional feature)
+           (when (and file-ext
+                      (lsp-icons--enabled-for-feature feature))
+             (nerd-icons-icon-for-extension file-ext)))
+         (advice-add #'lsp-icons-get-by-file-ext :override #'my-lsp-icons-get-by-file-ext)
 
-       (setq lsp-headerline-arrow (nerd-icons-octicon "nf-oct-chevron_right"
-                                                      :face 'lsp-headerline-breadcrumb-separator-face))))
+         (defvar lsp-symbol-alist
+           '((misc          nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-warning-face)
+             (document      nerd-icons-codicon "nf-cod-symbol_file" :face font-lock-string-face)
+             (namespace     nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-type-face)
+             (string        nerd-icons-codicon "nf-cod-symbol_string" :face font-lock-doc-face)
+             (boolean-data  nerd-icons-codicon "nf-cod-symbol_boolean" :face font-lock-builtin-face)
+             (numeric       nerd-icons-codicon "nf-cod-symbol_numeric" :face font-lock-builtin-face)
+             (method        nerd-icons-codicon "nf-cod-symbol_method" :face font-lock-function-name-face)
+             (field         nerd-icons-codicon "nf-cod-symbol_field" :face font-lock-variable-name-face)
+             (localvariable nerd-icons-codicon "nf-cod-symbol_variable" :face font-lock-variable-name-face)
+             (class         nerd-icons-codicon "nf-cod-symbol_class" :face font-lock-type-face)
+             (interface     nerd-icons-codicon "nf-cod-symbol_interface" :face font-lock-type-face)
+             (property      nerd-icons-codicon "nf-cod-symbol_property" :face font-lock-variable-name-face)
+             (indexer       nerd-icons-codicon "nf-cod-symbol_enum" :face font-lock-builtin-face)
+             (enumerator    nerd-icons-codicon "nf-cod-symbol_enum" :face font-lock-builtin-face)
+             (enumitem      nerd-icons-codicon "nf-cod-symbol_enum_member" :face font-lock-builtin-face)
+             (constant      nerd-icons-codicon "nf-cod-symbol_constant" :face font-lock-constant-face)
+             (structure     nerd-icons-codicon "nf-cod-symbol_structure" :face font-lock-variable-name-face)
+             (event         nerd-icons-codicon "nf-cod-symbol_event" :face font-lock-warning-face)
+             (operator      nerd-icons-codicon "nf-cod-symbol_operator" :face font-lock-comment-delimiter-face)
+             (template      nerd-icons-codicon "nf-cod-symbol_snippet" :face font-lock-type-face)))
+
+         (defun my-lsp-icons-get-by-symbol-kind (kind &optional feature)
+           (when (and kind
+                      (lsp-icons--enabled-for-feature feature))
+             (let* ((icon (cdr (assoc (lsp-treemacs-symbol-kind->icon kind) lsp-symbol-alist)))
+                    (args (cdr icon)))
+               (apply (car icon) args))))
+         (advice-add #'lsp-icons-get-by-symbol-kind :override #'my-lsp-icons-get-by-symbol-kind)
+
+         (setq lsp-headerline-arrow (nerd-icons-octicon "nf-oct-chevron_right"
+                                                        :face 'lsp-headerline-breadcrumb-separator-face)))))
 
    (use-package lsp-ui
      :custom-face
      (lsp-ui-sideline-code-action ((t (:inherit warning))))
      :pretty-hydra
-     ((:title (pretty-hydra-title "LSP UI" 'faicon "nf-fa-rocket_launch" :face 'nerd-icons-green)
+     ((:title (pretty-hydra-title "LSP UI" 'faicon "nf-fa-rocket" :face 'nerd-icons-green)
        :color amaranth :quit-key ("q" "C-g"))
       ("Doc"
        (("d e" (progn
@@ -292,59 +301,6 @@
                  (propertize " " 'display '(space :height (1)))
                  (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
        (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
-
-   ;; Ivy integration
-   (use-package lsp-ivy
-     :after lsp-mode
-     :bind (:map lsp-mode-map
-            ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-            ("C-s-." . lsp-ivy-global-workspace-symbol))
-     :config
-     (with-no-warnings
-       (when (icons-displayable-p)
-         (defconst lsp-ivy-symbol-kind-icons
-           `(,(nerd-icons-codicon "nf-cod-symbol_namespace") ; Unknown - 0
-             ,(nerd-icons-codicon "nf-cod-symbol_file") ; File - 1
-             ,(nerd-icons-codicon "nf-cod-symbol_namespace" :face 'nerd-icons-lblue) ; Module - 2
-             ,(nerd-icons-codicon "nf-cod-symbol_namespace" :face 'nerd-icons-lblue) ; Namespace - 3
-             ,(nerd-icons-codicon "nf-cod-package") ; Package - 4
-             ,(nerd-icons-codicon "nf-cod-symbol_class" :face 'nerd-icons-orange) ; Class - 5
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-purple) ; Method - 6
-             ,(nerd-icons-codicon "nf-cod-symbol_property") ; Property - 7
-             ,(nerd-icons-codicon "nf-cod-symbol_field" :face 'nerd-icons-lblue) ; Field - 8
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-lpurple) ; Constructor - 9
-             ,(nerd-icons-codicon "nf-cod-symbol_enum" :face 'nerd-icons-orange) ; Enum - 10
-             ,(nerd-icons-codicon "nf-cod-symbol_interface" :face 'nerd-icons-lblue) ; Interface - 11
-             ,(nerd-icons-codicon "nf-cod-symbol_method" :face 'nerd-icons-purple) ; Function - 12
-             ,(nerd-icons-codicon "nf-cod-symbol_variable" :face 'nerd-icons-lblue) ; Variable - 13
-             ,(nerd-icons-codicon "nf-cod-symbol_constant") ; Constant - 14
-             ,(nerd-icons-codicon "nf-cod-symbol_string") ; String - 15
-             ,(nerd-icons-codicon "nf-cod-symbol_numeric") ; Number - 16
-             ,(nerd-icons-codicon "nf-cod-symbol_boolean" :face 'nerd-icons-lblue) ; Boolean - 17
-             ,(nerd-icons-codicon "nf-cod-symbol_array") ; Array - 18
-             ,(nerd-icons-codicon "nf-cod-symbol_class" :face 'nerd-icons-blue) ; Object - 19
-             ,(nerd-icons-codicon "nf-cod-symbol_key") ; Key - 20
-             ,(nerd-icons-codicon "nf-cod-symbol_numeric" :face 'nerd-icons-dsilver) ; Null - 21
-             ,(nerd-icons-codicon "nf-cod-symbol_enum_member" :face 'nerd-icons-lblue) ; EnumMember - 22
-             ,(nerd-icons-codicon "nf-cod-symbol_structure" :face 'nerd-icons-orange) ; Struct - 23
-             ,(nerd-icons-codicon "nf-cod-symbol_event" :face 'nerd-icons-orange) ; Event - 24
-             ,(nerd-icons-codicon "nf-cod-symbol_operator") ; Operator - 25
-             ,(nerd-icons-codicon "nf-cod-symbol_class") ; TypeParameter - 26
-             ))
-
-         (lsp-defun my-lsp-ivy--format-symbol-match
-           ((sym &as &SymbolInformation :kind :location (&Location :uri))
-            project-root)
-           "Convert the match returned by `lsp-mode` into a candidate string."
-           (let* ((sanitized-kind (if (length> lsp-ivy-symbol-kind-icons kind) kind 0))
-                  (type (elt lsp-ivy-symbol-kind-icons sanitized-kind))
-                  (typestr (if lsp-ivy-show-symbol-kind (format "%s " type) ""))
-                  (pathstr (if lsp-ivy-show-symbol-filename
-                               (propertize (format " · %s" (file-relative-name (lsp--uri-to-path uri) project-root))
-                                           'face font-lock-comment-face)
-                             "")))
-             (concat typestr (lsp-render-symbol-information sym ".") pathstr)))
-         (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
 
    ;; Debug
    (use-package dap-mode

@@ -1,9 +1,9 @@
-;; init-elixir.el --- Initialize elixir configurations.	-*- lexical-binding: t -*-
+;;; init-workspace.el --- Initialize workspace configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2023 N.Ahmet BASTUG
+;; Copyright (C) 2018-2023 Vincent Zhang
 
-;; Author: N.Ahmet BASTUG <bastugn@itu.edu.tr>
-;; URL: https://github.com/kosantosbik/.emacs.d
+;; Author: Vincent Zhang <seagle0128@gmail.com>
+;; URL: https://github.com/seagle0128/.emacs.d
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -25,19 +25,26 @@
 
 ;;; Commentary:
 ;;
-;; Elixir configurations.
+;; Workspace configurations.
 ;;
 
 ;;; Code:
 
-(use-package elixir-mode
-  :config
-  (use-package alchemist
-    :diminish (alchemist-mode alchemist-phoenix-mode)
-    :hook ((elixir-mode . alchemist-mode)
-           (elixir-mode . alchemist-phoenix-mode))))
+(use-package tabspaces
+  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
+  :commands (tabspaces-switch-or-create-workspace
+             tabspaces-open-or-create-project-and-workspace)
+  :custom
+  (tab-bar-show nil)
+  (tabspaces-use-filtered-buffers-as-default t)
+  (tabspaces-default-tab "Default")
+  (tabspaces-remove-to-default t)
+  (tabspaces-include-buffers '("*scratch*"))
+  ;; sessions
+  (tabspaces-session t)
+  (tabspaces-session-auto-restore t))
 
-(provide 'init-elixir)
+(provide 'init-workspace)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-elixir.el ends here
+;;; init-workspace.el ends here

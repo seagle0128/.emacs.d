@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'init-custom)
+(eval-when-compile
+  (require 'init-custom))
 
 ;; Chinese calendar
 ;; `pC' can show lunar details

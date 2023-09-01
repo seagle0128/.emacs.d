@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
@@ -100,9 +97,9 @@ FACE defaults to inheriting from default and highlight."
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-2 ((t (:inherit nerd-icons-pink :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-3 ((t (:inherit nerd-icons-yellow :background unspecified :foreground unspecified :inverse-video t))))
-  (symbol-overlay-face-4 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-4 ((t (:inherit nerd-icons-purple :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-5 ((t (:inherit nerd-icons-red :background unspecified :foreground unspecified :inverse-video t))))
-  (symbol-overlay-face-6 ((t (:inherit nerd-icons-purple :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-6 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-7 ((t (:inherit nerd-icons-green :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit nerd-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
   :bind (("M-i" . symbol-overlay-put)
@@ -160,24 +157,7 @@ FACE defaults to inheriting from default and highlight."
       (advice-add #'macrostep-collapse
                   :after (lambda (&rest _)
                            (when (derived-mode-p 'prog-mode 'yaml-mode)
-                             (highlight-indent-guides-mode 1)))))
-
-    ;; Don't display indentations in `swiper'
-    ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
-    (with-eval-after-load 'ivy
-      (defun my-ivy-cleanup-indentation (str)
-        "Clean up indentation highlighting in ivy minibuffer."
-        (let ((pos 0)
-              (next 0)
-              (limit (length str))
-              (prop 'highlight-indent-guides-prop))
-          (while (and pos next)
-            (setq next (text-property-not-all pos limit prop nil str))
-            (when next
-              (setq pos (text-property-any next limit prop nil str))
-              (ignore-errors
-                (remove-text-properties next pos '(display nil face nil) str))))))
-      (advice-add #'ivy-cleanup-string :after #'my-ivy-cleanup-indentation))))
+                             (highlight-indent-guides-mode 1)))))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
@@ -219,8 +199,12 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t p" . hl-todo-previous)
          ("C-c t n" . hl-todo-next)
          ("C-c t o" . hl-todo-occur)
+         ("C-c t r" . hl-todo-rg)
          ("C-c t i" . hl-todo-insert))
-  :hook (after-init . global-hl-todo-mode)
+  :hook ((after-init . global-hl-todo-mode)
+         (hl-todo-mode . (lambda ()
+                           (add-hook 'flymake-diagnostic-functions
+                                     #'hl-todo-flymake nil t))))
   :init (setq hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
@@ -229,7 +213,19 @@ FACE defaults to inheriting from default and highlight."
   (dolist (keyword '("TRICK" "WORKAROUND"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
   (dolist (keyword '("DEBUG" "STUB"))
-    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb"))))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb")))
+
+  (defun hl-todo-rg (regexp &optional files dir)
+    "Use `rg' to find all TODO or similar keywords."
+    (interactive
+     (progn
+       (unless (require 'rg nil t)
+         (error "`rg' is not installed"))
+       (let ((regexp (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp))))
+         (list regexp
+               (rg-read-files)
+               (read-directory-name "Base directory: " nil default-directory t)))))
+    (rg regexp files dir)))
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
@@ -317,13 +313,9 @@ FACE defaults to inheriting from default and highlight."
       (advice-add cmd :after #'my-recenter-and-pulse))))
 
 ;; Pulse modified region
-(if emacs/>=27p
-    (use-package goggles
-      :diminish
-      :hook ((prog-mode text-mode) . goggles-mode))
-  (use-package volatile-highlights
-    :diminish
-    :hook (after-init . volatile-highlights-mode)))
+(use-package goggles
+  :diminish
+  :hook ((prog-mode text-mode) . goggles-mode))
 
 (provide 'init-highlight)
 

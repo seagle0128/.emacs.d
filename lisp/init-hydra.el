@@ -30,13 +30,29 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 (use-package hydra
-  :hook (emacs-lisp-mode . hydra-add-imenu))
+  :hook (emacs-lisp-mode . hydra-add-imenu)
+  :init
+  (when (childframe-completion-workable-p)
+    (setq hydra-hint-display-type 'posframe)
+
+    (with-eval-after-load 'posframe
+      (defun hydra-set-posframe-show-params ()
+        "Set hydra-posframe style."
+        (setq hydra-posframe-show-params
+              `(:left-fringe 8
+                :right-fringe 8
+                :internal-border-width 2
+                :internal-border-color ,(face-background 'posframe-border nil t)
+                :background-color ,(face-background 'tooltip nil t)
+                :lines-truncate t
+                :poshandler posframe-poshandler-frame-center-near-bottom)))
+      (hydra-set-posframe-show-params)
+      (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t))))
 
 (use-package pretty-hydra
+  :custom (pretty-hydra-default-title-body-format-spec (format "%s %%s\n%%s"
+                                                               (propertize "\n" 'face '(:height 0.5))))
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()
                              (add-to-list
@@ -48,7 +64,7 @@
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
     "Add an icon in the hydra title."
-    (let ((face (or face `(:foreground ,(face-background 'highlight))))
+    (let ((face (or face `(:inherit highlight :reverse-video t)))
           (height (or height 1.2))
           (v-adjust (or v-adjust 0.0)))
       (concat
@@ -100,8 +116,7 @@
         ("h i" highlight-indent-guides-mode "indent" :toggle t)
         ("h t" global-hl-todo-mode "todo" :toggle t))
        "Program"
-       (("F" flycheck-mode "flycheck" :toggle t)
-        ("f" flymake-mode "flymake" :toggle t)
+       (("f" flymake-mode "flymake" :toggle t)
         ("O" hs-minor-mode "hideshow" :toggle t)
         ("u" subword-mode "subword" :toggle t)
         ("W" which-function-mode "which function" :toggle t)
@@ -134,15 +149,10 @@
          :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
-        ("t o" (ivy-read "Load custom theme: "
-                         (all-completions "doom" (custom-available-themes))
-                         :action (lambda (theme)
-                                   (centaur-set-variable
-                                    'centaur-theme
-                                    (let ((x (intern theme)))
-                                      (or (car (rassoc x centaur-theme-alist)) x)))
-                                   (counsel-load-theme-action theme))
-                         :caller 'counsel-load-theme)
+        ("t o" (centaur-load-theme
+                (let ((x (intern (completing-read "Load custom theme: "
+                                                  (all-completions "doom" (custom-available-themes))))))
+                  (or (car (rassoc x centaur-theme-alist)) x)))
          "others"
          :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
                           (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))

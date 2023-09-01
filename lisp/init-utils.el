@@ -30,25 +30,21 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
+              which-key-lighter nil
               which-key-show-remaining-keys t)
   :config
   (which-key-add-key-based-replacements "C-c !" "flycheck")
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
   (which-key-add-key-based-replacements "C-c @" "hideshow")
-  (which-key-add-key-based-replacements "C-c c" "counsel")
   (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
-  (which-key-add-key-based-replacements "C-c v" "ivy-view")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
   (which-key-add-key-based-replacements "C-x 8" "unicode")
@@ -106,36 +102,11 @@
       (which-key-posframe ((t (:inherit tooltip))))
       (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
       :init
-      (setq which-key-posframe-border-width 3
+      (setq which-key-posframe-border-width posframe-border-width
             which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
-      (which-key-posframe-mode 1)
-      :config
-      (with-no-warnings
-        (defun my-which-key-posframe--show-buffer (act-popup-dim)
-          "Show which-key buffer when popup type is posframe.
-Argument ACT-POPUP-DIM includes the dimension, (height . width)
-of the buffer text to be displayed in the popup"
-          (when (posframe-workable-p)
-            (with-current-buffer (get-buffer-create which-key-buffer-name)
-              (let ((inhibit-read-only t))
-                (goto-char (point-min))
-                (insert (propertize "\n" 'face '(:height 0.3)))
-                (goto-char (point-max))
-                (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
-            (posframe-show which-key--buffer
-		                   :font which-key-posframe-font
-		                   :position (point)
-		                   :poshandler which-key-posframe-poshandler
-		                   :background-color (face-attribute 'which-key-posframe :background nil t)
-		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
-		                   :height (1+ (car act-popup-dim))
-		                   :width (1+ (cdr act-popup-dim))
-		                   :internal-border-width which-key-posframe-border-width
-		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
-		                   :override-parameters which-key-posframe-parameters)))
-        (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer)))))
+      (which-key-posframe-mode 1))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
@@ -177,22 +148,6 @@ of the buffer text to be displayed in the popup"
   :init
   (setq alert-default-style 'mode-line)
 
-  (with-eval-after-load 'nerd-icons
-    (setq alert-severity-faces
-          '((urgent   . nerd-icons-red)
-            (high     . nerd-icons-orange)
-            (moderate . nerd-icons-yellow)
-            (normal   . nerd-icons-green)
-            (low      . nerd-icons-blue)
-            (trivial  . nerd-icons-purple))
-          alert-severity-colors
-          `((urgent   . ,(face-foreground 'nerd-icons-red))
-            (high     . ,(face-foreground 'nerd-icons-orange))
-            (moderate . ,(face-foreground 'nerd-icons-yellow))
-            (normal   . ,(face-foreground 'nerd-icons-green))
-            (low      . ,(face-foreground 'nerd-icons-blue))
-            (trivial  . ,(face-foreground 'nerd-icons-purple)))))
-
   (when sys/macp
     (setq pomidor-play-sound-file
           (lambda (file)
@@ -209,11 +164,14 @@ of the buffer text to be displayed in the popup"
 (use-package atomic-chrome
   :hook ((emacs-startup . atomic-chrome-start-server)
          (atomic-chrome-edit-mode . delete-other-windows))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
+  :init (setq atomic-chrome-buffer-frame-width 100
+              atomic-chrome-buffer-frame-height 30
+              atomic-chrome-buffer-open-style 'frame)
   :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
+  (when (fboundp 'gfm-mode)
+    (setq atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)
+            ("gitlab\\.com" . gfm-mode)))))
 
 ;; Process
 (use-package proced

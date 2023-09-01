@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
-
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil
@@ -248,7 +245,23 @@
 
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :bind ("C-=" . er/expand-region))
+  :bind ("C-=" . er/expand-region)
+  :config
+  (when (centaur-treesit-available-p)
+    (defun treesit-mark-bigger-node ()
+      "Use tree-sitter to mark regions."
+      (let* ((root (treesit-buffer-root-node))
+             (node (treesit-node-descendant-for-range root (region-beginning) (region-end)))
+             (node-start (treesit-node-start node))
+             (node-end (treesit-node-end node)))
+        ;; Node fits the region exactly. Try its parent node instead.
+        (when (and (= (region-beginning) node-start) (= (region-end) node-end))
+          (when-let ((node (treesit-node-parent node)))
+            (setq node-start (treesit-node-start node)
+                  node-end (treesit-node-end node))))
+        (set-mark node-end)
+        (goto-char node-start)))
+    (add-to-list 'er/try-expand-list 'treesit-mark-bigger-node)))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -264,7 +277,7 @@
          :map mc/keymap
          ("C-|" . mc/vertical-align-with-space))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Multiple Cursors" 'mdicon "nf-md-border_all")
+  ((:title (pretty-hydra-title "Multiple Cursors" 'mdicon "nf-md-cursor_move")
     :color amaranth :quit-key ("q" "C-g"))
    ("Up"
 	(("p" mc/mark-previous-like-this "prev")
@@ -300,14 +313,7 @@
                               (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
               ispell-program-name "aspell"
-              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
-  :config
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after ivy
-    :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Hungry deletion
 (use-package hungry-delete
@@ -324,19 +330,10 @@
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
-  :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
-         ([remap move-end-of-line] . mwim-end-of-code-or-line)))
-
-;; Windows-scroll commands
-(use-package pager
-  :bind (([remap scroll-up-command] . pager-page-down)
-         ([remap scroll-down-command] . pager-page-up)
-         ([next]   . pager-page-down)
-         ([prior]  . pager-page-up)
-         ([M-up]   . pager-row-up)
-         ([M-kp-8] . pager-row-up)
-         ([M-down] . pager-row-down)
-         ([M-kp-2] . pager-row-down)))
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)
+         ("<home>" . mwim-beginning-of-line-or-code)
+         ("<end>" . mwim-end-of-line-or-code)))
 
 ;; Treat undo history as a tree
 (if emacs/>=28p
@@ -354,14 +351,6 @@
 ;; Goto last change
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
-
-;; Preview when `goto-char'
-(use-package goto-char-preview
-  :bind ([remap goto-char] . goto-char-preview))
-
-;; Preview when `goto-line'
-(use-package goto-line-preview
-  :bind ([remap goto-line] . goto-line-preview))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

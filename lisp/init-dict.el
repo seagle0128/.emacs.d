@@ -30,15 +30,15 @@
 
 ;;; Code:
 
-(require 'init-const)
+(eval-when-compile
+  (require 'init-const))
 
 ;; A multi dictionaries interface
-(when emacs/>=27p
-  (use-package fanyi
-    :bind (("C-c d f" . fanyi-dwim)
-           ("C-c d d" . fanyi-dwim2)
-           ("C-c d h" . fanyi-from-history))
-    :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider)))
+(use-package fanyi
+  :bind (("C-c d f" . fanyi-dwim)
+         ("C-c d d" . fanyi-dwim2)
+         ("C-c d h" . fanyi-from-history))
+  :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider))
 
   (use-package go-translate
     :bind (("C-c d g" . gts-do-translate))
@@ -89,15 +89,13 @@
               (let ((inhibit-read-only t))
                 (erase-buffer)
                 (youdao-dictionary-mode)
-                (insert (propertize "\n" 'face '(:height 0.5)))
                 (insert string)
-                (insert (propertize "\n" 'face '(:height 0.5)))
                 (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
             (posframe-show
              youdao-dictionary-buffer-name
              :position (point)
-             :left-fringe 16
-             :right-fringe 16
+             :left-fringe 8
+             :right-fringe 8
              :max-width (/ (frame-width) 2)
              :max-height (/ (frame-height) 2)
              :background-color (face-background 'tooltip nil t)

@@ -30,9 +30,9 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Prettify Symbols
 ;; e.g. display “lambda” as “λ”
@@ -49,11 +49,28 @@
     :hook (after-init . global-treesit-auto-mode)
     :init (setq treesit-auto-install 'prompt)))
 
+;; Show function arglist or variable docstring
+(use-package eldoc
+  :ensure nil
+  :diminish
+  :config
+  (when (childframe-workable-p)
+    (use-package eldoc-box
+      :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+      :custom-face
+      (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+      (eldoc-box-body ((t (:inherit tooltip))))
+      :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode))
+      :config
+      ;; Prettify `eldoc-box' frame
+      (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+            (alist-get 'right-fringe eldoc-box-frame-parameters) 8))))
+
 ;; Search tool
 (use-package grep
   :ensure nil
   :autoload grep-apply-setting
-  :config
+  :init
   (cond
    ((executable-find "ugrep")
     (grep-apply-setting
@@ -76,29 +93,16 @@
 
 ;; Cross-referencing commands
 (use-package xref
-  :ensure nil
-  :config
-  (with-no-warnings
-    ;; Use faster search tool
-    (when emacs/>=28p
-      (add-to-list 'xref-search-program-alist
-                   '(ugrep . "xargs -0 ugrep <C> --null -ns -e <R>"))
-      (cond
-       ((executable-find "ugrep")
-        (setq xref-search-program 'ugrep))
-       ((executable-find "rg")
-        (setq xref-search-program 'ripgrep))))
+  :init
+  ;; Use faster search tool
+  (setq xref-search-program (cond
+                             ((executable-find "ugrep") 'ugrep)
+                             ((executable-find "rg") 'ripgrep)
+                             (t 'grep)))
 
-    ;; Select from xref candidates with Ivy
-    (if emacs/>=28p
-        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-              xref-show-xrefs-function #'xref-show-definitions-completing-read)
-      (use-package ivy-xref
-        :after ivy
-        :init
-        (when emacs/>=27p
-          (setq xref-show-definitions-function #'ivy-xref-show-defs))
-        (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))))
+  ;; Select from xref candidates in minibuffer
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+        xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 ;; Jump to definition
 (use-package dumb-jump
@@ -114,16 +118,10 @@
     (("i" dumb-jump-go-prompt "Prompt")
      ("l" dumb-jump-quick-look "Quick look")
      ("b" dumb-jump-back "Back"))))
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window)
-         ("C-M-j" . dumb-jump-hydra/body))
+  :bind (("C-M-j" . dumb-jump-hydra/body))
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq dumb-jump-prefer-searcher 'rg
-        dumb-jump-selector 'ivy))
+  (setq dumb-jump-selector 'completing-read))
 
 ;; Code styles
 (use-package editorconfig
@@ -136,75 +134,68 @@
          ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
-(when emacs/>=27p
-  (use-package devdocs
-    :autoload (devdocs--installed-docs devdocs--available-docs)
-    :bind (:map prog-mode-map
-           ("M-<f1>" . devdocs-dwim)
-           ("C-h D"  . devdocs-dwim))
-    :init
-    (defconst devdocs-major-mode-docs-alist
-      '((c-mode          . ("c"))
-        (c++-mode        . ("cpp"))
-        (python-mode     . ("python~3.10" "python~2.7"))
-        (ruby-mode       . ("ruby~3.1"))
-        (go-mode         . ("go"))
-        (rustic-mode     . ("rust"))
-        (css-mode        . ("css"))
-        (html-mode       . ("html"))
-        (julia-mode      . ("julia~1.8"))
-        (js-mode         . ("javascript" "jquery"))
-        (js2-mode        . ("javascript" "jquery"))
-        (emacs-lisp-mode . ("elisp")))
-      "Alist of major-mode and docs.")
+(use-package devdocs
+  :autoload (devdocs--installed-docs devdocs--available-docs)
+  :bind (:map prog-mode-map
+         ("M-<f1>" . devdocs-dwim)
+         ("C-h D"  . devdocs-dwim))
+  :init
+  (defconst devdocs-major-mode-docs-alist
+    '((c-mode          . ("c"))
+      (c++-mode        . ("cpp"))
+      (python-mode     . ("python~3.10" "python~2.7"))
+      (ruby-mode       . ("ruby~3.1"))
 
-    (mapc
-     (lambda (mode)
-       (add-hook (intern (format "%s-hook" (car mode)))
-                 (lambda ()
-                   (setq-local devdocs-current-docs (cdr mode)))))
-     devdocs-major-mode-docs-alist)
+      (rustic-mode     . ("rust"))
+      (css-mode        . ("css"))
+      (html-mode       . ("html"))
+      (julia-mode      . ("julia~1.8"))
+      (js-mode         . ("javascript" "jquery"))
+      (js2-mode        . ("javascript" "jquery"))
+      (emacs-lisp-mode . ("elisp")))
+    "Alist of major-mode and docs.")
 
-    (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+  (mapc
+   (lambda (mode)
+     (add-hook (intern (format "%s-hook" (car mode)))
+               (lambda ()
+                 (setq-local devdocs-current-docs (cdr mode)))))
+   devdocs-major-mode-docs-alist)
 
-    (defun devdocs-dwim()
-      "Look up a DevDocs documentation entry.
+  (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+
+  (defun devdocs-dwim()
+    "Look up a DevDocs documentation entry.
 
 Install the doc if it's not installed."
-      (interactive)
-      ;; Install the doc if it's not installed
-      (mapc
-       (lambda (slug)
-         (unless (member slug (let ((default-directory devdocs-data-dir))
-                                (seq-filter #'file-directory-p
-                                            (when (file-directory-p devdocs-data-dir)
-                                              (directory-files "." nil "^[^.]")))))
-           (mapc
-            (lambda (doc)
-              (when (string= (alist-get 'slug doc) slug)
-                (devdocs-install doc)))
-            (devdocs--available-docs))))
-       (alist-get major-mode devdocs-major-mode-docs-alist))
+    (interactive)
+    ;; Install the doc if it's not installed
+    (mapc
+     (lambda (slug)
+       (unless (member slug (let ((default-directory devdocs-data-dir))
+                              (seq-filter #'file-directory-p
+                                          (when (file-directory-p devdocs-data-dir)
+                                            (directory-files "." nil "^[^.]")))))
+         (mapc
+          (lambda (doc)
+            (when (string= (alist-get 'slug doc) slug)
+              (devdocs-install doc)))
+          (devdocs--available-docs))))
+     (alist-get major-mode devdocs-major-mode-docs-alist))
 
-      ;; Lookup the symbol at point
-      (devdocs-lookup nil (thing-at-point 'symbol t)))))
+    ;; Lookup the symbol at point
+    (devdocs-lookup nil (thing-at-point 'symbol t))))
 
 ;; Misc. programming modes
-(when emacs/>=27p
-  (use-package csv-mode))
-
+(use-package csv-mode)
 (unless emacs/>=29p
   (use-package csharp-mode))
-
 (use-package cask-mode)
 (use-package cmake-mode)
 (use-package dart-mode)
-(use-package groovy-mode)
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
-(use-package plantuml-mode)
-(use-package rmsbolt)                   ; A compiler output viewer
 (use-package scala-mode)
 (use-package swift-mode)
 (use-package v-mode)
@@ -218,12 +209,6 @@ Install the doc if it's not installed."
 (use-package nxml-mode
   :ensure nil
   :mode (("\\.xaml$" . xml-mode)))
-
-;; Batch Mode eXtras
-(use-package bmx-mode
-  :after company
-  :diminish
-  :hook (after-init . bmx-mode-setup-defaults))
 
 ;; Fish shell
 (use-package fish-mode

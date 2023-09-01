@@ -143,7 +143,7 @@
   "List of themes mapped to the time they should be loaded.
 
 The keywords `:sunrise' and `:sunset' can be used for the time
-if `calendar-latitude' and `calendar-longitude' are set.
+if the option `calendar-latitude' and option `calendar-longitude' are set.
 For example:
   \\='((:sunrise . doom-one-light)
     (:sunset  . doom-one))"
@@ -193,12 +193,11 @@ If Non-nil, save and restore the frame's geometry."
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-lsp 'lsp-mode
+(defcustom centaur-lsp 'eglot
   "Set language server.
 
 `lsp-mode': See https://github.com/emacs-lsp/lsp-mode.
 `eglot': See https://github.com/joaotavora/eglot.
-tags: Use tags file instead of language server. See https://github.com/universal-ctags/citre.
 nil means disabled."
   :group 'centaur
   :type '(choice (const :tag "LSP Mode" lsp-mode)
