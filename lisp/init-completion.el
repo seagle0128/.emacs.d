@@ -82,7 +82,7 @@
          ([remap Info-search]        . consult-info)
          ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
-         ([remap recentf-open-files] . consult-recent-file)
+
 
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -124,6 +124,12 @@
          ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
          ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+
+         :map vertico-map
+         ("RET" . vertico-directory-enter)
+         ("DEL" . vertico-directory-delete-char)
+         ("M-DEL" . vertico-directory-delete-word)
+
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-s" . (lambda ()
@@ -137,7 +143,8 @@
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
-  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :hook ((completion-list-mode . consult-preview-at-point-mode)
+         (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
   ;; The :init configuration is always executed (Not lazy)
   :init
