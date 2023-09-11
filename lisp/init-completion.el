@@ -52,7 +52,12 @@
         completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package vertico
-  :hook (after-init . vertico-mode))
+  :bind (:map vertico-map
+         ("RET" . vertico-directory-enter)
+         ("DEL" . vertico-directory-delete-char)
+         ("M-DEL" . vertico-directory-delete-word))
+  :hook ((after-init . vertico-mode)
+         (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
 (when (childframe-completion-workable-p)
   (use-package vertico-posframe
@@ -125,11 +130,6 @@
          ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
 
-         :map vertico-map
-         ("RET" . vertico-directory-enter)
-         ("DEL" . vertico-directory-delete-char)
-         ("M-DEL" . vertico-directory-delete-word)
-
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-s" . (lambda ()
@@ -143,8 +143,7 @@
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
-  :hook ((completion-list-mode . consult-preview-at-point-mode)
-         (rfn-eshadow-update-overlay . vertico-directory-tidy))
+  :hook (completion-list-mode . consult-preview-at-point-mode)
 
   ;; The :init configuration is always executed (Not lazy)
   :init
