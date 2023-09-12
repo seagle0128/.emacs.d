@@ -141,11 +141,11 @@
     "Launches a powershell in buffer *powershell* and switches to it."
     (interactive)
     (let ((buffer (or buffer "*powershell*"))
-          (program (if (executable-find "pwsh") "pwsh"
-                     "powershell")))
+          (program (if (executable-find "pwsh") "pwsh" "powershell")))
       (make-comint-in-buffer "Powershell" buffer program nil "-NoProfile")
       (with-current-buffer buffer
-        (setq-local mode-line-format nil))
+        (setq-local mode-line-format nil)
+        (and (bound-and-true-p corfu-mode) (corfu-mode -1)))
       (pop-to-buffer buffer))))
 
 ;; Shell Pop: leverage `popper'
