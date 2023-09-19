@@ -134,20 +134,6 @@
           (pop-to-buffer vterm-buffer)))
       (advice-add #'multi-vterm :override #'my-multi-vterm))))
 
-;; Powershell
-(use-package powershell
-  :init
-  (defun powershell (&optional buffer)
-    "Launches a powershell in buffer *powershell* and switches to it."
-    (interactive)
-    (let ((buffer (or buffer "*powershell*"))
-          (program (if (executable-find "pwsh") "pwsh" "powershell")))
-      (make-comint-in-buffer "Powershell" buffer program nil "-NoProfile")
-      (with-current-buffer buffer
-        (setq-local mode-line-format nil)
-        (and (bound-and-true-p corfu-mode) (corfu-mode -1)))
-      (pop-to-buffer buffer))))
-
 ;; Shell Pop: leverage `popper'
 (with-no-warnings
   (defvar shell-pop--frame nil)
@@ -156,8 +142,6 @@
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
     (cond ((fboundp 'vterm) (vterm arg))
-          ((or (executable-find "pwsh") (executable-find "powershell"))
-           (powershell arg))
           (sys/win32p (eshell arg))
           (t (shell))))
 

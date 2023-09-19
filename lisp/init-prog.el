@@ -196,6 +196,7 @@ Install the doc if it's not installed."
 (use-package julia-mode)
 (use-package lua-mode)
 (use-package mermaid-mode)
+(use-package powershell)
 (use-package scala-mode)
 (use-package swift-mode)
 (use-package v-mode)
