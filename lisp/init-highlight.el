@@ -236,6 +236,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
+  :custom (diff-hl-draw-borders nil)
   :custom-face
   (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
   (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
@@ -245,7 +246,6 @@ FACE defaults to inheriting from default and highlight."
   :hook ((after-init . global-diff-hl-mode)
          (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode))
-  :init (setq diff-hl-draw-borders nil)
   :config
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
