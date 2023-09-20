@@ -199,7 +199,7 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t p" . hl-todo-previous)
          ("C-c t n" . hl-todo-next)
          ("C-c t o" . hl-todo-occur)
-         ("C-c t r" . hl-todo-rg)
+         ("C-c t r" . hl-todo-rg-project)
          ("C-c t i" . hl-todo-insert))
   :hook ((after-init . global-hl-todo-mode)
          (hl-todo-mode . (lambda ()
@@ -225,7 +225,14 @@ FACE defaults to inheriting from default and highlight."
          (list regexp
                (rg-read-files)
                (read-directory-name "Base directory: " nil default-directory t)))))
-    (rg regexp files dir)))
+    (rg regexp files dir))
+
+  (defun hl-todo-rg-project ()
+    "Use `rg' to find all TODO or similar keywords in current project."
+    (interactive)
+    (unless (require 'rg nil t)
+      (error "`rg' is not installed"))
+    (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
