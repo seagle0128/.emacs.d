@@ -264,7 +264,7 @@
 (use-package list-environment
   :hook (list-environment-mode . (lambda ()
                                    (setq tabulated-list-format
-                                         (vconcat `(("" ,(if (icons-displayable-p) 2 0)))
+                                         (vconcat `(("" ,(if (icons-displayable-p) 1 0)))
                                                   tabulated-list-format))
                                    (tabulated-list-init-header)))
   :init
@@ -277,7 +277,7 @@
                        (val (mapconcat #'identity (cdr kv) "=")))
                   (list key (vector
                              (if (icons-displayable-p)
-                                 (nerd-icons-octicon "key" :height 0.8 :v-adjust -0.05)
+                                 (nerd-icons-octicon "nf-oct-key" :height 0.8 :v-adjust 0.1)
                                "")
                              `(,key face font-lock-keyword-face)
                              `(,val face font-lock-string-face)))))
