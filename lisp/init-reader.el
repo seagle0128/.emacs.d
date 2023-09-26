@@ -58,6 +58,7 @@
 
     ;; Recover last viewed position
     (use-package saveplace-pdf-view
+      :when (ignore-errors (pdf-info-check-epdfinfo) t)
       :autoload (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
       :init
       (advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
