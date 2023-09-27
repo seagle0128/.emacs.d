@@ -52,7 +52,12 @@
         completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package vertico
-  :hook (after-init . vertico-mode))
+  :bind (:map vertico-map
+         ("RET" . vertico-directory-enter)
+         ("DEL" . vertico-directory-delete-char)
+         ("M-DEL" . vertico-directory-delete-word))
+  :hook ((after-init . vertico-mode)
+         (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
 (when (childframe-completion-workable-p)
   (use-package vertico-posframe
@@ -83,6 +88,7 @@
          ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
+
 
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -124,6 +130,7 @@
          ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
          ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-s" . (lambda ()

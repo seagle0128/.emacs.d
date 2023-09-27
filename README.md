@@ -17,7 +17,7 @@
 - [Prerequisite](#prerequisite)
   - [OS](#os)
   - [GNU Emacs](#gnu-emacs)
-  - [Dotfiles](#dotfiles)
+  - [Dotfiles (Optional)](#dotfiles)
 - [Quick Start](#quick-start)
   - [Install](#install)
   - [Update](#update)
@@ -81,7 +81,7 @@ latest stable release - currently **29.1**.
 
 Please refer to [Installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
 
-### Dotfiles
+### Dotfiles (Optional)
 
 Recommend to use [Centaur Dotfiles](https://github.com/seagle0128/dotfiles).
 
