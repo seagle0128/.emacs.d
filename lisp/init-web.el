@@ -72,14 +72,11 @@
 
 ;; CSS
 (use-package css-mode
-  :ensure nil
   :init (setq css-indent-offset 2))
 
 ;; SCSS
 (use-package scss-mode
-  :init
-  ;; Disable complilation on save
-  (setq scss-compile-at-save nil))
+  :init (setq scss-compile-at-save nil))
 
 ;; LESS
 (unless (fboundp 'less-css-mode)
@@ -90,11 +87,8 @@
   (use-package json-mode))
 
 ;; JavaScript
-(use-package js-mode
-  :ensure nil
-  :defines js-indent-level
-  :config
-  (setq js-indent-level 2))
+(use-package js
+  :init (setq js-indent-level 2))
 
 (use-package js2-mode
   :mode (("\\.js\\'" . js2-mode)
