@@ -144,15 +144,17 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  :defines popper-echo-dispatch-actions
-  :autoload popper-group-by-directory
+  :diminish (popper-mode popper-echo-mode)
+  :functions popper-echo-mode
+  :custom
+  (popper-group-function #'popper-group-by-directory)
+  (popper-echo-dispatch-actions t)
   :bind (:map popper-mode-map
-         ("C-h z"     . popper-toggle-latest)
+         ("C-h z"     . popper-toggle)
          ("C-<tab>"   . popper-cycle)
          ("C-M-<tab>" . popper-toggle-type))
   :hook (emacs-startup . popper-mode)
   :init
-  (setq popper-group-function #'popper-group-by-directory)
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
@@ -220,8 +222,6 @@
                         (format " %s "
                                 (nerd-icons-octicon "nf-oct-pin" :face face))
                       (propertize " POP" 'face face))))))
-
-  (setq popper-echo-dispatch-actions t)
   :config
   (popper-echo-mode 1)
 
