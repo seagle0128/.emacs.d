@@ -31,11 +31,10 @@
 ;;; Code:
 
 (use-package tabspaces
-  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
-  :commands (tabspaces-switch-or-create-workspace
-             tabspaces-open-or-create-project-and-workspace)
+  :hook (after-init . tabspaces-mode)
   :custom
   (tab-bar-show nil)
+
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
