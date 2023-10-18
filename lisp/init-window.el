@@ -202,7 +202,8 @@
           "\\*lsp-help\\*$" "\\*lsp session\\*$"
           "\\*quickrun\\*$"
           "\\*tldr\\*$"
-          "\\*vc-.*\\*$"
+          "\\*vc-.*\\**"
+          "\\*diff-hl\\**"
           "^\\*macro expansion\\**"
 
           "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
