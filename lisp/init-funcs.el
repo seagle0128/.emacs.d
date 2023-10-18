@@ -237,7 +237,8 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
 Native tree-sitter is introduced since 29."
-  (and (fboundp 'treesit-available-p)
+  (and centaur-tree-sitter
+       (fboundp 'treesit-available-p)
        (treesit-available-p)))
 
 (defun centaur-set-variable (variable value &optional no-save)
