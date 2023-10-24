@@ -216,9 +216,10 @@
   (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
           '(:eval (let ((face (if (doom-modeline--active)
-                                  'mode-line-emphasis
-                                'mode-line-inactive)))
+                                  'doom-modeline-emphasis
+                                'doom-modeline)))
                     (if (and (icons-displayable-p)
+                             (bound-and-true-p doom-modeline-icon)
                              (bound-and-true-p doom-modeline-mode))
                         (format " %s "
                                 (nerd-icons-octicon "nf-oct-pin" :face face))
