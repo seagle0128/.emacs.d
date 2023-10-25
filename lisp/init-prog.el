@@ -44,7 +44,7 @@
   (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Tree-sitter support
-(when (and centaur-tree-sitter (centaur-treesit-available-p))
+(when (centaur-treesit-available-p)
   (use-package treesit-auto
     :hook (after-init . global-treesit-auto-mode)
     :init (setq treesit-auto-install 'prompt)))

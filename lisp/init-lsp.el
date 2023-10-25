@@ -40,6 +40,7 @@
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (eglot-ensure))))
             ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+     :init (setq eglot-send-changes-idle-time 0)
      :config
      (use-package consult-eglot
        :bind (:map eglot-mode-map
