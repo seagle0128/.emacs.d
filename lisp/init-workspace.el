@@ -42,11 +42,31 @@
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
-  :int
+  :init
   ;; WORKAROUND: fix compatibility issue on 27.1
   ;; See https://github.com/seagle0128/.emacs.d/issues/425
   (unless (fboundp 'tab-switch)
-    (defalias 'tab-switch #'tab-bar-switch-to-tab)))
+    (defalias 'tab-switch #'tab-bar-switch-to-tab))
+
+  ;; Filter Buffers for Consult-Buffer
+  (with-eval-after-load 'consult
+    ;; hide full buffer list (still available with "b" prefix)
+    (consult-customize consult--source-buffer :hidden t :default nil)
+    ;; set consult-workspace buffer list
+    (defvar consult--source-workspace
+      (list :name     "Workspace Buffers"
+            :narrow   ?w
+            :history  'buffer-name-history
+            :category 'buffer
+            :state    #'consult--buffer-state
+            :default  t
+            :items    (lambda () (consult--buffer-query
+                             :predicate #'tabspaces--local-buffer-p
+                             :sort 'visibility
+                             :as #'buffer-name)))
+
+      "Set workspace buffer list for consult-buffer.")
+    (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
 
 (provide 'init-workspace)
 
