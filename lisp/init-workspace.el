@@ -41,7 +41,12 @@
   (tabspaces-include-buffers '("*scratch*"))
   ;; sessions
   (tabspaces-session t)
-  (tabspaces-session-auto-restore t))
+  (tabspaces-session-auto-restore t)
+  :int
+  ;; WORKAROUND: fix compatibility issue on 27.1
+  ;; See https://github.com/seagle0128/.emacs.d/issues/425
+  (unless (fboundp 'tab-switch)
+    (defalias 'tab-switch #'tab-bar-switch-to-tab)))
 
 (provide 'init-workspace)
 
