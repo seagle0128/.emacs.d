@@ -43,11 +43,6 @@
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
   :init
-  ;; WORKAROUND: fix compatibility issue on 27.1
-  ;; See https://github.com/seagle0128/.emacs.d/issues/425
-  (unless (fboundp 'tab-switch)
-    (defalias 'tab-switch #'tab-bar-switch-to-tab))
-
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
     ;; hide full buffer list (still available with "b" prefix)
