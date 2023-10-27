@@ -49,7 +49,7 @@
     (consult-customize consult--source-buffer :hidden t :default nil)
     ;; set consult-workspace buffer list
     (defvar consult--source-workspace
-      (list :name     "Workspace Buffers"
+      (list :name     "Workspace Buffer"
             :narrow   ?w
             :history  'buffer-name-history
             :category 'buffer
