@@ -144,7 +144,6 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  :diminish (popper-mode popper-echo-mode)
   :custom
   (popper-group-function #'popper-group-by-directory)
   (popper-echo-dispatch-actions t)
@@ -152,8 +151,7 @@
          ("C-h z"       . popper-toggle)
          ("C-<tab>"     . popper-cycle)
          ("C-M-<tab>"   . popper-toggle-type))
-  :hook ((emacs-startup . popper-mode)
-         (popper-mode   . popper-echo-mode))
+  :hook (emacs-startup . popper-echo-mode)
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
