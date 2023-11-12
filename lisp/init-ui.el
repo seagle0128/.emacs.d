@@ -271,7 +271,8 @@
            term-mode vterm-mode
            embark-collect-mode
            lsp-ui-imenu-mode
-           pdf-annot-list-mode) . hide-mode-line-mode)))
+           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
+         (dired-mode . turn-off-hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
 (use-package minions

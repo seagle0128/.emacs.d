@@ -34,7 +34,7 @@
   (require 'init-const))
 
 ;; Git
-;; See `magit-maybe-define-global-key-bindings'
+;; See `magit-define-global-key-bindings'
 (use-package magit
   :init (setq magit-diff-refine-hunk t)
   :config

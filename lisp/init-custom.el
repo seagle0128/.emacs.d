@@ -84,9 +84,9 @@
     `((melpa    . (("gnu"    . ,(format "%s://elpa.gnu.org/packages/" proto))
                    ("nongnu" . ,(format "%s://elpa.nongnu.org/nongnu/" proto))
                    ("melpa"  . ,(format "%s://melpa.org/packages/" proto))))
-      (emacs-cn . (("gnu"    . "http://1.15.88.122/gnu/")
-                   ("nongnu" . "http://1.15.88.122/nongnu/")
-                   ("melpa"  . "http://1.15.88.122/melpa/")))
+      (emacs-cn . (("gnu"    . ,(format "%s://1.15.88.122/gnu/" proto))
+                   ("nongnu" . ,(format "%s://1.15.88.122/nongnu/" proto))
+                   ("melpa"  . ,(format "%s://1.15.88.122/melpa/" proto))))
       (bfsu     . (("gnu"    . ,(format "%s://mirrors.bfsu.edu.cn/elpa/gnu/" proto))
                    ("nongnu" . ,(format "%s://mirrors.bfsu.edu.cn/elpa/nongnu/" proto))
                    ("melpa"  . ,(format "%s://mirrors.bfsu.edu.cn/elpa/melpa/" proto))))
@@ -184,12 +184,6 @@ It's only available on macOS currently."
 (defcustom centaur-dashboard (not (daemonp))
   "Display dashboard at startup or not.
 If Non-nil, use dashboard, otherwise will restore previous session."
-  :group 'centaur
-  :type 'boolean)
-
-(defcustom centaur-restore-frame-geometry t
-  "Restore the frame's geometry at startup.
-If Non-nil, save and restore the frame's geometry."
   :group 'centaur
   :type 'boolean)
 

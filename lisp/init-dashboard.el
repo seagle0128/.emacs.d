@@ -92,7 +92,7 @@
           dashboard-path-max-length 60
           dashboard-center-content t
           dashboard-show-shortcuts nil
-          dashboard-items '((recents  . 8)
+          dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5))
 

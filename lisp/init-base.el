@@ -107,13 +107,11 @@
   :if centaur-server
   :hook (after-init . server-mode))
 
-;; History
-(use-package desktop
-  :hook (after-init . desktop-save-mode))
-
+;; Save place
 (use-package saveplace
   :hook (after-init . save-place-mode))
 
+;; History
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
   :hook (after-init . recentf-mode)
@@ -139,6 +137,7 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
+;; Misc.
 (use-package simple
   :ensure nil
   :hook ((after-init . size-indication-mode)
