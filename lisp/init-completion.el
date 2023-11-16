@@ -47,11 +47,12 @@
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-overrides '((file (styles basic partial-completion)))))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-component-separator #'orderless-escapable-split-on-space))
 
-;; Support
+;; Support Pinyin
 (use-package pinyinlib
   :after orderless
   :autoload pinyinlib-build-regexp-string
