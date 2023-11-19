@@ -205,11 +205,9 @@ prepended to the element after the #+HEADER: tag."
       (sass       . t)
       (C          . t)
       (java       . t)
+      (shell      . t)
       (plantuml   . t))
     "Alist of org ob languages.")
-
-  ;; ob-sh renamed to ob-shell since 26.1.
-  (cl-pushnew '(shell . t) load-language-alist)
 
   (use-package ob-go
     :init (cl-pushnew '(go . t) load-language-alist))

@@ -57,6 +57,10 @@
   (when (childframe-workable-p)
     (use-package eldoc-box
       :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+      :custom
+      (eldoc-box-lighter nil)
+      (eldoc-box-only-multi-line t)
+      (eldoc-box-clear-with-C-g t)
       :custom-face
       (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
       (eldoc-box-body ((t (:inherit tooltip))))
