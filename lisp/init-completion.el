@@ -201,6 +201,7 @@
 
 (use-package embark
   :bind (("s-." . embark-act)
+         ("C-s-." . embark-act)
          ("M-." . embark-dwim)
          ("M-s-." . xref-find-definitions)
          ([remap describe-bindings] . embark-bindings))
