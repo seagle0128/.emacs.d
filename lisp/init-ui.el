@@ -273,7 +273,7 @@
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
          (dired-mode . (lambda()
-                         (and hide-mode-line-mode
+                         (and (bound-and-true-p hide-mode-line-mode)
                               (turn-off-hide-mode-line-mode))))))
 
 ;; A minor-mode menu for mode-line
