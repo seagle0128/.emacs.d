@@ -272,7 +272,9 @@
            embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-         (dired-mode . turn-off-hide-mode-line-mode)))
+         (dired-mode . (lambda()
+                         (and hide-mode-line-mode
+                              (turn-off-hide-mode-line-mode))))))
 
 ;; A minor-mode menu for mode-line
 (use-package minions
