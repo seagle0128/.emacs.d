@@ -171,7 +171,7 @@
                             title (elfeed-clamp
                                    elfeed-search-title-min-width
                                    title-width
- elfeed-search-title-max-width) :left))
+                                   elfeed-search-title-max-width) :left))
 
              ;; Title/Feed ALIGNMENT
              (align-to-feed-pixel (+ date-width
