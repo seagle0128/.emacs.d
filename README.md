@@ -17,7 +17,7 @@
 - [Prerequisite](#prerequisite)
   - [OS](#os)
   - [GNU Emacs](#gnu-emacs)
-  - [Dotfiles (Optional)](#dotfiles)
+  - [Dotfiles (Optional)](#dotfiles-optional)
 - [Quick Start](#quick-start)
   - [Install](#install)
   - [Update](#update)
