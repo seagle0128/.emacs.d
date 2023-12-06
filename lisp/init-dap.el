@@ -51,12 +51,12 @@
        ("r" dape-restart "restart")
        ("D" dape-disconnect-quit "disconnect"))
       "Switch"
-      (("i" dape-info "info")
-       ("R" dape-repl "repl")
-       ("m" dape-read-memory "memory")
+      (("m" dape-read-memory "memory")
        ("t" dape-select-thread "thread")
+       ("w" dape-watch-dwim "watch")
        ("S" dape-select-stack "stack")
-       ("w" dape-watch-dwim "memory"))
+       ("i" dape-info "info")
+       ("R" dape-repl "repl"))
       "Breakpoints"
       (("b" dape-breakpoint-toggle "toggle")
        ("l" dape-breakpoint-log "log")
