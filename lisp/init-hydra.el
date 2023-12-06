@@ -45,6 +45,7 @@
                 :internal-border-width 2
                 :internal-border-color ,(face-background 'posframe-border nil t)
                 :background-color ,(face-background 'tooltip nil t)
+                :foreground-color ,(face-foreground 'tooltip nil t)
                 :lines-truncate t
                 :poshandler posframe-poshandler-frame-center-near-bottom)))
       (hydra-set-posframe-show-params)
