@@ -139,8 +139,12 @@
                           (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
-  (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
-    (push mode aggressive-indent-excluded-modes))
+  (dolist (mode '(gitconfig-mode
+                  asm-mode web-mode html-mode css-mode
+                  go-mode scala-mode
+                  shell-mode term-mode vterm-mode
+                  prolog-inferior-mode))
+    (add-to-list 'aggressive-indent-excluded-modes mode))
 
   ;; Disable in some commands
   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
