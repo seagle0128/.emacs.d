@@ -144,11 +144,14 @@
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-s" . (lambda ()
-                    "Insert the currunt symbol."
+                    "Insert the selected region or current symbol at point."
                     (interactive)
                     (insert (save-excursion
 		                      (set-buffer (window-buffer (minibuffer-selected-window)))
-		                      (or (thing-at-point 'symbol t) "")))))
+                              (or (and transient-mark-mode mark-active (/= (point) (mark))
+                                       (buffer-substring-no-properties (point) (mark)))
+		                          (thing-at-point 'symbol t)
+                                  "")))))
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
