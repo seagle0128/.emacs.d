@@ -99,7 +99,7 @@
                                      (face-remap-add-relative face 'doom-themes-visual-bell))
                                    '(mode-line mode-line-active))))
               (force-mode-line-update)
-              (run-with-timer 0.15 nil
+              (run-with-timer 0.2 nil
                               (lambda ()
                                 (with-current-buffer buf
                                   (mapc #'face-remap-remove-relative cookies)
