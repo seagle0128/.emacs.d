@@ -80,14 +80,34 @@
     (progn
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
-        :hook (after-load-theme . solaire-global-mode))
+        :hook (after-init . solaire-global-mode))
+
       ;; Excellent themes
       (use-package doom-themes
         :bind ("C-c T" . centaur-load-theme)
         :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)))
+        (doom-themes-visual-bell-config)
+
+        ;; WORKAROUND: Visual bell on 29+
+        ;; @see https://github.com/doomemacs/themes/issues/733
+        (with-no-warnings
+          (defun my-doom-themes-visual-bell-fn ()
+            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+            (let ((buf (current-buffer))
+                  (cookies (mapcar (lambda (face)
+                                     (face-remap-add-relative face 'doom-themes-visual-bell))
+                                   (if (facep 'mode-line-active)
+                                       '(mode-line-active solaire-mode-line-active-face)
+                                     '(mode-line solaire-mode-line-face)))))
+              (force-mode-line-update)
+              (run-with-timer 0.2 nil
+                              (lambda ()
+                                (with-current-buffer buf
+                                  (mapc #'face-remap-remove-relative cookies)
+                                  (force-mode-line-update))))))
+          (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))))
   (progn
     (warn "The current theme is incompatible!")
     (centaur-load-theme centaur-theme t)))
