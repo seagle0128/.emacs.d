@@ -102,7 +102,7 @@
                                        '(mode-line-active solaire-mode-line-active-face)
                                      '(mode-line solaire-mode-line-face)))))
               (force-mode-line-update)
-              (run-with-timer 0.2 nil
+              (run-with-timer 0.15 nil
                               (lambda ()
                                 (with-current-buffer buf
                                   (mapc #'face-remap-remove-relative cookies)
