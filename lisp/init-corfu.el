@@ -35,8 +35,8 @@
   (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-preview-current nil)
-  (corfu-auto-delay 0.1)
-  (corfu-popupinfo-delay '(0.2 . 0.1))
+  (corfu-auto-delay 0.2)
+  (corfu-popupinfo-delay '(0.4 . 0.2))
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind ("M-/" . completion-at-point)
