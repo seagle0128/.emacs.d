@@ -203,9 +203,9 @@
   :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
-  :bind (("s-." . embark-act)
+  :bind (("s-."   . embark-act)
          ("C-s-." . embark-act)
-         ("M-." . embark-dwim)
+         ("M-."   . embark-dwim)
          ("M-s-." . xref-find-definitions)
          ([remap describe-bindings] . embark-bindings))
   :init

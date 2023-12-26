@@ -32,7 +32,6 @@
 
 ;; Rust
 (use-package rustic)
-(use-package rust-playground)
 
 (provide 'init-rust)
 
