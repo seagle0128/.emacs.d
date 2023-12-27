@@ -415,6 +415,16 @@
                     " "))))
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
+;; Copy&paste GUI clipboard from text terminal
+(use-package xclip
+  :init (xclip-mode 1)
+  :config
+  ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
+  (when (eq xclip-method 'wl-copy)
+    (setq interprogram-cut-function
+          (lambda (text)
+            (start-process "wl-copy" nil "wl-copy" "--trim-newline" "--type" "text/plain;charset=utf-8" text)))))
+
 ;; Open files as another user
 (unless sys/win32p
   (use-package sudo-edit))
