@@ -206,22 +206,22 @@
   :bind (("s-."   . embark-act)
          ("C-s-." . embark-act)
          ("M-."   . embark-dwim)        ; overrides `xref-find-definitions'
-         ([remap describe-bindings] . embark-bindings))
+         ([remap describe-bindings] . embark-bindings)
+         :map minibuffer-local-map
+         ("M-." . my-embark-preview))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
-
-  ;; Manual preview for non-Consult commands using Embark
-  (with-eval-after-load 'consult
-    (define-key minibuffer-local-map (kbd "M-.") #'my-embark-preview)
-    (defun my-embark-preview ()
-      "Previews candidate in vertico buffer, unless it's a consult command"
-      (interactive)
-      (unless (bound-and-true-p consult--preview-function)
-        (save-selected-window
-          (let ((embark-quit-after-action nil))
-            (embark-dwim))))))
   :config
+  ;; Manual preview for non-Consult commands using Embark
+  (defun my-embark-preview ()
+    "Previews candidate in vertico buffer, unless it's a consult command"
+    (interactive)
+    (unless (bound-and-true-p consult--preview-function)
+      (save-selected-window
+        (let ((embark-quit-after-action nil))
+          (embark-dwim)))))
+
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
