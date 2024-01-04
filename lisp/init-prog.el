@@ -97,6 +97,8 @@
 
 ;; Cross-referencing commands
 (use-package xref
+  :bind (("M-g ." . xref-find-definitions)
+         ("M-g ," . xref-go-back))
   :init
   ;; Use faster search tool
   (setq xref-search-program (cond
