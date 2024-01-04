@@ -141,9 +141,9 @@
          :toggle (centaur-theme-enable-p 'day) :exit t)
         ("t n" (centaur-load-theme 'night) "night"
          :toggle (centaur-theme-enable-p 'night) :exit t)
-        ("t o" (call-interactively (if (fboundp #'consult-theme)
-                                       #'consult-theme
-                                     #'load-theme))
+        ("t o" (centaur-load-theme
+                (intern (completing-read "Load custom theme: "
+                                         (custom-available-themes))))
          "others"
          :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
                           (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))
