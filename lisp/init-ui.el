@@ -84,7 +84,6 @@
 
       ;; Excellent themes
       (use-package doom-themes
-        :bind ("C-c T" . centaur-load-theme)
         :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
@@ -109,7 +108,7 @@
                                   (force-mode-line-update))))))
           (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))))
   (progn
-    (warn "The current theme is incompatible!")
+    (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line

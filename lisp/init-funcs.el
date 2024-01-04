@@ -467,7 +467,6 @@ This issue has been addressed in 28."
 
 (defun centaur--load-system-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
-  (mapc #'disable-theme custom-enabled-themes)
   (centaur--load-theme (alist-get appearance centaur-system-themes)))
 
 (defun centaur-load-random-theme ()

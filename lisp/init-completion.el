@@ -93,12 +93,12 @@
          ("C-c m"   . consult-man)
          ("C-c i"   . consult-info)
          ("C-c r"   . consult-ripgrep)
+         ("C-c T"   . consult-theme)
 
          ([remap Info-search]        . consult-info)
          ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
-
 
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -180,13 +180,13 @@
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
   ;; (setq consult-preview-key 'any)
-  (setq consult-preview-key '(:debounce 1.0 any))
   ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+  (setq consult-preview-key '(:debounce 1.0 any))
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-goto-line
-   consult-theme :preview-key '(:debounce 0.4 any))
+   consult-theme :preview-key '(:debounce 0.5 any))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
@@ -206,18 +206,29 @@
   :bind (("s-."   . embark-act)
          ("C-s-." . embark-act)
          ("M-."   . embark-dwim)
-         ("M-s-." . xref-find-definitions)
+         ("M-g ." . xref-find-definitions)
          ([remap describe-bindings] . embark-bindings))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
+
+  ;; Manual preview for non-Consult commands using Embark
+  (with-eval-after-load 'consult
+    (define-key minibuffer-local-map (kbd "M-.") #'my-embark-preview)
+    (defun my-embark-preview ()
+      "Previews candidate in vertico buffer, unless it's a consult command"
+      (interactive)
+      (unless (bound-and-true-p consult--preview-function)
+        (save-selected-window
+          (let ((embark-quit-after-action nil))
+            (embark-dwim))))))
   :config
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
-  :config
+
   (with-eval-after-load 'which-key
     (defun embark-which-key-indicator ()
       "An embark indicator that displays keymaps using which-key.
