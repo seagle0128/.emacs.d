@@ -422,7 +422,7 @@
     :config
     ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
     (when (eq xclip-method 'wl-copy)
-      (set-clipboard-coding-system 'gbk-dos) ; for wsl
+      (set-clipboard-coding-system 'gbk) ; for wsl
       (setq interprogram-cut-function
             (lambda (text)
               (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
