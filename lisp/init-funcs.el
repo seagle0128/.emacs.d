@@ -205,7 +205,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (search-forward "" nil t)
+    (while (search-forward "" nil t)
       (replace-match "" nil t))))
 
 (defun byte-compile-elpa ()
