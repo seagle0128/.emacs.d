@@ -201,12 +201,18 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (save-buffer-as-utf8 'gbk))
 
 (defun remove-dos-eol ()
-  "Remove  in current buffer."
+  "Remove  in current region or buffer."
   (interactive)
   (save-excursion
+    (when (region-active-p)
+      (narrow-to-region (region-beginning) (region-end)))
     (goto-char (point-min))
-    (while (search-forward "" nil t)
-      (replace-match "" nil t))))
+    (let ((count 0))
+      (while (search-forward "" nil t)
+        (replace-match "" nil t)
+        (setq count (1+ count)))
+      (message "Removed %d " count))
+    (widen)))
 
 (defun byte-compile-elpa ()
   "Compile packages in elpa directory. Useful if you switch Emacs versions."
