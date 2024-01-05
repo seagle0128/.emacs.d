@@ -200,6 +200,14 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (save-buffer-as-utf8 'gbk))
 
+(defun remove-dos-eol ()
+  "Remove  in current buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "" nil t)
+      (replace-match "" nil t))))
+
 (defun byte-compile-elpa ()
   "Compile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
@@ -236,7 +244,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
-Native tree-sitter is introduced since 29."
+  Native tree-sitter is introduced since 29."
   (and centaur-tree-sitter
        (fboundp 'treesit-available-p)
        (treesit-available-p)))
@@ -255,8 +263,8 @@ Native tree-sitter is introduced since 29."
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
                                nil t)
   (replace-match (format "(setq %s '%s)" variable value) nil nil))
-      (write-region nil nil custom-file)
-      (message "Saved %s (%s) to %s" variable value custom-file))))
+  (write-region nil nil custom-file)
+  (message "Saved %s (%s) to %s" variable value custom-file))))
 
 (defun too-long-file-p ()
   "Check whether the file is too long."
