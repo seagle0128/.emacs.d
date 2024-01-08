@@ -143,7 +143,8 @@
          :toggle (centaur-theme-enable-p 'night) :exit t)
         ("t o" (centaur-load-theme
                 (intern (completing-read "Load custom theme: "
-                                         (custom-available-themes))))
+                                         (mapcar #'symbol-name
+				                                 (custom-available-themes)))))
          "others"
          :toggle (not (or (rassoc (car custom-enabled-themes) centaur-theme-alist)
                           (rassoc (cadr custom-enabled-themes) centaur-theme-alist)))
