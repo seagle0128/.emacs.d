@@ -84,6 +84,9 @@
 
       ;; Excellent themes
       (use-package doom-themes
+        :custom
+        (doom-themes-enable-bold t)
+        (doom-themes-enable-italic t)
         :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
