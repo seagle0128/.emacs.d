@@ -40,13 +40,12 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
-(declare-function browse-url-interactive-arg 'browse-url)
-(declare-function chart-bar-quickie 'chart)
-(declare-function circadian-activate-latest-theme 'xwidget)
-(declare-function consult-theme 'consult)
-(declare-function nerd-icons-install-fonts 'nerd-icons)
-(declare-function xwidget-buffer 'xwidget)
-(declare-function xwidget-webkit-current-session 'xwidget)
+(declare-function browse-url-interactive-arg "browse-url")
+(declare-function chart-bar-quickie "chart")
+(declare-function consult-theme "ext:consult")
+(declare-function nerd-icons-install-fonts "ext:nerd-icons")
+(declare-function xwidget-buffer "xwidget")
+(declare-function xwidget-webkit-current-session "xwidget")
 
 
 
@@ -243,7 +242,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
-  Native tree-sitter is introduced since 29."
+Native tree-sitter is introduced since 29.1."
   (and centaur-tree-sitter
        (fboundp 'treesit-available-p)
        (treesit-available-p)))
@@ -510,7 +509,7 @@ This issue has been addressed in 28."
      ;; Time-switching themes
      (use-package circadian
        :ensure t
-       :functions circadian-setup
+       :commands circadian-setup circadian-activate-latest-theme
        :custom (circadian-themes centaur-auto-themes)
        :init (circadian-setup)))
     ('system
@@ -518,6 +517,7 @@ This issue has been addressed in 28."
      (use-package auto-dark
        :ensure t
        :diminish
+       :commands auto-dark-mode
        :init
        (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
              auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
