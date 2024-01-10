@@ -205,6 +205,7 @@ Lisp function does not specify a special indentation."
 
 ;; Interactive macro expander
 (use-package macrostep
+  :custom (macrostep-expand-in-separate-buffer t)
   :bind (:map emacs-lisp-mode-map
          ("C-c e" . macrostep-expand)
          :map lisp-interaction-mode-map
