@@ -146,8 +146,8 @@
          ("C-s" . (lambda ()
                     "Insert the selected region or current symbol at point."
                     (interactive)
-                    (insert (save-excursion
-		                      (set-buffer (window-buffer (minibuffer-selected-window)))
+                    (insert (with-current-buffer
+                                (window-buffer (minibuffer-selected-window))
                               (or (and transient-mark-mode mark-active (/= (point) (mark))
                                        (buffer-substring-no-properties (point) (mark)))
 		                          (thing-at-point 'symbol t)
@@ -186,10 +186,10 @@
   (autoload 'consult--read "consult")
 
   (defun consult-colors-emacs (color)
-    "Show a list of all supported colors for a particular frame.\
+    "Show a list of all supported colors for a particular frame.
 
-You can insert the name (default), or insert or kill the hexadecimal or RGB value of the
-selected color."
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
     (interactive
      (list (consult--read (list-colors-duplicates (defined-colors))
                           :prompt "Emacs color: "
@@ -208,8 +208,8 @@ selected color."
   (defun consult-colors-web (color)
     "Show a list of all CSS colors.\
 
-You can insert the name (default), or insert or kill the hexadecimal or RGB value of the
-selected color."
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
     (interactive
      (list (consult--read (consult-colors--web-list)
                           :prompt "Color: "
@@ -257,7 +257,7 @@ selected color."
   :config
   ;; Manual preview for non-Consult commands using Embark
   (defun my-embark-preview ()
-    "Previews candidate in vertico buffer, unless it's a consult command"
+    "Previews candidate in vertico buffer, unless it's a consult command."
     (interactive)
     (unless (bound-and-true-p consult--preview-function)
       (save-selected-window
