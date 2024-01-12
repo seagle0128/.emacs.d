@@ -1,6 +1,6 @@
 ;; init-flymake.el --- Initialize flymake configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2009-2023 Vincent Zhang
+;; Copyright (C) 2009-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -32,6 +32,7 @@
 
 (use-package flymake
   :diminish
+  :bind ("C-c f" . flymake-show-buffer-diagnostics)
   :hook (prog-mode . flymake-mode)
   :init (setq flymake-no-changes-timeout nil
               flymake-fringe-indicator-position 'right-fringe)

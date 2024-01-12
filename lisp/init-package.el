@@ -1,6 +1,6 @@
 ;;; init-package.el --- Initialize package configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -33,6 +33,8 @@
 (eval-when-compile
   (require 'init-const)
   (require 'init-custom))
+
+(require 'init-funcs)
 
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
