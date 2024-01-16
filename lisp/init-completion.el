@@ -95,6 +95,11 @@
          ("C-c r"   . consult-ripgrep)
          ("C-c T"   . consult-theme)
 
+         ("C-c c e" . consult-colors-emacs)
+         ("C-c c w" . consult-colors-web)
+         ("C-c c f" . describe-face)
+         ("C-c c t" . consult-theme)
+
          ([remap Info-search]        . consult-info)
          ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
