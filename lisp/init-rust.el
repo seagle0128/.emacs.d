@@ -31,7 +31,11 @@
 ;;; Code:
 
 ;; Rust
-(use-package rustic)
+(use-package rustic
+  :custom (rustic-lsp-client centaur-lsp))
+
+(use-package ron-mode
+  :mode ("\\.ron" . ron-mode))
 
 (provide 'init-rust)
 
