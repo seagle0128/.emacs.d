@@ -58,8 +58,8 @@
          (load centaur-custom-post-file))))
 (add-hook 'after-init-hook #'load-custom-post-file)
 
-;; HACK: DO NOT save package-selected-packages to `custom-file'.
-;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+;; HACK: DO NOT save `package-selected-packages' to `custom-file'
+;; @see https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-package--save-selected-packages (&optional value)
   "Set `package-selected-packages' to VALUE but don't save to option `custom-file'."
   (when value
