@@ -40,7 +40,7 @@ power for Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 27.1 and above**. In general you're advised to always run with the
-latest stable release - currently **29.1**.
+latest stable release - currently **29.2**.
 
 ## Features
 
