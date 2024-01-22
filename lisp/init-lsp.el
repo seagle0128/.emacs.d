@@ -40,7 +40,10 @@
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (eglot-ensure))))
             ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
-     :init (setq eglot-send-changes-idle-time 0)
+     :init
+     (setq read-process-output-max (* 1024 1024)) ; 1MB
+     (setq eglot-autoshutdown t
+           eglot-send-changes-idle-time 0.5)
      :config
      (use-package consult-eglot
        :bind (:map eglot-mode-map
@@ -48,7 +51,7 @@
   ('lsp-mode
    ;; Performace tuning
    ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
-   (setq read-process-output-max (* 1024 1024)) ;; 1MB
+   (setq read-process-output-max (* 1024 1024)) ; 1MB
    (setenv "LSP_USE_PLISTS" "true")
 
    ;; Emacs client for the Language Server Protocol
