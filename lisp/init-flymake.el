@@ -38,9 +38,8 @@
   :init (setq flymake-no-changes-timeout nil
               flymake-fringe-indicator-position 'right-fringe)
   :config
-  ;; Check elisp with ``load-path''
+  ;; Check elisp with `load-path'
   (defun my-elisp-flymake-byte-compile (fn &rest args)
-    ;; checkdoc-params: (fn args)
     "Wrapper for `elisp-flymake-byte-compile'."
     (let ((elisp-flymake-byte-compile-load-path
            (append elisp-flymake-byte-compile-load-path load-path)))

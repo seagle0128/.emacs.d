@@ -251,7 +251,7 @@ Lisp function does not specify a special indentation."
         (helpful--goto-char-widen pos)))
     (advice-add #'helpful--navigate :override #'my-helpful--navigate)))
 
-;; For ERT
+;; Integrate Ert-runner
 (use-package overseer
   :diminish
   :hook (emacs-lisp-mode . overseer-mode))
