@@ -1,6 +1,6 @@
 ;; init-corfu.el --- Initialize corfu configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2023 Vincent Zhang
+;; Copyright (C) 2015-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -35,8 +35,8 @@
   (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-preview-current nil)
-  (corfu-auto-delay 0.1)
-  (corfu-popupinfo-delay '(0.2 . 0.1))
+  (corfu-auto-delay 0.2)
+  (corfu-popupinfo-delay '(0.4 . 0.2))
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind ("M-/" . completion-at-point)

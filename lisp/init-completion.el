@@ -1,6 +1,6 @@
 ;;; init-completion.el --- Initialize completion configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2016-2023 Vincent Zhang
+;; Copyright (C) 2016-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -93,12 +93,17 @@
          ("C-c m"   . consult-man)
          ("C-c i"   . consult-info)
          ("C-c r"   . consult-ripgrep)
+         ("C-c T"   . consult-theme)
+
+         ("C-c c e" . consult-colors-emacs)
+         ("C-c c w" . consult-colors-web)
+         ("C-c c f" . describe-face)
+         ("C-c c t" . consult-theme)
 
          ([remap Info-search]        . consult-info)
          ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
-
 
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -144,11 +149,14 @@
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-s" . (lambda ()
-                    "Insert the currunt symbol."
+                    "Insert the selected region or current symbol at point."
                     (interactive)
-                    (insert (save-excursion
-		                      (set-buffer (window-buffer (minibuffer-selected-window)))
-		                      (or (thing-at-point 'symbol t) "")))))
+                    (insert (with-current-buffer
+                                (window-buffer (minibuffer-selected-window))
+                              (or (and transient-mark-mode mark-active (/= (point) (mark))
+                                       (buffer-substring-no-properties (point) (mark)))
+		                          (thing-at-point 'symbol t)
+                                  "")))))
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
@@ -173,17 +181,59 @@
     (setq xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref))
 
+  ;; More utils
+  (defvar consult-colors-history nil
+    "History for `consult-colors-emacs' and `consult-colors-web'.")
+
+  ;; No longer preloaded in Emacs 28.
+  (autoload 'list-colors-duplicates "facemenu")
+  ;; No preloaded in consult.el
+  (autoload 'consult--read "consult")
+
+  (defun consult-colors-emacs (color)
+    "Show a list of all supported colors for a particular frame.
+
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
+    (interactive
+     (list (consult--read (list-colors-duplicates (defined-colors))
+                          :prompt "Emacs color: "
+                          :require-match t
+                          :category 'color
+                          :history '(:input consult-colors-history)
+                          )))
+    (insert color))
+
+  ;; Adapted from counsel.el to get web colors.
+  (defun consult-colors--web-list nil
+    "Return list of CSS colors for `counsult-colors-web'."
+    (require 'shr-color)
+    (sort (mapcar #'downcase (mapcar #'car shr-color-html-colors-alist)) #'string-lessp))
+
+  (defun consult-colors-web (color)
+    "Show a list of all CSS colors.\
+
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
+    (interactive
+     (list (consult--read (consult-colors--web-list)
+                          :prompt "Color: "
+                          :require-match t
+                          :category 'color
+                          :history '(:input consult-colors-history)
+                          )))
+    (insert color))
   :config
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
   ;; (setq consult-preview-key 'any)
-  (setq consult-preview-key "M-.")
   ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+  (setq consult-preview-key '(:debounce 1.0 any))
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-goto-line
-   consult-theme :preview-key '(:debounce 0.4 any))
+   consult-theme :preview-key '(:debounce 0.5 any))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
@@ -200,21 +250,31 @@
   :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
-  :bind (("s-." . embark-act)
+  :bind (("s-."   . embark-act)
          ("C-s-." . embark-act)
-         ("M-." . embark-dwim)
-         ("M-s-." . xref-find-definitions)
-         ([remap describe-bindings] . embark-bindings))
+         ("M-."   . embark-dwim)        ; overrides `xref-find-definitions'
+         ([remap describe-bindings] . embark-bindings)
+         :map minibuffer-local-map
+         ("M-." . my-embark-preview))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
+  ;; Manual preview for non-Consult commands using Embark
+  (defun my-embark-preview ()
+    "Previews candidate in vertico buffer, unless it's a consult command."
+    (interactive)
+    (unless (bound-and-true-p consult--preview-function)
+      (save-selected-window
+        (let ((embark-quit-after-action nil))
+          (embark-dwim)))))
+
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
-  :config
+
   (with-eval-after-load 'which-key
     (defun embark-which-key-indicator ()
       "An embark indicator that displays keymaps using which-key.

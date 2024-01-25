@@ -1,6 +1,6 @@
 ;; init-base.el --- Better default configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -67,7 +67,7 @@
     (setq w32-get-true-file-attributes nil   ; decrease file IO workload
           w32-use-native-image-API t         ; use native w32 API
           w32-pipe-read-delay 0              ; faster IPC
-          w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
+          w32-pipe-buffer-size 65536))       ; read more at a time (64K, was 4K)
   (unless sys/macp
     (setq command-line-ns-option-alist nil))
   (unless sys/linuxp
@@ -100,6 +100,7 @@
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
   (use-package exec-path-from-shell
+    :custom (exec-path-from-shell-arguments '("-l"))
     :init (exec-path-from-shell-initialize)))
 
 ;; Start server

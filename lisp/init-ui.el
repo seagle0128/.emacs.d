@@ -1,6 +1,6 @@
 ;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -80,10 +80,13 @@
     (progn
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
-        :hook (after-load-theme . solaire-global-mode))
+        :hook (after-init . solaire-global-mode))
+
       ;; Excellent themes
       (use-package doom-themes
-        :bind ("C-c T" . centaur-load-theme)
+        :custom
+        (doom-themes-enable-bold t)
+        (doom-themes-enable-italic t)
         :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
@@ -97,7 +100,9 @@
             (let ((buf (current-buffer))
                   (cookies (mapcar (lambda (face)
                                      (face-remap-add-relative face 'doom-themes-visual-bell))
-                                   '(mode-line mode-line-active))))
+                                   (if (facep 'mode-line-active)
+                                       '(mode-line-active solaire-mode-line-active-face)
+                                     '(mode-line solaire-mode-line-face)))))
               (force-mode-line-update)
               (run-with-timer 0.15 nil
                               (lambda ()
@@ -106,7 +111,7 @@
                                   (force-mode-line-update))))))
           (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))))
   (progn
-    (warn "The current theme is incompatible!")
+    (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
@@ -272,7 +277,9 @@
            embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-         (dired-mode . turn-off-hide-mode-line-mode)))
+         (dired-mode . (lambda()
+                         (and (bound-and-true-p hide-mode-line-mode)
+                              (turn-off-hide-mode-line-mode))))))
 
 ;; A minor-mode menu for mode-line
 (use-package minions

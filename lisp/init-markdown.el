@@ -1,6 +1,6 @@
 ;; init-markdown.el --- Initialize markdown configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2009-2023 Vincent Zhang
+;; Copyright (C) 2009-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -106,7 +106,7 @@ mermaid.initialize({
            ("g" . grip-mode))
     :init
     (with-eval-after-load 'org
-      (bind-key "C-c C-g" #'grip-mode org-mode-map))
+      (bind-key "C-c g" #'grip-mode org-mode-map))
 
     (setq grip-update-after-change nil)
     (when-let ((credential (auth-source-user-and-password "api.github.com")))

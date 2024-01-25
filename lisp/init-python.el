@@ -1,6 +1,6 @@
 ;; init-python.el --- Initialize python configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2023 Vincent Zhang
+;; Copyright (C) 2010-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -49,10 +49,7 @@
 
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-env "PYTHONPATH"))
-
-  ;; Live Coding in Python
-  (use-package live-py-mode))
+    (exec-path-from-shell-copy-env "PYTHONPATH")))
 
 (provide 'init-python)
 

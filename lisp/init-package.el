@@ -1,6 +1,6 @@
 ;;; init-package.el --- Initialize package configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -34,6 +34,8 @@
   (require 'init-const)
   (require 'init-custom))
 
+(require 'init-funcs)
+
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
            (not (file-exists-p custom-file)))
@@ -56,8 +58,8 @@
          (load centaur-custom-post-file))))
 (add-hook 'after-init-hook #'load-custom-post-file)
 
-;; HACK: DO NOT save package-selected-packages to `custom-file'.
-;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+;; HACK: DO NOT save `package-selected-packages' to `custom-file'
+;; @see https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-package--save-selected-packages (&optional value)
   "Set `package-selected-packages' to VALUE but don't save to option `custom-file'."
   (when value

@@ -38,6 +38,7 @@ jobs:
         run: |
           export HOME="/home/runner/work/.emacs.d"; \
           mkdir -p $HOME/.emacs.d/elpa/gnupg && gpg --homedir $HOME/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40; \
+          cp -f $HOME/.emacs.d/custom-example.el $HOME/.emacs.d/custom.el; \
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))

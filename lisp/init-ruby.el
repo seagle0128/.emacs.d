@@ -1,6 +1,6 @@
 ;; init-ruby.el --- Initialize ruby configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2023 Vincent Zhang
+;; Copyright (C) 2010-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -29,11 +29,6 @@
 ;;
 
 ;;; Code:
-
-;; Integrate rbenv
-(use-package rbenv
-  :hook (after-init . global-rbenv-mode)
-  :init (setq rbenv-show-active-ruby-in-modeline nil))
 
 ;; YAML mode
 (use-package yaml-mode)

@@ -1,10 +1,10 @@
 ;;; init.el --- A Fancy and Fast Emacs Configuration.	-*- lexical-binding: t no-byte-compile: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 8.0.0
+;; Version: 8.1.0
 ;; Keywords: .emacs.d centaur
 
 ;;
@@ -146,6 +146,7 @@ Otherwise the startup will be very slow."
 (require 'init-vcs)
 (require 'init-flymake)
 (require 'init-lsp)
+(require 'init-dap)
 
 (require 'init-prog)
 (require 'init-elisp)

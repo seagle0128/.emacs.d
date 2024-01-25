@@ -1,6 +1,6 @@
 ;; init-go.el --- Initialize Golang configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2018-2023 Vincent Zhang
+;; Copyright (C) 2018-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -106,11 +106,6 @@
 (when (centaur-treesit-available-p)
   (use-package go-ts-mode
     :init (setq go-ts-mode-indent-offset 4)))
-
-;; Local Golang playground for short snippets
-(use-package go-playground
-  :diminish
-  :commands go-playground-mode)
 
 (provide 'init-go)
 

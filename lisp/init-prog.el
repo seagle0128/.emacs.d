@@ -1,6 +1,6 @@
 ;; init-prog.el --- Initialize programming configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2023 Vincent Zhang
+;; Copyright (C) 2006-2024 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -75,17 +75,7 @@
   :ensure nil
   :autoload grep-apply-setting
   :init
-  (cond
-   ((executable-find "ugrep")
-    (grep-apply-setting
-     'grep-command "ugrep --color=auto -0In -e ")
-    (grep-apply-setting
-     'grep-template "ugrep --color=auto -0In -e <R> <D>")
-    (grep-apply-setting
-     'grep-find-command '("ugrep --color=auto -0Inr -e ''" . 30))
-    (grep-apply-setting
-     'grep-find-template "ugrep <C> -0Inr -e <R> <D>"))
-   ((executable-find "rg")
+  (when (executable-find "rg")
     (grep-apply-setting
      'grep-command "rg --color=auto --null -nH --no-heading -e ")
     (grep-apply-setting
@@ -93,16 +83,16 @@
     (grep-apply-setting
      'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
     (grep-apply-setting
-     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>"))))
+     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
 
 ;; Cross-referencing commands
 (use-package xref
+  :bind (("M-g ." . xref-find-definitions)
+         ("M-g ," . xref-go-back))
   :init
   ;; Use faster search tool
-  (setq xref-search-program (cond
-                             ((executable-find "ugrep") 'ugrep)
-                             ((executable-find "rg") 'ripgrep)
-                             (t 'grep)))
+  (when (executable-find "rg")
+    (setq xref-search-program 'ripgrep))
 
   ;; Select from xref candidates in minibuffer
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
