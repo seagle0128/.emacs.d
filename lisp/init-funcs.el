@@ -66,7 +66,7 @@
   (set-buffer-file-coding-system 'undecided-dos nil))
 
 (defun delete-dos-eol ()
-  "Delete `' characters in current region or buffer.
+  "Delete `' characters in current region or buffer.
 Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (save-excursion
@@ -77,7 +77,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
       (while (search-forward "\r" nil t)
         (replace-match "" nil t)
         (setq count (1+ count)))
-      (message "Removed %d " count))
+      (message "Removed %d " count))
     (widen)))
 
 ;; File and buffer
@@ -549,6 +549,16 @@ This issue has been addressed in 28."
           (width  . ,(frame-parameter nil 'width))
           (height . ,(frame-parameter nil 'height))
           (fullscreen))))
+
+(defun centaur-frame-adjust-opacity (frame incr)
+  "Adjust the background opacity of FRAME by increment INCR."
+  (unless (display-graphic-p frame)
+    (error "Cannot adjust opacity of this frame"))
+  (let* ((oldalpha (or (frame-parameter frame 'alpha) 100))
+         (oldalpha (if (listp oldalpha) (car oldalpha) oldalpha))
+         (newalpha (+ incr oldalpha)))
+    (when (and (<= frame-alpha-lower-limit newalpha) (>= 100 newalpha))
+      (modify-frame-parameters frame (list (cons 'alpha newalpha))))))
 
 (defun centaur-frame--fullscreen-p ()
   "Return Non-nil if the frame is fullscreen."

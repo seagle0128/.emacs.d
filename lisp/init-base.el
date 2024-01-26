@@ -207,6 +207,7 @@
 
 ;; Frame
 (when (display-graphic-p)
+  ;; Frame fullscreen
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
   (bind-key "S-s-<return>" #'toggle-frame-fullscreen)
   (and sys/mac-x-p (bind-key "C-s-f" #'toggle-frame-fullscreen))
@@ -218,7 +219,12 @@
              ("C-M-<left>"      . centaur-frame-left-half)
              ("C-M-<right>"     . centaur-frame-right-half)
              ("C-M-<up>"        . centaur-frame-top-half)
-             ("C-M-<down>"      . centaur-frame-bottom-half)))
+             ("C-M-<down>"      . centaur-frame-bottom-half))
+
+  ;; Adjust frame opacity
+  (bind-keys ("C-M-8" . (lambda () (interactive) (centaur-frame-adjust-opacity nil -2)))
+             ("C-M-9" . (lambda () (interactive) (centaur-frame-adjust-opacity nil 2)))
+             ("C-M-7" . (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))))
 
 ;; Global keybindings
 (bind-keys ("s-r"     . revert-this-buffer)
