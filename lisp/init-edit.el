@@ -298,11 +298,6 @@
               hungry-delete-except-modes
               '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
-;; Framework for mode-specific buffer indexes
-(use-package imenu
-  :ensure nil
-  :bind (("C-." . imenu)))
-
 ;; Move to the beginning/end of line or code
 (use-package mwim
   :bind (([remap move-beginning-of-line] . mwim-beginning)

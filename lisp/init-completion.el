@@ -94,6 +94,7 @@
          ("C-c i"   . consult-info)
          ("C-c r"   . consult-ripgrep)
          ("C-c T"   . consult-theme)
+         ("C-."     . consult-imenu)
 
          ("C-c c e" . consult-colors-emacs)
          ("C-c c w" . consult-colors-web)
@@ -101,7 +102,6 @@
          ("C-c c t" . consult-theme)
 
          ([remap Info-search]        . consult-info)
-         ([remap imenu]              . consult-imenu)
          ([remap isearch-forward]    . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
 
