@@ -221,10 +221,11 @@
              ("C-M-<up>"        . centaur-frame-top-half)
              ("C-M-<down>"      . centaur-frame-bottom-half))
 
-  ;; Adjust frame opacity
-  (bind-keys ("C-M-8" . (lambda () (interactive) (centaur-frame-adjust-opacity nil -2)))
-             ("C-M-9" . (lambda () (interactive) (centaur-frame-adjust-opacity nil 2)))
-             ("C-M-7" . (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))))
+  ;; Frame transparence
+  (use-package transwin
+    :bind (("C-M-9" . transwin-inc)
+           ("C-M-8" . transwin-dec)
+           ("C-M-7" . transwin-toggle))))
 
 ;; Global keybindings
 (bind-keys ("s-r"     . revert-this-buffer)
