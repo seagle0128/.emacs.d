@@ -225,7 +225,11 @@
   (use-package transwin
     :bind (("C-M-9" . transwin-inc)
            ("C-M-8" . transwin-dec)
-           ("C-M-7" . transwin-toggle))))
+           ("C-M-7" . transwin-toggle))
+    :init
+    (when sys/linux-x-p
+      (setq transwin-parameter-alpha 'alpha-background)
+      (transwin-ask '80))))
 
 ;; Global keybindings
 (bind-keys ("s-r"     . revert-this-buffer)
