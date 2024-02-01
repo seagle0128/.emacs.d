@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'package))
+
 (defgroup centaur nil
   "Centaur Emacs customization."
   :group 'convenience

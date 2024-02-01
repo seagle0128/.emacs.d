@@ -32,9 +32,8 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-custom))
-
-(require 'init-funcs)
+  (require 'init-custom)
+  (require 'init-funcs))
 
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)
@@ -75,6 +74,9 @@
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
+
+;; More options
+(setq package-install-upgrade-built-in t)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
