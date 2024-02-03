@@ -40,13 +40,13 @@
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
-             
-  ;; Unbind Magit's M-1, M-2, M-3, and M-4 shortcuts due to conflict with ace-window
-  (define-key magit-mode-map (kbd "M-1") nil)
-  (define-key magit-mode-map (kbd "M-2") nil)
-  (define-key magit-mode-map (kbd "M-3") nil)
-  (define-key magit-mode-map (kbd "M-4") nil)
-             
+
+  ;; Unbind M-1, M-2, M-3, and M-4 shortcuts due to conflict with `ace-window'
+  (unbind-key "M-1" magit-mode-map)
+  (unbind-key "M-2" magit-mode-map)
+  (unbind-key "M-3" magit-mode-map)
+  (unbind-key "M-4" magit-mode-map)
+
   ;; Access Git forges from Magit
   (use-package forge
     :demand t
