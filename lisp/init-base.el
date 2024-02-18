@@ -207,6 +207,7 @@
 
 ;; Frame
 (when (display-graphic-p)
+  ;; Frame fullscreen
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
   (bind-key "S-s-<return>" #'toggle-frame-fullscreen)
   (and sys/mac-x-p (bind-key "C-s-f" #'toggle-frame-fullscreen))
@@ -218,7 +219,17 @@
              ("C-M-<left>"      . centaur-frame-left-half)
              ("C-M-<right>"     . centaur-frame-right-half)
              ("C-M-<up>"        . centaur-frame-top-half)
-             ("C-M-<down>"      . centaur-frame-bottom-half)))
+             ("C-M-<down>"      . centaur-frame-bottom-half))
+
+  ;; Frame transparence
+  (use-package transwin
+    :bind (("C-M-9" . transwin-inc)
+           ("C-M-8" . transwin-dec)
+           ("C-M-7" . transwin-toggle))
+    :init
+    (when sys/linux-x-p
+      (setq transwin-parameter-alpha 'alpha-background)
+      (transwin-ask '80))))
 
 ;; Global keybindings
 (bind-keys ("s-r"     . revert-this-buffer)
