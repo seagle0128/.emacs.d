@@ -71,8 +71,31 @@
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   )
 
+;;;; Custom  title beamer 
 
 
+(setq org-latex-title-command 
+  "\\begingroup
+  \\setbeamertemplate{headline}{}
+  \\maketitle
+  \\endgroup")
+
+
+
+(setq org-beamer-outline-frame-title "Sumário")
+
+  (let ((depth (plist-get info :with-toc)))
+       (when depth
+   (concat
+    (format "\\begin{frame}%s{%s}\n"
+      (org-beamer--normalize-argument
+       (plist-get info :beamer-outline-frame-options) 'option)
+      (plist-get info :beamer-outline-frame-title))
+    (when (wholenump depth)
+      (format "\\setcounter{tocdepth}{%d}\n" depth))
+    "\ \newpage"
+    "\\tableofcontents\n"
+    "\\end{frame}\n\n")))
 
 
 
