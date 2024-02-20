@@ -115,8 +115,7 @@ Otherwise the startup will be very slow."
 (require 'init-ui)
 (require 'init-edit)
 (require 'init-completion)
-(require 'init-corfu)
-(require 'init-yasnippet)
+(require 'init-snippet)
 
 (require 'init-bookmark)
 (require 'init-calendar)
@@ -143,7 +142,7 @@ Otherwise the startup will be very slow."
 
 ;; Programming
 (require 'init-vcs)
-(require 'init-flymake)
+(require 'init-check)
 (require 'init-lsp)
 (require 'init-dap)
 

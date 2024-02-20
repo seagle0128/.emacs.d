@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Define functions.
+;; Define some useful functions.
 ;;
 
 ;;; Code:

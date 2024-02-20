@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-;; YAML mode
-(use-package yaml-mode)
-
 ;; Run a Ruby process in a buffer
 (use-package inf-ruby
   :hook ((ruby-mode . inf-ruby-minor-mode)

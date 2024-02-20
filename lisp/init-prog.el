@@ -195,6 +195,7 @@ Install the doc if it's not installed."
 (use-package swift-mode)
 (use-package v-mode)
 (use-package vimrc-mode)
+(use-package yaml-mode)
 
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()
