@@ -87,7 +87,7 @@
 
 (use-package consult
   :bind (;; C-c bindings in `mode-specific-map'
-         ("C-c M-x"t-mode-command)
+         ("C-c M-x" . consult-mode-command)
          ("C-c h"   . consult-history)
          ("C-c k"   . consult-kmacro)
          ("C-c m"   . consult-man)
@@ -245,9 +245,6 @@ value of the selected COLOR."
 
 (use-package consult-flyspell
   :bind ("M-g s" . consult-flyspell))
-
-(use-package consult-todo
-  :bind ("M-g t" . consult-todo))
 
 (use-package consult-yasnippet
   :bind ("M-g y" . consult-yasnippet))
