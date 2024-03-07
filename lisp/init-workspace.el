@@ -45,13 +45,6 @@
   :init
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
-    ;; FIXME: Display *Messages* buffer in all workspaces
-    ;; see https://github.com/mclear-tools/tabspaces/issues/54
-    (defun tabspaces--local-buffer-p (buffer)
-      "Return whether BUFFER is in the list of local buffers."
-      (or (member (buffer-name buffer) tabspaces-include-buffers)
-          (memq buffer (frame-parameter nil 'buffer-list))))
-
     ;; hide full buffer list (still available with "b" prefix)
     (consult-customize consult--source-buffer :hidden t :default nil)
     ;; set consult-workspace buffer list
