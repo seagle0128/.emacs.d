@@ -89,10 +89,22 @@
           dashboard-path-style 'truncate-middle
           dashboard-path-max-length 60
           dashboard-center-content t
+          dashboard-vertically-center-content t
           dashboard-show-shortcuts nil
           dashboard-items '((recents  . 10)
                             (bookmarks . 5)
                             (projects . 5))
+
+          dashboard-startupify-list '(dashboard-insert-banner
+                                      dashboard-insert-newline
+                                      dashboard-insert-banner-title
+                                      dashboard-insert-newline
+                                      dashboard-insert-navigator
+                                      dashboard-insert-newline
+                                      dashboard-insert-init-info
+                                      dashboard-insert-items
+                                      dashboard-insert-newline
+                                      dashboard-insert-footer)
 
           dashboard-display-icons-p #'icons-displayable-p
           dashboard-set-file-icons centaur-icon
@@ -103,7 +115,6 @@
                                     (projects  . "nf-oct-briefcase")
                                     (registers . "nf-oct-database"))
 
-          dashboard-set-navigator t
           dashboard-navigator-buttons
           `(((,(when (icons-displayable-p)
                  (nerd-icons-mdicon "nf-md-github" :height 1.4))
@@ -127,7 +138,6 @@
               "" "Help (?/h)"
               (lambda (&rest _) (dashboard-hydra/body)))))
 
-          dashboard-set-footer t
           dashboard-footer-icon
           (if (icons-displayable-p)
               (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
