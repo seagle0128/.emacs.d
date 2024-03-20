@@ -149,10 +149,9 @@
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
       "Insert copyright in the footer."
-      (when dashboard-set-footer
-        (dashboard-insert-center
-         (propertize (format "\nPowered by Vincent Zhang, %s\n" (format-time-string "%Y"))
-                     'face 'font-lock-comment-face))))
+      (dashboard-insert-center
+       (propertize (format "\nPowered by Vincent Zhang, %s\n" (format-time-string "%Y"))
+                   'face 'font-lock-comment-face)))
     (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
 
     (defun restore-session ()
