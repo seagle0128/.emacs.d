@@ -1,4 +1,4 @@
-;; init-flymake.el --- Initialize flymake configurations.	-*- lexical-binding: t -*-
+;; init-check.el --- Initialize check configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2009-2024 Vincent Zhang
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Flymake configurations.
+;; Check configurations.
 ;;
 
 ;;; Code:
@@ -52,7 +52,7 @@
   :init (setq sideline-flymake-display-mode 'point
               sideline-backends-right '(sideline-flymake)))
 
-(provide 'init-flymake)
+(provide 'init-check)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-flymake.el ends here
+;;; init-check.el ends here

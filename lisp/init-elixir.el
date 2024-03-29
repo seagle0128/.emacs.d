@@ -34,8 +34,8 @@
   :config
   (use-package alchemist
     :diminish (alchemist-mode alchemist-phoenix-mode)
-    :hook ((elixir-mode . alchemist-mode)
-           (elixir-mode . alchemist-phoenix-mode))))
+    :hook (((elixir-mode elixir-ts-mode) . alchemist-mode)
+           (alchemist-mode . alchemist-phoenix-mode))))
 
 (provide 'init-elixir)
 

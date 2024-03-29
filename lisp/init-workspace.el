@@ -38,7 +38,7 @@
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
+  (tabspaces-include-buffers '("*scratch*" "*Messages*"))
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
@@ -59,9 +59,9 @@
                              :predicate #'tabspaces--local-buffer-p
                              :sort 'visibility
                              :as #'buffer-name)))
-
       "Set workspace buffer list for consult-buffer.")
     (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
+
 
 (provide 'init-workspace)
 
