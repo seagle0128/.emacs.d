@@ -145,10 +145,6 @@
 
     (dashboard-setup-startup-hook)
     :config
-    ;; WORKAROUND: no icons are displayed on Windows
-    ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/471
-    (advice-add #'dashboard-replace-displayable :override #'identity)
-
     ;; Insert copyright
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
     (defun my-dashboard-insert-copyright ()
