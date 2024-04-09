@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feat/modern-completion
   pull_request:
 
 concurrency:
@@ -18,19 +17,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        emacs-version: [27.2, 28.2, 29.1]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        emacs-version: [27.2, 28.2, 29.3]
         experimental: [false]
         include:
-          - emacs-version: snapshot
+          - os: ubuntu-latest
+            emacs-version: snapshot
+            experimental: true
+          - os: macos-latest
+            emacs-version: snapshot
+            experimental: true
+          - os: windows-latest
+            emacs-version: snapshot
             experimental: true
 
     steps:
       - name: setenv
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: purcell/setup-emacs@master
+      - uses: jcs090218/setup-emacs@master
         with:
           version: ${{ matrix.emacs-version }}
 
