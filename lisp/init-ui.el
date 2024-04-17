@@ -187,6 +187,9 @@
      ("f" (setq doom-modeline-buffer-file-name-style 'file-name)
       "file name"
       :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
+     ("F" (setq doom-modeline-buffer-file-name-style 'file-name-with-project)
+      "file name with project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'file-name-with-project))
      ("t u" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
       "truncate upto project"
       :toggle (eq doom-modeline-buffer-file-name-style 'truncate-upto-project))
