@@ -200,8 +200,7 @@ value of the selected COLOR."
                           :prompt "Emacs color: "
                           :require-match t
                           :category 'color
-                          :history '(:input consult-colors-history)
-                          )))
+                          :history '(:input consult-colors-history))))
     (insert color))
 
   ;; Adapted from counsel.el to get web colors.
