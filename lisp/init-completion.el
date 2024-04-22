@@ -220,8 +220,7 @@ value of the selected COLOR."
                           :prompt "Color: "
                           :require-match t
                           :category 'color
-                          :history '(:input consult-colors-history)
-                          )))
+                          :history '(:input consult-colors-history))))
     (insert color))
   :config
   ;; Optionally configure preview. The default value

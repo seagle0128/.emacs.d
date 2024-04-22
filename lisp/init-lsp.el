@@ -47,7 +47,11 @@
      :config
      (use-package consult-eglot
        :bind (:map eglot-mode-map
-              ("C-M-." . consult-eglot-symbols)))))
+              ("C-M-." . consult-eglot-symbols))
+       :config
+       (use-package consult-eglot-embark
+         :after embark
+         :init (consult-eglot-embark-mode 1)))))
   ('lsp-mode
    ;; Performace tuning
    ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
