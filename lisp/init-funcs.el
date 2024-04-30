@@ -342,6 +342,30 @@ Return the fastest package archive."
     ;; Return the fastest
     fastest))
 
+(defun set-from-minibuffer (sym)
+  "Set SYM value from minibuffer."
+  (eval-expression
+   (minibuffer-with-setup-hook
+       (lambda ()
+         (add-function :before-until (local 'eldoc-documentation-function)
+           #'elisp-eldoc-documentation-function)
+         (run-hooks 'eval-expression-minibuffer-setup-hook)
+         (goto-char (minibuffer-prompt-end))
+         (forward-char (length (format "(setq %S " sym))))
+     (read-from-minibuffer
+      "Eval: "
+      (let ((sym-value (symbol-value sym)))
+        (format
+         (if (or (consp sym-value)
+                 (and (symbolp sym-value)
+                      (not (null sym-value))
+                      (not (keywordp sym-value))))
+             "(setq %s '%S)"
+           "(setq %s %S)")
+         sym sym-value))
+      read-expression-map t
+      'read-expression-history))))
+
 ;; WORKAROUND: fix blank screen issue on macOS.
 (defun fix-fullscreen-cocoa ()
   "Address blank screen issue with child-frame in fullscreen.

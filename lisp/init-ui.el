@@ -248,29 +248,13 @@
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
-     ("z h" (read-from-minibuffer
-             "Eval: "
-             (format "(setq %s %s)"
-                     'doom-modeline-height
-                     (symbol-value 'doom-modeline-height)))
+     ("z h" (set-from-minibuffer 'doom-modeline-height)
       "set height" :exit t)
-     ("z w" (read-from-minibuffer
-             "Eval: "
-             (format "(setq %s %s)"
-                     'doom-modeline-bar-width
-                     (symbol-value 'doom-modeline-bar-width)))
+     ("z w" (set-from-minibuffer 'doom-modeline-bar-width)
       "set bar width" :exit t)
-     ("z g" (read-from-minibuffer
-             "Eval: "
-             (format "(setq %s %s)"
-                     'doom-modeline-github-interval
-                     (symbol-value 'doom-modeline-github-interval)))
+     ("z g" (set-from-minibuffer 'doom-modeline-github-interval)
       "set github interval" :exit t)
-     ("z n" (read-from-minibuffer
-             "Eval: "
-             (format "(setq %s %s)"
-                     'doom-modeline-gnus-timer
-                     (symbol-value 'doom-modeline-gnus-timer)))
+     ("z n" (set-from-minibuffer 'doom-modeline-gnus-timer)
       "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
