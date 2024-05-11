@@ -63,7 +63,7 @@
   (setq gt-preset-translators `((default . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
                                                            :engines (cdar (gt-ensure-plain gt-preset-engines))
                                                            :render  (cdar (gt-ensure-plain gt-preset-renders))))
-                                (detailed . ,gt-default-translator)
+                                (detail . ,gt-default-translator)
                                 (Text-Utility . ,(gt-text-utility
                                                   :taker (gt-taker :pick nil)
                                                   :render (gt-buffer-render)))))
@@ -84,7 +84,7 @@
     (defclass gt-posframe-pos-render (gt-posframe-pop-render)
       ((width       :initarg :width        :initform 60)
        (height      :initarg :height       :initform 15)
-       (padding     :initarg :padding      :initform 8)
+       (padding     :initarg :padding      :initform 16)
        (bd-width    :initarg :bd-width     :initform 1)
        (bd-color    :initarg :bd-color     :initform nil)
        (backcolor   :initarg :backcolor    :initform nil))
