@@ -38,77 +38,67 @@
   :bind (("C-c d f" . fanyi-dwim)
          ("C-c d d" . fanyi-dwim2)
          ("C-c d h" . fanyi-from-history))
-  :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider))
+  :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider)))
 
-  (use-package go-translate
-    :bind (("C-c d g" . gts-do-translate))
-    :init (setq gts-translate-list '(("en" "zh") ("zh" "en")))))
-
-;; Youdao Dictionary
-(use-package youdao-dictionary
-  :bind (("C-c y"   . my-youdao-dictionary-search-at-point)
-         ("C-c d Y" . my-youdao-dictionary-search-at-point)
-         ("C-c d y" . youdao-dictionary-search-async)
-         :map youdao-dictionary-mode-map
-         ("h"       . my-youdao-dictionary-help)
-         ("?"       . my-youdao-dictionary-help))
-  :init
-  (setq url-automatic-caching t)
-  (setq youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
+(use-package go-translate
+  :bind (("C-c y"   . gt-do-translate)
+         ("C-c d g" . gt-do-translate))
+  :init (setq gt-langs '(en zh))
   :config
-  (with-no-warnings
-    (with-eval-after-load 'hydra
-      (defhydra youdao-dictionary-hydra (:color blue)
-        ("p" youdao-dictionary-play-voice-of-current-word "play voice of current word")
-        ("y" youdao-dictionary-play-voice-at-point "play voice at point")
-        ("q" quit-window "quit")
-        ("C-g" nil nil)
-        ("h" nil nil)
-        ("?" nil nil))
-      (defun my-youdao-dictionary-help ()
-        "Show help in `hydra'."
-        (interactive)
-        (let ((hydra-hint-display-type 'message))
-          (youdao-dictionary-hydra/body))))
+  (setq gt-default-translator
+        (gt-translator :engines (list (gt-bing-engine) (gt-youdao-dict-engine))))
 
-    (defun my-youdao-dictionary-search-at-point ()
-      "Search word at point and display result with `posframe', `pos-tip' or buffer."
-      (interactive)
-      (if (posframe-workable-p)
-          (youdao-dictionary-search-at-point-posframe)
-        (youdao-dictionary-search-at-point)))
+  (when (childframe-workable-p)
+    (defclass gt-posframe-pos-render (gt-posframe-pop-render)
+      ((width       :initarg :width        :initform 60)
+       (height      :initarg :height       :initform 15)
+       (padding     :initarg :padding      :initform 8)
+       (bd-width    :initarg :bd-width     :initform 2)
+       (bd-color    :initarg :bd-color     :initform nil)
+       (backcolor   :initarg :backcolor    :initform nil))
+      "Pop up a childframe to show the result at point.
+The frame will disappear when do do anything but focus in it.
+Manually close the frame with `q'.")
 
-    (defun my-youdao-dictionary--posframe-tip (string)
-      "Show STRING using `posframe-show'."
-      (unless (posframe-workable-p)
-        (error "Posframe not workable"))
+    (cl-defmethod gt-init ((render gt-posframe-pos-render) translator)
+      (with-slots (width height min-width min-height bd-width forecolor backcolor bd-color padding position) render
+        (let ((inhibit-read-only t)
+              (buf gt-posframe-pop-render-buffer))
+          ;; create
+          (unless (buffer-live-p (get-buffer buf))
+            (posframe-show buf
+                           :string "Loading..."
+                           :timeout gt-posframe-pop-render-timeout
+                           :width width
+                           :height height
+                           :min-width width
+                           :min-height height
+                           :foreground-color (or forecolor (face-foreground 'tooltip nil t))
+                           :background-color (or backcolor (face-background 'tooltip nil t))
+                           :internal-border-width bd-width
+                           :border-color (or bd-color (face-background 'posframe-border nil t))
+                           :left-fringe padding
+                           :right-fringe padding
+                           :accept-focus t
+                           :position (point)
+                           :poshandler gt-posframe-pop-render-poshandler))
 
-      (if-let ((word (youdao-dictionary--region-or-word)))
-          (progn
-            (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
-              (let ((inhibit-read-only t))
-                (erase-buffer)
-                (youdao-dictionary-mode)
-                (insert string)
-                (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-            (posframe-show
-             youdao-dictionary-buffer-name
-             :position (point)
-             :left-fringe 8
-             :right-fringe 8
-             :max-width (/ (frame-width) 2)
-             :max-height (/ (frame-height) 2)
-             :background-color (face-background 'tooltip nil t)
-             :internal-border-color (face-background 'posframe-border nil t)
-             :internal-border-width 1)
-            (unwind-protect
-                (push (read-event) unread-command-events)
-              (progn
-                (posframe-hide youdao-dictionary-buffer-name)
-                (other-frame 0)))
-            (message "Nothing to look up"))))
-    (advice-add #'youdao-dictionary--posframe-tip
-                :override #'my-youdao-dictionary--posframe-tip)))
+          ;; render
+          (gt-buffer-render-init buf render translator)
+          (posframe-refresh buf)
+          ;; setup
+          (with-current-buffer buf
+            (gt-buffer-render-key ("q" "Close") (posframe-delete buf))))))
+
+    (cl-defmethod gt-output ((render gt-posframe-pos-render) translator)
+      (when-let (buf (get-buffer gt-posframe-pop-render-buffer))
+        (gt-buffer-render-output buf render translator)
+        (posframe-refresh buf)
+        (add-hook 'post-command-hook #'gt-posframe-render-auto-close-handler)))
+
+    (setq gt-default-translator
+          (gt-translator :engines (gt-youdao-dict-engine)
+                         :render (gt-posframe-pos-render)))))
 
 ;; OSX dictionary
 (when sys/macp
