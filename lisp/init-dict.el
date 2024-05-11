@@ -43,18 +43,33 @@
 (use-package go-translate
   :bind (("C-c y"   . gt-do-translate)
          ("C-c d g" . gt-do-translate))
-  :init (setq gt-langs '(en zh)
-              gt-buffer-render-window-config
-              '((display-buffer-reuse-window display-buffer-in-direction)
-                (direction . bottom)
-                (window-height . 0.4)))
+
   :config
+  (setq gt-langs '(en zh)
+        gt-buffer-render-window-config
+        '((display-buffer-reuse-window display-buffer-in-side-window)
+          (side . bottom)
+          (slot . 1)
+          (window-height . 0.4)))
+
   (setq gt-default-translator
         (gt-translator
          :engines (list (gt-bing-engine)
                         (gt-youdao-dict-engine)
                         (gt-youdao-suggest-engine))
          :render (gt-buffer-render)))
+
+  ;; Same behavior with `popper'
+  (add-hook 'gt-buffer-render-output-hook
+            (lambda ()
+              "Focus in the dict result window."
+              (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
+                (and (window-live-p win) (select-window win)))))
+  (advice-add #'keyboard-quit :before
+              (lambda (&rest _)
+                "Close dict result window via `C-g'."
+                (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
+                  (and (window-live-p win) (delete-window nil)))))
 
   (when (childframe-workable-p)
     (defclass gt-posframe-pos-render (gt-posframe-pop-render)
