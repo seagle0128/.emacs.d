@@ -54,19 +54,22 @@
           (window-height . 0.4)))
 
   (setq gt-default-translator
-        (gt-translator
-         :engines (list (gt-bing-engine)
-                        (gt-youdao-dict-engine)
-                        (gt-youdao-suggest-engine))
-         :render (gt-buffer-render)))
+        (gt-translator :engines (list (gt-bing-engine)
+                                      (gt-youdao-dict-engine)
+                                      (gt-youdao-suggest-engine))
+                       :render (gt-buffer-render)))
 
-  (setq gt-preset-translators `((default . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
-                                                           :engines (cdar (gt-ensure-plain gt-preset-engines))
-                                                           :render  (cdar (gt-ensure-plain gt-preset-renders))))
-                                (detail . ,gt-default-translator)
-                                (Text-Utility . ,(gt-text-utility
-                                                  :taker (gt-taker :pick nil)
-                                                  :render (gt-buffer-render)))))
+  (setq gt-preset-translators
+        `((default . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
+                                     :engines (cdar (gt-ensure-plain gt-preset-engines))
+                                     :render  (cdar (gt-ensure-plain gt-preset-renders))))
+          (detail . ,(gt-translator :engines (list (gt-bing-engine)
+                                                   (gt-youdao-dict-engine)
+                                                   (gt-youdao-suggest-engine))
+                                    :render (gt-buffer-render)))
+          (Text-Utility . ,(gt-text-utility
+                            :taker (gt-taker :pick nil)
+                            :render (gt-buffer-render)))))
 
   ;; Same behavior with `popper'
   (add-hook 'gt-buffer-render-output-hook
@@ -78,7 +81,7 @@
               (lambda (&rest _)
                 "Close dict result window via `C-g'."
                 (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
-                  (and (window-live-p win) (delete-window nil)))))
+                  (and (window-live-p win) (delete-window win)))))
 
   (when (childframe-workable-p)
     (defclass gt-posframe-pos-render (gt-posframe-pop-render)
@@ -115,7 +118,6 @@ Manually close the frame with `q'.")
                            :border-color (or bd-color (face-background 'posframe-border nil t))
                            :left-fringe padding
                            :right-fringe padding
-                           :accept-focus t
                            :position (point)
                            :poshandler gt-posframe-pop-render-poshandler))
 
