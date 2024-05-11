@@ -43,17 +43,25 @@
 (use-package go-translate
   :bind (("C-c y"   . gt-do-translate)
          ("C-c d g" . gt-do-translate))
-  :init (setq gt-langs '(en zh))
+  :init (setq gt-langs '(en zh)
+              gt-buffer-render-window-config
+              '((display-buffer-reuse-window display-buffer-in-direction)
+                (direction . bottom)
+                (window-height . 0.4)))
   :config
   (setq gt-default-translator
-        (gt-translator :engines (list (gt-bing-engine) (gt-youdao-dict-engine))))
+        (gt-translator
+         :engines (list (gt-bing-engine)
+                        (gt-youdao-dict-engine)
+                        (gt-youdao-suggest-engine))
+         :render (gt-buffer-render)))
 
   (when (childframe-workable-p)
     (defclass gt-posframe-pos-render (gt-posframe-pop-render)
       ((width       :initarg :width        :initform 60)
        (height      :initarg :height       :initform 15)
        (padding     :initarg :padding      :initform 8)
-       (bd-width    :initarg :bd-width     :initform 2)
+       (bd-width    :initarg :bd-width     :initform 1)
        (bd-color    :initarg :bd-color     :initform nil)
        (backcolor   :initarg :backcolor    :initform nil))
       "Pop up a childframe to show the result at point.
@@ -67,7 +75,7 @@ Manually close the frame with `q'.")
           ;; create
           (unless (buffer-live-p (get-buffer buf))
             (posframe-show buf
-                           :string "Loading..."
+                           ;; :string "Loading..."
                            :timeout gt-posframe-pop-render-timeout
                            :width width
                            :height height
