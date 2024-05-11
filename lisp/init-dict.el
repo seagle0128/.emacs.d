@@ -42,7 +42,8 @@
 
 (use-package go-translate
   :bind (("C-c y"   . gt-do-translate)
-         ("C-c d g" . gt-do-translate))
+         ("C-c d g" . gt-do-translate)
+         ("C-c d s" . gt-do-setup))
 
   :config
   (setq gt-langs '(en zh)
@@ -58,6 +59,14 @@
                         (gt-youdao-dict-engine)
                         (gt-youdao-suggest-engine))
          :render (gt-buffer-render)))
+
+  (setq gt-preset-translators `((default . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
+                                                           :engines (cdar (gt-ensure-plain gt-preset-engines))
+                                                           :render  (cdar (gt-ensure-plain gt-preset-renders))))
+                                (detailed . ,gt-default-translator)
+                                (Text-Utility . ,(gt-text-utility
+                                                  :taker (gt-taker :pick nil)
+                                                  :render (gt-buffer-render)))))
 
   ;; Same behavior with `popper'
   (add-hook 'gt-buffer-render-output-hook
@@ -83,6 +92,10 @@
 The frame will disappear when do do anything but focus in it.
 Manually close the frame with `q'.")
 
+    (cl-defmethod gt-init :before ((_ gt-posframe-pos-render) _)
+      (unless (require 'posframe nil t)
+        (user-error "To use `gt-posframe-render', you should install and load package `posframe' first")))
+
     (cl-defmethod gt-init ((render gt-posframe-pos-render) translator)
       (with-slots (width height min-width min-height bd-width forecolor backcolor bd-color padding position) render
         (let ((inhibit-read-only t)
@@ -90,7 +103,7 @@ Manually close the frame with `q'.")
           ;; create
           (unless (buffer-live-p (get-buffer buf))
             (posframe-show buf
-                           ;; :string "Loading..."
+                           :string "Loading..."
                            :timeout gt-posframe-pop-render-timeout
                            :width width
                            :height height
