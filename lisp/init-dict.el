@@ -66,8 +66,8 @@
                   (and (window-live-p win) (delete-window win)))))
 
   (defclass gt-posframe-pos-render (gt-posframe-pop-render)
-    ((width       :initarg :width        :initform 60)
-     (height      :initarg :height       :initform 15)
+    ((width       :initarg :width        :initform 70)
+     (height      :initarg :height       :initform 20)
      (padding     :initarg :padding      :initform 16)
      (bd-width    :initarg :bd-width     :initform 1)
      (bd-color    :initarg :bd-color     :initform nil)
