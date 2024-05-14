@@ -78,6 +78,47 @@
                 (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
                   (and (window-live-p win) (delete-window win)))))
 
+  ;; Tweak child frame
+  (defclass gt-posframe-pop-render (gt-buffer-render)
+    ((width       :initarg :width        :initform 70)
+     (height      :initarg :height       :initform 15)
+     (forecolor   :initarg :forecolor    :initform nil)
+     (backcolor   :initarg :backcolor    :initform nil)
+     (padding     :initarg :padding      :initform 16)
+     (bd-width    :initarg :bd-width     :initform 1)
+     (bd-color    :initarg :bd-color     :initform nil))
+    "Pop up a childframe to show the result.
+The frame will disappear when do do anything but focus in it.
+Manually close the frame with `q'.")
+
+  (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
+    (with-slots (width height bd-width forecolor backcolor bd-color padding) render
+      (let ((inhibit-read-only t)
+            (buf gt-posframe-pop-render-buffer))
+        ;; create
+        (unless (buffer-live-p (get-buffer buf))
+          (posframe-show buf
+                         :string "Loading..."
+                         :timeout gt-posframe-pop-render-timeout
+                         :width width
+                         :height height
+                         :min-width width
+                         :min-height height
+                         :foreground-color (or forecolor (face-foreground 'tooltip nil t))
+                         :background-color (or backcolor (face-background 'tooltip nil t))
+                         :internal-border-width bd-width
+                         :border-color (or bd-color (face-background 'posframe-border nil t))
+                         :left-fringe padding
+                         :right-fringe padding
+                         :position (point)
+                         :poshandler gt-posframe-pop-render-poshandler))
+        ;; render
+        (gt-buffer-render-init buf render translator)
+        (posframe-refresh buf)
+        ;; setup
+        (with-current-buffer buf
+          (gt-buffer-render-key ("q" "Close") (posframe-delete buf))))))
+
   ;; Translators
   (setq gt-preset-translators
         `((default          . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
@@ -148,48 +189,7 @@
   (defun gt-do-text-utility ()
     (interactive)
     (let ((gt-default-translator (alist-get 'Text-Utility gt-preset-translators)))
-      (gt-do-translate)))
-
-  ;; Tweak child frame
-  (defclass gt-posframe-pop-render (gt-buffer-render)
-    ((width       :initarg :width        :initform 70)
-     (height      :initarg :height       :initform 15)
-     (forecolor   :initarg :forecolor    :initform nil)
-     (backcolor   :initarg :backcolor    :initform nil)
-     (padding     :initarg :padding      :initform 16)
-     (bd-width    :initarg :bd-width     :initform 1)
-     (bd-color    :initarg :bd-color     :initform nil))
-    "Pop up a childframe to show the result.
-The frame will disappear when do do anything but focus in it.
-Manually close the frame with `q'.")
-
-  (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
-    (with-slots (width height bd-width forecolor backcolor bd-color padding) render
-      (let ((inhibit-read-only t)
-            (buf gt-posframe-pop-render-buffer))
-        ;; create
-        (unless (buffer-live-p (get-buffer buf))
-          (posframe-show buf
-                         :string "Loading..."
-                         :timeout gt-posframe-pop-render-timeout
-                         :width width
-                         :height height
-                         :min-width width
-                         :min-height height
-                         :foreground-color (or forecolor (face-foreground 'tooltip nil t))
-                         :background-color (or backcolor (face-background 'tooltip nil t))
-                         :internal-border-width bd-width
-                         :border-color (or bd-color (face-background 'posframe-border nil t))
-                         :left-fringe padding
-                         :right-fringe padding
-                         :position (point)
-                         :poshandler gt-posframe-pop-render-poshandler))
-        ;; render
-        (gt-buffer-render-init buf render translator)
-        (posframe-refresh buf)
-        ;; setup
-        (with-current-buffer buf
-          (gt-buffer-render-key ("q" "Close") (posframe-delete buf)))))))
+      (gt-do-translate))))
 
 ;; OSX dictionary
 (when sys/macp
