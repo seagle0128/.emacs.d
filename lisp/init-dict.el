@@ -41,7 +41,7 @@
   :custom (fanyi-providers '(fanyi-haici-provider fanyi-longman-provider)))
 
 (use-package go-translate
-  :bind (("C-c y"   . gt-do-translate)
+  :bind (("C-c g"   . gt-do-translate)
          ("C-c d g" . gt-do-translate)
          ("C-c d s" . gt-do-setup))
   :init
