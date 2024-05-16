@@ -60,10 +60,12 @@
     :init
     (setq gt-langs '(en zh)
           gt-buffer-render-window-config
-          '((display-buffer-reuse-window display-buffer-in-side-window)
-            (side . bottom)
-            (slot . 1)
+          '((display-buffer-reuse-window display-buffer-in-direction)
+            (direction . bottom)
             (window-height . 0.4)))
+
+    (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t))
+    (setq gt-pop-posframe-backcolor (face-background 'tooltip nil t))
     (when (facep 'posframe-border)
       (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
     :config
@@ -82,38 +84,37 @@
     ;; Tweak child frame
     (with-no-warnings
       (defclass gt-posframe-pop-render (gt-buffer-render)
-        ((width       :initarg :width        :initform 70)
-         (height      :initarg :height       :initform 15)
-         (forecolor   :initarg :forecolor    :initform nil)
-         (backcolor   :initarg :backcolor    :initform nil)
-         (padding     :initarg :padding      :initform 16)
-         (bd-width    :initarg :bd-width     :initform 1)
-         (bd-color    :initarg :bd-color     :initform nil))
+        ((width        :initarg :width        :initform 100)
+         (height       :initarg :height       :initform 15)
+         (forecolor    :initarg :forecolor    :initform nil)
+         (backcolor    :initarg :backcolor    :initform nil)
+         (padding      :initarg :padding      :initform 12)
+         (extra-params :initarg :extra-params :initform nil :type list
+                       :documentation "Other parameters passed to `posframe-show'. Have higher priority."))
         "Pop up a childframe to show the result.
 The frame will disappear when do do anything but focus in it.
 Manually close the frame with `q'.")
 
       (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
-        (with-slots (width height bd-width forecolor backcolor bd-color padding) render
+        (with-slots (width height forecolor backcolor padding extra-params) render
           (let ((inhibit-read-only t)
                 (buf gt-posframe-pop-render-buffer))
             ;; create
             (unless (buffer-live-p (get-buffer buf))
-              (posframe-show buf
-                             :string "Loading..."
-                             :timeout gt-posframe-pop-render-timeout
-                             :width width
-                             :height height
-                             :min-width width
-                             :min-height height
-                             :foreground-color (or forecolor (face-foreground 'tooltip nil t))
-                             :background-color (or backcolor (face-background 'tooltip nil t))
-                             :internal-border-width bd-width
-                             :border-color (or bd-color (face-background 'posframe-border nil t))
-                             :left-fringe padding
-                             :right-fringe padding
-                             :position (point)
-                             :poshandler gt-posframe-pop-render-poshandler))
+              (apply #'posframe-show buf
+                     (append extra-params
+                             (list
+                              :string "Loading..."
+                              :timeout gt-posframe-pop-render-timeout
+                              :max-width width
+                              :max-height height
+                              :foreground-color (or forecolor gt-pop-posframe-forecolor)
+                              :background-color (or backcolor gt-pop-posframe-backcolor)
+                              :internal-border-width padding
+                              :internal-border-color (or backcolor gt-pop-posframe-backcolor)
+                              :accept-focus t
+                              :position (point)
+                              :poshandler gt-posframe-pop-render-poshandler))))
             ;; render
             (gt-buffer-render-init buf render translator)
             (posframe-refresh buf)
@@ -132,7 +133,12 @@ Manually close the frame with `q'.")
               (youdao-dict-dwim . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
                                                   :engines (gt-youdao-dict-engine)
                                                   :render (if (display-graphic-p)
-                                                              (gt-posframe-pop-render)
+                                                              (gt-posframe-pop-render
+                                                               :extra-params (list :width 70
+                                                                                   :left-fringe 16
+                                                                                   :right-fringe 16
+                                                                                   :border-width 1
+                                                                                   :border-color (face-background 'posframe-border nil t)))
                                                             (gt-buffer-render))))
               (bing             . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
                                                   :engines (gt-bing-engine)
@@ -156,42 +162,39 @@ Manually close the frame with `q'.")
                                                   :render (gt-buffer-render)))
               (Text-Utility     . ,(gt-text-utility :taker (gt-taker :pick nil)
                                                     :render (gt-buffer-render)))))
-      (setq gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators)))
+      (setq gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators))
 
-    (defun gt-youdao-dict-translate ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'youdao-dict gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt--do-translate (dict)
+        (let ((gt-default-translator (alist-get dict gt-preset-translators)))
+          (gt-do-translate)))
 
-    (defun gt-youdao-dict-translate-dwim ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'youdao-dict-dwim gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt-youdao-dict-translate ()
+        (interactive)
+        (gt--do-translate 'youdao-dict))
 
-    (defun gt-bing-translate ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'bing gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt-youdao-dict-translate-dwim ()
+        (interactive)
+        (gt--do-translate 'youdao-dict-dwim))
 
-    (defun gt-bing-translate-dwim ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'bing-dwim gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt-bing-translate ()
+        (interactive)
+        (gt--do-translate 'bing))
 
-    (defun gt-multi-dict-translate ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'multi-dict gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt-bing-translate-dwim ()
+        (interactive)
+        (gt--do-translate 'bing-dwim))
 
-    (defun gt-multi-dict-translate-dwim ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators)))
-        (gt-do-translate)))
+      (defun gt-multi-dict-translate ()
+        (interactive)
+        (gt--do-translate 'multi-dict))
 
-    (defun gt-do-text-utility ()
-      (interactive)
-      (let ((gt-default-translator (alist-get 'Text-Utility gt-preset-translators)))
-        (gt-do-translate)))))
+      (defun gt-multi-dict-translate-dwim ()
+        (interactive)
+        (gt--do-translate 'multi-dict-dwim))
+
+      (defun gt-do-text-utility ()
+        (interactive)
+        (gt--do-translate 'Text-Utility)))))
 
 ;; OSX dictionary
 (when sys/macp
