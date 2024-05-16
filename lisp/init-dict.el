@@ -80,82 +80,83 @@
                     (and (window-live-p win) (delete-window win)))))
 
     ;; Tweak child frame
-    (defclass gt-posframe-pop-render (gt-buffer-render)
-      ((width       :initarg :width        :initform 70)
-       (height      :initarg :height       :initform 15)
-       (forecolor   :initarg :forecolor    :initform nil)
-       (backcolor   :initarg :backcolor    :initform nil)
-       (padding     :initarg :padding      :initform 16)
-       (bd-width    :initarg :bd-width     :initform 1)
-       (bd-color    :initarg :bd-color     :initform nil))
-      "Pop up a childframe to show the result.
+    (with-no-warnings
+      (defclass gt-posframe-pop-render (gt-buffer-render)
+        ((width       :initarg :width        :initform 70)
+         (height      :initarg :height       :initform 15)
+         (forecolor   :initarg :forecolor    :initform nil)
+         (backcolor   :initarg :backcolor    :initform nil)
+         (padding     :initarg :padding      :initform 16)
+         (bd-width    :initarg :bd-width     :initform 1)
+         (bd-color    :initarg :bd-color     :initform nil))
+        "Pop up a childframe to show the result.
 The frame will disappear when do do anything but focus in it.
 Manually close the frame with `q'.")
 
-    (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
-      (with-slots (width height bd-width forecolor backcolor bd-color padding) render
-        (let ((inhibit-read-only t)
-              (buf gt-posframe-pop-render-buffer))
-          ;; create
-          (unless (buffer-live-p (get-buffer buf))
-            (posframe-show buf
-                           :string "Loading..."
-                           :timeout gt-posframe-pop-render-timeout
-                           :width width
-                           :height height
-                           :min-width width
-                           :min-height height
-                           :foreground-color (or forecolor (face-foreground 'tooltip nil t))
-                           :background-color (or backcolor (face-background 'tooltip nil t))
-                           :internal-border-width bd-width
-                           :border-color (or bd-color (face-background 'posframe-border nil t))
-                           :left-fringe padding
-                           :right-fringe padding
-                           :position (point)
-                           :poshandler gt-posframe-pop-render-poshandler))
-          ;; render
-          (gt-buffer-render-init buf render translator)
-          (posframe-refresh buf)
-          ;; setup
-          (with-current-buffer buf
-            (gt-buffer-render-key ("q" "Close") (posframe-delete buf))))))
+      (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
+        (with-slots (width height bd-width forecolor backcolor bd-color padding) render
+          (let ((inhibit-read-only t)
+                (buf gt-posframe-pop-render-buffer))
+            ;; create
+            (unless (buffer-live-p (get-buffer buf))
+              (posframe-show buf
+                             :string "Loading..."
+                             :timeout gt-posframe-pop-render-timeout
+                             :width width
+                             :height height
+                             :min-width width
+                             :min-height height
+                             :foreground-color (or forecolor (face-foreground 'tooltip nil t))
+                             :background-color (or backcolor (face-background 'tooltip nil t))
+                             :internal-border-width bd-width
+                             :border-color (or bd-color (face-background 'posframe-border nil t))
+                             :left-fringe padding
+                             :right-fringe padding
+                             :position (point)
+                             :poshandler gt-posframe-pop-render-poshandler))
+            ;; render
+            (gt-buffer-render-init buf render translator)
+            (posframe-refresh buf)
+            ;; setup
+            (with-current-buffer buf
+              (gt-buffer-render-key ("q" "Close") (posframe-delete buf))))))
 
-    ;; Translators
-    (setq gt-preset-translators
-          `((default          . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
-                                                :engines (cdar (gt-ensure-plain gt-preset-engines))
-                                                :render  (cdar (gt-ensure-plain gt-preset-renders))))
-            (youdao-dict      . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
-                                                :engines (gt-youdao-dict-engine)
-                                                :render (gt-buffer-render)))
-            (youdao-dict-dwim . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
-                                                :engines (gt-youdao-dict-engine)
-                                                :render (if (display-graphic-p)
-                                                            (gt-posframe-pop-render)
-                                                          (gt-buffer-render))))
-            (bing             . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
-                                                :engines (gt-bing-engine)
-                                                :render (gt-buffer-render)))
-            (bing-dwim        . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
-                                                :engines (gt-bing-engine)
-                                                :render (if (display-graphic-p)
-                                                            (gt-posframe-pop-render)
-                                                          (gt-buffer-render))))
-            (multi-dict       . ,(gt-translator :taker (gt-taker :langs '(en zh) :prompt t)
-                                                :engines (list (gt-bing-engine)
-                                                               (gt-youdao-dict-engine)
-                                                               (gt-youdao-suggest-engine)
-                                                               (gt-google-engine))
-                                                :render (gt-buffer-render)))
-            (multi-dict-dwim  . ,(gt-translator :taker (gt-taker :langs '(en zh))
-                                                :engines (list (gt-bing-engine)
-                                                               (gt-youdao-dict-engine)
-                                                               (gt-youdao-suggest-engine)
-                                                               (gt-google-engine))
-                                                :render (gt-buffer-render)))
-            (Text-Utility     . ,(gt-text-utility :taker (gt-taker :pick nil)
-                                                  :render (gt-buffer-render)))))
-    (setq gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators))
+      ;; Translators
+      (setq gt-preset-translators
+            `((default          . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
+                                                  :engines (cdar (gt-ensure-plain gt-preset-engines))
+                                                  :render  (cdar (gt-ensure-plain gt-preset-renders))))
+              (youdao-dict      . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
+                                                  :engines (gt-youdao-dict-engine)
+                                                  :render (gt-buffer-render)))
+              (youdao-dict-dwim . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
+                                                  :engines (gt-youdao-dict-engine)
+                                                  :render (if (display-graphic-p)
+                                                              (gt-posframe-pop-render)
+                                                            (gt-buffer-render))))
+              (bing             . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
+                                                  :engines (gt-bing-engine)
+                                                  :render (gt-buffer-render)))
+              (bing-dwim        . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
+                                                  :engines (gt-bing-engine)
+                                                  :render (if (display-graphic-p)
+                                                              (gt-posframe-pop-render)
+                                                            (gt-buffer-render))))
+              (multi-dict       . ,(gt-translator :taker (gt-taker :langs '(en zh) :prompt t)
+                                                  :engines (list (gt-bing-engine)
+                                                                 (gt-youdao-dict-engine)
+                                                                 (gt-youdao-suggest-engine)
+                                                                 (gt-google-engine))
+                                                  :render (gt-buffer-render)))
+              (multi-dict-dwim  . ,(gt-translator :taker (gt-taker :langs '(en zh))
+                                                  :engines (list (gt-bing-engine)
+                                                                 (gt-youdao-dict-engine)
+                                                                 (gt-youdao-suggest-engine)
+                                                                 (gt-google-engine))
+                                                  :render (gt-buffer-render)))
+              (Text-Utility     . ,(gt-text-utility :taker (gt-taker :pick nil)
+                                                    :render (gt-buffer-render)))))
+      (setq gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators)))
 
     (defun gt-youdao-dict-translate ()
       (interactive)
