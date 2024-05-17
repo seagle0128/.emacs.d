@@ -46,15 +46,18 @@
 (when emacs/>=28p
   (use-package go-translate
     :bind (("C-c g"   . gt-do-translate)
-           ("C-c u"   . gt-do-text-utiliuty)
+           ("C-c G"   . gt-multi-dict-translate)
+           ("C-c u"   . gt-do-text-utility)
            ("C-c y"   . gt-youdao-dict-translate-dwim)
-           ("C-c d b" . gt-bing-translate)
-           ("C-c d B" . gt-bing-translate-dwim)
+           ("C-c Y"   . gt-youdao-dict-translate)
+           ("C-c d b" . gt-bing-translate-dwim)
+           ("C-c d B" . gt-bing-translate)
            ("C-c d g" . gt-do-translate)
+           ("C-c d G" . gt-multi-dict-translate)
            ("C-c d m" . gt-multi-dict-translate-dwim)
            ("C-c d M" . gt-multi-dict-translate)
-           ("C-c d y" . gt-youdao-dict-translate)
-           ("C-c d Y" . gt-youdao-dict-translate-dwim)
+           ("C-c d y" . gt-youdao-dict-translate-dwim)
+           ("C-c d Y" . gt-youdao-dict-translate)
            ("C-c d s" . gt-do-setup)
            ("C-c d u" . gt-do-text-utility))
     :init
@@ -64,8 +67,8 @@
             (direction . bottom)
             (window-height . 0.4)))
 
-    (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t))
-    (setq gt-pop-posframe-backcolor (face-background 'tooltip nil t))
+    (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
+          gt-pop-posframe-backcolor (face-background 'tooltip nil t))
     (when (facep 'posframe-border)
       (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
     :config
@@ -89,20 +92,20 @@
          (forecolor    :initarg :forecolor    :initform nil)
          (backcolor    :initarg :backcolor    :initform nil)
          (padding      :initarg :padding      :initform 12)
-         (extra-params :initarg :extra-params :initform nil :type list
+         (frame-params :initarg :frame-params :initform nil :type list
                        :documentation "Other parameters passed to `posframe-show'. Have higher priority."))
         "Pop up a childframe to show the result.
 The frame will disappear when do do anything but focus in it.
 Manually close the frame with `q'.")
 
       (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
-        (with-slots (width height forecolor backcolor padding extra-params) render
+        (with-slots (width height forecolor backcolor padding frame-params) render
           (let ((inhibit-read-only t)
                 (buf gt-posframe-pop-render-buffer))
             ;; create
             (unless (buffer-live-p (get-buffer buf))
               (apply #'posframe-show buf
-                     (append extra-params
+                     (append frame-params
                              (list
                               :string "Loading..."
                               :timeout gt-posframe-pop-render-timeout
@@ -134,11 +137,12 @@ Manually close the frame with `q'.")
                                                   :engines (gt-youdao-dict-engine)
                                                   :render (if (display-graphic-p)
                                                               (gt-posframe-pop-render
-                                                               :extra-params (list :width 70
+                                                               :frame-params (list :width 70
+                                                                                   :height 15
                                                                                    :left-fringe 16
                                                                                    :right-fringe 16
                                                                                    :border-width 1
-                                                                                   :border-color (face-background 'posframe-border nil t)))
+                                                                                   :border-color gt-pin-posframe-bdcolor))
                                                             (gt-buffer-render))))
               (bing             . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word :prompt t)
                                                   :engines (gt-bing-engine)
@@ -146,7 +150,13 @@ Manually close the frame with `q'.")
               (bing-dwim        . ,(gt-translator :taker (gt-taker :langs '(en zh) :text 'word)
                                                   :engines (gt-bing-engine)
                                                   :render (if (display-graphic-p)
-                                                              (gt-posframe-pop-render)
+                                                              (gt-posframe-pop-render
+                                                               :frame-params (list :width 70
+                                                                                   :height 15
+                                                                                   :left-fringe 16
+                                                                                   :right-fringe 16
+                                                                                   :border-width 1
+                                                                                   :border-color gt-pin-posframe-bdcolor))
                                                             (gt-buffer-render))))
               (multi-dict       . ,(gt-translator :taker (gt-taker :langs '(en zh) :prompt t)
                                                   :engines (list (gt-bing-engine)
@@ -165,34 +175,41 @@ Manually close the frame with `q'.")
       (setq gt-default-translator (alist-get 'multi-dict-dwim gt-preset-translators))
 
       (defun gt--do-translate (dict)
-        (let ((gt-default-translator (alist-get dict gt-preset-translators)))
-          (gt-do-translate)))
+        "Translate using DICT from preset tranlators."
+        (gt-start (alist-get dict gt-preset-translators)))
 
       (defun gt-youdao-dict-translate ()
+        "Translate using Youdao dictionary."
         (interactive)
         (gt--do-translate 'youdao-dict))
 
       (defun gt-youdao-dict-translate-dwim ()
+        "Translate using Youdao dictionary without any prompt."
         (interactive)
         (gt--do-translate 'youdao-dict-dwim))
 
       (defun gt-bing-translate ()
+        "Translate using Bing."
         (interactive)
         (gt--do-translate 'bing))
 
       (defun gt-bing-translate-dwim ()
+        "Translate using Bing without any prompt."
         (interactive)
         (gt--do-translate 'bing-dwim))
 
       (defun gt-multi-dict-translate ()
+        "Translate using multiple dictionaries."
         (interactive)
         (gt--do-translate 'multi-dict))
 
       (defun gt-multi-dict-translate-dwim ()
+        "Translate using multiple dictionaries without any prompt."
         (interactive)
         (gt--do-translate 'multi-dict-dwim))
 
       (defun gt-do-text-utility ()
+        "Handle the texts with the utilities."
         (interactive)
         (gt--do-translate 'Text-Utility)))))
 
