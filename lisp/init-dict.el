@@ -62,6 +62,7 @@
            ("C-c d u" . gt-do-text-utility))
     :init
     (setq gt-langs '(en zh)
+          gt-buffer-render-follow-p t
           gt-buffer-render-window-config
           '((display-buffer-reuse-window display-buffer-in-direction)
             (direction . bottom)
@@ -72,18 +73,6 @@
     (when (facep 'posframe-border)
       (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
     :config
-    ;; Same behavior with `popper'
-    (add-hook 'gt-buffer-render-output-hook
-              (lambda ()
-                "Focus in the dict result window."
-                (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
-                  (and (window-live-p win) (select-window win)))))
-    (advice-add #'keyboard-quit :before
-                (lambda (&rest _)
-                  "Close dict result window via `C-g'."
-                  (when-let ((win (get-buffer-window gt-buffer-render-buffer-name)))
-                    (and (window-live-p win) (delete-window win)))))
-
     ;; Tweak child frame
     (with-no-warnings
       ;; Translators
