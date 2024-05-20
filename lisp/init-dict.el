@@ -86,45 +86,6 @@
 
     ;; Tweak child frame
     (with-no-warnings
-      (defclass gt-posframe-pop-render (gt-buffer-render)
-        ((width        :initarg :width        :initform 100)
-         (height       :initarg :height       :initform 15)
-         (forecolor    :initarg :forecolor    :initform nil)
-         (backcolor    :initarg :backcolor    :initform nil)
-         (padding      :initarg :padding      :initform 12)
-         (frame-params :initarg :frame-params :initform nil :type list
-                       :documentation "Other parameters passed to `posframe-show'. Have higher priority."))
-        "Pop up a childframe to show the result.
-The frame will disappear when do do anything but focus in it.
-Manually close the frame with `q'.")
-
-      (cl-defmethod gt-init ((render gt-posframe-pop-render) translator)
-        (with-slots (width height forecolor backcolor padding frame-params) render
-          (let ((inhibit-read-only t)
-                (buf gt-posframe-pop-render-buffer))
-            ;; create
-            (unless (buffer-live-p (get-buffer buf))
-              (apply #'posframe-show buf
-                     (append frame-params
-                             (list
-                              :string "Loading..."
-                              :timeout gt-posframe-pop-render-timeout
-                              :max-width width
-                              :max-height height
-                              :foreground-color (or forecolor gt-pop-posframe-forecolor)
-                              :background-color (or backcolor gt-pop-posframe-backcolor)
-                              :internal-border-width padding
-                              :internal-border-color (or backcolor gt-pop-posframe-backcolor)
-                              :accept-focus t
-                              :position (point)
-                              :poshandler gt-posframe-pop-render-poshandler))))
-            ;; render
-            (gt-buffer-render-init buf render translator)
-            (posframe-refresh buf)
-            ;; setup
-            (with-current-buffer buf
-              (gt-buffer-render-key ("q" "Close") (posframe-delete buf))))))
-
       ;; Translators
       (setq gt-preset-translators
             `((default          . ,(gt-translator :taker   (cdar (gt-ensure-plain gt-preset-takers))
