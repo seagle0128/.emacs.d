@@ -48,6 +48,10 @@
 
 (use-package sideline-flymake
   :diminish sideline-mode
+  :custom-face
+  (sideline-flymake-error ((t (:height 0.85 :italic t))))
+  (sideline-flymake-warning ((t (:height 0.85 :italic t))))
+  (sideline-flymake-success ((t (:height 0.85 :italic t))))
   :hook (flymake-mode . sideline-mode)
   :init (setq sideline-flymake-display-mode 'point
               sideline-backends-right '(sideline-flymake)))

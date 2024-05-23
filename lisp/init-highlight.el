@@ -316,8 +316,7 @@ FACE defaults to inheriting from default and highlight."
                    aw-select toggle-window-split
                    windmove-do-window-select
                    pager-page-down pager-page-up
-                   treemacs-select-window
-                   symbol-overlay-basic-jump))
+                   treemacs-select-window))
       (advice-add cmd :after #'my-pulse-momentary-line))
 
     (dolist (cmd '(pop-to-mark-command

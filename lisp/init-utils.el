@@ -223,17 +223,17 @@
 ;; text mode directory tree
 (use-package ztree
   :custom-face
-  (ztreep-header-face ((t (:inherit diff-header))))
-  (ztreep-arrow-face ((t (:inherit font-lock-comment-face))))
-  (ztreep-leaf-face ((t (:inherit diff-index))))
-  (ztreep-node-face ((t (:inherit font-lock-variable-name-face))))
+  (ztreep-header-face ((t (:inherit diff-header :foreground unspecified))))
+  (ztreep-arrow-face ((t (:inherit font-lock-comment-face :foreground unspecified))))
+  (ztreep-leaf-face ((t (:inherit diff-index :foreground unspecified))))
+  (ztreep-node-face ((t (:inherit font-lock-variable-name-face :foreground unspecified))))
   (ztreep-expand-sign-face ((t (:inherit font-lock-function-name-face))))
-  (ztreep-diff-header-face ((t (:inherit (diff-header bold)))))
-  (ztreep-diff-header-small-face ((t (:inherit diff-file-header))))
-  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face))))
-  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
-  (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
-  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
+  (ztreep-diff-header-face ((t (:inherit (diff-header bold :foreground unspecified)))))
+  (ztreep-diff-header-small-face ((t (:inherit diff-file-header :foreground unspecified))))
+  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face :foreground unspecified))))
+  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t :foreground unspecified))))
+  (ztreep-diff-model-diff-face ((t (:inherit diff-removed :foreground unspecified))))
+  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent :foreground unspecified))))
   :pretty-hydra
   ((:title (pretty-hydra-title "Ztree" 'octicon "nf-oct-diff" :face 'nerd-icons-green)
     :color pink :quit-key ("q" "C-g"))
