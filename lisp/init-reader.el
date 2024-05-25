@@ -89,9 +89,8 @@
 
   ;; Fix encoding issue on Windows
   (when sys/win32p
-    (setq process-coding-system-alist
-          (cons `(,nov-unzip-program . (gbk . gbk))
-                process-coding-system-alist))))
+    (add-to-list 'process-coding-system-alist
+                 `(,nov-unzip-program . (gbk . gbk)))))
 
 ;; Atom/RSS reader
 (use-package elfeed
