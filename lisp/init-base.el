@@ -94,7 +94,9 @@
 (prefer-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (setq system-time-locale "C")
-(unless sys/win32p
+(if sys/win32p
+    (add-to-list 'process-coding-system-alist
+                 '("cmdproxy" utf-8 . gbk))
   (set-selection-coding-system 'utf-8))
 
 ;; Environment
