@@ -428,6 +428,10 @@
   (use-package xclip
     :hook (after-init . xclip-mode)
     :config
+    ;; HACK: fix bug in xclip-mode on WSL
+    (when (eq xclip-method 'powershell)
+      (setq xclip-program "powershell.exe"))
+
     ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
     (when (eq xclip-method 'wl-copy)
       (set-clipboard-coding-system 'gbk) ; for wsl
