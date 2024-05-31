@@ -716,10 +716,16 @@ This issue has been addressed in 28."
     (enable-socks-proxy)))
 
 (defun enable-proxy ()
-  "Toggle proxy."
+  "Enbale proxy."
   (interactive)
-  (toggle-http-proxy)
-  (toggle-socks-proxy))
+  (enable-http-proxy)
+  (enable-socks-proxy))
+
+(defun disable-proxy ()
+  "Disable proxy."
+  (interactive)
+  (disable-http-proxy)
+  (disable-socks-proxy))
 
 (defun toggle-proxy ()
   "Toggle proxy."
