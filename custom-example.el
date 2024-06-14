@@ -102,8 +102,8 @@
 ;; (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; Enable proxy
-;; (proxy-http-enable)
-;; (proxy-socks-enable)
+;; (enable-http-proxy)
+;; (enable-socks-proxy)
 
 ;; Display on the specified monitor
 ;; (when (and (> (length (display-monitor-attributes-list)) 1)
