@@ -48,10 +48,15 @@
      (use-package consult-eglot
        :bind (:map eglot-mode-map
               ("C-M-." . consult-eglot-symbols)))
+
+     ;; Emacs LSP booster
      (when (executable-find "emacs-lsp-booster")
-       (package-vc-install "https://github.com/jdtsmith/eglot-booster")
+       (unless (package-installed-p 'eglot-booster)
+         (and (fboundp #'package-vc-install)
+              (package-vc-install "https://github.com/jdtsmith/eglot-booster")))
        (use-package eglot-booster
          :ensure nil
+         :autoload eglot-booster-mode
          :init (eglot-booster-mode 1)))))
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
@@ -114,6 +119,7 @@
               ("C-M-." . consult-lsp-symbols)))
 
      (with-no-warnings
+       ;; Emacs LSP booster
        ;; @seee https://github.com/blahgeek/emacs-lsp-booster
        (when (executable-find "emacs-lsp-booster")
          (defun lsp-booster--advice-json-parse (old-fn &rest args)
