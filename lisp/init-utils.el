@@ -172,7 +172,7 @@
   (when (fboundp 'gfm-mode)
     (setq atomic-chrome-url-major-mode-alist
           '(("github\\.com" . gfm-mode)
-            ("gitlab\\.com" . gfm-mode)))))
+            ("gitlab\\.*"   . gfm-mode)))))
 
 ;; Process
 (use-package proced
