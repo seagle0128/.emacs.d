@@ -443,11 +443,6 @@
 (unless sys/win32p
   (use-package sudo-edit))
 
-;; Narrow/Widen
-(use-package fancy-narrow
-  :diminish
-  :hook (after-init . fancy-narrow-mode))
-
 ;; Hanlde minified code
 (use-package so-long
   :hook (after-init . global-so-long-mode))
