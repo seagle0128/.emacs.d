@@ -131,7 +131,17 @@
 (use-package link-hint
   :bind (("M-o" . link-hint-open-link)
          ("C-c l o" . link-hint-open-link)
-         ("C-c l c" . link-hint-copy-link)))
+         ("C-c l c" . link-hint-copy-link))
+  :init
+  (with-eval-after-load 'embark
+    (setq link-hint-action-fallback-commands
+          (list :open (lambda ()
+                        (condition-case _
+                            (progn
+                              (embark-dwim)
+                              t)
+                          (error
+                           nil)))))))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
