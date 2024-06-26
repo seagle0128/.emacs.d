@@ -169,7 +169,7 @@ FACE defaults to inheriting from default and highlight."
 (if emacs/>=28p
     (use-package colorful-mode
       :diminish
-      :hook ((mhtml-mode html-mode html-ts-mode php-mode latex-mode help-mode helpful-mode) . colorful-mode)
+      :hook ((mhtml-mode html-mode html-ts-mode php-mode latex-mode help-mode helpful-mode prog-mode) . colorful-mode)
       :init (setq colorful-use-prefix t))
   (use-package rainbow-mode
     :diminish

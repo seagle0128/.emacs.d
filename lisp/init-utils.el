@@ -54,7 +54,7 @@
   (which-key-add-key-based-replacements "C-x 8 e" "emoji")
   (which-key-add-key-based-replacements "C-x @" "modifior")
   (which-key-add-key-based-replacements "C-x a" "abbrev")
-  (which-key-add-key-based-replacements "C-x c" "citre")
+  (which-key-add-key-based-replacements "C-x c" "colorful")
   (which-key-add-key-based-replacements "C-x n" "narrow")
   (which-key-add-key-based-replacements "C-x p" "project")
   (which-key-add-key-based-replacements "C-x r" "rect & bookmark")
