@@ -131,7 +131,17 @@
 (use-package link-hint
   :bind (("M-o" . link-hint-open-link)
          ("C-c l o" . link-hint-open-link)
-         ("C-c l c" . link-hint-copy-link)))
+         ("C-c l c" . link-hint-copy-link))
+  :init
+  (with-eval-after-load 'embark
+    (setq link-hint-action-fallback-commands
+          (list :open (lambda ()
+                        (condition-case _
+                            (progn
+                              (embark-dwim)
+                              t)
+                          (error
+                           nil)))))))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
@@ -428,6 +438,10 @@
   (use-package xclip
     :hook (after-init . xclip-mode)
     :config
+    ;; HACK: fix bug in xclip-mode on WSL
+    (when (eq xclip-method 'powershell)
+      (setq xclip-program "powershell.exe"))
+
     ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
     (when (eq xclip-method 'wl-copy)
       (set-clipboard-coding-system 'gbk) ; for wsl
@@ -438,11 +452,6 @@
 ;; Open files as another user
 (unless sys/win32p
   (use-package sudo-edit))
-
-;; Narrow/Widen
-(use-package fancy-narrow
-  :diminish
-  :hook (after-init . fancy-narrow-mode))
 
 ;; Hanlde minified code
 (use-package so-long

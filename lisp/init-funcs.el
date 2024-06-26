@@ -649,36 +649,36 @@ This issue has been addressed in 28."
 
 
 ;; Network Proxy
-(defun proxy-http-show ()
+(defun show-http-proxy ()
   "Show HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
       (message "Current HTTP proxy is `%s'" centaur-proxy)
     (message "No HTTP proxy")))
 
-(defun proxy-http-enable ()
+(defun enable-http-proxy ()
   "Enable HTTP/HTTPS proxy."
   (interactive)
   (setq url-proxy-services
         `(("http" . ,centaur-proxy)
           ("https" . ,centaur-proxy)
           ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
-  (proxy-http-show))
+  (show-http-proxy))
 
-(defun proxy-http-disable ()
+(defun disable-http-proxy ()
   "Disable HTTP/HTTPS proxy."
   (interactive)
   (setq url-proxy-services nil)
-  (proxy-http-show))
+  (show-http-proxy))
 
-(defun proxy-http-toggle ()
+(defun toggle-http-proxy ()
   "Toggle HTTP/HTTPS proxy."
   (interactive)
   (if (bound-and-true-p url-proxy-services)
-      (proxy-http-disable)
-    (proxy-http-enable)))
+      (disable-http-proxy)
+    (enable-http-proxy)))
 
-(defun proxy-socks-show ()
+(defun show-socks-proxy ()
   "Show SOCKS proxy."
   (interactive)
   (if (bound-and-true-p socks-noproxy)
@@ -686,7 +686,7 @@ This issue has been addressed in 28."
                (cadddr socks-server) (cadr socks-server) (caddr socks-server))
     (message "No SOCKS proxy")))
 
-(defun proxy-socks-enable ()
+(defun enable-socks-proxy ()
   "Enable SOCKS proxy."
   (interactive)
   (require 'socks)
@@ -697,23 +697,41 @@ This issue has been addressed in 28."
          (port (string-to-number (cadr proxy))))
     (setq socks-server `("Default server" ,host ,port 5)))
   (setenv "all_proxy" (concat "socks5://" centaur-socks-proxy))
-  (proxy-socks-show))
+  (show-socks-proxy))
 
-(defun proxy-socks-disable ()
+(defun disable-socks-proxy ()
   "Disable SOCKS proxy."
   (interactive)
   (setq url-gateway-method 'native
         socks-noproxy nil
         socks-server nil)
   (setenv "all_proxy" "")
-  (proxy-socks-show))
+  (show-socks-proxy))
 
-(defun proxy-socks-toggle ()
+(defun toggle-socks-proxy ()
   "Toggle SOCKS proxy."
   (interactive)
-  (if (bound-and-true-p socks-noproxy)
-      (proxy-socks-disable)
-    (proxy-socks-enable)))
+  (if (bound-and-true-p socks-server)
+      (disable-socks-proxy)
+    (enable-socks-proxy)))
+
+(defun enable-proxy ()
+  "Enbale proxy."
+  (interactive)
+  (enable-http-proxy)
+  (enable-socks-proxy))
+
+(defun disable-proxy ()
+  "Disable proxy."
+  (interactive)
+  (disable-http-proxy)
+  (disable-socks-proxy))
+
+(defun toggle-proxy ()
+  "Toggle proxy."
+  (interactive)
+  (toggle-http-proxy)
+  (toggle-socks-proxy))
 
 (provide 'init-funcs)
 

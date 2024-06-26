@@ -102,14 +102,16 @@ mermaid.initialize({
   ;; Install: pip install grip
   (use-package grip-mode
     :defines org-mode-map
+    :functions auth-source-user-and-password
     :bind (:map markdown-mode-command-map
            ("g" . grip-mode))
     :init
     (with-eval-after-load 'org
-      (bind-key "C-c g" #'grip-mode org-mode-map))
+      (bind-key "C-c C-g" #'grip-mode org-mode-map))
 
     (setq grip-update-after-change nil)
-    (when-let ((credential (auth-source-user-and-password "api.github.com")))
+    (when-let ((credential (and (require 'auth-source nil t)
+                                (auth-source-user-and-password "api.github.com"))))
       (setq grip-github-user (car credential)
             grip-github-password (cadr credential))))
 

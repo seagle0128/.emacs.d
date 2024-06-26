@@ -47,13 +47,18 @@
      :config
      (use-package consult-eglot
        :bind (:map eglot-mode-map
-              ("C-M-." . consult-eglot-symbols)))))
-  ('lsp-mode
-   ;; Performace tuning
-   ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
-   (setq read-process-output-max (* 1024 1024)) ; 1MB
-   (setenv "LSP_USE_PLISTS" "true")
+              ("C-M-." . consult-eglot-symbols)))
 
+     ;; Emacs LSP booster
+     (when (executable-find "emacs-lsp-booster")
+       (unless (package-installed-p 'eglot-booster)
+         (and (fboundp #'package-vc-install)
+              (package-vc-install "https://github.com/jdtsmith/eglot-booster")))
+       (use-package eglot-booster
+         :ensure nil
+         :autoload eglot-booster-mode
+         :init (eglot-booster-mode 1)))))
+  ('lsp-mode
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
    (use-package lsp-mode
@@ -61,6 +66,11 @@
      :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
      :autoload lsp-enable-which-key-integration
      :commands (lsp-format-buffer lsp-organize-imports)
+     :preface
+     ;; Performace tuning
+     ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
+     (setq read-process-output-max (* 1024 1024)) ; 1MB
+     (setenv "LSP_USE_PLISTS" "true")
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
                              (lsp-deferred))))
@@ -78,7 +88,9 @@
             ("C-c C-d" . lsp-describe-thing-at-point)
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
-     :init (setq lsp-keymap-prefix "C-c l"
+     :init (setq lsp-use-plists t
+
+                 lsp-keymap-prefix "C-c l"
                  lsp-keep-workspace-alive nil
                  lsp-signature-auto-activate nil
                  lsp-modeline-code-actions-enable nil
@@ -107,6 +119,38 @@
               ("C-M-." . consult-lsp-symbols)))
 
      (with-no-warnings
+       ;; Emacs LSP booster
+       ;; @seee https://github.com/blahgeek/emacs-lsp-booster
+       (when (executable-find "emacs-lsp-booster")
+         (defun lsp-booster--advice-json-parse (old-fn &rest args)
+           "Try to parse bytecode instead of json."
+           (or
+            (when (equal (following-char) ?#)
+              (let ((bytecode (read (current-buffer))))
+                (when (byte-code-function-p bytecode)
+                  (funcall bytecode))))
+            (apply old-fn args)))
+         (advice-add (if (progn (require 'json)
+                                (fboundp 'json-parse-buffer))
+                         'json-parse-buffer
+                       'json-read)
+                     :around
+                     #'lsp-booster--advice-json-parse)
+
+         (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+           "Prepend emacs-lsp-booster command to lsp CMD."
+           (let ((orig-result (funcall old-fn cmd test?)))
+             (if (and (not test?)                             ;; for check lsp-server-present?
+                      (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+                      lsp-use-plists
+                      (not (functionp 'json-rpc-connection))  ;; native json-rpc
+                      (executable-find "emacs-lsp-booster"))
+                 (progn
+                   (message "Using emacs-lsp-booster for %s!" orig-result)
+                   (cons "emacs-lsp-booster" orig-result))
+               orig-result)))
+         (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+
        ;; Disable `lsp-mode' in `git-timemachine-mode'
        (defun my-lsp--init-if-visible (fn &rest args)
          (unless (bound-and-true-p git-timemachine-mode)
