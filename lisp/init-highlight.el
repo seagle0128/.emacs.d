@@ -170,7 +170,8 @@ FACE defaults to inheriting from default and highlight."
     (use-package colorful-mode
       :diminish
       :hook ((mhtml-mode html-mode html-ts-mode php-mode latex-mode help-mode helpful-mode prog-mode) . colorful-mode)
-      :init (setq colorful-use-prefix t))
+      :init (setq colorful-use-prefix t
+                  colorful-prefix-string "⬤"))
   (use-package rainbow-mode
     :diminish
     :defines helpful-mode-map
