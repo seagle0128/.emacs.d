@@ -31,8 +31,9 @@
 ;;; Code:
 
 ;; Rust
-(use-package rustic
-  :custom (rustic-lsp-client centaur-lsp))
+(use-package rust-mode
+  :init (setq rust-format-on-save t
+              rust-mode-treesitter-derive t))
 
 (use-package ron-mode
   :mode ("\\.ron" . ron-mode))
