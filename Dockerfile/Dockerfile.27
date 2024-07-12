@@ -15,9 +15,8 @@ RUN apt-get upgrade -y
 RUN apt-get install -y software-properties-common git
 
 # Install Centaur Emacs
-RUN add-apt-repository -y ppa:kelleyk/emacs
 RUN apt-get update
-RUN apt-get install -y emacs27-nox
+RUN apt-get install -y emacs-nox
 RUN git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 
 ENV TERM xterm-256color

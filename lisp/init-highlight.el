@@ -211,11 +211,12 @@ FACE defaults to inheriting from default and highlight."
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
          ([C-f3]    . hl-todo-occur)
+         ("C-c t o" . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
          ("C-c t n" . hl-todo-next)
-         ("C-c t o" . hl-todo-occur)
+         ("C-c t i" . hl-todo-insert)
          ("C-c t r" . hl-todo-rg-project)
-         ("C-c t i" . hl-todo-insert))
+         ("C-c t R" . hl-todo-rg))
   :hook ((after-init . global-hl-todo-mode)
          (hl-todo-mode . (lambda ()
                            (add-hook 'flymake-diagnostic-functions
