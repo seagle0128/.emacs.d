@@ -73,24 +73,26 @@
                            :taker   (list (gt-taker :pick nil :if 'selection)
                                           (gt-taker :text 'paragraph :if (lambda (&rest _) (derived-mode-p 'Info-mode)))
                                           (gt-taker :text 'buffer :pick 'fresh-word :if 'read-only)
-                                          (gt-taker))
+                                          (gt-taker :langs '(en zh)))
                            :engines (if (display-graphic-p)
-                                        (gt-youdao-dict-engine :if 'word)
-                                      (list (gt-bing-engine :if 'no-word)
+                                        (list (gt-bing-engine :if 'not-word)
+                                              (gt-youdao-dict-engine :if 'word))
+                                      (list (gt-bing-engine :if 'not-word)
                                             (gt-youdao-dict-engine :if 'word)
                                             (gt-youdao-suggest-engine :if 'word)
                                             (gt-google-engine :if 'word)))
-                           :render  (list (gt-posframe-pop-render :if (lambda (&rest _) (display-graphic-p))
-                                                                  :frame-params (list :accept-focus nil
-                                                                                      :width 70
-                                                                                      :height 15
-                                                                                      :left-fringe 16
-                                                                                      :right-fringe 16
-                                                                                      :border-width 1
-                                                                                      :border-color gt-pin-posframe-bdcolor))
-                                          (gt-overlay-render :if 'read-only)
-                                          (gt-insert-render :if (lambda (&rest _) (member (buffer-name) '("COMMIT_EDITMSG"))))
-                                          (gt-buffer-render))))
+                           :render  (list  (gt-overlay-render :if 'read-only)
+                                           (gt-insert-render :if (lambda (&rest _) (member (buffer-name) '("COMMIT_EDITMSG"))))
+                                           (gt-posframe-pop-render :if (lambda (&rest _) (and (display-graphic-p)
+                                                                                         (not (derived-mode-p 'Info-mode))))
+                                                                   :frame-params (list :accept-focus nil
+                                                                                       :width 70
+                                                                                       :height 15
+                                                                                       :left-fringe 16
+                                                                                       :right-fringe 16
+                                                                                       :border-width 1
+                                                                                       :border-color gt-pin-posframe-bdcolor))
+                                           (gt-buffer-render))))
               (multi-dict . ,(gt-translator :taker (gt-taker :langs '(en zh) :prompt t)
                                             :engines (list (gt-bing-engine)
                                                            (gt-youdao-dict-engine)
