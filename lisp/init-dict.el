@@ -65,9 +65,7 @@
     (when (facep 'posframe-border)
       (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
     :config
-    ;; Tweak child frame
     (with-no-warnings
-      ;; Translators
       (setq gt-preset-translators
             `((default . ,(gt-translator
                            :taker   (list (gt-taker :pick nil :if 'selection)
