@@ -82,7 +82,7 @@
                                             (gt-google-engine :if 'word)))
                            :render  (list (gt-posframe-pop-render :if (lambda (translator)
                                                                         (and (display-graphic-p)
-                                                                             (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode))
+                                                                             (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
                                                                              (not (member (buffer-name) '("COMMIT_EDITMSG")))))
                                                                   :frame-params (list :accept-focus nil
                                                                                       :width 70
@@ -94,7 +94,7 @@
                                           (gt-overlay-render :if 'read-only)
                                           (gt-insert-render :if (lambda (translator) (member (buffer-name) '("COMMIT_EDITMSG"))))
                                           (gt-buffer-render))))
-              (multi-dict . ,(gt-translator :taker (gt-taker :langs '(en zh) :prompt t)
+              (multi-dict . ,(gt-translator :taker (gt-taker :prompt t)
                                             :engines (list (gt-bing-engine)
                                                            (gt-youdao-dict-engine)
                                                            (gt-youdao-suggest-engine :if 'word)
