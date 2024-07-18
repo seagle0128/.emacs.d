@@ -50,6 +50,7 @@
            ("C-c u"   . gt-do-text-utility)
            ("C-c d g" . gt-do-translate)
            ("C-c d G" . gt-do-translate-prompt)
+           ("C-c d p" . gt-do-speak)
            ("C-c d s" . gt-do-setup)
            ("C-c d u" . gt-do-text-utility))
     :init
@@ -69,7 +70,7 @@
       (setq gt-preset-translators
             `((default . ,(gt-translator
                            :taker   (list (gt-taker :pick nil :if 'selection)
-                                          (gt-taker :text 'paragraph :if '(Info-mode help-mode helpful-mode))
+                                          (gt-taker :text 'paragraph :if '(Info-mode help-mode helpful-mode devdocs-mode))
                                           (gt-taker :text 'buffer :pick 'fresh-word :if 'read-only)
                                           (gt-taker :text 'word))
                            :engines (if (display-graphic-p)
