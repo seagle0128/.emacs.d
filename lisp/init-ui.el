@@ -353,9 +353,8 @@
 (use-package page-break-lines
   :diminish
   :hook (after-init . global-page-break-lines-mode)
-  :config
-  (add-to-list 'page-break-lines-modes 'dashboard-mode)
-  (add-to-list 'page-break-lines-modes 'emacs-news-mode))
+  :config (dolist (mode '(dashboard-mode emacs-news-mode))
+            (add-to-list 'page-break-lines-modes mode)))
 
 ;; Child frame
 (when (childframe-workable-p)
