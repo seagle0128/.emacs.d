@@ -75,12 +75,7 @@
            ("q" . quit-dashboard)
            ("h" . dashboard-hydra/body)
            ("?" . dashboard-hydra/body))
-    :hook (dashboard-mode . (lambda ()
-                              ;; No title
-                              (setq-local frame-title-format nil)
-                              ;; Enable `page-break-lines-mode'
-                              (when (fboundp 'page-break-lines-mode)
-                                (page-break-lines-mode 1))))
+    :hook (dashboard-mode . (lambda () (setq-local frame-title-format nil)))
     :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
           dashboard-startup-banner (or centaur-logo 'official)

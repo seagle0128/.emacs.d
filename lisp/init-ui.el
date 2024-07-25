@@ -352,7 +352,10 @@
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode))
+  :hook (after-init . global-page-break-lines-mode)
+  :config
+  (add-to-list 'page-break-lines-modes 'dashboard-mode)
+  (add-to-list 'page-break-lines-modes 'emacs-news-mode))
 
 ;; Child frame
 (when (childframe-workable-p)
