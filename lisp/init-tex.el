@@ -14,7 +14,7 @@
   ;; open pdfs scaled to fit page
   ;(setq-default pdf-view-display-size 'fit-page)
   ;)
-  
+
  ;(pdf-loader-install)
 
 ;(require 'ox-latex)
@@ -35,7 +35,26 @@
   (setq org-latex-classes nil))
 
 
+(setq org-beamer-outline-frame-title "Sumário")
+
+
 (with-eval-after-load "ox-latex"
+
+
+  (add-to-list 'org-latex-classes
+               '("beamer"
+                 "\\documentclass{beamer}
+                [PACKAGES]
+                [NO-DEFAULT-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  )
+
+
+
 (add-to-list 'org-latex-classes
              '("koma-article" "\\documentclass{scrartcl}
                             [NO-DEFAULT-PACKAGES]"
@@ -69,20 +88,19 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  )
+)
 
-;;;; Custom  title beamer 
+;;;; Custom  title beamer
 
 
-(setq org-latex-title-command 
-  "\\begingroup
+(setq org-latex-title-command
+      "\\begingroup
   \\setbeamertemplate{headline}{}
   \\maketitle
   \\endgroup")
 
 
 
-(setq org-beamer-outline-frame-title "Sumário")
 
   (let ((depth (plist-get info :with-toc)))
        (when depth
