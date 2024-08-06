@@ -226,12 +226,15 @@ value of the selected COLOR."
   ;; is 'any, such that any key triggers the preview.
   ;; (setq consult-preview-key 'any)
   ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
-  (setq consult-preview-key '(:debounce 1.0 any))
+  (setq consult-preview-key nil)
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-   consult-goto-line
-   consult-theme :preview-key '(:debounce 0.5 any))
+   consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 1.0 any)
+   consult-goto-line :preview-key '(:debounce 0.5 any)
+   consult-ripgrep consult-git-grep consult-grep
+   :initial (thing-at-point 'symbol t)
+   :preview-key '(:debounce 0.5 any))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
