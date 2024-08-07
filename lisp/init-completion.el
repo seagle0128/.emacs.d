@@ -148,15 +148,6 @@
 
          ;; Minibuffer history
          :map minibuffer-local-map
-         ("C-s" . (lambda ()
-                    "Insert the selected region or current symbol at point."
-                    (interactive)
-                    (insert (with-current-buffer
-                                (window-buffer (minibuffer-selected-window))
-                              (or (and transient-mark-mode mark-active (/= (point) (mark))
-                                       (buffer-substring-no-properties (point) (mark)))
-		                          (thing-at-point 'symbol t)
-                                  "")))))
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
@@ -230,7 +221,7 @@ value of the selected COLOR."
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-   consult-line :preview-key 'any
+   consult-line consult-line-multi :preview-key 'any
    consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 1.0 any)
    consult-goto-line :preview-key '(:debounce 0.5 any)
    consult-ripgrep consult-git-grep consult-grep
