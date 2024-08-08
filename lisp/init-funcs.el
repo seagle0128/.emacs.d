@@ -133,17 +133,24 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
       (warn "Current buffer is not attached to a file!"))))
 
 ;; Browse URL
-(defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
-  "Browse URL with xwidget-webkit' and switch or pop to the buffer.
-
-  POP-BUFFER specifies whether to pop to the buffer.
-  NEW-SESSION specifies whether to create a new xwidget-webkit session."
+(defun centaur-browse-url (url)
+  "Open URL using a configurable method.
+See `browse-url' for more details."
   (interactive (progn
                  (require 'browse-url)
-                 (browse-url-interactive-arg "xwidget-webkit URL: ")))
-  (or (featurep 'xwidget-internal)
-      (user-error "Your Emacs was not compiled with xwidgets support"))
+                 (browse-url-interactive-arg "URL: ")))
+  (if (and (featurep 'xwidget-internal) (display-graphic-p))
+      (centaur-webkit-browse-url url t)
+    (browse-url url)))
 
+(defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
+  "Browse URL with xwidget-webkit' and switch or pop to the buffer.
+  POP-BUFFER specifies whether to pop to the buffer.
+  NEW-SESSION specifies whether to create a new xwidget-webkit session.
+  Interactively, URL defaults to the string looking like a url around point."
+  (interactive (progn
+                 (require 'browse-url)
+                 (browse-url-interactive-arg "URL: ")))
   (xwidget-webkit-browse-url url new-session)
   (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
     (when (buffer-live-p buf)
@@ -242,7 +249,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
-Native tree-sitter is introduced since 29.1."
+  Native tree-sitter is introduced since 29.1."
   (and centaur-tree-sitter
        (fboundp 'treesit-available-p)
        (treesit-available-p)))
@@ -259,8 +266,8 @@ Native tree-sitter is introduced since 29.1."
       (goto-char (point-min))
       (while (re-search-forward
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-              nil t)
-        (replace-match (format "(setq %s '%s)" variable value) nil nil))
+                               nil t)
+  (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
 
