@@ -222,12 +222,12 @@ value of the selected COLOR."
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-line consult-line-multi
-   :initial (thing-at-point 'symbol t)
+   :initial (selected-region-or-symbol-at-point)
    :preview-key 'any
    consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 1.0 any)
    consult-goto-line :preview-key '(:debounce 0.5 any)
    consult-ripgrep consult-git-grep consult-grep
-   :initial (thing-at-point 'symbol t)
+   :initial (selected-region-or-symbol-at-point)
    :preview-key '(:debounce 0.5 any))
 
   ;; Optionally configure the narrowing key.

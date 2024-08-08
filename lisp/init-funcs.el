@@ -132,6 +132,30 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
           (message "Copied '%s'" filename))
       (warn "Current buffer is not attached to a file!"))))
 
+(defun create-scratch-buffer ()
+  "Create a scratch buffer."
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*scratch*"))
+  (lisp-interaction-mode))
+
+(defun save-buffer-as-utf8 (coding-system)
+  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
+  (interactive "zCoding system for visited file (default nil):")
+  (revert-buffer-with-coding-system coding-system)
+  (set-buffer-file-coding-system 'utf-8)
+  (save-buffer))
+
+(defun save-buffer-gbk-as-utf8 ()
+  "Revert a buffer with GBK and save as UTF-8."
+  (interactive)
+  (save-buffer-as-utf8 'gbk))
+
+(defun selected-region-or-symbol-at-point ()
+  "Return the selected region, otherwise return the symbol at point."
+  (if (region-active-p)
+      (buffer-substring-no-properties (region-beginning) (region-end))
+    (thing-at-point 'symbol t)))
+
 ;; Browse URL
 (defun centaur-browse-url (url)
   "Open URL using a configurable method.
@@ -195,24 +219,6 @@ See `browse-url' for more details."
     (find-file-other-window centaur-custom-post-file)))
 
 ;; Misc
-(defun create-scratch-buffer ()
-  "Create a scratch buffer."
-  (interactive)
-  (switch-to-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode))
-
-(defun save-buffer-as-utf8 (coding-system)
-  "Revert a buffer with `CODING-SYSTEM' and save as UTF-8."
-  (interactive "zCoding system for visited file (default nil):")
-  (revert-buffer-with-coding-system coding-system)
-  (set-buffer-file-coding-system 'utf-8)
-  (save-buffer))
-
-(defun save-buffer-gbk-as-utf8 ()
-  "Revert a buffer with GBK and save as UTF-8."
-  (interactive)
-  (save-buffer-as-utf8 'gbk))
-
 (defun byte-compile-elpa ()
   "Compile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
