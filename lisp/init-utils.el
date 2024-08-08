@@ -146,6 +146,17 @@
   :config
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases))
 
+(use-package calc
+  :defer t)
+
+;; Better UI for `calc'
+(use-package casual-calc
+  :after calc
+  :bind (:map calc-mode-map
+         ("C-o" . casual-calc-tmenu)
+         :map calc-alg-map
+         ("C-o" . casual-calc-tmenu)))
+
 ;; A Simple and cool pomodoro timer
 (use-package pomidor
   :bind ("s-<f12>" . pomidor)
