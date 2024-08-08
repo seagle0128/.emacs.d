@@ -44,6 +44,7 @@
      :init
      (setq read-process-output-max (* 1024 1024)) ; 1MB
      (setq eglot-autoshutdown t
+           eglot-events-buffer-size 0
            eglot-send-changes-idle-time 0.5)
      :config
      (use-package consult-eglot
