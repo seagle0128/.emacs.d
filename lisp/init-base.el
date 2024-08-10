@@ -246,10 +246,6 @@
            ("C-x K"   . delete-this-file)
            ("C-c C-l" . reload-init-file))
 
-;; Sqlite
-(when (fboundp 'sqlite-open)
-  (use-package emacsql-sqlite-builtin))
-
 (provide 'init-base)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
