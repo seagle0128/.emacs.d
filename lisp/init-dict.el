@@ -37,11 +37,7 @@
 (use-package fanyi
   :bind (("C-c d f" . fanyi-dwim)
          ("C-c d d" . fanyi-dwim2)
-         ("C-c d h" . fanyi-from-history))
-  :custom (fanyi-providers '(fanyi-haici-provider
-                             fanyi-youdao-thesaurus-provider
-                             fanyi-etymon-provider
-                             fanyi-longman-provider)))
+         ("C-c d h" . fanyi-from-history)))
 
 (when emacs/>=28p
   (use-package go-translate
@@ -71,7 +67,9 @@
             `((default . ,(gt-translator
                            :taker   (list (gt-taker :pick nil :if 'selection)
                                           (gt-taker :text 'paragraph :if '(Info-mode help-mode helpful-mode devdocs-mode))
-                                          (gt-taker :text 'buffer :pick 'fresh-word :if 'read-only)
+                                          (gt-taker :text 'buffer :pick 'fresh-word
+                                                    :if (lambda (translatror)
+                                                          (and (not (derived-mode-p 'fanyi-mode)) buffer-read-only)))
                                           (gt-taker :text 'word))
                            :engines (if (display-graphic-p)
                                         (list (gt-bing-engine :if 'not-word)
@@ -80,17 +78,18 @@
                                             (gt-youdao-dict-engine :if 'word)
                                             (gt-youdao-suggest-engine :if 'word)
                                             (gt-google-engine :if 'word)))
-                           :render  (list (gt-posframe-pop-render :if (lambda (translator)
-                                                                        (and (display-graphic-p)
-                                                                             (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
-                                                                             (not (member (buffer-name) '("COMMIT_EDITMSG")))))
-                                                                  :frame-params (list :accept-focus nil
-                                                                                      :width 70
-                                                                                      :height 15
-                                                                                      :left-fringe 16
-                                                                                      :right-fringe 16
-                                                                                      :border-width 1
-                                                                                      :border-color gt-pin-posframe-bdcolor))
+                           :render  (list (gt-posframe-pop-render
+                                           :if (lambda (translator)
+                                                 (and (display-graphic-p)
+                                                      (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
+                                                      (not (member (buffer-name) '("COMMIT_EDITMSG")))))
+                                           :frame-params (list :accept-focus nil
+                                                               :width 70
+                                                               :height 15
+                                                               :left-fringe 16
+                                                               :right-fringe 16
+                                                               :border-width 1
+                                                               :border-color gt-pin-posframe-bdcolor))
                                           (gt-overlay-render :if 'read-only)
                                           (gt-insert-render :if (lambda (translator) (member (buffer-name) '("COMMIT_EDITMSG"))))
                                           (gt-buffer-render))))
