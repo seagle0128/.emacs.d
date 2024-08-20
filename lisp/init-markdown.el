@@ -98,8 +98,8 @@ mermaid.initialize({
         (funcall fn)))
     (advice-add #'markdown-export-and-preview :around #'my-markdown-export-and-preview))
 
-  ;; Preview via `grip'
-  ;; Install: pip install grip
+  ;; Preview markdown files
+  ;; @see: https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
   (use-package grip-mode
     :defines org-mode-map
     :functions auth-source-user-and-password
@@ -110,10 +110,14 @@ mermaid.initialize({
       (bind-key "C-c C-g" #'grip-mode org-mode-map))
 
     (setq grip-update-after-change nil)
-    (when-let ((credential (and (require 'auth-source nil t)
-                                (auth-source-user-and-password "api.github.com"))))
-      (setq grip-github-user (car credential)
-            grip-github-password (cadr credential))))
+
+    ;; mdopen doesn't need credentials, and only support external browsers
+    (if (executable-find "mdopen")
+        (setq grip-use-mdopen t)
+      (when-let ((credential (and (require 'auth-source nil t)
+                                  (auth-source-user-and-password "api.github.com"))))
+        (setq grip-github-user (car credential)
+              grip-github-password (cadr credential)))))
 
   ;; Table of contents
   (use-package markdown-toc
