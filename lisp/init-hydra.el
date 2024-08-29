@@ -152,10 +152,10 @@
        "Package Archive"
        (("p m" (centaur-set-package-archives 'melpa t)
          "melpa" :toggle (eq centaur-package-archives 'melpa) :exit t)
-        ("p c" (centaur-set-package-archives 'emacs-cn t)
-         "emacs-cn" :toggle (eq centaur-package-archives 'emacs-cn) :exit t)
         ("p b" (centaur-set-package-archives 'bfsu t)
          "bfsu" :toggle (eq centaur-package-archives 'bfsu) :exit t)
+        ("p i" (centaur-set-package-archives 'iscas t)
+         "iscas" :toggle (eq centaur-package-archives 'iscas) :exit t)
         ("p n" (centaur-set-package-archives 'netease t)
          "netease" :toggle (eq centaur-package-archives 'netease) :exit t)
         ("p s" (centaur-set-package-archives 'sjtu t)
