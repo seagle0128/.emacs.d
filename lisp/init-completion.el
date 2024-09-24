@@ -99,6 +99,7 @@
          ("C-c c e" . consult-colors-emacs)
          ("C-c c w" . consult-colors-web)
          ("C-c c f" . describe-face)
+         ("C-c c l" . find-library)
          ("C-c c t" . consult-theme)
 
          ([remap Info-search]        . consult-info)
