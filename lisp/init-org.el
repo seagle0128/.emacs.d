@@ -116,7 +116,10 @@ prepended to the element after the #+HEADER: tag."
         (progn
           ;; New template expansion since org 9
           (require 'org-tempo nil t)
-          (org-tempo-complete-tag)))
+          (org-tempo-complete-tag)
+	  ;; FIX - `Duplicated keys in ‘org-structure-template-alist’ and ‘org-tempo-keywords-alist’`			
+	  (setq org-structure-template-alist (cl-remove-duplicates org-structure-template-alist :key #'car :test #'equal))
+          (setq org-tempo-keywords-alist (cl-remove-duplicates org-tempo-keywords-alist :key #'car :test #'equal))))
       (when mod (insert mod) (forward-line))
       (when text (insert text))))
 
