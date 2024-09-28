@@ -62,6 +62,7 @@
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 (use-package vertico
+  :custom (vertico-count 15)
   :bind (:map vertico-map
          ("RET" . vertico-directory-enter)
          ("DEL" . vertico-directory-delete-char)
