@@ -504,7 +504,7 @@ This issue has been addressed in 28."
 
 (defun centaur--load-theme (theme)
   "Disable others and enable new THEME."
-  (when-let ((theme (centaur--theme-name theme)))
+  (when-let* ((theme (centaur--theme-name theme)))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme theme t)))
 

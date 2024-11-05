@@ -141,8 +141,8 @@ mermaid.initialize({
   ;; mdopen doesn't need credentials, and only support external browsers
   (if (executable-find "mdopen")
       (setq grip-use-mdopen t)
-    (when-let ((credential (and (require 'auth-source nil t)
-                                (auth-source-user-and-password "api.github.com"))))
+    (when-let* ((credential (and (require 'auth-source nil t)
+                                 (auth-source-user-and-password "api.github.com"))))
       (setq grip-github-user (car credential)
             grip-github-password (cadr credential)))))
 

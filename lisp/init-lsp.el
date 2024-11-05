@@ -559,8 +559,8 @@
        ;; @see https://github.com/emacs-lsp/emacs-ccls/issues/109
        (cl-defmethod my-lsp-execute-command
          ((_server (eql ccls)) (command (eql ccls.xref)) arguments)
-         (when-let ((xrefs (lsp--locations-to-xref-items
-                            (lsp--send-execute-command (symbol-name command) arguments))))
+         (when-let* ((xrefs (lsp--locations-to-xref-items
+                             (lsp--send-execute-command (symbol-name command) arguments))))
            (xref--show-xrefs xrefs nil)))
        (advice-add #'lsp-execute-command :override #'my-lsp-execute-command)))
 
