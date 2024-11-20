@@ -59,10 +59,9 @@
                   ("Updated" 10 t nil updated nil)))))
 
 ;; Display transient in child frame
-(when (childframe-completion-workable-p)
+(when (childframe-workable-p)
   (use-package transient-posframe
     :diminish
-    :after posframe transient
     :defines posframe-border-width
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
