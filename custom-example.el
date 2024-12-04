@@ -7,8 +7,8 @@
 ;; (setq centaur-logo nil)                        ; Logo file or nil (official logo)
 ;; (setq centaur-full-name "user name")           ; User full name
 ;; (setq centaur-mail-address "user@email.com")   ; Email address
-;; (setq centaur-proxy "127.0.0.1:7890")          ; HTTP/HTTPS proxy
-;; (setq centaur-socks-proxy "127.0.0.1:7890")    ; SOCKS proxy
+;; (setq centaur-proxy "127.0.0.1:7897")          ; HTTP/HTTPS proxy
+;; (setq centaur-socks-proxy "127.0.0.1:7897")    ; SOCKS proxy
 ;; (setq centaur-server nil)                      ; Enable `server-mode' or not: t or nil
 ;; (setq centaur-icon nil)                        ; Display icons or not: t or nil
 ;; (setq centaur-package-archives 'melpa)         ; Package repo: melpa, bfsu, iscas, netease, sjtu, tencent, tuna or ustc

@@ -60,12 +60,12 @@
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-proxy "127.0.0.1:1087"
+(defcustom centaur-proxy "127.0.0.1:7897"
   "Set HTTP/HTTPS proxy."
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-socks-proxy "127.0.0.1:1086"
+(defcustom centaur-socks-proxy "127.0.0.1:7897"
   "Set SOCKS proxy."
   :group 'centaur
   :type 'string)
