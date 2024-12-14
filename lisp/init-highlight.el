@@ -43,6 +43,7 @@
 ;; Highlight matching parens
 (use-package paren
   :ensure nil
+  :custom-face (show-paren-match ((t (:underline t))))
   :hook (after-init . show-paren-mode)
   :init (setq show-paren-when-point-inside-paren t
               show-paren-when-point-in-periphery t)
