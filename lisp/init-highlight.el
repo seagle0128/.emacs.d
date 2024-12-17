@@ -53,7 +53,8 @@
               show-paren-when-point-in-periphery t)
   :config
   (if emacs/>=29p
-      (setq show-paren-context-when-offscreen
+      (setq blink-matching-paren-highlight-offscreen t
+            show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))
     (with-no-warnings
       ;; Display matching line for off-screen paren.
