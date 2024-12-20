@@ -125,7 +125,7 @@ FACE defaults to inheriting from default and highlight."
   :hook (((prog-mode yaml-mode) . symbol-overlay-mode)
          (iedit-mode            . turn-off-symbol-overlay)
          (iedit-mode-end        . turn-on-symbol-overlay))
-  :init (setq symbol-overlay-idle-time 0.1)
+  :init (setq symbol-overlay-idle-time 0.3)
   :config
   (with-no-warnings
     ;; Disable symbol highlighting while selecting
