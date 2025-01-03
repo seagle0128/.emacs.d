@@ -126,7 +126,6 @@
       (html-mode       . ("html"))
       (julia-mode      . ("julia~1.8"))
       (js-mode         . ("javascript" "jquery"))
-      (js2-mode        . ("javascript" "jquery"))
       (emacs-lisp-mode . ("elisp")))
     "Alist of major-mode and docs.")
 
