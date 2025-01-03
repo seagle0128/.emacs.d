@@ -539,16 +539,18 @@
    ;; Python
    (use-package lsp-pyright
      :preface
-     ;; Use yapf to format
-     (defun lsp-pyright-format-buffer ()
-       (interactive)
-       (when (and (executable-find "yapf") buffer-file-name)
-         (call-process "yapf" nil nil nil "-i" buffer-file-name)))
      :hook (((python-mode python-ts-mode) . (lambda ()
                                               (require 'lsp-pyright)
                                               (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
-     :init (when (executable-find "python3")
-             (setq lsp-pyright-python-executable-cmd "python3")))
+     :init
+     (when (executable-find "python3")
+       (setq lsp-pyright-python-executable-cmd "python3"))
+
+     (defun lsp-pyright-format-buffer ()
+       "Use `yapf' to format the buffer."
+       (interactive)
+       (when (and (executable-find "yapf") buffer-file-name)
+         (call-process "yapf" nil nil nil "-i" buffer-file-name))))
 
    ;; C/C++/Objective-C
    (use-package ccls
