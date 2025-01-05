@@ -102,10 +102,6 @@
 (use-package typescript-mode
   :mode ("\\.ts[x]\\'" . typescript-mode))
 
-;; Run Mocha or Jasmine tests
-(use-package mocha
-  :config (use-package mocha-snippets))
-
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode
   :config (setq coffee-tab-width 2))
