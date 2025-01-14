@@ -39,7 +39,6 @@
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
-  :commands (winner-undo winner-redo)
   :hook (after-init . winner-mode)
   :init (setq winner-boring-buffers '("*Completions*"
                                       "*Compile-Log*"
@@ -85,9 +84,7 @@
     "Misc"
     (("o" set-frame-font "frame font")
      ("f" make-frame-command "new frame")
-     ("d" delete-frame "delete frame")
-     ("<left>" winner-undo "winner undo")
-     ("<right>" winner-redo "winner redo"))))
+     ("d" delete-frame "delete frame"))))
   :custom-face
   (aw-leading-char-face ((t (:inherit font-lock-keyword-face :foreground unspecified :bold t :height 3.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
