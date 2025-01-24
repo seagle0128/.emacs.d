@@ -203,7 +203,7 @@
                    :min-width width
                    :min-height height
                    :internal-border-width 3
-                   :internal-border-color (face-background 'posframe-border nil t)
+                   :internal-border-color (face-background 'region nil t)
                    :background-color (face-background 'tooltip nil t)
                    :override-parameters '((cursor-type . t))
                    :respect-mode-line t
