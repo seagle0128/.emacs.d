@@ -107,8 +107,7 @@
 ;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")
-           (executable-find "libtool")  ; libtool-bin
-           (executable-find "make"))
+           (executable-find "libtool")) ; libtool-bin
   (use-package vterm
     :bind (:map vterm-mode-map
            ([f9] . (lambda ()

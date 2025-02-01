@@ -122,7 +122,7 @@
 
      (with-no-warnings
        ;; Emacs LSP booster
-       ;; @seee https://github.com/blahgeek/emacs-lsp-booster
+       ;; @see https://github.com/blahgeek/emacs-lsp-booster
        (when (executable-find "emacs-lsp-booster")
          (defun lsp-booster--advice-json-parse (old-fn &rest args)
            "Try to parse bytecode instead of json."

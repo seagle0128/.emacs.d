@@ -124,7 +124,7 @@ mermaid.initialize({
         (apply fn args))))))
 
 ;; Preview markdown files
-;; @see: https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
+;; @see https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
 (use-package grip-mode
   :defines markdown-mode-command-map org-mode-map
   :functions auth-source-user-and-password
