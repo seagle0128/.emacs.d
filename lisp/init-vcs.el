@@ -58,21 +58,6 @@
                   ("State" 6 t nil state nil)
                   ("Updated" 10 t nil updated nil)))))
 
-;; Display transient in child frame
-(when (childframe-workable-p)
-  (use-package transient-posframe
-    :diminish
-    :defines posframe-border-width
-    :custom-face
-    (transient-posframe ((t (:inherit tooltip))))
-    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :hook (after-init . transient-posframe-mode)
-    :init (setq transient-mode-line-format nil
-                transient-posframe-border-width posframe-border-width
-                transient-posframe-poshandler 'posframe-poshandler-frame-center
-                transient-posframe-parameters '((left-fringe . 8)
-                                                (right-fringe . 8)))))
-
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
