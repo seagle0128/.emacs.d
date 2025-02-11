@@ -1,6 +1,6 @@
 ;; init-elixir.el --- Initialize elixir configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2024 N.Ahmet BASTUG
+;; Copyright (C) 2019-2025 N.Ahmet BASTUG
 
 ;; Author: N.Ahmet BASTUG <bastugn@itu.edu.tr>
 ;; URL: https://github.com/kosantosbik/.emacs.d
