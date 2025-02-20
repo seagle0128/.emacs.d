@@ -297,30 +297,31 @@ prepended to the element after the #+HEADER: tag."
         ("C-c C-x m" . org-pomodoro)))))
 
 ;; Roam
-(use-package org-roam
-  :diminish
-  :functions centaur-browse-url
-  :defines org-roam-graph-viewer
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
-  :init
-  (setq org-roam-directory (file-truename centaur-org-directory)
-        org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-        org-roam-graph-viewer #'centaur-browse-url)
-  :config
-  (unless (file-exists-p org-roam-directory)
-    (make-directory org-roam-directory))
-  (add-to-list 'org-agenda-files (format "%s/%s" org-roam-directory "roam"))
+(when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
+  (use-package org-roam
+    :diminish
+    :functions centaur-browse-url
+    :defines org-roam-graph-viewer
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today))
+    :init
+    (setq org-roam-directory (file-truename centaur-org-directory)
+          org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+          org-roam-graph-viewer #'centaur-browse-url)
+    :config
+    (unless (file-exists-p org-roam-directory)
+      (make-directory org-roam-directory))
+    (add-to-list 'org-agenda-files (format "%s/%s" org-roam-directory "roam"))
 
-  (org-roam-db-autosync-enable))
+    (org-roam-db-autosync-enable))
 
-(use-package org-roam-ui
-  :bind ("C-c n u" . org-roam-ui-mode)
-  :init (setq org-roam-ui-browser-function #'centaur-browse-url))
+  (use-package org-roam-ui
+    :bind ("C-c n u" . org-roam-ui-mode)
+    :init (setq org-roam-ui-browser-function #'centaur-browse-url)))
 
 (provide 'init-org)
 
