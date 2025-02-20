@@ -48,15 +48,16 @@
   (unbind-key "M-4" magit-mode-map)
 
   ;; Access Git forges from Magit
-  (use-package forge
-    :demand t
-    :custom-face
-    (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
-    :init (setq forge-topic-list-columns
-                '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-                  ("Title" 60 t nil title  nil)
-                  ("State" 6 t nil state nil)
-                  ("Updated" 10 t nil updated nil)))))
+  (when emacs/>=29p
+    (use-package forge
+      :demand t
+      :custom-face
+      (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
+      :init (setq forge-topic-list-columns
+                  '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+                    ("Title" 60 t nil title  nil)
+                    ("State" 6 t nil state nil)
+                    ("Updated" 10 t nil updated nil))))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
