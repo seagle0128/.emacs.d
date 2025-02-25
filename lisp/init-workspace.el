@@ -30,8 +30,11 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (use-package tabspaces
-  :hook (after-init . tabspaces-mode)
+  :hook (after-init . (lambda() (unless centaur-dashboard (tabspaces-mode t))))
   :custom
   (tab-bar-show nil)
 

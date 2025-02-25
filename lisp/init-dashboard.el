@@ -154,11 +154,10 @@
       (interactive)
       (message "Restoring previous session...")
       (quit-window t)
-      (cond
-       ((bound-and-true-p tabspaces-mode)
-        (tabspaces-restore-session))
-       ((bound-and-true-p desktop-save-mode)
-        (desktop-read)))
+
+      (tabspaces-mode t)
+      (tabspaces-restore-session)
+
       (message "Restoring previous session...done"))
 
     (defun dashboard-goto-recent-files ()
@@ -207,6 +206,12 @@
       "Quit dashboard window."
       (interactive)
       (quit-window t)
+
+      ;; Create workspace
+      (tabspaces-mode t)
+      (tabspaces-switch-or-create-workspace tabspaces-default-tab)
+
+      ;; Recover layout
       (and dashboard-recover-layout-p
            (and (bound-and-true-p winner-mode) (winner-undo))
            (setq dashboard-recover-layout-p nil)))))
