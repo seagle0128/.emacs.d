@@ -53,12 +53,8 @@
 
      ;; Emacs LSP booster
      (when (and emacs/>=29p (executable-find "emacs-lsp-booster"))
-       (unless (package-installed-p 'eglot-booster)
-         (and (fboundp #'package-vc-install)
-              (package-vc-install "https://github.com/jdtsmith/eglot-booster")))
        (use-package eglot-booster
-         :ensure nil
-         :autoload eglot-booster-mode
+         :vc (:url "https://github.com/jdtsmith/eglot-booster")
          :init (eglot-booster-mode 1)))))
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
