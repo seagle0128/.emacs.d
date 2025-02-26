@@ -474,9 +474,12 @@ This issue has been addressed in 28."
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
-  (not (or noninteractive
-           emacs-basic-display
-           (not (display-graphic-p)))))
+  (and (>= emacs-major-version 26)
+       (not noninteractive)
+       (not emacs-basic-display)
+       (or (display-graphic-p)
+           (featurep 'tty-child-frames))
+       (eq (frame-parameter (selected-frame) 'minibuffer) 't)))
 
 (defun childframe-completion-workable-p ()
   "Whether childframe completion is workable."
