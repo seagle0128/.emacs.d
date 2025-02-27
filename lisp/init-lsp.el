@@ -54,7 +54,7 @@
 
    ;; Emacs LSP booster
    (use-package eglot-booster
-     :when emacs/>=29p
+     :when (and emacs/>=29p (executable-find "emacs-lsp-booster"))
      :ensure nil
      :init (unless (package-installed-p 'eglot-booster)
              (package-vc-install "https://github.com/jdtsmith/eglot-booster"))
