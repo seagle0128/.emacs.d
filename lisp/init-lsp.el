@@ -45,17 +45,20 @@
      (setq read-process-output-max (* 1024 1024)) ; 1MB
      (setq eglot-autoshutdown t
            eglot-events-buffer-size 0
-           eglot-send-changes-idle-time 0.5)
-     :config
-     (use-package consult-eglot
-       :bind (:map eglot-mode-map
-              ("C-M-." . consult-eglot-symbols)))
+           eglot-send-changes-idle-time 0.5))
 
-     ;; Emacs LSP booster
-     (when (and emacs/>=29p (executable-find "emacs-lsp-booster"))
-       (use-package eglot-booster
-         :vc (:url "https://github.com/jdtsmith/eglot-booster")
-         :init (eglot-booster-mode 1)))))
+   (use-package consult-eglot
+     :after eglot
+     :bind (:map eglot-mode-map
+            ("C-M-." . consult-eglot-symbols)))
+
+   ;; Emacs LSP booster
+   (use-package eglot-booster
+     :when emacs/>=29p
+     :ensure nil
+     :init (unless (package-installed-p 'eglot-booster)
+             (package-vc-install "https://github.com/jdtsmith/eglot-booster"))
+     :hook (after-init . eglot-booster-mode)))
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
