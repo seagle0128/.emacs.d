@@ -184,6 +184,11 @@ It's only available on macOS currently."
   :type '(choice (const :tag "Minibuffer" minibuffer)
                  (const :tag "Child Frame" childframe)))
 
+(defcustom centaur-frame-maximized-on-startup nil
+  "Maximize frame on startup or not."
+  :group 'centaur
+  :type 'boolean)
+
 (defcustom centaur-dashboard (not (daemonp))
   "Display dashboard at startup or not.
 If Non-nil, use dashboard, otherwise will restore previous session."

@@ -53,12 +53,14 @@ body:
       label: Emacs Version
       description: Which version of Emacs are you using?
       options:
-        - 26
         - 27
         - 28
         - 29
+        - 30
+        - 31
         - gccemacs-28
         - gccemacs-29
+        - snapshot
     validations:
       required: true
   - type: textarea
