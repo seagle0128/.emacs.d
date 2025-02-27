@@ -45,7 +45,7 @@
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore (not centaur-dashboard))
-  :init
+  :config
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
     ;; hide full buffer list (still available with "b" prefix)
