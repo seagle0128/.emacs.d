@@ -133,14 +133,17 @@ FACE defaults to inheriting from default and highlight."
       "Turn off symbol highlighting."
       (interactive)
       (symbol-overlay-mode -1))
-    (advice-add #'set-mark :after #'turn-off-symbol-overlay)
 
     (defun turn-on-symbol-overlay (&rest _)
       "Turn on symbol highlighting."
       (interactive)
       (when (derived-mode-p 'prog-mode 'yaml-mode)
         (symbol-overlay-mode 1)))
-    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
+
+    (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
+    (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
+    (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay)))
 
 ;; Mark occurrences of current region (selection)
 (use-package region-occurrences-highlighter
