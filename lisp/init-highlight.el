@@ -167,38 +167,12 @@ FACE defaults to inheriting from default and highlight."
   :config (require 'indent-bars-ts))
 
 ;; Colorize color names in buffers
-(if emacs/>=28p
-    (use-package colorful-mode
-      :diminish
-      :hook (after-init . global-colorful-mode)
-      :init (setq colorful-use-prefix t)
-      :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-                (add-to-list 'global-colorful-modes mode)))
-  (use-package rainbow-mode
-    :diminish
-    :defines helpful-mode-map
-    :bind (:map help-mode-map
-           ("w" . rainbow-mode))
-    :hook ((mhtml-mode html-mode html-ts-mode php-mode latex-mode help-mode helpful-mode) . rainbow-mode)
-    :init (with-eval-after-load 'helpful
-            (bind-key "w" #'rainbow-mode helpful-mode-map))
-    :config
-    (with-no-warnings
-      ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
-      ;; @see https://emacs.stackexchange.com/questions/36420
-      (defun my-rainbow-colorize-match (color &optional match)
-        (let* ((match (or match 0))
-               (ov (make-overlay (match-beginning match) (match-end match))))
-          (overlay-put ov 'ovrainbow t)
-          (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                    "white" "black"))
-                                  (:background ,color)))))
-      (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
-
-      (defun my-rainbow-clear-overlays ()
-        "Clear all rainbow overlays."
-        (remove-overlays (point-min) (point-max) 'ovrainbow t))
-      (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))))
+(use-package colorful-mode
+  :diminish
+  :hook (after-init . global-colorful-mode)
+  :init (setq colorful-use-prefix t)
+  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
+            (add-to-list 'global-colorful-modes mode)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters

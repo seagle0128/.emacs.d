@@ -222,7 +222,6 @@
     (add-hook 'window-setup-hook #'centaur-frame-maximize))
 
   ;; Frame fullscreen
-  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
   (bind-key "S-s-<return>" #'toggle-frame-fullscreen)
   (and sys/mac-x-p (bind-key "C-s-f" #'toggle-frame-fullscreen))
 

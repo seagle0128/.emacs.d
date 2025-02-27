@@ -39,8 +39,8 @@ an easy to use Emacs configuration for Emacs newcomers and lots of additional
 power for Emacs power users.
 
 It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
-GNU Emacs 27.1 and above**. In general you're advised to always run with the
-latest stable release - currently **29.2**.
+GNU Emacs 28.1 and above**. In general you're advised to always run with the
+latest stable release - currently **30.1**.
 
 ## Features
 

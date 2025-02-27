@@ -4,7 +4,7 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 8.1.1
+;; Version: 8.2.0
 ;; Keywords: .emacs.d centaur
 
 ;;
@@ -50,8 +50,8 @@
 
 ;;; Code:
 
-(when (version< emacs-version "27.1")
-  (error "This requires Emacs 27.1 and above!"))
+(when (version< emacs-version "28.1")
+  (error "This requires Emacs 28.1 and above!"))
 
 ;;
 ;; Speed up startup

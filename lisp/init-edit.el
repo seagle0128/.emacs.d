@@ -327,17 +327,9 @@
          ([remap move-end-of-line] . mwim-end)))
 
 ;; Treat undo history as a tree
-(if emacs/>=28p
-    (use-package vundo
-      :bind ("C-x u" . vundo)
-      :config (setq vundo-glyph-alist vundo-unicode-symbols))
-  (use-package undo-tree
-    :diminish
-    :hook (after-init . global-undo-tree-mode)
-    :init (setq undo-tree-visualizer-timestamps t
-                undo-tree-visualizer-diff t
-                undo-tree-enable-undo-in-region nil
-                undo-tree-auto-save-history nil)))
+(use-package vundo
+  :bind ("C-x u" . vundo)
+  :config (setq vundo-glyph-alist vundo-unicode-symbols))
 
 ;; Goto last change
 (use-package goto-chg
