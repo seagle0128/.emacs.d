@@ -156,7 +156,8 @@
       (quit-window t)
 
       (when (fboundp 'tabspaces-mode)
-        (tabspaces-mode t)
+        (unless tabspaces-mode
+          (tabspaces-mode t))
         (tabspaces-restore-session))
 
       (message "Restoring previous session...done"))
@@ -210,8 +211,9 @@
 
       ;; Create workspace
       (when (fboundp 'tabspaces-mode)
-        (tabspaces-mode t)
-        (tabspaces-switch-or-create-workspace tabspaces-default-tab))
+        (unless tabspaces-mode
+          (tabspaces-mode t)
+          (tabspaces-switch-or-create-workspace tabspaces-default-tab)))
 
       ;; Recover layout
       (and dashboard-recover-layout-p
