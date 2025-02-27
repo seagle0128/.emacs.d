@@ -219,7 +219,7 @@
 (when (display-graphic-p)
   ;; Frame maximized on startup
   (when centaur-frame-maximized-on-startup
-    (add-hook 'window-setup-hook #'toggle-frame-maximized))
+    (add-hook 'window-setup-hook #'centaur-frame-maximize))
 
   ;; Frame fullscreen
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
