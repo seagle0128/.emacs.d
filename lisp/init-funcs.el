@@ -174,9 +174,10 @@ See `browse-url' for more details."
 
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
   "Browse URL with xwidget-webkit' and switch or pop to the buffer.
-  POP-BUFFER specifies whether to pop to the buffer.
-  NEW-SESSION specifies whether to create a new xwidget-webkit session.
-  Interactively, URL defaults to the string looking like a url around point."
+
+POP-BUFFER specifies whether to pop to the buffer.
+NEW-SESSION specifies whether to create a new xwidget-webkit session.
+Interactively, URL defaults to the string looking like a url around point."
   (interactive (progn
                  (require 'browse-url)
                  (browse-url-interactive-arg "URL: ")))
@@ -260,7 +261,8 @@ See `browse-url' for more details."
 
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
-  Native tree-sitter is introduced since 29.1."
+
+Native tree-sitter is introduced since 29.1."
   (and centaur-tree-sitter
        (fboundp 'treesit-available-p)
        (treesit-available-p)))
