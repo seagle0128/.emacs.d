@@ -367,8 +367,6 @@ Return the fastest package archive."
   (eval-expression
    (minibuffer-with-setup-hook
        (lambda ()
-         (add-function :before-until (local 'eldoc-documentation-function)
-           #'elisp-eldoc-documentation-function)
          (run-hooks 'eval-expression-minibuffer-setup-hook)
          (goto-char (minibuffer-prompt-end))
          (forward-char (length (format "(setq %S " sym))))
@@ -557,8 +555,8 @@ Return the fastest package archive."
        :diminish
        :commands auto-dark-mode
        :init
-       (setq auto-dark-light-theme (alist-get 'light centaur-system-themes)
-             auto-dark-dark-theme (alist-get 'dark centaur-system-themes))
+       (setq auto-dark-themes `(,(alist-get 'dark centaur-system-themes)
+                                ,(alist-get 'light centaur-system-themes)))
        (when (and sys/macp (not (display-graphic-p)))
          (setq auto-dark-detection-method 'osascript))
        (auto-dark-mode 1)))

@@ -154,8 +154,8 @@ For example:
   :type '(alist :key-type (string :tag "Time")
                 :value-type (symbol :tag "Theme")))
 
-(defcustom centaur-system-themes '((light . doom-one-light)
-				                   (dark  . doom-one))
+(defcustom centaur-system-themes '((dark  . doom-one)
+                                   (light . doom-one-light))
   "List of themes related the system appearance.
 
 It's only available on macOS currently."
