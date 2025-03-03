@@ -157,13 +157,18 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
     (thing-at-point 'symbol t)))
 
 ;; Browse URL
+(defun xwidget-workable-p ()
+  "Check whether xwidget is available."
+  (and (display-graphic-p)
+       (featurep 'xwidget-internal)))
+
 (defun centaur-browse-url (url)
   "Open URL using a configurable method.
 See `browse-url' for more details."
   (interactive (progn
                  (require 'browse-url)
                  (browse-url-interactive-arg "URL: ")))
-  (if (and (featurep 'xwidget-internal) (display-graphic-p))
+  (if (xwidget-workable-p)
       (centaur-webkit-browse-url url t)
     (browse-url url)))
 
