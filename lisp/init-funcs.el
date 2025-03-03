@@ -555,8 +555,8 @@ Return the fastest package archive."
        :diminish
        :commands auto-dark-mode
        :init
-       (setq auto-dark-themes `(,(alist-get 'dark centaur-system-themes)
-                                ,(alist-get 'light centaur-system-themes)))
+       (setq auto-dark-themes `((,(alist-get 'dark centaur-system-themes))
+                                (,(alist-get 'light centaur-system-themes))))
        (when (and sys/macp (not (display-graphic-p)))
          (setq auto-dark-detection-method 'osascript))
        (auto-dark-mode 1)))
