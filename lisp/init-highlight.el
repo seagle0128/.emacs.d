@@ -140,7 +140,7 @@ FACE defaults to inheriting from default and highlight."
       (when (derived-mode-p 'prog-mode 'yaml-mode)
         (symbol-overlay-mode 1)))
 
-    (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+    (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
     (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
     (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
     (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay)))
