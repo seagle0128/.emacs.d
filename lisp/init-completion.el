@@ -42,9 +42,10 @@
   :after orderless
   :autoload pinyinlib-build-regexp-string
   :init
-  (defun completion--regex-pinyin (str)
+  (defun orderless-regexp-pinyin (str)
+    "Match COMPONENT as a pinyin regex."
     (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
+  (add-to-list 'orderless-matching-styles 'orderless-regexp-pinyin))
 
 (use-package vertico
   :custom (vertico-count 15)
