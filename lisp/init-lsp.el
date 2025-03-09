@@ -48,7 +48,7 @@
            eglot-send-changes-idle-time 0.5))
 
    (use-package consult-eglot
-     :after eglot
+     :after consult eglot
      :bind (:map eglot-mode-map
             ("C-M-." . consult-eglot-symbols)))
 
