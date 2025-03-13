@@ -151,12 +151,13 @@
   (popper-group-function #'popper-group-by-directory)
   (popper-echo-dispatch-actions t)
   :bind (:map popper-mode-map
-         ("C-h z"       . popper-toggle)
-         ("C-<tab>"     . popper-cycle)
-         ("C-M-<tab>"   . popper-toggle-type))
+              ("C-h z"       . popper-toggle)
+              ("C-<tab>"     . popper-cycle)
+              ("C-M-<tab>"   . popper-toggle-type))
   :hook (emacs-startup . popper-echo-mode)
   :init
-  (setq popper-reference-buffers
+  (setq popper-mode-line ""
+        popper-reference-buffers
         '("\\*Messages\\*$"
           "Output\\*$" "\\*Pp Eval Output\\*$"
           "^\\*eldoc.*\\*$"
@@ -213,18 +214,6 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
-
-  (with-eval-after-load 'doom-modeline
-    (setq popper-mode-line
-          '(:eval (let ((face (if (doom-modeline--active)
-                                  'doom-modeline-emphasis
-                                'doom-modeline)))
-                    (if (and (icons-displayable-p)
-                             (bound-and-true-p doom-modeline-icon)
-                             (bound-and-true-p doom-modeline-mode))
-                        (format " %s "
-                                (nerd-icons-octicon "nf-oct-pin" :face face))
-                      (propertize " POP " 'face face))))))
   :config
   (with-no-warnings
     (defun my-popper-fit-window-height (win)
