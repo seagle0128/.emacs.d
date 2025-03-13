@@ -338,12 +338,12 @@
       scroll-preserve-screen-position t)
 
 ;; Smooth scrolling
-(use-package ultra-scroll
-  :when emacs/>=29p
-  :ensure nil
-  :init (unless (package-installed-p 'ultra-scroll)
-          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
-  :hook (after-init . ultra-scroll-mode))
+(when emacs/>=29p
+  (use-package ultra-scroll
+    :ensure nil
+    :init (unless (package-installed-p 'ultra-scroll)
+            (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
+    :hook (after-init . ultra-scroll-mode)))
 
 ;; Smooth scrolling over images
 (unless emacs/>=30p
