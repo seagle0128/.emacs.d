@@ -296,7 +296,6 @@ targets."
                 :around #'embark-hide-which-key-indicator)))
 
 (use-package embark-consult
-  :after embark consult
   :bind (:map minibuffer-mode-map
          ("C-c C-o" . embark-export))
   :hook (embark-collect-mode . consult-preview-at-point-mode))
