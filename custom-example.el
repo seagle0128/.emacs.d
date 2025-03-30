@@ -95,6 +95,7 @@
 
 ;; Misc.
 ;; (setq confirm-kill-emacs 'y-or-n-p)
+;; (setq package-check-signature nil)
 
 ;; Enable proxy
 ;; (enable-http-proxy)
