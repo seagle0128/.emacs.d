@@ -42,7 +42,7 @@
             `(:left-fringe 8
               :right-fringe 8
               :internal-border-width 2
-              :internal-border-color ,(face-background 'posframe-border nil t)
+              :internal-border-color ,(face-background 'region nil t)
               :background-color ,(face-background 'tooltip nil t)
               :foreground-color ,(face-foreground 'tooltip nil t)
               :lines-truncate t
