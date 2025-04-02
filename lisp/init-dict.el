@@ -57,9 +57,8 @@
           (window-height . 0.4)))
 
   (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
-        gt-pop-posframe-backcolor (face-background 'tooltip nil t))
-  (when (facep 'posframe-border)
-    (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
+        gt-pop-posframe-backcolor (face-background 'tooltip nil t)
+        gt-pin-posframe-bdcolor (face-background 'posframe-border nil t))
   :config
   (with-no-warnings
     (setq gt-preset-translators

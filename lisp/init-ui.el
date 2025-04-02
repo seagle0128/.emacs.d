@@ -362,30 +362,7 @@
   :config (dolist (mode '(dashboard-mode emacs-news-mode))
             (add-to-list 'page-break-lines-modes mode)))
 
-;; Child frame
-(use-package posframe
-  :hook (after-load-theme . posframe-delete-all)
-  :init
-  (defface posframe-border
-    `((t (:inherit region)))
-    "Face used by the `posframe' border."
-    :group 'posframe)
-  (defvar posframe-border-width 2
-    "Default posframe border width.")
-  :config
-  (with-no-warnings
-    (defun my-posframe--prettify-frame (&rest _)
-      (set-face-background 'fringe nil posframe--frame))
-    (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
-
-    (defun posframe-poshandler-frame-center-near-bottom (info)
-      (cons (/ (- (plist-get info :parent-frame-width)
-                  (plist-get info :posframe-width))
-               2)
-            (/ (+ (plist-get info :parent-frame-height)
-                  (* 2 (plist-get info :font-height)))
-               2)))))
-
+;; Transient
 (when (childframe-completion-workable-p)
   ;; Display transient in child frame
   (use-package transient-posframe
@@ -400,6 +377,7 @@
                 transient-posframe-parameters '((left-fringe . 8)
                                                 (right-fringe . 8)))))
 
+;; For macOS
 (with-no-warnings
   (when sys/macp
     ;; Render thinner fonts
