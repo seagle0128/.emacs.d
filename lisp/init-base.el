@@ -215,6 +215,13 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
+;; Async
+(use-package async
+  :autoload (async-bytecomp-package-mode dired-async-mode)
+  :init
+  (async-bytecomp-package-mode 1)
+  (dired-async-mode 1))
+
 ;; Frame
 (when (display-graphic-p)
   ;; Frame maximized on startup
