@@ -113,8 +113,7 @@
            ([f9] . (lambda ()
                      (interactive)
                      (and (fboundp 'shell-pop-toggle)
-                          (shell-pop-toggle)))))
-    :init (setq vterm-always-compile-module t))
+                          (shell-pop-toggle))))))
 
   (use-package multi-vterm
     :bind ("C-<f9>" . multi-vterm)
