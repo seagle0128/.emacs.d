@@ -47,7 +47,13 @@
 (when (centaur-treesit-available-p)
   (use-package treesit-auto
     :hook (after-init . global-treesit-auto-mode)
-    :init (setq treesit-auto-install 'prompt)))
+    :init (setq treesit-auto-install 'prompt))
+
+  ;; Code folding
+  (use-package treesit-fold-indicators
+    :ensure treesit-fold
+    :hook (after-init . global-treesit-fold-indicators-mode)
+    :init (setq treesit-fold-indicators-priority -1)))
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
