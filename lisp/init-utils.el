@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
@@ -260,6 +263,7 @@
 ;; Misc
 (use-package disk-usage)
 (use-package memory-usage)
+(use-package reveal-in-folder)
 
 (use-package list-environment
   :init
