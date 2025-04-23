@@ -104,33 +104,9 @@
   (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
 ;; Better terminal emulator
-;; @see https://github.com/akermu/emacs-libvterm#installation
-(when (and module-file-suffix           ; dynamic module
-           (executable-find "cmake")
-           (executable-find "libtool")) ; libtool-bin
-  (use-package vterm
-    :bind (:map vterm-mode-map
-           ([f9] . (lambda ()
-                     (interactive)
-                     (and (fboundp 'shell-pop-toggle)
-                          (shell-pop-toggle))))))
-
-  (use-package multi-vterm
-    :bind ("C-<f9>" . multi-vterm)
-    :custom (multi-vterm-buffer-name "vterm")
-    :config
-    (with-no-warnings
-      ;; Use `pop-to-buffer' instead of `switch-to-buffer'
-      (defun my-multi-vterm ()
-        "Create new vterm buffer."
-        (interactive)
-        (let ((vterm-buffer (multi-vterm-get-buffer)))
-          (setq multi-vterm-buffer-list
-                (nconc multi-vterm-buffer-list (list vterm-buffer)))
-          (set-buffer vterm-buffer)
-          (multi-vterm-internal)
-          (pop-to-buffer vterm-buffer)))
-      (advice-add #'multi-vterm :override #'my-multi-vterm))))
+(use-package eat
+  :hook ((eshell-load . eat-eshell-mode)
+         (eshell-load . eat-eshell-visual-command-mode)))
 
 ;; Shell Pop: leverage `popper'
 (with-no-warnings
@@ -139,7 +115,8 @@
 
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
-    (cond ((fboundp 'vterm) (vterm arg))
+    (cond ((fboundp 'eat) (eat arg))
+          ((fboundp 'vterm) (vterm arg))
           (sys/win32p (eshell arg))
           (t (shell))))
 

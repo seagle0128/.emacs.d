@@ -190,6 +190,7 @@
           "^\\*Process List\\*$" process-menu-mode
           list-environment-mode cargo-process-mode
 
+          "^\\*.*eat.*\\*.*$"
           "^\\*.*eshell.*\\*.*$"
           "^\\*.*shell.*\\*.*$"
           "^\\*.*terminal.*\\*.*$"
@@ -225,8 +226,8 @@
     (defun popper-close-window-hack (&rest _args)
       "Close popper window via `C-g'."
       (when (and ; (called-interactively-p 'interactive)
-                 (not (region-active-p))
-                 popper-open-popup-alist)
+             (not (region-active-p))
+             popper-open-popup-alist)
         (let ((window (caar popper-open-popup-alist))
               (buffer (cdar popper-open-popup-alist)))
           (when (and (window-live-p window)

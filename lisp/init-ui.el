@@ -265,7 +265,7 @@
 (use-package hide-mode-line
   :hook (((treemacs-mode
            eshell-mode shell-mode
-           term-mode vterm-mode
+           term-mode vterm-mode eat-mode
            embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
