@@ -63,7 +63,12 @@
                              :sort 'visibility
                              :as #'buffer-name)))
       "Set workspace buffer list for consult-buffer.")
-    (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
+    (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
+  (defun my-tabspaces-burry-window (&rest _)
+    "Burry *Messages* buffer"
+    (quit-windows-on messages-buffer-name))
+  (advice-add #'tabspaces-restore-session :after #'my-tabspaces-burry-window))
 
 
 (provide 'init-workspace)
