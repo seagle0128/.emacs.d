@@ -34,8 +34,11 @@
   (require 'init-const)
   (require 'init-custom))
 
-;; Prettify Symbols
-;; e.g. display “lambda” as “λ”
+;; ---------------------------------------------------------------------------
+;; Code Display & Utilities
+;; ---------------------------------------------------------------------------
+
+;; Prettify Symbols (e.g., display “lambda” as “λ”)
 (use-package prog-mode
   :ensure nil
   :hook (prog-mode . prettify-symbols-mode)
@@ -45,11 +48,12 @@
 
 ;; Tree-sitter support
 (when (centaur-treesit-available-p)
+  ;; Automatic Tree-sitter grammar management
   (use-package treesit-auto
     :hook (after-init . global-treesit-auto-mode)
     :init (setq treesit-auto-install 'prompt))
 
-  ;; Code folding
+  ;; Code folding indicators using Tree-sitter
   (use-package treesit-fold-indicators
     :ensure treesit-fold
     :hook (after-init . global-treesit-fold-indicators-mode)
@@ -166,7 +170,9 @@ Install the doc if it's not installed."
     ;; Lookup the symbol at point
     (devdocs-lookup nil (thing-at-point 'symbol t))))
 
-;; Misc. programming modes
+;; ---------------------------------------------------------------------------
+;; Miscellaneous Programming Modes
+;; ---------------------------------------------------------------------------
 (use-package csv-mode)
 (unless emacs/>=29p
   (use-package csharp-mode))
@@ -183,20 +189,23 @@ Install the doc if it's not installed."
 (use-package vimrc-mode)
 (use-package yaml-mode)
 
+;; Protobuf mode configuration
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()
+                           "Set up Protobuf's imenu generic expressions."
                            (setq imenu-generic-expression
                                  '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
+;; nXML mode for special file types
 (use-package nxml-mode
   :ensure nil
-  :mode (("\\.xaml$" . xml-mode)))
+  :mode (("\\.xaml\\'" . xml-mode)))
 
-;; Fish shell
+;; Fish shell mode and auto-formatting
 (use-package fish-mode
   :hook (fish-mode . (lambda ()
-                       (add-hook 'before-save-hook
-                                 #'fish_indent-before-save))))
+                       "Integrate `fish_indent` formatting with Fish shell mode."
+                       (add-hook 'before-save-hook #'fish_indent-before-save))))
 
 (provide 'init-prog)
 
