@@ -38,7 +38,10 @@
   ('eglot
    (use-package eglot
      :hook ((prog-mode . (lambda ()
-                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
+                           (unless (derived-mode-p
+                                    'emacs-lisp-mode 'lisp-mode
+                                    'makefile-mode 'snippet-mode
+                                    'ron-mode)
                              (eglot-ensure))))
             ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
      :init
@@ -320,33 +323,33 @@
                (when (bufferp lsp-ui-peek--buffer)
                  (posframe-hide lsp-ui-peek--buffer))
                (setq lsp-ui-peek--last-xref nil))
-                           (funcall fn)))
+           (funcall fn)))
        (advice-add #'lsp-ui-peek--peek-new :around #'lsp-ui-peek--peek-display)
        (advice-add #'lsp-ui-peek--peek-hide :around #'lsp-ui-peek--peek-destroy)
 
        ;; Handle docs
        (defun my-lsp-ui-doc--handle-hr-lines nil
          (let (bolp next before after)
-                           (goto-char 1)
-                           (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
-           (when (get-text-property next 'markdown-hr)
-             (goto-char next)
-             (setq bolp (bolp)
-                   before (char-before))
-             (delete-region (point) (save-excursion (forward-visible-line 1) (point)))
-             (setq after (char-after (1+ (point))))
-             (insert
-              (concat
-               (and bolp (not (equal before ?\n)) (propertize "\n" 'face '(:height 0.5)))
-               (propertize "\n" 'face '(:height 0.5))
-               (propertize " "
-                           ;; :align-to is added with lsp-ui-doc--fix-hr-props
-                           'display '(space :height (1))
-                           'lsp-ui-doc--replace-hr t
-                           'face `(:background ,(face-foreground 'font-lock-comment-face nil t)))
-               ;; :align-to is added here too
-               (propertize " " 'display '(space :height (1)))
-               (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
+           (goto-char 1)
+           (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
+             (when (get-text-property next 'markdown-hr)
+               (goto-char next)
+               (setq bolp (bolp)
+                     before (char-before))
+               (delete-region (point) (save-excursion (forward-visible-line 1) (point)))
+               (setq after (char-after (1+ (point))))
+               (insert
+                (concat
+                 (and bolp (not (equal before ?\n)) (propertize "\n" 'face '(:height 0.5)))
+                 (propertize "\n" 'face '(:height 0.5))
+                 (propertize " "
+                             ;; :align-to is added with lsp-ui-doc--fix-hr-props
+                             'display '(space :height (1))
+                             'lsp-ui-doc--replace-hr t
+                             'face `(:background ,(face-foreground 'font-lock-comment-face nil t)))
+                 ;; :align-to is added here too
+                 (propertize " " 'display '(space :height (1)))
+                 (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
        (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
 
    ;; `lsp-mode' and `treemacs' integration
