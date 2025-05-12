@@ -76,7 +76,10 @@
      (setq read-process-output-max (* 1024 1024)) ; 1MB
      (setenv "LSP_USE_PLISTS" "true")
      :hook ((prog-mode . (lambda ()
-                           (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
+                           (unless (derived-mode-p
+                                    'emacs-lisp-mode 'lisp-mode
+                                    'makefile-mode 'snippet-mode
+                                    'ron-mode)
                              (lsp-deferred))))
             ((markdown-mode yaml-mode yaml-ts-mode) . lsp-deferred)
             (lsp-mode . (lambda ()
