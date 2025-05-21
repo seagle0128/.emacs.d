@@ -52,7 +52,7 @@
   (flymake-popon ((t :inherit default :height 0.85)))
   (flymake-popon-posframe-border ((t :foreground ,(face-background 'posframe-border nil t))))
   :hook (flymake-mode . flymake-popon-mode)
-  :init (setq flymake-popon-width 70
+  :init (setq flymake-popon-width 80
               flymake-popon-posframe-border-width 1
               flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
 
