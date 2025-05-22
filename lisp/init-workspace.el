@@ -67,20 +67,6 @@
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
-    (defun my-tabspaces-hide-childframes (&rest _)
-      "Hide all child frames."
-      (when (childframe-workable-p)
-        ;; Hide shell pop frames
-        (when (and (frame-live-p shell-pop--frame)
-                   (frame-visible-p shell-pop--frame))
-          ;; Hide child frame and refocus in parent frame
-          (make-frame-invisible shell-pop--frame)
-          (select-frame-set-input-focus (frame-parent shell-pop--frame))
-          (setq shell-pop--frame nil))
-        ;; Hide posframe
-        (posframe-hide-all)))
-    (advice-add #'tabspaces-save-session :before #'my-tabspaces-hide-childframes)
-
     (defun my-tabspaces-burry-window (&rest _)
       "Burry *Messages* buffer."
       (quit-windows-on messages-buffer-name))
