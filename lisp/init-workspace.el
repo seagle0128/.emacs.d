@@ -43,6 +43,7 @@
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*" "*Messages*"))
+  (tabspaces-exclude-buffers '("*eat*" "*vterm*" "*shell*" "*eshell*"))
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore (not centaur-dashboard))
@@ -67,9 +68,16 @@
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
+    (defun my-tabspaces-delete-childframe (&rest _)
+      "Delete all child frames."
+      (ignore-errors
+        (posframe-delete-all)))
+    (advice-add #'tabspaces-save-session :before #'my-tabspaces-delete-childframe)
+
     (defun my-tabspaces-burry-window (&rest _)
       "Burry *Messages* buffer."
-      (quit-windows-on messages-buffer-name))
+      (ignore-errors
+        (quit-windows-on messages-buffer-name)))
     (advice-add #'tabspaces-restore-session :after #'my-tabspaces-burry-window)))
 
 (provide 'init-workspace)
