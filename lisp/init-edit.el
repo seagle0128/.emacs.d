@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Delete selection if you insert
 (use-package delsel
   :ensure nil
@@ -129,6 +132,7 @@
 
 ;; Quickly follow links
 (use-package link-hint
+  :functions embark-dwim
   :bind (("M-o" . link-hint-open-link)
          ("C-c l o" . link-hint-open-link)
          ("C-c l c" . link-hint-copy-link))
@@ -151,6 +155,8 @@
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish
+  :autoload aggressive-indent-mode
+  :functions too-long-file-p
   :hook ((after-init . global-aggressive-indent-mode)
          ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
@@ -192,6 +198,7 @@
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
   :diminish beginend-global-mode
+  :functions diminish
   :hook (after-init . beginend-global-mode)
   :config (mapc (lambda (pair)
                   (diminish (cdr pair)))
@@ -243,6 +250,7 @@
 
 ;; Increase selected region by semantic units
 (use-package expand-region
+  :functions centaur-treesit-available-p treesit-buffer-root-node
   :bind ("C-=" . er/expand-region)
   :config
   (when (centaur-treesit-available-p)

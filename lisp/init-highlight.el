@@ -43,6 +43,7 @@
 ;; Highlight matching parens
 (use-package paren
   :ensure nil
+  :functions childframe-workable-p
   :custom-face
   (show-paren-match ((((class color) (background light))
                       (:box (:line-width (-1 . -1) :color "gray73")))
@@ -226,6 +227,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
   :custom (diff-hl-draw-borders nil)
+  :autoload diff-hl-flydiff-mode
   :custom-face
   (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
   (diff-hl-insert ((t (:inherit diff-added :background unspecified))))

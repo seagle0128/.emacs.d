@@ -48,6 +48,7 @@
 
 (use-package flymake-popon
   :diminish
+  :functions childframe-workable-p
   :custom-face
   (flymake-popon ((t :inherit default :height 0.85)))
   (flymake-popon-posframe-border ((t :foreground ,(face-background 'posframe-border nil t))))

@@ -43,6 +43,7 @@
                pdf-view-midnight-minor-mode
                pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
+    :functions pdf-tools-install
     :hook ((pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
            (pdf-tools-enabled . pdf-isearch-minor-mode))
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
@@ -58,6 +59,7 @@
 
     ;; Recover last viewed position
     (use-package saveplace-pdf-view
+      :functions pdf-info-check-epdfinfo
       :when (ignore-errors (pdf-info-check-epdfinfo) t)
       :autoload (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
       :init

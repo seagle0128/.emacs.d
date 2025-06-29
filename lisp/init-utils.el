@@ -36,6 +36,8 @@
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
+  :autoload which-key-posframe-mode
+  :functions childframe-completion-workable-p
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
@@ -102,6 +104,7 @@
   (when (childframe-completion-workable-p)
     (use-package which-key-posframe
       :diminish
+      :defines posframe-border-width
       :functions posframe-poshandler-frame-center-near-bottom
       :custom-face
       (which-key-posframe ((t (:inherit tooltip))))
@@ -217,7 +220,7 @@
 ;; IRC
 (use-package erc
   :ensure nil
-  :defines erc-autojoin-channels-alist
+  :defines erc-interpret-mirc-color erc-autojoin-channels-alist
   :init (setq erc-interpret-mirc-color t
               erc-lurker-hide-list '("JOIN" "PART" "QUIT")
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))

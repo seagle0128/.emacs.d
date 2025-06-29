@@ -113,6 +113,7 @@
 
   ;; `eldoc' support
   (use-package esh-help
+    :commands setup-esh-help-eldoc
     :init (setup-esh-help-eldoc))
 
   ;; `cd' to frequent directory in `eshell'

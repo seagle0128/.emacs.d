@@ -33,6 +33,8 @@
 (eval-when-compile
   (require 'init-custom))
 
+(declare-function centaur-treesit-available-p "init-funcs")
+
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil

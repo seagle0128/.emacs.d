@@ -51,6 +51,7 @@
   (when emacs/>=29p
     (use-package forge
       :demand t
+      :defines forge-topic-list-columns
       :custom-face
       (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
       :init (setq forge-topic-list-columns

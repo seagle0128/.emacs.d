@@ -33,6 +33,8 @@
 (eval-when-compile
   (require 'init-custom))
 
+(declare-function centaur-treesit-available-p "init-funcs")
+
 ;; Golang
 (use-package go-mode
   :functions (go-install-tools exec-path-from-shell-copy-envs)

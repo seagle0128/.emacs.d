@@ -69,7 +69,7 @@
   :defines (compilation-environment
             eshell-preoutput-filter-functions
             eshell-output-filter-functions)
-  :functions (compilation-filter my-advice-compilation-filter)
+  :functions (compilation-filter my-advice-compilation-filter xterm-color-filter)
   :init
   ;; For shell and interpreters
   (setenv "TERM" "xterm-256color")

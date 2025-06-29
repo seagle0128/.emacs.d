@@ -34,6 +34,9 @@
   (require 'init-const)
   (require 'init-custom))
 
+(declare-function centaur-treesit-available-p "init-funcs")
+(declare-function childframe-workable-p "init-funcs")
+
 ;; ---------------------------------------------------------------------------
 ;; Code Display & Utilities
 ;; ---------------------------------------------------------------------------

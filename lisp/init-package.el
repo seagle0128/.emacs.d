@@ -32,8 +32,10 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-custom)
-  (require 'init-funcs))
+  (require 'init-custom))
+
+(declare-function set-package-archives "init-funcs")
+(declare-function centaur-test-package-archives "init-funcs")
 
 ;; At first startup
 (when (and (file-exists-p centaur-custom-example-file)

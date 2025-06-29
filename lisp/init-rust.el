@@ -32,6 +32,7 @@
 
 ;; Rust
 (use-package rust-mode
+  :functions centaur-treesit-available-p
   :mode ("\\.rs\\'" . rustic-mode)
   :init (setq rust-format-on-save t
               rust-mode-treesitter-derive t)
