@@ -206,9 +206,15 @@ Install the doc if it's not installed."
 
 ;; Fish shell mode and auto-formatting
 (use-package fish-mode
+  :commands fish_indent-before-save
+  :defines eglot-server-programs
   :hook (fish-mode . (lambda ()
                        "Integrate `fish_indent` formatting with Fish shell mode."
-                       (add-hook 'before-save-hook #'fish_indent-before-save))))
+                       (add-hook 'before-save-hook #'fish_indent-before-save)))
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '(fish-mode . ("fish-lsp" "start")))))
 
 (provide 'init-prog)
 
