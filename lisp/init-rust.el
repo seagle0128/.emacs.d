@@ -34,8 +34,7 @@
 (use-package rust-mode
   :functions centaur-treesit-available-p
   :mode ("\\.rs\\'" . rustic-mode)
-  :init (setq rust-format-on-save t
-              rust-mode-treesitter-derive t)
+  :init (setq rust-format-on-save t)
   :config
   ;; HACK: `global-treesit-auto-mode' will override `rust-mode'.
   (define-derived-mode rustic-mode rust-mode "Rust"
@@ -44,6 +43,7 @@
 \\{rust-mode-map}")
 
   (when (centaur-treesit-available-p)
+    (setq rust-mode-treesitter-derive t)
     (setq auto-mode-alist (delete '("\\.rs\\'" . rust-mode) auto-mode-alist))
     (setq auto-mode-alist (delete '("\\.rs\\'" . rust-ts-mode) auto-mode-alist))))
 
