@@ -185,7 +185,8 @@
   :init
   (setq-default proced-format 'verbose)
   (setq proced-auto-update-flag t
-        proced-auto-update-interval 3))
+        proced-auto-update-interval 3
+        proced-enable-color-flag t))
 
 ;; Search
 (use-package webjump
