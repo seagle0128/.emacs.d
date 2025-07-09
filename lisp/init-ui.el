@@ -34,6 +34,10 @@
   (require 'init-const)
   (require 'init-custom))
 
+(declare-function childframe-completion-workable-p "init-funcs")
+(declare-function centaur-compatible-theme-p "init-funcs")
+(declare-function refresh-ns-appearance "init-ui")
+
 ;; Optimization
 (setq idle-update-delay 1.0)
 
@@ -89,6 +93,7 @@
 
       ;; Excellent themes
       (use-package doom-themes
+        :functions centaur-load-theme doom-themes-visual-bell-config
         :custom
         (doom-themes-enable-bold t)
         (doom-themes-enable-italic t)
@@ -263,6 +268,7 @@
       "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
+  :autoload turn-off-hide-mode-line-mode
   :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode eat-mode
@@ -279,6 +285,8 @@
 
 ;; Icons
 (use-package nerd-icons
+  :commands nerd-icons-install-fonts
+  :functions font-installed-p
   :config
   (when (and (display-graphic-p)
              (not (font-installed-p nerd-icons-font-family)))
@@ -361,6 +369,7 @@
   ;; Display transient in child frame
   (use-package transient-posframe
     :diminish
+    :defines posframe-border-width
     :custom-face
     (transient-posframe ((t (:inherit tooltip))))
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
