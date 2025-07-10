@@ -83,21 +83,6 @@
       (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
             (alist-get 'right-fringe eldoc-box-frame-parameters) 8))))
 
-;; Search tool
-(use-package grep
-  :ensure nil
-  :autoload grep-apply-setting
-  :init
-  (when (executable-find "rg")
-    (grep-apply-setting
-     'grep-command "rg --color=auto --null -nH --no-heading -e ")
-    (grep-apply-setting
-     'grep-template "rg --color=auto --null --no-heading -g '!*/' -e <R> <D>")
-    (grep-apply-setting
-     'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
-    (grep-apply-setting
-     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
-
 ;; Cross-referencing commands
 (use-package xref
   :bind (("M-g ." . xref-find-definitions)
