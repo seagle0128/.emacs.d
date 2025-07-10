@@ -182,7 +182,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
   :autoload hl-todo-flymake hl-todo-search-and-highlight
-  :functions rg-read-files rg-project
+  :functions rg rg-read-files rg-project
   :custom-face
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
@@ -193,10 +193,7 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t i" . hl-todo-insert)
          ("C-c t r" . hl-todo-rg-project)
          ("C-c t R" . hl-todo-rg))
-  :hook ((after-init . global-hl-todo-mode)
-         (hl-todo-mode . (lambda ()
-                           (add-hook 'flymake-diagnostic-functions
-                                     #'hl-todo-flymake nil t))))
+  :hook (after-init . global-hl-todo-mode)
   :init (setq hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
@@ -207,6 +204,11 @@ FACE defaults to inheriting from default and highlight."
   (dolist (keyword '("DEBUG" "STUB"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb")))
 
+  ;; Integrate into flymake
+  (with-eval-after-load 'flymake
+    (add-hook 'flymake-diagnostic-functions #'hl-todo-flymake))
+
+  ;; Integrate into magit
   (with-eval-after-load 'magit
     (add-hook 'magit-log-wash-summary-hook
               #'hl-todo-search-and-highlight t)
