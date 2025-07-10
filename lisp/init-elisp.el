@@ -33,15 +33,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
-         ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
   :config
-  ;; Syntax highlighting of known Elisp symbols
-  (use-package highlight-defined
-    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
-
   (with-no-warnings
     ;; Align indent keywords
     ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
@@ -202,6 +194,10 @@ Lisp function does not specify a special indentation."
                   (helpful-update)
                 (revert-buffer nil t)))))))
     (bind-key "r" #'remove-hook-at-point help-mode-map)))
+
+;; Syntax highlighting of known Elisp symbols
+(use-package highlight-defined
+  :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
 
 ;; Interactive macro expander
 (use-package macrostep
