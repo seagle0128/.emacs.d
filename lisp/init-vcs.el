@@ -33,7 +33,7 @@
 (eval-when-compile
   (require 'init-const))
 
-;; Git
+;; Magit
 ;; See `magit-define-global-key-bindings'
 (use-package magit
   :init (setq magit-diff-refine-hunk t)
@@ -45,20 +45,15 @@
   (unbind-key "M-1" magit-mode-map)
   (unbind-key "M-2" magit-mode-map)
   (unbind-key "M-3" magit-mode-map)
-  (unbind-key "M-4" magit-mode-map)
+  (unbind-key "M-4" magit-mode-map))
 
-  ;; Access Git forges from Magit
-  (when emacs/>=29p
-    (use-package forge
-      :demand t
-      :defines forge-topic-list-columns
-      :custom-face
-      (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
-      :init (setq forge-topic-list-columns
-                  '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-                    ("Title" 60 t nil title  nil)
-                    ("State" 6 t nil state nil)
-                    ("Updated" 10 t nil updated nil))))))
+;; Show TODOs in magit
+(use-package magit-todos
+  :after magit-status
+  :commands magit-todos-mode
+  :init
+  (setq magit-todos-nice (if (executable-find "nice") t nil))
+  (magit-todos-mode 1))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
