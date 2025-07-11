@@ -36,7 +36,8 @@
 ;; Magit
 ;; See `magit-define-global-key-bindings'
 (use-package magit
-  :init (setq magit-diff-refine-hunk t)
+  :init (setq magit-diff-refine-hunk t
+              git-commit-major-mode 'git-commit-elisp-text-mode)
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
