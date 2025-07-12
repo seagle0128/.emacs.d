@@ -288,8 +288,7 @@
   :commands nerd-icons-install-fonts
   :functions font-installed-p
   :config
-  (when (and (display-graphic-p)
-             (not (font-installed-p nerd-icons-font-family)))
+  (unless (font-installed-p nerd-icons-font-family)
     (nerd-icons-install-fonts t)))
 
 ;; Show line numbers

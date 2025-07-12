@@ -31,6 +31,8 @@
 ;;; Code:
 
 (use-package hydra
+  :define posframe-border-width
+  :functions childframe-completion-workable-p
   :hook (emacs-lisp-mode . hydra-add-imenu)
   :init
   (when (childframe-completion-workable-p)
@@ -51,6 +53,7 @@
     (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t)))
 
 (use-package pretty-hydra
+  :functions icons-displayable-p
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()
                              (add-to-list
