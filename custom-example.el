@@ -14,7 +14,7 @@
 ;; (setq centaur-package-archives 'melpa)         ; Package repo: melpa, bfsu, iscas, netease, sjtu, tencent, tuna or ustc
 ;; (setq centaur-theme 'auto)                     ; Color theme: auto, random, system, default, pro, dark, light, warm, cold, day or night
 ;; (setq centaur-completion-style 'minibuffer)    ; Completion display style: minibuffer or childframe
-;; (setq centaur-frame-maximized-on-startup nil)  ; Maximize frame on startup or not: t or nil
+;; (setq centaur-frame-maximized-on-startup t)    ; Maximize frame on startup or not: t or nil
 ;; (setq centaur-dashboard nil)                   ; Display dashboard at startup or not: t or nil
 ;; (setq centaur-lsp 'lsp-mode)                   ; Set LSP client: lsp-mode, eglot or nil
 ;; (setq centaur-lsp-format-on-save t)            ; Auto format buffers on save: t or nil
@@ -36,7 +36,7 @@
   (when (display-graphic-p)
     ;; Set default font
     (cl-loop for font in '("Cascadia Code" "Fira Code" "Jetbrains Mono"
-                           "SF Mono" "Hack" "Source Code Pro" "Menlo"
+                           "SF Mono" "Menlo" "Hack" "Source Code Pro"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil
@@ -46,7 +46,7 @@
                                                       (t 100))))
 
     ;; Set mode-line font
-    ;; (cl-loop for font in '("Menlo" "SF Pro Display" "Helvetica")
+    ;; (cl-loop for font in '("SF Mono" "Menlo" "SF Pro Display" "Helvetica")
     ;;          when (font-installed-p font)
     ;;          return (progn
     ;;                   (set-face-attribute 'mode-line nil :family font :height 120)
