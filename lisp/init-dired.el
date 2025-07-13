@@ -97,7 +97,7 @@
         (let ((ov (make-overlay (1- pos) pos)))
           (overlay-put ov 'nerd-icons-dired-overlay t)
           (overlay-put ov 'after-string
-                           (propertize "_" 'display string))))
+                       (propertize "_" 'display string))))
       (advice-add #'nerd-icons-dired--add-overlay :override #'my-nerd-icons-dired--add-overlay)))
 
   ;; Extra Dired functionality
@@ -126,10 +126,6 @@
     (setq dired-omit-files
           (concat dired-omit-files
                   "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))))
-
-;; `find-dired' alternative using `fd'
-(when (executable-find "fd")
-  (use-package fd-dired))
 
 (provide 'init-dired)
 
