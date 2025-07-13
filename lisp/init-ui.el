@@ -281,7 +281,7 @@
 
 ;; A minor-mode menu for mode-line
 (use-package minions
-  :hook (doom-modeline-mode . minions-mode))
+  :hook (after-init . minions-mode))
 
 ;; Icons
 (use-package nerd-icons
