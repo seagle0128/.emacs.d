@@ -310,13 +310,13 @@ prepended to the element after the #+HEADER: tag."
            ("C-c n c" . org-roam-capture)
            ("C-c n j" . org-roam-dailies-capture-today))
     :init
-    (setq org-roam-directory (file-truename centaur-org-directory)
+    (setq org-roam-directory centaur-org-directory
           org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
           org-roam-graph-viewer #'centaur-browse-url)
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
-    (add-to-list 'org-agenda-files (format "%s/%s" org-roam-directory "roam"))
+    (add-to-list 'org-agenda-files org-roam-directory)
 
     (org-roam-db-autosync-enable))
 
