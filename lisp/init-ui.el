@@ -347,9 +347,6 @@
 ;; Smooth scrolling
 (when emacs/>=29p
   (use-package ultra-scroll
-    :ensure nil
-    :init (unless (package-installed-p 'ultra-scroll)
-            (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
     :hook (after-init . ultra-scroll-mode)))
 
 ;; Use fixed pitch where it's sensible
