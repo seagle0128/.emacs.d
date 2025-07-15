@@ -53,15 +53,7 @@
    (use-package consult-eglot
      :after consult eglot
      :bind (:map eglot-mode-map
-            ("C-M-." . consult-eglot-symbols)))
-
-   ;; Emacs LSP booster
-   (use-package eglot-booster
-     :when (and emacs/>=29p (executable-find "emacs-lsp-booster"))
-     :ensure nil
-     :init (unless (package-installed-p 'eglot-booster)
-             (package-vc-install "https://github.com/jdtsmith/eglot-booster"))
-     :hook (after-init . eglot-booster-mode)))
+            ("C-M-." . consult-eglot-symbols))))
   ('lsp-mode
    ;; Emacs client for the Language Server Protocol
    ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
@@ -126,38 +118,6 @@
               ("C-M-." . consult-lsp-symbols)))
 
      (with-no-warnings
-       ;; Emacs LSP booster
-       ;; @see https://github.com/blahgeek/emacs-lsp-booster
-       (when (executable-find "emacs-lsp-booster")
-         (defun lsp-booster--advice-json-parse (old-fn &rest args)
-           "Try to parse bytecode instead of json."
-           (or
-            (when (equal (following-char) ?#)
-              (let ((bytecode (read (current-buffer))))
-                (when (byte-code-function-p bytecode)
-                  (funcall bytecode))))
-            (apply old-fn args)))
-         (advice-add (if (progn (require 'json)
-                                (fboundp 'json-parse-buffer))
-                         'json-parse-buffer
-                       'json-read)
-                     :around
-                     #'lsp-booster--advice-json-parse)
-
-         (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-           "Prepend emacs-lsp-booster command to lsp CMD."
-           (let ((orig-result (funcall old-fn cmd test?)))
-             (if (and (not test?)                             ;; for check lsp-server-present?
-                      (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-                      lsp-use-plists
-                      (not (functionp 'json-rpc-connection))  ;; native json-rpc
-                      (executable-find "emacs-lsp-booster"))
-                 (progn
-                   (message "Using emacs-lsp-booster for %s!" orig-result)
-                   (cons "emacs-lsp-booster" orig-result))
-               orig-result)))
-         (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
-
        ;; Disable `lsp-mode' in `git-timemachine-mode'
        (defun my-lsp--init-if-visible (fn &rest args)
          (unless (bound-and-true-p git-timemachine-mode)
