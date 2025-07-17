@@ -322,7 +322,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Pulse modified region
 (use-package goggles
   :diminish
-  :hook ((prog-mode text-mode) . goggles-mode))
+  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
 
 (provide 'init-highlight)
 
