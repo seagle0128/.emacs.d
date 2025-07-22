@@ -163,11 +163,9 @@ Install the doc if it's not installed."
 ;; ---------------------------------------------------------------------------
 ;; Miscellaneous Programming Modes
 ;; ---------------------------------------------------------------------------
-(use-package csv-mode)
-(unless emacs/>=29p
-  (use-package csharp-mode))
 (use-package cask-mode)
 (use-package cmake-mode)
+(use-package csv-mode)
 (use-package cue-sheet-mode)
 (use-package dart-mode)
 (use-package julia-mode)
