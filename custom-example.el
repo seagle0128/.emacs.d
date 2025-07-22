@@ -38,7 +38,7 @@
     (cl-loop for font in '("Cascadia Code" "Fira Code" "Jetbrains Mono"
                            "SF Mono" "Menlo" "Hack" "Source Code Pro"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
-             when (font-installed-p font)
+             when (font-available-p font)
              return (set-face-attribute 'default nil
                                         :family font
                                         :height (cond (sys/macp 130)
@@ -47,7 +47,7 @@
 
     ;; Set mode-line font
     ;; (cl-loop for font in '("SF Mono" "Menlo" "SF Pro Display" "Helvetica")
-    ;;          when (font-installed-p font)
+    ;;          when (font-available-p font)
     ;;          return (progn
     ;;                   (set-face-attribute 'mode-line nil :family font :height 120)
     ;;                   (when (facep 'mode-line-active)
@@ -56,12 +56,12 @@
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
-             when (font-installed-p font)
+             when (font-available-p font)
              return (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
 
     ;; Emoji
     (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
-             when (font-installed-p font)
+             when (font-available-p font)
              return (set-fontset-font t
                                       (if (< emacs-major-version 28)'symbol 'emoji)
                                       (font-spec :family font) nil 'prepend))
@@ -69,7 +69,7 @@
     ;; Specify font for Chinese characters
     (cl-loop for font in '("LXGW Neo Xihei" "WenQuanYi Micro Hei Mono" "LXGW WenKai Screen"
                            "LXGW WenKai Mono" "PingFang SC" "Microsoft Yahei UI" "Simhei")
-             when (font-installed-p font)
+             when (font-available-p font)
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.3)))
                       (set-fontset-font t 'han (font-spec :family font))))))

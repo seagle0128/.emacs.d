@@ -282,9 +282,9 @@
 ;; Icons
 (use-package nerd-icons
   :commands nerd-icons-install-fonts
-  :functions font-installed-p
+  :functions font-available-p
   :config
-  (unless (font-installed-p nerd-icons-font-family)
+  (unless (font-available-p nerd-icons-font-family)
     (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
