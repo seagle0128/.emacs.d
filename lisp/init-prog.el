@@ -168,6 +168,7 @@ Install the doc if it's not installed."
   (use-package csharp-mode))
 (use-package cask-mode)
 (use-package cmake-mode)
+(use-package cue-sheet-mode)
 (use-package dart-mode)
 (use-package julia-mode)
 (use-package lua-mode)
