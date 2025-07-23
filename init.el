@@ -4,7 +4,7 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
-;; Version: 8.2.1
+;; Version: 8.3.0
 ;; Keywords: .emacs.d centaur
 
 ;;
