@@ -145,6 +145,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-check)
 (require 'init-lsp)
 (require 'init-dap)
+(require 'init-ai)
 
 (require 'init-prog)
 (require 'init-elisp)
