@@ -44,6 +44,9 @@
               which-key-lighter nil
               which-key-show-remaining-keys t)
   :config
+  (which-key-add-key-based-replacements "M-s h" "highlight")
+  (which-key-add-key-based-replacements "M-s s" "symbol-overlay")
+
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
   (which-key-add-key-based-replacements "C-c @" "hideshow")
   (which-key-add-key-based-replacements "C-c c" "consult")
