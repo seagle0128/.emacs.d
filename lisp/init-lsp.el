@@ -133,15 +133,6 @@
 
        ;; Display icons
        (when (icons-displayable-p)
-         (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-           (and (icons-displayable-p) (apply fn args)))
-         (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
-
-         ;; For `lsp-headerline'
-         (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-           (and (icons-displayable-p) (apply fn args)))
-         (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
-
          (defun my-lsp-icons-get-by-file-ext (file-ext &optional feature)
            (when (and file-ext
                       (lsp-icons--enabled-for-feature feature))

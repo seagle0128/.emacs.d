@@ -48,6 +48,7 @@
     (orderless-regexp (pinyinlib-build-regexp-string str)))
   (add-to-list 'orderless-matching-styles 'orderless-regexp-pinyin))
 
+;; VERTical Interactive COmpletion
 (use-package vertico
   :custom (vertico-count 15)
   :bind (:map vertico-map
@@ -57,6 +58,7 @@
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
+;; Display vertico in the child frame
 (use-package vertico-posframe
   :functions posframe-poshandler-frame-center-near-bottom
   :hook (vertico-mode . vertico-posframe-mode)
@@ -66,14 +68,15 @@
               '((left-fringe  . 8)
                 (right-fringe . 8))))
 
+;; Add icons to completion candidates
 (use-package nerd-icons-completion
-  :functions icons-displayable-p
-  :when (icons-displayable-p)
   :hook (vertico-mode . nerd-icons-completion-mode))
 
+;; Enrich existing commands with completion annotations
 (use-package marginalia
   :hook (after-init . marginalia-mode))
 
+;; Consulting completing-read
 (use-package consult
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
