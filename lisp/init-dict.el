@@ -40,14 +40,14 @@
          ("C-c d h" . fanyi-from-history)))
 
 (use-package go-translate
-  :bind (("C-c g"   . gt-do-translate)
-         ("C-c G"   . gt-do-translate-prompt)
-         ("C-c u"   . gt-do-text-utility)
-         ("C-c d g" . gt-do-translate)
-         ("C-c d G" . gt-do-translate-prompt)
-         ("C-c d p" . gt-do-speak)
-         ("C-c d s" . gt-do-setup)
-         ("C-c d u" . gt-do-text-utility))
+  :bind (("C-c g"   . gt-translate)
+         ("C-c G"   . gt-translate-prompt)
+         ("C-c u"   . gt-use-text-utility)
+         ("C-c d g" . gt-translate)
+         ("C-c d G" . gt-translate-prompt)
+         ("C-c d p" . gt-speak)
+         ("C-c d s" . gt-setup)
+         ("C-c d u" . gt-use-text-utility))
   :init
   (setq gt-langs '(en zh)
         gt-buffer-render-follow-p t
@@ -99,20 +99,19 @@
                                           :render (gt-buffer-render)))
             (Text-Utility . ,(gt-text-utility :taker (gt-taker :pick nil)
                                               :render (gt-buffer-render)))))
-
-    (defun gt--do-translate (dict)
+    (defun gt--translate (dict)
       "Translate using DICT from the preset tranlators."
       (gt-start (alist-get dict gt-preset-translators)))
 
-    (defun gt-do-translate-prompt ()
+    (defun gt-translate-prompt ()
       "Translate with prompt using the multiple dictionaries."
       (interactive)
-      (gt--do-translate 'multi-dict))
+      (gt--translate 'multi-dict))
 
-    (defun gt-do-text-utility ()
+    (defun gt-use-text-utility ()
       "Handle the texts with the utilities."
       (interactive)
-      (gt--do-translate 'Text-Utility))))
+      (gt--translate 'Text-Utility))))
 
 ;; OSX dictionary
 (when sys/macp
