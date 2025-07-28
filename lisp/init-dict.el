@@ -39,7 +39,7 @@
          ("C-c d d" . fanyi-dwim2)
          ("C-c d h" . fanyi-from-history)))
 
-(use-package go-translate
+(use-package gt
   :bind (("C-c g"   . gt-translate)
          ("C-c G"   . gt-translate-prompt)
          ("C-c u"   . gt-use-text-utility)
