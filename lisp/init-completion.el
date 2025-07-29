@@ -30,10 +30,14 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
   (completion-category-overrides '((file (styles basic partial-completion))))
   (orderless-component-separator #'orderless-escapable-split-on-space))
 
@@ -308,17 +312,38 @@ targets."
 
 ;; Auto completion
 (use-package corfu
+  :autoload consult-completion-in-region
+  :functions corfu-move-to-minibuffer
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 2)
+  (corfu-count 12)
   (corfu-preview-current nil)
+  (corfu-on-exact-match nil)
   (corfu-auto-delay 0.2)
   (corfu-popupinfo-delay '(0.4 . 0.2))
+  (global-corfu-modes '((not erc-mode
+                             circe-mode
+                             help-mode
+                             gud-mode
+                             vterm-mode)
+                        t))
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind ("M-/" . completion-at-point)
   :hook ((after-init . global-corfu-mode)
-         (global-corfu-mode . corfu-popupinfo-mode)))
+         (global-corfu-mode . corfu-popupinfo-mode)
+         (global-corfu-mode . corfu-history-mode))
+  :config
+  (defun corfu-move-to-minibuffer ()
+    (interactive)
+    (pcase completion-in-region--data
+      (`(,beg ,end ,table ,pred ,extras)
+       (let ((completion-extra-properties extras)
+             completion-cycle-threshold completion-cycling)
+         (consult-completion-in-region beg end table pred)))))
+  (keymap-set corfu-map "M-m" #'corfu-move-to-minibuffer)
+  (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
@@ -344,19 +369,32 @@ targets."
   (read-extended-command-predicate #'command-completion-default-include-p))
 
 (use-package nerd-icons-corfu
+  :autoload nerd-icons-corfu-formatter
   :after corfu
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Add extensions
 (use-package cape
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
 
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  ;; Make these capfs composable.
+  (advice-add 'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
+  (advice-add 'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
+  (advice-add 'comint-completion-at-point :around #'cape-wrap-nonexclusive)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)
+
+  ;; Sanitize the `pcomplete-completions-at-point' Capf.  The Capf has undesired
+  ;; side effects on Emacs 28.  These advices are not needed on Emacs 29 and newer.
+  (unless emacs/>=29p
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
 (provide 'init-completion)
 
