@@ -72,13 +72,13 @@
               '((left-fringe  . 8)
                 (right-fringe . 8))))
 
-;; Add icons to completion candidates
-(use-package nerd-icons-completion
-  :hook (vertico-mode . nerd-icons-completion-mode))
-
 ;; Enrich existing commands with completion annotations
 (use-package marginalia
   :hook (after-init . marginalia-mode))
+
+;; Add icons to completion candidates
+(use-package nerd-icons-completion
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
 ;; Consulting completing-read
 (use-package consult
