@@ -82,6 +82,12 @@
 
 ;; Consulting completing-read
 (use-package consult
+  :defines (xref-show-xrefs-function xref-show-definitions-function)
+  :defines shr-color-html-colors-alist
+  :autoload (consult-register-format consult-register-window consult-xref)
+  :autoload (consult--read consult--customize-put)
+  :commands (consult-narrow-help)
+  :functions (list-colors-duplicates consult-colors--web-list)
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
          ("C-c h"   . consult-history)
@@ -240,6 +246,7 @@ value of the selected COLOR."
   :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
+  :commands embark-prefix-help-command
   :bind (("s-."   . embark-act)
          ("C-s-." . embark-act)
          ("M-."   . embark-dwim)        ; overrides `xref-find-definitions'
@@ -268,42 +275,42 @@ value of the selected COLOR."
   (with-no-warnings
     (with-eval-after-load 'which-key
       (defun embark-which-key-indicator ()
-       "An embark indicator that displays keymaps using which-key.
+        "An embark indicator that displays keymaps using which-key.
 The which-key help message will show the type and value of the
 current target followed by an ellipsis if there are further
 targets."
-       (lambda (&optional keymap targets prefix)
-         (if (null keymap)
-             (which-key--hide-popup-ignore-command)
-           (which-key--show-keymap
-            (if (eq (plist-get (car targets) :type) 'embark-become)
-                "Become"
-              (format "Act on %s '%s'%s"
-                      (plist-get (car targets) :type)
-                      (embark--truncate-target (plist-get (car targets) :target))
-                      (if (cdr targets) "…" "")))
-            (if prefix
-                (pcase (lookup-key keymap prefix 'accept-default)
-                  ((and (pred keymapp) km) km)
-                  (_ (key-binding prefix 'accept-default)))
-              keymap)
-            nil nil t (lambda (binding)
-                        (not (string-suffix-p "-argument" (cdr binding))))))))
+        (lambda (&optional keymap targets prefix)
+          (if (null keymap)
+              (which-key--hide-popup-ignore-command)
+            (which-key--show-keymap
+             (if (eq (plist-get (car targets) :type) 'embark-become)
+                 "Become"
+               (format "Act on %s '%s'%s"
+                       (plist-get (car targets) :type)
+                       (embark--truncate-target (plist-get (car targets) :target))
+                       (if (cdr targets) "…" "")))
+             (if prefix
+                 (pcase (lookup-key keymap prefix 'accept-default)
+                   ((and (pred keymapp) km) km)
+                   (_ (key-binding prefix 'accept-default)))
+               keymap)
+             nil nil t (lambda (binding)
+                         (not (string-suffix-p "-argument" (cdr binding))))))))
 
       (setq embark-indicators
-           '(embark-which-key-indicator
-             embark-highlight-indicator
-             embark-isearch-highlight-indicator))
+            '(embark-which-key-indicator
+              embark-highlight-indicator
+              embark-isearch-highlight-indicator))
 
       (defun embark-hide-which-key-indicator (fn &rest args)
-       "Hide the which-key indicator immediately when using the completing-read prompter."
-       (which-key--hide-popup-ignore-command)
-       (let ((embark-indicators
-              (remq #'embark-which-key-indicator embark-indicators)))
-         (apply fn args)))
+        "Hide the which-key indicator immediately when using the completing-read prompter."
+        (which-key--hide-popup-ignore-command)
+        (let ((embark-indicators
+               (remq #'embark-which-key-indicator embark-indicators)))
+          (apply fn args)))
 
       (advice-add #'embark-completing-read-prompter
-                 :around #'embark-hide-which-key-indicator))))
+                  :around #'embark-hide-which-key-indicator))))
 
 (use-package embark-consult
   :bind (:map minibuffer-mode-map
@@ -375,6 +382,9 @@ targets."
 
 ;; Add extensions
 (use-package cape
+  :commands (cape-file cape-elisp-block cape-keyword)
+  :autoload (cape-wrap-noninterruptible cape-wrap-nonexclusive cape-wrap-buster)
+  :autoload (cape-wrap-silent cape-wrap-purify)
   :init
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
