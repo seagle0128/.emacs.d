@@ -280,7 +280,7 @@
                2)))))
 
 ;; Global keybindings
-(bind-keys ("s-r"     . revert-this-buffer)
+(bind-keys ("s-r"     . revert-buffer-quick)
            ("C-x K"   . delete-this-file)
            ("C-c C-l" . reload-init-file))
 

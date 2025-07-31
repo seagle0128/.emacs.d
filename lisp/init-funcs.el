@@ -81,13 +81,6 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
     (widen)))
 
 ;; File and buffer
-(defun revert-this-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (unless (minibuffer-window-active-p (selected-window))
-    (revert-buffer t t)
-    (message "Reverted this buffer")))
-
 (defun delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
