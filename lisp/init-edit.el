@@ -311,6 +311,7 @@
 (use-package flyspell
   :ensure nil
   :diminish
+  :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
@@ -318,7 +319,7 @@
                               (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
-              ispell-program-name (executable-find "aspell")
+              ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 ;; Hungry deletion
