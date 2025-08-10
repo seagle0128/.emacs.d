@@ -65,6 +65,8 @@
   (which-key-add-key-based-replacements "C-x p" "project")
   (which-key-add-key-based-replacements "C-x r" "rect & bookmark")
   (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
+  (which-key-add-key-based-replacements "C-x w" "window & highlight")
+  (which-key-add-key-based-replacements "C-x w ^" "window")
   (which-key-add-key-based-replacements "C-x x" "buffer")
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
   (which-key-add-key-based-replacements "C-x RET" "coding-system")

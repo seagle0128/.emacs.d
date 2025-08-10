@@ -119,7 +119,7 @@
      ("u" elfeed-search-tag-all-unread "mark unread")
      ("r" elfeed-search-untag-all-unread "mark read")
      ("RET" elfeed-search-show-entry "show"))))
-  :bind (("C-x w" . elfeed)
+  :bind (("C-x j" . elfeed)
          :map elfeed-search-mode-map
          ("?" . elfeed-hydra/body)
          :map elfeed-show-mode-map
@@ -224,7 +224,7 @@ browser defined by `browse-url-generic-program'."
 ;; Another Atom/RSS reader
 (use-package newsticker
   :ensure nil
-  :bind ("C-x W" . newsticker-show-news)
+  :bind ("C-x J" . newsticker-show-news)
   :hook (newsticker-treeview-item-mode . centaur-read-mode)
   :init (setq newsticker-url-list
               '(("Planet Emacslife" "https://planet.emacslife.com/atom.xml")
