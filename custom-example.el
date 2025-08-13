@@ -22,8 +22,8 @@
 ;; (setq centaur-tree-sitter nil)                 ; Enable tree-sitter or not: t or nil. Only available in 29+.
 ;; (setq centaur-chinese-calendar t)              ; Support Chinese calendar or not: t or nil
 ;; (setq centaur-player t)                        ; Enable players or not: t or nil
-;; (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
-;; (setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
+(setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
+(setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
 
 ;; For Emacs devel
 ;; (setq package-user-dir (locate-user-emacs-file (format "elpa-%s" emacs-major-version)))
@@ -107,7 +107,6 @@
 ;;   (set-frame-parameter nil 'left 1920))
 
 ;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
-;; (put 'pdf-view-create-image 'lisp-indent-function 'defun)
 ;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
 
 (custom-set-variables
