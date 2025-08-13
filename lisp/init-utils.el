@@ -36,7 +36,6 @@
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
-  :autoload which-key-posframe-mode
   :functions childframe-completion-workable-p
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
@@ -109,6 +108,7 @@
   (when (childframe-completion-workable-p)
     (use-package which-key-posframe
       :diminish
+      :autoload which-key-posframe-mode
       :defines posframe-border-width
       :functions posframe-poshandler-frame-center-near-bottom
       :custom-face
