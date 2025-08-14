@@ -78,7 +78,7 @@
     (setq command-line-x-option-alist nil))
 
   ;; Increase how much is read from processes in a single chunk (default is 4kb)
-  (setq read-process-output-max #x10000)  ; 64kb
+  (setq read-process-output-max #x100000)  ; 1MB
 
   ;; Don't ping things that look like domain names.
   (setq ffap-machine-p-known 'reject))

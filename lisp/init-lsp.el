@@ -45,7 +45,6 @@
                              (eglot-ensure))))
             ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
      :init
-     (setq read-process-output-max (* 1024 1024)) ; 1MB
      (setq eglot-autoshutdown t
            eglot-events-buffer-size 0
            eglot-send-changes-idle-time 0.5))
@@ -62,11 +61,6 @@
      :defines (lsp-diagnostics-disabled-modes lsp-clients-python-library-directories)
      :autoload lsp-enable-which-key-integration
      :commands (lsp-format-buffer lsp-organize-imports)
-     :preface
-     ;; Performace tuning
-     ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
-     (setq read-process-output-max (* 1024 1024)) ; 1MB
-     (setenv "LSP_USE_PLISTS" "true")
      :hook ((prog-mode . (lambda ()
                            (unless (derived-mode-p
                                     'emacs-lisp-mode 'lisp-mode
@@ -88,6 +82,7 @@
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
      :init (setq lsp-use-plists t
+                 lsp-log-io nil
 
                  lsp-keymap-prefix "C-c l"
                  lsp-keep-workspace-alive nil
