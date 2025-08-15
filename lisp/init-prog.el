@@ -69,7 +69,6 @@
   :config
   (when (childframe-workable-p)
     (use-package eldoc-box
-      :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
       :custom
       (eldoc-box-lighter nil)
       (eldoc-box-only-multi-line t)
