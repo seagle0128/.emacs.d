@@ -122,7 +122,7 @@
        "Theme"
        (("t a" (centaur-load-theme 'auto) "auto"
          :toggle (eq centaur-theme 'auto) :exit t)
-        ("t m" (centaur-load-theme 'random) "random"
+        ("t r" (centaur-load-theme 'random) "random"
          :toggle (eq centaur-theme 'random) :exit t)
         ("t s" (centaur-load-theme 'system) "system"
          :toggle (eq centaur-theme 'system) :exit t)
