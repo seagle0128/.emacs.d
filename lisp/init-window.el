@@ -198,7 +198,7 @@
 
           "\\*DAP Templates\\*$" dap-server-log-mode
           "\\*ELP Profiling Restuls\\*" profiler-report-mode
-          "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
+          "\\*package update results\\*$" "\\*Package-Lint\\*$"
           "\\*[Wo]*Man.*\\*$"
           "\\*ert\\*$" overseer-buffer-mode
           "\\*gud-debug\\*$"
