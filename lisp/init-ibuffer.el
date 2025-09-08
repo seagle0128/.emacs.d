@@ -45,7 +45,7 @@
 
 ;; Group ibuffer's list by project
 (use-package ibuffer-project
-  :autoload ibuffer-project-generate-filter-groups ibuffer-do-sort-by-project-file-relative
+  :autoload (ibuffer-project-generate-filter-groups ibuffer-do-sort-by-project-file-relative)
   :functions icons-displayable-p
   :hook (ibuffer . (lambda ()
                      "Group ibuffer's list by project."

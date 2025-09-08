@@ -108,7 +108,7 @@
 
 ;; Browse devdocs.io documents using EWW
 (use-package devdocs
-  :autoload (devdocs--installed-docs devdocs--available-docs)
+  :autoload devdocs--available-docs
   :commands (devdocs-install devdocs-lookup)
   :bind (:map prog-mode-map
          ("M-<f1>" . devdocs-dwim)

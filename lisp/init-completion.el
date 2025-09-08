@@ -319,8 +319,8 @@ targets."
 
 ;; Auto completion
 (use-package corfu
-  :autoload corfu-quit consult-completion-in-region
-  :functions persistent-scratch-save corfu-move-to-minibuffer
+  :autoload (corfu-quit consult-completion-in-region)
+  :functions (persistent-scratch-save corfu-move-to-minibuffer)
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 2)
