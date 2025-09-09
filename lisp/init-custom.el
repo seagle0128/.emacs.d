@@ -258,36 +258,6 @@ Nil to use font supports ligatures."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))
 
-(defcustom centaur-prettify-org-symbols-alist
-  '(("[ ]"            . ?)
-    ("[-]"            . ?)
-    ("[X]"            . ?)
-
-    (":PROPERTIES:"   . ?)
-    (":ID:"           . ?🪪)
-    (":END:"          . ?🔚)
-
-    ("#+ARCHIVE:"     . ?📦)
-    ("#+AUTHOR:"      . ?👤)
-    ("#+CREATOR:"     . ?💁)
-    ("#+DATE:"        . ?📆)
-    ("#+DESCRIPTION:" . ?⸙)
-    ("#+EMAIL:"       . ?📧)
-    ("#+HEADERS"      . ?☰)
-    ("#+OPTIONS:"     . ?⚙)
-    ("#+SETUPFILE:"   . ?⚒)
-    ("#+TAGS:"        . ?🏷)
-    ("#+TITLE:"       . ?📓)
-
-    ("#+BEGIN_SRC"    . ?✎)
-    ("#+END_SRC"      . ?□)
-    ("#+BEGIN_QUOTE"  . ?«)
-    ("#+END_QUOTE"    . ?»)
-    ("#+RESULTS:"     . ?💻))
-  "A list of symbol prettifications for `org-mode'."
-  :group 'centaur
-  :type '(alist :key-type string :value-type (choice character sexp)))
-
 ;; Load `custom-file'
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 

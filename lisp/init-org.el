@@ -85,13 +85,6 @@
                       (org-hydra/body)
                     (self-insert-command 1)))))
   :hook (((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
-         (org-mode . (lambda ()
-                       "Beautify org symbols."
-                       (when centaur-prettify-org-symbols-alist
-                         (if prettify-symbols-alist
-                             (push centaur-prettify-org-symbols-alist prettify-symbols-alist)
-                           (setq prettify-symbols-alist centaur-prettify-org-symbols-alist)))
-                       (prettify-symbols-mode 1)))
          (org-indent-mode . (lambda()
                               (diminish 'org-indent-mode)
                               ;; HACK: Prevent text moving around while using brackets
@@ -184,12 +177,7 @@ prepended to the element after the #+HEADER: tag."
   ;; Prettify UI
   (use-package org-modern
     :hook ((org-mode . org-modern-mode)
-           (org-agenda-finalize . org-modern-agenda)
-           (org-modern-mode . (lambda ()
-                                "Adapt `org-modern-mode'."
-                                ;; Disable Prettify Symbols mode
-                                (setq prettify-symbols-alist nil)
-                                (prettify-symbols-mode -1)))))
+           (org-agenda-finalize . org-modern-agenda)))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil

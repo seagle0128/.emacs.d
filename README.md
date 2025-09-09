@@ -181,7 +181,6 @@ For Example:
 (setq centaur-chinese-calendar nil)            ; Support Chinese calendar or not: t or nil
 (setq centaur-player t)                        ; Enable players or not: t or nil
 (setq centaur-prettify-symbols-alist nil)      ; Alist of symbol prettifications. Nil to use font supports ligatures.
-(setq centaur-prettify-org-symbols-alist nil)  ; Alist of symbol prettifications for `org-mode'
 ```
 
 The default package archives is `melpa`. You can change it in `custom.el`, or
