@@ -224,19 +224,6 @@ prepended to the element after the #+HEADER: tag."
 (use-package toc-org
   :hook (org-mode . toc-org-mode))
 
-;; Auto-toggle Org LaTeX fragments
-(use-package org-fragtog
-  :diminish
-  :hook (org-mode . org-fragtog-mode))
-
-;; Export text/html MIME emails
-(use-package org-mime
-  :after org
-  :bind (:map message-mode-map
-         ("C-c M-o" . org-mime-htmlize)
-         :map org-mode-map
-         ("C-c M-o" . org-mime-org-buffer-htmlize)))
-
 ;; Preview
 (use-package org-preview-html
   :after org
