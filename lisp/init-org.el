@@ -174,11 +174,6 @@ prepended to the element after the #+HEADER: tag."
   (use-package ox-gfm
     :init (add-to-list 'org-export-backends 'gfm))
 
-  ;; Prettify UI
-  (use-package org-modern
-    :hook ((org-mode . org-modern-mode)
-           (org-agenda-finalize . org-modern-agenda)))
-
   ;; Babel
   (setq org-confirm-babel-evaluate nil
         org-src-fontify-natively t
@@ -212,78 +207,89 @@ prepended to the element after the #+HEADER: tag."
     :init (cl-pushnew '(mermaid . t) load-language-alist))
 
   (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-alist)
+                               load-language-alist))
 
-  (use-package org-rich-yank
-    :bind (:map org-mode-map
-           ("C-M-y" . org-rich-yank)))
+;; Prettify UI
+(use-package org-modern
+  :after org
+  :autoload global-org-modern-mode
+  :init (global-org-modern-mode 1))
 
-  ;; Table of contents
-  (use-package toc-org
-    :hook (org-mode . toc-org-mode))
+(use-package org-rich-yank
+  :after org
+  :bind (:map org-mode-map
+         ("C-M-y" . org-rich-yank)))
 
-  ;; Export text/html MIME emails
-  (use-package org-mime
-    :bind (:map message-mode-map
-           ("C-c M-o" . org-mime-htmlize)
-           :map org-mode-map
-           ("C-c M-o" . org-mime-org-buffer-htmlize)))
+;; Table of contents
+(use-package toc-org
+  :hook (org-mode . toc-org-mode))
 
-  ;; Auto-toggle Org LaTeX fragments
-  (use-package org-fragtog
-    :diminish
-    :hook (org-mode . org-fragtog-mode))
+;; Auto-toggle Org LaTeX fragments
+(use-package org-fragtog
+  :diminish
+  :hook (org-mode . org-fragtog-mode))
 
-  ;; Preview
-  (use-package org-preview-html
-    :diminish
-    :bind (:map org-mode-map
-           ("C-c C-h" . org-preview-html-mode))
-    :init (when (xwidget-workable-p)
-            (setq org-preview-html-viewer 'xwidget)))
+;; Export text/html MIME emails
+(use-package org-mime
+  :after org
+  :bind (:map message-mode-map
+         ("C-c M-o" . org-mime-htmlize)
+         :map org-mode-map
+         ("C-c M-o" . org-mime-org-buffer-htmlize)))
 
-  ;; Presentation
-  (use-package org-tree-slide
-    :diminish
-    :functions (org-display-inline-images
-                org-remove-inline-images)
-    :bind (:map org-mode-map
-           ("s-<f7>" . org-tree-slide-mode)
-           :map org-tree-slide-mode-map
-           ("<left>" . org-tree-slide-move-previous-tree)
-           ("<right>" . org-tree-slide-move-next-tree)
-           ("S-SPC" . org-tree-slide-move-previous-tree)
-           ("SPC" . org-tree-slide-move-next-tree))
-    :hook ((org-tree-slide-play . (lambda ()
-                                    (text-scale-increase 4)
-                                    (org-display-inline-images)
-                                    (read-only-mode 1)))
-           (org-tree-slide-stop . (lambda ()
-                                    (text-scale-increase 0)
-                                    (org-remove-inline-images)
-                                    (read-only-mode -1))))
-    :init (setq org-tree-slide-header nil
-                org-tree-slide-slide-in-effect t
-                org-tree-slide-heading-emphasis nil
-                org-tree-slide-cursor-init t
-                org-tree-slide-modeline-display 'outside
-                org-tree-slide-skip-done nil
-                org-tree-slide-skip-comments t
-                org-tree-slide-skip-outline-level 3))
+;; Preview
+(use-package org-preview-html
+  :after org
+  :diminish
+  :functions xwidget-workable-p
+  :bind (:map org-mode-map
+         ("C-c C-h" . org-preview-html-mode))
+  :init (when (xwidget-workable-p)
+          (setq org-preview-html-viewer 'xwidget)))
 
-  ;; Pomodoro
-  (use-package org-pomodoro
-    :custom-face
-    (org-pomodoro-mode-line ((t (:inherit warning))))
-    (org-pomodoro-mode-line-overtime ((t (:inherit error))))
-    (org-pomodoro-mode-line-break ((t (:inherit success))))
-    :bind (:map org-mode-map
-           ("C-c C-x m" . org-pomodoro))
-    :init
-    (with-eval-after-load 'org-agenda
-      (bind-keys :map org-agenda-mode-map
-        ("K" . org-pomodoro)
-        ("C-c C-x m" . org-pomodoro)))))
+;; Presentation
+(use-package org-tree-slide
+  :after org
+  :diminish
+  :functions (org-display-inline-images
+              org-remove-inline-images)
+  :bind (:map org-mode-map
+         ("s-<f7>" . org-tree-slide-mode)
+         :map org-tree-slide-mode-map
+         ("<left>" . org-tree-slide-move-previous-tree)
+         ("<right>" . org-tree-slide-move-next-tree)
+         ("S-SPC" . org-tree-slide-move-previous-tree)
+         ("SPC" . org-tree-slide-move-next-tree))
+  :hook ((org-tree-slide-play . (lambda ()
+                                  (text-scale-increase 4)
+                                  (org-display-inline-images)
+                                  (read-only-mode 1)))
+         (org-tree-slide-stop . (lambda ()
+                                  (text-scale-increase 0)
+                                  (org-remove-inline-images)
+                                  (read-only-mode -1))))
+  :init (setq org-tree-slide-header nil
+              org-tree-slide-slide-in-effect t
+              org-tree-slide-heading-emphasis nil
+              org-tree-slide-cursor-init t
+              org-tree-slide-modeline-display 'outside
+              org-tree-slide-skip-done nil
+              org-tree-slide-skip-comments t
+              org-tree-slide-skip-outline-level 3))
+
+;; Pomodoro
+(use-package org-pomodoro
+  :after org
+  :custom-face
+  (org-pomodoro-mode-line ((t (:inherit warning))))
+  (org-pomodoro-mode-line-overtime ((t (:inherit error))))
+  (org-pomodoro-mode-line-break ((t (:inherit success))))
+  :bind (:map org-mode-map
+         ("C-c C-x m" . org-pomodoro))
+  :init (with-eval-after-load 'org-agenda
+          (bind-keys :map org-agenda-mode-map
+           ("K" . org-pomodoro)
+           ("C-c C-x m" . org-pomodoro))))
 
 ;; Roam
 (when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
