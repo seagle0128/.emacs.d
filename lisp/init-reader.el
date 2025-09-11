@@ -193,7 +193,13 @@
   (when (xwidget-workable-p)
     (use-package elfeed-webkit
       :bind (:map elfeed-show-mode-map
-             ("%" . elfeed-webkit-toggle)))))
+             ("%" . elfeed-webkit-toggle))
+      :config
+      ;; Fix incorrect keymap after disabling webkit
+      (defun my-elfeed-webkit-reset-keymap ()
+        "Reset local keymap."
+        (use-local-map elfeed-show-mode-map))
+      (advice-add #'elfeed-webkit--disable :after #'my-elfeed-webkit-reset-keymap))))
 
 ;; Another Atom/RSS reader
 (use-package newsticker
