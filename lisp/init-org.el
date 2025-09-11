@@ -162,12 +162,11 @@ prepended to the element after the #+HEADER: tag."
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
   ;; Use embedded webkit browser if possible
-  (when (xwidget-workable-p)
-    (push '("\\.\\(x?html?\\|pdf\\)\\'"
-            .
-            (lambda (file _link)
-              (centaur-webkit-browse-url (concat "file://" file) t)))
-          org-file-apps))
+  (add-to-list 'org-file-apps
+               '("\\.\\(x?html?\\|pdf\\)\\'"
+                 .
+                 (lambda (file _link)
+                   (centaur-browse-url-of-file (browse-url-file-url file)))))
 
   ;; Add md/gfm backends
   (add-to-list 'org-export-backends 'md)

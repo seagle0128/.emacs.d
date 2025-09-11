@@ -90,13 +90,11 @@ mermaid.initialize({
     (advice-add #'markdown--command-map-prompt :override #'ignore)
     (advice-add #'markdown--style-map-prompt   :override #'ignore)
 
-    ;; Preview with built-in webkit
-    (defun my-markdown-export-and-preview (fn)
+    ;; Preview with webkit
+    (defun my-markdown-export-and-preview ()
       "Preview with `xwidget' if applicable, otherwise with the default browser."
-      (if (xwidget-workable-p)
-          (centaur-webkit-browse-url (concat "file://" (markdown-export)) t)
-        (funcall fn)))
-    (advice-add #'markdown-export-and-preview :around #'my-markdown-export-and-preview)))
+      (centaur-browse-url-of-file (markdown-export)))
+    (advice-add #'markdown-export-and-preview :override #'my-markdown-export-and-preview)))
 
 ;; Table of contents
 (use-package markdown-toc

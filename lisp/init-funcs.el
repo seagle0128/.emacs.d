@@ -40,6 +40,7 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
+(declare-function browse-url-file-url "browse-url")
 (declare-function browse-url-interactive-arg "browse-url")
 (declare-function chart-bar-quickie "chart")
 (declare-function consult-theme "ext:consult")
@@ -155,16 +156,6 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (and (display-graphic-p)
        (featurep 'xwidget-internal)))
 
-(defun centaur-browse-url (url)
-  "Open URL using a configurable method.
-See `browse-url' for more details."
-  (interactive (progn
-                 (require 'browse-url)
-                 (browse-url-interactive-arg "URL: ")))
-  (if (xwidget-workable-p)
-      (centaur-webkit-browse-url url t)
-    (browse-url url)))
-
 (defun centaur-webkit-browse-url (url &optional pop-buffer new-session)
   "Browse URL with xwidget-webkit' and switch or pop to the buffer.
 
@@ -181,6 +172,25 @@ Interactively, URL defaults to the string looking like a url around point."
       (if pop-buffer
           (pop-to-buffer buf)
         (switch-to-buffer buf)))))
+
+(defun centaur-browse-url (url)
+  "Open URL using a configurable method.
+See `browse-url' for more details."
+  (interactive)
+  (if (xwidget-workable-p)
+      (centaur-webkit-browse-url url t)
+    (browse-url url)))
+
+(defun centaur-browse-url-of-file (file)
+  "Use a web browser to display FILE.
+Display the current buffer's file if FILE is nil or if called
+interactively.  Turn the filename into a URL with function
+`browse-url-file-url'.  Pass the URL to a browser using the
+`browse-url' function then run `browse-url-of-file-hook'."
+  (interactive)
+  (if (xwidget-workable-p)
+      (centaur-webkit-browse-url (browse-url-file-url file) t)
+    (browse-url-of-file file)))
 
 ;; Reload configurations
 (defun reload-init-file ()
