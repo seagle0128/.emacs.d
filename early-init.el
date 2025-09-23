@@ -66,7 +66,8 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 (when (featurep 'ns)
-  (push '(ns-transparent-titlebar . t) default-frame-alist))
+  (push '(ns-transparent-titlebar . t) default-frame-alist)
+  (push '(ns-appearance . dark) default-frame-alist))
 
 ;; Prevent flash of unstyled mode line
 (setq mode-line-format nil)
