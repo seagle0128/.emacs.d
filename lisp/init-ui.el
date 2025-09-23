@@ -105,12 +105,13 @@
         (with-no-warnings
           (defun my-doom-themes-visual-bell-fn ()
             "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-            (let ((buf (current-buffer))
-                  (cookies (mapcar (lambda (face)
-                                     (face-remap-add-relative face 'doom-themes-visual-bell))
-                                   (if (facep 'mode-line-active)
-                                       '(mode-line-active solaire-mode-line-active-face)
-                                     '(mode-line solaire-mode-line-face)))))
+            (let* ((faces (if (facep 'mode-line-active)
+                              '(mode-line-active solaire-mode-line-active-face)
+                            '(mode-line solaire-mode-line-face)))
+                   (buf (current-buffer))
+                   (cookies (mapcar (lambda (face)
+                                      (face-remap-add-relative face 'doom-themes-visual-bell))
+                                    faces)))
               (force-mode-line-update)
               (run-with-timer 0.15 nil
                               (lambda ()
