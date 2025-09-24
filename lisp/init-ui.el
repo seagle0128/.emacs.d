@@ -73,14 +73,18 @@
                 (menu-bar-mode -1))))
 
   (defun refresh-ns-appearance ()
-    "Refresh frame parameter ns-appearance."
+    "Safely refresh frame parameter `ns-appearance' to match background mode."
+    (interactive)
     (let ((bg (frame-parameter nil 'background-mode)))
       (set-frame-parameter nil 'ns-appearance bg)
-      (setcdr (assq 'ns-appearance default-frame-alist) bg)))
+      (setf (alist-get 'ns-appearance default-frame-alist) bg)))
+
+  ;; Hook up appearance refresh to theme changes
   (add-hook 'after-load-theme-hook #'refresh-ns-appearance)
-  (with-eval-after-load'auto-dark
-   (add-hook 'auto-dark-dark-mode-hook #'refresh-ns-appearance)
-   (add-hook 'auto-dark-light-mode-hook #'refresh-ns-appearance)))
+
+  (with-eval-after-load 'auto-dark
+    (dolist (hook '(auto-dark-dark-mode-hook auto-dark-light-mode-hook))
+      (add-hook hook #'refresh-ns-appearance))))
 
 ;; Theme
 (if (centaur-compatible-theme-p centaur-theme)
