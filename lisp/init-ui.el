@@ -330,26 +330,31 @@
   :init (setq display-time-default-load-average nil
               display-time-format "%H:%M"))
 
-;; Mouse & Smooth Scroll
+;; Scrolling
 ;; Scroll one line at a time (less "jumpy" than defaults)
-(when (display-graphic-p)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
-        mouse-wheel-scroll-amount-horizontal 1
-        mouse-wheel-progressive-speed nil))
-(setq scroll-step 1
+(setq hscroll-step 1
+      hscroll-margin 2
+      scroll-step 1
       scroll-margin 0
       scroll-conservatively 100000
+      scroll-preserve-screen-position t
       auto-window-vscroll nil
-      scroll-preserve-screen-position t)
+      ;; mouse
+      mouse-wheel-scroll-amount-horizontal 1
+      mouse-wheel-progressive-speed nil)
 
 ;; Smooth scrolling
-(when emacs/>=29p
+(when (fboundp 'pixel-scroll-precision-mode) ;; 29+
   (use-package ultra-scroll
-    :hook (after-init . ultra-scroll-mode)))
+    :functions (hl-todo-mode diff-hl-flydiff-mode)
+    :hook (after-init . ultra-scroll-mode)
+    :config
+    (add-hook 'ultra-scroll-hide-functions #'diff-hl-flydiff-mode)
+    (add-hook 'ultra-scroll-hide-functions #'hl-todo-mode)
+    (add-hook 'ultra-scroll-hide-functions #'jit-lock-mode)))
 
 ;; Use fixed pitch where it's sensible
-(use-package mixed-pitch
-  :diminish)
+(use-package mixed-pitch :diminish)
 
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
