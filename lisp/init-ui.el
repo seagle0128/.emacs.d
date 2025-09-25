@@ -102,27 +102,7 @@
         :init (centaur-load-theme centaur-theme t)
         :config
         ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)
-
-        ;; WORKAROUND: Visual bell on 29+
-        ;; @see https://github.com/doomemacs/themes/issues/733
-        (with-no-warnings
-          (defun my-doom-themes-visual-bell-fn ()
-            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-            (let* ((faces (if (facep 'mode-line-active)
-                              '(mode-line-active solaire-mode-line-active-face)
-                            '(mode-line solaire-mode-line-face)))
-                   (buf (current-buffer))
-                   (cookies (mapcar (lambda (face)
-                                      (face-remap-add-relative face 'doom-themes-visual-bell))
-                                    faces)))
-              (force-mode-line-update)
-              (run-with-timer 0.15 nil
-                              (lambda ()
-                                (with-current-buffer buf
-                                  (mapc #'face-remap-remove-relative cookies)
-                                  (force-mode-line-update))))))
-          (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))))
+        (doom-themes-visual-bell-config)))
   (progn
     (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
