@@ -37,9 +37,6 @@
 
 (require 'init-funcs)
 
-;; Compatibility
-(use-package compat :demand t)
-
 ;; Personal information
 (setq user-full-name centaur-full-name
       user-mail-address centaur-mail-address)
