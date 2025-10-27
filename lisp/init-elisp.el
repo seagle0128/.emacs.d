@@ -196,8 +196,10 @@ Lisp function does not specify a special indentation."
     (bind-key "r" #'remove-hook-at-point help-mode-map)))
 
 ;; Syntax highlighting of known Elisp symbols
-(use-package highlight-defined
-  :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
+(if (boundp 'elisp-fontify-semantically)
+    (setq elisp-fontify-semantically t)
+  (use-package highlight-defined
+    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode)))
 
 ;; Interactive macro expander
 (use-package macrostep
