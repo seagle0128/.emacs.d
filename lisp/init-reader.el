@@ -125,7 +125,6 @@
          :map elfeed-search-mode-map
          ("h" . elfeed-hydra/body)
          ("?" . elfeed-hydra/body))
-  :hook (elfeed-show-mode . centaur-read-mode)
   :init (setq url-queue-timeout 30
               elfeed-db-directory (locate-user-emacs-file ".elfeed")
               elfeed-show-entry-switch #'pop-to-buffer
