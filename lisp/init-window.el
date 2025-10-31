@@ -93,7 +93,9 @@
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind (([remap other-window] . ace-window)
-         ("C-c w" . ace-window-hydra/body))
+         ("C-c w" . ace-window-hydra/body)
+         ("C-x |" . split-window-horizontally-instead)
+         ("C-x _" . split-window-vertically-instead))
   :hook (emacs-startup . ace-window-display-mode)
   :config
   (defun toggle-window-split ()
