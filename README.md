@@ -168,6 +168,7 @@ For Example:
 (setq centaur-proxy "127.0.0.1:1087")          ; HTTP/HTTPS proxy
 (setq centaur-socks-proxy "127.0.0.1:1086")    ; SOCKS proxy
 (setq centaur-server t)                        ; Enable `server-mode' or not: t or nil
+(setq centaur-use-exec-path-from-shell t)      ; Use `exec-path-from-shell' or not. If using emacs-plus with path ejection, set to nil
 (setq centaur-icon t)                          ; Display icons or not: t or nil
 (setq centaur-package-archives 'melpa)         ; Package repo: melpa, bfsu, iscas, netease, sjtu, tencent, tuna or ustc
 (setq centaur-theme 'auto)                     ; Color theme: auto, random, system, default, pro, dark, light, warm, cold, day or night

@@ -109,7 +109,8 @@
   (set-selection-coding-system 'utf-8))
 
 ;; Environment
-(when (or (memq window-system '(mac ns x)) (daemonp))
+(when (and centaur-use-exec-path-from-shell
+           (or (memq window-system '(mac ns x)) (daemonp)))
   (use-package exec-path-from-shell
     :commands exec-path-from-shell-initialize
     :custom (exec-path-from-shell-arguments '("-l"))

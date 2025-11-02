@@ -75,6 +75,12 @@
   :group 'centaur
   :type 'boolean)
 
+(defcustom centaur-use-exec-path-from-shell t
+  "Use `exec-path-from-shell' or not.
+If using emacs-plus with path ejection, set to nil."
+  :group 'centaur
+  :type 'boolean)
+
 (defcustom centaur-icon t
   "Display icons or not."
   :group 'centaur
