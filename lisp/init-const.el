@@ -95,6 +95,11 @@ Loaded by `org-babel-load-file'.")
   (>= emacs-major-version 29)
   "Emacs is 29 or above.")
 
+(defconst emacs/>=29.2p
+  (and (>= emacs-major-version 29)
+       (>= emacs-minor-version 2))
+  "Emacs is 29.2 or above.")
+
 (defconst emacs/>=30p
   (>= emacs-major-version 30)
   "Emacs is 30 or above.")
