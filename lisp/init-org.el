@@ -212,16 +212,33 @@ prepended to the element after the #+HEADER: tag."
 ;; Prettify UI
 (use-package org-modern
   :after org
+  :diminish
   :autoload global-org-modern-mode
   :init (global-org-modern-mode 1))
 
+;; Paste with org-mode markup and link
 (use-package org-rich-yank
   :after org
+  :diminish
   :bind (:map org-mode-map
          ("C-M-y" . org-rich-yank)))
 
+;; Auto-toggle Org elements
+(use-package org-appear
+  :diminish
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-inside-latex t)
+  (org-appear-manual-linger t)
+  (org-appear-delay 0.5))
+
 ;; Table of contents
 (use-package toc-org
+  :diminish
   :hook (org-mode . toc-org-mode))
 
 ;; Preview
@@ -238,6 +255,7 @@ prepended to the element after the #+HEADER: tag."
 (if emacs/>=29.2p
     (use-package dslide
       :after org
+      :diminish
       :bind (:map org-mode-map
              ("s-<f7>" . dslide-deck-start)))
   (use-package org-tree-slide
@@ -255,6 +273,7 @@ prepended to the element after the #+HEADER: tag."
 ;; Pomodoro
 (use-package org-pomodoro
   :after org
+  :diminish
   :custom-face
   (org-pomodoro-mode-line ((t (:inherit warning))))
   (org-pomodoro-mode-line-overtime ((t (:inherit error))))
