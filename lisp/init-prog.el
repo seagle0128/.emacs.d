@@ -117,13 +117,12 @@
   (defconst devdocs-major-mode-docs-alist
     '((c-mode          . ("c"))
       (c++-mode        . ("cpp"))
-      (python-mode     . ("python~3.10" "python~2.7"))
-      (ruby-mode       . ("ruby~3.1"))
+      (python-mode     . ("python~3.14" "python~2.7"))
+      (ruby-mode       . ("ruby~3"))
 
       (rustic-mode     . ("rust"))
       (css-mode        . ("css"))
       (html-mode       . ("html"))
-      (julia-mode      . ("julia~1.8"))
       (js-mode         . ("javascript" "jquery"))
       (emacs-lisp-mode . ("elisp")))
     "Alist of major-mode and docs.")
