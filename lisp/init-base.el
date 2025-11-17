@@ -222,7 +222,8 @@
 (use-package async
   :functions (async-bytecomp-package-mode dired-async-mode)
   :init
-  (async-bytecomp-package-mode 1)
+  (unless sys/win32p
+    (async-bytecomp-package-mode 1))
   (dired-async-mode 1))
 
 ;; Frame
