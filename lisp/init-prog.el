@@ -71,9 +71,7 @@
     (if emacs/>=30p
         (use-package eldoc-mouse
           :diminish
-          :bind (:map emacs-lisp-mode-map
-                 ("C-h ." . eldoc-mouse-pop-doc-at-cursor)
-                 :map eglot-mode-map
+          :bind (:map eldoc-mouse-mode-map
                  ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
           :hook (eglot-managed-mode emacs-lisp-mode)
           :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
