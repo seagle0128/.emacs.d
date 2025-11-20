@@ -70,6 +70,8 @@
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
   (which-key-add-key-based-replacements "C-x RET" "coding-system")
   (which-key-add-key-based-replacements "C-x X" "edebug")
+  (which-key-add-key-based-replacements "C-x v b" "vc-branch")
+  (which-key-add-key-based-replacements "C-x v M" "vc-mergebase")
 
   (which-key-add-major-mode-key-based-replacements 'org-mode
     "C-c \"" "org-plot")
