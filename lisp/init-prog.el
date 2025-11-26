@@ -68,28 +68,14 @@
   :diminish
   :config
   (when (childframe-workable-p)
-    (if emacs/>=30p
-        (use-package eldoc-mouse
-          :diminish
-          :bind (:map eldoc-mouse-mode-map
-                 ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
-          :hook (eglot-managed-mode emacs-lisp-mode)
-          :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
-          :config (add-to-list 'eldoc-mouse-posframe-override-parameters
-                               `(background-color . ,(face-background 'tooltip nil t))))
-      (use-package eldoc-box
-        :custom
-        (eldoc-box-lighter nil)
-        (eldoc-box-only-multi-line t)
-        (eldoc-box-clear-with-C-g t)
-        :custom-face
-        (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
-        (eldoc-box-body ((t (:inherit tooltip))))
-        :hook ((eglot-managed-mode . eldoc-box-mouse-mode))
-        :config
-        ;; Prettify `eldoc-box' frame
-        (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
-              (alist-get 'right-fringe eldoc-box-frame-parameters) 8)))))
+    (use-package eldoc-mouse
+      :diminish
+      :bind (:map eldoc-mouse-mode-map
+             ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
+      :hook (eglot-managed-mode emacs-lisp-mode)
+      :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
+      :config (add-to-list 'eldoc-mouse-posframe-override-parameters
+                           `(background-color . ,(face-background 'tooltip nil t))))))
 
 ;; Cross-referencing commands
 (use-package xref
