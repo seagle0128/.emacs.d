@@ -144,7 +144,7 @@ M-x centaur-update-all
 
 ```shell
 cd ~/.emacs.d/Dockerfile
-docker build -t centaur/emacs .
+docker build -t centaur/emacs -f Dockerfile.xx .
 docker run -it centaur/emacs bash
 ```
 
