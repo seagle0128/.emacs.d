@@ -161,15 +161,24 @@ Install the doc if it's not installed."
 (use-package csv-mode)
 (use-package cue-sheet-mode)
 (use-package dart-mode)
-(use-package julia-mode)
 (use-package lua-mode)
-(use-package mermaid-mode)
 (use-package powershell)
-(use-package scala-mode)
-(use-package swift-mode)
 (use-package v-mode)
 (use-package vimrc-mode)
-(use-package yaml-mode)
+
+(if (centaur-treesit-available-p)
+    (progn
+      (use-package julia-ts-mode)
+      (use-package mermaid-ts-mode)
+      (use-package scala-ts-mode)
+      (use-package swift-ts-mode)
+      (use-package yaml-ts-mode))
+  (progn
+    (use-package julia-mode)
+    (use-package mermaid-mode)
+    (use-package scala-mode)
+    (use-package swift-mode)
+    (use-package yaml-mode)))
 
 ;; Protobuf mode configuration
 (use-package protobuf-mode

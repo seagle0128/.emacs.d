@@ -155,9 +155,8 @@
 
 ;; Writable `grep' buffer
 (use-package wgrep
-  :init
-  (setq wgrep-auto-save-buffer t
-        wgrep-change-readonly-file t))
+  :init (setq wgrep-auto-save-buffer t
+              wgrep-change-readonly-file t))
 
 ;; Fast search tool `ripgrep'
 (use-package rg
