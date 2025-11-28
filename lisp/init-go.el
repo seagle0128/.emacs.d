@@ -37,7 +37,7 @@
 (declare-function exec-path-from-shell-copy-envs "ext: exec-path-from-shell")
 
 ;; Install tools
-(defvar go--tools
+(defvar go-tools
   '("golang.org/x/tools/gopls"
     "golang.org/x/tools/cmd/goimports"
     "honnef.co/go/tools/cmd/staticcheck"
@@ -56,7 +56,7 @@
     (user-error "Unable to find `go' in `exec-path'!"))
 
   (message "Installing go tools...")
-  (dolist (pkg go--tools)
+  (dolist (pkg go-tools)
     (set-process-sentinel
      (start-process "go-tools" "*Go Tools*" "go" "install" "-v" "-x" (concat pkg "@latest"))
      (lambda (proc _)
