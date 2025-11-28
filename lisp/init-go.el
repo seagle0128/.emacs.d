@@ -65,11 +65,11 @@
              (message "Installed %s" pkg)
            (message "Failed to install %s: %d" pkg status)))))))
 
-(defun go--get-keymap ()
-  "Get proper keymap for Golang."
-  (if (centaur-treesit-available-p)
-      'go-ts-mode-map
-    'go-mode-map))
+;; Configure Golang automatically
+(defvar go-keymap (if (centaur-treesit-available-p)
+                      'go-ts-mode-map
+                    'go-mode-map)
+  "The keymap for Golang.")
 
 (defun go-auto-config ()
   "Configure Golang automatically."
@@ -86,28 +86,17 @@
   (use-package go-fill-struct)
 
   (use-package go-gen-test
-    :commands go-gen-test-dwim
-    :init
-    (let ((map (go--get-keymap)))
-      (bind-keys :map map
-        ("C-c t g" . go-gen-test-dwim))))
+    :bind (:map go-keymap
+           ("C-c t g" . go-gen-test-dwim)))
 
   (use-package gotest
-    :commands (go-test-current-file
-               go-test-current-test
-               go-test-current-project
-               go-test-current-benchmark
-               go-test-current-coverage
-               go-run)
-    :init
-    (let ((map (go--get-keymap)))
-      (bind-keys :map map
-        ("C-c t f" . go-test-current-file)
-        ("C-c t t" . go-test-current-test)
-        ("C-c t j" . go-test-current-project)
-        ("C-c t b" . go-test-current-benchmark)
-        ("C-c t c" . go-test-current-coverage)
-        ("C-c t x" . go-run)))))
+    :bind (:map go-keymap
+           ("C-c t f" . go-test-current-file)
+           ("C-c t t" . go-test-current-test)
+           ("C-c t j" . go-test-current-project)
+           ("C-c t b" . go-test-current-benchmark)
+           ("C-c t c" . go-test-current-coverage)
+           ("C-c t x" . go-run))))
 
 ;; Golang
 (if (centaur-treesit-available-p)
