@@ -30,14 +30,26 @@
 
 ;;; Code:
 
-(use-package elixir-mode
-  :config
+(declare-function centaur-treesit-available-p "init-funcs")
+
+(defun elixir-auto-config ()
+  "Configure elixir automatically."
   (use-package alchemist
     :diminish (alchemist-mode alchemist-phoenix-mode)
     :hook (((elixir-mode elixir-ts-mode) . alchemist-mode)
            (alchemist-mode . alchemist-phoenix-mode))))
 
-(provide 'init-elixir)
+(if (centaur-treesit-available-p)
+    (use-package elixir-ts-mode
+      :mode (("\\.elixir\\'" . elixir-ts-mode)
+             ("\\.ex\\'"     . elixir-ts-mode)
+             ("\\.exs\\'"    . elixir-ts-mode)
+             ("mix\\.lock"   . elixir-ts-mode))
+      :config (elixir-auto-config))
+  (use-package elixir-mode
+    :config (elixir-auto-config)))
+
+  (provide 'init-elixir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-elixir.el ends here

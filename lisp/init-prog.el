@@ -169,10 +169,13 @@ Install the doc if it's not installed."
 (if (centaur-treesit-available-p)
     (progn
       (use-package julia-ts-mode)
-      (use-package mermaid-ts-mode)
+      (use-package mermaid-ts-mode
+        :mode ("\\.mmd\\'" . mermaid-ts-mode))
       (use-package scala-ts-mode)
-      (use-package swift-ts-mode)
-      (use-package yaml-ts-mode))
+      (use-package swift-ts-mode
+        :mode ("\\.swift\\'" . swift-ts-mode))
+      (use-package yaml-ts-mode
+        :mode ("\\.ya?ml\\'" . yaml-ts-mode)))
   (progn
     (use-package julia-mode)
     (use-package mermaid-mode)
