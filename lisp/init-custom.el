@@ -75,7 +75,8 @@
   :group 'centaur
   :type 'boolean)
 
-(defcustom centaur-use-exec-path-from-shell t
+(defcustom centaur-use-exec-path-from-shell
+  (or (memq window-system '(mac ns x)) (daemonp))
   "Use `exec-path-from-shell' or not.
 If using emacs-plus with path ejection, set to nil."
   :group 'centaur
