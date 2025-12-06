@@ -50,16 +50,7 @@
 
 (use-package flyover
   :diminish
-  :hook (flymake-mode
-         (after-load-theme . set-flyover-appearance))
-  :init
-  (defun set-flyover-appearance ()
-    "Set flyover appearance according to the background."
-    (if (frame-parameter nil 'background-mode)
-        (setq flyover-background-lightness 45
-              flyover-percent-darker 40)
-      (setq flyover-background-lightness 75
-            flyover-percent-darker 50)))
+  :hook flymake-mode
   :config
   ;; FIXME: `flymake-handle-report' doesn't exist
   ;; @see https://github.com/konrad1977/flyover/issues/30
