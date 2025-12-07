@@ -53,7 +53,7 @@
   :diminish
   :hook after-init)
 
-;; Show TODOs in magit
+;; Show TODOs in Magit
 (use-package magit-todos
   :after magit-status
   :commands magit-todos-mode

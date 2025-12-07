@@ -217,8 +217,9 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
-;; Async
+;; Asynchronous processing
 (use-package async
+  :diminish (async-bytecomp-package-mode dired-async-mode)
   :functions (async-bytecomp-package-mode dired-async-mode)
   :init
   (unless sys/win32p
