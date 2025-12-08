@@ -51,7 +51,22 @@
 ;; Display Flymake errors with overlays
 (use-package flyover
   :diminish
-  :hook flymake-mode)
+  :hook flymake-mode
+  :custom (flyover-checkers '(flymake))
+  :config
+  ;; FIXME: see https://github.com/konrad1977/flyover/issues/30#issuecomment-3624168811
+  (defun flyover--maybe-display-errors-debounced (&rest _)
+    "Debounced messages of `flyover--maybe-display-errors`."
+    (condition-case err
+        (progn
+          (when flyover--debounce-timer
+            (cancel-timer flyover--debounce-timer))
+          (setq flyover--debounce-timer
+                (run-with-idle-timer flyover-debounce-interval nil
+                                     #'flyover--maybe-display-errors)))
+      (error
+       (message "Error in debounced display: %S" err)
+       (setq flyover--debounce-timer nil)))))
 
 (provide 'init-check)
 
