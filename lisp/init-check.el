@@ -48,15 +48,10 @@
       (apply fn args)))
   (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
 
+;; Display Flymake errors with overlays
 (use-package flyover
   :diminish
-  :hook flymake-mode
-  :config
-  ;; FIXME: `flymake-handle-report' doesn't exist
-  ;; @see https://github.com/konrad1977/flyover/issues/30
-  (advice-add 'flymake--handle-report :after
-              (lambda (&rest _)
-                (flyover--maybe-display-errors-debounced))))
+  :hook flymake-mode)
 
 (provide 'init-check)
 
