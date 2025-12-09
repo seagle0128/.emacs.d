@@ -388,7 +388,7 @@ targets."
 (use-package cape
   :commands (cape-file cape-elisp-block cape-keyword)
   :autoload (cape-wrap-noninterruptible cape-wrap-nonexclusive cape-wrap-buster)
-  :autoload (cape-wrap-silent cape-wrap-purify)
+  :autoload (cape-wrap-silent)
   :init
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -404,11 +404,10 @@ targets."
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)
 
-  ;; Sanitize the `pcomplete-completions-at-point' Capf.  The Capf has undesired
-  ;; side effects on Emacs 28.  These advices are not needed on Emacs 29 and newer.
+  ;; Sanitize the `pcomplete-completions-at-point' Capf.
+  ;; The Capf has undesired side effects on Emacs 28.
   (unless emacs/>=29p
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)))
 
 (provide 'init-completion)
 
