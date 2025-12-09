@@ -323,16 +323,6 @@
       mouse-wheel-scroll-amount-horizontal 1
       mouse-wheel-progressive-speed nil)
 
-;; Smooth scrolling
-(when (fboundp 'pixel-scroll-precision-mode) ;; 29+
-  (use-package ultra-scroll
-    :functions (hl-todo-mode diff-hl-flydiff-mode)
-    :hook (after-init . ultra-scroll-mode)
-    :config
-    (add-hook 'ultra-scroll-hide-functions #'diff-hl-flydiff-mode)
-    (add-hook 'ultra-scroll-hide-functions #'hl-todo-mode)
-    (add-hook 'ultra-scroll-hide-functions #'jit-lock-mode)))
-
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch :diminish)
 
