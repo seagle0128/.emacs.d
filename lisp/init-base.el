@@ -152,6 +152,7 @@
 
 ;; Misc.
 (use-package simple
+  :diminish visual-line-mode
   :ensure nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)
