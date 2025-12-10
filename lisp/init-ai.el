@@ -49,6 +49,10 @@
 (use-package gptel-magit
   :hook (magit-mode . gptel-magit-install))
 
+;; A native shell experience to interact with ACP agents
+(use-package agent-shell
+  :diminish agent-shell-ui-mode)
+
 (provide 'init-ai)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
