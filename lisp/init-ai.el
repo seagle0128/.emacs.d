@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 ;; Interact with ChatGPT or other LLMs
 (use-package gptel
   :functions gptel-make-openai
@@ -50,8 +53,9 @@
   :hook (magit-mode . gptel-magit-install))
 
 ;; A native shell experience to interact with ACP agents
-(use-package agent-shell
-  :diminish agent-shell-ui-mode)
+(when emacs/>=29p
+  (use-package agent-shell
+    :diminish agent-shell-ui-mode))
 
 (provide 'init-ai)
 
