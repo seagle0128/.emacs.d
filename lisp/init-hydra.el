@@ -49,7 +49,7 @@
               :lines-truncate t
               :poshandler posframe-poshandler-frame-center-near-bottom)))
     (hydra-set-posframe-show-params)
-    (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t)))
+    (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params)))
 
 (use-package pretty-hydra
   :functions icons-displayable-p

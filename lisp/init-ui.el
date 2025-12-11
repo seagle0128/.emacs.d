@@ -340,7 +340,6 @@
     :diminish
     :defines posframe-border-width
     :custom-face
-    (transient-posframe ((t (:inherit tooltip))))
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook (after-init . transient-posframe-mode)
     :init (setq transient-mode-line-format nil
