@@ -33,14 +33,13 @@
 (eval-when-compile
   (require 'init-custom))
 
-(declare-function centaur-treesit-available-p "init-funcs")
-
 ;; C/C++ Mode
 (use-package cc-mode
   :init (setq-default c-basic-offset 4))
 
 (when (centaur-treesit-available-p)
   (use-package c-ts-mode
+    :functions centaur-treesit-available-p
     :init
     (setq c-ts-mode-indent-offset 4)
 
@@ -48,7 +47,7 @@
       (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
       (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
       (add-to-list 'major-mode-remap-alist
-                       '(c-or-c++-mode . c-or-c++-ts-mode)))))
+                   '(c-or-c++-mode . c-or-c++-ts-mode)))))
 
 (provide 'init-c)
 

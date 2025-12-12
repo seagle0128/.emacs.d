@@ -34,10 +34,6 @@
   (require 'init-const)
   (require 'init-custom))
 
-(declare-function childframe-completion-workable-p "init-funcs")
-(declare-function centaur-compatible-theme-p "init-funcs")
-(declare-function refresh-ns-appearance "init-ui")
-
 ;; Optimization
 (setq idle-update-delay 1.0)
 
@@ -91,18 +87,14 @@
     (progn
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
+        :functions (centaur-compatible-theme-p refresh-ns-appearance)
         :hook (after-init . solaire-global-mode))
 
       ;; Excellent themes
       (use-package doom-themes
         :functions centaur-load-theme doom-themes-visual-bell-config
-        :custom
-        (doom-themes-enable-bold t)
-        (doom-themes-enable-italic t)
         :init (centaur-load-theme centaur-theme t)
-        :config
-        ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)))
+        :config (doom-themes-visual-bell-config)))
   (progn
     (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
@@ -339,6 +331,7 @@
   (use-package transient-posframe
     :diminish
     :defines posframe-border-width
+    :functions childframe-completion-workable-p
     :custom-face
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
     :hook after-init

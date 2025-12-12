@@ -78,59 +78,60 @@
 ;;  2. Combin the packages into one directory.
 ;; This code slice can make the package.el to install packages in the package-user-dir/"all" to speedup Emacs:
 (when sys/win32p
-  (defun package-user-all-dir ()
-    (file-name-concat package-user-dir "all"))
+  (with-no-warnings
+    (defun package-user-all-dir ()
+      (file-name-concat package-user-dir "all"))
 
-  (define-advice package-unpack (:around (ofun pkg-desc) ADV)
-    (let ((pkg-dir (funcall ofun pkg-desc)))
-      (when-let* (pkg-dir
-                  (pkg-file (format "%s-pkg.el" (package-desc-name pkg-desc)))
-                  (files (seq-difference (directory-files pkg-dir)
-                                         '("." "..") 'string=))
-                  (target-dir (file-name-as-directory (package-user-all-dir))))
-        (make-directory target-dir t)
-        (unless (seq-intersection files (directory-files target-dir) #'string=)
-          (with-current-buffer (find-file-noselect (file-name-concat pkg-dir pkg-file))
-            (goto-char (point-max))
-            (when (re-search-backward ")" nil t)
-              (newline-and-indent)
-              (insert (format ":files '%S" (remove pkg-file files)))
-              (save-buffer))
-            (kill-buffer))
-          (dolist (file files)
-            (rename-file (expand-file-name file pkg-dir) target-dir))
-          (delete-directory pkg-dir)
-          (setf (package-desc-dir (car (alist-get (package-desc-name pkg-desc)
-                                                  package-alist)))
-                target-dir)
-          (setq pkg-dir target-dir)))
-      pkg-dir))
+    (define-advice package-unpack (:around (ofun pkg-desc) ADV)
+      (let ((pkg-dir (funcall ofun pkg-desc)))
+        (when-let* (pkg-dir
+                    (pkg-file (format "%s-pkg.el" (package-desc-name pkg-desc)))
+                    (files (seq-difference (directory-files pkg-dir)
+                                           '("." "..") 'string=))
+                    (target-dir (file-name-as-directory (package-user-all-dir))))
+          (make-directory target-dir t)
+          (unless (seq-intersection files (directory-files target-dir) #'string=)
+            (with-current-buffer (find-file-noselect (file-name-concat pkg-dir pkg-file))
+              (goto-char (point-max))
+              (when (re-search-backward ")" nil t)
+                (newline-and-indent)
+                (insert (format ":files '%S" (remove pkg-file files)))
+                (save-buffer))
+              (kill-buffer))
+            (dolist (file files)
+              (rename-file (expand-file-name file pkg-dir) target-dir))
+            (delete-directory pkg-dir)
+            (setf (package-desc-dir (car (alist-get (package-desc-name pkg-desc)
+                                                    package-alist)))
+                  target-dir)
+            (setq pkg-dir target-dir)))
+        pkg-dir))
 
-  (define-advice package-load-all-descriptors (:after () ADV)
-    (when-let* ((pkg-dir (package-user-all-dir))
-                ((file-directory-p pkg-dir)))
-      (dolist (pkg-file (directory-files pkg-dir t ".*-pkg.el"))
-        (cl-letf (((symbol-function 'package--description-file)
-                   (lambda (_) pkg-file)))
-          (package-load-descriptor pkg-dir)))))
+    (define-advice package-load-all-descriptors (:after () ADV)
+      (when-let* ((pkg-dir (package-user-all-dir))
+                  ((file-directory-p pkg-dir)))
+        (dolist (pkg-file (directory-files pkg-dir t ".*-pkg.el"))
+          (cl-letf (((symbol-function 'package--description-file)
+                     (lambda (_) pkg-file)))
+            (package-load-descriptor pkg-dir)))))
 
-  (define-advice package-delete (:around (ofun pkg-desc &optional force nosave) ADV)
-    (if (string-prefix-p (package-user-all-dir)
-                         (package-desc-dir pkg-desc))
-        (cl-letf* ((default-directory (package-user-all-dir))
-                   (pkg-file (format "%s-pkg.el" (package-desc-name pkg-desc)))
-                   ((symbol-function 'package--delete-directory)
-                    (lambda (x)
-                      (with-current-buffer (find-file-noselect pkg-file)
-                        (goto-char (point-min))
-                        (when (re-search-forward ":files '\\((.*)\\)" nil t)
-                          (dolist (file (read (match-string 1)))
-                            (if (file-directory-p file)
-                                (delete-directory file 'recursive)
-                              (delete-file file)))))
-                      (delete-file pkg-file))))
-          (funcall ofun pkg-desc force nosave))
-      (funcall ofun pkg-desc force nosave))))
+    (define-advice package-delete (:around (ofun pkg-desc &optional force nosave) ADV)
+      (if (string-prefix-p (package-user-all-dir)
+                           (package-desc-dir pkg-desc))
+          (cl-letf* ((default-directory (package-user-all-dir))
+                     (pkg-file (format "%s-pkg.el" (package-desc-name pkg-desc)))
+                     ((symbol-function 'package--delete-directory)
+                      (lambda (_)
+                        (with-current-buffer (find-file-noselect pkg-file)
+                          (goto-char (point-min))
+                          (when (re-search-forward ":files '\\((.*)\\)" nil t)
+                            (dolist (file (read (match-string 1)))
+                              (if (file-directory-p file)
+                                  (delete-directory file 'recursive)
+                                (delete-file file)))))
+                        (delete-file pkg-file))))
+            (funcall ofun pkg-desc force nosave))
+        (funcall ofun pkg-desc force nosave)))))
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
@@ -149,7 +150,7 @@
       use-package-enable-imenu-support t)
 
 ;; Required by `use-package'
-(use-package diminish :ensure t)
+(use-package diminish)
 
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
@@ -157,10 +158,11 @@
 ;; Update packages
 (unless (fboundp 'package-upgrade-all)
   (use-package auto-package-update
-    :init
-    (setq auto-package-update-delete-old-versions t
-          auto-package-update-hide-results t)
-    (defalias 'package-upgrade-all #'auto-package-update-now)))
+    :autoload auto-package-update-now
+    :custom
+    (auto-package-update-delete-old-versions t)
+    (auto-package-update-hide-results t)
+    :init (defalias 'package-upgrade-all #'auto-package-update-now)))
 
 (provide 'init-package)
 

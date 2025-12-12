@@ -33,11 +33,8 @@
 (eval-when-compile
   (require 'init-custom))
 
-(declare-function centaur-treesit-available-p "init-funcs")
-
 ;; eww
 (use-package eww
-  :ensure nil
   :init
   ;; Install: npm install -g readability-cli
   (when (executable-find "readable")
@@ -104,7 +101,8 @@
 ;; Typescript
 (unless (and (centaur-treesit-available-p)
              (fboundp 'typescript-ts-mode))
-  (use-package typescript-mode))
+  (use-package typescript-mode
+    :functions centaur-treesit-available-p))
 
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode

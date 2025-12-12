@@ -33,9 +33,6 @@
 (eval-when-compile
   (require 'init-custom))
 
-(declare-function centaur-treesit-available-p "init-funcs")
-(declare-function exec-path-from-shell-copy-envs "ext: exec-path-from-shell")
-
 ;; Install tools
 (defvar go-tools
   '("golang.org/x/tools/gopls"
@@ -101,6 +98,7 @@
 ;; Golang
 (if (centaur-treesit-available-p)
     (use-package go-ts-mode
+      :functions (centaur-treesit-available-p exec-path-from-shell-copy-envs)
       :mode (("\\.go\\'" . go-ts-mode)
              ("/go\\.mod\\'" . go-mod-ts-mode))
       :init (setq go-ts-mode-indent-offset 4)
