@@ -105,6 +105,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :functions (easy-kill easy-kill-destroy-candidate)
   :bind (("M-i"  . symbol-overlay-put)
          ("M-n"  . symbol-overlay-jump-next)
          ("M-p"  . symbol-overlay-jump-prev)
@@ -120,23 +121,22 @@ FACE defaults to inheriting from default and highlight."
          (iedit-mode-end . turn-on-symbol-overlay))
   :custom (symbol-overlay-idle-time 0.3)
   :config
-  (with-no-warnings
-    ;; Disable symbol highlighting while selecting
-    (defun turn-off-symbol-overlay (&rest _)
-      "Turn off symbol highlighting."
-      (interactive)
-      (symbol-overlay-mode -1))
+  ;; Disable symbol highlighting while selecting
+  (defun turn-off-symbol-overlay (&rest _)
+    "Turn off symbol highlighting."
+    (interactive)
+    (symbol-overlay-mode -1))
 
-    (defun turn-on-symbol-overlay (&rest _)
-      "Turn on symbol highlighting."
-      (interactive)
-      (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
-        (symbol-overlay-mode 1)))
+  (defun turn-on-symbol-overlay (&rest _)
+    "Turn on symbol highlighting."
+    (interactive)
+    (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+      (symbol-overlay-mode 1)))
 
-    (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
-    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
-    (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
-    (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay)))
+  (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
+  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
+  (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
+  (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay))
 
 ;; Mark occurrences of current region (selection)
 (use-package region-occurrences-highlighter
