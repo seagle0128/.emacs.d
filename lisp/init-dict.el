@@ -40,7 +40,6 @@
          ("C-c d h" . fanyi-from-history)))
 
 (use-package gt
-  :functions set-gt-pop-posframe
   :bind (("C-c g"   . gt-translate)
          ("C-c G"   . gt-translate-prompt)
          ("C-c u"   . gt-use-text-utility)
@@ -49,6 +48,7 @@
          ("C-c d p" . gt-speak)
          ("C-c d s" . gt-setup)
          ("C-c d u" . gt-use-text-utility))
+  :hook (after-load-theme . gt-configure)
   :init
   (setq gt-langs '(en zh)
         gt-buffer-render-follow-p t
@@ -56,56 +56,67 @@
         '((display-buffer-reuse-window display-buffer-in-direction)
           (direction . bottom)
           (window-height . 0.4)))
-
-  (defun set-gt-pop-posframe ()
-    "Set appearance of gt pop posframe."
-    (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
-          gt-pop-posframe-backcolor (face-background 'tooltip nil t)
-          gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
-  (set-gt-pop-posframe)
-  (add-hook 'after-load-theme-hook #'set-gt-pop-posframe)
   :config
   (with-no-warnings
-    (setq gt-preset-translators
-          `((default . ,(gt-translator
-                         :taker   (list (gt-taker :pick nil :if 'selection)
-                                        (gt-taker :text 'paragraph :if '(Info-mode help-mode helpful-mode devdocs-mode))
+    (defun gt-configure ()
+      "Set appearance and presets of go-translate."
+      (setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
+            gt-pop-posframe-backcolor (face-background 'tooltip nil t)
+            gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)
+
+            gt-preset-translators
+            `((default . ,(gt-translator
+                           :taker (list (gt-taker :pick nil :if 'selection)
+                                        (gt-taker :text 'paragraph
+                                                  :if '(Info-mode help-mode helpful-mode devdocs-mode))
                                         (gt-taker :text 'buffer :pick 'fresh-word
                                                   :if (lambda (translatror)
-                                                        (and (not (derived-mode-p 'fanyi-mode)) buffer-read-only)))
+                                                        (and (not (derived-mode-p 'fanyi-mode))
+                                                             buffer-read-only)))
                                         (gt-taker :text 'word))
-                         :engines (if (display-graphic-p)
+                           :engines (if (childframe-workable-p)
+                                        (list (gt-bing-engine :if 'not-word)
+                                              (gt-youdao-dict-engine :if 'word))
                                       (list (gt-bing-engine :if 'not-word)
-                                            (gt-youdao-dict-engine :if 'word))
-                                    (list (gt-bing-engine :if 'not-word)
-                                          (gt-youdao-dict-engine :if 'word)
-                                          (gt-youdao-suggest-engine :if 'word)
-                                          (gt-google-engine :if 'word)))
-                         :render  (list (gt-posframe-pop-render
-                                         :if (lambda (translator)
-                                               (and (display-graphic-p)
-                                                    (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
-                                                    (not (member (buffer-name) '("COMMIT_EDITMSG")))))
-                                         :frame-params (list :accept-focus nil
-                                                             :width 70
-                                                             :height 15
-                                                             :left-fringe 16
-                                                             :right-fringe 16
-                                                             :border-width 1
-                                                             :border-color gt-pin-posframe-bdcolor))
-                                        (gt-overlay-render :if 'read-only)
-                                        (gt-insert-render :if (lambda (translator) (member (buffer-name) '("COMMIT_EDITMSG"))))
-                                        (gt-buffer-render))))
-            (multi-dict . ,(gt-translator :taker (gt-taker :prompt t)
-                                          :engines (list (gt-bing-engine)
-                                                         (gt-youdao-dict-engine)
-                                                         (gt-youdao-suggest-engine :if 'word)
-                                                         (gt-google-engine))
-                                          :render (gt-buffer-render)))
-            (Text-Utility . ,(gt-text-utility :taker (gt-taker :pick nil)
-                                              :render (gt-buffer-render)))))
+                                            (gt-youdao-dict-engine :if 'word)
+                                            (gt-youdao-suggest-engine :if 'word)
+                                            (gt-google-engine :if 'word)))
+                           :render (list (gt-posframe-pop-render
+                                          :if (lambda (translator)
+                                                (and (childframe-workable-p)
+                                                     (not (derived-mode-p
+                                                           'Info-mode
+                                                           'help-mode
+                                                           'helpful-mode
+                                                           'devdocs-mode))
+                                                     (not (member (buffer-name) '("COMMIT_EDITMSG")))))
+                                          :frame-params (list :accept-focus nil
+                                                              :width 70
+                                                              :height 15
+                                                              :left-fringe 16
+                                                              :right-fringe 16
+                                                              :border-width 1
+                                                              :border-color gt-pin-posframe-bdcolor))
+                                         (gt-overlay-render :if 'read-only)
+                                         (gt-insert-render
+                                          :if (lambda (translator)
+                                                (member (buffer-name) '("COMMIT_EDITMSG"))))
+                                         (gt-buffer-render))))
+              (multi-dict . ,(gt-translator
+                              :taker (gt-taker :prompt t)
+                              :engines (list (gt-bing-engine)
+                                             (gt-youdao-dict-engine)
+                                             (gt-youdao-suggest-engine :if 'word)
+                                             (gt-google-engine))
+                              :render (gt-buffer-render)))
+              (Text-Utility . ,(gt-text-utility
+                                :taker (gt-taker :pick nil)
+                                :render (gt-buffer-render))))))
+
+    (gt-configure)
+
     (defun gt--translate (dict)
-      "Translate using DICT from the preset tranlators."
+      "Translate using DICT from the preset translators."
       (gt-start (alist-get dict gt-preset-translators)))
 
     (defun gt-translate-prompt ()

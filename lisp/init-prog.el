@@ -72,12 +72,19 @@
       :diminish
       :bind (:map eldoc-mouse-mode-map
              ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
-      :hook (eglot-managed-mode emacs-lisp-mode)
-      :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
-      :config
-      (tooltip-mode -1)                 ; Conflict with `track-mouse'
-      (add-to-list 'eldoc-mouse-posframe-override-parameters
-                   `(background-color . ,(face-background 'tooltip nil t))))))
+      :hook ((eglot-managed-mode emacs-lisp-mode)
+             (after-load-theme . set-eldoc-mouse-appearance))
+      :init
+      (defun set-eldoc-mouse-appearance ()
+        "Set appearance of eldoc-mouse."
+        (setq eldoc-mouse-posframe-override-parameters
+              `((drag-internal-border . t)
+                (foreground-color . ,(face-foreground 'tooltip nil t))
+                (background-color . ,(face-background 'tooltip nil t)))
+              eldoc-mouse-posframe-border-color
+              (face-background 'posframe-border nil t)))
+      (set-eldoc-mouse-appearance)
+      :config (tooltip-mode -1))))      ; conflict with `track-mouse'
 
 ;; Cross-referencing commands
 (use-package xref
