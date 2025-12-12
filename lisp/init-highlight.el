@@ -238,45 +238,29 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
-  :custom (diff-hl-draw-borders nil)
-  :autoload diff-hl-flydiff-mode
-  :custom-face
-  (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
-  (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
-  (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
+  :diminish (diff-hl-mode diff-hl-flydiff-mode diff-hl-margin-mode)
+  :commands (diff-hl-flydiff-mode diff-hl-margin-mode)
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (after-init . global-diff-hl-show-hunk-mouse-mode)
-         (dired-mode . diff-hl-dired-mode))
+         (dired-mode . diff-hl-dired-mode)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :custom
+  (diff-hl-draw-borders nil)
+  (diff-hl-update-async t)
+  (diff-hl-show-hunk-function (if (childframe-workable-p)
+                                  'diff-hl-show-hunk-posframe
+                                'diff-hl-show-hunk-inline))
   :config
-  ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1)
-
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
 
-  (with-no-warnings
-    (defun my-diff-hl-fringe-bmp-function (_type _pos)
-      "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
-      (define-fringe-bitmap 'my-diff-hl-bmp
-        (vector (if sys/linuxp #b11111100 #b11100000))
-        1 8
-        '(center t)))
-    (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
+  ;; Highlight on-the-fly
+  (diff-hl-flydiff-mode 1)
 
-    (unless (display-graphic-p)
-      ;; Fall back to the display margin since the fringe is unavailable in tty
-      (diff-hl-margin-mode 1)
-      ;; Avoid restoring `diff-hl-margin-mode'
-      (with-eval-after-load 'desktop
-        (add-to-list 'desktop-minor-mode-table
-                     '(diff-hl-margin-mode nil))))
-
-    ;; Integration with magit
-    (with-eval-after-load 'magit
-      (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-      (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
+  ;; Fall back to the display margin since the fringe is unavailable in tty
+  (unless (display-graphic-p) (diff-hl-margin-mode 1)))
 
 ;; Pulse current line
 (use-package pulse

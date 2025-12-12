@@ -238,7 +238,6 @@
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
-  :ensure nil
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
@@ -247,17 +246,15 @@
 
 ;; Edit multiple regions in the same way simultaneously
 (use-package iedit
-  :defines desktop-minor-mode-table
-  :bind (("C-;" . iedit-mode)
+  :bind (:map global-map
+         ("C-;" . iedit-mode)
          ("C-x r RET" . iedit-rectangle-mode)
-         :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
-         :map esc-map ("C-;" . iedit-execute-last-modification)
-         :map help-map ("C-;" . iedit-mode-toggle-on-function))
-  :config
-  ;; Avoid restoring `iedit-mode'
-  (with-eval-after-load 'desktop
-    (add-to-list 'desktop-minor-mode-table
-                 '(iedit-mode nil))))
+         :map isearch-mode-map
+         ("C-;" . iedit-mode-from-isearch)
+         :map esc-map
+         ("C-;" . iedit-execute-last-modification)
+         :map help-map
+         ("C-;" . iedit-mode-toggle-on-function)))
 
 ;; Increase selected region by semantic units
 (use-package expand-region
