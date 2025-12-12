@@ -199,7 +199,7 @@ Lisp function does not specify a special indentation."
 (if (boundp 'elisp-fontify-semantically)
     (setq elisp-fontify-semantically t)
   (use-package highlight-defined
-    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode)))
+    :hook (emacs-lisp-mode inferior-emacs-lisp-mode)))
 
 ;; Interactive macro expander
 (use-package macrostep

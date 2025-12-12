@@ -109,7 +109,7 @@
 
 ;; Mode-line
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
+  :hook after-init
   :init
   (setq doom-modeline-icon centaur-icon
         doom-modeline-minor-modes t)
@@ -256,7 +256,7 @@
 
 ;; A minor-mode menu for mode-line
 (use-package minions
-  :hook (after-init . minions-mode))
+  :hook after-init)
 
 ;; Icons
 (use-package nerd-icons
@@ -341,7 +341,7 @@
     :defines posframe-border-width
     :custom-face
     (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :hook (after-init . transient-posframe-mode)
+    :hook after-init
     :init (setq transient-mode-line-format nil
                 transient-posframe-border-width posframe-border-width
                 transient-posframe-poshandler 'posframe-poshandler-frame-center

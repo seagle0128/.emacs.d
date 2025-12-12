@@ -40,7 +40,7 @@
 
 ;; Display icons for buffers
 (use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+  :hook ibuffer-mode
   :init (setq nerd-icons-ibuffer-icon centaur-icon))
 
 ;; Group ibuffer's list by project

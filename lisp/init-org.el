@@ -226,7 +226,7 @@ prepended to the element after the #+HEADER: tag."
 ;; Auto-toggle Org elements
 (use-package org-appear
   :diminish
-  :hook (org-mode . org-appear-mode)
+  :hook org-mode
   :custom
   (org-appear-autoentities t)
   (org-appear-autokeywords t)
@@ -239,7 +239,7 @@ prepended to the element after the #+HEADER: tag."
 ;; Table of contents
 (use-package toc-org
   :diminish
-  :hook (org-mode . toc-org-mode))
+  :hook org-mode)
 
 ;; Preview
 (use-package org-preview-html

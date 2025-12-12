@@ -96,7 +96,7 @@
 ;; Code styles
 (use-package editorconfig
   :diminish
-  :hook (after-init . editorconfig-mode))
+  :hook after-init)
 
 ;; Run commands quickly
 (use-package quickrun

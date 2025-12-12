@@ -125,7 +125,7 @@ FACE defaults to inheriting from default and highlight."
          ([M-f3] . symbol-overlay-put)
          ([M-f4] . symbol-overlay-remove-all))
   :bind-keymap ("M-s s"  . symbol-overlay-map)
-  :hook (((prog-mode yaml-mode yaml-ts-mode) . symbol-overlay-mode)
+  :hook ((prog-mode yaml-mode yaml-ts-mode)
          (iedit-mode     . turn-off-symbol-overlay)
          (iedit-mode-end . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.3)
@@ -166,7 +166,7 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-prefer-character t)
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                       if_statement with_statement while_statement)))
-  :hook ((prog-mode yaml-mode) . indent-bars-mode)
+  :hook (prog-mode yaml-mode)
   :config (require 'indent-bars-ts))
 
 ;; Colorize color names in buffers
@@ -179,7 +179,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook prog-mode)
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
@@ -324,7 +324,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Pulse modified region
 (use-package goggles
   :diminish
-  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
+  :hook (prog-mode text-mode conf-mode))
 
 (provide 'init-highlight)
 

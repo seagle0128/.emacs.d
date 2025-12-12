@@ -101,7 +101,7 @@ mermaid.initialize({
   :diminish
   :bind (:map markdown-mode-command-map
          ("r" . markdown-toc-generate-or-refresh-toc))
-  :hook (markdown-mode . markdown-toc-mode)
+  :hook markdown-mode
   :init (setq markdown-toc-indentation-space 2
               markdown-toc-header-toc-title "\n## Table of Contents"
               markdown-toc-user-toc-structure-manipulation-fn 'cdr)

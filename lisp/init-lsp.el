@@ -226,7 +226,7 @@
             ("s-<return>" . lsp-ui-sideline-apply-code-actions)
             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
             ([remap xref-find-references] . lsp-ui-peek-find-references))
-     :hook (lsp-mode . lsp-ui-mode)
+     :hook lsp-mode
      :init
      (setq lsp-ui-sideline-show-diagnostics nil
            lsp-ui-sideline-ignore-duplicate t

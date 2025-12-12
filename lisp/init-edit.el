@@ -323,7 +323,7 @@
   :ensure nil
   :diminish
   :if (executable-find "aspell")
-  :hook (((text-mode outline-mode) . flyspell-mode)
+  :hook ((text-mode outline-mode)
          (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
                             (dolist (key '("C-;" "C-," "C-."))
@@ -359,8 +359,7 @@
 (use-package subword
   :ensure nil
   :diminish
-  :hook ((prog-mode . subword-mode)
-         (minibuffer-setup . subword-mode)))
+  :hook (prog-mode minibuffer-setup))
 
 ;; Flexible text folding
 (use-package hideshow

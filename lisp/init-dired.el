@@ -78,13 +78,14 @@
 
   ;; Colorful dired
   (use-package diredfl
-    :hook (dired-mode . diredfl-mode))
+    :diminish
+    :hook dired-mode)
 
   ;; Shows icons in dired
   (use-package nerd-icons-dired
     :diminish
     :functions (nerd-icons-icon-for-dir my-nerd-icons-icon-for-dir)
-    :hook (dired-mode . nerd-icons-dired-mode)
+    :hook dired-mode
     :init
     (defface nerd-icons-dired-dir-face
       '((t (:inherit 'font-lock-doc-face)))

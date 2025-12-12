@@ -98,7 +98,7 @@
   (use-package prettier
     :diminish
     :defines prettier-pre-warm
-    :hook ((js-base-mode css-mode sgml-mode web-mode) . prettier-mode)
+    :hook (js-base-mode css-mode sgml-mode web-mode)
     :init (setq prettier-pre-warm 'none)))
 
 ;; Typescript
@@ -131,7 +131,7 @@
   :config
   (use-package restclient-test
     :diminish
-    :hook (restclient-mode . restclient-test-mode)))
+    :hook restclient-mode))
 
 (provide 'init-web)
 
