@@ -213,10 +213,8 @@ FACE defaults to inheriting from default and highlight."
 
   ;; Integrate into magit
   (with-eval-after-load 'magit
-    (add-hook 'magit-log-wash-summary-hook
-              #'hl-todo-search-and-highlight t)
-    (add-hook 'magit-revision-wash-message-hook
-              #'hl-todo-search-and-highlight t))
+    (add-hook 'magit-log-wash-summary-hook #'hl-todo-search-and-highlight t)
+    (add-hook 'magit-revision-wash-message-hook #'hl-todo-search-and-highlight t))
 
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."
@@ -239,9 +237,12 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
-  :diminish (diff-hl-mode diff-hl-flydiff-mode diff-hl-margin-mode)
   :defines diff-hl-show-hunk-posframe-internal-border-color
   :commands (diff-hl-flydiff-mode diff-hl-margin-mode)
+  :custom-face
+  (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
+  (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
+  (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -265,6 +266,15 @@ FACE defaults to inheriting from default and highlight."
   :config
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
+
+  ;; Thin indicators on fringe
+  (defun my-diff-hl-fringe-bmp-function (_type _pos)
+    "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
+    (define-fringe-bitmap 'my-diff-hl-bmp
+      (vector (if sys/linuxp #b11111100 #b11100000))
+      1 8
+      '(center t)))
+  (setq diff-hl-fringe-bmp-function 'my-diff-hl-fringe-bmp-function)
 
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
