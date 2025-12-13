@@ -261,6 +261,7 @@ prepended to the element after the #+HEADER: tag."
   (use-package org-tree-slide
     :after org
     :diminish
+    :defines org-tree-slide-mode-map
     :bind (:map org-mode-map
            ("s-<f7>" . org-tree-slide-mode)
            :map org-tree-slide-mode-map
@@ -268,7 +269,7 @@ prepended to the element after the #+HEADER: tag."
            ("<right>" . org-tree-slide-move-next-tree)
            ("S-SPC" . org-tree-slide-move-previous-tree)
            ("SPC" . org-tree-slide-move-next-tree))
-    :init (setq org-tree-slide-skip-outline-level 3)))
+    :custom (org-tree-slide-skip-outline-level 3)))
 
 ;; Pomodoro
 (use-package org-pomodoro
@@ -289,7 +290,7 @@ prepended to the element after the #+HEADER: tag."
 (when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
   (use-package org-roam
     :diminish
-    :functions centaur-browse-url org-roam-db-autosync-enable
+    :functions centaur-browse-url org-roam-db-autosync-mode
     :defines org-roam-graph-viewer
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
@@ -306,7 +307,8 @@ prepended to the element after the #+HEADER: tag."
       (make-directory org-roam-directory))
     (add-to-list 'org-agenda-files org-roam-directory)
 
-    (org-roam-db-autosync-enable))
+    ;; Keep Org-roam session automatically synchronized
+    (org-roam-db-autosync-mode))
 
   (use-package org-roam-ui
     :bind ("C-c n u" . org-roam-ui-mode)
