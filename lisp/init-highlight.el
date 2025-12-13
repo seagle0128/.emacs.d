@@ -50,10 +50,11 @@
                      (((class color) (background dark))
                       (:box (:line-width (-1 . -1) :color "gray56")))))
   :hook (after-init . show-paren-mode)
-  :init (setq show-paren-when-point-inside-paren t
-              show-paren-when-point-in-periphery t)
+  :custom
+  (show-paren-when-point-inside-paren t)
+  (show-paren-when-point-in-periphery t)
   :config
-  (if emacs/>=29p
+  (if (fboundp 'show-paren-context-when-offscreen)
       (setq blink-matching-paren-highlight-offscreen t
             show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))
