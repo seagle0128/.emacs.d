@@ -229,18 +229,27 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
   :diminish (diff-hl-mode diff-hl-flydiff-mode diff-hl-margin-mode)
+  :defines diff-hl-show-hunk-posframe-internal-border-color
   :commands (diff-hl-flydiff-mode diff-hl-margin-mode)
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode)
-         (magit-post-refresh . diff-hl-magit-post-refresh))
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         (after-load-theme . diff-hl-set-posframe-appearance))
   :custom
   (diff-hl-draw-borders nil)
   (diff-hl-update-async t)
-  (diff-hl-show-hunk-function (if (childframe-workable-p) 'diff-hl-show-hunk-posframe 'diff-hl-show-hunk-inline))
-  (diff-hl-show-hunk-posframe-internal-border-color (face-background 'posframe-border nil t))
+  (diff-hl-show-hunk-function (if (childframe-workable-p)
+                                  'diff-hl-show-hunk-posframe
+                                'diff-hl-show-hunk-inline))
+  :init
+  (defun diff-hl-set-posframe-appearance ()
+    "Set appearance of diff-hl-posframe."
+    (setq diff-hl-show-hunk-posframe-internal-border-color
+          (face-background 'posframe-border nil t)))
+  (diff-hl-set-posframe-appearance)
   :config
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
