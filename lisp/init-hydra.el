@@ -34,9 +34,9 @@
   :defines posframe-border-width
   :functions childframe-completion-workable-p
   :hook ((emacs-lisp-mode . hydra-add-imenu)
-         (after-load-theme . hydra-set-appearance))
+         (after-load-theme . hydra-set-posframe-appearance))
   :init
-  (defun hydra-set-appearance ()
+  (defun hydra-set-posframe-appearance ()
     "Set appearance of hydra."
     (when (childframe-completion-workable-p)
       (setq hydra-hint-display-type 'posframe)
@@ -49,7 +49,7 @@
               :foreground-color ,(face-foreground 'tooltip nil t)
               :lines-truncate t
               :poshandler posframe-poshandler-frame-center-near-bottom))))
-    (hydra-set-appearance))
+  (hydra-set-posframe-appearance))
 
 (use-package pretty-hydra
   :functions icons-displayable-p
