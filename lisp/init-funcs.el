@@ -459,7 +459,10 @@ Return the fastest package archive."
 (defun run-after-load-theme-hook (&rest _)
   "Run `after-load-theme-hook'."
   (run-hooks 'after-load-theme-hook))
-(advice-add #'load-theme :after #'run-after-load-theme-hook)
+
+(if (boundp 'enable-theme-functions)    ; Introduced in 29.1
+    (add-hook 'enable-theme-functions #'run-after-load-theme-hook)
+  (advice-add #'load-theme :after #'run-after-load-theme-hook))
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
