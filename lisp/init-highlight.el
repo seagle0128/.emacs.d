@@ -239,9 +239,8 @@ FACE defaults to inheriting from default and highlight."
   :custom
   (diff-hl-draw-borders nil)
   (diff-hl-update-async t)
-  (diff-hl-show-hunk-function (if (childframe-workable-p)
-                                  'diff-hl-show-hunk-posframe
-                                'diff-hl-show-hunk-inline))
+  (diff-hl-show-hunk-function (if (childframe-workable-p) 'diff-hl-show-hunk-posframe 'diff-hl-show-hunk-inline))
+  (diff-hl-show-hunk-posframe-internal-border-color (face-background 'posframe-border nil t))
   :config
   ;; Set fringe style
   (setq-default fringes-outside-margins t)

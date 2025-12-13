@@ -62,12 +62,13 @@
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
-  :functions childframe-workable-p
+  :ensure nil
   :diminish
   :config
   (when (childframe-workable-p)
     (use-package eldoc-mouse
       :diminish
+      :functions childframe-workable-p
       :bind (:map eldoc-mouse-mode-map
              ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
       :hook ((eglot-managed-mode emacs-lisp-mode)
