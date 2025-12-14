@@ -326,6 +326,9 @@
 (use-package memory-usage)
 (use-package reveal-in-folder)
 
+(use-package file-info
+  :bind ("C-c c i" . file-info-show))
+
 (use-package list-environment
   :init
   (with-no-warnings
