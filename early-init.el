@@ -59,7 +59,7 @@
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
 
-;; Explicitly set the prefered coding systems to avoid annoying prompt
+;; Explicitly set the preferred coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
 

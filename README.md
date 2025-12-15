@@ -192,26 +192,26 @@ or`~/.emacs.d/custom-post.el`.
 
 ## Hydra
 
-| Name                     | Scope                 | Keybinding        | Description                          |
-|--------------------------|-----------------------|-------------------|--------------------------------------|
-| `toggles-hydra`          | global                | `<f6>`            | Global option toggles                |
-| `window-hydra`           | global                | `C-c w`/`C-x o w` | Window management                    |
-| `doom-modeline-hydra`    | doom-modeline-mode    | `C-<f6>`          | Mode-line options and actions        |
-| `hydra-dired-qick-sort`  | dired-mode            | `S`               | Options for `dired-quick-sort`       |
-| `org-hydra`              | org-mode              | `<`               | Org template                         |
-| `dashboard-hydra`        | dashboard-mode        | `h`/`?`           | Actions for the dashboard            |
-| `dumb-jump-hydra`        | global                | `C-M-j`           | Jump to definition                   |
-| `youdao-dictionay-hydra` | youdao-dictionay-mode | `h`/`?`           | Actions for `youdao-dictionary`      |
-| `ztreediff-hydra`        | zreediff-mode         | `C-<f5>`          | Actions for text mode directory tree |
-| `git-messenger-hydra`    | global                | `C-x v p`         | Actions for `git-messenger`          |
-| `smerge-mode-hydra`      | smerge-mode           | `C-c m`           | Actions for `smerge-mode`            |
-| `rect-hydra`             | text-mode, prog-mode  | `C-<return>`      | Actions for Rectangle                |
-| `rect-hydra`             | org-mode              | `S-<return>`      | Actions for Rectangle                |
-| `hideshow-hydra`         | prog-mode             | `C-~`             | Actions for `hideshow`               |
-| `lsp-ui-hydra`           | lsp-ui-mode           | `M-<f6>`          | Actions for `lsp-ui`                 |
-| `dap-hydra`              | dap-mode              | `M-<f5>`          | Actions for `dap-debug`              |
-| `elfeed-hydra`           | elfeed-search-mode    | `?`               | Actions for RSS reader `elfeed`      |
-| `xwidget-hydra`          | xwidget-webkit-mode   | `?`               | Actions for embedded webkit browser  |
+| Name                      | Scope                  | Keybinding        | Description                          |
+|---------------------------|------------------------|-------------------|--------------------------------------|
+| `toggles-hydra`           | global                 | `<f6>`            | Global option toggles                |
+| `window-hydra`            | global                 | `C-c w`/`C-x o w` | Window management                    |
+| `doom-modeline-hydra`     | doom-modeline-mode     | `C-<f6>`          | Mode-line options and actions        |
+| `hydra-dired-quick-sort`  | dired-mode             | `S`               | Options for `dired-quick-sort`       |
+| `org-hydra`               | org-mode               | `<`               | Org template                         |
+| `dashboard-hydra`         | dashboard-mode         | `h`/`?`           | Actions for the dashboard            |
+| `dumb-jump-hydra`         | global                 | `C-M-j`           | Jump to definition                   |
+| `youdao-dictionary-hydra` | youdao-dictionary-mode | `h`/`?`           | Actions for `youdao-dictionary`      |
+| `ztreediff-hydra`         | ztreediff-mode         | `C-<f5>`          | Actions for text mode directory tree |
+| `git-messenger-hydra`     | global                 | `C-x v p`         | Actions for `git-messenger`          |
+| `smerge-mode-hydra`       | smerge-mode            | `C-c m`           | Actions for `smerge-mode`            |
+| `rect-hydra`              | text-mode, prog-mode   | `C-<return>`      | Actions for Rectangle                |
+| `rect-hydra`              | org-mode               | `S-<return>`      | Actions for Rectangle                |
+| `hideshow-hydra`          | prog-mode              | `C-~`             | Actions for `hideshow`               |
+| `lsp-ui-hydra`            | lsp-ui-mode            | `M-<f6>`          | Actions for `lsp-ui`                 |
+| `dap-hydra`               | dap-mode               | `M-<f5>`          | Actions for `dap-debug`              |
+| `elfeed-hydra`            | elfeed-search-mode     | `?`               | Actions for RSS reader `elfeed`      |
+| `xwidget-hydra`           | xwidget-webkit-mode    | `?`               | Actions for embedded webkit browser  |
 
 ## Screenshots
 

@@ -42,7 +42,7 @@
       '(("gnu"   . "http://elpa.gnu.org/packages/")
         ("melpa" . "http://melpa.org/packages/")))
 
-;; Explicitly set the prefered coding systems to avoid annoying prompt
+;; Explicitly set the preferred coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
 
