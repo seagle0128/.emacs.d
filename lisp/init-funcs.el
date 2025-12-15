@@ -67,8 +67,8 @@
   (set-buffer-file-coding-system 'undecided-dos nil))
 
 (defun delete-dos-eol ()
-  "Delete `' characters in current region or buffer.
-Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
+  "Delete `^M' characters in current region or buffer.
+Same as `replace-string' `C-q' `C-m' `RET' `RET'."
   (interactive)
   (save-excursion
     (when (region-active-p)
@@ -194,8 +194,10 @@ interactively.  Turn the filename into a URL with function
   (browse-url centaur-homepage))
 
 ;; Open custom file
-(defun find-custom-file()
-  "Open custom files."
+(defun find-custom-file ()
+  "Open custom files.
+If the custom file doesn't exist, copy the example file to create it.
+Also opens the custom-post file in another window if it exists."
   (interactive)
   (unless (file-exists-p custom-file)
     (if (file-exists-p centaur-custom-example-file)
@@ -252,7 +254,9 @@ Native tree-sitter is introduced since 29.1."
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 
-  Save to option `custom-file' if NO-SAVE is nil."
+If NO-SAVE is non-nil, don't save to the custom file.
+This function both sets the variable in the current session and persists it to
+the custom file."
   (customize-set-variable variable value)
   (when (and (not no-save)
              (file-writable-p custom-file))
@@ -261,13 +265,16 @@ Native tree-sitter is introduced since 29.1."
       (goto-char (point-min))
       (while (re-search-forward
               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-                               nil t)
-  (replace-match (format "(setq %s '%s)" variable value) nil nil))
+              nil t)
+        (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
 
 (defun too-long-file-p ()
-  "Check whether the file is too long."
+  "Check whether the file is too long.
+
+Returns non-nil if the buffer size exceeds 500,000 bytes or has more than 10,000
+lines."
   (or (> (buffer-size) 500000)
       (and (fboundp 'buffer-line-statistics)
            (> (car (buffer-line-statistics)) 10000))))
@@ -286,7 +293,7 @@ Native tree-sitter is introduced since 29.1."
       (and (fboundp 'mixed-pitch-mode) (mixed-pitch-mode -1))
       (text-scale-set 0))))
 
-;; Pakcage repository (ELPA)
+;; Package repository (ELPA)
 (defun set-package-archives (archives &optional refresh async no-save)
   "Set the package ARCHIVES (ELPA).
 
@@ -390,8 +397,8 @@ Return the fastest package archive."
   (message "Updating packages...done"))
 (defalias 'centaur-update-packages #'update-packages)
 
-(defun update-config-and-packages()
-  "Update confgiurations and packages."
+(defun update-config-and-packages ()
+  "Update configurations and packages."
   (interactive)
   (update-config)
   (update-packages))
@@ -424,7 +431,7 @@ Return the fastest package archive."
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
 
-(defun update-all()
+(defun update-all ()
   "Update dotfiles, org files, configurations and packages to the latest."
   (interactive)
   (update-org)
@@ -735,7 +742,7 @@ Return the fastest package archive."
     (enable-socks-proxy)))
 
 (defun enable-proxy ()
-  "Enbale proxy."
+  "Enable proxy."
   (interactive)
   (enable-http-proxy)
   (enable-socks-proxy))
