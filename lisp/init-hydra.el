@@ -48,7 +48,7 @@
               :background-color ,(face-background 'tooltip nil t)
               :foreground-color ,(face-foreground 'tooltip nil t)
               :lines-truncate t
-              :poshandler posframe-poshandler-frame-center-near-bottom))))
+              :poshandler posframe-poshandler-frame-center))))
   (hydra-set-posframe-appearance))
 
 (use-package pretty-hydra
