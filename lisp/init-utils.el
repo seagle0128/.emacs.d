@@ -112,12 +112,11 @@
       :diminish
       :autoload which-key-posframe-mode
       :defines posframe-border-width
-      :functions posframe-poshandler-frame-center-near-bottom
       :custom-face
       (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
       :init
       (setq which-key-posframe-border-width posframe-border-width
-            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
+            which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
       (which-key-posframe-mode 1))))

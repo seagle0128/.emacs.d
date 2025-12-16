@@ -148,19 +148,17 @@
         (run-hook-with-args 'git-messenger:before-popup-hook popuped-message)
         (git-messenger-hydra/body)
         (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
-               (let ((buffer-name "*git-messenger*"))
+               (let ((buffer-name " *git-messenger*"))
                  (posframe-show buffer-name
-                                :string (concat (propertize "\n" 'face '(:height 0.3))
-                                                popuped-message
-                                                "\n"
-                                                (propertize "\n" 'face '(:height 0.3)))
+                                :string popuped-message
                                 :left-fringe 8
                                 :right-fringe 8
                                 :max-width (round (* (frame-width) 0.62))
                                 :max-height (round (* (frame-height) 0.62))
                                 :internal-border-width 1
                                 :internal-border-color (face-background 'posframe-border nil t)
-                                :background-color (face-background 'tooltip nil t))
+                                :foreground-color (face-foreground 'tooltip nil t)
+                                :background-color (face-background 'tooltip nil t)                                )
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-hide buffer-name))))
