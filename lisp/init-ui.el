@@ -337,7 +337,6 @@
     :hook after-init
     :init (setq transient-mode-line-format nil
                 transient-posframe-border-width posframe-border-width
-                transient-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
                 transient-posframe-parameters '((left-fringe . 8)
                                                 (right-fringe . 8)))))
 
