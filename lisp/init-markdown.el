@@ -110,14 +110,14 @@ mermaid.initialize({
     (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
       "Generate or refresh toc after disabling lsp."
       (cond
-       ((bound-and-true-p lsp-managed-mode)
-        (lsp-managed-mode -1)
-        (apply fn args)
-        (lsp-managed-mode 1))
        ((bound-and-true-p eglot--manage-mode)
         (eglot--manage-mode -1)
         (apply fn args)
         (eglot--manage-mode 1))
+       ((bound-and-true-p lsp-managed-mode)
+        (lsp-managed-mode -1)
+        (apply fn args)
+        (lsp-managed-mode 1))
        (t
         (apply fn args))))))
 

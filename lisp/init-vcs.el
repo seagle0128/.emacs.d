@@ -106,7 +106,7 @@
         ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
         ("q" git-messenger:popup-close "quit")))
 
-    (defun my-git-messenger:format-detail (vcs commit-id author message)
+    (defun my-git-messenger:format-detail (fn vcs commit-id author message)
       (if (eq vcs 'git)
           (let ((date (git-messenger:commit-date commit-id))
                 (colon (propertize ":" 'face 'font-lock-comment-face)))
@@ -121,7 +121,8 @@
              (propertize (make-string 38 ?─) 'face 'font-lock-comment-face)
              message
              (propertize "\nPress q to quit" 'face '(:inherit (font-lock-comment-face italic)))))
-        (git-messenger:format-detail vcs commit-id author message)))
+        (funcall fn vcs commit-id author message)))
+    (advice-add #'git-messenger:format-detail :around #'my-git-messenger:format-detail)
 
     (defun my-git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
@@ -135,7 +136,7 @@
              (author (cdr commit-info))
              (msg (git-messenger:commit-message vcs commit-id))
              (popuped-message (if (git-messenger:show-detail-p commit-id)
-                                  (my-git-messenger:format-detail vcs commit-id author msg)
+                                  (git-messenger:format-detail vcs commit-id author msg)
                                 (cl-case vcs
                                   (git msg)
                                   (svn (if (string= commit-id "-")
