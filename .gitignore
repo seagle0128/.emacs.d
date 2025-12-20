@@ -45,6 +45,7 @@
 /tabsession.el
 /tramp
 README.html
+.agent-shell/
 anaconda-mode/
 auto-save-list/
 cnfonts/
