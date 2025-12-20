@@ -21,21 +21,21 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Prerequisite](#prerequisite)
+- [Prerequisites](#prerequisites)
   - [OS](#os)
   - [GNU Emacs](#gnu-emacs)
   - [Dotfiles (Optional)](#dotfiles-optional)
 - [Quick Start](#quick-start)
-  - [Install](#install)
-  - [Update](#update)
-  - [Docker](#docker)
+  - [Installation](#installation)
+  - [Updating](#updating)
+  - [Docker Support](#docker-support)
 - [Customization](#customization)
-  - [Customize Group](#customize-group)
-  - [Manual](#manual)
-- [Hydra](#hydra)
+  - [Using Customize Interface](#using-customize-interface)
+  - [Manual Configuration](#manual-configuration)
+- [Hydra Keybindings](#hydra-keybindings)
 - [Screenshots](#screenshots)
-- [FAQ](#faq)
-- [Donate](#donate)
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+- [Support the Project](#support-the-project)
 
 <!-- markdown-toc end -->
 
@@ -45,7 +45,7 @@ packages and adds its own core library to the mix. The final product offers
 an easy to use Emacs configuration for Emacs newcomers and lots of additional
 power for Emacs power users.
 
-It's able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
+It is able to run on Windows, GNU Linux and macOS. It is compatible **ONLY with
 GNU Emacs 28.1 and above**. In general you're advised to always run with the
 latest stable release - currently **30.1**.
 
