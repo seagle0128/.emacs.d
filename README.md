@@ -20,22 +20,22 @@
 
 ## Table of Contents
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-  - [OS](#os)
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+  - [Operating Systems](#operating-systems)
   - [GNU Emacs](#gnu-emacs)
   - [Dotfiles (Optional)](#dotfiles-optional)
-- [Quick Start](#quick-start)
+- [Quick Start](#-quick-start)
   - [Installation](#installation)
   - [Updating](#updating)
   - [Docker Support](#docker-support)
-- [Customization](#customization)
+- [Customization](#-customization)
   - [Using Customize Interface](#using-customize-interface)
   - [Manual Configuration](#manual-configuration)
-- [Hydra Keybindings](#hydra-keybindings)
-- [Screenshots](#screenshots)
-- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
-- [Support the Project](#support-the-project)
+- [Hydra Keybindings](#-hydra-keybindings)
+- [Screenshots](#-screenshots)
+- [Frequently Asked Questions (FAQ)](#-frequently-asked-questions-faq)
+- [Support the Project](#-support-the-project)
 
 <!-- markdown-toc end -->
 
@@ -256,7 +256,7 @@ Centaur Emacs comes with several Hydra interfaces for efficient workflows. Here 
 | `xwidget-hydra`            | XWidget Webkit Mode  | `?`               | Embedded browser controls            |
 | `ztreediff-hydra`          | Ztree Diff Mode      | `C-<f5>`          | Directory comparison operations      |
 
-## Screenshots
+## 📸 Screenshots
 
 ![Dashboard](https://user-images.githubusercontent.com/140797/97093362-c793b000-167d-11eb-924a-1892c6e95b8a.png "Dashboard (default theme)")
 
