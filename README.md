@@ -28,7 +28,6 @@
   - [🚀 Quick Start](#-quick-start)
     - [Installation](#installation)
       - [Standard Installation](#standard-installation)
-      - [XDG Configuration Directory (Linux)](#xdg-configuration-directory-linux)
       - [First Startup](#first-startup)
     - [Updating](#updating)
       - [Update Commands](#update-commands)
@@ -117,7 +116,7 @@ git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.emacs.d
 
 Alternatively, you can download the [ZIP package](https://github.com/seagle0128/.emacs.d/archive/master.zip) directly and extract it to `~/.emacs.d`.
 
-#### XDG Configuration Directory (Linux)
+**:information_source: Notes**: XDG Configuration Directory (Linux)
 
 If you're using Linux and prefer an XDG-compatible location, use:
 
@@ -132,7 +131,7 @@ Or extract the ZIP package to the `$XDG_CONFIG_HOME/emacs` directory.
 
 After installation, start Emacs and wait for packages to install during the first startup. This may take some time depending on your network speed.
 
-**:warning: Important Notes**:
+**:warning: Notes**:
 - First startup may take a while as packages are downloaded and installed
 - If installation stalls, check your network connection or consider using a proxy
 - For troubleshooting, start with minimal configuration: `emacs -Q -l ~/.emacs.d/init-mini.el`
