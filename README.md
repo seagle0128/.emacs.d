@@ -20,22 +20,27 @@
 
 ## Table of Contents
 
-- [Features](#-features)
-- [Prerequisites](#-prerequisites)
-  - [Operating Systems](#operating-systems)
-  - [GNU Emacs](#gnu-emacs)
-  - [Dotfiles (Optional)](#dotfiles-optional)
-- [Quick Start](#-quick-start)
-  - [Installation](#installation)
-  - [Updating](#updating)
-  - [Docker Support](#docker-support)
-- [Customization](#-customization)
-  - [Using Customize Interface](#using-customize-interface)
-  - [Manual Configuration](#manual-configuration)
-- [Hydra Keybindings](#-hydra-keybindings)
-- [Screenshots](#-screenshots)
-- [Frequently Asked Questions (FAQ)](#-frequently-asked-questions-faq)
-- [Support the Project](#-support-the-project)
+  - [✨ Features](#-features)
+  - [🧰 Prerequisites](#-prerequisites)
+    - [Operating Systems](#operating-systems)
+    - [GNU Emacs](#gnu-emacs)
+    - [Dotfiles (Optional)](#dotfiles-optional)
+  - [🚀 Quick Start](#-quick-start)
+    - [Installation](#installation)
+      - [Standard Installation](#standard-installation)
+      - [XDG Configuration Directory (Linux)](#xdg-configuration-directory-linux)
+      - [First Startup](#first-startup)
+    - [Updating](#updating)
+      - [Update Commands](#update-commands)
+    - [Docker Support](#docker-support)
+  - [⚙️ Customization](#-customization)
+    - [Using Customize Interface](#using-customize-interface)
+    - [Manual Configuration](#manual-configuration)
+      - [Common Configuration Options](#common-configuration-options)
+  - [🎯 Hydra Keybindings](#-hydra-keybindings)
+  - [📸 Screenshots](#-screenshots)
+  - [❓ Frequently Asked Questions (FAQ)](#-frequently-asked-questions-faq)
+  - [💖 Support the Project](#-support-the-project)
 
 <!-- markdown-toc end -->
 
@@ -94,7 +99,7 @@ For installation instructions, please refer to [Installing Emacs](http://wikemac
 
 We recommend using [Centaur Dotfiles](https://github.com/seagle0128/dotfiles) for a complete system configuration.
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Installation
 
