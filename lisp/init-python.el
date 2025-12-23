@@ -34,6 +34,7 @@
 ;; Install: pip install pyflakes autopep8
 (use-package python
   :ensure nil
+  :defines eglot-server-programs
   :functions exec-path-from-shell-copy-env
   :hook (inferior-python-mode . (lambda ()
                                   (process-query-on-exit-flag
@@ -42,6 +43,17 @@
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
   :config
+  ;; Type checker & language server: `ty'
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((python-ts-mode python-mode)
+                   . ("ty" "server"))))
+
+  ;; Linter & formatter: `ruff'
+  (when (executable-find "ruff")
+    (use-package flymake-ruff
+      :hook (python-base-mode . flymake-ruff-load)))
+
   ;; Default to Python 3. Prefer the versioned Python binaries since some
   ;; systems stupidly make the unversioned one point at Python 2.
   (when (and (executable-find "python3")
