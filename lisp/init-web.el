@@ -89,15 +89,6 @@
 (unless (fboundp 'js-json-mode)
   (use-package json-mode))
 
-;; Format HTML, CSS and JavaScript/JSON
-;; Install: npm -g install prettier
-(when (executable-find "prettier")
-  (use-package prettier
-    :diminish
-    :defines prettier-pre-warm
-    :hook (js-base-mode css-mode sgml-mode web-mode)
-    :init (setq prettier-pre-warm 'none)))
-
 ;; Typescript
 (unless (and (centaur-treesit-available-p)
              (fboundp 'typescript-ts-mode))

@@ -104,6 +104,11 @@
   :diminish
   :hook after-init)
 
+; Reformat buffer stably
+(use-package apheleia
+  :diminish
+  :hook (after-init . apheleia-global-mode))
+
 ;; Run commands quickly
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
