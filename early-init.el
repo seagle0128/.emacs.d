@@ -75,7 +75,7 @@
   (push '(ns-appearance . dark) default-frame-alist))
 
 ;; Prevent flash of unstyled mode line
-(setq mode-line-format nil)
+(setq-default mode-line-format nil)
 
 ;; For LSP performance
 ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/

@@ -88,7 +88,8 @@
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
         :functions (centaur-compatible-theme-p refresh-ns-appearance)
-        :hook (after-init . solaire-global-mode))
+        :commands solaire-global-mode
+        :init (solaire-global-mode 1))
 
       ;; Excellent themes
       (use-package doom-themes
@@ -101,10 +102,10 @@
 
 ;; Mode-line
 (use-package doom-modeline
+  :custom
+  (doom-modeline-icon centaur-icon)
+  (doom-modeline-minor-modes t)
   :hook after-init
-  :init
-  (setq doom-modeline-icon centaur-icon
-        doom-modeline-minor-modes t)
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
@@ -239,7 +240,6 @@
       "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
-  :autoload turn-off-hide-mode-line-mode
   :hook (((eat-mode
            eshell-mode shell-mode
            term-mode vterm-mode
