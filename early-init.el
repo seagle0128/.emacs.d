@@ -32,7 +32,11 @@
 ;;; Code:
 
 ;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
+(if noninteractive  ; in CLI sessions
+    (setq gc-cons-threshold #x8000000   ; 128MB
+          ;; Backport from 29 (see emacs-mirror/emacs@73a384a98698)
+          gc-cons-percentage 1.0)
+  (setq gc-cons-threshold most-positive-fixnum))
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
