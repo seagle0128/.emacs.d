@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-custom))
+  (require 'init-custom)
+  (require 'init-hydra))
 
 ;; Dashboard
 (when centaur-dashboard

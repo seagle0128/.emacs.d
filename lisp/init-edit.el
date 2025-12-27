@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-hydra))
 
 ;; Delete selection if you insert
 (use-package delsel

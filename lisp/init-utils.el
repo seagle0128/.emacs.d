@@ -31,7 +31,9 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-funcs)
+  (require 'init-hydra))
 
 ;; Display available keybindings in popup
 (use-package which-key

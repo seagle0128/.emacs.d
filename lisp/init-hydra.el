@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-funcs))
+
 (use-package hydra
   :defines posframe-border-width
   :functions childframe-completion-workable-p

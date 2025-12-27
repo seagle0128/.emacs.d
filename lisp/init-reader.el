@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-hydra))
 
 (bind-key "M-<f7>" #'centaur-read-mode)
 
