@@ -32,7 +32,8 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-custom))
+  (require 'init-custom)
+  (require 'init-hydra))
 
 (pcase centaur-lsp
   ('eglot

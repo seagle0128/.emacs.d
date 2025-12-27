@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-hydra))
+
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil

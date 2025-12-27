@@ -31,7 +31,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-hydra))
 
 ;; Magit
 ;; See `magit-define-global-key-bindings'

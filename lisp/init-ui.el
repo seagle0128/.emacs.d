@@ -32,7 +32,9 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-custom))
+  (require 'init-funcs)
+  (require 'init-custom)
+  (require 'init-hydra))
 
 ;; Optimization
 (setq idle-update-delay 1.0)
