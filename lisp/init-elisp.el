@@ -1,6 +1,6 @@
 ;; init-elisp.el --- Initialize Emacs Lisp configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,30 +30,10 @@
 
 ;;; Code:
 
-(require 'init-custom)
-(require 'init-funcs)
-
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :defines flycheck-disabled-checkers
-  :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
-         ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
-  :hook (emacs-lisp-mode . (lambda ()
-                             "Disable the checkdoc checker."
-                             (setq-local flycheck-disabled-checkers
-                                         '(emacs-lisp-checkdoc))))
   :config
-  (when (boundp 'elisp-flymake-byte-compile-load-path)
-    (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
-
-  ;; Syntax highlighting of known Elisp symbols
-  (use-package highlight-defined
-    :hook (emacs-lisp-mode . highlight-defined-mode)
-    :init (setq highlight-defined-face-use-itself t))
-
   (with-no-warnings
     ;; Align indent keywords
     ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
@@ -124,7 +104,7 @@ Lisp function does not specify a special indentation."
                              (get (intern-soft function) 'lisp-indent-hook)))
             (cond ((or (eq method 'defun)
                        (and (null method)
-                            (> (length function) 3)
+                            (length> function 3)
                             (string-match "\\`def" function)))
                    (lisp-indent-defform state indent-point))
                   ((integerp method)
@@ -147,59 +127,52 @@ Lisp function does not specify a special indentation."
         advices))
 
     (defun add-remove-advice-button (advice function)
-      (when (and advice (symbolp advice))
-        (let ((inhibit-read-only t))
+      (when (and (functionp advice) (functionp function))
+        (let ((inhibit-read-only t)
+              (msg (format "Remove advice `%s'" advice)))
           (insert "\t")
-          (insert-text-button
-           "[Remove]"
-           'cursor-sensor-functions `((lambda (&rest _) (message "Remove advice `%s'" ',advice)))
-           'help-echo (format "Remove advice `%s'" advice)
+          (insert-button
+           "Remove"
+           'face 'custom-button
+           'cursor-sensor-functions `((lambda (&rest _) ,msg))
+           'help-echo msg
            'action (lambda (_)
-                     (when (yes-or-no-p (format "Remove advice `%s'?" advice))
-                       (message "Removing advice `%s' from function `%s'" advice function)
+                     (when (yes-or-no-p msg)
+                       (message "%s from function `%s'" msg function)
                        (advice-remove function advice)
                        (if (eq major-mode 'helpful-mode)
                            (helpful-update)
                          (revert-buffer nil t))))
            'follow-link t))))
 
-    (defun add-button-to-remove-advice (buffer-name function)
+    (defun add-button-to-remove-advice (buffer-or-name function)
       "Add a button to remove advice."
-      (when (get-buffer buffer-name)
-        (with-current-buffer buffer-name
-          (save-excursion
-            (goto-char (point-min))
-            (let ((ad-list (function-advices function)))
-              (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.$" nil t)
-                (let* ((name (string-trim (match-string 1) "[‘'`]" "[’']"))
-                       (advice (intern-soft name)))
-                  (when (memq advice ad-list)
-                    (add-remove-advice-button advice function)
-                    (setq ad-list (delq advice ad-list)))))
-
-              ;; Search `:around' advice
-              (goto-char (point-min))
-              (when (re-search-forward "^This function is advised.$" nil t)
-                (add-remove-advice-button (car ad-list) function)))))))
+      (with-current-buffer buffer-or-name
+        (save-excursion
+          (goto-char (point-min))
+          (let ((ad-list (function-advices function)))
+            (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)$" nil t)
+              (let ((advice (car ad-list)))
+                (add-remove-advice-button advice function)
+                (setq ad-list (delq advice ad-list))))))))
 
     (define-advice describe-function-1 (:after (function) advice-remove-button)
-      (add-button-to-remove-advice "*Help*" function))
+      (add-button-to-remove-advice (help-buffer) function))
     (with-eval-after-load 'helpful
       (define-advice helpful-update (:after () advice-remove-button)
         (when helpful--callable-p
-          (add-button-to-remove-advice (helpful--buffer helpful--sym t) helpful--sym))))
+          (add-button-to-remove-advice (current-buffer) helpful--sym))))
 
     ;; Remove hooks
     (defun remove-hook-at-point ()
       "Remove the hook at the point in the *Help* buffer."
       (interactive)
-      (unless (or (eq major-mode 'help-mode)
-                  (eq major-mode 'helpful-mode)
-                  (string= (buffer-name) "*Help*"))
+      (unless (memq major-mode '(help-mode helpful-mode))
         (error "Only for help-mode or helpful-mode"))
+
       (let ((orig-point (point)))
         (save-excursion
-          (when-let
+          (when-let*
               ((hook (progn (goto-char (point-min)) (symbol-at-point)))
                (func (when (and
                             (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
@@ -222,70 +195,14 @@ Lisp function does not specify a special indentation."
                 (revert-buffer nil t)))))))
     (bind-key "r" #'remove-hook-at-point help-mode-map)))
 
-;; Show function arglist or variable docstring
-;; `global-eldoc-mode' is enabled by default.
-(use-package eldoc
-  :ensure nil
-  :diminish
-  :config
-  ;; Display `eldoc' in child frame
-  (with-no-warnings
-    (when (childframe-workable-p)
-      (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
-        "The posframe buffer name use by eldoc-posframe.")
-
-      (defvar eldoc-posframe-hide-posframe-hooks
-        '(pre-command-hook post-command-hook focus-out-hook)
-        "The hooks which should trigger automatic removal of the posframe.")
-
-      (defvar eldoc-posframe-delay 0.2
-        "Delay seconds to display `eldoc'.")
-
-      (defvar-local eldoc-posframe--timer nil)
-
-      (defun eldoc-posframe-hide-posframe ()
-        "Hide messages currently being shown if any."
-        (when eldoc-posframe--timer
-          (cancel-timer eldoc-posframe--timer))
-
-        (posframe-hide eldoc-posframe-buffer)
-        (dolist (hook eldoc-posframe-hide-posframe-hooks)
-          (remove-hook hook #'eldoc-posframe-hide-posframe t)))
-
-      (defun eldoc-posframe-show-posframe (str &rest args)
-        "Display STR with ARGS."
-        (when eldoc-posframe--timer
-          (cancel-timer eldoc-posframe--timer))
-
-        (posframe-hide eldoc-posframe-buffer)
-        (dolist (hook eldoc-posframe-hide-posframe-hooks)
-          (add-hook hook #'eldoc-posframe-hide-posframe nil t))
-
-        (setq eldoc-posframe--timer
-              (run-with-idle-timer
-               eldoc-posframe-delay nil
-               (lambda ()
-                 (when str
-                   (posframe-show
-                    eldoc-posframe-buffer
-                    :string (concat (propertize "\n" 'face '(:height 0.3))
-                                    (apply #'format str args)
-                                    (propertize "\n\n" 'face '(:height 0.3)))
-                    :postion (point)
-                    :left-fringe 8
-                    :right-fringe 8
-                    :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
-                    :internal-border-width 1
-                    :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                    :background-color (face-background 'tooltip nil t)))))))
-      (add-hook 'emacs-lisp-mode-hook
-                (lambda ()
-                  (setq-local eldoc-message-function #'eldoc-posframe-show-posframe))))))
+;; Syntax highlighting of known Elisp symbols
+(if (boundp 'elisp-fontify-semantically)
+    (setq elisp-fontify-semantically t)
+  (use-package highlight-defined
+    :hook (emacs-lisp-mode inferior-emacs-lisp-mode)))
 
 ;; Interactive macro expander
 (use-package macrostep
-  :custom-face
-  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t))))
   :bind (:map emacs-lisp-mode-map
          ("C-c e" . macrostep-expand)
          :map lisp-interaction-mode-map
@@ -293,49 +210,32 @@ Lisp function does not specify a special indentation."
 
 ;; A better *Help* buffer
 (use-package helpful
-  :defines (counsel-describe-function-function
-            counsel-describe-variable-function)
-  :commands helpful--buffer
-  :bind (([remap describe-key] . helpful-key)
-         ([remap describe-symbol] . helpful-symbol)
-         ("C-c C-d" . helpful-at-point)
+  :bind (([remap describe-function] . helpful-callable)
+         ([remap describe-command]  . helpful-command)
+         ([remap describe-variable] . helpful-variable)
+         ([remap describe-key]      . helpful-key)
+         ([remap describe-symbol]   . helpful-symbol)
+         :map emacs-lisp-mode-map
+         ("C-c C-d"                 . helpful-at-point)
+         :map lisp-interaction-mode-map
+         ("C-c C-d"                 . helpful-at-point)
          :map helpful-mode-map
-         ("r" . remove-hook-at-point))
+         ("r"                       . remove-hook-at-point))
   :hook (helpful-mode . cursor-sensor-mode) ; for remove-advice button
   :init
-  (with-eval-after-load 'counsel
-    (setq counsel-describe-function-function #'helpful-callable
-          counsel-describe-variable-function #'helpful-variable))
-
-  (with-eval-after-load 'apropos
-    ;; patch apropos buttons to call helpful instead of help
-    (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
-      (button-type-put
-       fun-bt 'action
-       (lambda (button)
-         (helpful-callable (button-get button 'apropos-symbol)))))
-    (dolist (var-bt '(apropos-variable apropos-user-option))
-      (button-type-put
-       var-bt 'action
-       (lambda (button)
-         (helpful-variable (button-get button 'apropos-symbol))))))
-  :config
   (with-no-warnings
-    ;; Open the buffer in other window
-    (defun my-helpful--navigate (button)
-      "Navigate to the path this BUTTON represents."
-      (find-file-other-window (substring-no-properties (button-get button 'path)))
-      ;; We use `get-text-property' to work around an Emacs 25 bug:
-      ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=f7c4bad17d83297ee9a1b57552b1944020f23aea
-      (-when-let (pos (get-text-property button 'position
-                                         (marker-buffer button)))
-        (helpful--goto-char-widen pos)))
-    (advice-add #'helpful--navigate :override #'my-helpful--navigate)))
-
-;; For ERT
-(use-package overseer
-  :diminish
-  :hook (emacs-lisp-mode . overseer-mode))
+    (with-eval-after-load 'apropos
+      ;; patch apropos buttons to call helpful instead of help
+      (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
+        (button-type-put
+         fun-bt 'action
+         (lambda (button)
+           (helpful-callable (button-get button 'apropos-symbol)))))
+      (dolist (var-bt '(apropos-variable apropos-user-option))
+        (button-type-put
+         var-bt 'action
+         (lambda (button)
+           (helpful-variable (button-get button 'apropos-symbol))))))))
 
 (provide 'init-elisp)
 

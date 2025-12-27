@@ -1,6 +1,6 @@
 ;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,34 +30,55 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const))
 
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
+  :functions childframe-completion-workable-p
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
+              which-key-lighter nil
               which-key-show-remaining-keys t)
   :config
-  (which-key-add-key-based-replacements "C-c !" "flycheck")
+  (which-key-add-key-based-replacements "M-s h" "highlight")
+  (which-key-add-key-based-replacements "M-s s" "symbol-overlay")
+
   (which-key-add-key-based-replacements "C-c &" "yasnippet")
-  (which-key-add-key-based-replacements "C-c c" "counsel")
+  (which-key-add-key-based-replacements "C-c @" "hideshow")
+  (which-key-add-key-based-replacements "C-c c" "consult")
+  (which-key-add-key-based-replacements "C-c d" "dict")
+  (which-key-add-key-based-replacements "C-c l" "link-hint")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
-  (which-key-add-key-based-replacements "C-c v" "ivy-view")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
-  (which-key-add-key-based-replacements "C-x RET" "coding-system")
   (which-key-add-key-based-replacements "C-x 8" "unicode")
+  (which-key-add-key-based-replacements "C-x 8 e" "emoji")
   (which-key-add-key-based-replacements "C-x @" "modifior")
-  (which-key-add-key-based-replacements "C-x X" "edebug")
   (which-key-add-key-based-replacements "C-x a" "abbrev")
+  (which-key-add-key-based-replacements "C-x c" "colorful")
   (which-key-add-key-based-replacements "C-x n" "narrow")
-  (which-key-add-key-based-replacements "C-x t" "tab")
+  (which-key-add-key-based-replacements "C-x p" "project")
+  (which-key-add-key-based-replacements "C-x r" "rect & bookmark")
+  (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
+  (which-key-add-key-based-replacements "C-x w" "window & highlight")
+  (which-key-add-key-based-replacements "C-x w ^" "window")
+  (which-key-add-key-based-replacements "C-x x" "buffer")
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
+  (which-key-add-key-based-replacements "C-x RET" "coding-system")
+  (which-key-add-key-based-replacements "C-x X" "edebug")
+  (which-key-add-key-based-replacements "C-x v b" "vc-branch")
+  (which-key-add-key-based-replacements "C-x v M" "vc-mergebase")
 
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c \"" "org-plot")
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c C-v" "org-babel")
+  (which-key-add-major-mode-key-based-replacements 'org-mode
+    "C-c C-x" "org-misc")
 
   (which-key-add-major-mode-key-based-replacements 'emacs-lisp-mode
     "C-c ," "overseer")
@@ -86,50 +107,19 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle")
 
-  (when (childframe-workable-p)
+  (when (childframe-completion-workable-p)
     (use-package which-key-posframe
       :diminish
-      :functions posframe-poshandler-frame-center-near-bottom
+      :autoload which-key-posframe-mode
+      :defines posframe-border-width
       :custom-face
-      (which-key-posframe ((t (:inherit tooltip))))
-      (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
+      (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
       :init
-      (setq which-key-posframe-border-width 3
-            which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
+      (setq which-key-posframe-border-width posframe-border-width
+            which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
             which-key-posframe-parameters '((left-fringe . 8)
                                             (right-fringe . 8)))
-      (which-key-posframe-mode 1)
-      :config
-      (with-no-warnings
-        (defun my-which-key-posframe--show-buffer (act-popup-dim)
-          "Show which-key buffer when popup type is posframe.
-Argument ACT-POPUP-DIM includes the dimension, (height . width)
-of the buffer text to be displayed in the popup"
-          (when (posframe-workable-p)
-            (with-current-buffer (get-buffer-create which-key-buffer-name)
-              (let ((inhibit-read-only t))
-                (goto-char (point-min))
-                (insert (propertize "\n" 'face '(:height 0.3)))
-                (goto-char (point-max))
-                (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
-            (posframe-show which-key--buffer
-		                   :font which-key-posframe-font
-		                   :position (point)
-		                   :poshandler which-key-posframe-poshandler
-		                   :background-color (face-attribute 'which-key-posframe :background nil t)
-		                   :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
-		                   :height (1+ (car act-popup-dim))
-		                   :width (1+ (cdr act-popup-dim))
-		                   :internal-border-width which-key-posframe-border-width
-		                   :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
-		                   :override-parameters which-key-posframe-parameters)))
-        (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer))
-
-      (add-hook 'after-load-theme-hook
-                (lambda ()
-                  (custom-set-faces
-                   '(which-key-posframe ((t (:inherit tooltip))))
-                   `(which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))))))))
+      (which-key-posframe-mode 1))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
@@ -137,133 +127,50 @@ of the buffer text to be displayed in the popup"
   :bind (:map persistent-scratch-mode-map
          ([remap kill-buffer] . (lambda (&rest _)
                                   (interactive)
-                                  (user-error "Scrach buffer cannot be killed")))
+                                  (user-error "Scratch buffer cannot be killed")))
          ([remap revert-buffer] . persistent-scratch-restore)
-         ([remap revert-this-buffer] . persistent-scratch-restore))
+         ([remap revert-buffer-quick] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
-         (lisp-interaction-mode . persistent-scratch-mode)))
+         (lisp-interaction-mode . persistent-scratch-mode))
+  :init (setq persistent-scratch-backup-file-name-format "%Y-%m-%d"
+              persistent-scratch-backup-directory
+              (expand-file-name "persistent-scratch" user-emacs-directory)))
 
 ;; Search tools
+(use-package grep
+  :ensure nil
+  :autoload grep-apply-setting
+  :init
+  (when (executable-find "rg")
+    (grep-apply-setting
+     'grep-command "rg --color=auto --null -nH --no-heading -e ")
+    (grep-apply-setting
+     'grep-template "rg --color=auto --null --no-heading -g '!*/' -e <R> <D>")
+    (grep-apply-setting
+     'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
+    (grep-apply-setting
+     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
+
 ;; Writable `grep' buffer
 (use-package wgrep
-  :init
-  (setq wgrep-auto-save-buffer t
-        wgrep-change-readonly-file t))
+  :init (setq wgrep-auto-save-buffer t
+              wgrep-change-readonly-file t))
 
 ;; Fast search tool `ripgrep'
 (use-package rg
-  :defines projectile-command-map
   :hook (after-init . rg-enable-default-bindings)
   :bind (:map rg-global-map
          ("c" . rg-dwim-current-dir)
          ("f" . rg-dwim-current-file)
-         ("m" . rg-menu)
-         :map rg-mode-map
          ("m" . rg-menu))
-  :init (setq rg-group-result t
-              rg-show-columns t)
-  :config
-  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
-
-  (with-eval-after-load 'projectile
-    (defalias 'projectile-ripgrep #'rg-project)
-    (bind-key "s R" #'rg-project projectile-command-map))
-
-  (with-eval-after-load 'counsel
-    (bind-keys
-     :map rg-global-map
-     ("R" . counsel-rg)
-     ("F" . counsel-fzf))))
-
-;; Dictionary
-(when sys/macp
-  (use-package osx-dictionary
-    :bind (("C-c D" . osx-dictionary-search-pointer))))
-
-;; Youdao Dictionary
-(use-package youdao-dictionary
-  :commands youdao-dictionary-play-voice-of-current-word
-  :bind (("C-c y" . my-youdao-dictionary-search-at-point)
-         ("C-c Y" . youdao-dictionary-search-at-point)
-         :map youdao-dictionary-mode-map
-         ("h" . youdao-dictionary-hydra/body)
-         ("?" . youdao-dictionary-hydra/body))
-  :init
-  (setq url-automatic-caching t
-        youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
-
-  (defun my-youdao-dictionary-search-at-point ()
-    "Search word at point and display result with `posframe', `pos-tip', or buffer."
-    (interactive)
-    (if (display-graphic-p)
-        (if emacs/>=26p
-            (youdao-dictionary-search-at-point-posframe)
-          (youdao-dictionary-search-at-point-tooltip))
-      (youdao-dictionary-search-at-point)))
-  :config
-  (with-eval-after-load 'hydra
-    (defhydra youdao-dictionary-hydra (:color blue)
-      ("p" youdao-dictionary-play-voice-of-current-word "play voice of current word")
-      ("y" youdao-dictionary-play-voice-at-point "play voice at point")
-      ("q" quit-window "quit")
-      ("C-g" nil nil)
-      ("h" nil nil)
-      ("?" nil nil)))
-
-  (with-no-warnings
-    (defun my-youdao-dictionary--posframe-tip (string)
-      "Show STRING using posframe-show."
-      (unless (and (require 'posframe nil t) (posframe-workable-p))
-        (error "Posframe not workable"))
-
-      (let ((word (youdao-dictionary--region-or-word)))
-        (if word
-            (progn
-              (with-current-buffer (get-buffer-create youdao-dictionary-buffer-name)
-                (let ((inhibit-read-only t))
-                  (erase-buffer)
-                  (youdao-dictionary-mode)
-                  (insert (propertize "\n" 'face '(:height 0.5)))
-                  (insert string)
-                  (insert (propertize "\n" 'face '(:height 0.5)))
-                  (set (make-local-variable 'youdao-dictionary-current-buffer-word) word)))
-              (posframe-show youdao-dictionary-buffer-name
-                             :position (point)
-                             :left-fringe 16
-                             :right-fringe 16
-                             :background-color (face-background 'tooltip nil t)
-                             :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                             :internal-border-width 1)
-              (unwind-protect
-                  (push (read-event) unread-command-events)
-                (progn
-                  (posframe-delete youdao-dictionary-buffer-name)
-                  (other-frame 0))))
-          (message "Nothing to look up"))))
-    (advice-add #'youdao-dictionary--posframe-tip
-                :override #'my-youdao-dictionary--posframe-tip)))
+  :init (setq rg-show-columns t)
+  :config (add-to-list 'rg-custom-type-aliases '("tmpl" . "*.tmpl")))
 
 ;; A Simple and cool pomodoro timer
 (use-package pomidor
   :bind ("s-<f12>" . pomidor)
   :init
   (setq alert-default-style 'mode-line)
-
-  (with-eval-after-load 'all-the-icons
-    (setq alert-severity-faces
-          '((urgent   . all-the-icons-red)
-            (high     . all-the-icons-orange)
-            (moderate . all-the-icons-yellow)
-            (normal   . all-the-icons-green)
-            (low      . all-the-icons-blue)
-            (trivial  . all-the-icons-purple))
-          alert-severity-colors
-          `((urgent   . ,(face-foreground 'all-the-icons-red))
-            (high     . ,(face-foreground 'all-the-icons-orange))
-            (moderate . ,(face-foreground 'all-the-icons-yellow))
-            (normal   . ,(face-foreground 'all-the-icons-green))
-            (low      . ,(face-foreground 'all-the-icons-blue))
-            (trivial  . ,(face-foreground 'all-the-icons-purple)))))
 
   (when sys/macp
     (setq pomidor-play-sound-file
@@ -275,41 +182,20 @@ of the buffer text to be displayed in the popup"
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :init (setq olivetti-body-width 0.618))
+  :init (setq olivetti-body-width 0.62))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
 (use-package atomic-chrome
   :hook ((emacs-startup . atomic-chrome-start-server)
-         (atomic-chrome-edit-mode . (lambda ()
-                                      "Enter edit mode and delete other windows."
-                                      (and (fboundp 'olivetti-mode)
-                                           (olivetti-mode 1))
-                                      (delete-other-windows))))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
+         (atomic-chrome-edit-mode . delete-other-windows))
+  :init (setq atomic-chrome-buffer-frame-width 100
+              atomic-chrome-buffer-frame-height 30
+              atomic-chrome-buffer-open-style 'frame)
   :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
-
-;; Music player
-(use-package bongo
-  :bind ("C-<f9>" . bongo)
-  :config
-  (with-eval-after-load 'dired
-    (with-no-warnings
-      (defun bongo-add-dired-files ()
-        "Add marked files to the Bongo library."
-        (interactive)
-        (bongo-buffer)
-        (let (file (files nil))
-          (dired-map-over-marks
-           (setq file (dired-get-filename)
-                 files (append files (list file)))
-           nil t)
-          (with-bongo-library-buffer
-           (mapc 'bongo-insert-file files)))
-        (bongo-switch-buffers))
-      (bind-key "b" #'bongo-add-dired-files dired-mode-map))))
+  (when (fboundp 'gfm-mode)
+    (setq atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)
+            ("gitlab\\.*"   . gfm-mode)))))
 
 ;; Process
 (use-package proced
@@ -317,7 +203,8 @@ of the buffer text to be displayed in the popup"
   :init
   (setq-default proced-format 'verbose)
   (setq proced-auto-update-flag t
-        proced-auto-update-interval 3))
+        proced-auto-update-interval 3
+        proced-enable-color-flag t))
 
 ;; Search
 (use-package webjump
@@ -352,36 +239,28 @@ of the buffer text to be displayed in the popup"
 ;; IRC
 (use-package erc
   :ensure nil
-  :defines erc-autojoin-channels-alist
-  :init (setq erc-rename-buffers t
-              erc-interpret-mirc-color t
+  :defines erc-interpret-mirc-color erc-autojoin-channels-alist
+  :init (setq erc-interpret-mirc-color t
               erc-lurker-hide-list '("JOIN" "PART" "QUIT")
               erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
-
-;; A stackoverflow and its sisters' sites reader
-(when emacs/>=26p
-  (use-package howdoyou
-    :bind (:map howdoyou-mode-map
-           ("q" . kill-buffer-and-window))
-    :hook (howdoyou-mode . read-only-mode)))
 
 ;; text mode directory tree
 (use-package ztree
   :custom-face
-  (ztreep-header-face ((t (:inherit diff-header))))
-  (ztreep-arrow-face ((t (:inherit font-lock-comment-face))))
-  (ztreep-leaf-face ((t (:inherit diff-index))))
-  (ztreep-node-face ((t (:inherit font-lock-variable-name-face))))
+  (ztreep-header-face ((t (:inherit diff-header :foreground unspecified))))
+  (ztreep-arrow-face ((t (:inherit font-lock-comment-face :foreground unspecified))))
+  (ztreep-leaf-face ((t (:inherit diff-index :foreground unspecified))))
+  (ztreep-node-face ((t (:inherit font-lock-variable-name-face :foreground unspecified))))
   (ztreep-expand-sign-face ((t (:inherit font-lock-function-name-face))))
-  (ztreep-diff-header-face ((t (:inherit (diff-header bold)))))
-  (ztreep-diff-header-small-face ((t (:inherit diff-file-header))))
-  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face))))
-  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
-  (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
-  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
+  (ztreep-diff-header-face ((t (:inherit (diff-header bold :foreground unspecified)))))
+  (ztreep-diff-header-small-face ((t (:inherit diff-file-header :foreground unspecified))))
+  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face :foreground unspecified))))
+  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t :foreground unspecified))))
+  (ztreep-diff-model-diff-face ((t (:inherit diff-removed :foreground unspecified))))
+  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent :foreground unspecified))))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
-    :color pink :quit-key "q")
+  ((:title (pretty-hydra-title "Ztree" 'octicon "nf-oct-diff" :face 'nerd-icons-green)
+    :color pink :quit-key ("q" "C-g"))
    ("Diff"
     (("C" ztree-diff-copy "copy" :exit t)
      ("h" ztree-diff-toggle-show-equal-files "show/hide equals" :exit t)
@@ -404,15 +283,27 @@ of the buffer text to be displayed in the popup"
               ztree-show-number-of-children t))
 
 ;; Misc
-(use-package copyit)                    ; copy path, url, etc.
-(use-package diffview)                  ; side-by-side diff view
-(use-package esup)                      ; Emacs startup profiler
-(use-package focus)                     ; Focus on the current region
-(use-package list-environment)
+(use-package disk-usage)
 (use-package memory-usage)
-(unless sys/win32p
-  (use-package daemons)                 ; system services/daemons
-  (use-package tldr))
+(use-package reveal-in-folder)
+
+(use-package file-info
+  :bind ("C-c c i" . file-info-show))
+
+(use-package list-environment
+  :init
+  (with-no-warnings
+    (defun my-list-environment-entries ()
+      "Generate environment variable entries list for tabulated-list."
+      (mapcar (lambda (env)
+                (let* ((kv (split-string env "="))
+                       (key (car kv))
+                       (val (mapconcat #'identity (cdr kv) "=")))
+                  (list key (vector
+                             `(,key face font-lock-keyword-face)
+                             `(,val face font-lock-string-face)))))
+              process-environment))
+    (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
 (provide 'init-utils)
 

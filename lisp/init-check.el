@@ -1,6 +1,6 @@
-;; init-ruby.el --- Initialize ruby configurations.	-*- lexical-binding: t -*-
+;; init-check.el --- Initialize check configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2025 Vincent Zhang
+;; Copyright (C) 2009-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -25,39 +25,36 @@
 
 ;;; Commentary:
 ;;
-;; Ruby configurations.
+;; Check configurations.
 ;;
 
 ;;; Code:
 
-;; Run a Ruby process in a buffer
-(use-package inf-ruby
-  :hook ((ruby-mode . inf-ruby-minor-mode)
-         (compilation-filter . inf-ruby-auto-enter)))
-
-;; Ruby YARD comments
-(use-package yard-mode
+(use-package flymake
   :diminish
-  :hook (ruby-mode . yard-mode))
+  :functions my-elisp-flymake-byte-compile
+  :bind ("C-c f" . flymake-show-buffer-diagnostics)
+  :hook prog-mode
+  :custom
+  (flymake-no-changes-timeout nil)
+  (flymake-fringe-indicator-position 'right-fringe)
+  (flymake-margin-indicator-position 'right-margin)
+  :config
+  ;; Check elisp with `load-path'
+  (defun my-elisp-flymake-byte-compile (fn &rest args)
+    "Wrapper for `elisp-flymake-byte-compile'."
+    (let ((elisp-flymake-byte-compile-load-path
+           (append elisp-flymake-byte-compile-load-path load-path)))
+      (apply fn args)))
+  (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
 
-;; Ruby refactoring helpers
-(use-package ruby-refactor
+;; Display Flymake errors with overlays
+(use-package flyover
   :diminish
-  :hook (ruby-mode . ruby-refactor-mode-launch))
+  :hook flymake-mode
+  :custom (flyover-checkers '(flymake)))
 
-;; Yet Another RI interface for Emacs
-(use-package yari
-  :bind (:map ruby-mode-map ([f1] . yari)))
-
-;; RSpec
-(use-package rspec-mode
-  :diminish
-  :autoload rspec-install-snippets
-  :hook (dired-mode . rspec-dired-mode)
-  :config (with-eval-after-load 'yasnippet
-            (rspec-install-snippets)))
-
-(provide 'init-ruby)
+(provide 'init-check)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-ruby.el ends here
+;;; init-check.el ends here

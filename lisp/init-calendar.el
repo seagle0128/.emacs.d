@@ -1,6 +1,6 @@
 ;; init-calendar.el --- Initialize calendar configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,14 +30,15 @@
 
 ;;; Code:
 
-(require 'init-custom)
+(eval-when-compile
+  (require 'init-custom))
 
 ;; Chinese calendar
 ;; `pC' can show lunar details
 (when centaur-chinese-calendar
   (use-package cal-china-x
     :after calendar
-    :commands cal-china-x-setup
+    :autoload cal-china-x-setup
     :init (cal-china-x-setup)
     :config
     ;; Holidays

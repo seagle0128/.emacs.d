@@ -1,6 +1,6 @@
 ;; init-shell.el --- Initialize shell configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -29,8 +29,6 @@
 ;;
 
 ;;; Code:
-
-(require 'init-const)
 
 (use-package shell
   :ensure nil
@@ -71,7 +69,7 @@
   :defines (compilation-environment
             eshell-preoutput-filter-functions
             eshell-output-filter-functions)
-  :functions (compilation-filter my-advice-compilation-filter)
+  :functions (compilation-filter my-advice-compilation-filter xterm-color-filter)
   :init
   ;; For shell and interpreters
   (setenv "TERM" "xterm-256color")
@@ -105,26 +103,97 @@
   (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
   (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
-;; Better term
-;; @see https://github.com/akermu/emacs-libvterm#installation
-(when (and module-file-suffix           ; dynamic module
-           (executable-find "cmake")
-           (executable-find "libtool")
-           (executable-find "make"))
-  (use-package vterm
-    :bind (:map vterm-mode-map
-           ([f9] . shell-pop))
-    :init (setq vterm-always-compile-module t)))
+;; Better terminal emulator
+(use-package eat
+  :hook ((eshell-load . eat-eshell-mode)
+         (eshell-load . eat-eshell-visual-command-mode)))
 
-;; Shell Pop
-(use-package shell-pop
-  :bind ([f9] . shell-pop)
-  :init (setq shell-pop-window-size 30
-              shell-pop-shell-type
-              (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
-                    (sys/win32p '("eshell" "*eshell*" #'eshell))
-                    (t '("terminal" "*terminal*"
-                         (lambda () (term shell-pop-term-shell)))))))
+;; Shell Pop: leverage `popper'
+(with-no-warnings
+  (defvar shell-pop--frame nil)
+  (defvar shell-pop--window nil)
+
+  (defun shell-pop--shell (&optional arg)
+    "Run shell and return the buffer."
+    (cond ((fboundp 'eat) (eat arg))
+          ((fboundp 'vterm) (vterm arg))
+          (sys/win32p (eshell arg))
+          (t (shell))))
+
+  (defun shell-pop--hide-frame ()
+    "Hide child frame and refocus in parent frame."
+    (when (and (childframe-workable-p)
+               (frame-live-p shell-pop--frame)
+               (frame-visible-p shell-pop--frame))
+      (make-frame-invisible shell-pop--frame)
+      (select-frame-set-input-focus (frame-parent shell-pop--frame))
+      (setq shell-pop--frame nil)))
+
+  (defun shell-pop-toggle ()
+    "Toggle shell."
+    (interactive)
+    (shell-pop--hide-frame)
+    (if (window-live-p shell-pop--window)
+        (progn
+          (delete-window shell-pop--window)
+          (setq shell-pop--window nil))
+      (setq shell-pop--window
+            (get-buffer-window (shell-pop--shell)))))
+  (bind-keys ([f9]  . shell-pop-toggle)
+             ("C-`" . shell-pop-toggle))
+
+  (when (childframe-workable-p)
+    (defun shell-pop-posframe-hidehandler (_)
+      "Hidehandler used by `shell-pop-posframe-toggle'."
+      (not (eq (selected-frame) shell-pop--frame)))
+
+    (defun shell-pop-posframe-toggle ()
+      "Toggle shell in child frame."
+      (interactive)
+      (let* ((buffer (shell-pop--shell))
+             (window (get-buffer-window buffer)))
+        ;; Hide window: for `popper'
+        (when (window-live-p window)
+          (delete-window window))
+
+        (if (and (frame-live-p shell-pop--frame)
+                 (frame-visible-p shell-pop--frame))
+            (progn
+              ;; Hide child frame and refocus in parent frame
+              (make-frame-invisible shell-pop--frame)
+              (select-frame-set-input-focus (frame-parent shell-pop--frame))
+              (setq shell-pop--frame nil))
+          (let ((width  (max 100 (round (* (frame-width) 0.62))))
+                (height (round (* (frame-height) 0.62))))
+            ;; Shell pop in child frame
+            (setq shell-pop--frame
+                  (posframe-show
+                   buffer
+                   :poshandler #'posframe-poshandler-frame-center
+                   :hidehandler #'shell-pop-posframe-hidehandler
+                   :left-fringe 8
+                   :right-fringe 8
+                   :width width
+                   :height height
+                   :min-width width
+                   :min-height height
+                   :internal-border-width 3
+                   :internal-border-color (face-background 'region nil t)
+                   :background-color (face-background 'default nil t)
+                   :foreground-color (face-foreground 'default nil t)
+                   :override-parameters '((cursor-type . t))
+                   :respect-mode-line t
+                   :accept-focus t))
+
+            ;; Focus in child frame
+            (select-frame-set-input-focus shell-pop--frame)
+
+            (with-current-buffer buffer
+              (setq-local cursor-type 'box) ; blink cursor
+              (goto-char (point-max))
+              (when (fboundp 'vterm-reset-cursor-point)
+                (vterm-reset-cursor-point)))))))
+    (bind-key "C-`" #'shell-pop-posframe-toggle)))
 
 (provide 'init-shell)
 

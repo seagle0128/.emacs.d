@@ -1,6 +1,6 @@
 ;; init-python.el --- Initialize python configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2021 Vincent Zhang
+;; Copyright (C) 2010-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -34,6 +34,8 @@
 ;; Install: pip install pyflakes autopep8
 (use-package python
   :ensure nil
+  :defines eglot-server-programs
+  :functions exec-path-from-shell-copy-env
   :hook (inferior-python-mode . (lambda ()
                                   (process-query-on-exit-flag
                                    (get-process "Python"))))
@@ -41,6 +43,17 @@
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
   :config
+  ;; Type checker & language server: `ty'
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((python-ts-mode python-mode)
+                   . ("ty" "server"))))
+
+  ;; Linter & formatter: `ruff'
+  (when (executable-find "ruff")
+    (use-package flymake-ruff
+      :hook (python-base-mode . flymake-ruff-load)))
+
   ;; Default to Python 3. Prefer the versioned Python binaries since some
   ;; systems stupidly make the unversioned one point at Python 2.
   (when (and (executable-find "python3")
@@ -49,10 +62,7 @@
 
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-env "PYTHONPATH"))
-
-  ;; Live Coding in Python
-  (use-package live-py-mode))
+    (exec-path-from-shell-copy-env "PYTHONPATH")))
 
 (provide 'init-python)
 

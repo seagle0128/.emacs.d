@@ -1,6 +1,6 @@
 ;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,9 +30,29 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
+;; Optimization
+(setq idle-update-delay 1.0)
+
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+(setq fast-but-imprecise-scrolling t)
+(setq redisplay-skip-fontification-on-input t)
+
+;; Inhibit resizing frame
+(setq frame-inhibit-implied-resize t
+      frame-resize-pixelwise t)
+
+;; Initial frame
+(setq initial-frame-alist '((top . 0.5)
+                            (left . 0.5)
+                            (width . 0.7)
+                            (height . 0.85)
+                            (fullscreen)))
 
 ;; Logo
 (setq fancy-splash-image centaur-logo)
@@ -41,70 +61,56 @@
 (setq frame-title-format '("Centaur Emacs - %b")
       icon-title-format frame-title-format)
 
-(when (and sys/mac-ns-p sys/mac-x-p)
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (add-hook 'after-load-theme-hook
+(when (or sys/mac-ns-p sys/mac-port-p)
+  (add-hook 'server-after-make-frame-hook
             (lambda ()
-              (let ((bg (frame-parameter nil 'background-mode)))
-                (set-frame-parameter nil 'ns-appearance bg)
-                (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
+              (if (display-graphic-p)
+                  (menu-bar-mode 1)
+                (menu-bar-mode -1))))
 
-;; Inhibit resizing frame
-(setq frame-inhibit-implied-resize t
-      frame-resize-pixelwise t)
+  (defun refresh-ns-appearance ()
+    "Safely refresh frame parameter `ns-appearance' to match background mode."
+    (interactive)
+    (let ((bg (frame-parameter nil 'background-mode)))
+      (set-frame-parameter nil 'ns-appearance bg)
+      (setf (alist-get 'ns-appearance default-frame-alist) bg)))
 
-;; Menu/Tool/Scroll bars
-(unless emacs/>=27p
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist))
+  ;; Hook up appearance refresh to theme changes
+  (add-hook 'after-load-theme-hook #'refresh-ns-appearance)
+
+  (with-eval-after-load 'auto-dark
+    (dolist (hook '(auto-dark-dark-mode-hook auto-dark-light-mode-hook))
+      (add-hook hook #'refresh-ns-appearance))))
 
 ;; Theme
 (if (centaur-compatible-theme-p centaur-theme)
     (progn
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
-        :hook (after-load-theme . solaire-global-mode))
+        :functions (centaur-compatible-theme-p refresh-ns-appearance)
+        :commands solaire-global-mode
+        :init (solaire-global-mode 1))
 
+      ;; Excellent themes
       (use-package doom-themes
-        :custom-face
-        (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
-        :custom
-        (doom-themes-treemacs-theme "doom-colors")
+        :functions centaur-load-theme doom-themes-visual-bell-config
         :init (centaur-load-theme centaur-theme t)
-        :config
-        ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)
-
-        ;; Enable customized theme
-        ;; FIXME https://github.com/emacs-lsp/lsp-treemacs/issues/89
-        (with-eval-after-load 'lsp-treemacs
-          (doom-themes-treemacs-config))))
+        :config (doom-themes-visual-bell-config)))
   (progn
-    (warn "The current theme may not be compatible!")
+    (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
 (use-package doom-modeline
   :custom
   (doom-modeline-icon centaur-icon)
-  (doom-modeline-bar nil)
-  (doom-modeline-hud t)
   (doom-modeline-minor-modes t)
-  (doom-modeline-unicode-fallback t)
-  (doom-modeline-mu4e nil)
-  :hook (after-init . doom-modeline-mode)
-  :init
-  ;; Prevent flash of unstyled modeline at startup
-  (unless after-init-time
-    (setq doom-modeline--default-format mode-line-format)
-    (setq-default mode-line-format nil))
+  :hook after-init
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Mode Line" 'fileicon "emacs" :face 'all-the-icons-purple :v-adjust -0.1)
-    :color amaranth :quit-key "q")
+  ((:title (pretty-hydra-title "Mode Line" 'sucicon "nf-custom-emacs" :face 'nerd-icons-purple)
+    :color amaranth :quit-key ("q" "C-g"))
    ("Icon"
     (("i" (setq doom-modeline-icon (not doom-modeline-icon))
       "display icons" :toggle doom-modeline-icon)
@@ -118,38 +124,42 @@
       "buffer state" :toggle doom-modeline-buffer-state-icon)
      ("o" (setq doom-modeline-buffer-modification-icon (not doom-modeline-buffer-modification-icon))
       "modification" :toggle doom-modeline-buffer-modification-icon)
+     ("x" (setq doom-modeline-time-icon (not doom-modeline-time-icon))
+      "time" :toggle doom-modeline-time-icon)
      ("v" (setq doom-modeline-modal-icon (not doom-modeline-modal-icon))
       "modal" :toggle doom-modeline-modal-icon))
     "Segment"
-    (("H" (setq doom-modeline-hud (not doom-modeline-hud))
+    (("g h" (setq doom-modeline-hud (not doom-modeline-hud))
       "hud" :toggle doom-modeline-hud)
-     ("M" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
+     ("g m" (setq doom-modeline-minor-modes (not doom-modeline-minor-modes))
       "minor modes" :toggle doom-modeline-minor-modes)
-     ("W" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
+     ("g w" (setq doom-modeline-enable-word-count (not doom-modeline-enable-word-count))
       "word count" :toggle doom-modeline-enable-word-count)
-     ("E" (setq doom-modeline-buffer-encoding (not doom-modeline-buffer-encoding))
+     ("g e" (setq doom-modeline-buffer-encoding (not doom-modeline-buffer-encoding))
       "encoding" :toggle doom-modeline-buffer-encoding)
-     ("I" (setq doom-modeline-indent-info (not doom-modeline-indent-info))
+     ("g i" (setq doom-modeline-indent-info (not doom-modeline-indent-info))
       "indent" :toggle doom-modeline-indent-info)
-     ("L" (setq doom-modeline-lsp (not doom-modeline-lsp))
+     ("g c" (setq doom-modeline-display-misc-in-all-mode-lines (not doom-modeline-display-misc-in-all-mode-lines))
+      "misc info" :toggle doom-modeline-display-misc-in-all-mode-lines)
+     ("g l" (setq doom-modeline-lsp (not doom-modeline-lsp))
       "lsp" :toggle doom-modeline-lsp)
-     ("P" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
-      "perspective" :toggle doom-modeline-persp-name)
-     ("G" (setq doom-modeline-github (not doom-modeline-github))
+     ("g k" (setq doom-modeline-workspace-name (not doom-modeline-workspace-name))
+      "workspace" :toggle doom-modeline-workspace-name)
+     ("g g" (setq doom-modeline-github (not doom-modeline-github))
       "github" :toggle doom-modeline-github)
-     ("N" (setq doom-modeline-gnus (not doom-modeline-gnus))
+     ("g n" (setq doom-modeline-gnus (not doom-modeline-gnus))
       "gnus" :toggle doom-modeline-gnus)
-     ("U" (setq doom-modeline-mu4e (not doom-modeline-mu4e))
+     ("g u" (setq doom-modeline-mu4e (not doom-modeline-mu4e))
       "mu4e" :toggle doom-modeline-mu4e)
-     ("R" (setq doom-modeline-irc (not doom-modeline-irc))
+     ("g r" (setq doom-modeline-irc (not doom-modeline-irc))
       "irc" :toggle doom-modeline-irc)
-     ("F" (setq doom-modeline-irc-buffers (not doom-modeline-irc-buffers))
+     ("g f" (setq doom-modeline-irc-buffers (not doom-modeline-irc-buffers))
       "irc buffers" :toggle doom-modeline-irc-buffers)
-     ("S" (progn
-            (setq doom-modeline-checker-simple-format (not doom-modeline-checker-simple-format))
-            (and (bound-and-true-p flycheck-mode) (flycheck-buffer)))
-      "simple checker" :toggle doom-modeline-checker-simple-format)
-     ("V" (setq doom-modeline-env-version (not doom-modeline-env-version))
+     ("g s" (setq doom-modeline-check-simple-format (not doom-modeline-check-simple-format))
+      "simple check format" :toggle doom-modeline-check-simple-format)
+     ("g t" (setq doom-modeline-time (not doom-modeline-time))
+      "time" :toggle doom-modeline-time)
+     ("g v" (setq doom-modeline-env-version (not doom-modeline-env-version))
       "version" :toggle doom-modeline-env-version))
     "Style"
     (("a" (setq doom-modeline-buffer-file-name-style 'auto)
@@ -161,6 +171,9 @@
      ("f" (setq doom-modeline-buffer-file-name-style 'file-name)
       "file name"
       :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
+     ("F" (setq doom-modeline-buffer-file-name-style 'file-name-with-project)
+      "file name with project"
+      :toggle (eq doom-modeline-buffer-file-name-style 'file-name-with-project))
      ("t u" (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
       "truncate upto project"
       :toggle (eq doom-modeline-buffer-file-name-style 'truncate-upto-project))
@@ -189,10 +202,13 @@
       "relative to project"
       :toggle (eq doom-modeline-buffer-file-name-style 'relative-to-project)))
     "Project Detection"
-    (("p f" (setq doom-modeline-project-detection 'ffip)
+    (("p a" (setq doom-modeline-project-detection 'auto)
+      "auto"
+      :toggle (eq doom-modeline-project-detection 'auto))
+     ("p f" (setq doom-modeline-project-detection 'ffip)
       "ffip"
       :toggle (eq doom-modeline-project-detection 'ffip))
-     ("p t" (setq doom-modeline-project-detection 'projectile)
+     ("p i" (setq doom-modeline-project-detection 'projectile)
       "projectile"
       :toggle (eq doom-modeline-project-detection 'projectile))
      ("p p" (setq doom-modeline-project-detection 'project)
@@ -202,166 +218,67 @@
       "disable"
       :toggle (eq doom-modeline-project-detection nil)))
     "Misc"
-    (("g" (progn
+    (("n" (progn
             (message "Fetching GitHub notifications...")
             (run-with-timer 300 nil #'doom-modeline--github-fetch-notifications)
             (browse-url "https://github.com/notifications"))
       "github notifications" :exit t)
-     ("e" (if (bound-and-true-p flycheck-mode)
-              (flycheck-list-errors)
-            (flymake-show-diagnostics-buffer))
+     ("e" (and (bound-and-true-p flymake-mode)
+               (flymake-show-diagnostics-buffer))
       "list errors" :exit t)
-     ("O" (if (bound-and-true-p grip-mode)
+     ("w" (if (bound-and-true-p grip-mode)
               (grip-browse-preview)
             (message "Not in preview"))
       "browse preview" :exit t)
-     ("z h" (counsel-read-setq-expression 'doom-modeline-height) "set height")
-     ("z w" (counsel-read-setq-expression 'doom-modeline-bar-width) "set bar width")
-     ("z g" (counsel-read-setq-expression 'doom-modeline-github-interval) "set github interval")
-     ("z n" (counsel-read-setq-expression 'doom-modeline-gnus-timer) "set gnus interval")))))
+     ("z h" (set-from-minibuffer 'doom-modeline-height)
+      "set height" :exit t)
+     ("z w" (set-from-minibuffer 'doom-modeline-bar-width)
+      "set bar width" :exit t)
+     ("z g" (set-from-minibuffer 'doom-modeline-github-interval)
+      "set github interval" :exit t)
+     ("z n" (set-from-minibuffer 'doom-modeline-gnus-timer)
+      "set gnus interval" :exit t)))))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
-           pdf-annot-list-mode
-           flycheck-error-list-mode) . hide-mode-line-mode)))
+  :hook (((eat-mode
+           eshell-mode shell-mode
+           term-mode vterm-mode
+           embark-collect-mode lsp-ui-imenu-mode
+           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
-(when emacs/>=25.2p
-  (use-package minions
-    :hook (doom-modeline-mode . minions-mode)))
+(use-package minions
+  :hook after-init)
 
 ;; Icons
-;; NOTE: Must run `M-x all-the-icons-install-fonts', and install fonts manually on Windows
-(use-package all-the-icons
-  :if (and centaur-icon (display-graphic-p))
-  :init (unless (or sys/win32p (font-installed-p "all-the-icons"))
-          (all-the-icons-install-fonts t))
+(use-package nerd-icons
+  :commands nerd-icons-install-fonts
+  :functions font-available-p
   :config
-  (declare-function memoize 'memoize)
-  (declare-function memoize-restore 'memoize)
-  (defun all-the-icons-reset ()
-    "Reset (unmemoize/memoize) the icons."
-    (interactive)
-    (ignore-errors
-      (dolist (f '(all-the-icons-icon-for-file
-                   all-the-icons-icon-for-mode
-                   all-the-icons-icon-for-url
-                   all-the-icons-icon-family-for-file
-                   all-the-icons-icon-family-for-mode
-                   all-the-icons-icon-family))
-        (memoize-restore f)
-        (memoize f)))
-    (message "Reset all-the-icons"))
+  ;; Install nerd fonts automatically only in GUI
+  ;; For macOS, may install via "brew install font-symbols-only-nerd-font"
+  (when (and (display-graphic-p)
+             (not (font-available-p nerd-icons-font-family)))
+    (nerd-icons-install-fonts t)))
 
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(compilation-mode all-the-icons-faicon "cogs" :v-adjust 0.0 :height 0.9))
-  (add-to-list 'all-the-icons-icon-alist
-               '("^Rakefile$" all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.\\(bat\\|cmd\\)$" all-the-icons-alltheicon "terminal" :face all-the-icons-lsilver))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\go.mod$" all-the-icons-fileicon "go" :face all-the-icons-dblue))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\go.sum$" all-the-icons-fileicon "go" :face all-the-icons-dpurple))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(xwidget-webkit-mode all-the-icons-faicon "chrome" :v-adjust -0.1 :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-playlist-mode all-the-icons-material "queue_music" :height 1.2 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(bongo-library-mode all-the-icons-material "library_music" :height 1.1 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-group-mode all-the-icons-fileicon "gnu" :face all-the-icons-silver))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-summary-mode all-the-icons-octicon "inbox" :height 1.0 :v-adjust 0.0 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(gnus-article-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(message-mode all-the-icons-octicon "mail" :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(diff-mode all-the-icons-octicon "git-compare" :v-adjust 0.0 :face all-the-icons-lred))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(flycheck-error-list-mode all-the-icons-octicon "checklist" :height 1.1 :v-adjust 0.0 :face all-the-icons-lred))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.rss$" all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(elfeed-search-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(elfeed-show-mode all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(newsticker-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(newsticker-treeview-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(newsticker-treeview-list-mode all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(newsticker-treeview-item-mode all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.[bB][iI][nN]$" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.c?make$" all-the-icons-fileicon "gnu" :face all-the-icons-dorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.conf$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(conf-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(conf-space-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(help-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(helpful-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(Info-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1))
-  (add-to-list 'all-the-icons-icon-alist
-               '("NEWS$" all-the-icons-faicon "newspaper-o" :height 0.9 :v-adjust -0.2))
-  (add-to-list 'all-the-icons-icon-alist
-               '("Cask\\'" all-the-icons-fileicon "elisp" :height 1.0 :v-adjust -0.2 :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(cask-mode all-the-icons-fileicon "elisp" :height 1.0 :v-adjust -0.2 :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-icon-alist
-               '(".*\\.ipynb\\'" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebooklist-mode all-the-icons-faicon "book" :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-dorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.epub\\'" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
-
-;; Show native line numbers if possible, otherwise use `linum'
-(if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      :hook (prog-mode . display-line-numbers-mode))
-  (use-package linum-off
-    :demand
-    :defines linum-format
-    :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d ")
-    :config
-    ;; Highlight current line number
-    (use-package hlinum
-      :defines linum-highlight-in-all-buffersp
-      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-      :hook (global-linum-mode . hlinum-activate)
-      :init (setq linum-highlight-in-all-buffersp t))))
+;; Show line numbers
+(use-package display-line-numbers
+  :ensure nil
+  :hook ((prog-mode
+          conf-mode toml-ts-mode
+          yaml-mode yaml-ts-mode)
+         . display-line-numbers-mode)
+  :init (setq display-line-numbers-width-start t))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
       use-dialog-box nil
       inhibit-startup-screen t
-      inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t
+      initial-scratch-message nil)
+(unless (daemonp)
+  (advice-add #'display-startup-echo-area-message :override #'ignore))
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
@@ -373,38 +290,57 @@
 (use-package default-text-scale
   :hook (after-init . default-text-scale-mode)
   :bind (:map default-text-scale-mode-map
-         ("s-=" . default-text-scale-increase)
-         ("s--" . default-text-scale-decrease)
-         ("s-0" . default-text-scale-reset)
+         ("s-="   . default-text-scale-increase)
+         ("s--"   . default-text-scale-decrease)
+         ("s-0"   . default-text-scale-reset)
          ("C-s-=" . default-text-scale-increase)
          ("C-s--" . default-text-scale-decrease)
          ("C-s-0" . default-text-scale-reset)))
 
+;; Display time
+(use-package time
+  :init (setq display-time-default-load-average nil
+              display-time-format "%H:%M"))
+
+;; Scrolling
+;; Scroll one line at a time (less "jumpy" than defaults)
+(setq hscroll-step 1
+      hscroll-margin 2
+      scroll-step 1
+      scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position t
+      auto-window-vscroll nil
+      ;; mouse
+      mouse-wheel-scroll-amount-horizontal 1
+      mouse-wheel-progressive-speed nil)
+
 ;; Use fixed pitch where it's sensible
-(use-package mixed-pitch
-  :diminish)
+(use-package mixed-pitch :diminish)
 
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode))
+  :hook (after-init . global-page-break-lines-mode)
+  :config (dolist (mode '(dashboard-mode emacs-news-mode))
+            (add-to-list 'page-break-lines-modes mode)))
 
-;; Child frame
-(when (childframe-workable-p)
-  (use-package posframe
-    :config
-    (with-no-warnings
-      (defun my-posframe--prettify-frame (&rest _)
-        (set-face-background 'fringe nil posframe--frame))
-      (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
+;; Transient
+(when (childframe-completion-workable-p)
+  ;; Display transient in child frame
+  (use-package transient-posframe
+    :diminish
+    :defines posframe-border-width
+    :functions childframe-completion-workable-p
+    :custom-face
+    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
+    :hook after-init
+    :init (setq transient-mode-line-format nil
+                transient-posframe-border-width posframe-border-width
+                transient-posframe-parameters '((left-fringe . 8)
+                                                (right-fringe . 8)))))
 
-      (defun posframe-poshandler-frame-center-near-bottom (info)
-        (cons (/ (- (plist-get info :parent-frame-width)
-                    (plist-get info :posframe-width))
-                 2)
-              (/ (plist-get info :parent-frame-height)
-                 2))))))
-
+;; For macOS
 (with-no-warnings
   (when sys/macp
     ;; Render thinner fonts
@@ -412,46 +348,43 @@
     ;; Don't open a file in a new frame
     (setq ns-pop-up-frames nil)))
 
-;; Don't use GTK+ tooltip
-(when (boundp 'x-gtk-use-system-tooltips)
-  (setq x-gtk-use-system-tooltips nil))
-
-;; When `centaur-prettify-symbols-alist' is `nil' use font supported ligatures
-(use-package composite
-  :ensure nil
-  :unless centaur-prettify-symbols-alist
-  :init (defvar composition-ligature-table (make-char-table nil))
-  :hook (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-          . (lambda () (setq-local composition-function-table composition-ligature-table))))
-  :config
-  ;; support ligatures, some toned down to prevent hang
-  (when emacs/>=27p
+;; Ligatures support
+(unless centaur-prettify-symbols-alist
+  (use-package composite
+    :ensure nil
+    :init (defvar composition-ligature-table (make-char-table nil))
+    :hook (((prog-mode
+             conf-mode nxml-mode markdown-mode help-mode
+             shell-mode eshell-mode term-mode vterm-mode)
+            . (lambda () (setq-local composition-function-table composition-ligature-table))))
+    :config
+    ;; support ligatures, some toned down to prevent hang
     (let ((alist
-           '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
-             (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
-             (36 . ".\\(?:\\(>\\)>?\\)")
-             (37 . ".\\(?:\\(%\\)%?\\)")
-             (38 . ".\\(?:\\(&\\)&?\\)")
-             (42 . ".\\(?:\\(\\*\\*\\|[*>]\\)[*>]?\\)")
+           '((33  . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
+             (35  . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
+             (36  . ".\\(?:\\(>\\)>?\\)")
+             (37  . ".\\(?:\\(%\\)%?\\)")
+             (38  . ".\\(?:\\(&\\)&?\\)")
+             (42  . ".\\(?:\\(\\*\\*\\|[*>]\\)[*>]?\\)")
              ;; (42 . ".\\(?:\\(\\*\\*\\|[*/>]\\).?\\)")
-             (43 . ".\\(?:\\([>]\\)>?\\)")
+             (43  . ".\\(?:\\([>]\\)>?\\)")
              ;; (43 . ".\\(?:\\(\\+\\+\\|[+>]\\).?\\)")
-             (45 . ".\\(?:\\(-[->]\\|<<\\|>>\\|[-<>|~]\\)[-<>|~]?\\)")
+             (45  . ".\\(?:\\(-[->]\\|<<\\|>>\\|[-<>|~]\\)[-<>|~]?\\)")
              ;; (46 . ".\\(?:\\(\\.[.<]\\|[-.=]\\)[-.<=]?\\)")
-             (46 . ".\\(?:\\(\\.<\\|[-=]\\)[-<=]?\\)")
-             (47 . ".\\(?:\\(//\\|==\\|[=>]\\)[/=>]?\\)")
+             (46  . ".\\(?:\\(\\.<\\|[-=]\\)[-<=]?\\)")
+             (47  . ".\\(?:\\(//\\|==\\|[=>]\\)[/=>]?\\)")
              ;; (47 . ".\\(?:\\(//\\|==\\|[*/=>]\\).?\\)")
-             (48 . ".\\(?:x[a-zA-Z]\\)")
-             (58 . ".\\(?:\\(::\\|[:<=>]\\)[:<=>]?\\)")
-             (59 . ".\\(?:\\(;\\);?\\)")
-             (60 . ".\\(?:\\(!--\\|\\$>\\|\\*>\\|\\+>\\|-[-<>|]\\|/>\\|<[-<=]\\|=[<>|]\\|==>?\\||>\\||||?\\|~[>~]\\|[$*+/:<=>|~-]\\)[$*+/:<=>|~-]?\\)")
-             (61 . ".\\(?:\\(!=\\|/=\\|:=\\|<<\\|=[=>]\\|>>\\|[=>]\\)[=<>]?\\)")
-             (62 . ".\\(?:\\(->\\|=>\\|>[-=>]\\|[-:=>]\\)[-:=>]?\\)")
-             (63 . ".\\(?:\\([.:=?]\\)[.:=?]?\\)")
-             (91 . ".\\(?:\\(|\\)[]|]?\\)")
+             (48  . ".\\(?:x[a-zA-Z]\\)")
+             (58  . ".\\(?:\\(::\\|[:<=>]\\)[:<=>]?\\)")
+             (59  . ".\\(?:\\(;\\);?\\)")
+             (60  . ".\\(?:\\(!--\\|\\$>\\|\\*>\\|\\+>\\|-[-<>|]\\|/>\\|<[-<=]\\|=[<>|]\\|==>?\\||>\\||||?\\|~[>~]\\|[$*+/:<=>|~-]\\)[$*+/:<=>|~-]?\\)")
+             (61  . ".\\(?:\\(!=\\|/=\\|:=\\|<<\\|=[=>]\\|>>\\|[=>]\\)[=<>]?\\)")
+             (62  . ".\\(?:\\(->\\|=>\\|>[-=>]\\|[-:=>]\\)[-:=>]?\\)")
+             (63  . ".\\(?:\\([.:=?]\\)[.:=?]?\\)")
+             (91  . ".\\(?:\\(|\\)[]|]?\\)")
              ;; (92 . ".\\(?:\\([\\n]\\)[\\]?\\)")
-             (94 . ".\\(?:\\(=\\)=?\\)")
-             (95 . ".\\(?:\\(|_\\|[_]\\)_?\\)")
+             (94  . ".\\(?:\\(=\\)=?\\)")
+             (95  . ".\\(?:\\(|_\\|[_]\\)_?\\)")
              (119 . ".\\(?:\\(ww\\)w?\\)")
              (123 . ".\\(?:\\(|\\)[|}]?\\)")
              (124 . ".\\(?:\\(->\\|=>\\||[-=>]\\||||*>\\|[]=>|}-]\\).?\\)")

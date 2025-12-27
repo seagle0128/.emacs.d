@@ -1,6 +1,6 @@
 ;; init-window.el --- Initialize window configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -33,13 +33,14 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :hook (after-init . windmove-default-keybindings))
+  :hook (after-init . (lambda ()
+                        (windmove-default-keybindings 'super))))
 
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
   :commands (winner-undo winner-redo)
-  :hook (after-init . winner-mode)
+  :hook after-init
   :init (setq winner-boring-buffers '("*Completions*"
                                       "*Compile-Log*"
                                       "*inferior-lisp*"
@@ -54,21 +55,22 @@
 ;; Quickly switch windows
 (use-package ace-window
   :pretty-hydra
-  ((:title (pretty-hydra-title "Window Management" 'faicon "th" :height 1.1 :v-adjust -0.1)
-    :foreign-keys warn :quit-key "q")
+  ((:title (pretty-hydra-title "Window Management" 'faicon "nf-fa-th")
+    :foreign-keys warn :quit-key ("q" "C-g"))
    ("Actions"
     (("TAB" other-window "switch")
-     ("x" ace-delete-window "delete" :exit t)
-     ("m" ace-delete-other-windows "maximize" :exit t)
-     ("s" ace-swap-window "swap" :exit t)
+     ("x" ace-delete-window "delete")
+     ("X" ace-delete-other-windows "delete other" :exit t)
+     ("s" ace-swap-window "swap")
      ("a" ace-select-window "select" :exit t)
-     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
+     ("m" toggle-frame-maximized "maximize" :exit t)
+     ("u" toggle-frame-fullscreen "fullscreen" :exit t))
     "Resize"
     (("h" shrink-window-horizontally "←")
      ("j" enlarge-window "↓")
      ("k" shrink-window "↑")
      ("l" enlarge-window-horizontally "→")
-     ("n" balance-windows "balance" :exit t))
+     ("n" balance-windows "balance"))
     "Split"
     (("r" split-window-right "horizontally")
      ("R" split-window-horizontally-instead "horizontally instead")
@@ -80,15 +82,20 @@
      ("=" text-scale-increase "in")
      ("-" text-scale-decrease "out")
      ("0" (text-scale-increase 0) "reset"))
-    "Appearance"
-    (("F" set-frame-font "font")
-     ("T" centaur-load-theme "theme"))))
+    "Misc"
+    (("o" set-frame-font "frame font")
+     ("f" make-frame-command "new frame")
+     ("d" delete-frame "delete frame")
+     ("<left>" winner-undo "winner undo")
+     ("<right>" winner-redo "winner redo"))))
   :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :foreground unspecified :bold t :height 3.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind (([remap other-window] . ace-window)
-         ("C-c w" . ace-window-hydra/body))
+         ("C-c w" . ace-window-hydra/body)
+         ("C-x |" . split-window-horizontally-instead)
+         ("C-x _" . split-window-vertically-instead))
   :hook (emacs-startup . ace-window-display-mode)
   :config
   (defun toggle-window-split ()
@@ -127,7 +134,9 @@
       (let ((found nil))
         (dolist (win (aw-window-list))
           (when (and (window-live-p win)
-                     (eq number (string-to-number (window-parameter win 'ace-window-path))))
+                     (eq number
+                         (string-to-number
+                          (window-parameter win 'ace-window-path))))
             (setq found t)
             (aw-switch-to-window win)))
         (unless found
@@ -139,134 +148,98 @@
                 (aw--select-window (1+ n))))))
 
 ;; Enforce rules for popups
-(use-package shackle
-  :functions org-switch-to-buffer-other-window
-  :commands shackle-display-buffer
-  :hook (after-init . shackle-mode)
+(use-package popper
+  :custom
+  (popper-group-function #'popper-group-by-directory)
+  (popper-echo-dispatch-actions t)
+  :bind (:map popper-mode-map
+         ("C-h z"       . popper-toggle)
+         ("C-<tab>"     . popper-cycle)
+         ("C-M-<tab>"   . popper-toggle-type))
+  :hook (emacs-startup . popper-echo-mode)
+  :init
+  (setq popper-mode-line ""
+        popper-reference-buffers
+        '("\\*Messages\\*$"
+          "Output\\*$" "\\*Pp Eval Output\\*$"
+          "^\\*eldoc.*\\*$"
+          "\\*Compile-Log\\*$"
+          "\\*Completions\\*$"
+          "\\*Warnings\\*$"
+          "\\*Async Shell Command\\*$"
+          "\\*Apropos\\*$"
+          "\\*Backtrace\\*$"
+          "\\*Calendar\\*$"
+          "\\*Fd\\*$" "\\*Find\\*$" "\\*Finder\\*$"
+          "\\*Kill Ring\\*$"
+          "\\*Embark \\(Collect\\|Live\\):.*\\*$"
+
+          bookmark-bmenu-mode
+          comint-mode
+          compilation-mode
+          help-mode helpful-mode
+          tabulated-list-mode
+          Buffer-menu-mode
+
+          flymake-diagnostics-buffer-mode
+
+          gnus-article-mode devdocs-mode
+          grep-mode occur-mode rg-mode
+          osx-dictionary-mode fanyi-mode
+          "^\\*gt-result\\*$" "^\\*gt-log\\*$"
+
+          "^\\*Process List\\*$" process-menu-mode
+          list-environment-mode cargo-process-mode
+
+          "^\\*.*eat.*\\*.*$"
+          "^\\*.*eshell.*\\*.*$"
+          "^\\*.*shell.*\\*.*$"
+          "^\\*.*terminal.*\\*.*$"
+          "^\\*.*vterm[inal]*.*\\*.*$"
+
+          "\\*DAP Templates\\*$" dap-server-log-mode
+          "\\*ELP Profiling Restuls\\*" profiler-report-mode
+          "\\*package update results\\*$" "\\*Package-Lint\\*$"
+          "\\*[Wo]*Man.*\\*$"
+          "\\*ert\\*$" overseer-buffer-mode
+          "\\*gud-debug\\*$"
+          "\\*lsp-help\\*$" "\\*lsp session\\*$"
+          "\\*quickrun\\*$"
+          "\\*tldr\\*$"
+          "\\*vc-.*\\**"
+          "\\*diff-hl\\**"
+          "^\\*macro expansion\\**"
+
+          "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
+          "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
+          "\\*docker-.+\\*"
+          "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
+          "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
+          rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
   :config
   (with-no-warnings
-    (defvar shackle--popup-window-list nil) ; all popup windows
-    (defvar-local shackle--current-popup-window nil) ; current popup window
-    (put 'shackle--current-popup-window 'permanent-local t)
+    (defun my-popper-fit-window-height (win)
+      "Adjust the height of popup window WIN to fit the buffer's content."
+      (let ((desired-height (floor (/ (frame-height) 3))))
+        (fit-window-to-buffer win desired-height desired-height)))
+    (setq popper-window-height #'my-popper-fit-window-height)
 
-    (defun shackle-last-popup-buffer ()
-      "View last popup buffer."
-      (interactive)
-      (ignore-errors
-        (display-buffer shackle-last-buffer)))
-    (bind-key "C-h z" #'shackle-last-popup-buffer)
-
-    ;; Add keyword: `autoclose'
-    (defun shackle-display-buffer-hack (fn buffer alist plist)
-      (let ((window (funcall fn buffer alist plist)))
-        (setq shackle--current-popup-window window)
-
-        (when (plist-get plist :autoclose)
-          (push (cons window buffer) shackle--popup-window-list))
-        window))
-
-    (defun shackle-close-popup-window-hack (&rest _)
-      "Close current popup window via `C-g'."
-      (setq shackle--popup-window-list
-            (cl-loop for (window . buffer) in shackle--popup-window-list
-                     if (and (window-live-p window)
-                             (equal (window-buffer window) buffer))
-                     collect (cons window buffer)))
-      ;; `C-g' can deactivate region
-      (when (and (called-interactively-p 'interactive)
-                 (not (region-active-p)))
-        (let (window buffer process)
-          (if (one-window-p)
-              (progn
-                (setq window (selected-window))
-                (when (equal (buffer-local-value 'shackle--current-popup-window
-                                                 (window-buffer window))
-                             window)
-                  (winner-undo)))
-            (progn
-              (setq window (caar shackle--popup-window-list))
-              (setq buffer (cdar shackle--popup-window-list))
-              (when (and (window-live-p window)
-                         (equal (window-buffer window) buffer))
-                (setq process (get-buffer-process buffer))
-                (when (process-live-p process)
-                  (kill-process process))
-                (delete-window window)
-
-                (pop shackle--popup-window-list)))))))
-
-    (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
-    (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
-
-  ;; HACK: compatibility issue with `org-switch-to-buffer-other-window'
-  (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
-
-  ;; rules
-  (setq shackle-default-size 0.4
-        shackle-default-alignment 'below
-        shackle-default-rule nil
-        shackle-rules
-        '((("*Help*" "*Apropos*") :select t :size 0.3 :align 'below :autoclose t)
-          (compilation-mode :select t :size 0.3 :align 'below :autoclose t)
-          (comint-mode :select t :size 0.4 :align 'below :autoclose t)
-          ("*Completions*" :size 0.3 :align 'below :autoclose t)
-          ("*Pp Eval Output*" :size 15 :align 'below :autoclose t)
-          ("*Backtrace*" :select t :size 15 :align 'below)
-          (("*Warnings*" "*Messages*") :size 0.3 :align 'below :autoclose t)
-          ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
-          ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
-          ("*Calendar*" :select t :size 0.3 :align 'below)
-          (("*shell*" "*eshell*" "*ielm*") :popup t :size 0.3 :align 'below)
-          ("^\\*vc-.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
-          ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
-          ("\\*ivy-occur .*\\*" :regexp t :select t :size 0.3 :align 'below)
-          (" *undo-tree*" :select t)
-          ("*quickrun*" :select t :size 15 :align 'below)
-          ("*tldr*" :size 0.4 :align 'below :autoclose t)
-          ("*osx-dictionary*" :size 20 :align 'below :autoclose t)
-          ("*Youdao Dictionary*" :size 15 :align 'below :autoclose t)
-          ("*Finder*" :select t :size 0.3 :align 'below :autoclose t)
-          ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
-          ("^\\*elfeed-entry" :regexp t :size 0.7 :align 'below :autoclose t)
-          (" *Install vterm* " :size 0.35 :same t :align 'below)
-          (("*Paradox Report*" "*package update results*") :size 0.2 :align 'below :autoclose t)
-          ("*Package-Lint*" :size 0.4 :align 'below :autoclose t)
-          ("*How Do You*" :select t :size 0.5 :align 'below :autoclose t)
-
-          (("*Org Agenda*" " *Agenda Commands*" " *Org todo*" "*Org Dashboard*" "*Org Select*") :select t :size 0.1 :align 'below :autoclose t)
-          (("\\*Capture\\*" "^CAPTURE-.*\\.org*") :regexp t :select t :size 0.3 :align 'below :autoclose t)
-
-          ("*ert*" :size 15 :align 'below :autoclose t)
-          (overseer-buffer-mode :size 15 :align 'below :autoclose t)
-
-          (" *Flycheck checkers*" :select t :size 0.3 :align 'below :autoclose t)
-          ((flycheck-error-list-mode flymake-diagnostics-buffer-mode)
-           :select t :size 0.25 :align 'below :autoclose t)
-
-          (("*lsp-help*" "*lsp session*") :size 0.3 :align 'below :autoclose t)
-          ("*DAP Templates*" :select t :size 0.4 :align 'below :autoclose t)
-          (dap-server-log-mode :size 15 :align 'below :autoclose t)
-          ("*rustfmt*" :select t :size 0.3 :align 'below :autoclose t)
-          ((rustic-compilation-mode rustic-cargo-clippy-mode rustic-cargo-outdated-mode rustic-cargo-test-mode) :select t :size 0.3 :align 'below :autoclose t)
-
-          (profiler-report-mode :select t :size 0.5 :align 'below)
-          ("*ELP Profiling Restuls*" :select t :size 0.5 :align 'below)
-
-          ((inferior-python-mode inf-ruby-mode swift-repl-mode) :size 0.4 :align 'below)
-          ("*prolog*" :size 0.4 :align 'below)
-
-          (("*Gofmt Errors*" "*Go Test*") :select t :size 0.3 :align 'below :autoclose t)
-          (godoc-mode :select t :size 0.4 :align 'below :autoclose t)
-
-          ((grep-mode rg-mode deadgrep-mode ag-mode pt-mode) :select t :size 0.4 :align 'below)
-          (Buffer-menu-mode :select t :size 0.5 :align 'below :autoclose t)
-          (gnus-article-mode :select t :size 0.7 :align 'below :autoclose t)
-          (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
-          ((process-menu-mode cargo-process-mode) :select t :size 0.3 :align 'below :autoclose t)
-          ("*Process-Environment*" :select t :size 0.3 :align 'below :autoclose t)
-          (("*docker-containers*" "*docker-images*" "*docker-networks*" "*docker-volumes*") :size 0.4 :align 'below :autoclose t)
-          (bookmark-bmenu-mode :select t :size 0.4 :align 'below)
-          (tabulated-list-mode :size 0.4 :align 'below :autclose t))))
+    (defun popper-close-window-hack (&rest _args)
+      "Close popper window via `C-g'."
+      (when (and ; (called-interactively-p 'interactive)
+             (not (region-active-p))
+             popper-open-popup-alist)
+        (let ((window (caar popper-open-popup-alist))
+              (buffer (cdar popper-open-popup-alist)))
+          (when (and (window-live-p window)
+                     (buffer-live-p buffer)
+                     (not (with-current-buffer buffer
+                            (derived-mode-p 'eshell-mode
+                                            'shell-mode
+                                            'term-mode
+                                            'vterm-mode))))
+            (delete-window window)))))
+    (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
 (provide 'init-window)
 

@@ -1,6 +1,6 @@
 ;; init-eshell.el --- Initialize eshell configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -34,26 +34,10 @@
 (use-package eshell
   :ensure nil
   :defines eshell-prompt-function
-  :functions eshell/alias
-  :hook (eshell-mode . (lambda ()
-                         (bind-key "C-l" 'eshell/clear eshell-mode-map)
-                         ;; Aliases
-                         (eshell/alias "f" "find-file $1")
-                         (eshell/alias "fo" "find-file-other-window $1")
-                         (eshell/alias "d" "dired $1")
-                         (eshell/alias "l" "ls -lFh")
-                         (eshell/alias "ll" "ls -l")
-                         (eshell/alias "la" "ls -lAFh")
-                         (eshell/alias "lr" "ls -tRFh")
-                         (eshell/alias "lrt" "ls -lFcrt")
-                         (eshell/alias "lsa" "ls -lah")
-                         (eshell/alias "lt" "ls -ltFh")))
+  :bind (:map eshell-mode-map
+         ([remap recenter-top-bottom] . eshell/clear))
   :config
   (with-no-warnings
-    ;; For compatibility
-    (unless (fboundp 'flatten-tree)
-      (defalias 'flatten-tree #'eshell-flatten-list))
-
     (defun eshell/clear ()
       "Clear the eshell buffer."
       (interactive)
@@ -123,26 +107,13 @@
   (use-package eshell-prompt-extras
     :after esh-opt
     :defines eshell-highlight-prompt
-    :commands (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
+    :autoload (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
     :init (setq eshell-highlight-prompt nil
                 eshell-prompt-function #'epe-theme-lambda))
 
-  ;; Fish-like history autosuggestions
-  (use-package esh-autosuggest
-    :defines ivy-display-functions-alist
-    :bind (:map eshell-mode-map
-           ([remap eshell-pcomplete] . completion-at-point))
-    :hook ((eshell-mode . esh-autosuggest-mode)
-           (eshell-mode . eshell-setup-ivy-completion))
-    :init (defun eshell-setup-ivy-completion ()
-            "Setup `ivy' completion in `eshell'."
-            (setq-local ivy-display-functions-alist
-                        (remq (assoc 'ivy-completion-in-region
-                                     ivy-display-functions-alist)
-                              ivy-display-functions-alist))))
-
   ;; `eldoc' support
   (use-package esh-help
+    :commands setup-esh-help-eldoc
     :init (setup-esh-help-eldoc))
 
   ;; `cd' to frequent directory in `eshell'

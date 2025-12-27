@@ -1,6 +1,6 @@
-;; init-org.el --- Initialize org configurations.	-*- lexical-binding: t -*-
+;; init-org.el --- Initialize Org configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,22 +30,22 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 (use-package org
   :ensure nil
-  :commands (org-dynamic-block-define)
-  :custom-face (org-ellipsis ((t (:foreground nil))))
+  :custom-face (org-ellipsis ((t (:foreground unspecified))))
   :pretty-hydra
-  ((:title (pretty-hydra-title "Org Template" 'fileicon "org" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
-    :color blue :quit-key "q")
+  ;; See `org-structure-template-alist'
+  ((:title (pretty-hydra-title "Org Template" 'sucicon "nf-custom-orgmode" :face 'nerd-icons-green)
+    :color blue :quit-key ("q" "C-g"))
    ("Basic"
     (("a" (hot-expand "<a") "ascii")
      ("c" (hot-expand "<c") "center")
      ("C" (hot-expand "<C") "comment")
-     ("e" (hot-expand "<e") "example")
+     ("x" (hot-expand "<e") "example")
      ("E" (hot-expand "<E") "export")
      ("h" (hot-expand "<h") "html")
      ("l" (hot-expand "<l") "latex")
@@ -60,14 +60,16 @@
      ("L" (hot-expand "<L") "LaTeX"))
     "Source"
     (("s" (hot-expand "<s") "src")
-     ("m" (hot-expand "<s" "emacs-lisp") "emacs-lisp")
+     ("e" (hot-expand "<s" "emacs-lisp") "emacs-lisp")
      ("y" (hot-expand "<s" "python :results output") "python")
      ("p" (hot-expand "<s" "perl") "perl")
+     ("w" (hot-expand "<s" "powershell") "powershell")
      ("r" (hot-expand "<s" "ruby") "ruby")
      ("S" (hot-expand "<s" "sh") "sh")
      ("g" (hot-expand "<s" "go :imports '\(\"fmt\"\)") "golang"))
     "Misc"
-    (("u" (hot-expand "<s" "plantuml :file CHANGE.png") "plantuml")
+    (("m" (hot-expand "<s" "mermaid :file chart.png") "mermaid")
+     ("u" (hot-expand "<s" "plantuml :file chart.png") "plantuml")
      ("Y" (hot-expand "<s" "ipython :session :exports both :results raw drawer\n$0") "ipython")
      ("P" (progn
             (insert "#+HEADERS: :results output :exports both :shebang \"#!/usr/bin/env perl\"\n")
@@ -84,13 +86,9 @@
                       (org-hydra/body)
                     (self-insert-command 1)))))
   :hook (((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
-         (org-mode . (lambda ()
-                       "Beautify org symbols."
-                       (setq prettify-symbols-alist centaur-prettify-org-symbols-alist)
-                       (prettify-symbols-mode 1)))
          (org-indent-mode . (lambda()
                               (diminish 'org-indent-mode)
-                              ;; WORKAROUND: Prevent text moving around while using brackets
+                              ;; HACK: Prevent text moving around while using brackets
                               ;; @see https://github.com/seagle0128/.emacs.d/issues/88
                               (make-variable-buffer-local 'show-paren-mode)
                               (setq show-paren-mode nil))))
@@ -127,14 +125,13 @@ prepended to the element after the #+HEADER: tag."
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Note" entry (file ,(concat org-directory "/note.org"))
            "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("j" "Journal" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+          ("j" "Journal" entry (file+olp+datetree
                                 ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry (,(if emacs/>=26p 'file+olp+datetree 'file+datetree)
+	      ("b" "Book" entry (file+olp+datetree
                              ,(concat org-directory "/book.org"))
 	       "* Topic: %^{Description}  %^g %? Added: %U"))
 
-        org-agenda-files `(,centaur-org-directory)
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
@@ -144,11 +141,21 @@ prepended to the element after the #+HEADER: tag."
                              (?B . warning)
                              (?C . success))
 
+        ;; Agenda styling
+        org-agenda-files (list centaur-org-directory)
+        org-agenda-block-separator ?─
+        org-agenda-time-grid
+        '((daily today require-timed)
+          (800 1000 1200 1400 1600 1800 2000)
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-current-time-string
+        "⭠ now ─────────────────────────────────────────────────"
+
         org-tags-column -80
         org-log-done 'time
         org-catch-invisible-edits 'smart
         org-startup-indented t
-        org-ellipsis (if (and (display-graphic-p) (char-displayable-p ?⏷)) "\t⏷" nil)
+        org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
         org-pretty-entities nil
         org-hide-emphasis-markers t)
 
@@ -156,95 +163,105 @@ prepended to the element after the #+HEADER: tag."
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
   ;; Use embedded webkit browser if possible
-  (when (featurep 'xwidget-internal)
-    (push '("\\.\\(x?html?\\|pdf\\)\\'"
-            .
-            (lambda (file _link)
-              (xwidget-webkit-browse-url (concat "file://" file))
-              (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
-                (when (buffer-live-p buf)
-                  (and (eq buf (current-buffer)) (quit-window))
-                  (pop-to-buffer buf)))))
-          org-file-apps))
+  (add-to-list 'org-file-apps
+               '("\\.\\(x?html?\\|pdf\\)\\'"
+                 .
+                 (lambda (file _link)
+                   (centaur-browse-url-of-file (browse-url-file-url file)))))
 
-  ;; Add gfm/md backends
-  (use-package ox-gfm)
+  ;; Add md/gfm backends
   (add-to-list 'org-export-backends 'md)
-
-  (with-eval-after-load 'counsel
-    (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
-
-  ;; Prettify UI
-  (when emacs/>=26p
-    (use-package org-superstar
-      :if (and (display-graphic-p) (char-displayable-p ?⚫))
-      :hook (org-mode . org-superstar-mode)
-      :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
-
-  (use-package org-fancy-priorities
-    :diminish
-    :hook (org-mode . org-fancy-priorities-mode)
-    :init (setq org-fancy-priorities-list
-                (if (and (display-graphic-p) (char-displayable-p ?⯀))
-                    '("⯀" "⯀" "⯀" "⯀")
-                  '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
+  (use-package ox-gfm
+    :init (add-to-list 'org-export-backends 'gfm))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t)
 
-  (defvar load-language-list '((emacs-lisp . t)
-                               (perl . t)
-                               (python . t)
-                               (ruby . t)
-                               (js . t)
-                               (css . t)
-                               (sass . t)
-                               (C . t)
-                               (java . t)
-                               (plantuml . t)))
-
-  ;; ob-sh renamed to ob-shell since 26.1.
-  (if emacs/>=26p
-      (cl-pushnew '(shell . t) load-language-list)
-    (cl-pushnew '(sh . t) load-language-list))
+  (defconst load-language-alist
+    '((emacs-lisp . t)
+      (perl       . t)
+      (python     . t)
+      (ruby       . t)
+      (js         . t)
+      (css        . t)
+      (sass       . t)
+      (C          . t)
+      (java       . t)
+      (shell      . t)
+      (plantuml   . t))
+    "Alist of org ob languages.")
 
   (use-package ob-go
-    :init (cl-pushnew '(go . t) load-language-list))
+    :init (cl-pushnew '(go . t) load-language-alist))
 
-  ;; Use mermadi-cli: npm install -g @mermaid-js/mermaid-cli
+  (use-package ob-powershell
+    :init (cl-pushnew '(powershell . t) load-language-alist))
+
+  (use-package ob-rust
+    :init (cl-pushnew '(rust . t) load-language-alist))
+
+  ;; Install: npm install -g @mermaid-js/mermaid-cli
   (use-package ob-mermaid
-    :init (cl-pushnew '(mermaid . t) load-language-list))
+    :init (cl-pushnew '(mermaid . t) load-language-alist))
 
   (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list)
+                               load-language-alist))
 
-  ;; Rich text clipboard
-  (use-package org-rich-yank
-    :bind (:map org-mode-map
-           ("C-M-y" . org-rich-yank)))
+;; Prettify UI
+(use-package org-modern
+  :after org
+  :diminish
+  :autoload global-org-modern-mode
+  :init (global-org-modern-mode 1))
 
-  ;; Table of contents
-  (use-package toc-org
-    :hook (org-mode . toc-org-mode))
+;; Paste with org-mode markup and link
+(use-package org-rich-yank
+  :after org
+  :diminish
+  :bind (:map org-mode-map
+         ("C-M-y" . org-rich-yank)))
 
-  ;; Export text/html MIME emails
-  (use-package org-mime
-    :bind (:map message-mode-map
-           ("C-c M-o" . org-mime-htmlize)
-           :map org-mode-map
-           ("C-c M-o" . org-mime-org-buffer-htmlize)))
+;; Auto-toggle Org elements
+(use-package org-appear
+  :diminish
+  :hook org-mode
+  :custom
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-inside-latex t)
+  (org-appear-manual-linger t)
+  (org-appear-delay 0.5))
 
-  ;; Preview
-  (use-package org-preview-html
-    :diminish)
+;; Table of contents
+(use-package toc-org
+  :diminish
+  :hook org-mode)
 
-  ;; Presentation
+;; Preview
+(use-package org-preview-html
+  :after org
+  :diminish
+  :functions xwidget-workable-p
+  :bind (:map org-mode-map
+         ("C-c C-h" . org-preview-html-mode))
+  :init (when (xwidget-workable-p)
+          (setq org-preview-html-viewer 'xwidget)))
+
+;; Presentation
+(if emacs/>=29.2p
+    (use-package dslide
+      :after org
+      :diminish
+      :bind (:map org-mode-map
+             ("s-<f7>" . dslide-deck-start)))
   (use-package org-tree-slide
+    :after org
     :diminish
-    :functions (org-display-inline-images
-                org-remove-inline-images)
+    :defines org-tree-slide-mode-map
     :bind (:map org-mode-map
            ("s-<f7>" . org-tree-slide-mode)
            :map org-tree-slide-mode-map
@@ -252,59 +269,50 @@ prepended to the element after the #+HEADER: tag."
            ("<right>" . org-tree-slide-move-next-tree)
            ("S-SPC" . org-tree-slide-move-previous-tree)
            ("SPC" . org-tree-slide-move-next-tree))
-    :hook ((org-tree-slide-play . (lambda ()
-                                    (text-scale-increase 4)
-                                    (org-display-inline-images)
-                                    (read-only-mode 1)))
-           (org-tree-slide-stop . (lambda ()
-                                    (text-scale-increase 0)
-                                    (org-remove-inline-images)
-                                    (read-only-mode -1))))
-    :init (setq org-tree-slide-header nil
-                org-tree-slide-slide-in-effect t
-                org-tree-slide-heading-emphasis nil
-                org-tree-slide-cursor-init t
-                org-tree-slide-modeline-display 'outside
-                org-tree-slide-skip-done nil
-                org-tree-slide-skip-comments t
-                org-tree-slide-skip-outline-level 3))
+    :custom (org-tree-slide-skip-outline-level 3)))
 
-  ;; Pomodoro
-  (use-package org-pomodoro
-    :custom-face
-    (org-pomodoro-mode-line ((t (:inherit warning))))
-    (org-pomodoro-mode-line-overtime ((t (:inherit error))))
-    (org-pomodoro-mode-line-break ((t (:inherit success))))
-    :bind (:map org-agenda-mode-map
-           ("P" . org-pomodoro))))
+;; Pomodoro
+(use-package org-pomodoro
+  :after org
+  :diminish
+  :custom-face
+  (org-pomodoro-mode-line ((t (:inherit warning))))
+  (org-pomodoro-mode-line-overtime ((t (:inherit error))))
+  (org-pomodoro-mode-line-break ((t (:inherit success))))
+  :bind (:map org-mode-map
+         ("C-c C-x m" . org-pomodoro))
+  :init (with-eval-after-load 'org-agenda
+          (bind-keys :map org-agenda-mode-map
+            ("K" . org-pomodoro)
+            ("C-c C-x m" . org-pomodoro))))
 
 ;; Roam
-(when (and emacs/>=26p (executable-find "cc"))
+(when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
   (use-package org-roam
     :diminish
-    :custom (org-roam-directory (file-truename centaur-org-directory))
-    :hook (after-init . org-roam-mode)
-    :bind (:map org-roam-mode-map
-           (("C-c n l" . org-roam)
-            ("C-c n f" . org-roam-find-file)
-            ("C-c n g" . org-roam-graph))
-           :map org-mode-map
-           (("C-c n i" . org-roam-insert))
-           (("C-c n I" . org-roam-insert-immediate)))
+    :functions centaur-browse-url org-roam-db-autosync-mode
+    :defines org-roam-graph-viewer
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today))
+    :init
+    (setq org-roam-directory centaur-org-directory
+          org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+          org-roam-graph-viewer #'centaur-browse-url)
     :config
     (unless (file-exists-p org-roam-directory)
-      (make-directory org-roam-directory)))
+      (make-directory org-roam-directory))
+    (add-to-list 'org-agenda-files org-roam-directory)
 
-  (use-package org-roam-server
-    :functions xwidget-buffer xwidget-webkit-current-session
-    :hook (org-roam-server-mode . org-roam-server-browse)
-    :init
-    (defun org-roam-server-browse ()
-      (when org-roam-server-mode
-        (let ((url (format "http://%s:%d" org-roam-server-host org-roam-server-port)))
-          (if (featurep 'xwidget-internal)
-              (centaur-webkit-browse-url url t)
-            (browse-url url)))))))
+    ;; Keep Org-roam session automatically synchronized
+    (org-roam-db-autosync-mode))
+
+  (use-package org-roam-ui
+    :bind ("C-c n u" . org-roam-ui-mode)
+    :init (setq org-roam-ui-browser-function #'centaur-browse-url)))
 
 (provide 'init-org)
 

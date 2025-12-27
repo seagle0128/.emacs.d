@@ -1,6 +1,6 @@
-;; init-docker.el --- Initialize docker configurations.	-*- lexical-binding: t -*-
+;; init-ai.el --- Initialize AI configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2025 Vincent Zhang
+;; Copyright (C) 2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; Docker configurations.
+;; AI configurations.
 ;;
 
 ;;; Code:
@@ -33,20 +33,31 @@
 (eval-when-compile
   (require 'init-const))
 
-;; Docker
-(unless sys/win32p
-  (use-package docker
-    :bind ("C-c D" . docker)
-    :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
-                docker-container-shell-file-name "/bin/bash"))
+;; Interact with ChatGPT or other LLMs
+(use-package gptel
+  :functions gptel-make-openai
+  :custom
+  (gptel-model 'gpt-4o)
+  ;; Put the apikey to `auth-sources'
+  ;; Format: "machine {HOST} login {USER} password {APIKEY}"
+  ;; The LLM host is used as HOST, and "apikey" as USER.
+  (gptel-backend (gptel-make-openai "Github Models"
+                   :host "models.inference.ai.azure.com"
+                   :endpoint "/chat/completions?api-version=2024-05-01-preview"
+                   :stream t
+                   :key 'gptel-api-key
+                   :models '(gpt-4o))))
 
-  ;;`tramp-container' is builtin since 29
-  (unless emacs/>=29p
-    (use-package docker-tramp)))
+;; Generate commit messages for magit
+(use-package gptel-magit
+  :hook (magit-mode . gptel-magit-install))
 
-(use-package dockerfile-mode)
+;; A native shell experience to interact with ACP agents
+(when emacs/>=29p
+  (use-package agent-shell
+    :diminish agent-shell-ui-mode))
 
-(provide 'init-docker)
+(provide 'init-ai)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-docker.el ends here
+;;; init-ai.el ends here

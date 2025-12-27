@@ -1,6 +1,6 @@
 ;; init-vcs.el --- Initialize version control system configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2016-2021 Vincent Zhang
+;; Copyright (C) 2016-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,119 +30,63 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const))
 
-;; Git
-;; See `magit-maybe-define-global-key-bindings'
+;; Magit
+;; See `magit-define-global-key-bindings'
 (use-package magit
-  :init (setq magit-diff-refine-hunk t)
+  :init (setq magit-diff-refine-hunk t
+              git-commit-major-mode 'git-commit-elisp-text-mode)
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  (when (fboundp 'transient-append-suffix)
-    ;; Add switch: --tags
-    (transient-append-suffix 'magit-fetch
-      "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
+  ;; Unbind conflicting shortcuts due to conflict with `ace-window'
+  (unbind-key "M-1" magit-mode-map)
+  (unbind-key "M-2" magit-mode-map)
+  (unbind-key "M-3" magit-mode-map)
+  (unbind-key "M-4" magit-mode-map))
 
-  ;; Exterminate Magit buffers
-  (with-no-warnings
-    (defun my-magit-kill-buffers (&rest _)
-      "Restore window configuration and kill all Magit buffers."
-      (interactive)
-      (magit-restore-window-configuration)
-      (let ((buffers (magit-mode-get-buffers)))
-        (when (eq major-mode 'magit-status-mode)
-          (mapc (lambda (buf)
-                  (with-current-buffer buf
-                    (if (and magit-this-process
-                             (eq (process-status magit-this-process) 'run))
-                        (bury-buffer buf)
-                      (kill-buffer buf))))
-                buffers))))
-    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
+;; Prime cache before Magit refresh
+(use-package magit-prime
+  :diminish
+  :hook after-init)
 
-  ;; Access Git forges from Magit
-  (when (executable-find "cc")
-    (use-package forge
-      :demand
-      :init (setq forge-topic-list-columns
-                  '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-                    ("Title" 60 t nil title  nil)
-                    ("State" 6 t nil state nil)
-                    ("Updated" 10 t nil updated nil)))))
-
-  ;; Show TODOs in magit
-  (when emacs/>=25.2p
-    (use-package magit-todos
-      :init
-      (setq magit-todos-nice (if (executable-find "nice") t nil))
-      (let ((inhibit-message t))
-        (magit-todos-mode 1))
-      :config
-      (transient-append-suffix 'magit-status-jump '(0 0 -1)
-        '("T " "Todos" magit-todos-jump-to-todos)))))
-
-;; Display transient in child frame
-(when (childframe-workable-p)
-  (use-package transient-posframe
-    :diminish
-    :custom-face
-    (transient-posframe ((t (:inherit tooltip))))
-    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
-    :hook (after-init . transient-posframe-mode)
-    :init
-    (setq transient-posframe-border-width 3
-          transient-posframe-min-height 22
-          transient-posframe-min-width nil
-          transient-posframe-parameters '((left-fringe . 8)
-                                          (right-fringe . 8)))
-    :config
-    (add-hook 'after-load-theme-hook
-              (lambda ()
-                (custom-set-faces
-                 '(transient-posframe ((t (:inherit tooltip))))
-                 `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
-
-    (with-no-warnings
-      (defun my-transient-posframe--show-buffer (buffer _alist)
-        "Show BUFFER in posframe and we do not use _ALIST at this period."
-        (when (posframe-workable-p)
-          (let ((posframe (posframe-show
-                           buffer
-			               :font transient-posframe-font
-			               :position (point)
-			               :poshandler transient-posframe-poshandler
-			               :background-color (face-attribute 'transient-posframe :background nil t)
-			               :foreground-color (face-attribute 'transient-posframe :foreground nil t)
-			               :min-width (or transient-posframe-min-width (round (* (frame-width) 0.62)))
-			               :min-height transient-posframe-min-height
-                           :lines-truncate t
-			               :internal-border-width transient-posframe-border-width
-			               :internal-border-color (face-attribute 'transient-posframe-border :background nil t)
-			               :override-parameters transient-posframe-parameters)))
-            (frame-selected-window posframe))))
-      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer)
-
-      (defun my-transient-posframe--render-buffer ()
-        (with-current-buffer (get-buffer-create transient--buffer-name)
-          (goto-char (point-min))
-          (insert (propertize "\n" 'face '(:height 0.3)))
-          (goto-char (point-max))
-          (insert (propertize "\n\n" 'face '(:height 0.3)))))
-      (advice-add #'transient--show :after #'my-transient-posframe--render-buffer))))
+;; Show TODOs in Magit
+(use-package magit-todos
+  :after magit-status
+  :commands magit-todos-mode
+  :init
+  (setq magit-todos-nice (if (executable-find "nice") t nil))
+  (magit-todos-mode 1))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
-  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
-  (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+  (git-timemachine-minibuffer-author-face ((t (:inherit success :foreground unspecified))))
+  (git-timemachine-minibuffer-detail-face ((t (:inherit warning :foreground unspecified))))
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
-  :hook (before-revert . (lambda ()
-                           (when (bound-and-true-p git-timemachine-mode)
-                             (user-error "Cannot revert the timemachine buffer")))))
+  :hook ((git-timemachine-mode . (lambda ()
+                                   "Improve `git-timemachine' buffers."
+                                   ;; Display different colors in mode-line
+                                   (if (facep 'mode-line-active)
+                                       (face-remap-add-relative 'mode-line-active 'custom-state)
+                                     (face-remap-add-relative 'mode-line 'custom-state))
+
+                                   ;; Highlight symbols in elisp
+                                   (and (derived-mode-p 'emacs-lisp-mode)
+                                        (fboundp 'highlight-defined-mode)
+                                        (highlight-defined-mode t))
+
+                                   ;; Display line numbers
+                                   (and (derived-mode-p 'prog-mode 'yaml-mode)
+                                        (fboundp 'display-line-numbers-mode)
+                                        (display-line-numbers-mode t))))
+         (before-revert . (lambda ()
+                            (when (bound-and-true-p git-timemachine-mode)
+                              (user-error "Cannot revert the timemachine buffer"))))))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger
@@ -162,7 +106,7 @@
         ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
         ("q" git-messenger:popup-close "quit")))
 
-    (defun my-git-messenger:format-detail (vcs commit-id author message)
+    (defun my-git-messenger:format-detail (fn vcs commit-id author message)
       (if (eq vcs 'git)
           (let ((date (git-messenger:commit-date commit-id))
                 (colon (propertize ":" 'face 'font-lock-comment-face)))
@@ -177,7 +121,8 @@
              (propertize (make-string 38 ?─) 'face 'font-lock-comment-face)
              message
              (propertize "\nPress q to quit" 'face '(:inherit (font-lock-comment-face italic)))))
-        (git-messenger:format-detail vcs commit-id author message)))
+        (funcall fn vcs commit-id author message)))
+    (advice-add #'git-messenger:format-detail :around #'my-git-messenger:format-detail)
 
     (defun my-git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
@@ -191,7 +136,7 @@
              (author (cdr commit-info))
              (msg (git-messenger:commit-message vcs commit-id))
              (popuped-message (if (git-messenger:show-detail-p commit-id)
-                                  (my-git-messenger:format-detail vcs commit-id author msg)
+                                  (git-messenger:format-detail vcs commit-id author msg)
                                 (cl-case vcs
                                   (git msg)
                                   (svn (if (string= commit-id "-")
@@ -204,20 +149,20 @@
         (run-hook-with-args 'git-messenger:before-popup-hook popuped-message)
         (git-messenger-hydra/body)
         (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
-               (let ((buffer-name "*git-messenger*"))
+               (let ((buffer-name " *git-messenger*"))
                  (posframe-show buffer-name
-                                :string (concat (propertize "\n" 'face '(:height 0.3))
-                                                popuped-message
-                                                "\n"
-                                                (propertize "\n" 'face '(:height 0.3)))
+                                :string popuped-message
                                 :left-fringe 8
                                 :right-fringe 8
+                                :max-width (round (* (frame-width) 0.62))
+                                :max-height (round (* (frame-height) 0.62))
                                 :internal-border-width 1
-                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                                :background-color (face-background 'tooltip nil t))
+                                :internal-border-color (face-background 'posframe-border nil t)
+                                :foreground-color (face-foreground 'tooltip nil t)
+                                :background-color (face-background 'tooltip nil t)                                )
                  (unwind-protect
                      (push (read-event) unread-command-events)
-                   (posframe-delete buffer-name))))
+                   (posframe-hide buffer-name))))
               ((and (fboundp 'pos-tip-show) (display-graphic-p))
                (pos-tip-show popuped-message))
               ((fboundp 'lv-message)
@@ -235,8 +180,8 @@
   :ensure nil
   :diminish
   :pretty-hydra
-  ((:title (pretty-hydra-title "Smerge" 'octicon "diff")
-    :color pink :quit-key "q")
+  ((:title (pretty-hydra-title "Smerge" 'octicon "nf-oct-diff")
+    :color pink :quit-key ("q" "C-g"))
    ("Move"
     (("n" smerge-next "next")
      ("p" smerge-prev "previous"))
@@ -271,17 +216,15 @@
                             (smerge-mode 1)))))
          (magit-diff-visit-file . (lambda ()
                                     (when smerge-mode
-                                      (hydra-smerge/body))))))
+                                      (smerge-mode-hydra/body))))))
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
   :bind (:map vc-prefix-map
          ("B" . browse-at-remote)))
 
-;; Git related modes
-(use-package gitattributes-mode)
-(use-package gitconfig-mode)
-(use-package gitignore-mode)
+;; Git configuration modes
+(use-package git-modes)
 
 (provide 'init-vcs)
 

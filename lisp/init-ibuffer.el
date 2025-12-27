@@ -1,6 +1,6 @@
 ;; init-buffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,48 +30,47 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom))
 
 (use-package ibuffer
   :ensure nil
   :bind ("C-x C-b" . ibuffer)
-  :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
-  :config
-  ;; Display icons for buffers
-  (use-package all-the-icons-ibuffer
-    :if (icons-displayable-p)
-    :init (all-the-icons-ibuffer-mode 1))
+  :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold))))
 
-  (with-eval-after-load 'counsel
-    (with-no-warnings
-      (defun my-ibuffer-find-file ()
-        (interactive)
-        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                   (if (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         default-directory)
-                                     default-directory))))
-          (counsel-find-file default-directory)))
-      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
+;; Display icons for buffers
+(use-package nerd-icons-ibuffer
+  :hook ibuffer-mode
+  :init (setq nerd-icons-ibuffer-icon centaur-icon))
 
-;; Group ibuffer's list by project root
-(use-package ibuffer-projectile
-  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
-  :hook ((ibuffer . (lambda ()
-                      (ibuffer-projectile-set-filter-groups)
-                      (unless (eq ibuffer-sorting-mode 'alphabetic)
-                        (ibuffer-do-sort-by-alphabetic)))))
+;; Group ibuffer's list by project
+(use-package ibuffer-project
+  :autoload (ibuffer-project-generate-filter-groups ibuffer-do-sort-by-project-file-relative)
+  :functions icons-displayable-p
+  :hook (ibuffer . (lambda ()
+                     "Group ibuffer's list by project."
+                     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+                     (unless (eq ibuffer-sorting-mode 'project-file-relative)
+                       (ibuffer-do-sort-by-project-file-relative))))
+  :init (setq ibuffer-project-use-cache t)
   :config
-  (setq ibuffer-projectile-prefix
-        (if (icons-displayable-p)
-            (concat
-             (all-the-icons-octicon "file-directory"
-                                    :face ibuffer-filter-group-name-face
-                                    :v-adjust 0.0
-                                    :height 1.0)
-             " ")
-          "Project: ")))
+  (with-no-warnings
+    (defun my-ibuffer-project-group-name (root type)
+      "Return group name for project ROOT and TYPE."
+      (if (and (stringp type) (> (length type) 0))
+          (format "%s %s" type root)
+        (format "%s" root)))
+    (if (icons-displayable-p)
+        (progn
+          (advice-add #'ibuffer-project-group-name :override #'my-ibuffer-project-group-name)
+          (setq ibuffer-project-root-functions
+                `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
+                  (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face)))))
+      (progn
+        (advice-remove #'ibuffer-project-group-name #'my-ibuffer-project-group-name)
+        (setq ibuffer-project-root-functions
+              '((ibuffer-project-project-root . "Project")
+                (file-remote-p . "Remote")))))))
 
 (provide 'init-ibuffer)
 

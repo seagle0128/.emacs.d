@@ -1,6 +1,6 @@
 ;; init-kill-ring.el --- Initialize kill-ring configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,40 +30,22 @@
 
 ;;; Code:
 
+(setq kill-ring-max 200)
+
+;; Save clipboard contents into kill-ring before replace them
+(setq save-interprogram-paste-before-kill t)
+
 ;; Kill & Mark things easily
-(use-package easy-kill-extras
+(use-package easy-kill
   :bind (([remap kill-ring-save] . easy-kill)
-         ([remap mark-sexp] . easy-mark-sexp)
-         ([remap mark-word] . easy-mark-word)
+         ([remap mark-sexp] . easy-mark)))
 
-         ;; Integrate `zap-to-char'
-         ([remap zap-to-char] . easy-mark-to-char)
-         ([remap zap-up-to-char] . easy-mark-up-to-char)
-
-         ;; Integrate `expand-region'
-         :map easy-kill-base-map
-         ("o" . easy-kill-er-expand)
-         ("i" . easy-kill-er-unexpand))
-  :init (setq kill-ring-max 200
-              save-interprogram-paste-before-kill t ; Save clipboard contents before replacement
-              easy-kill-alist '((?w word           " ")
-                                (?s sexp           "\n")
-                                (?l list           "\n")
-                                (?f filename       "\n")
-                                (?d defun          "\n\n")
-                                (?D defun-name     " ")
-                                (?e line           "\n")
-                                (?b buffer-file-name)
-
-                                (?^ backward-line-edge "")
-                                (?$ forward-line-edge "")
-                                (?h buffer "")
-                                (?< buffer-before-point "")
-                                (?> buffer-after-point "")
-                                (?f string-to-char-forward "")
-                                (?F string-up-to-char-forward "")
-                                (?t string-to-char-backward "")
-                                (?T string-up-to-char-backward ""))))
+;; Interactively insert and edit items from kill-ring
+(use-package browse-kill-ring
+  :bind ("C-c k" . browse-kill-ring)
+  :hook (after-init . browse-kill-ring-default-keybindings)
+  :init (setq browse-kill-ring-separator "────────────────"
+              browse-kill-ring-separator-face 'shadow))
 
 (provide 'init-kill-ring)
 

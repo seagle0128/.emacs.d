@@ -1,6 +1,6 @@
 ;; init-dired.el --- Initialize dired configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -30,8 +30,8 @@
 
 ;;; Code:
 
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const))
 
 ;; Directory operations
 (use-package dired
@@ -39,30 +39,32 @@
   :bind (:map dired-mode-map
          ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
+  ;; Guess a default target directory
+  (setq dired-dwim-target t)
+
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always
         dired-recursive-copies 'always)
 
+  ;; Show directory first
+  (setq dired-listing-switches "-alh --group-directories-first")
+
   (when sys/macp
-    ;; Suppress the warning: `ls does not support --dired'.
-    (setq dired-use-ls-dired nil)
+    (if (executable-find "gls")
+        (progn
+          ;; Use GNU ls as `gls' from `coreutils' if available.
+          (setq insert-directory-program "gls")
+          ;; Using `insert-directory-program'
+          (setq ls-lisp-use-insert-directory-program t))
+      (progn
+        ;; Suppress the warning: `ls does not support --dired'.
+        (setq dired-use-ls-dired nil)
+        (setq dired-listing-switches "-alh"))))
 
-    (when (executable-find "gls")
-      ;; Use GNU ls as `gls' from `coreutils' if available.
-      (setq insert-directory-program "gls")))
-
-  (when (or (and sys/macp (executable-find "gls"))
-            (and (not sys/macp) (executable-find "ls")))
-    ;; Using `insert-directory-program'
-    (setq ls-lisp-use-insert-directory-program t)
-
-    ;; Show directory first
-    (setq dired-listing-switches "-alh --group-directories-first")
-
-    ;; Quick sort dired buffers via hydra
-    (use-package dired-quick-sort
-      :bind (:map dired-mode-map
-             ("S" . hydra-dired-quick-sort/body))))
+  ;; Quick sort dired buffers via hydra
+  (use-package dired-quick-sort
+    :bind (:map dired-mode-map
+           ("S" . hydra-dired-quick-sort/body)))
 
   ;; Show git info in dired
   (use-package dired-git-info
@@ -74,52 +76,30 @@
     :bind (:map dired-mode-map
            ("C-c C-r" . dired-rsync)))
 
-  ;; Colourful dired
+  ;; Colorful dired
   (use-package diredfl
-    :init (diredfl-global-mode 1))
-
-  ;; Shows icons
-  (use-package all-the-icons-dired
     :diminish
-    :if (icons-displayable-p)
-    :hook (dired-mode . all-the-icons-dired-mode)
-    :init (setq all-the-icons-dired-monochrome nil)
-    :config
-    (with-no-warnings
-      (defun my-all-the-icons-dired--refresh ()
-        "Display the icons of files in a dired buffer."
-        (all-the-icons-dired--remove-all-overlays)
-        ;; NOTE: don't display icons it too many items
-        (if (<= (count-lines (point-min) (point-max)) 1000)
-            (save-excursion
-              (goto-char (point-min))
-              (while (not (eobp))
-                (when (dired-move-to-filename nil)
-                  (let ((case-fold-search t))
-                    (when-let* ((file (dired-get-filename 'relative 'noerror))
-                                (icon (if (file-directory-p file)
-                                          (all-the-icons-icon-for-dir file
-                                                                      :face 'all-the-icons-dired-dir-face
-                                                                      :height 0.9
-                                                                      :v-adjust all-the-icons-dired-v-adjust)
-                                        (apply 'all-the-icons-icon-for-file file
-                                               (append
-                                                '(:height 0.9)
-                                                `(:v-adjust ,all-the-icons-dired-v-adjust)
-                                                (when all-the-icons-dired-monochrome
-                                                  `(:face ,(face-at-point))))))))
-                      (if (member file '("." ".."))
-                          (all-the-icons-dired--add-overlay (point) "  \t")
-                        (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
-                (forward-line 1)))
-          (message "Not display icons because of too many items.")))
-      (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
+    :hook dired-mode)
+
+  ;; Shows icons in dired
+  (use-package nerd-icons-dired
+    :diminish
+    :functions (nerd-icons-icon-for-dir my-nerd-icons-icon-for-dir)
+    :hook dired-mode
+    :init
+    (defface nerd-icons-dired-dir-face
+      '((t (:inherit 'font-lock-doc-face)))
+      "Face for the directory icon."
+      :group 'nerd-icons-faces)
+    (defun my-nerd-icons-icon-for-dir (dir)
+      (nerd-icons-icon-for-dir dir :face 'nerd-icons-dired-dir-face))
+    (setq nerd-icons-dired-dir-icon-function #'my-nerd-icons-icon-for-dir))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
   (use-package dired-x
     :ensure nil
-    :demand
+    :demand t
     :config
     (let ((cmd (cond (sys/mac-x-p "open")
                      (sys/linux-x-p "xdg-open")
@@ -141,10 +121,6 @@
     (setq dired-omit-files
           (concat dired-omit-files
                   "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))))
-
-;; `find-dired' alternative using `fd'
-(when (executable-find "fd")
-  (use-package fd-dired))
 
 (provide 'init-dired)
 

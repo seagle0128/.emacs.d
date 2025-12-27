@@ -1,6 +1,6 @@
 ;; init-rust.el --- Initialize Rust configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2021 Vincent Zhang
+;; Copyright (C) 2019-2025 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
@@ -9,7 +9,7 @@
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
+;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -31,12 +31,13 @@
 ;;; Code:
 
 ;; Rust
-(require 'init-const)
+(use-package rust-mode
+  :functions centaur-treesit-available-p
+  :init (setq rust-format-on-save t
+              rust-mode-treesitter-derive (centaur-treesit-available-p)))
 
-(when emacs/>=26p
-  (use-package rustic))
-
-(use-package rust-playground)
+(use-package ron-mode
+  :mode ("\\.ron" . ron-mode))
 
 (provide 'init-rust)
 

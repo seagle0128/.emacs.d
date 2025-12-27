@@ -11,6 +11,3 @@
                 /o   `..```h+`y+/h+`   
                 .s       `++``o:  ``   
                         `:- `:-                     
-         
-   CENTAUR EMACS - Enjoy Programming & Writing
-
