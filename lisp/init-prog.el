@@ -54,11 +54,9 @@
     :hook (after-init . global-treesit-auto-mode)
     :init (setq treesit-auto-install 'prompt))
 
-  ;; Code folding indicators using Tree-sitter
-  (use-package treesit-fold-indicators
-    :ensure treesit-fold
-    :hook (after-init . global-treesit-fold-indicators-mode)
-    :init (setq treesit-fold-indicators-priority -1)))
+  ;; Code folding using Tree-sitter
+  (use-package treesit-fold
+    :hook (after-init . global-treesit-fold-mode)))
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
@@ -104,7 +102,7 @@
   :diminish
   :hook after-init)
 
-; Reformat buffer stably
+;; Reformat buffer stably
 (use-package apheleia
   :diminish
   :hook (after-init . apheleia-global-mode))

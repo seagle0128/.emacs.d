@@ -167,12 +167,12 @@
 (use-package aggressive-indent
   :diminish
   :autoload aggressive-indent-mode
-  :functions too-long-file-p
+  :functions file-too-long-p
   :hook ((after-init . global-aggressive-indent-mode)
          ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
-                        (when (too-long-file-p)
+                        (when (file-too-long-p)
                           (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
@@ -319,12 +319,16 @@
 (use-package flyspell
   :ensure nil
   :diminish
+  :functions file-too-long-p
+  :commands flyspell-prog-mode
   :if (executable-find "aspell")
-  :hook ((text-mode outline-mode)
-         (prog-mode . flyspell-prog-mode)
+  :hook (((text-mode outline-mode) . flyspell-mode)
+         ((prog-mode yaml-mode) . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
-                            (dolist (key '("C-;" "C-," "C-."))
-                              (unbind-key key flyspell-mode-map)))))
+                            (when flyspell-mode
+                              (and (file-too-long-p) (flyspell-mode -1))
+                              (dolist (key '("C-;" "C-," "C-."))
+                                (unbind-key key flyspell-mode-map))))))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
               ispell-program-name "aspell"

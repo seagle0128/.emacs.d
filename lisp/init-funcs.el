@@ -270,7 +270,7 @@ the custom file."
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
 
-(defun too-long-file-p ()
+(defun file-too-long-p ()
   "Check whether the file is too long.
 
 Returns non-nil if the buffer size exceeds 500,000 bytes or has more than 10,000

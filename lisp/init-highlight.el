@@ -159,7 +159,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight indentions
 (use-package indent-bars
-  :functions too-long-file-p
+  :functions file-too-long-p
   :commands indent-bars-mode
   :custom
   (indent-bars-color '(font-lock-comment-face :face-bg nil :blend 0.4))
@@ -175,7 +175,7 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                       if_statement with_statement while_statement)))
   :hook ((prog-mode yaml-mode) . (lambda ()
-                                   (unless (too-long-file-p)
+                                   (unless (file-too-long-p)
                                      (indent-bars-mode 1))))
   :config (require 'indent-bars-ts))
 
