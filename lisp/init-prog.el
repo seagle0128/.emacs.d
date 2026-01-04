@@ -56,6 +56,7 @@
 
   ;; Code folding using Tree-sitter
   (use-package treesit-fold
+    :custom (treesit-fold-line-count-show t)
     :hook (after-init . global-treesit-fold-mode)))
 
 ;; Show function arglist or variable docstring
