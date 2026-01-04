@@ -319,16 +319,12 @@
 (use-package flyspell
   :ensure nil
   :diminish
-  :functions file-too-long-p
-  :commands flyspell-prog-mode
   :if (executable-find "aspell")
   :hook ((text-mode outline-mode)
          (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
-                            (when flyspell-mode
-                              (and (file-too-long-p) (flyspell-mode -1))
-                              (dolist (key '("C-;" "C-," "C-."))
-                                (unbind-key key flyspell-mode-map))))))
+                            (dolist (key '("C-;" "C-," "C-."))
+                              (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
               ispell-program-name "aspell"
