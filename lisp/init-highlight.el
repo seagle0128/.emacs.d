@@ -174,9 +174,9 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-prefer-character t)
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                       if_statement with_statement while_statement)))
-  :hook ((prog-mode yaml-mode) . (lambda ()
-                                   (unless (file-too-long-p)
-                                     (indent-bars-mode 1))))
+  :hook ((prog-mode yaml-mode yaml-ts-mode) . (lambda ()
+                                                (unless (file-too-long-p)
+                                                  (indent-bars-mode 1))))
   :config (require 'indent-bars-ts))
 
 ;; Colorize color names in buffers

@@ -322,8 +322,8 @@
   :functions file-too-long-p
   :commands flyspell-prog-mode
   :if (executable-find "aspell")
-  :hook (((text-mode outline-mode) . flyspell-mode)
-         ((prog-mode yaml-mode) . flyspell-prog-mode)
+  :hook ((text-mode outline-mode)
+         (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
                             (when flyspell-mode
                               (and (file-too-long-p) (flyspell-mode -1))
