@@ -168,10 +168,7 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-color-by-depth nil)
   (indent-bars-treesit-support centaur-tree-sitter)
   (indent-bars-no-descend-string t)
-  (indent-bars-treesit-ignore-blank-lines-types '("module"))
   (indent-bars-prefer-character t)
-  (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-				                       if_statement with_statement while_statement)))
   :hook (prog-mode yaml-mode yaml-ts-mode)
   :config (require 'indent-bars-ts))
 
