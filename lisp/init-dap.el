@@ -31,7 +31,9 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-hydra)
+  (require 'init-funcs))
 
 (when emacs/>=29p
   (use-package dape
