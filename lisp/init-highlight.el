@@ -169,8 +169,7 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-treesit-support centaur-tree-sitter)
   (indent-bars-no-descend-string t)
   (indent-bars-prefer-character t)
-  :hook (prog-mode yaml-mode yaml-ts-mode)
-  :config (require 'indent-bars-ts))
+  :hook (prog-mode yaml-mode yaml-ts-mode))
 
 ;; Colorize color names in buffers
 (use-package colorful-mode
