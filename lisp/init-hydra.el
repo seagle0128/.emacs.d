@@ -31,11 +31,21 @@
 ;;; Code:
 
 (use-package hydra
-  :defines posframe-border-width
+  :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
   :hook ((emacs-lisp-mode . hydra-add-imenu)
          (after-load-theme . hydra-set-posframe-appearance))
   :init
+  (with-eval-after-load 'consult-imenu
+    (setq consult-imenu-config
+          '((emacs-lisp-mode :toplevel "Functions"
+                             :types ((?f "Functions" font-lock-function-name-face)
+                                     (?h "Hydras"    font-lock-constant-face)
+                                     (?m "Macros"    font-lock-function-name-face)
+                                     (?p "Packages"  font-lock-constant-face)
+                                     (?t "Types"     font-lock-type-face)
+                                     (?v "Variables" font-lock-variable-name-face))))))
+
   (defun hydra-set-posframe-appearance ()
     "Set appearance of hydra."
     (when (childframe-completion-workable-p)
@@ -54,9 +64,10 @@
 (use-package pretty-hydra
   :functions icons-displayable-p
   :bind ("<f6>" . toggles-hydra/body)
+  :hook (emacs-lisp-mode . pretty-hydra-add-imenu)
   :init
-  ;; Add to imenu
-  (with-eval-after-load 'lisp-mode
+  (defun pretty-hydra-add-imenu ()
+    "Have hydras in `imenu'."
     (add-to-list 'lisp-imenu-generic-expression
                  '("Hydras" "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)" 2)))
 
