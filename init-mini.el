@@ -81,11 +81,8 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-;; (global-hl-line-mode 1)
-
-;; (if (fboundp 'display-line-numbers-mode)
-;;     (global-display-line-numbers-mode 1)
-;;   (global-linum-mode 1))
+(global-hl-line-mode 1)
+(global-display-line-numbers-mode 1)
 
 ;; Basic modes
 (show-paren-mode 1)
