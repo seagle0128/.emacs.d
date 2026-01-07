@@ -1,6 +1,6 @@
 ;; init-check.el --- Initialize check configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2009-2025 Vincent Zhang
+;; Copyright (C) 2009-2026 Vincent Zhang
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
