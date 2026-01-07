@@ -68,7 +68,7 @@
   :init
   (defun pretty-hydra-add-imenu ()
     "Have hydras in `imenu'."
-    (add-to-list 'lisp-imenu-generic-expression
+    (add-to-list 'imenu-generic-expression
                  '("Hydras" "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)" 2)))
 
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
