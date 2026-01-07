@@ -52,12 +52,7 @@
   (use-package treesit-auto
     :functions centaur-treesit-available-p
     :hook (after-init . global-treesit-auto-mode)
-    :init (setq treesit-auto-install 'prompt))
-
-  ;; Code folding using Tree-sitter
-  (use-package treesit-fold
-    :custom (treesit-fold-line-count-show t)
-    :hook (after-init . global-treesit-fold-mode)))
+    :init (setq treesit-auto-install 'prompt)))
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
