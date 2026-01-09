@@ -66,7 +66,7 @@
   (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
   (which-key-add-key-based-replacements "C-x w" "window & highlight")
   (which-key-add-key-based-replacements "C-x w ^" "window")
-  (which-key-add-key-based-replacements "C-x x" "buffer")
+
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
   (which-key-add-key-based-replacements "C-x RET" "coding-system")
   (which-key-add-key-based-replacements "C-x X" "edebug")
@@ -105,21 +105,20 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-t" "markdown-header")
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-x" "markdown-toggle")
+    "C-c C-x" "markdown-toggle"))
 
-  (when (childframe-completion-workable-p)
-    (use-package which-key-posframe
-      :diminish
-      :autoload which-key-posframe-mode
-      :defines posframe-border-width
-      :custom-face
-      (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-      :init
-      (setq which-key-posframe-border-width posframe-border-width
-            which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
-            which-key-posframe-parameters '((left-fringe . 8)
-                                            (right-fringe . 8)))
-      (which-key-posframe-mode 1))))
+(when (childframe-completion-workable-p)
+  (use-package which-key-posframe
+    :diminish
+    :defines posframe-border-width
+    :custom-face
+    (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+    :hook which-key-mode
+    :init
+    (setq which-key-posframe-border-width posframe-border-width
+          which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
+          which-key-posframe-parameters '((left-fringe . 8)
+                                          (right-fringe . 8)))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
@@ -289,21 +288,6 @@
 
 (use-package file-info
   :bind ("C-c c i" . file-info-show))
-
-(use-package list-environment
-  :init
-  (with-no-warnings
-    (defun my-list-environment-entries ()
-      "Generate environment variable entries list for tabulated-list."
-      (mapcar (lambda (env)
-                (let* ((kv (split-string env "="))
-                       (key (car kv))
-                       (val (mapconcat #'identity (cdr kv) "=")))
-                  (list key (vector
-                             `(,key face font-lock-keyword-face)
-                             `(,val face font-lock-string-face)))))
-              process-environment))
-    (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
 (provide 'init-utils)
 
