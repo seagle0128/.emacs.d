@@ -282,12 +282,9 @@
               ztree-show-number-of-children t))
 
 ;; Misc
-(use-package disk-usage)
-(use-package memory-usage)
-(use-package reveal-in-folder)
-
 (use-package file-info
   :bind ("C-c c i" . file-info-show))
+(use-package reveal-in-folder)
 
 (provide 'init-utils)
 
