@@ -226,7 +226,8 @@ Lisp function does not specify a special indentation."
          :map lisp-interaction-mode-map
          ("C-c C-d"                 . helpful-at-point)
          :map helpful-mode-map
-         ("r" . remove-hook-at-point))
+         ("C-x K"                   . helpful-kill-buffers)
+         ("r"                       . remove-hook-at-point))
   :hook (helpful-mode . cursor-sensor-mode)
   :init (with-eval-after-load 'apropos
           ;; patch apropos buttons to call helpful instead of help
