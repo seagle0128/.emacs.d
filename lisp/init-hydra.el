@@ -33,7 +33,8 @@
 (use-package hydra
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
-  :hook (after-load-theme . hydra-set-posframe-appearance)
+  :hook ((emacs-lisp-mode  . hydra-add-imenu)
+         (after-load-theme . hydra-set-posframe-appearance))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -63,7 +64,13 @@
 (use-package pretty-hydra
   :functions icons-displayable-p
   :bind ("<f6>" . toggles-hydra/body)
+  :hook (emacs-lisp-mode . pretty-hydra-add-imenu)
   :init
+  (defun pretty-hydra-add-imenu ()
+    "Have hydras in `imenu'."
+    (add-to-list 'imenu-generic-expression
+                 '("Hydras" "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)" 2)))
+
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
     "Add an icon in the hydra title."
