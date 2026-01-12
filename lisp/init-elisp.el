@@ -117,6 +117,8 @@ Lisp function does not specify a special indentation."
 
     ;; Add remove buttons for advices
     (add-hook 'help-mode-hook 'cursor-sensor-mode)
+    (with-eval-after-load 'helpful
+      (add-hook 'helpful-mode-hook 'cursor-sensor-mode))
 
     (defun function-advices (function)
       "Return FUNCTION's advices."
@@ -177,8 +179,8 @@ Lisp function does not specify a special indentation."
                (func (when (and
                             (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
                                 (goto-char orig-point))
-                            (sexp-at-point))
-                       (end-of-sexp)
+                            (thing-at-point 'sexp))
+                       (thing-at-point--end-of-sexp)
                        (backward-char 1)
                        (catch 'break
                          (while t
@@ -187,13 +189,15 @@ Lisp function does not specify a special indentation."
                              (scan-error (throw 'break nil)))
                            (let ((bounds (bounds-of-thing-at-point 'sexp)))
                              (when (<= (car bounds) orig-point (cdr bounds))
-                               (throw 'break (sexp-at-point)))))))))
+                               (throw 'break (thing-at-point 'sexp)))))))))
             (when (yes-or-no-p (format "Remove %s from %s? " func hook))
-              (remove-hook hook func)
+              (remove-hook hook (intern func))
               (if (eq major-mode 'helpful-mode)
                   (helpful-update)
                 (revert-buffer nil t)))))))
-    (bind-key "r" #'remove-hook-at-point help-mode-map)))
+    (bind-key "r" #'remove-hook-at-point help-mode-map)
+    (with-eval-after-load 'helpful
+      (bind-key "r" #'remove-hook-at-point helpful-mode-map))))
 
 ;; Syntax highlighting of known Elisp symbols
 (if (boundp 'elisp-fontify-semantically)
@@ -218,10 +222,7 @@ Lisp function does not specify a special indentation."
          :map emacs-lisp-mode-map
          ("C-c C-d"                 . helpful-at-point)
          :map lisp-interaction-mode-map
-         ("C-c C-d"                 . helpful-at-point)
-         :map helpful-mode-map
-         ("r"                       . remove-hook-at-point))
-  :hook (helpful-mode . cursor-sensor-mode) ; for remove-advice button
+         ("C-c C-d"                 . helpful-at-point))
   :init
   (with-no-warnings
     (with-eval-after-load 'apropos
