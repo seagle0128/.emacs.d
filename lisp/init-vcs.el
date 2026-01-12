@@ -67,8 +67,8 @@
                                    "Improve `git-timemachine' buffers."
                                    ;; Display different colors in mode-line
                                    (if (facep 'mode-line-active)
-                                       (face-remap-add-relative 'mode-line-active 'custom-invalid)
-                                     (face-remap-add-relative 'mode-line 'custom-invalid))
+                                       (face-remap-add-relative 'mode-line-active 'custom-modified)
+                                     (face-remap-add-relative 'mode-line 'custom-modified))
 
                                    ;; Highlight symbols in elisp
                                    (and (derived-mode-p 'emacs-lisp-mode)
