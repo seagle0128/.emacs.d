@@ -38,16 +38,17 @@
 (declare-function centaur-test-package-archives "init-funcs")
 
 ;; At first startup
-(when (and (file-exists-p centaur-custom-example-file)
-           (not (file-exists-p custom-file)))
+(when (and (not (file-exists-p custom-file))
+           (file-exists-p centaur-custom-example-file))
+  ;; Copy template
   (copy-file centaur-custom-example-file custom-file)
 
   ;; Test and select the fastest package archives
   (message "Testing connection... Please wait a moment.")
-  (set-package-archives (centaur-test-package-archives 'no-chart)))
+  (set-package-archives (centaur-test-package-archives 'nochart)))
 
 ;; Load `custom-file'
-(and (file-readable-p custom-file) (load custom-file))
+(load custom-file 'noerror)
 
 ;; Load custom-post file
 (defun load-custom-post-file ()

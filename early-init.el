@@ -81,9 +81,14 @@
 ;; Prevent flash of unstyled mode line
 (setq-default mode-line-format nil)
 
-;; For LSP performance
-;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
-(setenv "LSP_USE_PLISTS" "true")
+;; PATH and other environment variables injection
+;; To avoid loading `exec-path-from-shell' for better performance
+(when-let ((env-file (expand-file-name "env.el" user-emacs-directory))
+           (env-example-file (expand-file-name "env-example.el" user-emacs-directory)))
+  (when (and (not (file-exists-p env-file))
+             (file-exists-p env-example-file))
+    (copy-file env-example-file env-file))
+  (load env-file 'noerror))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
