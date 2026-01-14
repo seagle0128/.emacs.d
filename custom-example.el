@@ -104,7 +104,7 @@
 ;; Display on the specified monitor
 ;; (when (and (> (length (display-monitor-attributes-list)) 1)
 ;;            (> (display-pixel-width) 1920))
-;;   (set-frame-parameter nil 'left 1920))
+;;   (set-frame-parameter nil 'left 288))
 
 ;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
 ;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
