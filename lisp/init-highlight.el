@@ -175,9 +175,7 @@ FACE defaults to inheriting from default and highlight."
 (use-package colorful-mode
   :diminish
   :hook (after-init . global-colorful-mode)
-  :init (setq colorful-use-prefix t)
-  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-            (add-to-list 'global-colorful-modes mode)))
+  :init (setq colorful-use-prefix t))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
