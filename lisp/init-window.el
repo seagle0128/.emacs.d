@@ -33,14 +33,14 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :hook (after-init . (lambda ()
-                        (windmove-default-keybindings 'super))))
+  :hook (window-setup . (lambda ()
+                          (windmove-default-keybindings 'super))))
 
 ;; Restore old window configurations
 (use-package winner
   :ensure nil
   :commands (winner-undo winner-redo)
-  :hook after-init
+  ;; :hook window-setup
   :init (setq winner-boring-buffers '("*Completions*"
                                       "*Compile-Log*"
                                       "*inferior-lisp*"
@@ -135,7 +135,7 @@
          ("C-h z"       . popper-toggle)
          ("C-<tab>"     . popper-cycle)
          ("C-M-<tab>"   . popper-toggle-type))
-  :hook (emacs-startup . popper-echo-mode)
+  :hook (window-setup . popper-echo-mode)
   :init
   (setq popper-mode-line ""
         popper-reference-buffers

@@ -34,8 +34,9 @@
   (require 'init-custom))
 
 (use-package tabspaces
-  :functions tabspaces-mode
-  :hook (after-init . (lambda() (unless centaur-dashboard (tabspaces-mode t))))
+  :diminish
+  :hook ((emacs-startup . tabspaces-mode)
+         (tabspaces-mode . tab-bar-history-mode))
   :custom
   (tab-bar-show nil)
 
