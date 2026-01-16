@@ -31,7 +31,6 @@
 ;;; Code:
 
 ;; Python Mode
-;; Install: pip install pyflakes autopep8
 (use-package python
   :ensure nil
   :defines eglot-server-programs
@@ -44,10 +43,11 @@
   (setq python-shell-completion-native-enable nil)
   :config
   ;; Type checker & language server: `ty'
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-                 '((python-ts-mode python-mode)
-                   . ("ty" "server"))))
+  (when (executable-find "ty")
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '((python-mode python-ts-mode)
+                     . ("ty" "server")))))
 
   ;; Linter & formatter: `ruff'
   (when (executable-find "ruff")
