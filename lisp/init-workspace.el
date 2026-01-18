@@ -71,8 +71,8 @@
 
     (defun my-tabspaces-delete-childframe (&rest _)
       "Delete all child frames."
-      (ignore-errors
-        (posframe-delete-all)))
+      (and (fboundp 'posframe-delete-all)
+           (posframe-delete-all)))
     (advice-add #'tabspaces-save-session :before #'my-tabspaces-delete-childframe)
 
     (defun my-tabspaces-burry-window (&rest _)
