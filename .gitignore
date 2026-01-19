@@ -76,6 +76,7 @@ server/
 session*
 site-lisp/
 snippets/
+tabspaces/
 templates/
 thumbs/
 tldr/
