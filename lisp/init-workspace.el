@@ -35,8 +35,12 @@
 
 (use-package tabspaces
   :diminish
-  :hook ((emacs-startup . tabspaces-mode)
-         (tabspaces-mode . tab-bar-history-mode))
+  :commands tabspaces-mode
+  :hook ((after-init . (lambda()
+                         ;; Don't enable in bashboard
+                         (unless centaur-dashboard
+                           (tabspaces-mode 1))
+                         (tab-bar-history-mode 1))))
   :custom
   (tab-bar-show nil)
 
