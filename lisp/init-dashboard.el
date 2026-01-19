@@ -216,9 +216,13 @@
           (tabspaces-switch-or-create-workspace tabspaces-default-tab)))
 
       ;; Recover layout
-      (and dashboard-recover-layout-p
-           (and (bound-and-true-p winner-mode) (winner-undo))
-           (setq dashboard-recover-layout-p nil)))))
+      (when dashboard-recover-layout-p
+        (cond
+         ((bound-and-true-p tab-bar-history-mode)
+          (tab-bar-history-back))
+         ((bound-and-true-p winner-mode)
+          (winner-undo)))
+        (setq dashboard-recover-layout-p nil)))))
 
 (provide 'init-dashboard)
 
