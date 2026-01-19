@@ -34,6 +34,12 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; Suppress warnings
+(defvar use-package-always-ensure)
+(defvar use-package-always-defer)
+(defvar use-package-expand-minimally)
+(defvar use-package-enable-imenu-support)
+
 (declare-function set-package-archives "init-funcs")
 (declare-function centaur-test-package-archives "init-funcs")
 
