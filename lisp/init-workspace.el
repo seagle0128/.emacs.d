@@ -99,13 +99,20 @@
           (copy-file tabspaces-session-file
                      (format "%s.%s" tabspaces-session-file (format-time-string "%Y%m%d"))
                      t))))
-    (advice-add #'tabspaces--save-session-smart :before #'tabspaces--backup-session)
 
-    (defun tabspaces--delete-childframe (&rest _)
-      "Delete all child frames."
+    (defun tabspaces--prepare-save-session (&rest _)
+      "Prepare for saving session."
+      ;; Backup session
+      (tabspaces--backup-session)
+
+      ;; Cleanup magit buffers
+      (and (fboundp 'magit-mode-get-buffers)
+           (mapc #'kill-buffer (magit-mode-get-buffers)))
+
+      ;; Cleanup child frames
       (and (fboundp 'posframe-delete-all)
            (posframe-delete-all)))
-    (advice-add #'tabspaces--save-session-smart :before #'tabspaces--delete-childframe)
+    (advice-add #'tabspaces--save-session-smart :before #'tabspaces--prepare-save-session)
 
     (defun tabspaces--bury-messages (&rest _)
       "Bury *Messages* buffer."
