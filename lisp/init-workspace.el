@@ -105,11 +105,11 @@
       ;; Backup session
       (tabspaces--backup-session)
 
-      ;; Cleanup magit buffers
+      ;; Cleanup
+      (and (fboundp 'helpful-kill-buffers)
+           (helpful-kill-buffers))
       (and (fboundp 'magit-mode-get-buffers)
            (mapc #'kill-buffer (magit-mode-get-buffers)))
-
-      ;; Cleanup child frames
       (and (fboundp 'posframe-delete-all)
            (posframe-delete-all)))
     (advice-add #'tabspaces--save-session-smart :before #'tabspaces--prepare-save-session)
