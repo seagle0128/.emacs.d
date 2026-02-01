@@ -58,26 +58,22 @@
 (use-package eldoc
   :ensure nil
   :diminish
+  :functions childframe-workable-p
   :config
   (when (childframe-workable-p)
-    (use-package eldoc-mouse
-      :diminish
-      :functions childframe-workable-p
-      :bind (:map eldoc-mouse-mode-map
-             ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
-      :hook ((eglot-managed-mode emacs-lisp-mode)
-             (after-load-theme . eldoc-mouse-set-appearance))
-      :init
-      (defun eldoc-mouse-set-appearance ()
-        "Set appearance of eldoc-mouse."
-        (setq eldoc-mouse-posframe-override-parameters
-              `((drag-internal-border . t)
-                (foreground-color . ,(face-foreground 'tooltip nil t))
-                (background-color . ,(face-background 'tooltip nil t)))
-              eldoc-mouse-posframe-border-color
-              (face-background 'posframe-border nil t)))
-      (eldoc-mouse-set-appearance)
-      :config (tooltip-mode -1))))      ; conflict with `track-mouse'
+    (use-package eldoc-box
+      :custom
+      (eldoc-box-lighter nil)
+      (eldoc-box-only-multi-line t)
+      (eldoc-box-clear-with-C-g t)
+      :custom-face
+      (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+      (eldoc-box-body ((t (:inherit tooltip))))
+      :hook (eglot-managed-mode . eldoc-box-hover-mode)
+      :config
+      ;; Prettify `eldoc-box' frame
+      (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+            (alist-get 'right-fringe eldoc-box-frame-parameters) 8))))
 
 ;; Cross-referencing commands
 (use-package xref
