@@ -14,3 +14,5 @@
 ;; Uncomment and adjust the following settings as needed
 ;; @see https://github.com/d12frosted/homebrew-emacs-plus/issues/895
 ;; (setenv "EMACS_PLUS_PATH" "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
+
+;;; env.el ends here
