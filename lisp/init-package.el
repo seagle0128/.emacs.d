@@ -145,6 +145,10 @@
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
+;; Prettify package list
+(set-face-attribute 'package-status-available nil :inherit 'font-lock-string-face)
+(set-face-attribute 'package-description nil :inherit 'font-lock-comment-face)
+
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
