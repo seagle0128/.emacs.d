@@ -55,9 +55,6 @@
   (flyover-checkers '(flymake))
   (flyover-background-lightness 60)
   (flyover-icon-background-tint-percent 50)
-  (flyover-display-mode 'show-only-on-same-line)
-  (flyover-show-at-eol t)
-  (flyover-virtual-line-type 'none)
   :hook flymake-mode)
 
 (provide 'init-check)
