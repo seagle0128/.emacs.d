@@ -54,7 +54,7 @@
   (show-paren-when-point-inside-paren t)
   (show-paren-when-point-in-periphery t)
   :config
-  (if (fboundp 'show-paren-context-when-offscreen)
+  (if (boundp 'show-paren-context-when-offscreen)
       (setq blink-matching-paren-highlight-offscreen t
             show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))

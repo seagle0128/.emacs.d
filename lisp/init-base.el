@@ -256,6 +256,8 @@
 
 ;; Child frame
 (use-package posframe
+  :custom-face
+  (child-frame-border ((t (:inherit posframe-border))))
   :hook (after-load-theme . posframe-delete-all)
   :init
   (defface posframe-border
