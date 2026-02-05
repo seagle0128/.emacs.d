@@ -218,6 +218,10 @@
   :bind (:map vc-prefix-map
          ("B" . browse-at-remote)))
 
+;; Get git URL for a buffer location
+(use-package git-link
+  :bind ("C-c c g" . git-link-dispatch))
+
 ;; Git configuration modes
 (use-package git-modes)
 
