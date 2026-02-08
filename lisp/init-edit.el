@@ -163,39 +163,6 @@
   :diminish
   :hook (after-init . ace-pinyin-global-mode))
 
-;; Minor mode to aggressively keep your code always indented
-(use-package aggressive-indent
-  :diminish
-  :autoload aggressive-indent-mode
-  :functions file-too-long-p
-  :hook ((after-init . global-aggressive-indent-mode)
-         ;; NOTE: Disable in large files due to the performance issues
-         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-         (find-file . (lambda ()
-                        (when (file-too-long-p)
-                          (aggressive-indent-mode -1)))))
-  :config
-  ;; Disable in some modes
-  (dolist (mode '(gitconfig-mode
-                  asm-mode web-mode html-mode
-                  css-mode css-ts-mode
-                  go-mode go-ts-mode
-                  python-ts-mode yaml-ts-mode
-                  scala-mode
-                  shell-mode term-mode vterm-mode
-                  prolog-inferior-mode))
-    (add-to-list 'aggressive-indent-excluded-modes mode))
-
-  ;; Disable in some commands
-  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
-
-  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-  (add-to-list 'aggressive-indent-dont-indent-if
-               '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
-                                     'java-mode 'go-mode 'swift-mode)
-                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-                                         (thing-at-point 'line))))))
-
 ;; Show number of matches in mode-line while searching
 (use-package anzu
   :diminish
