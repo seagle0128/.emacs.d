@@ -153,10 +153,16 @@
        ("M-o" . ace-link-gnus)))
 
     (with-eval-after-load 'ert
-      (bind-key "o" #'ace-link-help ert-results-mode-map))
+      (bind-keys
+       :map ert-results-mode-map
+       ("o" . ace-link-help)
+       ("M-o" . ace-link-help)))
 
     (with-eval-after-load 'elfeed
-      (bind-key "o" #'ace-link elfeed-show-mode-map))))
+      (bind-keys
+       :map elfeed-show-mode-map
+       ("o" . ace-link-eww)
+       ("M-o" . ace-link-eww)))))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
