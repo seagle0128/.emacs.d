@@ -132,37 +132,15 @@
 
 ;; Quickly follow links
 (use-package ace-link
-  :bind ("M-o" . ace-link-addr)
+  :defines elfeed-show-mode-map
+  :commands ace-link-notmuch
+  :bind ("M-o" . ace-link)
   :hook (after-init . ace-link-setup-default)
   :config
-  (with-no-warnings
-    (bind-keys
-     :map package-menu-mode-map
-     ("o" . ace-link-help)
-     :map process-menu-mode-map
-     ("o" . ace-link-help))
-
-    (with-eval-after-load 'org
-      (bind-key "M-o" #'ace-link-org org-mode-map))
-
-    (with-eval-after-load 'gnus
-      (bind-keys
-       :map gnus-summary-mode-map
-       ("M-o" . ace-link-gnus)
-       :map gnus-article-mode-map
-       ("M-o" . ace-link-gnus)))
-
-    (with-eval-after-load 'ert
-      (bind-keys
-       :map ert-results-mode-map
-       ("o" . ace-link-help)
-       ("M-o" . ace-link-help)))
-
-    (with-eval-after-load 'elfeed
-      (bind-keys
-       :map elfeed-show-mode-map
-       ("o" . ace-link-eww)
-       ("M-o" . ace-link-eww)))))
+  (add-to-list 'ace-link-major-mode-actions '(ace-link-addr emacs-lisp-mode text-mode))
+  (add-to-list 'ace-link-major-mode-actions '(ace-link-notmuch elfeed-show-mode))
+  (with-eval-after-load 'elfeed
+    (bind-key "o" #'ace-link-notmuch elfeed-show-mode-map)))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
