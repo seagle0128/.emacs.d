@@ -134,7 +134,7 @@
 (use-package link-hint
   :defines (Info-mode-map
             compilation-mode-map custom-mode-map
-            elfeed-show-mode-map eww-mode-map
+            devdocs-mode-map elfeed-show-mode-map eww-mode-map
             help-mode-map helpful-mode-map nov-mode-map
             woman-mode-map xref--xref-buffer-mode-map)
   :functions embark-dwim
@@ -146,6 +146,8 @@
     (bind-key "o" #'link-hint-open-link compilation-mode-map))
   (with-eval-after-load 'cus-edit
     (bind-key "o" #'link-hint-open-link custom-mode-map))
+  (with-eval-after-load 'devdocs
+    (bind-key "o" #'link-hint-open-link devdocs-mode-map))
   (with-eval-after-load 'elfeed-show
     (bind-key "o" #'link-hint-open-link elfeed-show-mode-map))
   (with-eval-after-load 'eww
