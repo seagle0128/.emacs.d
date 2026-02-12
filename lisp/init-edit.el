@@ -131,16 +131,47 @@
          ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Quickly follow links
-(use-package ace-link
-  :defines elfeed-show-mode-map
-  :commands ace-link-notmuch
-  :bind ("M-o" . ace-link)
-  :hook (after-init . ace-link-setup-default)
-  :config
-  (add-to-list 'ace-link-major-mode-actions '(ace-link-addr emacs-lisp-mode text-mode))
-  (add-to-list 'ace-link-major-mode-actions '(ace-link-notmuch elfeed-show-mode))
-  (with-eval-after-load 'elfeed
-    (bind-key "o" #'ace-link-notmuch elfeed-show-mode-map)))
+(use-package link-hint
+  :defines (Info-mode-map
+            compilation-mode-map custom-mode-map
+            elfeed-show-mode-map eww-mode-map
+            help-mode-map helpful-mode-map nov-mode-map
+            woman-mode-map xref--xref-buffer-mode-map)
+  :functions embark-dwim
+  :bind (("M-o"     . link-hint-open-link)
+         ("C-c l o" . link-hint-open-link)
+         ("C-c l c" . link-hint-copy-link))
+  :init
+  (with-eval-after-load 'compile
+    (bind-key "o" #'link-hint-open-link compilation-mode-map))
+  (with-eval-after-load 'cus-edit
+    (bind-key "o" #'link-hint-open-link custom-mode-map))
+  (with-eval-after-load 'elfeed-show
+    (bind-key "o" #'link-hint-open-link elfeed-show-mode-map))
+  (with-eval-after-load 'eww
+    (bind-key "o" #'link-hint-open-link eww-mode-map))
+  (with-eval-after-load 'help
+    (bind-key "o" #'link-hint-open-link help-mode-map))
+  (with-eval-after-load 'helpful
+    (bind-key "o" #'link-hint-open-link helpful-mode-map))
+  (with-eval-after-load 'info
+    (bind-key "o" #'link-hint-open-link Info-mode-map))
+  (with-eval-after-load 'nov
+    (bind-key "o" #'link-hint-open-link nov-mode-map))
+  (with-eval-after-load 'woman
+    (bind-key "o" #'link-hint-open-link woman-mode-map))
+  (with-eval-after-load 'xref
+    (bind-key "o" #'link-hint-open-link xref--xref-buffer-mode-map))
+
+  (with-eval-after-load 'embark
+    (setq link-hint-action-fallback-commands
+          (list :open (lambda ()
+                        (condition-case _
+                            (progn
+                              (embark-dwim)
+                              t)
+                          (error
+                           nil)))))))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
