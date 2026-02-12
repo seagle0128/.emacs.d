@@ -207,7 +207,7 @@ For advanced users, you can directly edit configuration settings in your `custom
 (setq centaur-socks-proxy "127.0.0.1:1086")    ; SOCKS proxy
 
 ;; System settings
-(setq centaur-server t)                        ; Enable server-mode
+
 (setq centaur-use-exec-path-from-shell t)      ; Use shell environment (set to nil for emacs-plus)
 
 ;; Visual settings

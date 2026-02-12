@@ -70,10 +70,7 @@
   :group 'centaur
   :type 'string)
 
-(defcustom centaur-server t
-  "Enable `server-mode' or not."
-  :group 'centaur
-  :type 'boolean)
+
 
 (defcustom centaur-use-exec-path-from-shell
   (and (or (memq window-system '(mac ns x)) (daemonp))

@@ -116,8 +116,9 @@
 
 ;; Start server
 (use-package server
-  :if centaur-server
-  :hook (after-init . server-mode))
+  :hook (emacs-startup . (lambda ()
+			               (unless server-mode
+                             (server-mode 1)))))
 
 ;; Save place
 (use-package saveplace
