@@ -33,8 +33,6 @@
 (eval-when-compile
   (require 'init-const))
 
-(bind-key "M-<f7>" #'centaur-read-mode)
-
 ;; PDF reader
 (when (display-graphic-p)
   (use-package pdf-view
@@ -70,6 +68,7 @@
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
   :hook (nov-mode . my-nov-setup)
+  :bind ("M-<f7>" . centaur-read-mode)
   :init
   (defun my-nov-setup ()
     "Setup `nov-mode' for better reading experience."
@@ -204,7 +203,6 @@
 (use-package newsticker
   :ensure nil
   :bind ("C-x J" . newsticker-show-news)
-  :hook (newsticker-treeview-item-mode . centaur-read-mode)
   :init (setq newsticker-url-list
               '(("Planet Emacslife" "https://planet.emacslife.com/atom.xml")
                 ("Mastering Emacs" "http://www.masteringemacs.org/feed/")
