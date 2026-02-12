@@ -33,8 +33,8 @@
 (use-package hydra
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
-  :hook ((emacs-lisp-mode  . hydra-add-imenu)
-         (after-load-theme . hydra-set-posframe-appearance))
+  :hook ((emacs-lisp-mode . hydra-add-imenu)
+         ((after-load-theme server-after-make-frame) . hydra-set-posframe-appearance))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config

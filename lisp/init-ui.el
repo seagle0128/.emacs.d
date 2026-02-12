@@ -330,20 +330,22 @@
   :config (dolist (mode '(dashboard-mode emacs-news-mode))
             (add-to-list 'page-break-lines-modes mode)))
 
-;; Transient
-(when (childframe-completion-workable-p)
-  ;; Display transient in child frame
-  (use-package transient-posframe
-    :diminish
-    :defines posframe-border-width
-    :functions childframe-completion-workable-p
-    :custom-face
-    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :hook after-init
-    :init (setq transient-mode-line-format nil
-                transient-posframe-border-width posframe-border-width
-                transient-posframe-parameters '((left-fringe . 8)
-                                                (right-fringe . 8)))))
+;; Display transient in child frame
+(use-package transient-posframe
+  :diminish
+  :defines posframe-border-width
+  :functions childframe-completion-workable-p
+  :commands transient-posframe-mode
+  :custom-face
+  (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
+  :hook ((after-init server-after-make-frame) . (lambda ()
+                                                  "Display transient in child frames."
+                                                  (and (childframe-completion-workable-p)
+                                                       (transient-posframe-mode 1))))
+  :init (setq transient-mode-line-format nil
+              transient-posframe-border-width posframe-border-width
+              transient-posframe-parameters '((left-fringe . 8)
+                                              (right-fringe . 8))))
 
 ;; For macOS
 (with-no-warnings
