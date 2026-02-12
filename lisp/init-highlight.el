@@ -276,10 +276,7 @@ FACE defaults to inheriting from default and highlight."
   (setq diff-hl-fringe-bmp-function 'my-diff-hl-fringe-bmp-function)
 
   ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1)
-
-  ;; Fall back to the display margin since the fringe is unavailable in tty
-  (unless (display-graphic-p) (diff-hl-margin-mode 1)))
+  (diff-hl-flydiff-mode 1))
 
 ;; Pulse highlight on selection
 (use-package pulsar
