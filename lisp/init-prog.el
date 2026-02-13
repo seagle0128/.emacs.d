@@ -59,21 +59,20 @@
   :ensure nil
   :diminish
   :functions childframe-workable-p
+  :commands eldoc-box-hover-mode
   :config
-  (when (childframe-workable-p)
-    (use-package eldoc-box
-      :custom
-      (eldoc-box-lighter nil)
-      (eldoc-box-only-multi-line t)
-      (eldoc-box-clear-with-C-g t)
-      :custom-face
-      (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
-      (eldoc-box-body ((t (:inherit tooltip))))
-      :hook (eglot-managed-mode . eldoc-box-hover-mode)
-      :config
-      ;; Prettify `eldoc-box' frame
-      (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
-            (alist-get 'right-fringe eldoc-box-frame-parameters) 8))))
+  (use-package eldoc-box
+    :custom
+    (eldoc-box-lighter nil)
+    (eldoc-box-only-multi-line t)
+    (eldoc-box-clear-with-C-g t)
+    :custom-face
+    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+    (eldoc-box-body ((t (:inherit tooltip))))
+    :hook (eglot-managed-mode . (lambda ()
+                                  (if (childframe-workable-p)
+                                      (eldoc-box-hover-mode 1)
+                                    (eldoc-box-hover-mode -1))))))
 
 ;; Cross-referencing commands
 (use-package xref
