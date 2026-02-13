@@ -338,10 +338,13 @@
   :commands transient-posframe-mode
   :custom-face
   (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  :hook ((after-init server-after-make-frame) . (lambda ()
-                                                  "Display transient in child frames."
-                                                  (and (childframe-completion-workable-p)
-                                                       (transient-posframe-mode 1))))
+  :hook ((after-init server-after-make-frame)
+         .
+         (lambda ()
+           "Display transient in child frames if applicable."
+           (if (childframe-completion-workable-p)
+               (transient-posframe-mode 1)
+             (transient-posframe-mode -1))))
   :init (setq transient-mode-line-format nil
               transient-posframe-border-width posframe-border-width
               transient-posframe-parameters '((left-fringe . 8)

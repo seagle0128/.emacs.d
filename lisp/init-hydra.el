@@ -34,7 +34,7 @@
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
   :hook ((emacs-lisp-mode . hydra-add-imenu)
-         ((after-load-theme server-after-make-frame) . hydra-set-posframe-appearance))
+         ((after-load-theme server-after-make-frame) . hydra-set-posframe))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -46,20 +46,23 @@
                                      (?t "Types"     font-lock-type-face)
                                      (?v "Variables" font-lock-variable-name-face))))))
 
-  (defun hydra-set-posframe-appearance ()
-    "Set appearance of hydra."
-    (when (childframe-completion-workable-p)
-      (setq hydra-hint-display-type 'posframe)
-      (setq hydra-posframe-show-params
-            `(:left-fringe 8
-              :right-fringe 8
-              :internal-border-width ,posframe-border-width
-              :internal-border-color ,(face-background 'posframe-border nil t)
-              :background-color ,(face-background 'tooltip nil t)
-              :foreground-color ,(face-foreground 'tooltip nil t)
-              :lines-truncate t
-              :poshandler posframe-poshandler-frame-center-near-bottom))))
-  (hydra-set-posframe-appearance))
+  (defun hydra-set-posframe ()
+    "Set display type and appearance of hydra."
+    ;; Display type
+    (if (childframe-completion-workable-p)
+        (setq hydra-hint-display-type 'posframe)
+      (setq hydra-hint-display-type 'lv))
+    ;; Appearance
+    (setq hydra-posframe-show-params
+          `(:left-fringe 8
+            :right-fringe 8
+            :internal-border-width ,posframe-border-width
+            :internal-border-color ,(face-background 'posframe-border nil t)
+            :background-color ,(face-background 'tooltip nil t)
+            :foreground-color ,(face-foreground 'tooltip nil t)
+            :lines-truncate t
+            :poshandler posframe-poshandler-frame-center-near-bottom)))
+  (hydra-set-posframe))
 
 (use-package pretty-hydra
   :functions icons-displayable-p
