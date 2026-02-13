@@ -165,9 +165,11 @@ Install the doc if it's not installed."
 (use-package cue-sheet-mode)
 (use-package dart-mode)
 (use-package lua-mode)
-(use-package powershell)
 (use-package v-mode)
 (use-package vimrc-mode)
+
+(use-package powershell
+  :custom (explicit-pwsh.exe-args explicit-powershell.exe-args))
 
 (if (centaur-treesit-available-p)
     (progn
