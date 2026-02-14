@@ -34,7 +34,7 @@
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
   :hook ((emacs-lisp-mode . hydra-add-imenu)
-         ((after-load-theme server-after-make-frame) . hydra-set-posframe))
+         ((after-init after-load-theme server-after-make-frame) . hydra-set-posframe))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -61,8 +61,7 @@
             :background-color ,(face-background 'tooltip nil t)
             :foreground-color ,(face-foreground 'tooltip nil t)
             :lines-truncate t
-            :poshandler posframe-poshandler-frame-center-near-bottom)))
-  (hydra-set-posframe))
+            :poshandler posframe-poshandler-frame-center-near-bottom))))
 
 (use-package pretty-hydra
   :functions icons-displayable-p
