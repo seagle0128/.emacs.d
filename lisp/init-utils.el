@@ -36,7 +36,6 @@
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
-  :functions childframe-completion-workable-p
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
@@ -52,7 +51,9 @@
   (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c l" "link-hint")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
+  (which-key-add-key-based-replacements "C-c o" "org")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
+  (which-key-add-key-based-replacements "C-c C-a" "activities")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
   (which-key-add-key-based-replacements "C-x 8" "unicode")
@@ -107,18 +108,24 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle"))
 
-(when (childframe-completion-workable-p)
-  (use-package which-key-posframe
-    :diminish
-    :defines posframe-border-width
-    :custom-face
-    (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :hook which-key-mode
-    :init
-    (setq which-key-posframe-border-width posframe-border-width
-          which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
-          which-key-posframe-parameters '((left-fringe . 8)
-                                          (right-fringe . 8)))))
+(use-package which-key-posframe
+  :diminish
+  :defines posframe-border-width
+  :functions childframe-completion-workable-p
+  :commands which-key-posframe-mode
+  :custom-face
+  (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+  :hook ((which-key-mode server-after-make-frame)
+         .
+         (lambda ()
+           (if (childframe-completion-workable-p)
+               (which-key-posframe-mode 1)
+             (which-key-posframe-mode -1))))
+  :init
+  (setq which-key-posframe-border-width posframe-border-width
+        which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
+        which-key-posframe-parameters '((left-fringe . 8)
+                                        (right-fringe . 8))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
