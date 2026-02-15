@@ -41,40 +41,13 @@
     (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     (dashboard-items-face ((t (:weight normal))))
     (dashboard-no-items-face ((t (:weight normal))))
-    :pretty-hydra
-    ((:title (pretty-hydra-title "Dashboard" 'mdicon "nf-md-view_dashboard")
-      :color pink :quit-key ("q" "C-g"))
-     ("Navigator"
-      (("U" update-config-and-packages "update" :exit t)
-       ("H" browse-homepage "homepage" :exit t)
-       ("R" restore-session "recover session" :exit t)
-       ("S" find-custom-file "settings" :exit t))
-      "Section"
-      (("}" dashboard-next-section "next")
-       ("{" dashboard-previous-section "previous")
-       ("r" dashboard-goto-recent-files "recent files")
-       ("m" dashboard-goto-bookmarks "bookmarks")
-       ("p" dashboard-goto-projects "projects"))
-      "Item"
-      (("RET" widget-button-press "open" :exit t)
-       ("<tab>" widget-forward "next")
-       ("C-i" widget-forward "next")
-       ("<backtab>" widget-backward "previous")
-       ("C-n" next-line "next line")
-       ("C-p" previous-line "previous  line"))
-      "Misc"
-      (("<f2>" open-dashboard "open" :exit t)
-       ("g" dashboard-refresh-buffer "refresh" :exit t)
-       ("Q" quit-dashboard "quit" :exit t))))
     :bind (("<f2>" . open-dashboard)
            :map dashboard-mode-map
            ("H" . browse-homepage)
            ("R" . restore-session)
            ("S" . find-custom-file)
            ("U" . update-config-and-packages)
-           ("q" . quit-dashboard)
-           ("h" . dashboard-hydra/body)
-           ("?" . dashboard-hydra/body))
+           ("q" . quit-dashboard))
     :hook (dashboard-mode . (lambda () (setq-local frame-title-format nil)))
     :init
     (setq dashboard-banner-logo-title "CENTAUR EMACS - Enjoy Programming & Writing"
@@ -162,24 +135,6 @@
         (tabspaces-switch-or-create-workspace tabspaces-default-tab))
 
       (message "Restoring previous session...done"))
-
-    (defun dashboard-goto-recent-files ()
-      "Go to recent files."
-      (interactive)
-      (let ((func (local-key-binding "r")))
-        (and func (funcall func))))
-
-    (defun dashboard-goto-projects ()
-      "Go to projects."
-      (interactive)
-      (let ((func (local-key-binding "p")))
-        (and func (funcall func))))
-
-    (defun dashboard-goto-bookmarks ()
-      "Go to bookmarks."
-      (interactive)
-      (let ((func (local-key-binding "m")))
-        (and func (funcall func))))
 
     (defvar dashboard-recover-layout-p nil
       "Wether recovers the layout.")
