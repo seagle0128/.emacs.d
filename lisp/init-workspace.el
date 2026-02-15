@@ -35,7 +35,9 @@
 
 (use-package tabspaces
   :bind (:map tabspaces-command-map
-         ("C-r" . tabspaces-restore-session))
+         ("C-r" . tabspaces-restore-session)
+         ("C-s" . tabspaces-save-session)
+         ("C-w" . tabspaces-save-current-project-session))
   :hook ((after-init . tabspaces-mode)
          (tabspaces-mode . tab-bar-history-mode))
   :custom
