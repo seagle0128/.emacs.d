@@ -34,7 +34,8 @@
   (require 'init-custom))
 
 (use-package tabspaces
-  :diminish
+  :bind (:map tabspaces-command-map
+         ("C-r" . tabspaces-restore-session))
   :hook ((after-init . tabspaces-mode)
          (tabspaces-mode . tab-bar-history-mode))
   :custom
