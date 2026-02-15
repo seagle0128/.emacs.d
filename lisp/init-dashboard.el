@@ -158,7 +158,8 @@
       (when (fboundp 'tabspaces-mode)
         (unless tabspaces-mode
           (tabspaces-mode t))
-        (tabspaces-restore-session))
+        (tabspaces-restore-session)
+        (tabspaces-switch-or-create-workspace tabspaces-default-tab))
 
       (message "Restoring previous session...done"))
 

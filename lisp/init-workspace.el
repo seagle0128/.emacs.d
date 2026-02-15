@@ -35,23 +35,21 @@
 
 (use-package tabspaces
   :diminish
-  :commands tabspaces-mode
-  :hook ((after-init . (lambda()
-                         ;; Don't enable in bashboard
-                         (unless centaur-dashboard
-                           (tabspaces-mode 1))
-                         (tab-bar-history-mode 1))))
+  :hook ((after-init . tabspaces-mode)
+         (tabspaces-mode . tab-bar-history-mode))
   :custom
-  (tab-bar-show nil)
+  (tab-bar-show nil)                    ; don't display tab-bar
 
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
   (tabspaces-exclude-buffers '("*eat*" "*vterm*" "*shell*" "*eshell*"))
+
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore (not centaur-dashboard))
   (tabspaces-session-file (concat user-emacs-directory "tabspaces/tabsession.el"))
+  (tabspaces-session-project-session-store (concat user-emacs-directory "tabspaces/"))
   :config
   (with-no-warnings
     ;; Filter Buffers for Consult-Buffer
@@ -66,10 +64,11 @@
               :category 'buffer
               :state    #'consult--buffer-state
               :default  t
-              :items    (lambda () (consult--buffer-query
-                               :predicate #'tabspaces--local-buffer-p
-                               :sort 'visibility
-                               :as #'buffer-name)))
+              :items    (lambda ()
+                          (consult--buffer-query
+                           :predicate #'tabspaces--local-buffer-p
+                           :sort 'visibility
+                           :as #'buffer-name)))
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult-source-workspace))
 
