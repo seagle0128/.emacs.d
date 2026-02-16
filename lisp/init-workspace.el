@@ -91,8 +91,8 @@
         (let ((dir (expand-file-name "tabspaces" user-emacs-directory)))
           (unless (file-exists-p dir)
             (mkdir dir))
-          ;; Delete the sessions that are older than 7 days
-          (tabspaces--delete-old-files dir 7))
+          ;; Delete the sessions that are older than 14 days
+          (tabspaces--delete-old-files dir 14))
 
         (when (file-exists-p tabspaces-session-file)
           (copy-file tabspaces-session-file
