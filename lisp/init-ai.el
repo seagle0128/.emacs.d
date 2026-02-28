@@ -61,22 +61,29 @@
   (use-package agent-shell
     :diminish agent-shell-ui-mode
     :commands agent-shell-insert
-    :functions magit-staged-files magit-commit-p magit-thing-at-point
+    :defines magit-mode-map
+    :functions (magit-message
+                magit-commit-create magit-staged-files
+                magit-commit-p magit-thing-at-point)
     :custom (agent-shell-display-action '(display-buffer-reuse-window))
     :bind (("<f12>" . agent-shell-toggle)
            :map magit-mode-map
-           ("C-c C-g" . my/agent-shell-magit-generate-message)
+           ("C-c C-g" . my/agent-shell-magit-generate-commit)
            ("C-c C-r" . my/agent-shell-review-magit-commit))
     :config
     (with-eval-after-load 'magit
-      (defun my/agent-shell-magit-generate-message ()
+      (defun my/agent-shell-magit-generate-commit ()
         "Generate conventional message and commit stage changes in magit."
         (interactive)
         (if-let ((changes (magit-staged-files)))
-            (agent-shell-insert
-             :submit t
-             :text "Generate conventional messages and commit the stage changes. \
-If `git-commit` skill exists, use it")
+            (progn
+              (magit-message "Generating commit...")
+              (agent-shell-insert
+               :submit t
+               :text "Load git-commit skill. \
+Generate conventional messages and commit the staged changes. \
+Switch to the magit-status buffer and refresh it. \
+Display a summary message in the echo area."))
           (user-error "No staged changes")))
 
       (defun my/agent-shell-review-magit-commit ()
