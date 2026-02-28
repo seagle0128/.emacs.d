@@ -81,8 +81,6 @@
   (which-key-add-major-mode-key-based-replacements 'org-mode
     "C-c C-x" "org-misc")
 
-  (which-key-add-major-mode-key-based-replacements 'emacs-lisp-mode
-    "C-c ," "overseer")
   (which-key-add-major-mode-key-based-replacements 'python-mode
     "C-c C-t" "python-skeleton")
 

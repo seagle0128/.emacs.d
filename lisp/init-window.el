@@ -145,14 +145,12 @@
           Buffer-menu-mode
 
           flymake-diagnostics-buffer-mode
-
           gnus-article-mode devdocs-mode
           grep-mode occur-mode rg-mode
+
           osx-dictionary-mode fanyi-mode
           "^\\*gt-result\\*$" "^\\*gt-log\\*$"
-
-          "^\\*Process List\\*$" process-menu-mode
-          list-environment-mode cargo-process-mode
+          "^\\*Process List\\*$" process-menu-mode cargo-process-mode
 
           "^\\*.*eat.*\\*.*$" eat-mode
           "^\\*.*eshell.*\\*.*$" eshell-mode
@@ -161,24 +159,21 @@
           "^\\*.*vterm[inal]*.*\\*.*$" vterm-mode
 
           "\\*DAP Templates\\*$" dap-server-log-mode
-          "\\*ELP Profiling Restuls\\*" profiler-report-mode
+          "\\*ELP Profiling Results\\*" profiler-report-mode
           "\\*package update results\\*$" "\\*Package-Lint\\*$"
           "\\*[Wo]*Man.*\\*$"
-          "\\*ert\\*$" overseer-buffer-mode
+          "\\*ert\\*$"
           "\\*gud-debug\\*$"
           "\\*lsp-help\\*$" "\\*lsp session\\*$"
           "\\*quickrun\\*$"
-          "\\*tldr\\*$"
           "\\*vc-.*\\**"
           "\\*diff-hl\\**"
           "^\\*macro expansion\\**"
 
           "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
           "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
-          "\\*docker-.+\\*"
-          "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
-          "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
-          rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
+          "\\*docker-.+\\*" "\\*prolog\\*" "\\*rustfmt\\*$"
+          inferior-python-mode inf-ruby-mode swift-repl-mode))
   :config
   (with-no-warnings
     (defun my/popper-fit-window-height (win)
