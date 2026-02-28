@@ -142,9 +142,9 @@
         (when (length> (window-list-1)
                        ;; exclude `treemacs' window
                        (if (and (fboundp 'treemacs-current-visibility)
-                              (eq (treemacs-current-visibility) 'visible))
-                         2
-                       1))
+                                (eq (treemacs-current-visibility) 'visible))
+                           2
+                         1))
           (setq dashboard-recover-layout-p t))
 
         ;; Display dashboard in maximized window
@@ -163,8 +163,8 @@
           (kill-buffer dashboard-buffer-name))
 
         ;; Create workspace if necessary
-        (unless (bound-and-true-p tabspaces-mode)
-          (tabspaces-mode t)
+        (unless (bound-and-true-p tabspaces-session)
+          (setq tabspaces-session t)
           (tabspaces-switch-or-create-workspace tabspaces-default-tab))
 
         ;; Recover layout or switch workspace

@@ -50,7 +50,7 @@
   (tabspaces-exclude-buffers '("*eat*" "*vterm*" "*shell*" "*eshell*"))
 
   ;; sessions
-  (tabspaces-session t)
+  (tabspaces-session (not centaur-dashboard))
   (tabspaces-session-auto-restore (not centaur-dashboard))
   (tabspaces-session-file (concat user-emacs-directory "tabspaces/tabsession.el"))
   (tabspaces-session-project-session-store (concat user-emacs-directory "tabspaces/"))
