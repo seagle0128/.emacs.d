@@ -174,7 +174,7 @@
 
   ;; Prettify the process list
   (with-no-warnings
-    (defun my-list-processes--prettify ()
+    (defun my/list-processes--prettify ()
       "Prettify process list."
       (when-let* ((entries tabulated-list-entries))
         (setq tabulated-list-entries nil)
@@ -194,7 +194,7 @@
                       (cmd (list (aref val 6) 'face 'completions-annotations)))
             (push (list p (vector name pid status buf-label tty thread cmd))
 		          tabulated-list-entries)))))
-    (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
+    (advice-add #'list-processes--refresh :after #'my/list-processes--prettify)))
 
 ;; Misc
 (if (boundp 'use-short-answers)
@@ -260,9 +260,9 @@
     "Default posframe border width.")
   :config
   (with-no-warnings
-    (defun my-posframe--prettify-frame (&rest _)
+    (defun my/posframe--prettify-frame (&rest _)
       (set-face-background 'fringe nil posframe--frame))
-    (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
+    (advice-add #'posframe--create-posframe :after #'my/posframe--prettify-frame)
 
     (defun posframe-poshandler-frame-center-near-bottom (info)
       (cons (/ (- (plist-get info :parent-frame-width)

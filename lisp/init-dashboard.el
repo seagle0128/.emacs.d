@@ -118,12 +118,12 @@
     (with-no-warnings
       ;; Insert copyright
       ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/219
-      (defun my-dashboard-insert-copyright ()
+      (defun my/dashboard-insert-copyright ()
         "Insert copyright in the footer."
         (dashboard-insert-center
          (propertize (format "\nPowered by Centaur Studio, %s\n" (format-time-string "%Y"))
                      'face 'font-lock-comment-face)))
-      (advice-add #'dashboard-insert-footer :after #'my-dashboard-insert-copyright)
+      (advice-add #'dashboard-insert-footer :after #'my/dashboard-insert-copyright)
 
       (defun restore-session ()
         "Restore the previous session."

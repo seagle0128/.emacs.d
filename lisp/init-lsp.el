@@ -113,25 +113,25 @@
 
      (with-no-warnings
        ;; Disable `lsp-mode' in `git-timemachine-mode'
-       (defun my-lsp--init-if-visible (fn &rest args)
+       (defun my/lsp--init-if-visible (fn &rest args)
          (unless (bound-and-true-p git-timemachine-mode)
            (apply fn args)))
-       (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)
+       (advice-add #'lsp--init-if-visible :around #'my/lsp--init-if-visible)
 
        ;; Enable `lsp-mode' in sh/bash/zsh
-       (defun my-lsp-bash-check-sh-shell (&rest _)
+       (defun my/lsp-bash-check-sh-shell (&rest _)
          (and (memq major-mode '(sh-mode bash-ts-mode))
               (memq sh-shell '(sh bash zsh))))
-       (advice-add #'lsp-bash-check-sh-shell :override #'my-lsp-bash-check-sh-shell)
+       (advice-add #'lsp-bash-check-sh-shell :override #'my/lsp-bash-check-sh-shell)
        (add-to-list 'lsp-language-id-configuration '(bash-ts-mode . "shellscript"))
 
        ;; Display icons
        (when (icons-displayable-p)
-         (defun my-lsp-icons-get-by-file-ext (file-ext &optional feature)
+         (defun my/lsp-icons-get-by-file-ext (file-ext &optional feature)
            (when (and file-ext
                       (lsp-icons--enabled-for-feature feature))
              (nerd-icons-icon-for-extension file-ext)))
-         (advice-add #'lsp-icons-get-by-file-ext :override #'my-lsp-icons-get-by-file-ext)
+         (advice-add #'lsp-icons-get-by-file-ext :override #'my/lsp-icons-get-by-file-ext)
 
          (defvar lsp-symbol-alist
            '((misc          nerd-icons-codicon "nf-cod-symbol_namespace" :face font-lock-warning-face)
@@ -155,13 +155,13 @@
              (operator      nerd-icons-codicon "nf-cod-symbol_operator" :face font-lock-comment-delimiter-face)
              (template      nerd-icons-codicon "nf-cod-symbol_snippet" :face font-lock-type-face)))
 
-         (defun my-lsp-icons-get-by-symbol-kind (kind &optional feature)
+         (defun my/lsp-icons-get-by-symbol-kind (kind &optional feature)
            (when (and kind
                       (lsp-icons--enabled-for-feature feature))
              (let* ((icon (cdr (assoc (lsp-treemacs-symbol-kind->icon kind) lsp-symbol-alist)))
                     (args (cdr icon)))
                (apply (car icon) args))))
-         (advice-add #'lsp-icons-get-by-symbol-kind :override #'my-lsp-icons-get-by-symbol-kind)
+         (advice-add #'lsp-icons-get-by-symbol-kind :override #'my/lsp-icons-get-by-symbol-kind)
 
          (setq lsp-headerline-arrow (nerd-icons-octicon "nf-oct-chevron_right"
                                                         :face 'lsp-headerline-breadcrumb-separator-face)))))
@@ -276,7 +276,7 @@
        (advice-add #'lsp-ui-peek--peek-hide :around #'lsp-ui-peek--peek-destroy)
 
        ;; Handle docs
-       (defun my-lsp-ui-doc--handle-hr-lines nil
+       (defun my/lsp-ui-doc--handle-hr-lines nil
          (let (bolp next before after)
            (goto-char 1)
            (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
@@ -298,7 +298,7 @@
                  ;; :align-to is added here too
                  (propertize " " 'display '(space :height (1)))
                  (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
-       (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
+       (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my/lsp-ui-doc--handle-hr-lines)))
 
    ;; `lsp-mode' and `treemacs' integration
    (use-package lsp-treemacs
@@ -508,12 +508,12 @@
      (with-no-warnings
        ;; FIXME: fail to call ccls.xref
        ;; @see https://github.com/emacs-lsp/emacs-ccls/issues/109
-       (cl-defmethod my-lsp-execute-command
+       (cl-defmethod my/lsp-execute-command
          ((_server (eql ccls)) (command (eql ccls.xref)) arguments)
          (when-let* ((xrefs (lsp--locations-to-xref-items
                              (lsp--send-execute-command (symbol-name command) arguments))))
            (xref--show-xrefs xrefs nil)))
-       (advice-add #'lsp-execute-command :override #'my-lsp-execute-command)))
+       (advice-add #'lsp-execute-command :override #'my/lsp-execute-command)))
 
    ;; Swift
    (use-package lsp-sourcekit)

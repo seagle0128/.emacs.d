@@ -181,11 +181,11 @@
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
   :config
   (with-no-warnings
-    (defun my-popper-fit-window-height (win)
+    (defun my/popper-fit-window-height (win)
       "Adjust the height of popup window WIN to fit the buffer's content."
       (let ((desired-height (floor (/ (frame-height) 3))))
         (fit-window-to-buffer win desired-height desired-height)))
-    (setq popper-window-height #'my-popper-fit-window-height)
+    (setq popper-window-height #'my/popper-fit-window-height)
 
     (defun popper-close-window-hack (&rest _args)
       "Close popper window via `C-g'."

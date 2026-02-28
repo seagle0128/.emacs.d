@@ -101,7 +101,7 @@
         ("," (catch 'git-messenger-loop (git-messenger:show-parent)) "go parent")
         ("q" git-messenger:popup-close "quit")))
 
-    (defun my-git-messenger:format-detail (fn vcs commit-id author message)
+    (defun my/git-messenger:format-detail (fn vcs commit-id author message)
       (if (eq vcs 'git)
           (let ((date (git-messenger:commit-date commit-id))
                 (colon (propertize ":" 'face 'font-lock-comment-face)))
@@ -117,9 +117,9 @@
              message
              (propertize "\nPress q to quit" 'face '(:inherit (font-lock-comment-face italic)))))
         (funcall fn vcs commit-id author message)))
-    (advice-add #'git-messenger:format-detail :around #'my-git-messenger:format-detail)
+    (advice-add #'git-messenger:format-detail :around #'my/git-messenger:format-detail)
 
-    (defun my-git-messenger:popup-message ()
+    (defun my/git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
       (interactive)
       (let* ((hydra-hint-display-type 'message)
@@ -168,7 +168,7 @@
               (t (message "%s" popuped-message)))
         (run-hook-with-args 'git-messenger:after-popup-hook popuped-message)))
     (advice-add #'git-messenger:popup-close :override #'ignore)
-    (advice-add #'git-messenger:popup-message :override #'my-git-messenger:popup-message)))
+    (advice-add #'git-messenger:popup-message :override #'my/git-messenger:popup-message)))
 
 ;; Resolve diff3 conflicts
 (use-package smerge-mode

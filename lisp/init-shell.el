@@ -32,13 +32,13 @@
 
 (use-package shell
   :ensure nil
-  :hook ((shell-mode . my-shell-mode-hook)
+  :hook ((shell-mode . my/shell-mode-hook)
          (comint-output-filter-functions . comint-strip-ctrl-m))
   :init
   (setq system-uses-terminfo nil)
 
   (with-no-warnings
-    (defun my-shell-simple-send (proc command)
+    (defun my/shell-simple-send (proc command)
       "Various PROC COMMANDs pre-processing before sending to shell."
       (cond
        ;; Checking for clear command and execute it.
@@ -55,21 +55,21 @@
        ;; Send other commands to the default handler.
        (t (comint-simple-send proc command))))
 
-    (defun my-shell-mode-hook ()
+    (defun my/shell-mode-hook ()
       "Shell mode customization."
       (local-set-key '[up] 'comint-previous-input)
       (local-set-key '[down] 'comint-next-input)
       (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
 
       (ansi-color-for-comint-mode-on)
-      (setq comint-input-sender 'my-shell-simple-send))))
+      (setq comint-input-sender 'my/shell-simple-send))))
 
 ;; ANSI & XTERM 256 color support
 (use-package xterm-color
   :defines (compilation-environment
             eshell-preoutput-filter-functions
             eshell-output-filter-functions)
-  :functions (compilation-filter my-advice-compilation-filter xterm-color-filter)
+  :functions (compilation-filter my/advice-compilation-filter xterm-color-filter)
   :init
   ;; For shell and interpreters
   (setenv "TERM" "xterm-256color")
@@ -95,13 +95,13 @@
 
   ;; For compilation buffers
   (setq compilation-environment '("TERM=xterm-256color"))
-  (defun my-advice-compilation-filter (f proc string)
+  (defun my/advice-compilation-filter (f proc string)
     (funcall f proc
              (if (eq major-mode 'rg-mode) ; compatible with `rg'
                  string
                (xterm-color-filter string))))
-  (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
-  (advice-add 'gud-filter :around #'my-advice-compilation-filter))
+  (advice-add 'compilation-filter :around #'my/advice-compilation-filter)
+  (advice-add 'gud-filter :around #'my/advice-compilation-filter))
 
 ;; Better terminal emulator
 (use-package eat
