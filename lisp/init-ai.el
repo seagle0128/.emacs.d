@@ -66,7 +66,8 @@
                 magit-commit-create magit-staged-files
                 magit-commit-p magit-thing-at-point)
     :custom (agent-shell-display-action '(display-buffer-reuse-window))
-    :bind (("<f12>" . agent-shell-toggle)
+    :bind (("<f12>" . agent-shell)
+           ("<f13>" . agent-shell)
            :map magit-mode-map
            ("C-c C-g" . my/agent-shell-magit-generate-commit)
            ("C-c C-r" . my/agent-shell-review-magit-commit))
@@ -75,15 +76,10 @@
       (defun my/agent-shell-magit-generate-commit ()
         "Generate conventional message and commit stage changes in magit."
         (interactive)
-        (if-let ((changes (magit-staged-files)))
-            (progn
-              (magit-message "Generating commit...")
-              (agent-shell-insert
-               :submit t
-               :text "Load git-commit skill. \
-Generate conventional messages and commit the staged changes. \
-Switch to the magit-status buffer and refresh it. \
-Display a summary message in the echo area."))
+        (if (magit-staged-files)
+            (agent-shell-insert
+             :submit t
+             :text "Commit changes with conventional message")
           (user-error "No staged changes")))
 
       (defun my/agent-shell-review-magit-commit ()
