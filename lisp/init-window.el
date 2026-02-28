@@ -113,13 +113,13 @@
 ;; Enforce rules for popups
 (use-package popper
   :custom
-  (popper-group-function #'popper-group-by-directory)
+  (popper-group-function #'popper-group-by-project)
   (popper-echo-dispatch-actions t)
   :bind (:map popper-mode-map
          ("C-h z"       . popper-toggle)
          ("C-<tab>"     . popper-cycle)
          ("C-M-<tab>"   . popper-toggle-type))
-  :hook (window-setup . popper-echo-mode)
+  :hook (window-setup . popper-tab-line-mode)
   :init
   (setq popper-mode-line ""
         popper-reference-buffers
@@ -154,11 +154,11 @@
           "^\\*Process List\\*$" process-menu-mode
           list-environment-mode cargo-process-mode
 
-          "^\\*.*eat.*\\*.*$"
-          "^\\*.*eshell.*\\*.*$"
-          "^\\*.*shell.*\\*.*$"
-          "^\\*.*terminal.*\\*.*$"
-          "^\\*.*vterm[inal]*.*\\*.*$"
+          "^\\*.*eat.*\\*.*$" eat-mode
+          "^\\*.*eshell.*\\*.*$" eshell-mode
+          "^\\*.*shell.*\\*.*$" shell-mode
+          "^\\*.*terminal.*\\*.*$" term-mode
+          "^\\*.*vterm[inal]*.*\\*.*$" vterm-mode
 
           "\\*DAP Templates\\*$" dap-server-log-mode
           "\\*ELP Profiling Restuls\\*" profiler-report-mode
