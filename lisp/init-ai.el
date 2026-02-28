@@ -33,8 +33,11 @@
 (eval-when-compile
   (require 'init-const))
 
+;; FIXME: Eager macro-expansion failure
+;; @see https://github.com/karthink/gptel/issues/1272
 ;; Interact with ChatGPT or other LLMs
 (use-package gptel
+  :disabled
   :functions gptel-make-openai
   :custom
   (gptel-model 'gpt-4o)
@@ -50,6 +53,7 @@
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
+  :disabled
   :hook (magit-mode . gptel-magit-install))
 
 ;; A native shell experience to interact with ACP agents
