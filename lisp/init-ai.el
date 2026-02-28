@@ -71,7 +71,6 @@
         (if-let ((changes (magit-staged-files)))
             (agent-shell-insert
              :submit t
-             :no-focus t
              :text "Generate conventional messages and commit the stage changes. \
 If `git-commit` skill exists, use it")
           (user-error "No staged changes")))
