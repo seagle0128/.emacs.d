@@ -43,6 +43,7 @@
          (tabspaces-mode . tab-bar-history-mode))
   :custom
   (tab-bar-show nil)                    ; don't display tab-bar
+  (tab-bar-history-limit 30)
 
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
