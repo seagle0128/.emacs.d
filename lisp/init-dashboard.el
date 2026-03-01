@@ -153,11 +153,8 @@
           (tabspaces-switch-or-create-workspace tabspaces-default-tab))
 
         ;; Recover layout
-        (cond
-         ((bound-and-true-p tab-bar-history-mode)
-          (tab-bar-history-back))
-         ((bound-and-true-p winner-mode)
-          (winner-undo)))))))
+        (when (bound-and-true-p tab-bar-history-mode)
+          (tab-bar-history-back))))))
 
 (provide 'init-dashboard)
 
