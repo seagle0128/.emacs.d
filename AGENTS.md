@@ -238,14 +238,14 @@ In Emacs:
 
 ## Key Configuration Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `centaur-full-name` | User full name | User's name |
-| `centaur-mail-address` | User email | User's email |
-| `centaur-theme` | Theme choice | `auto` |
-| `centaur-lsp` | LSP client | `lsp-mode` |
-| `centaur-icon` | Display icons | `t` |
-| `centaur-package-archives` | Package mirror | `melpa` |
+| Variable                   | Description    | Default      |
+|----------------------------|----------------|--------------|
+| `centaur-full-name`        | User full name | User's name  |
+| `centaur-mail-address`     | User email     | User's email |
+| `centaur-theme`            | Theme choice   | `auto`       |
+| `centaur-lsp`              | LSP client     | `lsp-mode`   |
+| `centaur-icon`             | Display icons  | `t`          |
+| `centaur-package-archives` | Package mirror | `melpa`      |
 
 ---
 
