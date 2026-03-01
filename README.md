@@ -244,7 +244,6 @@ Centaur Emacs comes with several Hydra interfaces for efficient workflows. Here 
 | Hydra Name                  | Scope                | Keybinding(s)     | Description                          |
 |:---------------------------|:--------------------|:------------------|:-------------------------------------|
 | `dape-hydra`               | Global               | `M-<f5>`          | Debug adapter protocol actions       |
-| `dashboard-hydra`          | Dashboard Mode       | `h` / `?`         | Dashboard navigation and actions     |
 | `doom-modeline-hydra`      | Modeline Mode        | `C-<f6>`          | Modeline customization options       |
 | `elfeed-hydra`             | Elfeed Search Mode   | `?`               | RSS feed reader commands             |
 | `git-messenger-hydra`      | Global               | `C-x v p`         | Git commit message inspection        |
