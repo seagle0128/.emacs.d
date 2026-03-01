@@ -42,70 +42,63 @@
               which-key-lighter nil
               which-key-show-remaining-keys t)
   :config
-  (which-key-add-key-based-replacements "M-s h" "highlight")
-  (which-key-add-key-based-replacements "M-s s" "symbol-overlay")
+  ;; Key prefix descriptions
+  (dolist (map '(("M-s h" . "highlight")
+                 ("M-s s" . "symbol-overlay")
+                 ("C-c &" . "yasnippet")
+                 ("C-c @" . "hideshow")
+                 ("C-c c" . "consult")
+                 ("C-c d" . "dict")
+                 ("C-c l" . "link-hint")
+                 ("C-c n" . "org-roam")
+                 ("C-c o" . "org")
+                 ("C-c t" . "hl-todo")
+                 ("C-c C-a" . "activities")
+                 ("C-c C-z" . "browse")
+                 ("C-x 8" . "unicode")
+                 ("C-x 8 e" . "emoji")
+                 ("C-x @" . "modifior")
+                 ("C-x a" . "abbrev")
+                 ("C-x c" . "colorful")
+                 ("C-x n" . "narrow")
+                 ("C-x p" . "project")
+                 ("C-x r" . "rect & bookmark")
+                 ("C-x t" . "tab & treemacs")
+                 ("C-x w" . "window & highlight")
+                 ("C-x w ^" . "window")
+                 ("C-x C-a" . "edebug")
+                 ("C-x RET" . "coding-system")
+                 ("C-x X" . "edebug")
+                 ("C-x v b" . "vc-branch")
+                 ("C-x v M" . "vc-mergebase")))
+    (which-key-add-key-based-replacements (car map) (cdr map)))
 
-  (which-key-add-key-based-replacements "C-c &" "yasnippet")
-  (which-key-add-key-based-replacements "C-c @" "hideshow")
-  (which-key-add-key-based-replacements "C-c c" "consult")
-  (which-key-add-key-based-replacements "C-c d" "dict")
-  (which-key-add-key-based-replacements "C-c l" "link-hint")
-  (which-key-add-key-based-replacements "C-c n" "org-roam")
-  (which-key-add-key-based-replacements "C-c o" "org")
-  (which-key-add-key-based-replacements "C-c t" "hl-todo")
-  (which-key-add-key-based-replacements "C-c C-a" "activities")
-  (which-key-add-key-based-replacements "C-c C-z" "browse")
+  ;; Mode-specific key replacements
+  (dolist (mode-map '((org-mode
+                       ("C-c \"" . "org-plot")
+                       ("C-c C-v" . "org-babel")
+                       ("C-c C-x" . "org-misc"))
+                      (python-mode
+                       ("C-c C-t" . "python-skeleton"))
+                      (markdown-mode
+                       ("C-c C-a" . "markdown-link")
+                       ("C-c C-c" . "markdown-command")
+                       ("C-c C-s" . "markdown-style")
+                       ("C-c C-t" . "markdown-header")
+                       ("C-c C-x" . "markdown-toggle"))
+                      (gfm-mode
+                       ("C-c C-a" . "markdown-link")
+                       ("C-c C-c" . "markdown-command")
+                       ("C-c C-s" . "markdown-style")
+                       ("C-c C-t" . "markdown-header")
+                       ("C-c C-x" . "markdown-toggle"))))
+    (let ((mode (car mode-map))
+          (maps (cdr mode-map)))
+      (dolist (map maps)
+        (which-key-add-major-mode-key-based-replacements
+          mode (car map) (cdr map))))))
 
-  (which-key-add-key-based-replacements "C-x 8" "unicode")
-  (which-key-add-key-based-replacements "C-x 8 e" "emoji")
-  (which-key-add-key-based-replacements "C-x @" "modifior")
-  (which-key-add-key-based-replacements "C-x a" "abbrev")
-  (which-key-add-key-based-replacements "C-x c" "colorful")
-  (which-key-add-key-based-replacements "C-x n" "narrow")
-  (which-key-add-key-based-replacements "C-x p" "project")
-  (which-key-add-key-based-replacements "C-x r" "rect & bookmark")
-  (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
-  (which-key-add-key-based-replacements "C-x w" "window & highlight")
-  (which-key-add-key-based-replacements "C-x w ^" "window")
-
-  (which-key-add-key-based-replacements "C-x C-a" "edebug")
-  (which-key-add-key-based-replacements "C-x RET" "coding-system")
-  (which-key-add-key-based-replacements "C-x X" "edebug")
-  (which-key-add-key-based-replacements "C-x v b" "vc-branch")
-  (which-key-add-key-based-replacements "C-x v M" "vc-mergebase")
-
-  (which-key-add-major-mode-key-based-replacements 'org-mode
-    "C-c \"" "org-plot")
-  (which-key-add-major-mode-key-based-replacements 'org-mode
-    "C-c C-v" "org-babel")
-  (which-key-add-major-mode-key-based-replacements 'org-mode
-    "C-c C-x" "org-misc")
-
-  (which-key-add-major-mode-key-based-replacements 'python-mode
-    "C-c C-t" "python-skeleton")
-
-  (which-key-add-major-mode-key-based-replacements 'markdown-mode
-    "C-c C-a" "markdown-link")
-  (which-key-add-major-mode-key-based-replacements 'markdown-mode
-    "C-c C-c" "markdown-command")
-  (which-key-add-major-mode-key-based-replacements 'markdown-mode
-    "C-c C-s" "markdown-style")
-  (which-key-add-major-mode-key-based-replacements 'markdown-mode
-    "C-c C-t" "markdown-header")
-  (which-key-add-major-mode-key-based-replacements 'markdown-mode
-    "C-c C-x" "markdown-toggle")
-
-  (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-a" "markdown-link")
-  (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-c" "markdown-command")
-  (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-s" "markdown-style")
-  (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-t" "markdown-header")
-  (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-x" "markdown-toggle"))
-
+;; Show 'which-key' in child frame
 (use-package which-key-posframe
   :diminish
   :defines posframe-border-width
