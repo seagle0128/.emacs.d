@@ -33,6 +33,20 @@
 (eval-when-compile
   (require 'init-const))
 
+;; Setup fill column indicator with stipple
+(when emacs/>=30p
+  (setq-default display-fill-column-indicator-character ?\s)
+  (defun adjust-fill-column-indicator-stipple ()
+    "Adjust the fill-column-indicator face with stipple using `set-face-attribute'."
+    (let* ((w (window-font-width))
+           (stipple `(,w 1 ,(apply #'unibyte-string
+                                   (append (make-list (1- (/ (+ w 7) 8)) ?\0)
+                                           '(1))))))
+      (set-face-attribute 'fill-column-indicator nil :stipple stipple)))
+  (add-hook 'emacs-startup-hook #'adjust-fill-column-indicator-stipple)
+  (add-hook 'text-scale-mode-hook #'adjust-fill-column-indicator-stipple)
+  (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode))
+
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
