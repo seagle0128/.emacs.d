@@ -75,9 +75,9 @@
             (insert "#+HEADERS: :results output :exports both :shebang \"#!/usr/bin/env perl\"\n")
             (hot-expand "<s" "perl")) "Perl tangled")
      ("<" self-insert-command "ins"))))
-  :bind (("C-c a" . org-agenda)
-         ("C-c b" . org-switchb)
-         ("C-c x" . org-capture)
+  :bind (("C-c o a" . org-agenda)
+         ("C-c o b" . org-switchb)
+         ("C-c o x" . org-capture)
          :map org-mode-map
          ("<" . (lambda ()
                   "Insert org template."

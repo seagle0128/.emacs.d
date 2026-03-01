@@ -76,12 +76,14 @@
     :diminish agent-shell-ui-mode
     :commands agent-shell-insert
     :defines magit-mode-map
-    :functions (magit-message
-                magit-commit-create magit-staged-files
-                magit-commit-p magit-thing-at-point)
-    :custom (agent-shell-display-action '(display-buffer-reuse-window))
+    :functions (magit-staged-files magit-commit-p magit-thing-at-point)
+    :custom
+    (agent-shell-display-action '(display-buffer-reuse-window))
+    (agent-shell-preferred-agent-config 'opencode)
     :bind (("<f12>" . agent-shell)
            ("<f13>" . agent-shell)
+           ("C-c a" . agent-shell)
+           ("C-c A" . agent-shell-new-shell)
            :map magit-mode-map
            ("C-c C-g" . my/agent-shell-magit-generate-commit)
            ("C-c C-r" . my/agent-shell-review-magit-commit))

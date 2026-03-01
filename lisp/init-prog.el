@@ -101,7 +101,7 @@
 ;; Run commands quickly
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
-         ("C-c X"  . quickrun)))
+         ("C-c x"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
 (use-package devdocs
