@@ -35,17 +35,36 @@
 
 ;; Interact with ChatGPT or other LLMs
 (use-package gptel
-  :functions gptel-make-openai
-  :init
-  ;; Put the apikey to `auth-sources'
+  :diminish
+  :functions (gptel-make-openai gptel-make-deepseek gptel-make-anthropic)
+  :bind ("C-<f12>" . gptel)
+  :hook (after-init . gptel-highlight-mode)
+  :config
+  ;; Register backends and setup models
+  ;; Securing API keys with authinfo (see `auth-sources')
   ;; format: "machine {HOST} login apikey password {token}"
   (setq gptel-model 'gpt-4o
-        gptel-backend (gptel-make-openai "Github Models"
-                        :host "models.inference.ai.azure.com"
-                        :endpoint "/chat/completions?api-version=2024-05-01-preview"
-                        :stream t
-                        :key 'gptel-api-key
-                        :models '(gpt-4o))))
+        gptel-backend
+        (gptel-make-openai "Github Models"
+          :host "models.inference.ai.azure.com"
+          :endpoint "/chat/completions?api-version=2024-05-01-preview"
+          :stream t
+          :key 'gptel-api-key
+          :models '(gpt-4o)))
+
+  (gptel-make-openai "Moonshot"
+    :host "api.moonshot.cn"
+    :key 'gptel-api-key
+    :stream t
+    :models '(kimi-latest kimi-k2-0711-preview))
+
+  (gptel-make-deepseek "DeepSeek"
+    :stream t
+    :key 'gptel-api-key)
+
+  (gptel-make-anthropic "Claude"
+    :stream t
+    :key 'aptel-api-key))
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
