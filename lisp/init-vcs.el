@@ -71,14 +71,14 @@
                                      (face-remap-add-relative 'mode-line 'custom-modified))
 
                                    ;; Highlight symbols in elisp
-                                   (and (derived-mode-p 'emacs-lisp-mode)
-                                        (fboundp 'highlight-defined-mode)
-                                        (highlight-defined-mode t))
+                                   (when (derived-mode-p 'emacs-lisp-mode)
+                                     (and (fboundp 'highlight-defined-mode)
+                                          (highlight-defined-mode t)))
 
                                    ;; Display line numbers
-                                   (and (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
-                                        (fboundp 'display-line-numbers-mode)
-                                        (display-line-numbers-mode t))))
+                                   (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+                                     (and (fboundp 'display-line-numbers-mode)
+                                          (display-line-numbers-mode t)))))
          (before-revert . (lambda ()
                             (when (bound-and-true-p git-timemachine-mode)
                               (user-error "Cannot revert the timemachine buffer"))))))
