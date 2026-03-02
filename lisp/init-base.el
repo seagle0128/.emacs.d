@@ -201,7 +201,7 @@
     (setq use-short-answers t)
   (fset 'yes-or-no-p 'y-or-n-p))
 (setq-default major-mode 'text-mode
-              fill-column 80
+              fill-column 100
               tab-width 4
               indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
 
