@@ -38,7 +38,7 @@
   :diminish
   :functions (gptel-make-openai gptel-make-deepseek gptel-make-anthropic)
   :bind ("C-<f12>" . gptel)
-  :hook (after-init . gptel-highlight-mode)
+  :hook (gptel-mode . gptel-highlight-mode)
   :config
   ;; Register backends and setup models
   ;; Securing API keys with authinfo (see `auth-sources')
