@@ -39,6 +39,7 @@
   :custom
   (magit-diff-refine-hunk t)
   (git-commit-major-mode 'git-commit-elisp-text-mode)
+  :hook (git-commit-setup . (lambda () (setq fill-column git-commit-summary-max-length)))
   :config
   (when sys/win32p
     (setenv "GIT_ASKPASS" "git-gui--askpass")))
@@ -65,11 +66,6 @@
          ("t" . git-timemachine))
   :hook ((git-timemachine-mode . (lambda ()
                                    "Improve `git-timemachine' buffers."
-                                   ;; Display different colors in mode-line
-                                   (if (facep 'mode-line-active)
-                                       (face-remap-add-relative 'mode-line-active 'custom-modified)
-                                     (face-remap-add-relative 'mode-line 'custom-modified))
-
                                    ;; Highlight symbols in elisp
                                    (when (derived-mode-p 'emacs-lisp-mode)
                                      (and (fboundp 'highlight-defined-mode)
