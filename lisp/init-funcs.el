@@ -297,9 +297,9 @@ lines."
 (defun set-package-archives (archives &optional refresh async no-save)
   "Set the package ARCHIVES (ELPA).
 
-REFRESH is non-nil, will refresh archive contents.
-ASYNC specifies whether to perform the downloads in the background.
-Save to option `custom-file' if NO-SAVE is nil."
+If REFRESH is non-nil, refresh the package contents.  If ASYNC is non-nil,
+perform the refresh in the background.  Save the setting to `custom-file'
+if NO-SAVE is nil.  This function updates `centaur-package-archives'."
   (interactive
    (list
     (intern
@@ -512,7 +512,7 @@ Return the fastest package archive."
       (centaur--load-theme theme))))
 
 (defun centaur-load-theme (theme &optional no-save)
-  "Load color THEME. Save to option `custom-file' if NO-SAVE is nil."
+  "Load color THEME. Save setting to `custom-file' if NO-SAVE is nil."
   (interactive
    (list
     (intern
