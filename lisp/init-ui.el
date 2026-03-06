@@ -338,19 +338,17 @@
   :commands transient-posframe-mode
   :custom-face
   (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  :hook ((after-init server-after-make-frame) . my/set-transient-posframe)
-  :init
-  (setq transient-mode-line-format nil
-        transient-posframe-border-width posframe-border-width
-        transient-posframe-parameters '((left-fringe . 8)
-                                        (right-fringe . 8)))
-
-  (defun my/set-transient-posframe (&rest _)
-    "Display transient in child frames if applicable."
-    (if (childframe-completion-workable-p)
-        (transient-posframe-mode 1)
-      (transient-posframe-mode -1)))
-  (advice-add #'handle-switch-frame :after #'my/set-transient-posframe))
+  :hook ((after-init server-after-make-frame)
+         .
+         (lambda ()
+           "Display transient in child frames if applicable."
+           (if (childframe-completion-workable-p)
+               (transient-posframe-mode 1)
+             (transient-posframe-mode -1))))
+  :init (setq transient-mode-line-format nil
+              transient-posframe-border-width posframe-border-width
+              transient-posframe-parameters '((left-fringe . 8)
+                                              (right-fringe . 8))))
 
 ;; For macOS
 (with-no-warnings

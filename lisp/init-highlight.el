@@ -268,20 +268,19 @@ FACE defaults to inheriting from default and highlight."
          (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh)
-         ((after-init after-load-theme server-after-make-frame) . my/set-diff-hl-posframe))
+         ((after-init after-load-theme server-after-make-frame) . diff-hl-set-posframe))
   :custom
   (diff-hl-draw-borders nil)
   (diff-hl-update-async t)
   (diff-hl-global-modes '(not image-mode pdf-view-mode))
   :init
-  (defun my/set-diff-hl-posframe (&rest _)
+  (defun diff-hl-set-posframe ()
     "Set display type and appearance of `diff-hl.'"
     (setq diff-hl-show-hunk-function (if (childframe-workable-p)
                                          'diff-hl-show-hunk-posframe
                                        'diff-hl-show-hunk-inline)
           diff-hl-show-hunk-posframe-internal-border-color
           (face-background 'posframe-border nil t)))
-  (advice-add #'handle-switch-frame :after #'my/set-diff-hl-posframe)
   :config
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
