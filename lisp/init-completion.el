@@ -65,15 +65,9 @@
 
   ;; Display vertico in the child frame
   (use-package vertico-posframe
-    :functions (childframe-completion-workable-p
-                posframe-poshandler-frame-center-near-bottom)
+    :functions posframe-poshandler-frame-center-near-bottom
     :commands vertico-posframe-mode
-    :hook ((server-after-make-frame vertico-mode)
-           .
-           (lambda ()
-             "Handle vertico child frame."
-             (and (childframe-completion-workable-p)
-                  (vertico-posframe-mode 1))))
+    :hook vertico-mode
     :init (setq vertico-posframe-poshandler
                 #'posframe-poshandler-frame-center-near-bottom
                 vertico-posframe-parameters

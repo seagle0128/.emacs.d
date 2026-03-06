@@ -34,7 +34,7 @@
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p
   :hook ((emacs-lisp-mode . hydra-add-imenu)
-         ((after-init after-load-theme server-after-make-frame) . hydra-set-posframe))
+         ((after-init after-load-theme server-after-make-frame) . my/set-hydra-posframe))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -46,7 +46,7 @@
                                      (?t "Types"     font-lock-type-face)
                                      (?v "Variables" font-lock-variable-name-face))))))
 
-  (defun hydra-set-posframe ()
+  (defun my/set-hydra-posframe (&rest _)
     "Set display type and appearance of hydra."
     ;; Display type
     (if (childframe-completion-workable-p)
@@ -61,7 +61,8 @@
             :background-color ,(face-background 'tooltip nil t)
             :foreground-color ,(face-foreground 'tooltip nil t)
             :lines-truncate t
-            :poshandler posframe-poshandler-frame-center-near-bottom))))
+            :poshandler posframe-poshandler-frame-center-near-bottom)))
+  (advice-add #'handle-switch-frame :after #'my/set-hydra-posframe))
 
 (use-package pretty-hydra
   :functions icons-displayable-p
