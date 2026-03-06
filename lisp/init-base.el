@@ -218,6 +218,13 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
+;; Asynchronous processing
+(use-package async
+  :diminish (async-bytecomp-package-mode dired-async-mode)
+  :functions async-bytecomp-package-mode
+  :hook (after-init . dired-async-mode)
+  :init (unless sys/win32p (async-bytecomp-package-mode 1)))
+
 ;; Frame
 (when (display-graphic-p)
   ;; Frame maximized on startup
