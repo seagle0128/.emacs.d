@@ -64,7 +64,7 @@
 
   (gptel-make-anthropic "Claude"
     :stream t
-    :key 'aptel-api-key))
+    :key 'gptel-api-key))
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
