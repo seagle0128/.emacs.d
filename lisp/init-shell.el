@@ -184,15 +184,14 @@
                  :internal-border-color (face-background 'region nil t)
                  :background-color (face-background 'default nil t)
                  :foreground-color (face-foreground 'default nil t)
-                 :override-parameters '((cursor-type . t))
-                 :respect-mode-line t
+                 :override-parameters '((minibuffer . nil))
+                 :cursor 'box
                  :accept-focus t))
 
           ;; Focus in child frame
           (select-frame-set-input-focus shell-pop--frame)))
 
       (with-current-buffer buffer
-        (setq-local cursor-type 'box) ; blink cursor
         (goto-char (point-max))
         (when (fboundp 'vterm-reset-cursor-point)
           (vterm-reset-cursor-point)))))
