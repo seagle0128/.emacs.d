@@ -142,7 +142,12 @@
   ;; Shell Pop in a child frame
   (defun shell-pop-posframe-hidehandler (_)
     "Hidehandler used by `shell-pop-posframe-toggle'."
-    (not (eq (selected-frame) shell-pop--frame)))
+    (let ((parent (and (frame-live-p shell-pop--frame)
+                       (frame-parent shell-pop--frame))))
+      (and (frame-live-p shell-pop--frame)
+           (frame-visible-p shell-pop--frame)
+           (not (active-minibuffer-window))
+           (not (memq (selected-frame) (list shell-pop--frame parent))))))
 
   (defun shell-pop-posframe-toggle ()
     "Toggle shell in child frame."
@@ -184,13 +189,13 @@
                  :accept-focus t))
 
           ;; Focus in child frame
-          (select-frame-set-input-focus shell-pop--frame)
+          (select-frame-set-input-focus shell-pop--frame)))
 
-          (with-current-buffer buffer
-            (setq-local cursor-type 'box) ; blink cursor
-            (goto-char (point-max))
-            (when (fboundp 'vterm-reset-cursor-point)
-              (vterm-reset-cursor-point)))))))
+      (with-current-buffer buffer
+        (setq-local cursor-type 'box) ; blink cursor
+        (goto-char (point-max))
+        (when (fboundp 'vterm-reset-cursor-point)
+          (vterm-reset-cursor-point)))))
 
   (defun shell-pop-toggle ()
     "Toggle shell in a split window or child frame."
