@@ -108,41 +108,60 @@
   :hook ((eshell-load . eat-eshell-mode)
          (eshell-load . eat-eshell-visual-command-mode)))
 
+;; Shell Pop
 (with-no-warnings
-  ;; Shell Pop: leverage `popper'
   (defvar shell-pop--frame nil)
   (defvar shell-pop--window nil)
+  (defvar shell-pop--buffer nil)
+
+  (defun shell-pop--reset ()
+    "Reset shell-pop."
+    (when shell-pop--frame
+      (delete-frame shell-pop--frame))
+    (setq shell-pop--buffer nil
+          shell-pop--window nil
+          shell-pop--frame nil))
 
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
-    (cond ((fboundp 'eat) (eat arg))
-          ((fboundp 'vterm) (vterm arg))
-          (sys/win32p (eshell arg))
-          (t (shell))))
+    (setq shell-pop--buffer
+          (cond ((fboundp 'eat) (eat arg))
+                ((fboundp 'vterm) (vterm arg))
+                (sys/win32p (eshell arg))
+                (t (shell))))
+    (when (and shell-pop--buffer
+               (buffer-live-p shell-pop--buffer))
+      (setq shell-pop--window (get-buffer-window shell-pop--buffer))
+      (add-hook 'kill-buffer-hook #'shell-pop--reset t)))
+
+  (defun shell-pop--hide-window ()
+    "Hide shell window."
+    (when (and shell-pop--window
+               (window-live-p shell-pop--window))
+      (delete-window shell-pop--window)))
 
   (defun shell-pop--hide-frame ()
     "Hide child frame and refocus in parent frame."
-    (when (and (frame-live-p shell-pop--frame)
+    (when (and shell-pop--frame
+               (frame-live-p shell-pop--frame)
                (frame-visible-p shell-pop--frame))
       (make-frame-invisible shell-pop--frame)
-      (select-frame-set-input-focus (frame-parent shell-pop--frame))
-      (setq shell-pop--frame nil)))
+      (select-frame-set-input-focus (frame-parent shell-pop--frame))))
 
   (defun shell-pop-window-toggle ()
     "Toggle shell in a split window."
     (interactive)
     (shell-pop--hide-frame)
-    (if (window-live-p shell-pop--window)
-        (progn
-          (delete-window shell-pop--window)
-          (setq shell-pop--window nil))
-      (setq shell-pop--window
-            (get-buffer-window (shell-pop--shell)))))
+    (if (and shell-pop--window
+             (window-live-p shell-pop--window))
+        (shell-pop--hide-window)
+      (shell-pop--shell)))
 
   ;; Shell Pop in a child frame
   (defun shell-pop-posframe-hidehandler (_)
     "Hidehandler used by `shell-pop-posframe-toggle'."
-    (let ((parent (and (frame-live-p shell-pop--frame)
+    (let ((parent (and shell-pop--frame
+                       (frame-live-p shell-pop--frame)
                        (frame-parent shell-pop--frame))))
       (and (frame-live-p shell-pop--frame)
            (frame-visible-p shell-pop--frame)
@@ -152,26 +171,22 @@
   (defun shell-pop-posframe-toggle ()
     "Toggle shell in child frame."
     (interactive)
+    (if (and shell-pop--frame
+             (frame-live-p shell-pop--frame)
+             (frame-visible-p shell-pop--frame))
+        (shell-pop--hide-frame)
+      (let ((width  (max 100 (round (* (frame-width) 0.62))))
+            (height (round (* (frame-height) 0.62))))
+        ;; Create shell
+        (shell-pop--shell)
 
-    (let* ((buffer (shell-pop--shell))
-           (window (get-buffer-window buffer)))
-      ;; Hide window: for `popper'
-      (when (window-live-p window)
-        (delete-window window))
-
-      (if (and (frame-live-p shell-pop--frame)
-               (frame-visible-p shell-pop--frame))
-          (progn
-            ;; Hide child frame and refocus in parent frame
-            (make-frame-invisible shell-pop--frame)
-            (select-frame-set-input-focus (frame-parent shell-pop--frame))
-            (setq shell-pop--frame nil))
-        (let ((width  (max 100 (round (* (frame-width) 0.62))))
-              (height (round (* (frame-height) 0.62))))
-          ;; Shell pop in child frame
+        (when (and shell-pop--buffer
+                   (buffer-live-p shell-pop--buffer))
+          (shell-pop--hide-window)
+          ;; Pop shell in child frame
           (setq shell-pop--frame
                 (posframe-show
-                 buffer
+                 shell-pop--buffer
                  :poshandler #'posframe-poshandler-frame-center
                  :hidehandler #'shell-pop-posframe-hidehandler
                  :left-fringe 8
@@ -189,12 +204,13 @@
                  :accept-focus t))
 
           ;; Focus in child frame
-          (select-frame-set-input-focus shell-pop--frame)))
+          (select-frame-set-input-focus shell-pop--frame)
 
-      (with-current-buffer buffer
-        (goto-char (point-max))
-        (when (fboundp 'vterm-reset-cursor-point)
-          (vterm-reset-cursor-point)))))
+          ;; Set cursor to the last
+          (with-current-buffer shell-pop--buffer
+            (goto-char (point-max))
+            (when (fboundp 'vterm-reset-cursor-point)
+              (vterm-reset-cursor-point)))))))
 
   (defun shell-pop-toggle ()
     "Toggle shell in a split window or child frame."
@@ -204,8 +220,9 @@
         (shell-pop-posframe-toggle)
       (shell-pop-window-toggle)))
 
-  (bind-keys ([f9]  . shell-pop-window-toggle)
-             ("C-`" . shell-pop-toggle)))
+  (bind-keys ("<f9>"   . shell-pop-window-toggle)
+             ("C-<f9>" . shell-pop-posframe-toggle)
+             ("C-`"    . shell-pop-toggle)))
 
 (provide 'init-shell)
 
