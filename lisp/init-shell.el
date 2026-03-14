@@ -220,9 +220,9 @@
         (shell-pop-posframe-toggle)
       (shell-pop-window-toggle)))
 
-  (bind-keys ("<f9>"   . shell-pop-window-toggle)
-             ("C-<f9>" . shell-pop-posframe-toggle)
-             ("C-`"    . shell-pop-toggle)))
+  (bind-keys ("C-`"    . shell-pop-toggle)
+             ("<f9>"   . shell-pop-toggle)
+             ("C-<f9>" . shell-pop-window-toggle)))
 
 (provide 'init-shell)
 
