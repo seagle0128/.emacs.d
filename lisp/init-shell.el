@@ -215,6 +215,7 @@
   (defun shell-pop-toggle ()
     "Toggle shell in a split window or child frame."
     (interactive)
+    ;; Don't use `childframe-workable-p' here!!!
     (if (or (display-graphic-p)
             (featurep 'tty-child-frames))
         (shell-pop-posframe-toggle)
