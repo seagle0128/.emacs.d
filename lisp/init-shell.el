@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (use-package shell
   :ensure nil
   :hook ((shell-mode . my/shell-mode-hook)
@@ -104,9 +107,10 @@
   (advice-add 'gud-filter :around #'my/advice-compilation-filter))
 
 ;; Better terminal emulator
-(use-package eat
-  :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode)))
+(unless sys/win32p
+  (use-package eat
+    :hook ((eshell-load . eat-eshell-mode)
+           (eshell-load . eat-eshell-visual-command-mode))))
 
 ;; Shell Pop
 (with-no-warnings
