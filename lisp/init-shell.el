@@ -191,6 +191,7 @@
           (setq shell-pop--frame
                 (posframe-show
                  shell-pop--buffer
+                 :cursor 'box
                  :poshandler #'posframe-poshandler-frame-center
                  :hidehandler #'shell-pop-posframe-hidehandler
                  :left-fringe 8
@@ -204,7 +205,7 @@
                  :background-color (face-background 'default nil t)
                  :foreground-color (face-foreground 'default nil t)
                  :override-parameters '((minibuffer . nil))
-                 :cursor 'box
+                 :tty-non-selected-cursor t
                  :accept-focus t))
 
           ;; Focus in child frame
