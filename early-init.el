@@ -28,15 +28,28 @@
 ;; Emacs 27 introduces early-init.el, which is run before init.el,
 ;; before package and UI initialization happens.
 ;;
+;; This file contains startup performance optimizations:
+;; - Deferred garbage collection (restored by gcmh-mode after startup)
+;; - Suppressed file-name-handler-alist during early init
+;; - Optimized load-suffixes to skip dynamic module search
+;; - Native compilation deferred
+;; - UI elements disabled before frame creation
 
 ;;; Code:
 
-;; Defer garbage collection further back in the startup process
+;; PERF: Defer garbage collection further back in the startup process.
+;; `gcmh-mode' (in init-base.el) will restore this after startup.
 (if noninteractive  ; in CLI sessions
     (setq gc-cons-threshold #x8000000   ; 128MB
           ;; Backport from 29 (see emacs-mirror/emacs@73a384a98698)
           gc-cons-percentage 1.0)
   (setq gc-cons-threshold most-positive-fixnum))
+
+;; PERF: Many elisp file API calls consult `file-name-handler-alist'.
+;; Setting it to nil speeds up startup significantly.
+;; We restore it in init.el after startup.
+(defvar centaur--file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
@@ -44,10 +57,11 @@
 (setq native-comp-deferred-compilation nil ;; obsolete since 29.1
       native-comp-jit-compilation nil)
 
-;; To speedup the Emacs windows, reducing the count on searching `load-path'
-(when (eq system-type 'windows-nt)
-  (setq load-suffixes '(".elc" ".el")) ;; to avoid searching .so/.dll
-  (setq load-file-rep-suffixes '(""))) ;; to avoid searching *.gz
+;; PERF: Reduce file-name operations on `load-path'.
+;; No dynamic modules are loaded this early, so we skip .so/.dll search.
+;; Also skip .gz to avoid decompression checks.
+(setq load-suffixes '(".elc" ".el")
+      load-file-rep-suffixes '(""))
 
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package

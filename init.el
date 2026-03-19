@@ -57,22 +57,18 @@
 ;; Speed up Startup Process
 ;;
 
-;; Optimize Garbage Collection for Startup
-(setq gc-cons-threshold most-positive-fixnum)
-
-;; Optimize `auto-mode-alist`
+;; Optimize `auto-mode-alist'
 (setq auto-mode-case-fold nil)
 
+;; PERF: Restore file-name-handler-alist after startup.
+;; It was set to nil in early-init.el for faster startup.
 (unless (or (daemonp) noninteractive init-file-debug)
-  ;; Temporarily suppress file-handler processing to speed up startup
-  (let ((default-handlers file-name-handler-alist))
-    (setq file-name-handler-alist nil)
-    ;; Recover handlers after startup
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist default-handlers))))
-              101)))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq file-name-handler-alist
+                    (delete-dups (append file-name-handler-alist
+                                         centaur--file-name-handler-alist))))
+            101))
 
 ;;
 ;; Configure Load Path
