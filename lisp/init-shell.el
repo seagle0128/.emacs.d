@@ -217,11 +217,10 @@
                  :accept-focus t))
 
           ;; Delete the child frames of `shell-pop--frame'
-          (dolist (frame (frame-list))
-            (when (and shell-pop--frame
-                       (frame-live-p shell-pop--frame)
-                       (eq (frame-parent frame) shell-pop--frame))
-              (delete-frame frame)))
+          (when (and shell-pop--frame (frame-live-p shell-pop--frame))
+            (dolist (frame (frame-list))
+              (when (eq (frame-parent frame) shell-pop--frame)
+                (delete-frame frame))))
 
           ;; Focus in child frame
           (select-frame-set-input-focus shell-pop--frame)
