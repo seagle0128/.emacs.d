@@ -225,17 +225,18 @@ prepended to the element after the #+HEADER: tag."
          ("C-M-y" . org-rich-yank)))
 
 ;; Auto-toggle Org elements
-(use-package org-appear
-  :diminish
-  :hook org-mode
-  :custom
-  (org-appear-autoentities t)
-  (org-appear-autokeywords t)
-  (org-appear-autolinks t)
-  (org-appear-autosubmarkers t)
-  (org-appear-inside-latex t)
-  (org-appear-manual-linger t)
-  (org-appear-delay 0.5))
+(when emacs/>=29p
+  (use-package org-appear
+    :diminish
+    :hook org-mode
+    :custom
+    (org-appear-autoentities t)
+    (org-appear-autokeywords t)
+    (org-appear-autolinks t)
+    (org-appear-autosubmarkers t)
+    (org-appear-inside-latex t)
+    (org-appear-manual-linger t)
+    (org-appear-delay 0.5)))
 
 ;; Table of contents
 (use-package toc-org
