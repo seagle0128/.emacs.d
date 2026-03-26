@@ -49,6 +49,7 @@ jobs:
           --eval "(message \"Testing...\")" \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
-                    (and (>= emacs-major-version 27) (load early-init-file))
+                    (setq package-check-signature nil)
+                    (load early-init-file)
                     (load user-init-file))" \
           --eval "(message \"Testing...done\")"
