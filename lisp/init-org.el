@@ -210,11 +210,12 @@ prepended to the element after the #+HEADER: tag."
                                load-language-alist))
 
 ;; Prettify UI
-(use-package org-modern
-  :after org
-  :diminish
-  :autoload global-org-modern-mode
-  :init (global-org-modern-mode 1))
+(when emacs/>=29p
+  (use-package org-modern
+    :after org
+    :diminish
+    :autoload global-org-modern-mode
+    :init (global-org-modern-mode 1)))
 
 ;; Paste with org-mode markup and link
 (use-package org-rich-yank
