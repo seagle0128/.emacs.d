@@ -214,6 +214,7 @@ prepended to the element after the #+HEADER: tag."
   (use-package org-modern
     :after org
     :diminish
+    :if (display-graphic-p)
     :autoload global-org-modern-mode
     :init (global-org-modern-mode 1)))
 
