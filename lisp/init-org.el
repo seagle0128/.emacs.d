@@ -212,11 +212,17 @@ prepended to the element after the #+HEADER: tag."
 ;; Prettify UI
 (when emacs/>=29p
   (use-package org-modern
-    :after org
     :diminish
-    :if (display-graphic-p)
-    :autoload global-org-modern-mode
-    :init (global-org-modern-mode 1)))
+    :autoload org-modern-mode org-modern-agenda
+    :hook ((org-mode . (lambda ()
+                         "Display org modern looks in GUI."
+                         (if (display-graphic-p)
+                             (org-modern-mode 1)
+                           (org-modern-mode -1))))
+           (org-agenda-finalize . (lambda ()
+                                    "Display org modern agenda in GUI."
+                                    (when (display-graphic-p)
+                                      (org-modern-agenda)))))))
 
 ;; Paste with org-mode markup and link
 (use-package org-rich-yank
