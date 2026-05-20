@@ -141,7 +141,7 @@
                 (t (shell))))
     (when (and shell-pop--buffer
                (buffer-live-p shell-pop--buffer))
-      (sleep-for 0.2)                   ; wait for shell-ready
+      (sleep-for 0.3)                   ; wait for shell-ready
       (setq shell-pop--window (get-buffer-window shell-pop--buffer))
       (add-hook 'kill-buffer-hook #'shell-pop--reset t)))
 
