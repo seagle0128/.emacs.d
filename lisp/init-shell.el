@@ -135,15 +135,16 @@
 
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
-    (setq shell-pop--buffer
-          (cond ((fboundp 'ghostel) (ghostel arg))
-                (sys/win32p (eshell arg))
-                (t (shell))))
-    (when (and shell-pop--buffer
-               (buffer-live-p shell-pop--buffer))
-      (sleep-for 0.3)                   ; wait for shell-ready
-      (setq shell-pop--window (get-buffer-window shell-pop--buffer))
-      (add-hook 'kill-buffer-hook #'shell-pop--reset t)))
+    (unless shell-pop--buffer
+      (setq shell-pop--buffer
+            (cond ((fboundp 'ghostel) (ghostel arg))
+                  (sys/win32p (eshell arg))
+                  (t (shell))))
+      (when (and shell-pop--buffer
+                 (buffer-live-p shell-pop--buffer))
+        (sleep-for 0.3)                   ; wait for shell-ready
+        (setq shell-pop--window (get-buffer-window shell-pop--buffer))
+        (add-hook 'kill-buffer-hook #'shell-pop--reset t))))
 
   (defun shell-pop--hide-window ()
     "Hide shell window."
