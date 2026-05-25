@@ -112,140 +112,27 @@
     :hook (eshell-load . ghostel-eshell-visual-command-mode)))
 
 ;; Shell Pop
-(with-no-warnings
-  (defvar shell-pop--frame nil)
-  (defvar shell-pop--window nil)
-  (defvar shell-pop--buffer nil)
-
-  (defun shell-pop--reset ()
-    "Reset shell-pop."
-    (when shell-pop--frame
-      (delete-frame shell-pop--frame))
-    (setq shell-pop--buffer nil
-          shell-pop--window nil
-          shell-pop--frame nil))
-
-  (defun shell-pop--reset-cursor-point ()
-    "Reset cursor point."
-    (with-current-buffer shell-pop--buffer
-      (goto-char (point-max))
-
-      (when (derived-mode-p 'ghostel-mode)
-        (ghostel-send-key "down"))))
-
-  (defun shell-pop--shell (&optional arg)
-    "Run shell and return the buffer."
-    (unless shell-pop--buffer
-      (setq shell-pop--buffer
-            (cond ((fboundp 'ghostel) (ghostel arg))
-                  (sys/win32p (eshell arg))
-                  (t (shell))))
-      (when (and shell-pop--buffer
-                 (buffer-live-p shell-pop--buffer))
-        (sleep-for 0.3)                   ; wait for shell-ready
-        (setq shell-pop--window (get-buffer-window shell-pop--buffer))
-        (add-hook 'kill-buffer-hook #'shell-pop--reset t))))
-
-  (defun shell-pop--hide-window ()
-    "Hide shell window."
-    (when (and shell-pop--window
-               (window-live-p shell-pop--window)
-               shell-pop--window
-               (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
-      (delete-window shell-pop--window)))
-
-  (defun shell-pop--hide-frame ()
-    "Hide child frame and refocus in parent frame."
-    (when (and shell-pop--frame
-               (frame-live-p shell-pop--frame)
-               (frame-visible-p shell-pop--frame))
-      (make-frame-invisible shell-pop--frame)
-      (select-frame-set-input-focus (frame-parent shell-pop--frame))))
-
-  (defun shell-pop-window-toggle ()
-    "Toggle shell in a split window."
-    (interactive)
-    (shell-pop--hide-frame)
-    (if (and shell-pop--buffer
-             (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
-        (shell-pop--hide-window)
-      (shell-pop--shell)))
-
-  ;; Shell Pop in a child frame
-  (defun shell-pop-posframe-hidehandler (_)
-    "Hidehandler used by `shell-pop-posframe-toggle'."
-    (let ((parent (and shell-pop--frame
-                       (frame-live-p shell-pop--frame)
-                       (frame-parent shell-pop--frame))))
-      (and (frame-live-p shell-pop--frame)
-           (frame-visible-p shell-pop--frame)
-           (not (active-minibuffer-window))
-           (not (memq (selected-frame) (list shell-pop--frame parent))))))
-
-  (defun shell-pop-posframe-toggle ()
-    "Toggle shell in child frame."
-    (interactive)
-    (if (and shell-pop--frame
-             (frame-live-p shell-pop--frame)
-             (frame-visible-p shell-pop--frame))
-        (shell-pop--hide-frame)
-      (let ((width  (max 100 (round (* (frame-width) 0.62))))
-            (height (round (* (frame-height) 0.62))))
-        ;; Create shell
-        (shell-pop--shell)
-
-        (when (and shell-pop--buffer (buffer-live-p shell-pop--buffer))
-          ;; Bury `shell-pop--buffer'
-          (when (and shell-pop--window
-                     (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
-            (switch-to-prev-buffer shell-pop--window))
-          (shell-pop--hide-window)
-
-          ;; Pop shell in child frame
-          (setq shell-pop--frame
-                (posframe-show
-                 shell-pop--buffer
-                 :cursor 'box
-                 :poshandler #'posframe-poshandler-frame-center
-                 :hidehandler #'shell-pop-posframe-hidehandler
-                 :left-fringe 8
-                 :right-fringe 8
-                 :width width
-                 :height height
-                 :min-width width
-                 :min-height height
-                 :internal-border-width 3
-                 :internal-border-color (face-background 'region nil t)
-                 :background-color (face-background 'default nil t)
-                 :foreground-color (face-foreground 'default nil t)
-                 :override-parameters '((minibuffer . nil))
-                 :tty-non-selected-cursor t
-                 :accept-focus t))
-
-          ;; Delete the child frames of `shell-pop--frame'
-          (when (and shell-pop--frame (frame-live-p shell-pop--frame))
-            (dolist (frame (frame-list))
-              (when (eq (frame-parent frame) shell-pop--frame)
-                (delete-frame frame))))
-
-          ;; Focus in child frame
-          (select-frame-set-input-focus shell-pop--frame)
-
-          ;; Set cursor to the last
-          (shell-pop--reset-cursor-point)))))
-
-  (defun shell-pop-toggle ()
-    "Toggle shell in a split window or child frame."
-    (interactive)
-    ;; Don't use `childframe-workable-p' here!!!
-    (if (or (display-graphic-p)
-            (featurep 'tty-child-frames))
-        (shell-pop-posframe-toggle)
-      (shell-pop-window-toggle)))
-
-  (bind-keys ("C-`"    . shell-pop-toggle)
-             ("<f9>"   . shell-pop-toggle)
-             ("C-<f9>" . shell-pop-window-toggle)))
+(when emacs/>=29p
+  (use-package popterm
+    :functions childframe-workable-p
+    :bind (("C-`"   . popterm-toggle)
+           ("C-~"   . popterm-toggle-cd)
+           ([f9]    . popterm-window-toggle))
+    :hook (after-init . popterm-global-mode)
+    :init
+    (setq popterm-backend (if sys/win32p 'eshell 'ghostel)
+          popterm-display-method (if (childframe-workable-p)
+                                     'posframe
+                                   'window)
+          popterm-scope 'project)
+    :config
+    (with-no-warnings
+      (defun popterm--reset-cursor-point (buffer-name)
+        "Reset cursor point."
+        (with-current-buffer buffer-name
+          (when (derived-mode-p 'ghostel-mode)
+            (ghostel-send-key "down"))))
+      (advice-add #'popterm--ghostel-create :after #'popterm--reset-cursor-point))))
 
 (provide 'init-shell)
 
