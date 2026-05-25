@@ -127,12 +127,12 @@
           popterm-scope 'project)
     :config
     (with-no-warnings
-      (defun popterm--reset-cursor-point (buffer-name)
+      (defun popterm--reset-cursor-point (buffer)
         "Reset cursor point."
-        (with-current-buffer buffer-name
+        (with-current-buffer buffer
           (when (derived-mode-p 'ghostel-mode)
             (ghostel-send-key "down"))))
-      (advice-add #'popterm--ghostel-create :after #'popterm--reset-cursor-point))))
+      (advice-add #'popterm--posframe-show :after #'popterm--reset-cursor-point))))
 
 (provide 'init-shell)
 
