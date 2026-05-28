@@ -313,13 +313,15 @@ The Centaur Dashboard enhances your Emacs startup experience:
 - Use `F2` to reopen the dashboard anytime after startup
 - Press `?` or `h` in the dashboard for help
 - Navigate with keybindings:
-  - **Homepage**: `H`g
-  - **Session**: `R` (resume), `L` (load last session)
+  - **Homepage**: `H`
+  - **Session**: `O` (restore)
   - **Settings**: `S`
   - **Update**: `U`
   - **Recent Files**: `r`
   - **Bookmarks**: `m`
   - **Projects**: `p`
+  - **Refresh**: `g`
+  - **Quit**: `q`
 
 ### Does Centaur Emacs support Language Server Protocol (LSP)?
 
