@@ -124,15 +124,7 @@
           popterm-display-method (if (childframe-workable-p)
                                      'posframe
                                    'window)
-          popterm-scope 'project)
-    :config
-    (with-no-warnings
-      (defun popterm--reset-cursor-point (buffer)
-        "Reset cursor point."
-        (with-current-buffer buffer
-          (when (derived-mode-p 'ghostel-mode)
-            (ghostel-send-key "down"))))
-      (advice-add #'popterm--posframe-show :after #'popterm--reset-cursor-point))))
+          popterm-scope 'project)))
 
 (provide 'init-shell)
 
