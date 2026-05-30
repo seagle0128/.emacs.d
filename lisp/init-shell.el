@@ -116,7 +116,7 @@
   (use-package popterm
     :functions childframe-workable-p
     :bind (("C-`"   . popterm-toggle)
-           ("C-~"   . popterm-toggle-cd)
+           ("C-M-`" . popterm-toggle-cd)
            ([f9]    . popterm-window-toggle))
     :hook (after-init . popterm-global-mode)
     :init
