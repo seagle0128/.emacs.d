@@ -121,9 +121,6 @@
     :hook (after-init . popterm-global-mode)
     :init
     (setq popterm-backend (if sys/win32p 'eshell 'ghostel)
-          popterm-display-method (if (childframe-workable-p)
-                                     'posframe
-                                   'window)
           popterm-scope 'project)))
 
 (provide 'init-shell)
