@@ -36,7 +36,7 @@
 (use-package tabspaces
   :bind (:map tabspaces-command-map
          ("C-r"   . tabspaces-restore-session)
-         ("C-S-r" . tabspaces-restore-session-alt)
+         ("C-M-r" . tabspaces-restore-session-alt)
          ("C-s"   . tabspaces-save-session)
          ("C-w"   . tabspaces-save-current-project-session))
   :hook ((after-init . tabspaces-mode)
