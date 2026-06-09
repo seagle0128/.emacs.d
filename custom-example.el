@@ -109,6 +109,24 @@
 ;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
 ;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
 
+;; For compat
+;; (add-hook 'emacs-lisp-mode-hook
+;;           (defun compat-add-to-imenu ()
+;;             "Add to imenu list."
+;;             (add-to-list
+;;              'imenu-generic-expression
+;;              '(nil
+;;                "^\\s-*(\\(compat-def\\(?:un\\|macro\\|alias\\)\\)\\s-+\\(\\(?:\\w\\|\\s_\\|\\\\.\\)+\\)"
+;;                2))
+;;             (add-to-list
+;;              'imenu-generic-expression
+;;              '("Packages" "^\\s-*(\\(compat-require\\)\\s-+\\(\\(?:\\w\\|\\s_\\|\\\\.\\)+\\)" 2))
+;;             (add-to-list
+;;              'imenu-generic-expression
+;;              '("Variables"
+;;                "^\\s-*(\\(compat-def\\(?:var\\|const\\)\\)?\\s-+\\(\\(?:\\w\\|\\s_\\|\\\\.\\)+\\)[[:space:]\n]+[^)]"
+;;                2))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
