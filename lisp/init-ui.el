@@ -41,6 +41,11 @@
 (setq fast-but-imprecise-scrolling t)
 (setq redisplay-skip-fontification-on-input t)
 
+;; Disable Bidirectional Text Scanning
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
 ;; Inhibit resizing frame
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
