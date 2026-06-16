@@ -208,6 +208,7 @@
                 ("Mastering Emacs" "http://www.masteringemacs.org/feed/")
                 ("Oremacs" "https://oremacs.com/atom.xml")
                 ("EmacsCast" "https://pinecast.com/feed/emacscast")
+                ("Emacs Redux" "https://emacsredux.com/atom.xml")
                 ("Emacs TIL" "https://emacstil.com/feed.xml")
                 ;; ("Emacs Reddit" "https://www.reddit.com/r/emacs.rss")
                 )))
