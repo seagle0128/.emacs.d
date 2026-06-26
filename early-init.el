@@ -48,20 +48,22 @@
 ;; PERF: Many elisp file API calls consult `file-name-handler-alist'.
 ;; Setting it to nil speeds up startup significantly.
 ;; We restore it in init.el after startup.
-(defvar centaur--file-name-handler-alist file-name-handler-alist)
+(defvar default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
+
+;; PERF: Reduce file-name operations on `load-path'.
+;; No dynamic modules are loaded this early, so we skip .so/.dll search.
+;; Also skip .gz to avoid decompression checks.
+(defvar default-load-suffixes load-suffixes)
+(defvar default-load-file-rep-suffixes load-file-rep-suffixes)
+(setq load-suffixes '(".elc" ".el")
+      load-file-rep-suffixes '(""))
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
 ;; are compiled when gccemacs is installed.
 (setq native-comp-deferred-compilation nil ;; obsolete since 29.1
       native-comp-jit-compilation nil)
-
-;; PERF: Reduce file-name operations on `load-path'.
-;; No dynamic modules are loaded this early, so we skip .so/.dll search.
-;; Also skip .gz to avoid decompression checks.
-(setq load-suffixes '(".elc" ".el")
-      load-file-rep-suffixes '(""))
 
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package
