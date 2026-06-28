@@ -60,18 +60,6 @@
 ;; Optimize `auto-mode-alist'
 (setq auto-mode-case-fold nil)
 
-;; PERF: Restore `load-suffixes', `load-file-rep-subffixes' and
-;; `file-name-handler-alist' after startup.
-(unless (or (daemonp) noninteractive init-file-debug)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq load-suffixes default-load-suffixes
-                    load-file-rep-suffixes default-load-file-rep-suffixes
-                    file-name-handler-alist
-                    (delete-dups (append file-name-handler-alist
-                                         default-file-name-handler-alist))))
-            101))
-
 ;;
 ;; Configure Load Path
 ;;

@@ -34,6 +34,9 @@
   (require 'init-const)
   (require 'init-custom))
 
+(unless centaur-lsp
+  (setq read-process-output-max #x100000))  ; 1MB
+
 (pcase centaur-lsp
   ('eglot
    (use-package eglot
