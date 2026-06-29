@@ -96,6 +96,7 @@
 ;; Misc.
 ;; (setq confirm-kill-emacs 'y-or-n-p)
 ;; (setq package-check-signature nil)
+;; (setq trusted-content ':all)
 
 ;; Enable proxy
 ;; (enable-http-proxy)
@@ -107,6 +108,7 @@
 ;;   (set-frame-parameter nil 'left 288))
 
 ;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
+;; (put 'pdf-view-create-image 'lisp-indent-function 'defun)
 ;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
 
 ;; For compat
