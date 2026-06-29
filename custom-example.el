@@ -47,13 +47,13 @@
                                                       (t 100))))
 
     ;; Set mode-line font
-    ;; (cl-loop for font in '("SF Mono" "Menlo" "SF Pro Display" "Helvetica")
+    ;; (cl-loop for font in '("Arial" "Helvetica" "Times New Roman")
     ;;          when (font-available-p font)
     ;;          return (progn
-    ;;                   (set-face-attribute 'mode-line nil :family font :height 120)
+    ;;                   (set-face-attribute 'mode-line nil :family font :inherit 'variable-pitch)
     ;;                   (when (facep 'mode-line-active)
-    ;;                     (set-face-attribute 'mode-line-active nil :family font :height 120))
-    ;;                   (set-face-attribute 'mode-line-inactive nil :family font :height 120)))
+    ;;                     (set-face-attribute 'mode-line-active nil :family font :inherit 'variable-pitch))
+    ;;                   (set-face-attribute 'mode-line-inactive nil :family font :inherit 'variable-pitch)))
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
