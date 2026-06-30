@@ -52,7 +52,10 @@
   (use-package treesit-auto
     :functions centaur-treesit-available-p
     :hook (after-init . global-treesit-auto-mode)
-    :init (setq treesit-auto-install 'prompt)))
+    :init (setq treesit-auto-install 'prompt)
+    :config
+    ;; `rust-mode' will handle tree-sitter
+    (delete 'rust treesit-auto-langs)))
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
