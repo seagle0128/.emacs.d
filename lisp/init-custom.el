@@ -70,8 +70,6 @@
   :group 'centaur
   :type 'string)
 
-
-
 (defcustom centaur-use-exec-path-from-shell
   (and (or (memq window-system '(mac ns x)) (daemonp))
        (not (bound-and-true-p ns-emacs-plus-injected-path)))
