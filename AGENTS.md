@@ -4,7 +4,7 @@
 
 **Centaur Emacs** - A fancy and fast Emacs distribution.
 - **Repo**: https://github.com/seagle0128/.emacs.d
-- **Emacs**: 28.1+ (CI tests 28.2, 29.4, 30.1, snapshot)
+- **Emacs**: 28.1+ (CI tests 28.2, 29.4, 30.2, snapshot)
 - **Platforms**: Linux, macOS, Windows (Cygwin/MSYS2)
 
 ---
