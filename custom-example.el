@@ -51,8 +51,6 @@
     ;;          when (font-available-p font)
     ;;          return (progn
     ;;                   (set-face-attribute 'mode-line nil :family font :inherit 'variable-pitch)
-    ;;                   (when (facep 'mode-line-active)
-    ;;                     (set-face-attribute 'mode-line-active nil :family font :inherit 'variable-pitch))
     ;;                   (set-face-attribute 'mode-line-inactive nil :family font :inherit 'variable-pitch)))
 
     ;; Specify font for all unicode characters
@@ -60,7 +58,7 @@
              when (font-available-p font)
              return (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
 
-    ;; Emoji
+    ;; Specify font for Emoji characters
     (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
              when (font-available-p font)
              return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
