@@ -90,13 +90,15 @@
     (progn
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
-        :functions (centaur-compatible-theme-p refresh-ns-appearance)
         :commands solaire-global-mode
         :init (solaire-global-mode 1))
 
       ;; Excellent themes
       (use-package doom-themes
-        :functions centaur-load-theme doom-themes-visual-bell-config
+        :functions (centaur-compatible-theme-p
+                    centaur-load-theme
+                    doom-themes-visual-bell-config
+                    refresh-ns-appearance)
         :init (centaur-load-theme centaur-theme t)
         :config (doom-themes-visual-bell-config)))
   (progn
