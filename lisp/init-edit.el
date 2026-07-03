@@ -416,18 +416,16 @@
                    (concat
                     " "
                     (propertize
-                     (if (char-displayable-p ?⏷) "⏷" "...")
-                     'face 'shadow)
-                    (propertize
-                     (format " (%d lines)"
+                     (format "%s(%d lines)..."
+                             (and (char-displayable-p ?⏷) "⏷ ")
                              (count-lines (overlay-start ov)
                                           (overlay-end ov)))
-                     'face '(:inherit shadow :height 0.8))
-                    " "))
-      (overlay-put ov 'mouse-face 'highlight)
-      (overlay-put ov 'keymap (let ((map (make-sparse-keymap)))
-                                (define-key map [mouse-1] #'hs-show-block)
-                                map))))
+                     'face '(:inherit shadow :height 0.8)
+                     'mouse-face 'highlight
+                     'local-map (let ((map (make-sparse-keymap)))
+                                  (define-key map [mouse-1] #'hs-show-block)
+                                  map))
+                    " "))))
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
 ;; Copy&paste GUI clipboard from text terminal
