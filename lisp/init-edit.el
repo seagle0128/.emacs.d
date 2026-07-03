@@ -351,9 +351,9 @@
   ((:title (pretty-hydra-title "HideShow" 'octicon "nf-oct-fold")
     :color amaranth :quit-key ("q" "C-g"))
    ("Fold"
-    (("t" hs-toggle-all "toggle all")
-     ("a" hs-show-all "show all")
-     ("i" hs-hide-all "hide all")
+    (("t" hs-toggle-all "toggle all" :exit t)
+     ("a" hs-show-all "show all" :exit t)
+     ("i" hs-hide-all "hide all" :exit t)
      ("g" hs-toggle-hiding "toggle hiding")
      ("c" hs-cycle "cycle block")
      ("s" hs-show-block "show block")
@@ -423,7 +423,11 @@
                              (count-lines (overlay-start ov)
                                           (overlay-end ov)))
                      'face '(:inherit shadow :height 0.8))
-                    " "))))
+                    " "))
+      (overlay-put ov 'mouse-face 'highlight)
+      (overlay-put ov 'keymap (let ((map (make-sparse-keymap)))
+                                (define-key map [mouse-1] #'hs-show-block)
+                                map))))
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
 ;; Copy&paste GUI clipboard from text terminal
