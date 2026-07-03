@@ -91,7 +91,9 @@
       ;; Make certain buffers grossly incandescent
       (use-package solaire-mode
         :commands solaire-global-mode
-        :init (solaire-global-mode 1))
+        :init (solaire-global-mode 1)
+        :config (add-to-list 'solaire-mode-remap-alist
+                             '(ghostel-default . solaire-default-face)))
 
       ;; Excellent themes
       (use-package doom-themes
