@@ -351,7 +351,7 @@
   ((:title (pretty-hydra-title "HideShow" 'octicon "nf-oct-fold")
     :color amaranth :quit-key ("q" "C-g"))
    ("Fold"
-    (("t" hs-toggle-all "toggle all" :exit t)
+    (("t" hs-toggle-all "toggle all")
      ("a" hs-show-all "show all" :exit t)
      ("i" hs-hide-all "hide all" :exit t)
      ("g" hs-toggle-hiding "toggle hiding")
@@ -442,7 +442,9 @@
       (set-clipboard-coding-system 'gbk) ; for wsl
       (setq interprogram-cut-function
             (lambda (text)
-              (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
+              (start-process "xclip" nil xclip-program
+                             "--trim-newline" "--type"
+                             "text/plain;charset=utf-8" text))))))
 
 ;; Open files as another user
 (unless sys/win32p
