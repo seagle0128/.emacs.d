@@ -39,10 +39,11 @@
   :custom
   (magit-diff-refine-hunk t)
   (git-commit-major-mode 'git-commit-elisp-text-mode)
-  :hook (git-commit-setup . (lambda () (setq fill-column git-commit-summary-max-length)))
-  :config
-  (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass")))
+  :config (when sys/win32p
+            (setenv "GIT_ASKPASS" "git-gui--askpass")
+            ;; Perf: improve performance on Windows
+            (setq magit-commit-show-diff nil
+                  magit-diff-refine-hunk nil)))
 
 ;; Prime cache before Magit refresh
 (use-package magit-prime
