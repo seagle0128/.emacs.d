@@ -34,35 +34,67 @@
   (require 'init-const))
 
 ;; Interact with ChatGPT or other LLMs
+;;
+;; API Key management via authinfo (no plain-text secrets):
+;;
+;;   machine models.inference.ai.azure.com  login api-key password <gh_token>
+;;   machine api.deepseek.com               login api-key password <ds_key>
+;;   machine dashscope.aliyuncs.com         login api-key password <qwen_key>
+;;   machine open.bigmodel.cn               login api-key password <zhipu_key>
+;;   machine generativelanguage.googleapis.com login api-key password <gemini_key>
+;;   machine api.anthropic.com              login api-key password <claude_key>
+;;
 (use-package gptel
   :diminish
-  :functions (gptel-make-openai gptel-make-deepseek)
+  :functions (gptel-make-openai gptel-make-anthropic
+               gptel-make-deepseek gptel-make-gemini
+               gptel-make-ollama)
   :bind (("C-<f12>"   . gptel)
          ("C-M-<f12>" . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
   :config
-  ;; Register backends and setup models
-  ;; Securing API keys with authinfo (see `auth-sources')
-  ;; format: "machine {HOST} login apikey password {token}"
-  (setq gptel-model 'gpt-4o
+  ;; GitHub Models (free with GH Copilot subscription)
+  (setq gptel-model 'gpt-4.1
         gptel-backend
         (gptel-make-openai "Github Models"
           :host "models.inference.ai.azure.com"
           :endpoint "/chat/completions?api-version=2024-05-01-preview"
           :stream t
           :key 'gptel-api-key
-          :models '(gpt-4o)))
+          :models '(gpt-4o gpt-4.1)))
 
-  (gptel-make-openai "ChatGLM"
+  ;; GLM
+  (gptel-make-openai "GLM"
     :host "open.bigmodel.cn"
     :endpoint "/api/paas/v4/chat/completions"
     :stream t
     :key 'gptel-api-key
-    :models '(glm-4.7 glm-4.7-flash))
+    :models '(glm-5.2 glm-5.2-flash glm-4.7 glm-4.7-flash))
 
   (gptel-make-deepseek "DeepSeek"
     :stream t
-    :key 'gptel-api-key))
+    :key 'gptel-api-key
+    :models '(deepseek-chat deepseek-reasoner))
+
+  ;; Qwen (Alibaba Cloud)
+  (gptel-make-openai "Qwen"
+    :host "dashscope.aliyuncs.com"
+    :endpoint "/compatible-mode/v1/chat/completions"
+    :stream t
+    :key 'gptel-api-key
+    :models '(qwen-plus qwen-turbo-latest qwen-max))
+
+  ;; Gemini (Google)
+  (gptel-make-gemini "Gemini"
+    :key 'gptel-api-key
+    :stream t
+    :models '(gemini-2.5-flash gemini-2.5-pro))
+
+  ;; Claude (Anthropic)
+  (gptel-make-anthropic "Claude"
+    :stream t
+    :key 'gptel-api-key
+    :models '(claude-sonnet-4-20250514 claude-haiku-3-5-20241022)))
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
@@ -84,12 +116,13 @@
            ("C-h ?"      . agent-shell-help-menu)
            ("C-<return>" . agent-shell-help-menu)
            :map magit-mode-map
-           ("C-c C-g"    . my/agent-shell-magit-generate-commit)
-           ("C-c C-r"    . my/agent-shell-review-magit-commit))
+           ("C-c C-g"    . centaur-generate-commit)
+           ("C-c C-r"    . centaur-review-commit))
     :config
+    ;; Integrate into magit
     (with-eval-after-load 'magit
-      (defun my/agent-shell-magit-generate-commit ()
-        "Generate conventional message and commit stage changes in magit."
+      (defun centaur-generate-commit ()
+        "Generate conventional commit message from staged changes."
         (interactive)
         (if (magit-staged-files)
             (agent-shell-insert
@@ -97,8 +130,8 @@
              :text "Commit changes with conventional message")
           (user-error "No staged changes")))
 
-      (defun my/agent-shell-review-magit-commit ()
-        "Send the commit from magit to agent-shell for reviews."
+      (defun centaur-review-commit ()
+        "Send the commit at point to agent-shell for review."
         (interactive)
         (if-let ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
             (agent-shell-insert
