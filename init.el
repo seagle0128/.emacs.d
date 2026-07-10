@@ -73,15 +73,20 @@
 ;; Initialize load paths explicitly
 (update-load-path)
 
-;; Add subdirectories inside "site-lisp" to `load-path`
+;; Rescan site-lisp subdirectories after package initialization
 (defun add-subdirs-to-load-path (&rest _)
-  "Recursively add subdirectories in `site-lisp` to `load-path`.
+  "Recursively add subdirectories in `site-lisp' to `load-path'.
 
-Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
+This runs as :after advice on `package-initialize' so that any
+subdirectories added to `site-lisp' during package installation are
+picked up automatically. Uses `&rest _' to absorb and ignore the
+arguments passed by the advised function.
+
+Avoid placing large projects (e.g., EAF) directly in `site-lisp',
+as recursive scanning slows down startup."
   (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
-;; Ensure these functions are called after `package-initialize`
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
 
 ;; Requisites
