@@ -256,8 +256,7 @@
 (use-package hide-mode-line
   :hook (((eshell-mode
            ghostel-mode shell-mode term-mode
-           embark-collect-mode lsp-ui-imenu-mode
-           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
+           embark-collect-mode pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
 (use-package minions

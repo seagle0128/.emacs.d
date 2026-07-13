@@ -221,10 +221,7 @@ For advanced users, you can directly edit configuration settings in your `custom
 (setq centaur-dashboard nil)                   ; Show dashboard on startup (t to show, nil to hide)
 
 ;; Development settings
-(setq centaur-lsp 'lsp-mode)                   ; LSP client: lsp-mode, eglot, or nil
-(setq centaur-lsp-format-on-save t)            ; Auto-format on save
-(setq centaur-lsp-format-on-save-ignore-modes  ; Modes to skip formatting on save
-     '(c-mode c++-mode python-mode markdown-mode))
+(setq centaur-lsp t)                           ; Enable LSP
 
 ;; Feature toggles
 (setq centaur-tree-sitter nil)                 ; Enable tree-sitter (requires Emacs 29+)
@@ -249,7 +246,6 @@ Centaur Emacs comes with several Hydra interfaces for efficient workflows. Here 
 | `git-messenger-hydra`    | Global              | `C-x v p`           | Git commit message inspection   |
 | `hideshow-hydra`         | Programming Modes   | `C-~`               | Code folding/unfolding actions  |
 | `hydra-dired-quick-sort` | Dired Mode          | `S`                 | File sorting options            |
-| `lsp-ui-hydra`           | LSP UI Mode         | `M-<f6>`            | LSP UI interface commands       |
 | `org-hydra`              | Org Mode            | `<`                 | Org template insertion          |
 | `rect-hydra`             | Org Mode            | `S-<return>`        | Rectangle selection operations  |
 | `rect-hydra`             | Text/Programming    | `C-<return>`        | Rectangle selection operations  |
@@ -327,13 +323,11 @@ The Centaur Dashboard enhances your Emacs startup experience:
 
 Yes, LSP is supported and enabled by default in Centaur Emacs:
 
-- **Default Client**: `lsp-mode`
-- **Alternative Client**: `eglot`
+- **Default Client**: `eglot`
 - To disable LSP: `(setq centaur-lsp nil)`
 
 **:warning: Important**: You'll need to install appropriate language servers for your programming languages.
-Refer to [lsp-mode: supported languages](https://github.com/emacs-lsp/lsp-mode#supported-languages)
-or [eglot: connecting to a server](https://github.com/joaotavora/eglot#connecting-to-a-server) for setup details.
+Refer to [eglot: connecting to a server](https://github.com/joaotavora/eglot#connecting-to-a-server) for setup details.
 
 ### How do I enable PlantUML in Org mode?
 

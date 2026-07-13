@@ -218,9 +218,8 @@ centaur-package-archives  ; melpa, bfsu, iscas, netease, sjtu, tuna, ustc
 centaur-icon, centaur-theme, centaur-completion-style, centaur-dashboard
 
 ;; Development
-centaur-lsp              ; lsp-mode, eglot, or nil
+centaur-lsp              ; nil or t
 centaur-tree-sitter      ; nil or t (Emacs 29+)
-centaur-lsp-format-on-save
 
 ;; Features
 centaur-chinese-calendar, centaur-player, centaur-prettify-symbols-alist

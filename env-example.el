@@ -4,11 +4,6 @@
 ;;;       This file is loaded in early-init.el.
 ;;; Code:
 
-;; Improve LSP performance
-;; Uncomment the following if you are using `lsp-mode'
-;; @see https://emacs-lsp.github.io/lsp-mode/page/performance/
-;; (setenv "LSP_USE_PLISTS" "true")
-
 ;; Configure PATH injection for emacs-plus-app
 ;; Avoid loading `exec-path-from-shell' for performance optimization
 ;; Uncomment and adjust the following settings as needed
