@@ -276,10 +276,12 @@ the custom file."
   "Check whether the file is too big.
 
 Returns non-nil if the buffer size exceeds 999,999 bytes or has more than 10,000
-lines."
+lines, or more than 2,000 bytes in one line."
   (or (> (buffer-size) 999999)
       (and (fboundp 'buffer-line-statistics)
-           (> (car (buffer-line-statistics)) 10000))))
+           (let ((statics (buffer-line-statistics)))
+             (or (> (car statics) 10000)
+                 (> (cadr statics) 2000))))))
 
 (define-minor-mode centaur-read-mode
   "Minor Mode for better reading experience."
