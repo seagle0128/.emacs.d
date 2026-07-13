@@ -303,12 +303,16 @@
 (use-package flyspell
   :ensure nil
   :diminish
+  :functions file-too-big-p
   :if (executable-find "aspell")
   :bind (:map flyspell-mode-map
          ("C-;" . nil)
          ("C-," . nil)
          ("C-." . nil))
-  :hook ((text-mode outline-mode)
+  :hook (((text-mode outline-mode) . (lambda ()
+                                       "Check spells unless the file is too big."
+                                       (unless (file-too-big-p)
+                                         (flyspell-mode 1))))
          (prog-mode . flyspell-prog-mode))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
