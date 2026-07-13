@@ -221,7 +221,7 @@ For advanced users, you can directly edit configuration settings in your `custom
 (setq centaur-dashboard nil)                   ; Show dashboard on startup (t to show, nil to hide)
 
 ;; Development settings
-(setq centaur-lsp t)                           ; Enable LSP
+(setq centaur-lsp nil)                         ; Enable LSP or not
 
 ;; Feature toggles
 (setq centaur-tree-sitter nil)                 ; Enable tree-sitter (requires Emacs 29+)
