@@ -54,8 +54,7 @@
   :diminish
   :autoload rspec-install-snippets
   :hook (dired-mode . rspec-dired-mode)
-  :config (with-eval-after-load 'yasnippet
-            (rspec-install-snippets)))
+  :config (rspec-install-snippets))
 
 (provide 'init-ruby)
 
