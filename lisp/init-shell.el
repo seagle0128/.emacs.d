@@ -118,6 +118,10 @@
          :map project-prefix-map
          ("m" . ghostel-project)
          ("M" . ghostel-project-list-buffers))
+  :init (when sys/win32p
+          (setq ghostel-shell (or (executable-find "pwsh")
+                                  (getenv "SHELL"))
+                ghostel-term "xterm-256color"))
   :config
   (defun my/ghostel-send-C-k-and-kill ()
     "Send `C-k' to ghostel.
