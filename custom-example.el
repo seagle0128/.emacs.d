@@ -45,11 +45,11 @@
                                                       (t 100))))
 
     ;; Set mode-line font
-    ;; (cl-loop for font in '("Arial" "Helvetica" "Times New Roman")
-    ;;          when (font-available-p font)
-    ;;          return (progn
-    ;;                   (set-face-attribute 'mode-line nil :family font :inherit 'variable-pitch)
-    ;;                   (set-face-attribute 'mode-line-inactive nil :family font :inherit 'variable-pitch)))
+    (cl-loop for font in '("Arial" "Helvetica" "Times New Roman")
+             when (font-available-p font)
+             return (progn
+                      (set-face-attribute 'mode-line nil :family font :inherit 'variable-pitch)
+                      (set-face-attribute 'mode-line-inactive nil :family font :inherit 'variable-pitch)))
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
