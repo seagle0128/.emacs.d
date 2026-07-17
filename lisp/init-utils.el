@@ -66,6 +66,7 @@
                  ("C-x t" . "tab & treemacs")
                  ("C-x w" . "window & highlight")
                  ("C-x w ^" . "window")
+                 ("C-x x" . "buffer")
                  ("C-x C-a" . "edebug")
                  ("C-x RET" . "coding-system")
                  ("C-x X" . "edebug")
