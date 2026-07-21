@@ -138,6 +138,7 @@
 (use-package grep
   :ensure nil
   :autoload grep-apply-setting
+  :custom (grep-use-headings t)
   :init
   (when (executable-find "rg")
     (grep-apply-setting
