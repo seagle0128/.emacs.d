@@ -110,7 +110,7 @@
   :hook ((which-key-mode server-after-make-frame)
          .
          (lambda ()
-           (if (childframe-completion-workable-p)
+           (if (and which-key-mode (childframe-completion-workable-p))
                (which-key-posframe-mode 1)
              (which-key-posframe-mode -1))))
   :init
