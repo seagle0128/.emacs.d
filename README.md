@@ -216,7 +216,7 @@ For advanced users, you can directly edit configuration settings in your `custom
 (setq centaur-theme 'auto)                     ; Theme: auto, random, system, default, pro, dark, light, warm, cold, day, night
 
 ;; UI settings
-(setq centaur-completion-style 'minibuffer)    ; Completion style: minibuffer or childframe
+(setq centaur-completion-style 'minibuffer)    ; Completion display style: minibuffer or childframe
 (setq centaur-frame-maximized-on-startup t)    ; Maximize frame on startup
 (setq centaur-dashboard nil)                   ; Show dashboard on startup (t to show, nil to hide)
 

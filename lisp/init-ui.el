@@ -337,7 +337,7 @@
   :config (dolist (mode '(dashboard-mode emacs-news-mode))
             (add-to-list 'page-break-lines-modes mode)))
 
-;; Display transient in child frame
+;; Display transient in the child frame
 (use-package transient-posframe
   :diminish
   :defines posframe-border-width
@@ -348,7 +348,7 @@
   :hook ((after-init server-after-make-frame)
          .
          (lambda ()
-           "Display transient in child frames if applicable."
+           "Display transient in the child frame if applicable."
            (if (childframe-completion-workable-p)
                (transient-posframe-mode 1)
              (transient-posframe-mode -1))))

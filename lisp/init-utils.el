@@ -99,7 +99,7 @@
         (which-key-add-major-mode-key-based-replacements
           mode (car map) (cdr map))))))
 
-;; Show 'which-key' in child frame
+;; Show 'which-key' in the child frame
 (use-package which-key-posframe
   :diminish
   :defines posframe-border-width
