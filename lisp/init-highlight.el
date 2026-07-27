@@ -192,8 +192,14 @@ FACE defaults to inheriting from default and highlight."
 ;; Colorize color names in buffers
 (use-package colorful-mode
   :diminish
+  :custom
+  (colorful-use-prefix t)
+  (colorful-prefix-string "■")
+  (colorful-only-strings 'only-prog)
+  (css-fontify-colors nil)
   :hook (after-init . global-colorful-mode)
-  :init (setq colorful-use-prefix t))
+  :config
+  (add-to-list 'global-colorful-modes 'helpful-mode))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
