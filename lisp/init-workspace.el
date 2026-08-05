@@ -42,19 +42,26 @@
   :hook ((after-init . tabspaces-mode)
          (tabspaces-mode . tab-bar-history-mode))
   :custom
+  ;; tab-bar
   (tab-bar-show nil)                    ; don't display tab-bar
   (tab-bar-history-limit 30)
+  (tab-bar-new-tab-choice "*scratch*")
 
+  ;; options
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
-  (tabspaces-exclude-buffers '("*eat*" "*ghostel*" "*shell*" "*eshell*"))
+  (tabspaces-include-buffers '("*scratch*"))
+  (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*" "*ghostel*" "*shell*" "*eshell*"))
+  (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
+  (tabspaces-project-switch-opens-workspace t)
 
   ;; sessions
   (tabspaces-session (not centaur-dashboard))
   (tabspaces-session-auto-restore (not centaur-dashboard))
   (tabspaces-session-file (concat user-emacs-directory "tabspaces/tabsession.el"))
   (tabspaces-session-project-session-store (concat user-emacs-directory "tabspaces/"))
+  (tabspaces-session-auto-save-delay 300)  ; Save after 5 idle minutes
   :config
   (defun tabspaces-restore-session-alt ()
     "Select file to restore tabspaces session."

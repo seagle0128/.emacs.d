@@ -133,6 +133,7 @@
         (interactive)
         (quit-dashboard)
         (when (bound-and-true-p tabspaces-mode)
+          (setq tabspaces-session t)
           (tabspaces-restore-session)))
 
       (defun open-setting-files ()
