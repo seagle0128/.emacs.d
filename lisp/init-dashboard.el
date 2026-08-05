@@ -133,7 +133,6 @@
         (interactive)
         (quit-dashboard)
         (when (bound-and-true-p tabspaces-mode)
-          (setq tabspaces-session t)
           (tabspaces-restore-session)))
 
       (defun open-setting-files ()
@@ -156,7 +155,11 @@
 
         ;; Create workspace if necessary
         (unless (bound-and-true-p tabspaces-session)
+          ;; Save workspace sessions
           (setq tabspaces-session t)
+          (add-hook 'kill-emacs-hook #'tabspaces--save-session-smart)
+          (tabspaces--setup-session-auto-save)
+
           (tabspaces-switch-or-create-workspace tabspaces-default-tab))
 
         ;; Recover layout
