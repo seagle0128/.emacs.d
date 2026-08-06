@@ -51,9 +51,10 @@
 ;; Display Flymake errors with overlays
 (use-package flyover
   :diminish
+  :functions centaur-dark-theme-p
   :custom
   (flyover-checkers '(flymake))
-  (flyover-background-lightness 60)
+  (flyover-background-lightness (if (centaur-dark-theme-p) 35 75))
   (flyover-icon-background-tint-percent 50)
   :hook flymake-mode)
 
