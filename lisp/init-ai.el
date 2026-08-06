@@ -48,7 +48,7 @@
   :diminish
   :functions (gptel-make-openai gptel-make-anthropic
                gptel-make-deepseek gptel-make-gemini
-               gptel-make-ollama)
+               gptel-get-backend)
   :bind (("C-<f12>"   . gptel)
          ("C-M-<f12>" . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
@@ -92,6 +92,7 @@
     :key 'gptel-api-key
     :models '(claude-sonnet-4-20250514 claude-haiku-3-5-20241022))
 
+  ;; Set default model and backend
   (setq gptel-model 'deepseek-v4-flash
         gptel-backend (gptel-get-backend "DeepSeek")))
 
