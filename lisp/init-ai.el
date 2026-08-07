@@ -46,13 +46,34 @@
 ;;
 (use-package gptel
   :diminish
-  :functions (gptel-make-openai gptel-make-anthropic
-               gptel-make-deepseek gptel-make-gemini
-               gptel-get-backend)
+  :functions (gptel-make-openai gptel-make-deepseek
+               gptel-make-anthropic gptel-make-gemini)
   :bind (("C-<f12>"   . gptel)
          ("C-M-<f12>" . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
   :config
+  ;; Set default model and backend
+  (setq gptel-model 'big-pickle
+        gptel-backend
+        (gptel-make-openai "OpenCode Zen"
+          :host "opencode.ai"
+          :endpoint "/zen/v1/chat/completions"
+          :stream t
+          :key 'gptel-api-key
+          :models '(big-pickle
+                    deepseek-v4-flash-free
+                    mimo-v2.5-free
+                    laguna-s-2.1-free
+                    ling-3.0-flash-free
+                    longcat-2.0-free
+                    north-mini-code-free
+                    nemotron-3-ultra-free)))
+
+  ;; DeepSeek
+  (gptel-make-deepseek "DeepSeek"
+    :stream t
+    :key 'gptel-api-key)
+
   ;; GLM
   (gptel-make-openai "GLM"
     :host "open.bigmodel.cn"
@@ -60,11 +81,6 @@
     :stream t
     :key 'gptel-api-key
     :models '(glm-5.2 glm-5.2-flash glm-4.7 glm-4.7-flash))
-
-  ;; DeepSeek
-  (gptel-make-deepseek "DeepSeek"
-    :stream t
-    :key 'gptel-api-key)
 
   ;; Qwen (Alibaba Cloud)
   (gptel-make-openai "Qwen"
@@ -83,18 +99,12 @@
   ;; Gemini (Google)
   (gptel-make-gemini "Gemini"
     :key 'gptel-api-key
-    :stream t
-    :models '(gemini-2.5-flash gemini-2.5-pro))
+    :stream t)
 
   ;; Claude (Anthropic)
   (gptel-make-anthropic "Claude"
     :stream t
-    :key 'gptel-api-key
-    :models '(claude-sonnet-4-20250514 claude-haiku-3-5-20241022))
-
-  ;; Set default model and backend
-  (setq gptel-model 'deepseek-v4-flash
-        gptel-backend (gptel-get-backend "DeepSeek")))
+    :key 'gptel-api-key))
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
