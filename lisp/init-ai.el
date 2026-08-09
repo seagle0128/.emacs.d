@@ -36,12 +36,7 @@
 ;; Interact with ChatGPT or other LLMs
 ;;
 ;; API Key management via authinfo (no plain-text secrets):
-;;
-;;   machine models.inference.ai.azure.com  login api-key password <gh_token>
 ;;   machine api.deepseek.com               login api-key password <ds_key>
-;;   machine dashscope.aliyuncs.com         login api-key password <qwen_key>
-;;   machine open.bigmodel.cn               login api-key password <zhipu_key>
-;;   machine generativelanguage.googleapis.com login api-key password <gemini_key>
 ;;   machine api.anthropic.com              login api-key password <claude_key>
 ;;
 (use-package gptel
