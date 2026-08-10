@@ -104,7 +104,7 @@
 ;; Generate commit messages for magit
 (when emacs/>=30p
   (use-package gptel-magit
-    :vc (:url "https://github.com/roife/gptel-magit")
+    :vc (:url "https://github.com/roife/gptel-magit" :rev :newest)
     :hook (magit-mode . gptel-magit-install)))
 
 ;; A native shell experience to interact with ACP agents
