@@ -485,8 +485,7 @@ Return the fastest package archive."
 
 (defun centaur-compatible-theme-p (theme)
   "Check if the THEME is compatible. THEME is a symbol."
-  (or (memq theme '(atom-one-dark))
-      (memq theme '(auto random system))
+  (or (memq theme '(auto random system))
       (string-prefix-p "doom" (symbol-name (centaur--theme-name theme)))))
 
 (defun centaur-dark-theme-p ()
