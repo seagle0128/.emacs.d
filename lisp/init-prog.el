@@ -62,7 +62,7 @@
   :ensure nil
   :diminish
   :functions childframe-workable-p
-  :commands eldoc-box-hover-mode
+  :commands eldoc-box-hover-at-point-mode
   :config
   (use-package eldoc-box
     :custom
@@ -74,8 +74,8 @@
     (eldoc-box-body ((t (:inherit tooltip))))
     :hook (eglot-managed-mode . (lambda ()
                                   (if (childframe-workable-p)
-                                      (eldoc-box-hover-mode 1)
-                                    (eldoc-box-hover-mode -1))))))
+                                      (eldoc-box-hover-at-point-mode 1)
+                                    (eldoc-box-hover-at-point-mode -1))))))
 
 ;; Cross-referencing commands
 (use-package xref
