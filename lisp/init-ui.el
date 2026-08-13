@@ -104,7 +104,7 @@
         :init (centaur-load-theme centaur-theme t)
         :config (doom-themes-visual-bell-config)))
   (progn
-    (warn "The current theme may be incompatible!")
+    (message "The current theme `%s' may be incompatible" centaur-theme)
     (centaur-load-theme centaur-theme t)))
 
 ;; Mode-line
