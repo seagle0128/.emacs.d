@@ -99,13 +99,10 @@
       (use-package doom-themes
         :functions (centaur-compatible-theme-p
                     centaur-load-theme
-                    doom-themes-org-config
                     doom-themes-visual-bell-config
                     refresh-ns-appearance)
         :init (centaur-load-theme centaur-theme t)
-        :config
-        (doom-themes-org-config)
-        (doom-themes-visual-bell-config)))
+        :config (doom-themes-visual-bell-config)))
   (progn
     (warn "The current theme may be incompatible!")
     (centaur-load-theme centaur-theme t)))
