@@ -73,6 +73,7 @@
 (centaur-setup-fonts)
 (add-hook 'window-setup-hook #'centaur-setup-fonts)
 (add-hook 'server-after-make-frame-hook #'centaur-setup-fonts)
+(add-hook 'after-load-theme-hook #'centaur-setup-fonts)
 
 ;; Mail
 ;; (setq message-send-mail-function 'smtpmail-send-it
