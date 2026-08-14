@@ -37,7 +37,7 @@
 (use-package which-key
   :diminish
   :bind ("C-h M-m" . which-key-show-major-mode)
-  :hook (after-init . which-key-mode)
+  :hook ((after-init server-after-make-frame) . which-key-mode)
   :init (setq which-key-max-description-length 30
               which-key-lighter nil
               which-key-show-remaining-keys t)
@@ -107,7 +107,7 @@
   :commands which-key-posframe-mode
   :custom-face
   (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  :hook ((which-key-mode server-after-make-frame)
+  :hook (which-key-mode
          .
          (lambda ()
            (if (and which-key-mode (childframe-completion-workable-p))
