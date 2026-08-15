@@ -140,7 +140,7 @@
       (defun centaur-review-commit ()
         "Send the commit at point to agent-shell for review."
         (interactive)
-        (if-let ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
+        (if-let* ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
             (agent-shell-insert
              :submit t
              :text (format "Review commit: %s" commit))

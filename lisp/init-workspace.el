@@ -97,7 +97,7 @@
       (let ((cutoff (time-subtract (current-time)
                                    (seconds-to-time (* days 24 60 60)))))
         (dolist (file (directory-files dir 'full "\\.[0-9]\\{8\\}\\'"))
-          (when-let ((timestamp-str (substring file (string-match "\\([0-9]\\{8\\}\\)\\'" file))))
+          (when-let* ((timestamp-str (substring file (string-match "\\([0-9]\\{8\\}\\)\\'" file))))
             (when (time-less-p (date-to-time timestamp-str) cutoff)
               (delete-file file 'trash))))))
 
