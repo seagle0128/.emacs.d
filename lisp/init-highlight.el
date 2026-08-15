@@ -159,6 +159,10 @@ FACE defaults to inheriting from default and highlight."
 (use-package display-fill-column-indicator
   :ensure nil
   :functions adjust-fill-column-indicator-stipple
+  :custom-face (fill-column-indicator ((((class color) (background light))
+                                        (:foreground "gray75"))
+                                       (((class color) (background dark))
+                                        (:foreground "gray25"))))
   :hook (prog-mode . display-fill-column-indicator-mode)
   :config
   ;; Setup fill column indicator with stipple
