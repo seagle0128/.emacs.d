@@ -77,10 +77,24 @@
     (setq package-selected-packages (sort value #'string<)))
   (unless after-init-time
     (add-hook 'after-init-hook #'my/package--save-selected-packages)))
-(advice-add 'package--save-selected-packages :override #'my/package--save-selected-packages)
+(advice-add #'package--save-selected-packages :override #'my/package--save-selected-packages)
 
 ;; Set ELPA packages
 (set-package-archives centaur-package-archives nil nil t)
+
+;; FIXME: in 31+, :custom-face is incompatible with `doom-themes'
+;; @see https://github.com/doomemacs/themes/issues/893
+(defun my/use-package-handler/:custom-face (name _keyword args rest state)
+  "Generate use-package custom-face keyword code."
+  (use-package-concat
+   (mapcar #'(lambda (def)
+               `(progn
+                  (apply #'face-spec-set (append (backquote ,def)))
+                  (put ',(car def) 'face-modified t)))
+           args)
+   (use-package-process-keywords name rest state)))
+(advice-add #'use-package-handler/:custom-face
+            :override #'my/use-package-handler/:custom-face)
 
 ;; To speedup the Emacs windows, reducing the count on searching `load-path'
 ;; is significant, there're ways to do that:
