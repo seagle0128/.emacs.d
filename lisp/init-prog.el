@@ -61,21 +61,16 @@
 (use-package eldoc
   :ensure nil
   :diminish
-  :functions childframe-workable-p
-  :commands eldoc-box-hover-at-point-mode
   :config
-  (use-package eldoc-box
-    :custom
-    (eldoc-box-lighter nil)
-    (eldoc-box-only-multi-line t)
-    (eldoc-box-clear-with-C-g t)
-    :custom-face
-    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
-    (eldoc-box-body ((t (:inherit tooltip))))
-    :hook (eglot-managed-mode . (lambda ()
-                                  (if (childframe-workable-p)
-                                      (eldoc-box-hover-at-point-mode 1)
-                                    (eldoc-box-hover-at-point-mode -1))))))
+  (use-package eldoc-mouse
+    :bind (:map eldoc-mouse-mode-map
+           ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
+    :hook eglot-managed-mode
+    :init
+    ;; Since 31, tooltip is used to display help docs in elisp by default.
+    ;; To avoid the conflicts, only enable <=30
+    (unless emacs/>=31p
+      (add-hook 'emacs-lisp-mode-hook 'eldoc-mouse-mode))))
 
 ;; Cross-referencing commands
 (use-package xref
