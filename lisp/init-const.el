@@ -111,6 +111,10 @@ Loaded by `org-babel-load-file'.")
   (>= emacs-major-version 31)
   "Emacs is 31 or above.")
 
+(defconst emacs/>=32p
+  (>= emacs-major-version 32)
+  "Emacs is 32 or above.")
+
 (provide 'init-const)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
