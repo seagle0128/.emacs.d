@@ -2,6 +2,7 @@
 *.data
 *.db
 *.elc
+*.eld
 *.log
 *.sqlite
 *.tmp
