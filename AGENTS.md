@@ -229,7 +229,7 @@ centaur-chinese-calendar, centaur-player, centaur-prettify-symbols-alist
 
 - `custom.el` - Centaur variable settings, fonts, proxy
 - `custom-post.el` - Advanced customizations, use-package configs, hooks
-- `env.el` - Environment variables (PATH, LSP performance settings)
+- `env.el` - Environment variables (PATH)
 
 ### What Users SHOULD NOT Modify
 
