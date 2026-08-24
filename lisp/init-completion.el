@@ -90,12 +90,10 @@
 
   ;; Consulting completing-read
   (use-package consult
-    :defines (xref-show-xrefs-function xref-show-definitions-function)
-    :defines shr-color-html-colors-alist
+    :defines (xref-show-xrefs-function xref-show-definitions-function shr-color-html-colors-alist)
+    :functions (list-colors-duplicates consult-colors--web-list my/consult--read)
     :autoload (consult-register-format consult-register-window consult-xref)
     :autoload (consult--read consult--customize-put consult--grep)
-    :commands (consult-narrow-help)
-    :functions (list-colors-duplicates consult-colors--web-list my/consult--read)
     :bind (;; C-c bindings in `mode-specific-map'
            ("C-c M-x" . consult-mode-command)
            ("C-c h"   . consult-history)
@@ -222,6 +220,7 @@ value of the selected COLOR."
     ;; (setq consult-preview-key 'any)
     ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
     (setq consult-preview-key nil)
+
     ;; For some commands and buffer sources it is useful to configure the
     ;; :preview-key on a per-command basis using the `consult-customize' macro.
     (consult-customize
@@ -233,6 +232,10 @@ value of the selected COLOR."
      :initial (selected-region-or-symbol-at-point)
      :preview-key 'any)
 
+    ;; Optionally configure the narrowing key.
+    ;; Both < and C-+ work reasonably well.
+    (setq consult-narrow-key "<") ;; "C-+"
+
     (defun my/consult--read (fn &rest args)
       "Select initial texts in `consult--read'."
       (minibuffer-with-setup-hook
@@ -241,15 +244,7 @@ value of the selected COLOR."
             (set-mark (point-max))
             (goto-char (minibuffer-prompt-end)))
         (apply fn args)))
-    (advice-add #'consult--read :around #'my/consult--read)
-
-    ;; Optionally configure the narrowing key.
-    ;; Both < and C-+ work reasonably well.
-    (setq consult-narrow-key "<") ;; "C-+"
-
-    ;; Optionally make narrowing help available in the minibuffer.
-    ;; You may want to use `embark-prefix-help-command' or which-key instead.
-    (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
+    (advice-add #'consult--read :around #'my/consult--read))
 
   (use-package consult-dir
     :ensure t
