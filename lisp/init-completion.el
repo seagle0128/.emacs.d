@@ -174,14 +174,57 @@
       (setq xref-show-xrefs-function #'consult-xref
             xref-show-definitions-function #'consult-xref))
 
-    ;; More utils
+    :config
+    ;; Optionally configure preview. The default value
+    ;; is 'any, such that any key triggers the preview.
+    ;; (setq consult-preview-key 'any)
+    ;; (setq consult-preview-key "M-.")
+    ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+    (setq consult-preview-key nil)
+
+    ;; For some commands and buffer sources it is useful to configure the
+    ;; :preview-key on a per-command basis using the `consult-customize' macro.
+    (consult-customize
+     consult-goto-line :preview-key 'any
+     consult-theme :preview-key '("M-." :debounce 0.5 "<up>" "<down>")
+
+     consult-buffer consult-recent-file
+     consult-source-recent-file consult-source-project-recent-file
+     :preview-key '("M-.")
+
+     consult-man consult-bookmark consult-xref
+     consult-source-bookmark consult-source-file-register
+     :preview-key '(:debounce 0.4 any)
+
+     consult-line consult-line-multi
+     consult-ripgrep consult-git-grep consult-grep
+     :initial (selected-region-or-symbol-at-point)
+     :preview-key 'any)
+
+    ;; Optionally configure the narrowing key.
+    ;; Both < and C-+ work reasonably well.
+    (setq consult-narrow-key "<") ;; "C-+"
+
+    ;; Select initial texts
+    ;; It's useful in `consult-grep' and similar commands
+    (defun my/consult--read (fn &rest args)
+      "Select initial texts in `consult--read'."
+      (minibuffer-with-setup-hook
+          (lambda ()
+            "Select initial texts."
+            (set-mark (point-max))
+            (goto-char (minibuffer-prompt-end)))
+        (apply fn args)))
+    (advice-add #'consult--read :around #'my/consult--read)
+
+    ;;
+    ;; More utilities: list colors
+    ;;
     (defvar consult-colors-history nil
       "History for `consult-colors-emacs' and `consult-colors-web'.")
 
     ;; No longer preloaded in Emacs 28.
     (autoload 'list-colors-duplicates "facemenu")
-    ;; No preloaded in consult.el
-    (autoload 'consult--read "consult")
 
     (defun consult-colors-emacs (color)
       "Show a list of all supported colors for a particular frame.
@@ -213,38 +256,7 @@ value of the selected COLOR."
                             :require-match t
                             :category 'color
                             :history '(:input consult-colors-history))))
-      (insert color))
-    :config
-    ;; Optionally configure preview. The default value
-    ;; is 'any, such that any key triggers the preview.
-    ;; (setq consult-preview-key 'any)
-    ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
-    (setq consult-preview-key nil)
-
-    ;; For some commands and buffer sources it is useful to configure the
-    ;; :preview-key on a per-command basis using the `consult-customize' macro.
-    (consult-customize
-     consult-goto-line :preview-key 'any
-     consult-buffer consult-recent-file :preview-key '("M-.")
-     consult-theme :preview-key '("M-." :debounce 0.5 "<up>" "<down>")
-     consult-line consult-line-multi
-     consult-ripgrep consult-git-grep consult-grep
-     :initial (selected-region-or-symbol-at-point)
-     :preview-key 'any)
-
-    ;; Optionally configure the narrowing key.
-    ;; Both < and C-+ work reasonably well.
-    (setq consult-narrow-key "<") ;; "C-+"
-
-    (defun my/consult--read (fn &rest args)
-      "Select initial texts in `consult--read'."
-      (minibuffer-with-setup-hook
-          (lambda ()
-            "Select initial texts."
-            (set-mark (point-max))
-            (goto-char (minibuffer-prompt-end)))
-        (apply fn args)))
-    (advice-add #'consult--read :around #'my/consult--read))
+      (insert color)))
 
   (use-package consult-dir
     :ensure t
