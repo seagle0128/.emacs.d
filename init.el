@@ -106,6 +106,7 @@ as recursive scanning slows down startup."
 (require 'init-edit)
 (require 'init-completion)
 (require 'init-snippet)
+(require 'init-check)
 
 (require 'init-bookmark)
 (require 'init-calendar)
@@ -132,7 +133,6 @@ as recursive scanning slows down startup."
 
 ;; Programming
 (require 'init-vc)
-(require 'init-check)
 (require 'init-lsp)
 (require 'init-dap)
 (require 'init-ai)
