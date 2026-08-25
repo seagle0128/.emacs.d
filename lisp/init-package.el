@@ -68,33 +68,20 @@
 
 ;; HACK: DO NOT save `package-selected-packages' to `custom-file'
 ;; @see https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
-(defun my/package--save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to custom.el."
-  (when (or value after-init-time)
-    ;; It is valid to set it to nil, for example when the last package
-    ;; is uninstalled.  But it shouldn't be done at init time, to
-    ;; avoid overwriting configurations that haven't yet been loaded.
-    (setq package-selected-packages (sort value #'string<)))
-  (unless after-init-time
-    (add-hook 'after-init-hook #'my/package--save-selected-packages)))
-(advice-add #'package--save-selected-packages :override #'my/package--save-selected-packages)
+(with-no-warnings
+  (defun my/package--save-selected-packages (&optional value)
+    "Set `package-selected-packages' to VALUE but don't save to custom.el."
+    (when (or value after-init-time)
+      ;; It is valid to set it to nil, for example when the last package
+      ;; is uninstalled.  But it shouldn't be done at init time, to
+      ;; avoid overwriting configurations that haven't yet been loaded.
+      (setq package-selected-packages (sort value #'string<)))
+    (unless after-init-time
+      (add-hook 'after-init-hook #'my/package--save-selected-packages)))
+  (advice-add #'package--save-selected-packages :override #'my/package--save-selected-packages))
 
 ;; Set ELPA packages
 (set-package-archives centaur-package-archives nil nil t)
-
-;; FIXME: in 31+, :custom-face is incompatible with `doom-themes'
-;; @see https://github.com/doomemacs/themes/issues/893
-(defun my/use-package-handler/:custom-face (name _keyword args rest state)
-  "Generate use-package custom-face keyword code."
-  (use-package-concat
-   (mapcar #'(lambda (def)
-               `(progn
-                  (apply #'face-spec-set (append (backquote ,def)))
-                  (put ',(car def) 'face-modified t)))
-           args)
-   (use-package-process-keywords name rest state)))
-(advice-add #'use-package-handler/:custom-face
-            :override #'my/use-package-handler/:custom-face)
 
 ;; To speedup the Emacs windows, reducing the count on searching `load-path'
 ;; is significant, there're ways to do that:
@@ -176,6 +163,21 @@
       use-package-always-defer t
       use-package-expand-minimally t
       use-package-enable-imenu-support t)
+
+;; HACK: In 31+, the keyword ":custom-face" is incompatible with `doom-themes'
+;; @see https://github.com/doomemacs/themes/issues/893
+(with-no-warnings
+  (when emacs/>=31p
+    (defun my/use-package-handler/:custom-face (name _keyword args rest state)
+      "Generate use-package custom-face keyword code."
+      (use-package-concat
+       (mapcar #'(lambda (def)
+                   `(progn
+                    (apply #'face-spec-set (append (backquote ,def)))
+                    (put ',(car def) 'face-modified t)))
+               args)
+       (use-package-process-keywords name rest state)))
+    (advice-add #'use-package-handler/:custom-face :override #'my/use-package-handler/:custom-face)))
 
 ;; Required by `use-package'
 (use-package diminish)
