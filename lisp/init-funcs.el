@@ -248,7 +248,7 @@ Also opens the custom-post file in another window if it exists."
 (defun centaur-treesit-available-p ()
   "Check whether tree-sitter is available.
 
-Native tree-sitter is introduced since 29.1."
+Native tree-sitter is built into 29.1+."
   (and centaur-tree-sitter
        (fboundp 'treesit-available-p)
        (treesit-available-p)))

@@ -57,10 +57,10 @@
      ("n" balance-windows "balance"))
     "Split"
     (("r" split-window-right "horizontally")
-     ("R" split-window-horizontally-instead "horizontally instead")
+     ("R" split-window-horizontally-instead "horizontally instead" :exit t)
      ("v" split-window-below "vertically")
-     ("V" split-window-vertically-instead "vertically instead")
-     ("t" toggle-window-split "toggle"))
+     ("V" split-window-vertically-instead "vertically instead" :exit t)
+     ("t" toggle-window-split "toggle" :exit t))
     "Zoom"
     (("+" text-scale-increase "in")
      ("=" text-scale-increase "in")

@@ -36,6 +36,7 @@
   :config
   ;; Syntax highlighting of known Elisp symbols
   (if (boundp 'elisp-fontify-semantically)
+      ;; Built into Emacs 31+
       (setq elisp-fontify-semantically t)
     (use-package highlight-defined
       :hook (emacs-lisp-mode inferior-emacs-lisp-mode)))
