@@ -280,21 +280,6 @@ prepended to the element after the #+HEADER: tag."
            ("SPC" . org-tree-slide-move-next-tree))
     :custom (org-tree-slide-skip-outline-level 3)))
 
-;; Pomodoro
-(use-package org-pomodoro
-  :after org
-  :diminish
-  :custom-face
-  (org-pomodoro-mode-line ((t (:inherit warning))))
-  (org-pomodoro-mode-line-overtime ((t (:inherit error))))
-  (org-pomodoro-mode-line-break ((t (:inherit success))))
-  :bind (:map org-mode-map
-         ("C-c C-x m" . org-pomodoro))
-  :init (with-eval-after-load 'org-agenda
-          (bind-keys :map org-agenda-mode-map
-            ("K" . org-pomodoro)
-            ("C-c C-x m" . org-pomodoro))))
-
 ;; Roam
 (when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
   (use-package org-roam
