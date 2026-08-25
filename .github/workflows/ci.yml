@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        emacs-version: [28.2, 29.4, 30.2]
+        emacs-version: [28.2, 29.4, 30.2, 31.1]
         experimental: [false]
         include:
           - os: ubuntu-latest

@@ -281,7 +281,8 @@ prepended to the element after the #+HEADER: tag."
     :custom (org-tree-slide-skip-outline-level 3)))
 
 ;; Roam
-(when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
+(when (and (fboundp 'sqlite-available-p)
+           (sqlite-available-p))
   (use-package org-roam
     :diminish
     :functions centaur-browse-url org-roam-db-autosync-mode
