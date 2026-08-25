@@ -118,6 +118,7 @@ daemonp          ; Daemon mode
 emacs/>=29p      ; Version checks
 emacs/>=30p
 emacs/>=31p
+emacs/>=32p
 ```
 
 ---
