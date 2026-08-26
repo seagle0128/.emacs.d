@@ -389,7 +389,7 @@ Return the fastest package archive."
 
     (message "Updating configurations...")
     (cd dir)
-    (shell-command "git pull")
+    (vc-update)
     (message "Updating configurations...done")))
 (defalias 'centaur-update-config #'update-config)
 
@@ -419,7 +419,7 @@ Return the fastest package archive."
         (progn
           (message "Updating dotfiles...")
           (cd dir)
-          (shell-command "git pull")
+          (vc-update)
           (message "Updating dotfiles...done"))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
@@ -432,7 +432,7 @@ Return the fastest package archive."
         (progn
           (message "Updating org files...")
           (cd dir)
-          (shell-command "git pull")
+          (vc-update)
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
