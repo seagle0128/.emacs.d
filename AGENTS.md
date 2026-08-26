@@ -48,7 +48,7 @@ M-x set-package-archives        ; Switch mirrors
 
 ### Package Archives
 
-Options: `melpa`, `bfsu`, `iscas`, `netease`, `sjtu`, `tencent`, `tuna`, `ustc` (China mirrors)
+Options: `melpa`, `bfsu`, `iscas`, `netease`, `sjtu`, `tencent`, `tuna`, `ustc` (all except `melpa` are China mirrors)
 
 Set in `custom.el`:
 ```elisp
@@ -87,6 +87,7 @@ init-hydra, init-ui, init-edit, ...       ← Layer 5+: Features
 - `load-suffixes` → `(".elc" ".el")` only (skip .so/.dll/.gz)
 - `native-comp-jit-compilation` → `nil` (defer runtime compilation)
 - UI disabled via `default-frame-alist` (before frame creation)
+- `load-path-filter-function` → `load-path-filter-cache-directory-files` on Emacs 31+ (~15% startup improvement)
 
 **init-base.el**:
 - `gcmh-mode` restores GC to ~64MB after startup — never disable
@@ -111,11 +112,14 @@ sys/macp         ; macOS
 sys/linuxp       ; Linux
 sys/mac-port-p   ; Emacs Mac port build
 sys/mac-ns-p     ; macOS Cocoa (NextStep)
+sys/mac-cocoa-p  ; macOS with Cocoa feature
 sys/mac-x-p      ; macOS with GUI
 sys/linux-x-p    ; Linux with GUI
 sys/cygwinp      ; Cygwin
+sys/rootp        ; Running as root
 daemonp          ; Daemon mode
 emacs/>=29p      ; Version checks
+emacs/>=29.2p
 emacs/>=30p
 emacs/>=31p
 emacs/>=32p
