@@ -48,7 +48,7 @@
   :hook (gptel-mode . gptel-highlight-mode)
   :config
   ;; Set default model and backend
-  (setq gptel-model 'big-pickle
+  (setq gptel-model 'x-preview-f-free
         gptel-backend
         (gptel-make-openai "OpenCode Zen"
           :host "opencode.ai"
@@ -56,12 +56,11 @@
           :stream t
           :key 'gptel-api-key
           :models '(big-pickle
-                    deepseek-v4-flash-free
+                    x-preview-f-free
                     mimo-v2.5-free
+                    hy3-free
                     laguna-s-2.1-free
-                    ling-3.0-flash-free
-                    longcat-2.0-free
-                    north-mini-code-free
+                    nemotron-3-lightning-free
                     nemotron-3-ultra-free)))
 
   ;; DeepSeek
@@ -106,6 +105,9 @@
 (when emacs/>=30p
   (use-package gptel-magit
     :vc (:url "https://github.com/roife/gptel-magit" :rev :newest)
+    :custom
+    (gptel-magit-model 'x-preview-f-free)
+    (gptel-magit-backend (gptel-get-backend "OpenCode Zen"))
     :hook (magit-mode . gptel-magit-install)))
 
 ;; A native shell experience to interact with ACP agents
