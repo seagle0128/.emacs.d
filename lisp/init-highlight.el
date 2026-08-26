@@ -115,6 +115,7 @@ FACE defaults to inheriting from default and highlight."
   (symbol-overlay-face-6 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-7 ((t (:inherit nerd-icons-green :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit nerd-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
+  :custom (symbol-overlay-idle-time 0.3)
   :bind (("M-i"  . symbol-overlay-put)
          ("M-n"  . symbol-overlay-jump-next)
          ("M-p"  . symbol-overlay-jump-prev)
@@ -125,10 +126,9 @@ FACE defaults to inheriting from default and highlight."
          ([M-f3] . symbol-overlay-put)
          ([M-f4] . symbol-overlay-remove-all))
   :bind-keymap ("M-s s"  . symbol-overlay-map)
-  :hook ((prog-mode yaml-mode yaml-ts-mode)
-         (iedit-mode     . turn-off-symbol-overlay)
-         (iedit-mode-end . turn-on-symbol-overlay))
-  :custom (symbol-overlay-idle-time 0.3)
+  :hook ((after-find-file . turn-on-symbol-overlay)
+         (iedit-mode      . turn-off-symbol-overlay)
+         (iedit-mode-end  . turn-on-symbol-overlay))
   :config
   ;; Disable symbol highlighting while selecting
   (defun turn-off-symbol-overlay (&rest _)
@@ -149,7 +149,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Mark occurrences of current region (selection)
 (use-package region-occurrences-highlighter
-  :diminish
+  :diminish hi-lock-mode
   :bind (:map region-occurrences-highlighter-nav-mode-map
          ("M-n" . region-occurrences-highlighter-next)
          ("M-p" . region-occurrences-highlighter-prev))
