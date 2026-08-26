@@ -63,6 +63,7 @@
   :diminish
   :config
   (use-package eldoc-mouse
+    :diminish
     :bind (:map eldoc-mouse-mode-map
            ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
     :hook eglot-managed-mode
