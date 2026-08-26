@@ -336,6 +336,13 @@
       mouse-wheel-scroll-amount-horizontal 1
       mouse-wheel-progressive-speed nil)
 
+;; Smooth Scroll
+(when emacs/>=29p
+  (use-package ultra-scroll
+    :init (setq scroll-conservatively 3
+                scroll-margin 0)
+    :hook window-setup))
+
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch :diminish)
 
