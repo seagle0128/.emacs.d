@@ -31,7 +31,6 @@
 ;;; Code:
 
 (use-package flymake
-  :diminish
   :functions my/elisp-flymake-byte-compile
   :bind ("C-c f" . flymake-show-buffer-diagnostics)
   :hook prog-mode

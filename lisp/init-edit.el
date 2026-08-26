@@ -302,7 +302,6 @@
 ;; On-the-fly spell checker
 (use-package flyspell
   :ensure nil
-  :diminish
   :functions file-too-big-p
   :if (executable-find "aspell")
   :bind (:map flyspell-mode-map
