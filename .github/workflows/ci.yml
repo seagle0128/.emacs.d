@@ -51,5 +51,6 @@ jobs:
                         (user-init-file (locate-user-emacs-file \"init.el\")))
                     (setq package-check-signature nil)
                     (load early-init-file)
+                    (setq load-path-filter-function nil)
                     (load user-init-file))" \
           --eval "(message \"Testing...done\")"
