@@ -40,7 +40,6 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
-(declare-function apheleia-global-mode "apheleia")
 (declare-function browse-url-file-url "browse-url")
 (declare-function browse-url-interactive-arg "browse-url")
 (declare-function chart-bar-quickie "chart")
@@ -384,22 +383,18 @@ Return the fastest package archive."
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
   (let ((dir (expand-file-name user-emacs-directory)))
-    (unless (file-exists-p dir)
-      (user-error "\"%s\" doesn't exist" dir))
-
-    (message "Updating configurations...")
-    (let ((default-directory dir))
-      (vc-update))
-    (message "Updating configurations...done")))
+    (if (file-exists-p dir)
+        (let ((default-directory dir))
+          (message "Updating configurations...")
+          (vc-update))
+      (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-config #'update-config)
 
 (defun update-packages ()
   "Refresh package contents and update all packages."
   (interactive)
   (message "Updating packages...")
-  (and (fboundp 'apheleia-global-mode) (apheleia-global-mode -1))
   (package-upgrade-all)
-  (and (fboundp 'apheleia-global-mode) (apheleia-global-mode 1))
   (message "Updating packages...done"))
 (defalias 'centaur-update-packages #'update-packages)
 
@@ -413,14 +408,11 @@ Return the fastest package archive."
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
-  (let ((dir (or (getenv "DOTFILES")
-                 (expand-file-name "~/.dotfiles/"))))
+  (let ((dir (expand-file-name "~/.dotfiles/")))
     (if (file-exists-p dir)
-        (progn
+        (let ((default-directory dir))
           (message "Updating dotfiles...")
-          (let ((default-directory dir))
-            (vc-update))
-          (message "Updating dotfiles...done"))
+          (vc-update))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
@@ -429,11 +421,9 @@ Return the fastest package archive."
   (interactive)
   (let ((dir (expand-file-name "~/org/")))
     (if (file-exists-p dir)
-        (progn
+        (let ((default-directory dir))
           (message "Updating org files...")
-          (let ((default-directory dir))
-            (vc-update))
-          (message "Updating org files...done"))
+          (vc-update))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
 
