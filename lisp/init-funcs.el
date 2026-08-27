@@ -388,8 +388,8 @@ Return the fastest package archive."
       (user-error "\"%s\" doesn't exist" dir))
 
     (message "Updating configurations...")
-    (cd dir)
-    (vc-update)
+    (let ((default-directory dir))
+      (vc-update))
     (message "Updating configurations...done")))
 (defalias 'centaur-update-config #'update-config)
 
@@ -418,8 +418,8 @@ Return the fastest package archive."
     (if (file-exists-p dir)
         (progn
           (message "Updating dotfiles...")
-          (cd dir)
-          (vc-update)
+          (let ((default-directory dir))
+            (vc-update))
           (message "Updating dotfiles...done"))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
@@ -431,8 +431,8 @@ Return the fastest package archive."
     (if (file-exists-p dir)
         (progn
           (message "Updating org files...")
-          (cd dir)
-          (vc-update)
+          (let ((default-directory dir))
+            (vc-update))
           (message "Updating org files...done"))
       (message "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-org #'update-org)
