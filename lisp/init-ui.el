@@ -151,6 +151,8 @@
       "lsp" :toggle doom-modeline-lsp)
      ("g k" (setq doom-modeline-workspace-name (not doom-modeline-workspace-name))
       "workspace" :toggle doom-modeline-workspace-name)
+     ("g s" (setq doom-modeline-spell (not doom-modeline-spell))
+      "spell" :toggle doom-modeline-spell)
      ("g g" (setq doom-modeline-github (not doom-modeline-github))
       "github" :toggle doom-modeline-github)
      ("g n" (setq doom-modeline-gnus (not doom-modeline-gnus))
