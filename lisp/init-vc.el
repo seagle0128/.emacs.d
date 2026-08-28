@@ -112,7 +112,8 @@
     (advice-add #'git-messenger:format-detail :around #'my/git-messenger:format-detail)
 
     (defun my/git-messenger:popup-message ()
-      "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
+      "Popup message with `posframe', `pos-tip', `lv' or `message'.
+And dispatch actions with `hydra' in echo area."
       (interactive)
       (let* ((hydra-hint-display-type 'message)
              (vcs (git-messenger:find-vcs))
