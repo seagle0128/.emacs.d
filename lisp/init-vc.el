@@ -45,11 +45,6 @@
             (setq magit-commit-show-diff nil
                   magit-diff-refine-hunk nil)))
 
-;; Prime cache before Magit refresh
-(use-package magit-prime
-  :diminish
-  :hook after-init)
-
 ;; Show TODOs in Magit
 (use-package magit-todos
   :after magit-status
