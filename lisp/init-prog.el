@@ -41,6 +41,7 @@
 ;; Prettify Symbols (e.g., display “lambda” as “λ”)
 (use-package prog-mode
   :ensure nil
+  :functions centaur-treesit-available-p
   :hook (prog-mode . prettify-symbols-mode)
   :init
   (setq-default prettify-symbols-alist centaur-prettify-symbols-alist)
@@ -48,14 +49,18 @@
 
 ;; Tree-sitter support
 (when (centaur-treesit-available-p)
-  ;; Automatic Tree-sitter grammar management
-  (use-package treesit-auto
-    :functions centaur-treesit-available-p
-    :hook (after-init . global-treesit-auto-mode)
-    :init (setq treesit-auto-install 'prompt)
-    :config
-    ;; `rust-mode' will handle tree-sitter
-    (delete 'rust treesit-auto-langs)))
+  (if (boundp 'treesit-enabled-modes)
+      ;; Built into Emacs 31+
+      (use-package treesit
+        :ensure nil
+        :custom (treesit-enabled-modes t))
+    ;; Automatic Tree-sitter grammar management
+    (use-package treesit-auto
+      :custom (treesit-auto-install 'prompt)
+      :hook (after-init . global-treesit-auto-mode)
+      :config
+      ;; `rust-mode' will handle tree-sitter
+      (delete 'rust treesit-auto-langs))))
 
 ;; Show function arglist or variable docstring
 (use-package eldoc
