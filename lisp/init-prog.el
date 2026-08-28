@@ -53,7 +53,7 @@
       ;; Built into Emacs 31+
       (use-package treesit
         :ensure nil
-        :custom (treesit-enabled-modes t))
+        :custom (treesit-enabled-modes '(not rust-mode)))
     ;; Automatic Tree-sitter grammar management
     (use-package treesit-auto
       :custom (treesit-auto-install 'prompt)
