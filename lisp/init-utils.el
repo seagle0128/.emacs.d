@@ -74,7 +74,11 @@
                  ("C-x RET" . "coding-system")
                  ("C-x X" . "edebug")
                  ("C-x v b" . "vc-branch")
-                 ("C-x v M" . "vc-mergebase")))
+                 ("C-x v w" . "vc-working-tree")
+                 ("C-x v E" . "vc-outgoing")
+                 ("C-x v M" . "vc-mergebase")
+                 ("C-x v T" . "vc-unintegrated")
+                 ("C-x v T R" . "vc-remote-unintegrated")))
     (which-key-add-key-based-replacements (car map) (cdr map)))
 
   ;; Mode-specific key replacements
