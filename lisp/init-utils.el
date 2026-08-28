@@ -88,6 +88,8 @@
                       (python-ts-mode
                        ("C-c C-i" . "python-import")
                        ("C-c C-t" . "python-skeleton"))
+                      (rust-mode
+                       ("C-c C-c" . "rust-build"))
                       (markdown-ts-mode
                        ("C-c C-x" . "markdown-toggle")
                        ("C-c C-v" . "markdown-code-block"))
