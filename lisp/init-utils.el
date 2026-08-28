@@ -83,7 +83,14 @@
                        ("C-c C-v" . "org-babel")
                        ("C-c C-x" . "org-misc"))
                       (python-mode
+                       ("C-c C-i" . "python-import")
                        ("C-c C-t" . "python-skeleton"))
+                      (python-ts-mode
+                       ("C-c C-i" . "python-import")
+                       ("C-c C-t" . "python-skeleton"))
+                      (markdown-ts-mode
+                       ("C-c C-x" . "markdown-toggle")
+                       ("C-c C-v" . "markdown-code-block"))
                       (markdown-mode
                        ("C-c C-a" . "markdown-link")
                        ("C-c C-c" . "markdown-command")
