@@ -36,11 +36,13 @@
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
+  :custom
+  (which-key-dont-use-unicode nil)
+  (which-key-max-description-length 30)
+  (which-key-lighter nil)
+  (which-key-show-remaining-keys t)
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook ((after-init server-after-make-frame) . which-key-mode)
-  :init (setq which-key-max-description-length 30
-              which-key-lighter nil
-              which-key-show-remaining-keys t)
   :config
   ;; Key prefix descriptions
   (dolist (map '(("M-s h"     . "highlight")
