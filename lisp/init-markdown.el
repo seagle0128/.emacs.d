@@ -84,6 +84,9 @@ mermaid.initialize({
   :config
   ;; Support `mermaid'
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
+  (use-package markdown-mermaid
+    :bind (:map markdown-mode-map
+           ("C-c M" . markdown-mermaid-preview)))
 
   (with-no-warnings
     ;; Use `which-key' instead
