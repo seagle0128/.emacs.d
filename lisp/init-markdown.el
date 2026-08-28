@@ -33,15 +33,9 @@
 (eval-when-compile
   (require 'init-const))
 
-(if (and emacs/>=31p (centaur-treesit-available-p))
-    ;; Built into Emacs 31+
-    (use-package markdown-ts-mode
-      :ensure nil
-      :functions centaur-treesit-available-p
-      :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
-      :custom (markdown-ts-ellipsis " ⌄")
-      :config (require 'markdown-ts-mode-x))
+(when (centaur-treesit-available-p)
   (use-package markdown-mode
+    :functions centaur-treesit-available-p
     :mode (("README\\.md\\'" . gfm-mode))
     :init
     (setq markdown-enable-wiki-links t
@@ -105,32 +99,32 @@ mermaid.initialize({
       (defun my/markdown-export-and-preview ()
         "Preview with `xwidget' if applicable, otherwise with the default browser."
         (centaur-browse-url-of-file (markdown-export)))
-      (advice-add #'markdown-export-and-preview :override #'my/markdown-export-and-preview)))
-  :config
-  ;; Table of contents
-  (use-package markdown-toc
-    :diminish
-    :bind (:map markdown-mode-command-map
-           ("r" . markdown-toc-generate-or-refresh-toc))
-    :hook markdown-mode
-    :init (setq markdown-toc-indentation-space 2
-                markdown-toc-header-toc-title "\n## Table of Contents"
-                markdown-toc-user-toc-structure-manipulation-fn 'cdr)
-    :config
-    (with-no-warnings
-      (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
-        "Generate or refresh toc after disabling lsp."
-        (cond
-         ((bound-and-true-p eglot--manage-mode)
-          (eglot--manage-mode -1)
-          (apply fn args)
-          (eglot--manage-mode 1))
-         ((bound-and-true-p lsp-managed-mode)
-          (lsp-managed-mode -1)
-          (apply fn args)
-          (lsp-managed-mode 1))
-         (t
-          (apply fn args)))))))
+      (advice-add #'markdown-export-and-preview :override #'my/markdown-export-and-preview))
+
+    ;; Table of contents
+    (use-package markdown-toc
+      :diminish
+      :bind (:map markdown-mode-command-map
+             ("r" . markdown-toc-generate-or-refresh-toc))
+      :hook markdown-mode
+      :init (setq markdown-toc-indentation-space 2
+                  markdown-toc-header-toc-title "\n## Table of Contents"
+                  markdown-toc-user-toc-structure-manipulation-fn 'cdr)
+      :config
+      (with-no-warnings
+        (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
+          "Generate or refresh toc after disabling lsp."
+          (cond
+           ((bound-and-true-p eglot--manage-mode)
+            (eglot--manage-mode -1)
+            (apply fn args)
+            (eglot--manage-mode 1))
+           ((bound-and-true-p lsp-managed-mode)
+            (lsp-managed-mode -1)
+            (apply fn args)
+            (lsp-managed-mode 1))
+           (t
+            (apply fn args))))))))
 
 ;; Preview markdown files
 ;; @see https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
