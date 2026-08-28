@@ -126,7 +126,7 @@ FACE defaults to inheriting from default and highlight."
          ([M-f3] . symbol-overlay-put)
          ([M-f4] . symbol-overlay-remove-all))
   :bind-keymap ("M-s s"  . symbol-overlay-map)
-  :hook ((after-find-file . turn-on-symbol-overlay)
+  :hook ((after-change-major-mode . turn-on-symbol-overlay)
          (iedit-mode      . turn-off-symbol-overlay)
          (iedit-mode-end  . turn-on-symbol-overlay))
   :config
