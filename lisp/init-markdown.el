@@ -30,25 +30,20 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode))
+  :init
+  (setq markdown-enable-wiki-links t
+        markdown-italic-underscore t
+        markdown-asymmetric-header t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-gfm-uppercase-checkbox t
+        markdown-fontify-code-blocks-natively t
 
-(when (centaur-treesit-available-p)
-  (use-package markdown-mode
-    :functions centaur-treesit-available-p
-    :mode (("README\\.md\\'" . gfm-mode))
-    :init
-    (setq markdown-enable-wiki-links t
-          markdown-italic-underscore t
-          markdown-asymmetric-header t
-          markdown-make-gfm-checkboxes-buttons t
-          markdown-gfm-uppercase-checkbox t
-          markdown-fontify-code-blocks-natively t
-
-          markdown-content-type "application/xhtml+xml"
-          markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
-                               "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
-          markdown-xhtml-header-content "
+        markdown-content-type "application/xhtml+xml"
+        markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+                             "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
+        markdown-xhtml-header-content "
 <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 <style>
 body {
@@ -81,50 +76,50 @@ mermaid.initialize({
 });
 </script>
 "
-          markdown-gfm-additional-languages "Mermaid")
+        markdown-gfm-additional-languages "Mermaid")
 
-    ;; `multimarkdown' is necessary for `highlight.js' and `mermaid.js'
-    (when (executable-find "multimarkdown")
-      (setq markdown-command "multimarkdown"))
+  ;; `multimarkdown' is necessary for `highlight.js' and `mermaid.js'
+  (when (executable-find "multimarkdown")
+    (setq markdown-command "multimarkdown"))
+  :config
+  ;; Support `mermaid'
+  (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
+
+  (with-no-warnings
+    ;; Use `which-key' instead
+    (advice-add #'markdown--command-map-prompt :override #'ignore)
+    (advice-add #'markdown--style-map-prompt   :override #'ignore)
+
+    ;; Preview with webkit
+    (defun my/markdown-export-and-preview ()
+      "Preview with `xwidget' if applicable, otherwise with the default browser."
+      (centaur-browse-url-of-file (markdown-export)))
+    (advice-add #'markdown-export-and-preview :override #'my/markdown-export-and-preview))
+
+  ;; Table of contents
+  (use-package markdown-toc
+    :diminish
+    :bind (:map markdown-mode-command-map
+           ("r" . markdown-toc-generate-or-refresh-toc))
+    :hook markdown-mode
+    :init (setq markdown-toc-indentation-space 2
+                markdown-toc-header-toc-title "\n## Table of Contents"
+                markdown-toc-user-toc-structure-manipulation-fn 'cdr)
     :config
-    ;; Support `mermaid'
-    (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
-
     (with-no-warnings
-      ;; Use `which-key' instead
-      (advice-add #'markdown--command-map-prompt :override #'ignore)
-      (advice-add #'markdown--style-map-prompt   :override #'ignore)
-
-      ;; Preview with webkit
-      (defun my/markdown-export-and-preview ()
-        "Preview with `xwidget' if applicable, otherwise with the default browser."
-        (centaur-browse-url-of-file (markdown-export)))
-      (advice-add #'markdown-export-and-preview :override #'my/markdown-export-and-preview))
-
-    ;; Table of contents
-    (use-package markdown-toc
-      :diminish
-      :bind (:map markdown-mode-command-map
-             ("r" . markdown-toc-generate-or-refresh-toc))
-      :hook markdown-mode
-      :init (setq markdown-toc-indentation-space 2
-                  markdown-toc-header-toc-title "\n## Table of Contents"
-                  markdown-toc-user-toc-structure-manipulation-fn 'cdr)
-      :config
-      (with-no-warnings
-        (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
-          "Generate or refresh toc after disabling lsp."
-          (cond
-           ((bound-and-true-p eglot--manage-mode)
-            (eglot--manage-mode -1)
-            (apply fn args)
-            (eglot--manage-mode 1))
-           ((bound-and-true-p lsp-managed-mode)
-            (lsp-managed-mode -1)
-            (apply fn args)
-            (lsp-managed-mode 1))
-           (t
-            (apply fn args))))))))
+      (define-advice markdown-toc-generate-toc (:around (fn &rest args) lsp)
+        "Generate or refresh toc after disabling lsp."
+        (cond
+         ((bound-and-true-p eglot--manage-mode)
+          (eglot--manage-mode -1)
+          (apply fn args)
+          (eglot--manage-mode 1))
+         ((bound-and-true-p lsp-managed-mode)
+          (lsp-managed-mode -1)
+          (apply fn args)
+          (lsp-managed-mode 1))
+         (t
+          (apply fn args)))))))
 
 ;; Preview markdown files
 ;; @see https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite

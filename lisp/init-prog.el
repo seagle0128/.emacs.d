@@ -56,6 +56,7 @@
         :custom (treesit-enabled-modes '(not rust-mode markdown-mode)))
     ;; Automatic Tree-sitter grammar management
     (use-package treesit-auto
+      :defines treesit-auto-langs
       :custom (treesit-auto-install 'prompt)
       :hook (after-init . global-treesit-auto-mode)
       :config
