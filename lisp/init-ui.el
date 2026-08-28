@@ -268,6 +268,8 @@
 
 ;; A minor-mode menu for mode-line
 (use-package minions
+  :custom (minions-prominent-modes '(markdown-ts-code-block-in-context-mode
+                                     markdown-ts-in-table-mode))
   :hook after-init)
 
 ;; Icons
