@@ -231,18 +231,20 @@ FACE defaults to inheriting from default and highlight."
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
   (dolist (keyword '("TRICK" "WORKAROUND"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
-  (dolist (keyword '("DEBUG" "STUB"))
-    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb")))
 
-  ;; Integrate into flymake
-  (with-eval-after-load 'flymake
-    (add-hook 'flymake-diagnostic-functions #'hl-todo-flymake))
-
-  ;; Integrate into magit
+  ;; Highlight TODO keywords in Magit
   (with-eval-after-load 'magit
     (add-hook 'magit-log-wash-summary-hook #'hl-todo-search-and-highlight t)
     (add-hook 'magit-revision-wash-message-hook #'hl-todo-search-and-highlight t))
 
+  ;; Search TODO keywords in consult
+  (when emacs/>=29p
+    (use-package consult-todo
+      :bind (("C-c c h" . consult-todo)
+             :map hl-todo-mode-map
+             ("C-c t l" . consult-todo))))
+
+  ;; Search TODO keywords in rg
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."
     (interactive
