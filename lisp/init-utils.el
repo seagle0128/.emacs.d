@@ -155,17 +155,19 @@
 ;; Search tools
 (use-package grep
   :ensure nil
-  :init (setq grep-use-headings t))
+  :custom (grep-use-headings t))
 
 ;; `grep-edit-mode' is built-in since 31
 (unless emacs/>=31p
   ;; Writable `grep' buffer
   (use-package wgrep
-    :init (setq wgrep-auto-save-buffer t
-                wgrep-change-readonly-file t)))
+    :custom
+    (wgrep-auto-save-buffer t)
+    (wgrep-change-readonly-file t)))
 
 ;; Fast search tool `ripgrep'
 (use-package rg
+  :defines rg-custom-type-aliases
   :hook (after-init . rg-enable-default-bindings)
   :config (add-to-list 'rg-custom-type-aliases '("tmpl" . "*.tmpl")))
 
