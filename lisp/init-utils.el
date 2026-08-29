@@ -287,7 +287,7 @@
 
 ;; Misc
 (use-package file-info
-  :functions posframe-poshandler-window-center
+  :functions posframe-poshandler-frame-center
   :commands file-info-show
   :bind ("C-c c i" . my/file-info-show)
   :config
@@ -296,8 +296,7 @@
     (interactive)
     (let ((hydra-posframe-show-params
            (plist-put (copy-alist hydra-posframe-show-params)
-                      :poshandler
-                      #'posframe-poshandler-window-center)))
+                      :poshandler #'posframe-poshandler-frame-center)))
       (file-info-show))))
 
 (use-package reveal-in-folder
