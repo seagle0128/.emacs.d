@@ -165,11 +165,6 @@
 ;; Fast search tool `ripgrep'
 (use-package rg
   :hook (after-init . rg-enable-default-bindings)
-  :bind (:map rg-global-map
-         ("c" . rg-dwim-current-dir)
-         ("f" . rg-dwim-current-file)
-         ("m" . rg-menu))
-  :init (setq rg-show-columns t)
   :config (add-to-list 'rg-custom-type-aliases '("tmpl" . "*.tmpl")))
 
 ;; A Simple and cool pomodoro timer
