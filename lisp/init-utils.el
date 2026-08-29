@@ -289,7 +289,16 @@
 
 ;; Misc
 (use-package file-info
-  :bind ("C-c c i" . file-info-show))
+  :functions posframe-poshandler-window-center
+  :commands file-info-show
+  :bind ("C-c c i" . (lambda ()
+                       (interactive)
+                       (let ((hydra-posframe-show-params
+                              (plist-put (copy-alist hydra-posframe-show-params)
+                                         :poshandler
+                                         #'posframe-poshandler-window-center)))
+                         (file-info-show)))))
+
 (use-package reveal-in-folder)
 
 (provide 'init-utils)
