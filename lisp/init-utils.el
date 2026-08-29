@@ -291,15 +291,19 @@
 (use-package file-info
   :functions posframe-poshandler-window-center
   :commands file-info-show
-  :bind ("C-c c i" . (lambda ()
-                       (interactive)
-                       (let ((hydra-posframe-show-params
-                              (plist-put (copy-alist hydra-posframe-show-params)
-                                         :poshandler
-                                         #'posframe-poshandler-window-center)))
-                         (file-info-show)))))
+  :bind ("C-c c i" . my/file-info-show)
+  :config
+  (defun my/file-info-show ()
+    "Show info about file inside via hydra."
+    (interactive)
+    (let ((hydra-posframe-show-params
+           (plist-put (copy-alist hydra-posframe-show-params)
+                      :poshandler
+                      #'posframe-poshandler-window-center)))
+      (file-info-show))))
 
-(use-package reveal-in-folder)
+(use-package reveal-in-folder
+  :bind ("C-c R" . reveal-in-folder))
 
 (provide 'init-utils)
 
