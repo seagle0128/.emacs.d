@@ -157,13 +157,11 @@
   :ensure nil
   :custom (grep-use-headings t))
 
-;; `grep-edit-mode' is built-in since 31
-(unless emacs/>=31p
-  ;; Writable `grep' buffer
-  (use-package wgrep
-    :custom
-    (wgrep-auto-save-buffer t)
-    (wgrep-change-readonly-file t)))
+;; Writable `grep' buffer
+(use-package wgrep
+  :custom
+  (wgrep-auto-save-buffer t)
+  (wgrep-change-readonly-file t))
 
 ;; Fast search tool `ripgrep'
 (use-package rg
