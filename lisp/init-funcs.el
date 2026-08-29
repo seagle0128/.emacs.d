@@ -382,12 +382,12 @@ Return the fastest package archive."
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
-  (let ((dir (expand-file-name user-emacs-directory)))
-    (if (file-exists-p dir)
-        (let ((default-directory dir))
+  (let ((default-directory (expand-file-name user-emacs-directory)))
+    (if (file-exists-p default-directory)
+        (progn
           (message "Updating configurations...")
           (vc-update))
-      (message "\"%s\" doesn't exist" dir))))
+      (warn "\"%s\" doesn't exist" default-directory))))
 (defalias 'centaur-update-config #'update-config)
 
 (defun update-packages ()
@@ -408,23 +408,23 @@ Return the fastest package archive."
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
-  (let ((dir (expand-file-name "~/.dotfiles/")))
-    (if (file-exists-p dir)
-        (let ((default-directory dir))
+  (let ((default-directory (expand-file-name "~/.dotfiles/")))
+    (if (file-exists-p default-directory)
+        (progn
           (message "Updating dotfiles...")
           (vc-update))
-      (message "\"%s\" doesn't exist" dir))))
+      (warn "\"%s\" doesn't exist" default-directory))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
 (defun update-org ()
   "Update Org files to the latest version."
   (interactive)
-  (let ((dir (expand-file-name "~/org/")))
-    (if (file-exists-p dir)
-        (let ((default-directory dir))
+  (let ((default-directory (expand-file-name "~/org/")))
+    (if (file-exists-p default-directory)
+        (progn
           (message "Updating org files...")
           (vc-update))
-      (message "\"%s\" doesn't exist" dir))))
+      (warn "\"%s\" doesn't exist" default-directory))))
 (defalias 'centaur-update-org #'update-org)
 
 (defun update-all ()
