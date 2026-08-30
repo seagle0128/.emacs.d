@@ -342,8 +342,9 @@
 ;; Smooth Scroll
 (when emacs/>=29p
   (use-package ultra-scroll
-    :init (setq scroll-conservatively 3
-                scroll-margin 0)
+    :custom
+    (scroll-conservatively 3)
+    (scroll-margin 0)
     :hook window-setup))
 
 ;; Use fixed pitch where it's sensible
@@ -359,9 +360,13 @@
 ;; Display transient in the child frame
 (use-package transient-posframe
   :diminish
-  :defines posframe-border-width
   :functions childframe-completion-workable-p
   :commands transient-posframe-mode
+  :custom
+  (transient-mode-line-format nil)
+  (transient-posframe-border-width posframe-border-width)
+  (transient-posframe-parameters '((left-fringe . 8) (right-fringe . 8)))
+  (transient-posframe-poshandler #'posframe-poshandler-frame-center)
   :custom-face
   (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
   :hook ((after-init server-after-make-frame)
@@ -370,11 +375,7 @@
            "Display transient in the child frame if applicable."
            (if (childframe-completion-workable-p)
                (transient-posframe-mode 1)
-             (transient-posframe-mode -1))))
-  :init (setq transient-mode-line-format nil
-              transient-posframe-border-width posframe-border-width
-              transient-posframe-parameters '((left-fringe . 8)
-                                              (right-fringe . 8))))
+             (transient-posframe-mode -1)))))
 
 ;; For macOS
 (with-no-warnings
