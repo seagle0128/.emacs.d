@@ -116,11 +116,7 @@
 
 ;; REST
 (use-package restclient
-  :mode ("\\.http\\'" . restclient-mode)
-  :config
-  (use-package restclient-test
-    :diminish
-    :hook restclient-mode))
+  :mode ("\\.http\\'" . restclient-mode))
 
 (provide 'init-web)
 
