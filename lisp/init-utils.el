@@ -1,3 +1,4 @@
+
 ;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2026 Vincent Zhang
@@ -49,6 +50,7 @@
                  ("M-s s"     . "symbol-overlay")
                  ("C-c &"     . "yasnippet")
                  ("C-c @"     . "hideshow")
+                 ("C-c a"     . "ai")
                  ("C-c c"     . "consult")
                  ("C-c d"     . "dict")
                  ("C-c l"     . "link-hint")
