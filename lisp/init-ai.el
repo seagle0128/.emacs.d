@@ -44,7 +44,9 @@
   :functions (gptel-make-openai gptel-make-deepseek
                gptel-make-anthropic gptel-make-gemini)
   :bind (("C-<f12>"   . gptel)
-         ("C-M-<f12>" . gptel-menu))
+         ("C-M-<f12>" . gptel-menu)
+         ("C-c a g"   . gptel)
+         ("C-c a G"   . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
   :config
   ;; Set default model and backend
@@ -117,34 +119,36 @@
     :custom (agent-shell-display-action '(display-buffer-reuse-window))
     :bind (("<f12>"      . agent-shell)
            ("<f13>"      . agent-shell)
-           ("C-c a"      . agent-shell)
-           ("C-c A"      . agent-shell-new-shell)
+           ("C-c a a"    . agent-shell)
+           ("C-c a A"    . agent-shell-new-shell)
            :map agent-shell-mode-map
            ("C-h ?"      . agent-shell-help-menu)
-           ("C-<return>" . agent-shell-help-menu)
-           :map magit-mode-map
-           ("C-c C-g"    . centaur-generate-commit)
-           ("C-c C-r"    . centaur-review-commit))
+           ("C-<return>" . agent-shell-help-menu))
     :config
-    ;; Integrate into magit
-    (with-eval-after-load 'magit
-      (defun centaur-generate-commit ()
-        "Generate conventional commit message from staged changes."
-        (interactive)
-        (if (magit-staged-files)
-            (agent-shell-insert
-             :submit t
-             :text "Commit changes with conventional message")
-          (user-error "No staged changes")))
+    (with-no-warnings
+      ;; Integrate into magit
+      (with-eval-after-load 'magit
+        (defun centaur-generate-commit ()
+          "Generate conventional commit message from staged changes."
+          (interactive)
+          (if (magit-staged-files)
+              (agent-shell-insert
+               :submit t
+               :text "Commit changes with conventional message")
+            (user-error "No staged changes")))
 
-      (defun centaur-review-commit ()
-        "Send the commit at point to agent-shell for review."
-        (interactive)
-        (if-let* ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
-            (agent-shell-insert
-             :submit t
-             :text (format "Review commit: %s" commit))
-          (user-error "No magit commit at point"))))))
+        (defun centaur-review-commit ()
+          "Send the commit at point to agent-shell for review."
+          (interactive)
+          (if-let* ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
+              (agent-shell-insert
+               :submit t
+               :text (format "Review commit: %s" commit))
+            (user-error "No magit commit at point")))
+
+        (bind-keys :map magit-mode-map
+          ("C-c C-g" . centaur-generate-commit)
+          ("C-c C-r" . centaur-review-commit))))))
 
 (provide 'init-ai)
 
