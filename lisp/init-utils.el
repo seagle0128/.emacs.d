@@ -1,4 +1,3 @@
-
 ;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2026 Vincent Zhang
