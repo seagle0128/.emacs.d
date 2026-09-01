@@ -268,11 +268,16 @@
             ghostel-mode shell-mode term-mode
             embark-collect-mode pdf-annot-list-mode))))
 
-;; A minor-mode menu for mode-line
-(use-package minions
-  :custom (minions-prominent-modes '(markdown-ts-code-block-in-context-mode
-                                     markdown-ts-in-table-mode))
-  :hook after-init)
+;; Hide minor-modes lighters
+(if (boundp 'mode-line-collapse-minor-modes)
+    ;; Built into Emacs 31+
+    (setq mode-line-collapse-minor-modes '(not markdown-ts-code-block-in-context-mode
+                                               markdown-ts-in-table-mode))
+  ;; A minor-mode menu for mode-line
+  (use-package minions
+    :custom (minions-prominent-modes '(markdown-ts-code-block-in-context-mode
+                                       markdown-ts-in-table-mode))
+    :hook after-init))
 
 ;; Icons
 (use-package nerd-icons
