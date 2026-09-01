@@ -32,7 +32,6 @@
 
 ;; Yet another snippet extension
 (use-package yasnippet
-  :diminish yas-minor-mode
   :hook (after-init . yas-global-mode))
 
 ;; Collection of yasnippet snippets

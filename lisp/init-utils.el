@@ -35,7 +35,6 @@
 
 ;; Display available keybindings in popup
 (use-package which-key
-  :diminish
   :custom
   (which-key-dont-use-unicode nil)
   (which-key-max-description-length 30)
@@ -120,7 +119,6 @@
 
 ;; Show 'which-key' in the child frame
 (use-package which-key-posframe
-  :diminish
   :defines posframe-border-width
   :functions childframe-completion-workable-p
   :commands which-key-posframe-mode
@@ -140,7 +138,6 @@
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
-  :diminish
   :bind (:map persistent-scratch-mode-map
          ([remap kill-buffer] . (lambda (&rest _)
                                   (interactive)
@@ -184,7 +181,6 @@
 
 ;; Nice writing
 (use-package olivetti
-  :diminish
   :bind ("<f7>" . olivetti-mode)
   :init (setq olivetti-body-width 0.62))
 

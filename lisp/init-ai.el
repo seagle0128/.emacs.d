@@ -40,7 +40,6 @@
 ;;   machine api.anthropic.com              login api-key password <claude_key>
 ;;
 (use-package gptel
-  :diminish
   :functions (gptel-make-openai gptel-make-deepseek
                gptel-make-anthropic gptel-make-gemini)
   :bind (("C-<f12>"   . gptel)
@@ -112,7 +111,6 @@
 ;; A native shell experience to interact with ACP agents
 (when emacs/>=29p
   (use-package agent-shell
-    :diminish agent-shell-ui-mode
     :commands agent-shell-insert
     :defines magit-mode-map
     :functions (magit-staged-files magit-commit-p magit-thing-at-point)

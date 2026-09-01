@@ -78,12 +78,10 @@
 
   ;; Colorful dired
   (use-package diredfl
-    :diminish
     :hook dired-mode)
 
   ;; Shows icons in dired
   (use-package nerd-icons-dired
-    :diminish
     :functions (nerd-icons-icon-for-dir my/nerd-icons-icon-for-dir)
     :hook dired-mode
     :init

@@ -37,7 +37,6 @@
 ;; Dashboard
 (when centaur-dashboard
   (use-package dashboard
-    :diminish
     :autoload dashboard-setup-startup-hook
     :functions icons-displayable-p nerd-icons-mdicon nerd-icons-octicon
     :custom-face

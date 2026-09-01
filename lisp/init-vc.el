@@ -166,7 +166,6 @@ And dispatch actions with `hydra' in echo area."
 ;; Resolve diff3 conflicts
 (use-package smerge-mode
   :ensure nil
-  :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "Smerge" 'octicon "nf-oct-diff")
     :color pink :quit-key ("q" "C-g"))

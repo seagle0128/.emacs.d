@@ -33,7 +33,6 @@
 (defun elixir-auto-config ()
   "Configure elixir automatically."
   (use-package alchemist
-    :diminish (alchemist-mode alchemist-phoenix-mode)
     :hook ((elixir-mode elixir-ts-mode)
            (alchemist-mode . alchemist-phoenix-mode))))
 

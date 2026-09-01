@@ -103,7 +103,6 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight symbols
 (use-package symbol-overlay
-  :diminish
   :functions (easy-kill easy-kill-destroy-candidate)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
@@ -149,7 +148,6 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Mark occurrences of current region (selection)
 (use-package region-occurrences-highlighter
-  :diminish hi-lock-mode
   :bind (:map region-occurrences-highlighter-nav-mode-map
          ("M-n" . region-occurrences-highlighter-next)
          ("M-p" . region-occurrences-highlighter-prev))
@@ -195,7 +193,6 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Colorize color names in buffers
 (use-package colorful-mode
-  :diminish
   :custom
   (colorful-use-prefix t)
   (colorful-prefix-string "■")
@@ -318,7 +315,6 @@ FACE defaults to inheriting from default and highlight."
 ;; Pulse modified region
 (when emacs/>=29p
   (use-package goggles
-    :diminish
     :hook (prog-mode text-mode conf-mode)))
 
 (provide 'init-highlight)

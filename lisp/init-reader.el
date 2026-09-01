@@ -37,9 +37,6 @@
 (when (display-graphic-p)
   (use-package pdf-view
     :ensure pdf-tools
-    :diminish (pdf-view-themed-minor-mode
-               pdf-view-midnight-minor-mode
-               pdf-view-printer-minor-mode)
     :defines pdf-annot-activate-created-annotations
     :functions pdf-tools-install
     :hook ((pdf-tools-enabled . pdf-view-auto-slice-minor-mode)

@@ -49,7 +49,6 @@
 
 ;; Display Flymake errors with overlays
 (use-package flyover
-  :diminish
   :functions centaur-dark-theme-p
   :custom
   (flyover-checkers '(flymake))

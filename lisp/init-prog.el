@@ -66,10 +66,8 @@
 ;; Show function arglist or variable docstring
 (use-package eldoc
   :ensure nil
-  :diminish
   :config
   (use-package eldoc-mouse
-    :diminish
     :bind (:map eldoc-mouse-mode-map
            ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
     :hook eglot-managed-mode
@@ -95,12 +93,10 @@
 
 ;; Code styles
 (use-package editorconfig
-  :diminish
   :hook after-init)
 
 ;; Reformat buffer stably
 (use-package apheleia
-  :diminish
   :hook (after-init . apheleia-global-mode))
 
 ;; Run commands quickly

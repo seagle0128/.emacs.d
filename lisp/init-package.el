@@ -173,14 +173,11 @@
       (use-package-concat
        (mapcar #'(lambda (def)
                    `(progn
-                    (apply #'face-spec-set (append (backquote ,def)))
-                    (put ',(car def) 'face-modified t)))
+                      (apply #'face-spec-set (append (backquote ,def)))
+                      (put ',(car def) 'face-modified t)))
                args)
        (use-package-process-keywords name rest state)))
     (advice-add #'use-package-handler/:custom-face :override #'my/use-package-handler/:custom-face)))
-
-;; Required by `use-package'
-(use-package diminish)
 
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)

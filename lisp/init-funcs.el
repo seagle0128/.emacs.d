@@ -541,7 +541,6 @@ Return the fastest package archive."
      ;; System-appearance themes
      (use-package auto-dark
        :ensure t
-       :diminish
        :commands auto-dark-mode
        :init
        (setq auto-dark-themes `((,(alist-get 'dark centaur-system-themes))

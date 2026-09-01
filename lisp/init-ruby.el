@@ -37,12 +37,10 @@
 
 ;; Ruby YARD comments
 (use-package yard-mode
-  :diminish
   :hook (ruby-mode . yard-mode))
 
 ;; Ruby refactoring helpers
 (use-package ruby-refactor
-  :diminish
   :hook (ruby-mode . ruby-refactor-mode-launch))
 
 ;; Yet Another RI interface for Emacs
@@ -51,7 +49,6 @@
 
 ;; RSpec
 (use-package rspec-mode
-  :diminish
   :autoload rspec-install-snippets
   :hook (dired-mode . rspec-dired-mode)
   :config (rspec-install-snippets))
