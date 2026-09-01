@@ -113,8 +113,13 @@
 
   ;; `eldoc' support
   (use-package esh-help
-    :commands setup-esh-help-eldoc
-    :init (setup-esh-help-eldoc))
+    :commands esh-help-eldoc-command
+    :preface
+    (defun my/eshell-enable-esh-help-eldoc ()
+      "Enable `esh-help' Eldoc support in the current Eshell buffer."
+      (setq-local eldoc-documentation-function
+                  #'esh-help-eldoc-command))
+    :hook (eshell-mode . my/eshell-enable-esh-help-eldoc))
 
   ;; `cd' to frequent directory in `eshell'
   (use-package eshell-z
