@@ -189,11 +189,7 @@
 
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
-  :functions diminish
-  :hook (after-init . beginend-global-mode)
-  :config (mapc (lambda (pair)
-                  (diminish (cdr pair)))
-                beginend-modes))
+  :hook (after-init . beginend-global-mode))
 
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
