@@ -129,7 +129,6 @@ FACE defaults to inheriting from default and highlight."
          (iedit-mode      . turn-off-symbol-overlay)
          (iedit-mode-end  . turn-on-symbol-overlay))
   :config
-  ;; Disable symbol highlighting while selecting
   (defun turn-off-symbol-overlay (&rest _)
     "Turn off symbol highlighting."
     (interactive)
@@ -141,6 +140,7 @@ FACE defaults to inheriting from default and highlight."
     (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
       (symbol-overlay-mode 1)))
 
+  ;; Disable symbol highlighting while selecting
   (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
   (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
   (advice-add #'easy-kill :after #'turn-off-symbol-overlay)

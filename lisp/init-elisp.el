@@ -33,11 +33,15 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
+  :defines elisp-scope-unsafe-macros
   :config
   ;; Syntax highlighting of known Elisp symbols
   (if (boundp 'elisp-fontify-semantically)
       ;; Built into Emacs 31+
-      (setq elisp-fontify-semantically t)
+      (progn
+        (setq elisp-fontify-semantically t)
+        (with-eval-after-load 'elisp-scope
+          (add-to-list 'elisp-scope-unsafe-macros 'defhydra)))
     (use-package highlight-defined
       :hook (emacs-lisp-mode inferior-emacs-lisp-mode)))
 
