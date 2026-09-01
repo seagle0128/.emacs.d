@@ -185,9 +185,10 @@ interactively.  Turn the filename into a URL with function
 (defun reload-init-file ()
   "Reload Emacs configurations."
   (interactive)
-  (load early-init-file)
-  (load user-init-file)
-  (run-hooks 'after-init-hook 'window-setup-hook 'emacs-startup-hook))
+  (when (yes-or-no-p "Really reload Emacs configurations?")
+    (load early-init-file)
+    (load user-init-file)
+    (run-hooks 'after-init-hook 'window-setup-hook 'emacs-startup-hook)))
 (defalias 'centaur-reload-init-file #'reload-init-file)
 
 ;; Browse the homepage
