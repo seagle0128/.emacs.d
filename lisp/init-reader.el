@@ -79,7 +79,7 @@
     (defun my/nov-content-metadata (fn &rest args)
       "Wrapper for `nov-content-metadata'."
       (ignore-errors (apply fn args)))
-    (advice-add #'nov-content-metadata :arround #'my/nov-content-metadata))
+    (advice-add #'nov-content-metadata :around #'my/nov-content-metadata))
 
   ;; Fix encoding issue on Windows
   (when sys/win32p
