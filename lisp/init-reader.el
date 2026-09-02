@@ -66,7 +66,7 @@
   :mode ("\\.epub\\'" . nov-mode)
   :hook (nov-mode . my/nov-setup)
   :bind ("M-<f7>" . centaur-read-mode)
-  :init
+  :preface
   (defun my/nov-setup ()
     "Setup `nov-mode' for better reading experience."
     (visual-line-mode 1)
@@ -74,16 +74,12 @@
     (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5))
   :config
   (with-no-warnings
-    ;; WORKAROUND: errors while opening `nov' files with Unicode characters
+    ;; HACK: ignore invalid metadata which caused by Unicode characters
     ;; @see https://github.com/wasamasa/nov.el/issues/63
-    (defun my/nov-content-unique-identifier (content)
-      "Return the the unique identifier for CONTENT."
-      (let* ((name (nov-content-unique-identifier-name content))
-             (selector (format "package>metadata>identifier[id='%s']"
-                               (regexp-quote name)))
-             (id (car (esxml-node-children (esxml-query selector content)))))
-        (and id (intern id))))
-    (advice-add #'nov-content-unique-identifier :override #'my/nov-content-unique-identifier))
+    (defun my/nov-content-metadata (fn &rest args)
+      "Wrapper for `nov-content-metadata'."
+      (ignore-errors (apply fn args)))
+    (advice-add #'nov-content-metadata :arround #'my/nov-content-metadata))
 
   ;; Fix encoding issue on Windows
   (when sys/win32p
