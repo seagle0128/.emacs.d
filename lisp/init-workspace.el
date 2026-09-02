@@ -54,7 +54,7 @@
   (tabspaces-include-buffers '("*scratch*"))
   (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*" "*ghostel*" "*shell*" "*eshell*"))
   (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
-  (tabspaces-project-switch-opens-workspace t)
+  (tabspaces-project-switch-opens-workspace nil)
 
   ;; sessions
   (tabspaces-session (not centaur-dashboard))
@@ -92,6 +92,17 @@
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult-source-workspace))
 
+    ;; Switch to default workspace
+    (defun my/tabspaces-switch-to-default-workspace ()
+      "Switch to the default workspace."
+      (when tabspaces-mode
+        (tabspaces-switch-or-create-workspace tabspaces-default-tab)
+        (quit-windows-on messages-buffer-name)))
+    (advice-add #'tabspaces-restore-session :after #'my/tabspaces-switch-to-default-workspace)
+
+    ;; Backup tabspaces sessions
+    (defconst tabspaces--keep-days 14
+      "How long (days) to keep tabspaces sessions.")
     (defun tabspaces--delete-old-files (dir days)
       "Delete backup files of DIR, with timestamp suffix older than DAYS days."
       (let ((cutoff (time-subtract (current-time)
@@ -108,29 +119,21 @@
         (let ((dir (expand-file-name "tabspaces" user-emacs-directory)))
           (unless (file-exists-p dir)
             (mkdir dir))
-          ;; Delete the sessions that are older than 14 days
-          (tabspaces--delete-old-files dir 14))
+          ;; Cleanup the old sessions
+          (tabspaces--delete-old-files dir tabspaces--keep-days))
 
         (when (file-exists-p tabspaces-session-file)
           (copy-file tabspaces-session-file
                      (format "%s.%s" tabspaces-session-file (format-time-string "%Y%m%d"))
                      t)))
-
-      ;; Cleanup
-      (and (fboundp 'helpful-kill-buffers)
-           (helpful-kill-buffers))
-
-      (and (fboundp 'magit-mode-get-buffers)
-           (mapc #'kill-buffer (magit-mode-get-buffers)))
-
-      (and (fboundp 'posframe-delete-all)
-           (posframe-delete-all)))
-    (advice-add #'tabspaces--save-session-smart :before #'tabspaces--prepare-save-session)
-
-    (defun tabspaces--bury-messages (&rest _)
-      "Bury *Messages* buffer."
-      (quit-windows-on messages-buffer-name))
-    (advice-add #'tabspaces-restore-session :after #'tabspaces--bury-messages)))
+      ;; Cleanup dummies
+      (when (fboundp 'helpful-kill-buffers)
+        (helpful-kill-buffers))
+      (when (fboundp 'magit-mode-get-buffers)
+        (mapc #'kill-buffer (magit-mode-get-buffers)))
+      (when (fboundp 'posframe-delete-all)
+        (posframe-delete-all)))
+    (advice-add #'tabspaces--save-session-smart :before #'tabspaces--prepare-save-session)))
 
 (provide 'init-workspace)
 
