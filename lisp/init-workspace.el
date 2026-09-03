@@ -37,24 +37,17 @@
   :bind (:map tabspaces-command-map
          ("C-r"   . tabspaces-restore-session)
          ("C-M-r" . tabspaces-restore-session-alt)
-         ("C-s"   . tabspaces-save-session)
-         ("C-w"   . tabspaces-save-current-project-session))
+         ("C-s"   . tabspaces-save-session))
   :hook ((after-init . tabspaces-mode)
          (tabspaces-mode . tab-bar-history-mode))
   :custom
   ;; tab-bar
   (tab-bar-show nil)                    ; don't display tab-bar
   (tab-bar-history-limit 30)
-  (tab-bar-new-tab-choice "*scratch*")
 
   ;; options
   (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
   (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*" "*ghostel*" "*shell*" "*eshell*"))
-  (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
-  (tabspaces-project-switch-opens-workspace nil)
 
   ;; sessions
   (tabspaces-session (not centaur-dashboard))
@@ -91,14 +84,6 @@
                            :as #'buffer-name)))
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult-source-workspace))
-
-    ;; Switch to default workspace
-    (defun my/tabspaces-switch-to-default-workspace ()
-      "Switch to the default workspace."
-      (when tabspaces-mode
-        (tabspaces-switch-or-create-workspace tabspaces-default-tab)
-        (quit-windows-on messages-buffer-name)))
-    (advice-add #'tabspaces-restore-session :after #'my/tabspaces-switch-to-default-workspace)
 
     ;; Backup tabspaces sessions
     (defconst tabspaces--keep-days 14
