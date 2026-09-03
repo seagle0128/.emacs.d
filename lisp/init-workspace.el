@@ -59,8 +59,8 @@
   ;; sessions
   (tabspaces-session (not centaur-dashboard))
   (tabspaces-session-auto-restore (not centaur-dashboard))
-  (tabspaces-session-file (concat user-emacs-directory "tabspaces/tabsession.el"))
-  (tabspaces-session-project-session-store (concat user-emacs-directory "tabspaces/"))
+  (tabspaces-session-file (locate-user-emacs-file "tabspaces/tabsession.el"))
+  (tabspaces-session-project-session-store (locate-user-emacs-file "tabspaces"))
   (tabspaces-session-auto-save-delay 300)  ; Save after 5 idle minutes
   :config
   (defun tabspaces-restore-session-alt ()
@@ -116,7 +116,7 @@
       "Prepare for saving session."
       ;; Backup session
       (when tabspaces-session
-        (let ((dir (expand-file-name "tabspaces" user-emacs-directory)))
+        (let ((dir (locate-user-emacs-file "tabspaces")))
           (unless (file-exists-p dir)
             (mkdir dir))
           ;; Cleanup the old sessions

@@ -138,6 +138,9 @@
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
+  :custom
+  (persistent-scratch-backup-file-name-format "%Y-%m-%d")
+  (persistent-scratch-backup-directory (locate-user-emacs-file "persistent-scratch"))
   :bind (:map persistent-scratch-mode-map
          ([remap kill-buffer] . (lambda (&rest _)
                                   (interactive)
@@ -145,10 +148,7 @@
          ([remap revert-buffer] . persistent-scratch-restore)
          ([remap revert-buffer-quick] . persistent-scratch-restore))
   :hook ((after-init . persistent-scratch-autosave-mode)
-         (lisp-interaction-mode . persistent-scratch-mode))
-  :init (setq persistent-scratch-backup-file-name-format "%Y-%m-%d"
-              persistent-scratch-backup-directory
-              (expand-file-name "persistent-scratch" user-emacs-directory)))
+         (lisp-interaction-mode . persistent-scratch-mode)))
 
 ;; Search tools
 (use-package grep

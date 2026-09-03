@@ -38,9 +38,7 @@
   :group 'convenience
   :link '(url-link :tag "Homepage" "https://github.com/seagle0128/.emacs.d"))
 
-(defcustom centaur-logo (expand-file-name
-                         (if (display-graphic-p) "logo.png" "banner.txt")
-                         user-emacs-directory)
+(defcustom centaur-logo (locate-user-emacs-file (if (display-graphic-p) "logo.png" "banner.txt"))
   "Set Centaur logo. nil means official logo."
   :group 'centaur
   :type 'string)
@@ -244,7 +242,7 @@ Nil to use font supports ligatures."
   :type '(alist :key-type string :value-type (choice character sexp)))
 
 ;; Load `custom-file'
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
 (provide 'init-custom)
 

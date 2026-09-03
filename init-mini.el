@@ -33,8 +33,8 @@
 ;;; Code:
 
 ;; Load path
-(push (expand-file-name "site-lisp" user-emacs-directory) load-path)
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
+(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here

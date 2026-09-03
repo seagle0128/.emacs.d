@@ -35,17 +35,17 @@
   "The Github page of Centaur Emacs.")
 
 (defconst centaur-custom-example-file
-  (expand-file-name "custom-example.el" user-emacs-directory)
+  (locate-user-emacs-file "custom-example.el")
   "Custom example file of Centaur Emacs.")
 
 (defconst centaur-custom-post-file
-  (expand-file-name "custom-post.el" user-emacs-directory)
+  (locate-user-emacs-file "custom-post.el")
   "Custom file after startup.
 
 Put private configurations to override defaults here.")
 
 (defconst centaur-custom-post-org-file
-  (expand-file-name "custom-post.org" user-emacs-directory)
+  (locate-user-emacs-file "custom-post.org")
   "Custom org file after startup.
 
 Put private configurations to override defaults here.

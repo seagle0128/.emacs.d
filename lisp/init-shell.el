@@ -110,7 +110,7 @@
 (use-package ghostel
   :functions ghostel-send-key
   :custom
-  (ghostel-module-directory (expand-file-name ".cache" user-emacs-directory))
+  (ghostel-module-directory (locate-user-emacs-file ".cache"))
   (ghostel-shell (or (executable-find "pwsh") (getenv "SHELL") "/bin/sh"))
   (ghostel-term (if sys/win32p "xterm-256color" "xterm-ghostty"))
   :bind (("C-x m" . ghostel)
