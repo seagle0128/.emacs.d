@@ -21,9 +21,12 @@ emacs -q --batch \
                 (user-init-file (locate-user-emacs-file \"init.el\")))
             (setq package-check-signature nil)
             (load early-init-file)
+            (setq load-path-filter-function nil)
             (load user-init-file))" \
   --eval "(message \"Testing...done\")"
 ```
+
+**Note**: `load-path-filter-function` must be reset to `nil` before loading `init.el`, otherwise CI on older Emacs versions fails when `early-init.el` sets it targeting a function that may not exist.
 
 **Note**: CI also copies `custom-example.el` → `custom.el` before running. CI only validates that config loads — no automated test suites exist.
 
