@@ -57,12 +57,9 @@
           :stream t
           :key 'gptel-api-key
           :models '(big-pickle
-                    x-preview-f-free
                     mimo-v2.5-free
-                    hy3-free
-                    laguna-s-2.1-free
-                    nemotron-3-lightning-free
-                    nemotron-3-ultra-free)))
+                    muse-spark-1.2-free
+                    laguna-s-2.1-free)))
 
   ;; DeepSeek
   (gptel-make-deepseek "DeepSeek"
