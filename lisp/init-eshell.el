@@ -112,11 +112,6 @@
     :init (setq eshell-highlight-prompt nil
                 eshell-prompt-function #'epe-theme-lambda))
 
-  ;; Load `esh-help' only for its explicit command.  Its Eldoc integration
-  ;; performs synchronous manual-page lookups and can stall Eshell on open.
-  (use-package esh-help
-    :commands esh-help-run-help)
-
   ;; `cd' to frequent directory in `eshell'
   (use-package eshell-z
     :hook (eshell-mode . (lambda () (require 'eshell-z)))))
