@@ -110,11 +110,7 @@
     :defines eshell-highlight-prompt
     :autoload (epe-theme-lambda epe-theme-dakrone epe-theme-pipeline)
     :init (setq eshell-highlight-prompt nil
-                eshell-prompt-function #'epe-theme-lambda))
-
-  ;; `cd' to frequent directory in `eshell'
-  (use-package eshell-z
-    :hook (eshell-mode . (lambda () (require 'eshell-z)))))
+                eshell-prompt-function #'epe-theme-lambda)))
 
 (provide 'init-eshell)
 
