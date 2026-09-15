@@ -65,6 +65,8 @@
                  ("C-x c"     . "colorful")
                  ("C-x n"     . "narrow")
                  ("C-x p"     . "project")
+                 ("C-x p l"   . "layout")
+                 ("C-x p C-x" . "misc")
                  ("C-x r"     . "rect & bookmark")
                  ("C-x t"     . "tab & treemacs")
                  ("C-x w"     . "window & highlight")
