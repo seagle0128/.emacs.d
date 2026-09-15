@@ -153,7 +153,8 @@
           (kill-buffer dashboard-buffer-name))
 
         ;; Create workspace if necessary
-        (unless (bound-and-true-p tabspaces-session)
+        (when (and (bound-and-true-p tabspaces-mode)
+                   (not tabspaces-session))
           ;; Save workspace sessions
           (setq tabspaces-session t)
           (add-hook 'kill-emacs-hook #'tabspaces--save-session-smart)
