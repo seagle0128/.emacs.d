@@ -41,7 +41,7 @@
   (git-commit-major-mode 'git-commit-elisp-text-mode)
   :config (when sys/win32p
             (setenv "GIT_ASKPASS" "git-gui--askpass")
-            ;; Perf: improve performance on Windows
+            ;; PERF: improve performance on Windows
             (setq magit-commit-show-diff nil
                   magit-diff-refine-hunk nil)))
 

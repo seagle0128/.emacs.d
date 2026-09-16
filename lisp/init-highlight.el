@@ -228,6 +228,8 @@ FACE defaults to inheriting from default and highlight."
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
   (dolist (keyword '("TRICK" "WORKAROUND"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
+  (dolist (keyword '("PERF"))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb")))
 
   ;; Highlight TODO keywords in Magit
   (with-eval-after-load 'magit

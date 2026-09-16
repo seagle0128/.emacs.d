@@ -45,7 +45,7 @@
   :init (setq eglot-autoshutdown t
               eglot-events-buffer-config '(:size 0 :format 'short)
               eglot-send-changes-idle-time 0.5)
-  :config (setq read-process-output-max #x100000)) ; Perf: 1MB
+  :config (setq read-process-output-max #x100000)) ; PERF: 1MB
 
 (use-package consult-eglot
   :after eglot
