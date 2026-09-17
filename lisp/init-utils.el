@@ -287,17 +287,17 @@
 
 ;; Misc
 (use-package file-info
-  :functions posframe-poshandler-frame-center
-  :commands file-info-show
-  :bind ("C-c c i" . my/file-info-show)
+  :bind ("C-c c i" . file-info-show)
   :config
-  (defun my/file-info-show ()
-    "Show info about file inside via hydra."
-    (interactive)
-    (let ((hydra-posframe-show-params
-           (plist-put (copy-alist hydra-posframe-show-params)
-                      :poshandler #'posframe-poshandler-frame-center)))
-      (file-info-show))))
+  (with-no-warnings
+    (defun my/file-info-show (fn &rest args)
+      "Wrapper for `file-info-show'."
+      ;; display on the center of the frame
+      (let ((hydra-posframe-show-params
+             (plist-put (copy-alist hydra-posframe-show-params)
+                        :poshandler #'posframe-poshandler-frame-center)))
+        (apply fn args)))
+    (advice-add 'file-info-show :around #'my/file-info-show)))
 
 (use-package reveal-in-folder
   :bind ("C-c R" . reveal-in-folder))
