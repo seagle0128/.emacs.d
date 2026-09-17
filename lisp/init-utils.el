@@ -300,7 +300,7 @@
     (advice-add 'file-info-show :around #'my/file-info-show)))
 
 (use-package reveal-in-folder
-  :bind ("C-c R" . reveal-in-folder))
+  :bind ("C-c C-r" . reveal-in-folder))
 
 (provide 'init-utils)
 
