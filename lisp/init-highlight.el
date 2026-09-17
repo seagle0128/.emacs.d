@@ -240,8 +240,10 @@ FACE defaults to inheriting from default and highlight."
   (when emacs/>=29p
     (use-package consult-todo
       :bind (("C-c c h" . consult-todo)
+             ("C-c c a" . consult-todo-all)
              :map hl-todo-mode-map
-             ("C-c t l" . consult-todo))))
+             ("C-c t l" . consult-todo)
+             ("C-c t a" . consult-todo-all))))
 
   ;; Search TODO keywords in rg
   (defun hl-todo-rg (regexp &optional files dir)
