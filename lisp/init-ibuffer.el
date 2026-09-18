@@ -1,4 +1,4 @@
-;; init-buffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
+;; init-ibuffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2006-2026 Vincent Zhang
 
@@ -38,7 +38,8 @@
   :custom
   (ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   (ibuffer-human-readable-size t)
-  :bind ("C-x C-b" . ibuffer))
+  :bind ("C-x C-b" . ibuffer)
+  :hook (ibuffer-mode . ibuffer-auto-mode))
 
 ;; Group ibuffer's list by VC project
 (use-package ibuffer-vc
