@@ -50,16 +50,15 @@
   :config
   ;; Set default model and backend
   (setq gptel-model 'big-pickle
-        gptel-backend
-        (gptel-make-openai "OpenCode Zen"
-          :host "opencode.ai"
-          :endpoint "/zen/v1/chat/completions"
-          :stream t
-          :key 'gptel-api-key
-          :models '(big-pickle
-                    mimo-v2.5-free
-                    muse-spark-1.2-free
-                    laguna-s-2.1-free)))
+        gptel-backend (gptel-make-openai "OpenCode Zen"
+                        :host "opencode.ai"
+                        :endpoint "/zen/v1/chat/completions"
+                        :stream t
+                        :key 'gptel-api-key
+                        :models '(big-pickle
+                                  mimo-v2.5-free
+                                  muse-spark-1.2-free
+                                  laguna-s-2.1-free)))
 
   ;; DeepSeek
   (gptel-make-deepseek "DeepSeek"
