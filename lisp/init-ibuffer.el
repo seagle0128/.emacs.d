@@ -42,16 +42,7 @@
 
 ;; Display icons for buffers
 (use-package nerd-icons-ibuffer
-  :after ibuffer-vc
-  :custom
-  (nerd-icons-ibuffer-icon centaur-icon)
-  (nerd-icons-ibuffer-formats '((mark modified read-only locked vc-status-mini
-                                      " " (icon 2 2) (name 18 18 :left :elide)
-                                      " " (size-h 9 -1 :right)
-                                      " " (mode+ 16 16 :left :elide)
-                                      " " (vc-status 16 16 :left)
-                                      " " filename-and-process+)
-                                (mark " " (name 16 -1) " " filename)))
+  :custom (nerd-icons-ibuffer-icon centaur-icon)
   :hook ibuffer-mode)
 
 ;; Group ibuffer's list by VC project
@@ -66,6 +57,14 @@
   :config
   (with-no-warnings
     (when (icons-displayable-p)
+      (setq nerd-icons-ibuffer-formats '((mark modified read-only locked vc-status-mini
+                                               " " (icon 2 2) (name 18 18 :left :elide)
+                                               " " (size-h 9 -1 :right)
+                                               " " (mode+ 16 16 :left :elide)
+                                               " " (vc-status 16 16 :left)
+                                               " " filename-and-process+)
+                                         (mark " " (name 16 -1) " " filename)))
+
       (defun my/ibuffer-vc-generate-filter-groups-by-vc-root ()
         "Create a set of ibuffer filter groups based on the vc root dirs of buffers."
         (let ((roots (seq-uniq
