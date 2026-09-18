@@ -42,11 +42,11 @@
 
 ;; Display icons for buffers
 (use-package nerd-icons-ibuffer
+  :after ibuffer-vc
   :custom
   (nerd-icons-ibuffer-icon centaur-icon)
-  (nerd-icons-ibuffer-formats '((mark modified read-only locked
-                                      " " (icon 2 2)
-                                      (name 18 18 :left :elide)
+  (nerd-icons-ibuffer-formats '((mark modified read-only locked vc-status-mini
+                                      " " (icon 2 2) (name 18 18 :left :elide)
                                       " " (size-h 9 -1 :right)
                                       " " (mode+ 16 16 :left :elide)
                                       " " (vc-status 16 16 :left)
@@ -58,7 +58,6 @@
 (use-package ibuffer-vc
   :commands (ibuffer-vc-set-filter-groups-by-vc-root
              ibuffer-do-sort-by-vc-status)
-  :custom (ibuffer-project-use-cache t)
   :hook (ibuffer . (lambda ()
                      "Group ibuffer's list by project."
                      (ibuffer-vc-set-filter-groups-by-vc-root)
