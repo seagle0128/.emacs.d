@@ -42,39 +42,45 @@
 
 ;; Display icons for buffers
 (use-package nerd-icons-ibuffer
-  :custom (nerd-icons-ibuffer-icon centaur-icon)
+  :custom
+  (nerd-icons-ibuffer-icon centaur-icon)
+  (nerd-icons-ibuffer-formats '((mark modified read-only locked
+                                      " " (icon 2 2)
+                                      (name 18 18 :left :elide)
+                                      " " (size-h 9 -1 :right)
+                                      " " (mode+ 16 16 :left :elide)
+                                      " " (vc-status 16 16 :left)
+                                      " " filename-and-process+)
+                                (mark " " (name 16 -1) " " filename)))
   :hook ibuffer-mode)
 
-;; Group ibuffer's list by project
-(use-package ibuffer-project
-  :autoload (ibuffer-project-generate-filter-groups ibuffer-do-sort-by-project-file-relative)
-  :functions icons-displayable-p
+;; Group ibuffer's list by VC project
+(use-package ibuffer-vc
+  :commands (ibuffer-vc-set-filter-groups-by-vc-root
+             ibuffer-do-sort-by-vc-status)
   :custom (ibuffer-project-use-cache t)
   :hook (ibuffer . (lambda ()
                      "Group ibuffer's list by project."
-                     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+                     (ibuffer-vc-set-filter-groups-by-vc-root)
                      (unless (eq ibuffer-sorting-mode 'project-file-relative)
-                       (ibuffer-do-sort-by-project-file-relative))))
+                       (ibuffer-do-sort-by-vc-status))))
   :config
   (with-no-warnings
-    (defun my/ibuffer-project-group-name (root type)
-      "Return group name for project ROOT and TYPE."
-      (if (and (stringp type) (> (length type) 0))
-          (format "%s %s" type root)
-        (format "%s" root)))
-    (if (icons-displayable-p)
-        (progn
-          (advice-add #'ibuffer-project-group-name :override #'my/ibuffer-project-group-name)
-          (setq ibuffer-project-root-functions
-                `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
-                  (file-remote-p . ,(nerd-icons-mdicon "nf-md-remote_desktop" :height 1.2 :face ibuffer-filter-group-name-face))
-                  (identity . ,(nerd-icons-octicon "nf-oct-file_directory" :height 1.2 :face ibuffer-filter-group-name-face)))))
-      (progn
-        (advice-remove #'ibuffer-project-group-name #'my/ibuffer-project-group-name)
-        (setq ibuffer-project-root-functions
-              '((ibuffer-project-project-root . "Project")
-                (file-remote-p . "Remote")
-                (identity . "Directory")))))))
+    (when (icons-displayable-p)
+      (defun my/ibuffer-vc-generate-filter-groups-by-vc-root ()
+        "Create a set of ibuffer filter groups based on the vc root dirs of buffers."
+        (let ((roots (seq-uniq
+                      (delq nil (mapcar 'ibuffer-vc-root (buffer-list))))))
+          (mapcar (lambda (vc-root)
+                    (cons (format "%s: %s"
+                                  (nerd-icons-octicon "nf-oct-repo"
+                                                      :height 1.2
+                                                      :face ibuffer-filter-group-name-face)
+                                  (cdr vc-root))
+                          `((vc-root . ,vc-root))))
+                  roots)))
+      (advice-add #'ibuffer-vc-generate-filter-groups-by-vc-root
+                  :override #'my/ibuffer-vc-generate-filter-groups-by-vc-root))))
 
 (provide 'init-ibuffer)
 
