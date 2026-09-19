@@ -153,6 +153,8 @@
       "lsp" :toggle doom-modeline-lsp)
      ("g p" (setq doom-modeline-project-name (not doom-modeline-project-name))
       "project" :toggle doom-modeline-project-name)
+     ("g P" (setq doom-modeline-persp-name (not doom-modeline-persp-name))
+      "perspective" :toggle doom-modeline-persp-name)
      ("g w" (setq doom-modeline-workspace-name (not doom-modeline-workspace-name))
       "workspace" :toggle doom-modeline-workspace-name)
      ("g s" (setq doom-modeline-spell (not doom-modeline-spell))
@@ -165,7 +167,7 @@
       "mu4e" :toggle doom-modeline-mu4e)
      ("g r" (setq doom-modeline-irc (not doom-modeline-irc))
       "irc" :toggle doom-modeline-irc)
-     ("g b" (setq doom-modeline-irc-buffers (not doom-modeline-irc-buffers))
+     ("g R" (setq doom-modeline-irc-buffers (not doom-modeline-irc-buffers))
       "irc buffers" :toggle doom-modeline-irc-buffers)
      ("g t" (setq doom-modeline-time (not doom-modeline-time))
       "time" :toggle doom-modeline-time)
@@ -222,20 +224,15 @@
       "disable" :toggle (eq doom-modeline-check nil)))
     "Project"
     (("p a" (setq doom-modeline-project-detection 'auto)
-      "auto"
-      :toggle (eq doom-modeline-project-detection 'auto))
+      "auto" :toggle (eq doom-modeline-project-detection 'auto))
      ("p f" (setq doom-modeline-project-detection 'ffip)
-      "ffip"
-      :toggle (eq doom-modeline-project-detection 'ffip))
+      "ffip" :toggle (eq doom-modeline-project-detection 'ffip))
      ("p i" (setq doom-modeline-project-detection 'projectile)
-      "projectile"
-      :toggle (eq doom-modeline-project-detection 'projectile))
+      "projectile" :toggle (eq doom-modeline-project-detection 'projectile))
      ("p p" (setq doom-modeline-project-detection 'project)
-      "project"
-      :toggle (eq doom-modeline-project-detection 'project))
+      "project" :toggle (eq doom-modeline-project-detection 'project))
      ("p d" (setq doom-modeline-project-detection nil)
-      "disable"
-      :toggle (eq doom-modeline-project-detection nil)))
+      "disable" :toggle (eq doom-modeline-project-detection nil)))
     "Misc"
     (("x n" (progn
               (message "Fetching GitHub notifications...")
@@ -245,16 +242,22 @@
      ("x e" (and (bound-and-true-p flymake-mode)
                  (flymake-show-diagnostics-buffer))
       "list errors" :exit t)
-     ("x g" (if (bound-and-true-p grip-mode)
+     ("x p" (if (bound-and-true-p grip-mode)
                 (grip-browse-preview)
               (message "Not in preview"))
       "browse preview" :exit t)
+     ("x i" (set-from-minibuffer 'doom-modeline-number-limit)
+      "set notification limit" :exit t)
+     ("x w" (set-from-minibuffer 'doom-modeline-window-width-limit)
+      "set window width limit" :exit t)
      ("x h" (set-from-minibuffer 'doom-modeline-height)
       "set height" :exit t)
-     ("x w" (set-from-minibuffer 'doom-modeline-bar-width)
+     ("x b" (set-from-minibuffer 'doom-modeline-bar-width)
       "set bar width" :exit t)
      ("x g" (set-from-minibuffer 'doom-modeline-github-interval)
       "set github interval" :exit t)
+     ("x p" (set-from-minibuffer 'doom-modeline-project-name)
+      "set project name" :exit t)
      ("x n" (set-from-minibuffer 'doom-modeline-gnus-timer)
       "set gnus interval" :exit t)))))
 
