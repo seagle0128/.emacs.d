@@ -38,8 +38,7 @@
   :custom
   (ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   (ibuffer-human-readable-size t)
-  :bind ("C-x C-b" . ibuffer)
-  :hook (ibuffer-mode . ibuffer-auto-mode))
+  :bind ("C-x C-b" . ibuffer))
 
 ;; Group ibuffer's list by VC project
 (use-package ibuffer-vc
