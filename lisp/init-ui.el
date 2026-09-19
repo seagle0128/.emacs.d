@@ -111,8 +111,6 @@
   :custom
   (doom-modeline-icon centaur-icon)
   (doom-modeline-minor-modes t)
-  (doom-modeline-project-name t)
-  (doom-modeline-workspace-name nil)
   :hook after-init
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
