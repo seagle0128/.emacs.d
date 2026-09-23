@@ -111,6 +111,8 @@
   :custom
   (doom-modeline-icon centaur-icon)
   (doom-modeline-minor-modes t)
+  (doom-modeline-hud t)
+  (doom-modeline-project-name nil)
   :hook after-init
   :bind (:map doom-modeline-mode-map
          ("C-<f6>" . doom-modeline-hydra/body))
@@ -252,6 +254,8 @@
       "set height" :exit t)
      ("x b" (set-from-minibuffer 'doom-modeline-bar-width)
       "set bar width" :exit t)
+     ("x u" (set-from-minibuffer 'doom-modeline-hud-width)
+      "set hud width" :exit t)
      ("x g" (set-from-minibuffer 'doom-modeline-github-interval)
       "set github interval" :exit t)
      ("x p" (set-from-minibuffer 'doom-modeline-project-name)
