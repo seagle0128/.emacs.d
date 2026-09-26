@@ -159,6 +159,8 @@
       "workspace" :toggle doom-modeline-workspace-name)
      ("g s" (setq doom-modeline-spell (not doom-modeline-spell))
       "spell" :toggle doom-modeline-spell)
+     ("g b" (setq doom-modeline-battery (not doom-modeline-battery))
+      "battery" :toggle doom-modeline-battery)
      ("g g" (setq doom-modeline-github (not doom-modeline-github))
       "github" :toggle doom-modeline-github)
      ("g n" (setq doom-modeline-gnus (not doom-modeline-gnus))
