@@ -99,15 +99,15 @@
                        ("C-c C-t" . "python-skeleton"))
                       (rust-mode
                        ("C-c C-c" . "rust-build"))
-                      (markdown-ts-mode
-                       ("C-c C-x" . "markdown-toggle")
-                       ("C-c C-v" . "markdown-code-block"))
                       (markdown-mode
                        ("C-c C-a" . "markdown-link")
                        ("C-c C-c" . "markdown-command")
                        ("C-c C-s" . "markdown-style")
                        ("C-c C-t" . "markdown-header")
                        ("C-c C-x" . "markdown-toggle"))
+                      (markdown-ts-mode
+                       ("C-c C-x" . "markdown-toggle")
+                       ("C-c C-v" . "markdown-code-block"))
                       (gfm-mode
                        ("C-c C-a" . "markdown-link")
                        ("C-c C-c" . "markdown-command")
