@@ -98,13 +98,13 @@
     :stream t
     :key 'gptel-api-key))
 
-;; Generate commit messages for magit
-(use-package gptel-magit
-  :vc (:url "https://github.com/roife/gptel-magit" :rev :newest)
-  :hook (magit-mode . gptel-magit-install))
-
-;; A native shell experience to interact with ACP agents
 (when emacs/>=29p
+  ;; Generate commit messages for magit
+  (use-package gptel-magit
+    :vc (:url "https://github.com/roife/gptel-magit" :rev :newest)
+    :hook (magit-mode . gptel-magit-install))
+
+  ;; A native shell experience to interact with ACP agents
   (use-package agent-shell
     :commands agent-shell-insert
     :defines magit-mode-map
