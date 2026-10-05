@@ -127,7 +127,7 @@
   :commands which-key-posframe-mode
   :custom-face
   (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  :hook (which-key-mode
+  :hook ((after-init server-after-make-frame)
          .
          (lambda ()
            (if (and which-key-mode (childframe-completion-workable-p))
