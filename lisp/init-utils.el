@@ -122,22 +122,21 @@
 
 ;; Show 'which-key' in the child frame
 (use-package which-key-posframe
-  :defines posframe-border-width
   :functions childframe-completion-workable-p
   :commands which-key-posframe-mode
+  :custom
+  (which-key-posframe-border-width posframe-border-width)
+  (which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom)
+  (which-key-posframe-parameters '((left-fringe . 8)
+                                   (right-fringe . 8)))
   :custom-face
   (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  :hook ((after-init server-after-make-frame)
+  :hook ((emacs-startup server-after-make-frame)
          .
          (lambda ()
            (if (and which-key-mode (childframe-completion-workable-p))
                (which-key-posframe-mode 1)
-             (which-key-posframe-mode -1))))
-  :init
-  (setq which-key-posframe-border-width posframe-border-width
-        which-key-posframe-poshandler 'posframe-poshandler-frame-center-near-bottom
-        which-key-posframe-parameters '((left-fringe . 8)
-                                        (right-fringe . 8))))
+             (which-key-posframe-mode -1)))))
 
 ;; Persistent the scratch buffer
 (use-package persistent-scratch
