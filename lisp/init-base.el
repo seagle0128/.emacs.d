@@ -213,32 +213,32 @@
       word-wrap-by-category t)
 
 ;; Frame
-(when (display-graphic-p)
-  ;; Frame maximized on startup
-  (when centaur-frame-maximized-on-startup
-    (add-hook 'window-setup-hook #'centaur-frame-maximize))
+;; Frame maximized on startup
+(when centaur-frame-maximized-on-startup
+  (add-hook 'window-setup-hook #'centaur-frame-maximize))
 
-  ;; Frame fullscreen
-  (bind-key "S-s-<return>" #'toggle-frame-fullscreen)
-  (and sys/mac-x-p (bind-key "C-s-f" #'toggle-frame-fullscreen))
+;; Frame fullscreen
+(bind-key "S-s-<return>" #'toggle-frame-fullscreen)
+(when sys/macp
+  (bind-key "C-s-f" #'toggle-frame-fullscreen))
 
-  ;; Resize and re-position frames conveniently
-  ;; Same keybindings as Rectangle on macOS
-  (bind-keys ("C-M-<return>"    . centaur-frame-maximize)
-             ("C-M-<backspace>" . centaur-frame-restore)
-             ("C-M-<left>"      . centaur-frame-left-half)
-             ("C-M-<right>"     . centaur-frame-right-half)
-             ("C-M-<up>"        . centaur-frame-top-half)
-             ("C-M-<down>"      . centaur-frame-bottom-half))
+;; Resize and re-position frames conveniently
+;; Same keybindings as Rectangle
+(bind-keys ("C-M-<return>"    . centaur-frame-maximize)
+           ("C-M-<backspace>" . centaur-frame-restore)
+           ("C-M-<left>"      . centaur-frame-left-half)
+           ("C-M-<right>"     . centaur-frame-right-half)
+           ("C-M-<up>"        . centaur-frame-top-half)
+           ("C-M-<down>"      . centaur-frame-bottom-half))
 
-  ;; Frame transparency
-  (use-package transwin
-    :bind (("C-M-9" . transwin-inc)
-           ("C-M-8" . transwin-dec)
-           ("C-M-7" . transwin-toggle))
-    :init
-    (when sys/linux-x-p
-      (setq transwin-parameter-alpha 'alpha-background))))
+;; Frame transparency
+(use-package transwin
+  :bind (("C-M-9" . transwin-inc)
+         ("C-M-8" . transwin-dec)
+         ("C-M-7" . transwin-toggle))
+  :init
+  (when sys/linuxp
+    (setq transwin-parameter-alpha 'alpha-background)))
 
 ;; Child frame
 (use-package posframe
