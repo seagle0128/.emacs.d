@@ -36,6 +36,7 @@
 ;; Directory operations
 (use-package dired
   :ensure nil
+  :defines ls-lisp-use-insert-directory-program
   :bind (:map dired-mode-map
          ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
@@ -51,77 +52,77 @@
 
   (when sys/macp
     (if (executable-find "gls")
-        (progn
-          ;; Use GNU ls as `gls' from `coreutils' if available.
-          (setq insert-directory-program "gls")
-          ;; Using `insert-directory-program'
-          (setq ls-lisp-use-insert-directory-program t))
-      (progn
-        ;; Suppress the warning: `ls does not support --dired'.
-        (setq dired-use-ls-dired nil)
-        (setq dired-listing-switches "-alh"))))
+        ;; Use GNU ls as `gls' from `coreutils' if available.
+        ;; Using `insert-directory-program'
+        (setq insert-directory-program "gls"
+              ls-lisp-use-insert-directory-program t)
+      ;; Suppress the warning: `ls does not support --dired'.
+      (setq dired-use-ls-dired nil
+            dired-listing-switches "-alh"))))
 
-  ;; Quick sort dired buffers via hydra
-  (use-package dired-quick-sort
-    :bind (:map dired-mode-map
-           ("S" . hydra-dired-quick-sort/body)))
+;; Quick sort dired buffers via hydra
+(use-package dired-quick-sort
+  :after dired
+  :bind (:map dired-mode-map
+         ("S" . hydra-dired-quick-sort/body)))
 
-  ;; Show git info in dired
-  (use-package dired-git-info
-    :bind (:map dired-mode-map
-           (")" . dired-git-info-mode)))
+;; Show git info in dired
+(use-package dired-git-info
+  :after dired
+  :bind (:map dired-mode-map
+         (")" . dired-git-info-mode)))
 
-  ;; Allow rsync from dired buffers
-  (use-package dired-rsync
-    :bind (:map dired-mode-map
-           ("C-c C-r" . dired-rsync)))
+;; Allow rsync from dired buffers
+(use-package dired-rsync
+  :after dired
+  :bind (:map dired-mode-map
+         ("C-c C-r" . dired-rsync)))
 
-  ;; Colorful dired
-  (use-package diredfl
-    :hook dired-mode)
+;; Colorful dired
+(use-package diredfl
+  :hook dired-mode)
 
-  ;; Shows icons in dired
-  (use-package nerd-icons-dired
-    :functions (nerd-icons-icon-for-dir my/nerd-icons-icon-for-dir)
-    :hook dired-mode
-    :init
-    (defface nerd-icons-dired-dir-face
-      '((t nil))
-      "Face for the directory icon."
-      :group 'nerd-icons-faces)
-    (defun my/nerd-icons-icon-for-dir (dir &rest args)
-      (apply #'nerd-icons-icon-for-dir
-             dir
-             :face 'nerd-icons-dired-dir-face
-             args))
-    (setq nerd-icons-dired-dir-icon-function #'my/nerd-icons-icon-for-dir))
+;; Shows icons in dired
+(use-package nerd-icons-dired
+  :functions (nerd-icons-icon-for-dir my/nerd-icons-icon-for-dir)
+  :hook dired-mode
+  :init
+  (defface nerd-icons-dired-dir-face
+    '((t nil))
+    "Face for the directory icon."
+    :group 'nerd-icons-faces)
+  (defun my/nerd-icons-icon-for-dir (dir &rest args)
+    (apply #'nerd-icons-icon-for-dir
+           dir
+           :face 'nerd-icons-dired-dir-face
+           args))
+  (setq nerd-icons-dired-dir-icon-function #'my/nerd-icons-icon-for-dir))
 
-  ;; Extra Dired functionality
-  (use-package dired-aux :ensure nil)
-  (use-package dired-x
-    :ensure nil
-    :demand t
-    :config
-    (let ((cmd (cond (sys/mac-x-p "open")
-                     (sys/linux-x-p "xdg-open")
-                     (sys/win32p "start")
-                     (t ""))))
-      (setq dired-guess-shell-alist-user
-            `(("\\.pdf\\'" ,cmd)
-              ("\\.docx\\'" ,cmd)
-              ("\\.\\(?:djvu\\|eps\\)\\'" ,cmd)
-              ("\\.\\(?:jpg\\|jpeg\\|png\\|gif\\|xpm\\)\\'" ,cmd)
-              ("\\.\\(?:xcf\\)\\'" ,cmd)
-              ("\\.csv\\'" ,cmd)
-              ("\\.tex\\'" ,cmd)
-              ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
-              ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
-              ("\\.html?\\'" ,cmd)
-              ("\\.md\\'" ,cmd))))
-
-    (setq dired-omit-files
-          (concat dired-omit-files
-                  "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*"))))
+;; Extra Dired functionality
+(use-package dired-aux :ensure nil)
+(use-package dired-x
+  :ensure nil
+  :init
+  (when-let* ((cmd (cond (sys/macp "open")
+                         (sys/linux-x-p "xdg-open")
+                         (sys/win32p "start")
+                         (t nil))))
+    (setq dired-guess-shell-alist-user
+          `(("\\.pdf\\'" ,cmd)
+            ("\\.docx\\'" ,cmd)
+            ("\\.\\(?:djvu\\|eps\\)\\'" ,cmd)
+            ("\\.\\(?:jpg\\|jpeg\\|png\\|gif\\|xpm\\)\\'" ,cmd)
+            ("\\.\\(?:xcf\\)\\'" ,cmd)
+            ("\\.csv\\'" ,cmd)
+            ("\\.tex\\'" ,cmd)
+            ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
+            ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
+            ("\\.html?\\'" ,cmd)
+            ("\\.md\\'" ,cmd))))
+  :config
+  (setq dired-omit-files
+        (concat dired-omit-files
+                "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
 (provide 'init-dired)
 
