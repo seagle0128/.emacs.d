@@ -99,7 +99,7 @@
   :ensure nil
   :init
   (when-let* ((cmd (cond (sys/macp "open")
-                         (sys/linux-x-p "xdg-open")
+                         (sys/linuxp "xdg-open")
                          (sys/win32p "start")
                          (t nil))))
     (setq dired-guess-shell-alist-user
