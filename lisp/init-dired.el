@@ -47,18 +47,13 @@
   (setq dired-recursive-deletes 'always
         dired-recursive-copies 'always)
 
-  ;; Show directory first
-  (setq dired-listing-switches "-alh --group-directories-first")
-
-  (when sys/macp
-    (if (executable-find "gls")
-        ;; Use GNU ls as `gls' from `coreutils' if available.
-        ;; Using `insert-directory-program'
-        (setq insert-directory-program "gls"
-              ls-lisp-use-insert-directory-program t)
+  (if (and (or sys/macp sys/unixp)
+           (string= insert-directory-program "ls"))
       ;; Suppress the warning: `ls does not support --dired'.
       (setq dired-use-ls-dired nil
-            dired-listing-switches "-alh"))))
+            dired-listing-switches "-alh")
+    ;; Show directory first
+    (setq dired-listing-switches "-alh --group-directories-first")))
 
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort

@@ -59,6 +59,10 @@ Loaded by `org-babel-load-file'.")
   (eq system-type 'gnu/linux)
   "Are we running on a GNU/Linux system?")
 
+(defconst sys/unixp
+  (eq system-type 'berkeley-unix)
+  "Are we running on an Unix system?")
+
 (defconst sys/macp
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
