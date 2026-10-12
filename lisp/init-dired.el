@@ -57,11 +57,14 @@
       (setq dired-use-ls-dired nil
             dired-listing-switches "-alh"))))
 
-;; Quick sort dired buffers via hydra
-(use-package dired-quick-sort
-  :when (executable-find "gls")
-  :custom (dired-quick-sort-suppress-setup-warning t)
-  :hook (after-init . dired-quick-sort-setup))
+;; Quick sort dired buffers
+(when (and ls-lisp-use-insert-directory-program
+           (executable-find "gls"))
+  (use-package dired-quick-sort
+    :after dired
+    :bind (:map dired-mode-map
+           ("S" . dired-quick-sort-transient))
+    :hook (dired-mode . dired-quick-sort-set-switches)))
 
 ;; Show git info in dired
 (use-package dired-git-info
