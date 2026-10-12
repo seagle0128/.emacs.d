@@ -126,15 +126,19 @@ mermaid.initialize({
          (t
           (apply fn args)))))))
 
-;; Built into Emacs 31+
 (when (and emacs/>=31p
            (centaur-treesit-available-p))
+  ;; Built into Emacs 31+
   (use-package markdown-ts-mode
     :ensure nil
     :functions centaur-treesit-available-p
     :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
     :custom (markdown-ts-ellipsis " ⌄")
-    :config (require 'markdown-ts-mode-x)))
+    :config (require 'markdown-ts-mode-x))
+
+  (use-package markdown-ts-appear
+    :vc (:url "https://github.com/Thysrael/markdown-ts-appear" :rev :newest)
+    :hook (markdown-ts-mode . markdown-ts-appear-mode)))
 
 ;; Preview markdown files
 ;; @see https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
