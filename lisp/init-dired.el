@@ -58,8 +58,8 @@
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort
   :after dired
-  :bind (:map dired-mode-map
-         ("S" . hydra-dired-quick-sort/body)))
+  :custom (dired-quick-sort-suppress-setup-warning t)
+  :hook (after-init . dired-quick-sort-setup))
 
 ;; Show git info in dired
 (use-package dired-git-info
