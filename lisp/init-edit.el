@@ -108,8 +108,7 @@
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
   :ensure nil
-  :hook ((text-mode . goto-address-mode)
-         (prog-mode . goto-address-prog-mode)))
+  :hook (prog-mode . goto-address-prog-mode))
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
