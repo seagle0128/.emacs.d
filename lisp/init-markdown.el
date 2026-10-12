@@ -30,6 +30,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const))
+
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode))
   :init
@@ -122,6 +125,16 @@ mermaid.initialize({
           (lsp-managed-mode 1))
          (t
           (apply fn args)))))))
+
+;; Built into Emacs 31+
+(when (and emacs/>=31p
+           (centaur-treesit-available-p))
+  (use-package markdown-ts-mode
+    :ensure nil
+    :functions centaur-treesit-available-p
+    :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+    :custom (markdown-ts-ellipsis " ⌄")
+    :config (require 'markdown-ts-mode-x)))
 
 ;; Preview markdown files
 ;; @see https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite

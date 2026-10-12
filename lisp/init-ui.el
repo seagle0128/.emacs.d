@@ -404,10 +404,12 @@
   (use-package composite
     :ensure nil
     :init (defvar composition-ligature-table (make-char-table nil))
-    :hook (((prog-mode
-             conf-mode nxml-mode markdown-mode markdown-ts-mode help-mode
-             eshell-mode ghostel-mode shell-mode term-mode)
-            . (lambda () (setq-local composition-function-table composition-ligature-table))))
+    :hook ((prog-mode
+            conf-mode nxml-mode markdown-mode markdown-ts-mode help-mode
+            eshell-mode ghostel-mode shell-mode term-mode)
+           .
+           (lambda ()
+             (setq-local composition-function-table composition-ligature-table)))
     :config
     ;; support ligatures, some toned down to prevent hang
     (let ((alist
