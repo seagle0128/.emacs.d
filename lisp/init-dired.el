@@ -58,8 +58,9 @@
             dired-listing-switches "-alh"))))
 
 ;; Quick sort dired buffers
-(when (and ls-lisp-use-insert-directory-program
-           (executable-find "gls"))
+(when (or sys/linuxp sys/cygwinp
+          (and (or sys/macp sys/unixp)
+               (executable-find "gls")))
   (use-package dired-quick-sort
     :after dired
     :bind (:map dired-mode-map
