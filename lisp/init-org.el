@@ -208,8 +208,8 @@ prepended to the element after the #+HEADER: tag."
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-alist))
 
-;; Prettify UI
 (when emacs/>=29p
+  ;; Prettify UI
   (use-package org-modern
     :autoload org-modern-mode org-modern-agenda
     :hook ((org-mode . (lambda ()
@@ -220,18 +220,10 @@ prepended to the element after the #+HEADER: tag."
            (org-agenda-finalize . (lambda ()
                                     "Display org modern agenda in GUI."
                                     (when (display-graphic-p)
-                                      (org-modern-agenda)))))))
+                                      (org-modern-agenda))))))
 
-;; Paste with org-mode markup and link
-(use-package org-rich-yank
-  :after org
-  :bind (:map org-mode-map
-         ("C-M-y" . org-rich-yank)))
-
-;; Auto-toggle Org elements
-(when emacs/>=29p
+  ;; Auto-toggle Org elements
   (use-package org-appear
-    :hook org-mode
     :custom
     (org-appear-autoentities t)
     (org-appear-autokeywords t)
@@ -239,7 +231,14 @@ prepended to the element after the #+HEADER: tag."
     (org-appear-autosubmarkers t)
     (org-appear-inside-latex t)
     (org-appear-manual-linger t)
-    (org-appear-delay 0.5)))
+    (org-appear-delay 0.5)
+    :hook org-mode))
+
+;; Paste with org-mode markup and link
+(use-package org-rich-yank
+  :after org
+  :bind (:map org-mode-map
+         ("C-M-y" . org-rich-yank)))
 
 ;; Table of contents
 (use-package toc-org
@@ -277,17 +276,16 @@ prepended to the element after the #+HEADER: tag."
            (sqlite-available-p))
   (use-package org-roam
     :functions centaur-browse-url org-roam-db-autosync-mode
-    :defines org-roam-graph-viewer
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n g" . org-roam-graph)
            ("C-c n i" . org-roam-node-insert)
            ("C-c n c" . org-roam-capture)
            ("C-c n j" . org-roam-dailies-capture-today))
-    :init
-    (setq org-roam-directory centaur-org-directory
-          org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-          org-roam-graph-viewer #'centaur-browse-url)
+    :custom
+    (org-roam-directory centaur-org-directory)
+    (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-graph-viewer #'centaur-browse-url)
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
