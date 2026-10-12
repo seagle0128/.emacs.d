@@ -67,6 +67,10 @@ Loaded by `org-babel-load-file'.")
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
 
+(defconst sys/androidp
+  (eq system-type 'android)
+  "Are we running on an Android system?")
+
 (defconst sys/mac-x-p
   (and (display-graphic-p) sys/macp)
   "Are we running under X on a Mac system?")
