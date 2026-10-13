@@ -30,8 +30,18 @@
 
 ;;; Code:
 
+(when (centaur-treesit-available-p)
+  (use-package ruby-ts-mode
+    :functions centaur-treesit-available-p
+    :mode ("\\(?:\\.\\(?:rbw?\\|ru\\|rake\\|thor\\|axlsx\\|jbuilder\\|rabl\\|\
+gemspec\\|podspec\\)\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Puppet\\|Berks\\|Brew\\|\
+Fast\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'")
+    :init (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))))
+
 ;; Run a Ruby process in a buffer
 (use-package inf-ruby
+  :bind (:map inf-ruby-minor-mode-map
+         ("C-c C-s" . inf-ruby-console-auto))
   :hook ((ruby-mode . inf-ruby-minor-mode)
          (compilation-filter . inf-ruby-auto-enter)))
 
