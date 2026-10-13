@@ -177,12 +177,11 @@ Install the doc if it's not installed."
     (progn
       (use-package julia-ts-mode)
       (use-package mermaid-ts-mode
-        :mode ("\\.mmd\\'" . mermaid-ts-mode))
+        :mode ("\\.mmd\\'"))
       (use-package scala-ts-mode)
       (use-package swift-ts-mode
-        :mode ("\\.swift\\'" . swift-ts-mode))
-      (use-package yaml-ts-mode
-        :mode ("\\.ya?ml\\'" . yaml-ts-mode)))
+        :mode ("\\.swift\\'"))
+      (use-package yaml-ts-mode))
   (progn
     (use-package julia-mode)
     (use-package mermaid-mode)
@@ -192,15 +191,18 @@ Install the doc if it's not installed."
 
 ;; Protobuf item configuration
 (use-package protobuf-mode
-  :hook (protobuf-mode . (lambda ()
-                           "Set up Protobuf's imenu generic expressions."
-                           (setq imenu-generic-expression
-                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+  :hook (protobuf-mode
+         .
+         (lambda ()
+           "Set up Protobuf's imenu generic expressions."
+           (setq imenu-generic-expression
+                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)\
+[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
 ;; nXML item for special file types
 (use-package nxml-mode
   :ensure nil
-  :mode (("\\.xaml\\'" . xml-mode)))
+  :mode ("\\.xaml\\'"))
 
 ;; Fish shell item and auto-formatting
 (use-package fish-mode

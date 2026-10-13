@@ -37,7 +37,7 @@
               rust-mode-treesitter-derive (centaur-treesit-available-p)))
 
 (use-package ron-mode
-  :mode ("\\.ron" . ron-mode))
+  :mode ("\\.ron"))
 
 (provide 'init-rust)
 

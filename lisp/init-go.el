@@ -99,8 +99,6 @@
 (if (centaur-treesit-available-p)
     (use-package go-ts-mode
       :functions (centaur-treesit-available-p exec-path-from-shell-copy-envs)
-      :mode (("\\.go\\'" . go-ts-mode)
-             ("/go\\.mod\\'" . go-mod-ts-mode))
       :custom (go-ts-mode-indent-offset 4)
       :config (go-auto-config))
   (use-package go-mode

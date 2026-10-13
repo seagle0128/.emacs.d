@@ -39,15 +39,11 @@
 (if (centaur-treesit-available-p)
     (use-package elixir-ts-mode
       :functions centaur-treesit-available-p
-      :mode (("\\.elixir\\'" . elixir-ts-mode)
-             ("\\.ex\\'"     . elixir-ts-mode)
-             ("\\.exs\\'"    . elixir-ts-mode)
-             ("mix\\.lock"   . elixir-ts-mode))
       :config (elixir-auto-config))
   (use-package elixir-mode
     :config (elixir-auto-config)))
 
-  (provide 'init-elixir)
+(provide 'init-elixir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-elixir.el ends here
