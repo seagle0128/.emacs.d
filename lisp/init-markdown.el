@@ -136,8 +136,8 @@ mermaid.initialize({
     :custom (markdown-ts-ellipsis " ⌄")
     :config (require 'markdown-ts-mode-x))
 
+  ;; Reveal Markdown source at point
   (use-package markdown-ts-appear
-    :vc (:url "https://github.com/Thysrael/markdown-ts-appear" :rev :newest)
     :hook (markdown-ts-mode . markdown-ts-appear-mode)))
 
 ;; Preview markdown files
