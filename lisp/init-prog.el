@@ -80,17 +80,14 @@
 
 ;; Cross-referencing commands
 (use-package xref
-  :autoload xref-show-definitions-completing-read
   :bind (("M-g ." . xref-find-definitions)
          ("M-g ," . xref-go-back))
-  :init
+  :custom
   ;; Use faster search tool
-  (when (executable-find "rg")
-    (setq xref-search-program 'ripgrep))
-
+  (xref-search-program (if (executable-find "rg") 'ripgrep 'grep))
   ;; Select from xref candidates in minibuffer
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-        xref-show-xrefs-function #'xref-show-definitions-completing-read))
+  (xref-show-definitions-function #'xref-show-definitions-completing-read)
+  (xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 ;; Code styles
 (use-package editorconfig
@@ -104,59 +101,6 @@
 (use-package quickrun
   :bind (("C-<f5>" . quickrun)
          ("C-c x"  . quickrun)))
-
-;; Browse devdocs.io documents using EWW
-(use-package devdocs
-  :autoload devdocs--available-docs
-  :commands (devdocs-install devdocs-lookup)
-  :bind (:map prog-mode-map
-         ("M-<f1>" . devdocs-dwim)
-         ("C-h D"  . devdocs-dwim))
-  :init
-  (defvar devdocs-major-mode-docs-alist
-    '(((c-mode c-ts-mode)           . ("c"))
-      ((c++-mode c++-ts-mode)       . ("cpp"))
-      ((css-mode css-ts-mode)       . ("css"))
-      (emacs-lisp-mode              . ("elisp"))
-      ((html-mode html-ts-mode)     . ("html"))
-      ((js-mode js-ts-mode)         . ("javascript"))
-      ((python-mode python-ts-mode) . ("python~3.14"))
-      ((ruby-mode ruby-ts-mode)     . ("ruby~3"))
-      ((rust-mode rust-ts-mode)     . ("rust")))
-    "Alist of major-mode and docs.")
-
-  (mapc (lambda (item)
-          (let ((modes (car item))
-                (docs  (cdr item)))
-            (when (nlistp modes)
-              (setq modes (list modes)))
-            (dolist (m modes)
-              (add-hook (intern (format "%s-hook" m))
-                        (lambda ()
-                          (setq-local devdocs-current-docs docs))))))
-        devdocs-major-mode-docs-alist)
-
-  (defun devdocs-dwim()
-    "Look up a DevDocs documentation entry.
-
-Install the doc if it's not installed."
-    (interactive)
-    ;; Install the doc if it's not installed
-    (mapc
-     (lambda (slug)
-       (unless (member slug (let ((default-directory devdocs-data-dir))
-                              (seq-filter #'file-directory-p
-                                          (when (file-directory-p devdocs-data-dir)
-                                            (directory-files "." nil "^[^.]")))))
-         (mapc
-          (lambda (doc)
-            (when (string= (alist-get 'slug doc) slug)
-              (devdocs-install doc)))
-          (devdocs--available-docs))))
-     (alist-get major-mode devdocs-major-mode-docs-alist))
-
-    ;; Lookup the symbol at point
-    (devdocs-lookup nil (thing-at-point 'symbol t))))
 
 ;; ---------------------------------------------------------------------------
 ;; Miscellaneous Programming Modes
