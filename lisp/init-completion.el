@@ -48,9 +48,9 @@
     :functions orderless-regexp
     :autoload pinyinlib-build-regexp-string
     :init
-    (defun orderless-regexp-pinyin (str)
+    (defun orderless-regexp-pinyin (component)
       "Match COMPONENT as a pinyin regex."
-      (orderless-regexp (pinyinlib-build-regexp-string str)))
+      (orderless-regexp (pinyinlib-build-regexp-string component)))
     (add-to-list 'orderless-matching-styles 'orderless-regexp-pinyin))
 
   ;; VERTical Interactive COmpletion
