@@ -138,6 +138,7 @@ mermaid.initialize({
 
   ;; Reveal Markdown source at point
   (use-package markdown-ts-appear
+    :custom (markdown-ts-appear-table-reveal 'table)
     :hook (markdown-ts-mode . markdown-ts-appear-mode)))
 
 ;; Preview markdown files
