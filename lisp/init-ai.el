@@ -49,25 +49,10 @@
          ("C-c a G"   . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
   :config
-  ;; Set default model and backend
-  (setq gptel-model 'deepseek-flash
-        gptel-backend (gptel-get-backend "DeepSeek"))
-
   ;; DeepSeek
   (gptel-make-deepseek "DeepSeek"
     :stream t
     :key 'gptel-api-key)
-
-  ;; OpenCode Zen
-  (gptel-make-openai "OpenCode Zen"
-    :host "opencode.ai"
-    :endpoint "/zen/v1/chat/completions"
-    :stream t
-    :key 'gptel-api-key
-    :models '(big-pickle
-              mimo-v2.5-free
-              muse-spark-1.2-free
-              laguna-s-2.1-free))
 
   ;; GLM
   (gptel-make-openai "GLM"
@@ -100,7 +85,11 @@
   ;; Claude (Anthropic)
   (gptel-make-anthropic "Claude"
     :stream t
-    :key 'gptel-api-key))
+    :key 'gptel-api-key)
+
+  ;; Set default model and backend
+  (setq gptel-model 'deepseek-flash
+        gptel-backend (gptel-get-backend "DeepSeek")))
 
 (when emacs/>=29p
   ;; Generate commit messages for magit
