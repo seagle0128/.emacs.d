@@ -42,6 +42,7 @@
 (use-package gptel
   :functions (gptel-make-openai gptel-make-deepseek
                gptel-make-anthropic gptel-make-gemini)
+  :autoload gptel-get-backend
   :bind (("C-<f12>"   . gptel)
          ("C-M-<f12>" . gptel-menu)
          ("C-c a g"   . gptel)
@@ -49,21 +50,24 @@
   :hook (gptel-mode . gptel-highlight-mode)
   :config
   ;; Set default model and backend
-  (setq gptel-model 'big-pickle
-        gptel-backend (gptel-make-openai "OpenCode Zen"
-                        :host "opencode.ai"
-                        :endpoint "/zen/v1/chat/completions"
-                        :stream t
-                        :key 'gptel-api-key
-                        :models '(big-pickle
-                                  mimo-v2.5-free
-                                  muse-spark-1.2-free
-                                  laguna-s-2.1-free)))
+  (setq gptel-model 'deepseek-flash
+        gptel-backend (gptel-get-backend "DeepSeek"))
 
   ;; DeepSeek
   (gptel-make-deepseek "DeepSeek"
     :stream t
     :key 'gptel-api-key)
+
+  ;; OpenCode Zen
+  (gptel-make-openai "OpenCode Zen"
+    :host "opencode.ai"
+    :endpoint "/zen/v1/chat/completions"
+    :stream t
+    :key 'gptel-api-key
+    :models '(big-pickle
+              mimo-v2.5-free
+              muse-spark-1.2-free
+              laguna-s-2.1-free))
 
   ;; GLM
   (gptel-make-openai "GLM"
