@@ -42,10 +42,6 @@
   ;; Guess a default target directory
   (setq dired-dwim-target t)
 
-  ;; Always delete and copy recursively
-  (setq dired-recursive-deletes 'always
-        dired-recursive-copies 'always)
-
   ;; Show directory first
   (setq dired-listing-switches "-alh --group-directories-first")
 
@@ -66,12 +62,6 @@
     :bind (:map dired-mode-map
            ("S" . dired-quick-sort-transient))
     :hook (dired-mode . dired-quick-sort-set-switches)))
-
-;; Show git info in dired
-(use-package dired-git-info
-  :after dired
-  :bind (:map dired-mode-map
-         (")" . dired-git-info-mode)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
