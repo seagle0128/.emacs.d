@@ -66,7 +66,6 @@
 ;; Hide gitignored files
 (use-package dired-gitignore
   :after dired
-  :commands dired-gitignore-global-mode
   :bind (:map dired-mode-map
          (")" . dired-gitignore-mode)))
 
