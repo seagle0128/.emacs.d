@@ -63,6 +63,13 @@
            ("S" . dired-quick-sort-transient))
     :hook (dired-mode . dired-quick-sort-set-switches)))
 
+;; Hide gitignored files
+(use-package dired-gitignore
+  :after dired
+  :commands dired-gitignore-global-mode
+  :bind (:map dired-mode-map
+         (")" . dired-gitignore-mode)))
+
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
   :after dired
