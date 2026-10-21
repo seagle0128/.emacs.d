@@ -105,10 +105,7 @@
 ;;            (> (display-pixel-width) 1920))
 ;;   (set-frame-parameter nil 'left 288))
 
-;; (put 'cl-destructuring-bind 'lisp-indent-function 'defun)
 ;; (put 'ert-deftest 'lisp-indent-function 'defun)
-;; (put 'pdf-view-create-image 'lisp-indent-function 'defun)
-;; (put 'treemacs-create-theme 'lisp-indent-function 'defun)
 
 ;; For compat
 ;; (add-hook 'emacs-lisp-mode-hook
