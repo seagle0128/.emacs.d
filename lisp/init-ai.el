@@ -99,10 +99,13 @@
 
   ;; A native shell experience to interact with ACP agents
   (use-package agent-shell
-    :commands agent-shell-insert
-    :defines magit-mode-map
-    :functions (magit-staged-files magit-commit-p magit-thing-at-point)
-    :custom (agent-shell-display-action '(display-buffer-reuse-window))
+    :custom
+    (agent-shell-display-action '(display-buffer-reuse-window))
+    (agent-shell-deepseek-authentication
+     (agent-shell-deepseek-make-authentication
+      :api-key (or (getenv "DEEPSEEK_API_KEY")
+                   (auth-source-pick-first-password
+                    :host "api.deepseek.com" :user "apikey"))))
     :bind (("<f12>"      . agent-shell)
            ("<f13>"      . agent-shell)
            ("C-c a a"    . agent-shell)
