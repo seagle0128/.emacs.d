@@ -105,9 +105,9 @@
   (popper-group-function #'popper-group-by-project)
   (popper-echo-dispatch-actions t)
   :bind (:map popper-mode-map
-         ("C-h z"       . popper-toggle)
-         ("C-<tab>"     . popper-cycle)
-         ("C-M-<tab>"   . popper-toggle-type))
+         ("C-h z"     . popper-toggle)
+         ("C-<tab>"   . popper-cycle)
+         ("C-M-<tab>" . popper-toggle-type))
   :hook (window-setup . popper-tab-line-mode)
   :init
   (setq popper-mode-line ""
