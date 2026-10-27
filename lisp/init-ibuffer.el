@@ -44,6 +44,7 @@
 (use-package ibuffer-vc
   :commands (ibuffer-vc-set-filter-groups-by-vc-root
              ibuffer-do-sort-by-vc-status)
+  :custom (ibuffer-vc-buffer-file-name-function #'buffer-file-name)
   :hook (ibuffer . (lambda ()
                      "Group ibuffer's list by project."
                      (ibuffer-vc-set-filter-groups-by-vc-root)
