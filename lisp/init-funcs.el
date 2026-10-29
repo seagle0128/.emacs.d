@@ -387,6 +387,7 @@ Return the fastest package archive."
   (interactive)
   (message "Updating configurations...")
   (vc-dir user-emacs-directory)
+  (sleep-for 0.2)
   (vc-pull))
 (defalias 'centaur-update-config #'update-config)
 
@@ -410,6 +411,7 @@ Return the fastest package archive."
   (interactive)
   (message "Updating dotfiles...")
   (vc-dir "~/.dotfiles/")
+  (sleep-for 0.2)
   (vc-pull))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
@@ -418,6 +420,7 @@ Return the fastest package archive."
   (interactive)
   (message "Updating org files %s..." default-directory)
   (vc-dir "~/org/")
+  (sleep-for 0.2)
   (vc-pull))
 (defalias 'centaur-update-org #'update-org)
 
