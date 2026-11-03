@@ -94,8 +94,9 @@
   :hook after-init)
 
 ;; Reformat buffer stably
-(use-package apheleia
-  :hook (after-init . apheleia-global-mode))
+(unless sys/win32p
+  (use-package apheleia
+    :hook (after-init . apheleia-global-mode)))
 
 ;; Run commands quickly
 (use-package quickrun
