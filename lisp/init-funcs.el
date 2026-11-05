@@ -396,6 +396,7 @@ Return the fastest package archive."
   (interactive)
   (message "Updating packages...")
   (package-upgrade-all)
+  (delete-file (locate-user-emacs-file "package-quickstart.elc"))
   (message "Updating packages...done"))
 (defalias 'centaur-update-packages #'update-packages)
 
