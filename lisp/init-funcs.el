@@ -223,10 +223,10 @@ Also opens the custom-post file in another window if it exists."
 (defun byte-compile-site-lisp ()
   "Compile packages in site-lisp directory."
   (interactive)
-  (let ((default-directory (locate-user-emacs-file "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory default-directory)
-      (byte-recompile-directory default-directory 0 t))))
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
 
 (defun native-compile-elpa ()
   "Native-compile packages in elpa directory."
@@ -237,9 +237,9 @@ Also opens the custom-post file in another window if it exists."
 (defun native-compile-site-lisp ()
   "Native compile packages in site-lisp directory."
   (interactive)
-  (let ((default-directory (locate-user-emacs-file "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'native-compile-async)
-        (native-compile-async default-directory t))))
+        (native-compile-async dir t))))
 
 (defun icons-displayable-p ()
   "Return non-nil if icons are displayable."
@@ -385,10 +385,14 @@ Return the fastest package archive."
 (defun update-config ()
   "Update Centaur Emacs configurations to the latest version."
   (interactive)
-  (message "Updating configurations...")
-  (vc-dir user-emacs-directory)
-  (sleep-for 0.2)
-  (vc-pull))
+  (let ((dir user-emacs-directory))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating configurations...")
+          (vc-dir dir)
+          (sleep-for 0.2)
+          (vc-update))
+      (warn "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-config #'update-config)
 
 (defun update-packages ()
@@ -410,25 +414,43 @@ Return the fastest package archive."
 (defun update-dotfiles ()
   "Update the dotfiles to the latest version."
   (interactive)
-  (message "Updating dotfiles...")
-  (vc-dir "~/.dotfiles/")
-  (sleep-for 0.2)
-  (vc-pull))
+  (let ((dir "~/.dotfiles/"))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating dotfiles...")
+          (vc-dir dir)
+          (sleep-for 0.2)
+          (vc-update))
+      (warn "\"%s\" doesn't exist" dir))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
 (defun update-org ()
   "Update Org files to the latest version."
   (interactive)
-  (message "Updating org files %s..." default-directory)
-  (vc-dir "~/org/")
-  (sleep-for 0.2)
-  (vc-pull))
+  (let ((dir "~/org/"))
+    (when (file-exists-p dir)
+      (message "Updating org files...")
+      (vc-dir dir)
+      (sleep-for 0.2)
+      (vc-update))))
 (defalias 'centaur-update-org #'update-org)
+
+(defun update-rime ()
+  "Update Rime settings to the latest version."
+  (interactive)
+  (let ((dir "~/.rime/"))
+    (when (file-exists-p dir)
+      (message "Updating Rime settings...")
+      (vc-dir dir)
+      (sleep-for 0.2)
+      (vc-update))))
+(defalias 'centaur-update-rime #'update-rime)
 
 (defun update-all ()
   "Update dotfiles, org files, configurations and packages to the latest."
   (interactive)
   (update-org)
+  (update-rime)
   (update-dotfiles)
   (update-config-and-packages))
 (defalias 'centaur-update-all #'update-all)
