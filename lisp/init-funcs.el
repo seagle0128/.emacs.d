@@ -415,13 +415,12 @@ Return the fastest package archive."
   "Update the dotfiles to the latest version."
   (interactive)
   (let ((dir "~/.dotfiles/"))
-    (if (file-exists-p dir)
-        (progn
-          (message "Updating dotfiles...")
-          (vc-dir dir)
-          (sleep-for 0.2)
-          (vc-update))
-      (warn "\"%s\" doesn't exist" dir))))
+    (when (file-exists-p dir)
+      (message "Updating dotfiles...")
+      (vc-dir dir)
+      (sleep-for 0.2)
+      (vc-update)
+      (message "Updating dotfiles...done"))))
 (defalias 'centaur-update-dotfiles #'update-dotfiles)
 
 (defun update-org ()
@@ -432,7 +431,8 @@ Return the fastest package archive."
       (message "Updating org files...")
       (vc-dir dir)
       (sleep-for 0.2)
-      (vc-update))))
+      (vc-update)
+      (message "Updating org files...done"))))
 (defalias 'centaur-update-org #'update-org)
 
 (defun update-rime ()
@@ -443,7 +443,8 @@ Return the fastest package archive."
       (message "Updating Rime settings...")
       (vc-dir dir)
       (sleep-for 0.2)
-      (vc-update))))
+      (vc-update)
+      (message "Updating Rime settings...done"))))
 (defalias 'centaur-update-rime #'update-rime)
 
 (defun update-all ()
