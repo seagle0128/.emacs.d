@@ -99,6 +99,22 @@ Loaded by `org-babel-load-file'.")
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
 
+(defconst sys/wslp
+  (and sys/linuxp
+       (or (getenv "WSL_DISTRO_NAME")
+           (getenv "WSL_INTEROP")
+           (and (file-readable-p "/proc/version")
+                (with-temp-buffer
+                  (insert-file-contents "/proc/version")
+                  (let ((case-fold-search t))
+                    (string-match-p "microsoft\\|wsl" (buffer-string))))))
+       t)
+  "Are we running under Windows Subsystem for Linux (WSL/WSLg)?
+
+WSL exports `WSL_DISTRO_NAME' and `WSL_INTEROP'; the kernel version is
+used as a fallback for old WSL1 sessions.  `wl-copy' is *not* a WSL
+marker: native Wayland sessions select it as well.")
+
 (defconst emacs/>=29p
   (>= emacs-major-version 29)
   "Emacs is 29 or above.")
