@@ -466,9 +466,11 @@
     (when (eq xclip-method 'powershell)
       (setq xclip-program "powershell.exe"))
 
+    ;; WSLg only: `xclip' also selects `wl-copy' on native Wayland, where
+    ;; forcing GBK corrupts UTF-8 clipboard text. @see #492
     ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
-    (when (eq xclip-method 'wl-copy)
-      (set-clipboard-coding-system 'gbk) ; for wsl
+    (when (and sys/wslp (eq xclip-method 'wl-copy))
+      (set-clipboard-coding-system 'gbk) ; for WSLg
       (setq interprogram-cut-function
             (lambda (text)
               (start-process "xclip" nil xclip-program
