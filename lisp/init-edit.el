@@ -302,7 +302,10 @@
                                        "Check spells unless the file is too big."
                                        (unless (file-too-big-p)
                                          (flyspell-mode 1))))
-         (prog-mode . flyspell-prog-mode))
+         (prog-mode . (lambda ()
+                        "Check spells unless the file is too big."
+                        (unless (file-too-big-p)
+                          (flyspell-prog-mode)))))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
               ispell-program-name "aspell"

@@ -179,6 +179,8 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight indentions
 (use-package indent-bars
+  :functions file-too-big-p
+  :commands indent-bars-mode
   :custom
   (indent-bars-color '(font-lock-comment-face :face-bg nil :blend 0.4))
   (indent-bars-highlight-current-depth '(:face default :blend 0.4))
@@ -189,7 +191,10 @@ FACE defaults to inheriting from default and highlight."
   (indent-bars-treesit-support (centaur-treesit-available-p))
   (indent-bars-no-descend-string t)
   (indent-bars-prefer-character t)
-  :hook (prog-mode yaml-mode yaml-ts-mode))
+  :hook ((prog-mode yaml-mode yaml-ts-mode) . (lambda ()
+                                                "Enable indent-bars unless the file is too big."
+                                                (unless (file-too-big-p)
+                                                  (indent-bars-mode 1)))))
 
 ;; Colorize color names in buffers
 (use-package colorful-mode
