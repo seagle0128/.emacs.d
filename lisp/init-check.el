@@ -35,7 +35,8 @@
   :bind ("C-c f" . flymake-show-buffer-diagnostics)
   :hook prog-mode
   :custom
-  (flymake-no-changes-timeout 0.15)
+  ;; Avoid re-running checks on every short idle while typing.
+  (flymake-no-changes-timeout nil)
   (flymake-fringe-indicator-position 'right-fringe)
   (flymake-margin-indicator-position 'right-margin)
   :config
