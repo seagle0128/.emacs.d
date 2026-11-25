@@ -37,6 +37,8 @@
   :custom
   ;; Avoid re-running checks on every short idle while typing.
   (flymake-no-changes-timeout nil)
+  ;; layout diagnostic information below the affected line with Unicode graphics.
+  (flymake-inline-diagnostics 'fancy)
   (flymake-fringe-indicator-position 'right-fringe)
   (flymake-margin-indicator-position 'right-margin)
   :config
@@ -46,16 +48,17 @@
     (let ((elisp-flymake-byte-compile-load-path
            (append elisp-flymake-byte-compile-load-path load-path)))
       (apply fn args)))
-  (advice-add 'elisp-flymake-byte-compile :around #'my/elisp-flymake-byte-compile))
+  (advice-add 'elisp-flymake-byte-compile :around #'my/elisp-flymake-byte-compile)
 
-;; Display Flymake errors with overlays
-(use-package flyover
-  :functions centaur-dark-theme-p
-  :custom
-  (flyover-checkers '(flymake))
-  (flyover-background-lightness (if (centaur-dark-theme-p) 35 75))
-  (flyover-icon-background-tint-percent 50)
-  :hook flymake-mode)
+  ;; Display Flymake errors with overlays
+  (unless (boundp 'flymake-inline-diagnostics)
+    (use-package flyover
+      :functions centaur-dark-theme-p
+      :custom
+      (flyover-checkers '(flymake))
+      (flyover-background-lightness (if (centaur-dark-theme-p) 35 75))
+      (flyover-icon-background-tint-percent 50)
+      :hook flymake-mode)))
 
 (provide 'init-check)
 
