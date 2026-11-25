@@ -298,16 +298,17 @@
          ("C-;" . nil)
          ("C-," . nil)
          ("C-." . nil))
-  :hook (((text-mode outline-mode) . (lambda ()
-                                       "Check spells unless the file is too big."
-                                       (unless (file-too-big-p)
-                                         (flyspell-mode 1))))
+  :hook ((text-mode . (lambda ()
+                        "Check spells unless the file is too big."
+                        (unless (file-too-big-p)
+                          (flyspell-mode 1))))
          (prog-mode . (lambda ()
                         "Check spells unless the file is too big."
                         (unless (file-too-big-p)
                           (flyspell-prog-mode)))))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
+              flyspell-delay-use-timer t
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
