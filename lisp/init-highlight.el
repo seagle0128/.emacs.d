@@ -103,7 +103,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight symbols
 (use-package symbol-overlay
-  :functions (easy-kill easy-kill-destroy-candidate)
+  :functions (easy-kill easy-kill-destroy-candidate file-too-big-p)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
@@ -135,9 +135,10 @@ FACE defaults to inheriting from default and highlight."
     (symbol-overlay-mode -1))
 
   (defun turn-on-symbol-overlay (&rest _)
-    "Turn on symbol highlighting."
+    "Turn on symbol highlighting in code buffers that are not too big."
     (interactive)
-    (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+    (when (and (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+               (not (file-too-big-p)))
       (symbol-overlay-mode 1)))
 
   ;; Disable symbol highlighting while selecting
@@ -151,7 +152,7 @@ FACE defaults to inheriting from default and highlight."
   :bind (:map region-occurrences-highlighter-nav-mode-map
          ("M-n" . region-occurrences-highlighter-next)
          ("M-p" . region-occurrences-highlighter-prev))
-  :hook (after-init . global-region-occurrences-highlighter-mode))
+  :hook (emacs-startup . global-region-occurrences-highlighter-mode))
 
 ;; Display fill-column indicator
 (use-package display-fill-column-indicator
@@ -203,7 +204,7 @@ FACE defaults to inheriting from default and highlight."
   (colorful-prefix-string "■")
   (colorful-only-strings 'only-prog)
   (css-fontify-colors nil)
-  :hook (after-init . global-colorful-mode)
+  :hook (emacs-startup . global-colorful-mode)
   :config
   (add-to-list 'global-colorful-modes 'helpful-mode))
 
@@ -225,7 +226,7 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t i" . hl-todo-insert)
          ("C-c t r" . hl-todo-rg-project)
          ("C-c t R" . hl-todo-rg))
-  :hook (after-init . global-hl-todo-mode)
+  :hook (emacs-startup . global-hl-todo-mode)
   :init (setq hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
@@ -281,11 +282,12 @@ FACE defaults to inheriting from default and highlight."
   (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
-  :hook ((after-init . global-diff-hl-mode)
-         (after-init . global-diff-hl-show-hunk-mouse-mode)
+  :hook ((emacs-startup . global-diff-hl-mode)
+         (global-diff-hl-mode . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh)
-         ((after-init after-load-theme server-after-make-frame) . diff-hl-set-posframe))
+         ((global-diff-hl-show-hunk-mouse-mode
+           after-load-theme server-after-make-frame) . diff-hl-set-posframe))
   :custom
   (diff-hl-draw-borders nil)
   (diff-hl-update-async t)

@@ -166,7 +166,7 @@
 ;; Fast search tool `ripgrep'
 (use-package rg
   :defines rg-custom-type-aliases
-  :hook (after-init . rg-enable-default-bindings)
+  :hook (emacs-startup . rg-enable-default-bindings)
   :config (add-to-list 'rg-custom-type-aliases '("tmpl" . "*.tmpl")))
 
 ;; A Simple and cool pomodoro timer

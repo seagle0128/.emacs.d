@@ -287,7 +287,7 @@
 
 ;; Smartly select region, rectangle, multi cursors
 (use-package smart-region
-  :hook (after-init . smart-region-on))
+  :hook (emacs-startup . smart-region-on))
 
 ;; On-the-fly spell checker
 (use-package flyspell
